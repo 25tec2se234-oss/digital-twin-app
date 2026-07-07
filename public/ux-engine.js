@@ -308,3 +308,24 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+
+// Footer scroll space guard to prevent empty space below footer
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        const footer = document.querySelector('footer');
+        if (footer) {
+            const footerBottom = footer.getBoundingClientRect().bottom + window.scrollY;
+            document.querySelectorAll('body > *, #page-main > *').forEach(el => {
+                if (el.tagName !== 'SCRIPT' && el.tagName !== 'STYLE' && getComputedStyle(el).position !== 'fixed' && el.tagName !== 'FOOTER') {
+                    const rect = el.getBoundingClientRect();
+                    const elBottom = rect.bottom + window.scrollY;
+                    // If an absolute element is placed below the footer, hide it to prevent scroll stretch
+                    if (elBottom > footerBottom + 100 && getComputedStyle(el).position === 'absolute') {
+                        el.style.display = 'none';
+                    }
+                }
+            });
+        }
+    }, 2000);
+});
