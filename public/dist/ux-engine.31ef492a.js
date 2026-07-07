@@ -318,7 +318,7 @@ window.addEventListener('load', () => {
     const cleanup = () => {
         const footerBottom = footer.getBoundingClientRect().bottom + window.scrollY;
         document.querySelectorAll('body *').forEach(el => {
-            if (footer.contains(el) || el === footer || el.tagName === 'SCRIPT' || el.tagName === 'STYLE' || el.id === 'page-main' || el.closest('.page')) return;
+            if (footer.contains(el) || el === footer || el.tagName === 'SCRIPT' || el.tagName === 'STYLE' || el.id === 'page-main' || el.closest('.page') || el.closest('.toast') || el.closest('.mod') || el.closest('.ov') || el.closest('.wa-redirect-ov')) return;
             
             const style = getComputedStyle(el);
             if (style.display !== 'none' && style.position !== 'fixed') {
