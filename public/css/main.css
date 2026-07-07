@@ -120,7 +120,7 @@
         }
 
         html {
-            background-color: #0a0d14; /* Fixes iOS bounce white screen natively */
+            background-color: var(--surf); /* Fixes iOS bounce and matches footer background perfectly if space exists */
         }
 
         body {
