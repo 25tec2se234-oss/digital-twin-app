@@ -5589,4 +5589,15 @@
         -webkit-backdrop-filter: none !important;
         backdrop-filter: none !important;
     }
+
+    /* 3. Kill heavy screen-wide overlays that block the GPU on scroll */
+    .noise-overlay, #tsparticles, body::after, .blobs {
+        display: none !important;
+        animation: none !important;
+    }
+
+    /* 4. Disable smooth scroll on mobile to fix touch input delay */
+    html, body {
+        scroll-behavior: auto !important;
+    }
 }
