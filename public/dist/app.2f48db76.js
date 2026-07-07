@@ -656,25 +656,43 @@
             var grid = document.getElementById('career-grid');
             if (!grid) return;
             var list = CAREERS.filter(function(c) {
-                var matchCategory = (currentCategory === 'all' || c.stream === currentCategory);
-                if (!matchCategory) {
-                    if (currentCategory === 'Professional' && (c.stream === 'Engineering' || c.stream === 'Healthcare' || c.stream === 'Law & Policy' || c.stream === 'Professional')) matchCategory = true;
-                    if (currentCategory === 'Business & Other' && (c.stream === 'Business' || c.stream === 'Business & Other')) matchCategory = true;
+                var cat = (currentCategory || 'all').toLowerCase().trim();
+                var cstream = (c.stream || '').toLowerCase().trim();
+                var matchCategory = false;
+                
+                if (cat === 'all') {
+                    matchCategory = true;
+                } else if (cstream === cat) {
+                    matchCategory = true;
+                } else if (cstream.includes(cat) || cat.includes(cstream)) {
+                    matchCategory = true;
+                } else {
+                    // Fallback keyword matching for buttons
+                    if (cat.includes('technology') && cstream.includes('technology')) matchCategory = true;
+                    if (cat.includes('business') && cstream.includes('business')) matchCategory = true;
+                    if (cat.includes('creative') && cstream.includes('creative')) matchCategory = true;
+                    if (cat.includes('engineering') && cstream.includes('engineering')) matchCategory = true;
+                    if (cat.includes('healthcare') && cstream.includes('healthcare')) matchCategory = true;
+                    if (cat.includes('govt') && (cstream.includes('government') || cstream.includes('law'))) matchCategory = true;
+                    if (cat.includes('science') && cstream.includes('science')) matchCategory = true;
+                    if (cat.includes('education') && cstream.includes('education')) matchCategory = true;
+                    if (cat.includes('emerging') && cstream.includes('emerging')) matchCategory = true;
                 }
+
                 var matchSearch = true;
-                if (currentSearchQuery.trim() !== '') {
-                    var q = currentSearchQuery.toLowerCase();
-                    matchSearch = c.title.toLowerCase().includes(q) || 
-                                  c.desc.toLowerCase().includes(q) || 
-                                  c.stream.toLowerCase().includes(q) ||
-                                  c.id.toLowerCase().includes(q) ||
+                if (currentSearchQuery && currentSearchQuery.trim() !== '') {
+                    var q = currentSearchQuery.trim().toLowerCase();
+                    matchSearch = (c.title && c.title.toLowerCase().includes(q)) || 
+                                  (c.desc && c.desc.toLowerCase().includes(q)) || 
+                                  (c.stream && c.stream.toLowerCase().includes(q)) ||
+                                  (c.id && c.id.toLowerCase().includes(q)) ||
                                   (c.salary && c.salary.toLowerCase().includes(q)) ||
                                   (c.salaryGlobal && c.salaryGlobal.toLowerCase().includes(q)) ||
                                   (c.futureDemand && c.futureDemand.toLowerCase().includes(q)) ||
                                   (c.eligibility && c.eligibility.toLowerCase().includes(q)) ||
-                                  (c.techSkills && c.techSkills.join(' ').toLowerCase().includes(q)) ||
-                                  (c.softSkills && c.softSkills.join(' ').toLowerCase().includes(q)) ||
-                                  (c.topCompanies && c.topCompanies.join(' ').toLowerCase().includes(q));
+                                  (c.techSkills && Array.isArray(c.techSkills) && c.techSkills.join(' ').toLowerCase().includes(q)) ||
+                                  (c.softSkills && Array.isArray(c.softSkills) && c.softSkills.join(' ').toLowerCase().includes(q)) ||
+                                  (c.topCompanies && Array.isArray(c.topCompanies) && c.topCompanies.join(' ').toLowerCase().includes(q));
                 }
                 return matchCategory && matchSearch;
             });
