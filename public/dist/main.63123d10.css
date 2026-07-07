@@ -5596,8 +5596,22 @@
         animation: none !important;
     }
 
-    /* 4. Disable smooth scroll on mobile to fix touch input delay */
+/* 4. Disable smooth scroll on mobile to fix touch input delay */
     html, body {
         scroll-behavior: auto !important;
     }
+}
+
+/* ULTIMATE FOOTER SCROLL FIX */
+footer {
+    margin-bottom: 0 !important;
+}
+.ft-bottom p, .ft-legal {
+    margin-bottom: 0 !important;
+}
+#page-main {
+    margin-bottom: 0 !important;
+}
+html, body {
+    overscroll-behavior-y: none !important;
 }
