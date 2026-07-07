@@ -5610,8 +5610,4 @@ footer {
 }
 #page-main {
     margin-bottom: 0 !important;
-    overflow: clip !important;
-}
-html, body {
-    overscroll-behavior-y: none !important;
 }
