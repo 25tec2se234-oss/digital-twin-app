@@ -5610,5 +5610,8 @@ footer {
 }
 #page-main {
     margin-bottom: 0 !important;
+    overflow: clip !important;
 }
-/* html, body overscroll-behavior-y removed to fix laptop scrolling */
+html, body {
+    overscroll-behavior-y: none !important;
+}
