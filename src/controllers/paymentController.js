@@ -8,8 +8,8 @@ const ApiError = require('../utils/apiError');
 const userModel = require('../models/userModel');
 const emailService = require('../services/emailService');
 
-const getKeyId = () => (env.RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID || process.env['RAZORPAY_KEY_ID '] || 'dummy_id').trim();
-const getKeySecret = () => (env.RAZORPAY_KEY_SECRET || process.env.RAZORPAY_KEY_SECRET || process.env['RAZORPAY_KEY_SECRET '] || 'dummy_secret').trim();
+const getKeyId = () => (env.RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID || process.env['RAZORPAY_KEY_ID '] || 'rzp_live_T6IRvwv0PhxTVR').trim();
+const getKeySecret = () => (env.RAZORPAY_KEY_SECRET || process.env.RAZORPAY_KEY_SECRET || process.env['RAZORPAY_KEY_SECRET '] || '9cR9t2PHsqpB152wlYSw7eOO').trim();
 
 const razorpay = new Razorpay({
   key_id: getKeyId(),
