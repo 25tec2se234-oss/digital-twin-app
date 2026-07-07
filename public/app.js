@@ -644,6 +644,10 @@
         /* ═══ DASHBOARD RENDER ═══════════════════════════════════════ */
         var currentCategory = 'all';
         var currentSearchQuery = '';
+        var currentPage = 1;
+        var pageSize = 30;
+        var currentFilteredList = [];
+
 
         function renderCareers(filter) {
             if (filter !== undefined && filter !== null) {
@@ -674,6 +678,9 @@
                 }
                 return matchCategory && matchSearch;
             });
+            
+            currentFilteredList = list;
+            currentPage = 1; // reset page on filter/search
 
             if (list.length === 0) {
                 grid.innerHTML = '<div class="no-results">No careers found matching your criteria. Try adjusting your search or category filter.</div>';
@@ -686,26 +693,76 @@
             var existingBtn = document.getElementById('load-more-container');
             if (existingBtn) existingBtn.remove();
 
-            grid.innerHTML = list.map(function(c) {
-                var dispDp = c.dp || c.aiRecScore || 85;
-                var dispDemand = c.futureDemand || c.demand || 'High';
-                var dispSalary = c.salary || 'Competitive';
-                var dispGrowth = c.growthRate || '+25% Growth';
-                return '<div class="ccard" id="cc-' + c.id + '" onclick="openCareer(\'' + c.id + '\')" role="button" tabindex="0" aria-label="Explore ' + c.title + '">' +
-                    '<div class="ccard-top-row">' +
-                        '<div class="ccard-ic" aria-hidden="true">' + c.icon + '</div>' +
-                        '<div class="ccard-stream">' + c.stream + '</div>' +
-                    '</div>' +
-                    '<h3 class="ccard-title">' + c.title + '</h3>' +
-                    '<p class="ccard-desc">' + c.desc + '</p>' +
-                    '<div class="ccard-salary">' + dispSalary + ' <span style="font-size:0.75rem;color:#4ade80;background:rgba(74,222,128,0.15);padding:2px 6px;border-radius:4px;margin-left:6px;">' + dispGrowth + '</span></div>' +
-                    '<div class="demand-bar"><div class="demand-fill" style="width:' + dispDp + '%"></div></div>' +
-                    '<div class="demand-lbl">Demand: ' + dispDemand + '</div>' +
-                    '<div class="ccard-act"><button class="btn-explore" tabindex="-1">Explore →</button></div>' +
-                    '</div>';
+            var renderSubset = list.slice(0, pageSize);
+            grid.innerHTML = renderSubset.map(function(c) {
+                return generateCareerCardHTML(c);
             }).join('');
+            
+            if (list.length > pageSize) {
+                appendLoadMoreButton(grid);
+            }
 
             updateOverallProgress();
+        }
+        
+        function generateCareerCardHTML(c) {
+            var dispDp = c.dp || c.aiRecScore || 85;
+            var dispDemand = c.futureDemand || c.demand || 'High';
+            var dispSalary = c.salary || 'Competitive';
+            var dispGrowth = c.growthRate || '+25% Growth';
+            return '<div class="ccard" id="cc-' + c.id + '" onclick="openCareer(\'' + c.id + '\')" role="button" tabindex="0" aria-label="Explore ' + c.title + '">' +
+                '<div class="ccard-top-row">' +
+                    '<div class="ccard-ic" aria-hidden="true">' + c.icon + '</div>' +
+                    '<div class="ccard-stream">' + c.stream + '</div>' +
+                '</div>' +
+                '<h3 class="ccard-title">' + c.title + '</h3>' +
+                '<p class="ccard-desc">' + c.desc + '</p>' +
+                '<div class="ccard-salary">' + dispSalary + ' <span style="font-size:0.75rem;color:#4ade80;background:rgba(74,222,128,0.15);padding:2px 6px;border-radius:4px;margin-left:6px;">' + dispGrowth + '</span></div>' +
+                '<div class="demand-bar"><div class="demand-fill" style="width:' + dispDp + '%"></div></div>' +
+                '<div class="demand-lbl">Demand: ' + dispDemand + '</div>' +
+                '<div class="ccard-act"><button class="btn-explore" tabindex="-1">Explore →</button></div>' +
+                '</div>';
+        }
+        
+        function appendLoadMoreButton(grid) {
+            var btnContainer = document.createElement('div');
+            btnContainer.id = 'load-more-container';
+            btnContainer.style.textAlign = 'center';
+            btnContainer.style.gridColumn = '1 / -1';
+            btnContainer.style.marginTop = '2rem';
+            
+            var btn = document.createElement('button');
+            btn.className = 'btn-explore';
+            btn.style.width = 'auto';
+            btn.style.padding = '0.75rem 2rem';
+            btn.style.fontSize = '1rem';
+            btn.textContent = 'Load More Careers';
+            
+            btn.onclick = function() {
+                currentPage++;
+                var start = (currentPage - 1) * pageSize;
+                var end = start + pageSize;
+                var nextSubset = currentFilteredList.slice(start, end);
+                
+                // Append new HTML
+                var tempDiv = document.createElement('div');
+                tempDiv.innerHTML = nextSubset.map(function(c) {
+                    return generateCareerCardHTML(c);
+                }).join('');
+                
+                while(tempDiv.firstChild) {
+                    grid.appendChild(tempDiv.firstChild);
+                }
+                
+                if (end >= currentFilteredList.length) {
+                    btnContainer.remove();
+                } else {
+                    grid.appendChild(btnContainer); // move to bottom
+                }
+            };
+            
+            btnContainer.appendChild(btn);
+            grid.appendChild(btnContainer);
         }
 
         function filterCareer(el, stream) {
@@ -721,13 +778,19 @@
             }
         }
 
+        var searchTimeout;
         function handleSearchCareer(val) {
-            currentSearchQuery = val;
+            clearTimeout(searchTimeout);
             var clearBtn = document.getElementById('search-clear');
             if (clearBtn) {
                 clearBtn.style.display = val.trim() !== '' ? 'inline-flex' : 'none';
             }
-            renderCareers();
+            
+            searchTimeout = setTimeout(function() {
+                currentSearchQuery = val;
+                renderCareers();
+            }, 300); // 300ms debounce
+
         }
 
         function clearSearchCareer() {
