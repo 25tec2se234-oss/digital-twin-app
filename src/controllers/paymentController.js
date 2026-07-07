@@ -36,10 +36,11 @@ async function createOrder(req, res, next) {
 
     const rzp = new Razorpay({ key_id, key_secret });
 
+    const userIdForReceipt = req.user && req.user.id ? String(req.user.id).replace(/-/g, '').substring(0, 8) : 'anon';
     const options = {
       amount,
       currency: "INR",
-      receipt: `r_${String(req.user.id).replace(/-/g, '').substring(0, 8)}_${Date.now().toString().slice(-8)}`
+      receipt: `r_${userIdForReceipt}_${Date.now().toString().slice(-8)}`
     };
 
     let orderId = "";
@@ -57,13 +58,16 @@ async function createOrder(req, res, next) {
       orderId = ""; 
     }
 
-    const dbOrderId = orderId || `client_order_${req.user.id}_${Date.now()}`;
+    const userIdDb = req.user && req.user.id ? req.user.id : null;
+    const dbOrderId = orderId || `client_order_${userIdDb || 'anon'}_${Date.now()}`;
 
-    // Save to DB
-    await db.query(
-      'INSERT INTO orders (user_id, razorpay_order_id, plan_duration, amount) VALUES ($1, $2, $3, $4)',
-      [req.user.id, dbOrderId, plan, amount]
-    );
+    // Save to DB (only if we have a valid UUID/user_id, otherwise we skip inserting since anonymous orders don't belong to anyone yet)
+    if (userIdDb) {
+      await db.query(
+        'INSERT INTO orders (user_id, razorpay_order_id, plan_duration, amount) VALUES ($1, $2, $3, $4)',
+        [userIdDb, dbOrderId, plan, amount]
+      ).catch(e => console.error('Failed to log order:', e));
+    }
 
     res.json({
       success: true,
