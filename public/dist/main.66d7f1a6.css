@@ -440,11 +440,13 @@
             font-size: 1rem;
             letter-spacing: -.01em;
             color: var(--wh);
+            white-space: nowrap;
         }
 
         .logo-text em {
             color: var(--amb);
             font-style: normal;
+            white-space: nowrap;
         }
 
         .logo-sub {
@@ -5611,3 +5613,6 @@ footer {
 #page-main {
     margin-bottom: 0 !important;
 }
+
+@media(max-width: 1250px) { .nav-ul { display: none !important; } .hbg { display: flex !important; } }
+
