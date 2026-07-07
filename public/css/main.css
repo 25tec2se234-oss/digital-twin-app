@@ -33,9 +33,15 @@
             --fab-gap: 3.6rem;
         }
 
+        #page-main {
+            overflow: hidden;
+            width: 100%;
+        }
+
         html {
             scroll-behavior: smooth;
             overflow-x: hidden;
+            overscroll-behavior-y: none;
         }
 
         /* Interactive Cursor */
