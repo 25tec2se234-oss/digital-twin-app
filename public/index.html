@@ -2243,20 +2243,7 @@
                     });
                 }
 
-                // Parallax Hero - wrap in try-catch to ignore pseudo-element warnings
-                try {
-                    if (window.innerWidth > 768) {
-                        gsap.to("body::after", {
-                            scrollTrigger: {
-                                trigger: "body",
-                                start: "top top",
-                                end: "bottom top",
-                                scrub: 1
-                            },
-                            y: 200
-                        });
-                    }
-                } catch (e) { }
+                // Removed invalid gsap pseudo-element animation
 
             } catch (err) {
                 console.error("GSAP Animation fallback triggered:", err);
