@@ -2591,6 +2591,11 @@
         .ccard.selected::before {
             opacity: 1;
             transform: scaleX(1);
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
             animation: gradientMove 3s linear infinite;
         }
 
