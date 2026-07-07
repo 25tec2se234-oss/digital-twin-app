@@ -39,7 +39,7 @@ async function createOrder(req, res, next) {
     const options = {
       amount,
       currency: "INR",
-      receipt: `rcpt_${req.user.id}_${Date.now()}`
+      receipt: `r_${String(req.user.id).replace(/-/g, '').substring(0, 8)}_${Date.now().toString().slice(-8)}`
     };
 
     let orderId = "";
