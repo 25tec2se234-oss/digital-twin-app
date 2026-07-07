@@ -2222,24 +2222,26 @@
                 if (typeof gsap === 'undefined') throw new Error('GSAP not loaded');
                 gsap.registerPlugin(ScrollTrigger);
 
-                revealElements.forEach((el, index) => {
-                    // Pre-set visibility
-                    el.style.opacity = 0;
-                    el.style.transform = "translateY(30px)";
+                if (window.innerWidth > 768) {
+                    revealElements.forEach((el, index) => {
+                        // Pre-set visibility
+                        el.style.opacity = 0;
+                        el.style.transform = "translateY(30px)";
 
-                    gsap.to(el, {
-                        scrollTrigger: {
-                            trigger: el,
-                            start: "top 85%", // Reveal when top of element hits 85% of viewport
-                            toggleActions: "play none none none"
-                        },
-                        opacity: 1,
-                        y: 0,
-                        duration: 1.2,
-                        ease: "power3.out",
-                        delay: el.classList.contains('auth-card') ? 0.2 : 0
+                        gsap.to(el, {
+                            scrollTrigger: {
+                                trigger: el,
+                                start: "top 85%", // Reveal when top of element hits 85% of viewport
+                                toggleActions: "play none none none"
+                            },
+                            opacity: 1,
+                            y: 0,
+                            duration: 1.2,
+                            ease: "power3.out",
+                            delay: el.classList.contains('auth-card') ? 0.2 : 0
+                        });
                     });
-                });
+                }
 
                 // Parallax Hero - wrap in try-catch to ignore pseudo-element warnings
                 try {
