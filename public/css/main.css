@@ -34,7 +34,6 @@
         }
 
         #page-main {
-            overflow: hidden;
             width: 100%;
         }
 
@@ -5612,6 +5611,4 @@ footer {
 #page-main {
     margin-bottom: 0 !important;
 }
-html, body {
-    overscroll-behavior-y: none !important;
-}
+/* html, body overscroll-behavior-y removed to fix laptop scrolling */
