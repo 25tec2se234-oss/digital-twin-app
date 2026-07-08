@@ -43,7 +43,7 @@
                         <i class="fa fa-lock fa-4x" style="color: rgba(255, 255, 255, 0.1); margin-bottom: 20px;"></i>
                         <p style="font-size: 16px; margin-bottom: 15px;">${message || 'Your premium access has expired.'}</p>
                         ${expiredAt ? '<p style="font-size: 14px; color: #aaa; margin-bottom: 20px;">Expired on: ' + new Date(expiredAt).toLocaleDateString() + '</p>' : ''}
-                        <button onclick="window.location.href='#subscription'; document.getElementById('premium-expired-modal').remove(); window.scrollTo(0, document.body.scrollHeight);" class="primary-btn" style="width: 100%; padding: 12px; font-size: 16px; background: linear-gradient(135deg, #a78bfa, #e88c2a); border: none; color: #000; font-weight: bold; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">Renew Subscription Now</button>
+                        <button onclick="document.getElementById('premium-expired-modal').remove(); if(typeof openPaymentProofModal === 'function') { openPaymentProofModal(); }" class="primary-btn" style="width: 100%; padding: 12px; font-size: 16px; background: linear-gradient(135deg, #a78bfa, #e88c2a); border: none; color: #000; font-weight: bold; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">Renew Subscription Now</button>
                         <div style="margin-top: 15px;">
                             <button onclick="if(typeof doLogout === 'function') { document.getElementById('premium-expired-modal').remove(); doLogout(); }" style="background: transparent; border: none; color: #a78bfa; cursor: pointer; text-decoration: underline; font-size: 14px;">Log out</button>
                         </div>
