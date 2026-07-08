@@ -24,22 +24,22 @@
             modal.id = 'premium-expired-modal';
             modal.className = 'custom-modal-overlay active';
             modal.style.zIndex = '999999';
-            modal.innerHTML = \`
+            modal.innerHTML = `
                 <div class="custom-modal premium-expired-modal" style="display: block; border: 1px solid rgba(232, 140, 42, 0.3); box-shadow: 0 0 20px rgba(225, 42, 42, 0.2);">
                     <div class="modal-header">
                         <h3 style="color: #e12a2a;"><i class="fa fa-lock"></i> Premium Access Expired</h3>
                     </div>
                     <div class="modal-body" style="text-align: center; padding: 20px;">
                         <i class="fa fa-lock fa-4x" style="color: rgba(255, 255, 255, 0.1); margin-bottom: 20px;"></i>
-                        <p style="font-size: 16px; margin-bottom: 15px;">\${message || 'Your premium access has expired.'}</p>
-                        \${expiredAt ? '<p style="font-size: 14px; color: #aaa; margin-bottom: 20px;">Expired on: ' + new Date(expiredAt).toLocaleDateString() + '</p>' : ''}
+                        <p style="font-size: 16px; margin-bottom: 15px;">${message || 'Your premium access has expired.'}</p>
+                        ${expiredAt ? '<p style="font-size: 14px; color: #aaa; margin-bottom: 20px;">Expired on: ' + new Date(expiredAt).toLocaleDateString() + '</p>' : ''}
                         <button onclick="window.location.href='#subscription'; document.getElementById('premium-expired-modal').remove(); window.scrollTo(0, document.body.scrollHeight);" class="primary-btn" style="width: 100%; padding: 12px; font-size: 16px; background: linear-gradient(135deg, #a78bfa, #e88c2a); border: none; color: #000; font-weight: bold; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">Renew Subscription Now</button>
                         <form action="/api/v1/auth/logout" method="POST" style="margin-top: 15px;">
                             <button type="submit" style="background: transparent; border: none; color: #a78bfa; cursor: pointer; text-decoration: underline;">Log out</button>
                         </form>
                     </div>
                 </div>
-            \`;
+            `;
             document.body.appendChild(modal);
         }
     };
