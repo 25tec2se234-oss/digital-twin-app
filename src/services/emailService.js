@@ -240,10 +240,88 @@ async function sendParentInvitation(parentEmail, studentName, inviteLink) {
     }
 }
 
+async function sendDemoEndingSoonEmail(toEmail, userName, expiryDate) {
+    if (env.NODE_ENV === 'test') return;
+    if (!env.BREVO_API_KEY) {
+        console.warn('⚠️ BREVO_API_KEY not set.');
+        console.log(`\n📧 MOCK DEMO ENDING SOON EMAIL TO: ${toEmail}\n⚠️ ${userName}, your demo ends on ${expiryDate}!\n`);
+        return;
+    }
+
+    const payload = {
+        sender: { name: "Digital Twin Verse", email: "kumarkartikey020@gmail.com" },
+        to: [{ email: toEmail }],
+        subject: '⚠️ Your Digital Twin Premium Demo is Ending Soon',
+        htmlContent: `
+        <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; background: #0b1322; color: #e8f0f8; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
+            <div style="text-align: center; padding-bottom: 20px;">
+                <h1 style="color: #ffd700; margin: 0; font-size: 28px;">Digital Twin Verse</h1>
+                <span style="background: #e12a2a; color: #fff; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold;">DEMO ENDING</span>
+            </div>
+            <h2 style="color: #ffffff;">Hello ${userName || 'Student'},</h2>
+            <p style="font-size: 16px; line-height: 1.6; color: #cbd5e1;">Your Premium Demo will expire on <strong>${expiryDate}</strong>.</p>
+            <p style="font-size: 16px; line-height: 1.6; color: #cbd5e1;">Don't lose access to your personalized AI Career Guidance, Study Routines, and Premium Analytics. Renew your subscription today to ensure uninterrupted service.</p>
+            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;" />
+            <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by Eco-Novators. All rights reserved.</p>
+        </div>
+        `
+    };
+
+    try {
+        await fetch('https://api.brevo.com/v3/smtp/email', {
+            method: 'POST',
+            headers: { 'accept': 'application/json', 'api-key': env.BREVO_API_KEY, 'content-type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+    } catch (error) {
+        console.error('Error sending demo ending email:', error);
+    }
+}
+
+async function sendSubscriptionExpiredEmail(toEmail, userName) {
+    if (env.NODE_ENV === 'test') return;
+    if (!env.BREVO_API_KEY) {
+        console.warn('⚠️ BREVO_API_KEY not set.');
+        console.log(`\n📧 MOCK EXPIRED EMAIL TO: ${toEmail}\n⚠️ ${userName}, your subscription has expired!\n`);
+        return;
+    }
+
+    const payload = {
+        sender: { name: "Digital Twin Verse", email: "kumarkartikey020@gmail.com" },
+        to: [{ email: toEmail }],
+        subject: '🔒 Your Digital Twin Premium Access Has Expired',
+        htmlContent: `
+        <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; background: #0b1322; color: #e8f0f8; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
+            <div style="text-align: center; padding-bottom: 20px;">
+                <h1 style="color: #ffd700; margin: 0; font-size: 28px;">Digital Twin Verse</h1>
+                <span style="background: #e12a2a; color: #fff; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold;">EXPIRED</span>
+            </div>
+            <h2 style="color: #ffffff;">Hello ${userName || 'Student'},</h2>
+            <p style="font-size: 16px; line-height: 1.6; color: #cbd5e1;">Your Premium Access has expired. Your AI insights, reports, and personalized routines are now locked.</p>
+            <p style="font-size: 16px; line-height: 1.6; color: #cbd5e1;">Log in to the dashboard and upgrade your plan to restore access immediately. Nothing is lost, but you'll need an active plan to view your data.</p>
+            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;" />
+            <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by Eco-Novators. All rights reserved.</p>
+        </div>
+        `
+    };
+
+    try {
+        await fetch('https://api.brevo.com/v3/smtp/email', {
+            method: 'POST',
+            headers: { 'accept': 'application/json', 'api-key': env.BREVO_API_KEY, 'content-type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+    } catch (error) {
+        console.error('Error sending expired email:', error);
+    }
+}
+
 module.exports = {
     sendVerificationEmail,
     sendPasswordResetEmail,
     sendWelcomeEmail,
     sendPremiumConfirmation,
-    sendParentInvitation
+    sendParentInvitation,
+    sendDemoEndingSoonEmail,
+    sendSubscriptionExpiredEmail
 };

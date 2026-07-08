@@ -19,6 +19,7 @@ const routes = require('./routes');
 const aiRoutes = require('./routes/aiRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 const parentRoutes = require('./routes/parentRoutes');
+const adminSubscriptionRoutes = require('./routes/adminSubscriptionRoutes');
 const app = express();
 
 app.disable('x-powered-by');
@@ -84,8 +85,12 @@ app.use(compression());
 app.use(sanitizeInput);
 app.use(generalLimiter);
 
+const { authenticateOptional } = require('./middlewares/auth');
+const { requirePremium } = require('./middlewares/subscription');
+
 if (env.FILE_STORAGE === 'local') {
-  app.use('/uploads', express.static(path.join(process.cwd(), env.UPLOAD_DIR)));
+  // Use authenticateOptional to identify user, then requirePremium restricts access
+  app.use('/uploads', authenticateOptional, requirePremium, express.static(path.join(process.cwd(), env.UPLOAD_DIR)));
 }
 
 // Lightweight ping endpoint for external cron jobs to prevent "output too large" errors

@@ -4,8 +4,12 @@ const logger = require('./config/logger');
 const { pool } = require('./db');
 
 const backupService = require('./services/backupService');
+const { initSubscriptionCron } = require('./services/subscriptionCron');
+const { runSecurityHealthCheck } = require('./services/healthCheck');
 
 backupService.startBackupCron();
+initSubscriptionCron();
+runSecurityHealthCheck();
 
 const server = app.listen(env.PORT, '0.0.0.0', function() {
   logger.info('Digital Twin server running on http://0.0.0.0:' + env.PORT);
