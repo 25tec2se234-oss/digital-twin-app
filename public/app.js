@@ -3973,9 +3973,11 @@
         async function requirePremiumFrontend(callback) {
             requireAuth(async function() {
                 try {
-                    // Make a lightweight request to a premium protected route.
-                    // The global fetch interceptor will catch 403 and automatically show the modal.
-                    var res = await fetch('/api/v1/data/me', { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+                    var headers = { 'Content-Type': 'application/json' };
+                    if (APP_DATA && APP_DATA.userData && APP_DATA.userData.token) {
+                        headers['Authorization'] = 'Bearer ' + APP_DATA.userData.token;
+                    }
+                    var res = await fetch('/api/v1/data/me', { method: 'GET', headers: headers });
                     if (res.status === 403) return; // Intercepted, modal will be shown
                     
                     if (typeof callback === 'function') callback();
