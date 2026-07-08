@@ -3704,6 +3704,9 @@
         /* ═══ THANK YOU PAGE ════════════════════════════ */
         #page-ty {
             min-height: 100vh;
+            display: none;
+        }
+        #page-ty.active {
             display: flex;
             align-items: center;
             justify-content: center;
