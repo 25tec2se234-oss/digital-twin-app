@@ -41,7 +41,7 @@ async function requirePremium(req, res, next) {
   return res.status(403).json({
     success: false,
     error: 'SubscriptionExpired',
-    message: 'Your free demo or subscription has expired. Please renew your plan to access Premium Features.',
+    message: 'Your Plan Is Expired Please Upgrade Your Plan To Get The Access',
     expiredAt: Math.max(trialExpiresAt || 0, subExpiresAt || 0)
   });
 }
