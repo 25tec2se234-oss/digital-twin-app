@@ -23,11 +23,21 @@
             modal = document.createElement('div');
             modal.id = 'premium-expired-modal';
             modal.className = 'custom-modal-overlay active';
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100vw';
+            modal.style.height = '100vh';
+            modal.style.backgroundColor = 'rgba(0, 0, 0, 0.85)';
+            modal.style.display = 'flex';
+            modal.style.alignItems = 'center';
+            modal.style.justifyContent = 'center';
             modal.style.zIndex = '999999';
+            modal.style.backdropFilter = 'blur(4px)';
             modal.innerHTML = `
-                <div class="custom-modal premium-expired-modal" style="display: block; border: 1px solid rgba(232, 140, 42, 0.3); box-shadow: 0 0 20px rgba(225, 42, 42, 0.2);">
-                    <div class="modal-header">
-                        <h3 style="color: #e12a2a;"><i class="fa fa-lock"></i> Premium Access Expired</h3>
+                <div class="custom-modal premium-expired-modal" style="background: #1e1e24; display: block; border: 1px solid rgba(232, 140, 42, 0.3); box-shadow: 0 0 20px rgba(225, 42, 42, 0.2); padding: 30px; border-radius: 12px; width: 90%; max-width: 400px; font-family: inherit;">
+                    <div class="modal-header" style="text-align: center; margin-bottom: 20px;">
+                        <h3 style="color: #e12a2a; margin: 0; font-size: 22px;"><i class="fa fa-lock"></i> Premium Access Expired</h3>
                     </div>
                     <div class="modal-body" style="text-align: center; padding: 20px;">
                         <i class="fa fa-lock fa-4x" style="color: rgba(255, 255, 255, 0.1); margin-bottom: 20px;"></i>
