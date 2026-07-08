@@ -3970,6 +3970,22 @@
             }
         }
 
+        async function requirePremiumFrontend(callback) {
+            requireAuth(async function() {
+                try {
+                    // Make a lightweight request to a premium protected route.
+                    // The global fetch interceptor will catch 403 and automatically show the modal.
+                    var res = await fetch('/api/v1/data/me', { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+                    if (res.status === 403) return; // Intercepted, modal will be shown
+                    
+                    if (typeof callback === 'function') callback();
+                } catch(e) {
+                    console.error(e);
+                    if (typeof callback === 'function') callback();
+                }
+            });
+        }
+
         function isLoggedIn() {
             if (!APP_DATA.userData || !APP_DATA.userData.loggedIn) return false;
             

@@ -57,11 +57,11 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="/dist/main.b0e97ce3.css?v=f48d0367b327802a" as="style">
+    <link rel="preload" href="/dist/main.b0e97ce3.css?v=a9099a39beb0dca9" as="style">
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.b0e97ce3.css?v=f48d0367b327802a">
+    <link rel="stylesheet" href="/dist/main.b0e97ce3.css?v=a9099a39beb0dca9">
 
     <!-- JSON-LD Structured Data Schema -->
     <script type="application/ld+json">
@@ -538,7 +538,7 @@
         </div>
         <ul class="nav-ul">
             <li><a href="#how">How It Works</a></li>
-            <li><a href="#student-dashboard" onclick="requireAuth(openDashboardShortcut)">Personalised Dashboard</a></li>
+            <li><a href="#student-dashboard" onclick="requirePremiumFrontend(openDashboardShortcut)">Personalised Dashboard</a></li>
             <li><a href="#dashboard">Career Explorer</a></li>
             <li><a href="#ai-section">AI Advisor</a></li>
             <li><a href="/parent" style="color: #a78bfa; font-weight: 600;">Parent Portal</a></li>
@@ -574,7 +574,7 @@
             style="display:none; color:#f5a94e;" class="btn-reset">Developer DB</button>
         <button type="button" id="mob-logout" onclick="if (doLogout()) togMenu()" class="btn-reset">Log Out</button>
         <div id="mob-account-link-code" style="display:none; padding: 1rem 1.5rem; color:#a78bfa; font-size: 1.1rem; font-weight: 600; cursor:default;">Parent Code: <strong id="mob-ui-link-code">-</strong></div>
-        <a href="#student-dashboard" onclick="requireAuth(function(){openDashboardShortcut(); togMenu();})">Personalised Dashboard</a>
+        <a href="#student-dashboard" onclick="requirePremiumFrontend(function(){openDashboardShortcut(); togMenu();})">Personalised Dashboard</a>
         <a href="#how" onclick="togMenu()">How It Works</a>
         <a href="#dashboard" onclick="togMenu()">Career Explorer</a>
         <a href="#ai-section" onclick="togMenu()">AI Advisor</a>
@@ -1015,7 +1015,7 @@
                         exact next steps you should take.</p>
                 </div>
                 <div class="dashboard-shell rv">
-                    <button class="dash-toggle" id="dash-toggle" onclick="requireAuth(function(){toggleDashboard();})" aria-expanded="false"
+                    <button class="dash-toggle" id="dash-toggle" onclick="requirePremiumFrontend(function(){toggleDashboard();})" aria-expanded="false"
                         aria-controls="dashboard-panel">
                         <span class="dash-toggle-text">Open Personalised Dashboard</span>
                         <span class="dash-toggle-icon">▾</span>
@@ -1572,7 +1572,7 @@
                         <h2 class="ttl">Explore 1800+ Career Paths<br><span class="serif">with Your Personal Dashboard</span></h2>
                         <p class="desc">Browse, filter, search, and track 1800+ authentic, cutting-edge, and emerging career opportunities. Save your skill progress, write notes, and build your personalised roadmap — all saved locally on your device.</p>
                     </div>
-                    <button class="career-toggle" id="career-toggle" onclick="requireAuth(toggleCareerExplorer)"
+                    <button class="career-toggle" id="career-toggle" onclick="requirePremiumFrontend(toggleCareerExplorer)"
                         aria-expanded="false" aria-controls="career-explorer-body">
                         <span class="career-toggle-text">Open Career Explorer</span>
                         <span class="career-toggle-icon">▾</span>
@@ -2272,9 +2272,9 @@
     
 
 
-    <script defer src="/dist/careers.488719e3.js?v=f48d0367b327802a"></script>
-    <script defer src="/dist/app.a9f14d49.js?v=f48d0367b327802a"></script>
-    <script defer src="/dist/ux-engine.31ef492a.js?v=f48d0367b327802a"></script>
+    <script defer src="/dist/careers.488719e3.js?v=a9099a39beb0dca9"></script>
+    <script defer src="/dist/app.bd0dfde5.js?v=a9099a39beb0dca9"></script>
+    <script defer src="/dist/ux-engine.31ef492a.js?v=a9099a39beb0dca9"></script>
 </body>
 
 </html>
