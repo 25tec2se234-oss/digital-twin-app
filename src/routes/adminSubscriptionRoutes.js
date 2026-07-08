@@ -25,10 +25,10 @@ router.post('/grant', async (req, res) => {
 
         await pool.query(
             'INSERT INTO audit_logs (user_id, action, target_resource, request_payload, ip_address) VALUES ($1, $2, $3, $4, $5)',
-            [req.user.id, 'ADMIN_GRANT_SUBSCRIPTION', \`User \${userId}\`, JSON.stringify({ days }), req.ip]
+            [req.user.id, 'ADMIN_GRANT_SUBSCRIPTION', `User ${userId}`, JSON.stringify({ days }), req.ip]
         );
 
-        res.json({ success: true, message: \`Subscription extended by \${days} days.\`, expiresAt });
+        res.json({ success: true, message: `Subscription extended by ${days} days.`, expiresAt });
     } catch (error) {
         console.error('Error granting subscription:', error);
         res.status(500).json({ error: 'Internal server error' });
@@ -54,7 +54,7 @@ router.post('/revoke', async (req, res) => {
 
         await pool.query(
             'INSERT INTO audit_logs (user_id, action, target_resource, request_payload, ip_address) VALUES ($1, $2, $3, $4, $5)',
-            [req.user.id, 'ADMIN_REVOKE_SUBSCRIPTION', \`User \${userId}\`, '{}', req.ip]
+            [req.user.id, 'ADMIN_REVOKE_SUBSCRIPTION', `User ${userId}`, '{}', req.ip]
         );
 
         res.json({ success: true, message: 'Subscription revoked immediately.' });
