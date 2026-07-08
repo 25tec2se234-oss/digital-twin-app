@@ -44,9 +44,9 @@
                         <p style="font-size: 16px; margin-bottom: 15px;">${message || 'Your premium access has expired.'}</p>
                         ${expiredAt ? '<p style="font-size: 14px; color: #aaa; margin-bottom: 20px;">Expired on: ' + new Date(expiredAt).toLocaleDateString() + '</p>' : ''}
                         <button onclick="window.location.href='#subscription'; document.getElementById('premium-expired-modal').remove(); window.scrollTo(0, document.body.scrollHeight);" class="primary-btn" style="width: 100%; padding: 12px; font-size: 16px; background: linear-gradient(135deg, #a78bfa, #e88c2a); border: none; color: #000; font-weight: bold; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">Renew Subscription Now</button>
-                        <form action="/api/v1/auth/logout" method="POST" style="margin-top: 15px;">
-                            <button type="submit" style="background: transparent; border: none; color: #a78bfa; cursor: pointer; text-decoration: underline;">Log out</button>
-                        </form>
+                        <div style="margin-top: 15px;">
+                            <button onclick="if(typeof doLogout === 'function') { document.getElementById('premium-expired-modal').remove(); doLogout(); }" style="background: transparent; border: none; color: #a78bfa; cursor: pointer; text-decoration: underline; font-size: 14px;">Log out</button>
+                        </div>
                     </div>
                 </div>
             `;
@@ -3980,15 +3980,25 @@
             }
         }
 
-        async function requirePremiumFrontend(callback) {
-            requireAuth(async function() {
+        function requirePremiumFrontend(callback) {
+            requireAuth(function() {
                 try {
-                    var headers = { 'Content-Type': 'application/json' };
-                    if (APP_DATA && APP_DATA.userData && APP_DATA.userData.token) {
-                        headers['Authorization'] = 'Bearer ' + APP_DATA.userData.token;
+                    if (APP_DATA && APP_DATA.userData) {
+                        var now = new Date();
+                        var trialExp = APP_DATA.userData.trialExpiresAt ? new Date(APP_DATA.userData.trialExpiresAt) : null;
+                        var subExp = APP_DATA.userData.subscriptionExpiresAt ? new Date(APP_DATA.userData.subscriptionExpiresAt) : null;
+                        
+                        var hasTrial = trialExp && trialExp > now;
+                        var hasSub = subExp && subExp > now;
+                        
+                        if (!hasTrial && !hasSub) {
+                            var expiredAt = Math.max(trialExp || 0, subExp || 0);
+                            if (typeof showSubscriptionExpiredModal === 'function') {
+                                showSubscriptionExpiredModal('Your Plan Is Expired Please Upgrade Your Plan To Get The Access', expiredAt);
+                            }
+                            return; // Halt here, do not execute callback
+                        }
                     }
-                    var res = await fetch('/api/v1/data/me', { method: 'GET', headers: headers });
-                    if (res.status === 403) return; // Intercepted, modal will be shown
                     
                     if (typeof callback === 'function') callback();
                 } catch(e) {
