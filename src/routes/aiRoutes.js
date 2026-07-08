@@ -2,7 +2,8 @@ const express = require('express');
 const Joi = require('joi');
 const aiController = require('../controllers/aiController');
 const validate = require('../middlewares/validate');
-const { authenticateOptional } = require('../middlewares/auth');
+const { authenticate } = require('../middlewares/auth');
+const { requirePremium } = require('../middlewares/subscription');
 const { aiLimiter } = require('../middlewares/rateLimiter');
 
 const router = express.Router();
@@ -49,8 +50,10 @@ const aiSchema = Joi.object({
  *     responses:
  *       200:
  *         description: AI response
+ *       403:
+ *         description: Subscription Expired
  */
-router.post('/ai/messages', authenticateOptional, aiLimiter, validate(aiSchema), aiController.sendMessages);
-router.post('/messages', authenticateOptional, aiLimiter, validate(aiSchema), aiController.sendMessages);
+router.post('/ai/messages', authenticate, requirePremium, aiLimiter, validate(aiSchema), aiController.sendMessages);
+router.post('/messages', authenticate, requirePremium, aiLimiter, validate(aiSchema), aiController.sendMessages);
 
 module.exports = router;

@@ -1,10 +1,12 @@
 const express = require('express');
 const { authenticate, authorizeParentOfStudent, authorizeAdmin } = require('../middlewares/auth');
+const { requirePremium } = require('../middlewares/subscription');
 const parentController = require('../controllers/parentController');
 
 const router = express.Router();
 
 router.use(authenticate);
+router.use(requirePremium); // All parent tools require a premium subscription
 
 // Real-Time SSE Live Stream
 router.get('/live-stream', parentController.subscribeLiveStream);
