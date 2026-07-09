@@ -16,7 +16,7 @@ const SettingsAlerts = memo(function SettingsAlerts() {
     pushEnabled: true,
   });
 
-  const [phone, setPhone] = useState('+91 9876543210');
+  const [alertEmail, setAlertEmail] = useState('');
   const [toast, setToast] = useState(null);
   const [studentInfo, setStudentInfo] = useState({ name: 'Kumar Kartikey', linkCode: localStorage.getItem('studentCode') || 'FC0D52' });
   const [downloadingType, setDownloadingType] = useState(null);
@@ -34,8 +34,8 @@ const SettingsAlerts = memo(function SettingsAlerts() {
           }
           if (result.parentAlertSettings) {
             setAlerts(prev => ({ ...prev, ...result.parentAlertSettings }));
-            if (result.parentAlertSettings.phoneNumber) {
-              setPhone(result.parentAlertSettings.phoneNumber);
+            if (result.parentAlertSettings.alertEmail) {
+              setAlertEmail(result.parentAlertSettings.alertEmail);
             }
           }
         }
@@ -83,7 +83,7 @@ const SettingsAlerts = memo(function SettingsAlerts() {
   const handleSave = async () => {
     showToast('⏳ Saving preferences...');
     try {
-      const payload = { ...alerts, phoneNumber: phone };
+      const payload = { ...alerts, alertEmail };
       await saveParentPreferences(payload);
       showToast('✅ All Alert Preferences and Delivery Configurations saved successfully.');
     } catch (err) {
@@ -274,20 +274,37 @@ const SettingsAlerts = memo(function SettingsAlerts() {
               </div>
 
               {/* Email Notifications */}
-              <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors">
-                <div className="flex items-center gap-3">
-                  <Mail size={18} className="text-sky-400" />
-                  <div>
-                    <h4 className="text-white font-medium">Email Notifications</h4>
-                    <p className="text-xs text-text-muted">parent@example.com</p>
+              <div className="p-4 bg-sky-500/10 rounded-2xl border border-sky-500/20 space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Mail size={20} className="text-sky-400" />
+                    <div>
+                      <h4 className="text-white font-bold">Email Notifications</h4>
+                      <p className="text-xs text-sky-300">Detailed alerts straight to your inbox</p>
+                    </div>
                   </div>
+                  <button 
+                    onClick={() => toggleAlert('emailEnabled')}
+                    className={`w-12 h-6 rounded-full transition-colors relative ${alerts.emailEnabled ? 'bg-sky-500' : 'bg-gray-600'}`}
+                  >
+                    <div className={`w-4 h-4 bg-white rounded-full absolute top-1 transition-transform ${alerts.emailEnabled ? 'left-7' : 'left-1'}`}></div>
+                  </button>
                 </div>
-                <button 
-                  onClick={() => toggleAlert('emailEnabled')}
-                  className={`w-12 h-6 rounded-full transition-colors relative ${alerts.emailEnabled ? 'bg-sky-500' : 'bg-gray-600'}`}
-                >
-                  <div className={`w-4 h-4 bg-white rounded-full absolute top-1 transition-transform ${alerts.emailEnabled ? 'left-7' : 'left-1'}`}></div>
-                </button>
+                
+                {alerts.emailEnabled && (
+                  <div className="space-y-3 pt-2 border-t border-sky-500/20 animate-in fade-in duration-200">
+                    <div>
+                      <label className="text-xs text-sky-300 font-medium block mb-1">Target Email Address</label>
+                      <input 
+                        type="email" 
+                        value={alertEmail} 
+                        onChange={(e) => setAlertEmail(e.target.value)}
+                        className="w-full bg-slate-900/80 border border-sky-500/30 rounded-xl px-4 py-2.5 text-white font-bold focus:outline-none focus:border-sky-400 text-sm"
+                        placeholder="Enter your email address"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
 
               
