@@ -128,10 +128,13 @@ export const saveParentPreferences = async (preferences) => {
     const response = await apiClient.post('/v1/parent/preferences', preferences);
     return response.data;
   } catch (error) {
-    if (error.response?.status === 401 || error.response?.status === 403) {
-      throw new Error('Authentication required. Please log in to save preferences.');
+    if (error.response?.data?.message) {
+      throw new Error(error.response.data.message);
     }
-    throw new Error('Could not connect to the backend server. Make sure the server is running.');
+    if (error.response?.status === 401 || error.response?.status === 403) {
+      throw new Error('Session expired or access denied. Please log in again.');
+    }
+    throw new Error('Could not connect to backend server or network error.');
   }
 };
 
@@ -140,10 +143,13 @@ export const testEmailAlert = async (email) => {
     const response = await apiClient.post('/v1/parent/test-email', { email });
     return response.data;
   } catch (error) {
-    if (error.response?.status === 401 || error.response?.status === 403) {
-      throw new Error('Authentication required. Please log in to send a test email.');
+    if (error.response?.data?.message) {
+      throw new Error(error.response.data.message);
     }
-    throw new Error('Could not connect to the backend server. Make sure the server is running.');
+    if (error.response?.status === 401 || error.response?.status === 403) {
+      throw new Error('Session expired or access denied. Please log in again.');
+    }
+    throw new Error('Could not connect to backend server or network error.');
   }
 };
 
