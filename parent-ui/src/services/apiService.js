@@ -30,7 +30,7 @@ export const parentLogin = async (email, password, studentCode) => {
  */
 export const fetchStudentData = async (studentCode, retries = 2) => {
   try {
-    const response = await apiClient.get('/v1/parent/dashboard');
+    const response = await apiClient.get('/v1/parent/dashboard', { params: { studentCode } });
     if (response.data && response.data.data) {
       return response.data.data;
     }
