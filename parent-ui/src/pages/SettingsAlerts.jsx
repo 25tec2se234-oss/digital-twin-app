@@ -13,7 +13,7 @@ const SettingsAlerts = memo(function SettingsAlerts() {
     smsEnabled: false,
     emailEnabled: true,
     whatsappEnabled: true,
-    pushEnabled: true,
+    pushEnabled: ('Notification' in window) && Notification.permission === 'granted',
   });
 
   const [alertEmail, setAlertEmail] = useState('');
@@ -102,14 +102,15 @@ const SettingsAlerts = memo(function SettingsAlerts() {
       showToast('⚠️ Please enable Web Push Alerts toggle first!');
       return;
     }
-    if (Notification.permission === 'granted') {
+    if ('Notification' in window && Notification.permission === 'granted') {
       new Notification('🚨 Digital Twin Test Alert', {
         body: 'This is a simulated AI Academic Trigger notification!',
         icon: '/favicon.ico'
       });
       showToast('✅ Test Web Push Notification sent to your desktop!');
     } else {
-      showToast('❌ Browser permission for notifications is missing.');
+      // Fallback: If browser blocks desktop notifications, show an in-app simulation
+      showToast('🚨 [WEB PUSH SIMULATION]: AI Academic Trigger Alert! (Desktop permission missing, showing in-app)');
     }
   };
 
