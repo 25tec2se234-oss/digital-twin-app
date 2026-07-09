@@ -128,6 +128,11 @@ export const saveParentPreferences = async (preferences) => {
   return response.data;
 };
 
+export const testEmailAlert = async (email) => {
+  const response = await apiClient.post('/v1/parent/test-email', { email });
+  return response.data;
+};
+
 export const downloadPdfReport = async (studentId, type) => {
   const response = await apiClient.get(`/v1/parent/student/${studentId}/report`, {
     params: { type },

@@ -1,6 +1,6 @@
 import { BellRing, Smartphone, Mail, AlertTriangle, Clock, MessageSquare, CheckCircle2, Send, Download, FileText } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { fetchStudentData, saveParentPreferences, downloadPdfReport } from '../services/apiService';
+import { fetchStudentData, saveParentPreferences, downloadPdfReport, testEmailAlert } from '../services/apiService';
 
 import { memo, useRef } from 'react';
 
@@ -66,19 +66,6 @@ const SettingsAlerts = memo(function SettingsAlerts() {
     setToast(msg);
   };
 
-  const handleTestWhatsApp = async () => {
-    if (!alerts.whatsappEnabled) {
-      showToast('⚠️ Please enable WhatsApp Alerts toggle first!');
-      return;
-    }
-    showToast(`⏳ Sending WhatsApp Simulation to ${phone}...`);
-    try {
-      const res = await testWhatsappAlert(phone);
-      showToast(res.message || `🟢 WhatsApp Simulation sent to ${phone}`);
-    } catch (err) {
-      showToast('❌ Failed to send WhatsApp alert.');
-    }
-  };
 
   const handleSave = async () => {
     showToast('⏳ Saving preferences...');
@@ -88,6 +75,24 @@ const SettingsAlerts = memo(function SettingsAlerts() {
       showToast('✅ All Alert Preferences and Delivery Configurations saved successfully.');
     } catch (err) {
       showToast('❌ Failed to save preferences.');
+    }
+  };
+
+  const handleTestEmail = async () => {
+    if (!alertEmail || !alertEmail.includes('@')) {
+      showToast('⚠️ Please enter a valid email address first.');
+      return;
+    }
+    if (!alerts.emailEnabled) {
+      showToast('⚠️ Please enable Email Notifications toggle first!');
+      return;
+    }
+    showToast(`⏳ Sending Test Email to ${alertEmail}...`);
+    try {
+      const res = await testEmailAlert(alertEmail);
+      showToast(res.message || `✅ Test email successfully dispatched to ${alertEmail}`);
+    } catch (err) {
+      showToast('❌ Failed to send test email. Please check server logs.');
     }
   };
 
@@ -303,6 +308,13 @@ const SettingsAlerts = memo(function SettingsAlerts() {
                         placeholder="Enter your email address"
                       />
                     </div>
+                    <button 
+                      onClick={handleTestEmail}
+                      className="w-full py-2.5 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white rounded-xl font-bold text-sm shadow-[0_0_15px_rgba(14,165,233,0.3)] transition-all flex items-center justify-center gap-2 transform hover:scale-[1.02] active:scale-95 mt-2"
+                    >
+                      <Send size={16} />
+                      Test Email Notification Simulation
+                    </button>
                   </div>
                 )}
               </div>
