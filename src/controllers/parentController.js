@@ -75,136 +75,43 @@ const getDashboard = asyncHandler(async (req, res) => {
     title: c.career_path,
     match: parseFloat(c.alignment_score || 92),
     status: c.status || 'Active Chosen Path',
-    growth: c.growth_demand || '+35% Demand',
-    salary: c.potential_salary || '$160k - $220k',
-    focus: c.focus_area || 'System Design & Scalability'
+    growth: c.growth_demand || 'Demand Unknown',
+    salary: c.potential_salary || 'Salary Unknown',
+    focus: c.focus_area || 'Focus Unknown'
   }));
-  if (careerInsights.length === 0) {
-    if (appData && Array.isArray(appData.careerChoices) && appData.careerChoices.length > 0) {
-      careerInsights = appData.careerChoices.map(c => ({
-        title: c.title || 'Selected Career Path',
-        match: c.skillsPct || 92,
-        status: 'Live Chosen Path',
-        growth: '+35% Demand',
-        salary: '$140k - $220k',
-        focus: c.notes || 'Specialized Engineering & AI Simulation'
-      }));
-    } else {
-      careerInsights = [
-        { title: 'Space Tech Architect', match: 94, status: 'Primary Path', growth: '+32% Demand', salary: '$160k - $220k', focus: 'System Design & High-scale Cloud' },
-        { title: 'AI Systems Engineer', match: 96, status: 'Alternative Path', growth: '+45% Demand', salary: '$180k - $250k', focus: 'Deep Learning & Advanced Calculus' }
-      ];
-    }
-  }
 
   // 2. Recent Activities Map
   let recentActivities = activityQuery.rows.map(a => ({
     id: a.id,
-    title: `Live Action: ${a.action_type}`,
+    title: a.action_type,
     time: new Date(a.performed_at).toLocaleTimeString(),
-    type: a.action_type.toLowerCase().includes('ai') ? 'ai' : (a.action_type.toLowerCase().includes('quiz') ? 'assessment' : 'vr'),
-    score: a.action_details ? (JSON.parse(a.action_details).score || 'Completed') : 'Verified'
+    type: a.action_type.toLowerCase().includes('ai') ? 'ai' : (a.action_type.toLowerCase().includes('quiz') ? 'assessment' : 'activity'),
+    score: a.action_details ? (JSON.parse(a.action_details).score || '') : ''
   }));
-
-  if (recentActivities.length === 0) {
-    let baseActs = [
-      { id: 101, title: 'VR Career Simulation: Space Architecture', time: '2 hours ago', type: 'vr', score: '94% Match' },
-      { id: 102, title: 'Advanced Data Structures Assessment', time: 'Yesterday', type: 'assessment', score: '98/100' },
-      { id: 103, title: 'Multi-Agent Study Routine Adjustment', time: '3 days ago', type: 'ai', score: 'Balanced' }
-    ];
-    if (appData && Array.isArray(appData.AIResponses) && appData.AIResponses.length > 0) {
-      const aiActs = appData.AIResponses.slice(-5).map((r, idx) => ({
-        id: 1000 + idx,
-        title: `AI Prompt: "${(r.userMsg || '').substring(0, 45)}..."`,
-        time: r.timestamp ? new Date(r.timestamp).toLocaleTimeString() : 'Recently',
-        type: 'ai',
-        score: `${r.mode || 'Socratic'} Mode`
-      }));
-      recentActivities = [...aiActs.reverse(), ...baseActs];
-    } else {
-      recentActivities = baseActs;
-    }
-  }
 
   // 3. Goals (toAchieve and achieved)
   let toAchieve = goalsRes.rows.filter(g => g.status !== 'Achieved').map(g => ({
     title: g.title,
-    deadline: g.deadline ? new Date(g.deadline).toLocaleDateString() : 'Active Cycle',
-    priority: g.priority || 'High',
-    type: g.category || 'Development',
-    impact: g.impact || '+20% Alignment'
+    deadline: g.deadline ? new Date(g.deadline).toLocaleDateString() : 'No Deadline',
+    priority: g.priority || 'Medium',
+    type: g.category || 'Goal',
+    impact: g.impact || 'Standard'
   }));
-
-  if (toAchieve.length === 0) {
-    if (appData && appData.studentTools && appData.studentTools.items && Array.isArray(appData.studentTools.items.achieve) && appData.studentTools.items.achieve.length > 0) {
-      toAchieve = appData.studentTools.items.achieve.map((item, idx) => ({
-        title: typeof item === 'string' ? item : item.title || 'Student Active Target',
-        deadline: 'Active Cycle',
-        priority: idx === 0 ? 'High' : 'Medium',
-        type: 'Development',
-        impact: '+20% Alignment'
-      }));
-    } else {
-      toAchieve = [
-        { title: 'Master Data Structures', deadline: 'Next Week', priority: 'High', type: 'Skill', impact: '+15% Algorithm Match' },
-        { title: 'Build Full-stack E-commerce', deadline: 'End of Month', priority: 'Medium', type: 'Project', impact: '+25% System Design' },
-        { title: 'Clear Mock Interview L1', deadline: 'Tomorrow', priority: 'High', type: 'Assessment', impact: '+10% Communication' },
-        { title: 'Optimizing Virtual DOM state', deadline: 'In 3 Days', priority: 'High', type: 'Frameworks', impact: '+18% Frontend Arch' }
-      ];
-    }
-  }
 
   let achieved = achievementsRes.rows.map(a => ({
     title: a.badge_title,
     date: new Date(a.awarded_at).toLocaleDateString(),
-    type: 'Milestone Achieved',
-    score: a.criteria_met || 'Verified Elite'
+    type: 'Achievement',
+    score: a.criteria_met || 'Verified'
   }));
-
-  if (achieved.length === 0) {
-    if (appData && appData.studentTools && appData.studentTools.items && Array.isArray(appData.studentTools.items.achieved) && appData.studentTools.items.achieved.length > 0) {
-      achieved = appData.studentTools.items.achieved.map(item => ({
-        title: typeof item === 'string' ? item : item.title || 'Completed Milestone',
-        date: 'Completed Live',
-        type: 'Milestone Achieved',
-        score: 'Verified Elite'
-      }));
-    } else {
-      achieved = [
-        { title: 'Python Fundamentals', date: '2 days ago', type: 'Course Completed', score: '98% Accuracy' },
-        { title: '10-day Study Streak', date: 'Last week', type: 'Milestone', score: 'Flawless Execution' },
-        { title: 'Top 5% in Logic Quiz', date: 'Last week', type: 'Achievement', score: 'Percentile 95' },
-        { title: 'React Performance Foundations', date: '2 weeks ago', type: 'Certification', score: 'Elite Badge Passed' }
-      ];
-    }
-  }
 
   // 4. Time Data
   let timeData = sessionsRes.rows.map(s => ({
     subject: s.subject,
-    minutes: s.duration_minutes || 60,
+    minutes: s.duration_minutes || 0,
     color: '#3b82f6',
-    trend: 'Live Tracked Session'
+    trend: ''
   }));
-
-  if (timeData.length === 0) {
-    if (appData && appData.studentTools && appData.studentTools.timeTracker && Array.isArray(appData.studentTools.timeTracker.entries) && appData.studentTools.timeTracker.entries.length > 0) {
-      const entries = appData.studentTools.timeTracker.entries;
-      timeData = entries.map((e, idx) => ({
-        subject: e.subject || e.desc || 'Study Session',
-        minutes: e.minutes || e.duration || 60,
-        color: ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b'][idx % 4],
-        trend: 'Live Tracked'
-      }));
-    } else {
-      timeData = (appData && appData.timeData) || [
-        { subject: 'Mathematics', minutes: 340, color: '#3b82f6', trend: '+12% this week' },
-        { subject: 'Physics', minutes: 210, color: '#8b5cf6', trend: '+5% this week' },
-        { subject: 'Computer Sci', minutes: 420, color: '#10b981', trend: '+25% this week' },
-        { subject: 'English', minutes: 120, color: '#f59e0b', trend: '-8% this week' }
-      ];
-    }
-  }
 
   // Return real database metrics and full enterprise structure
   res.json({
@@ -212,21 +119,14 @@ const getDashboard = asyncHandler(async (req, res) => {
       studentInfo: {
         name: studentName,
         id: student.id,
-        email: student.email || `${firstName.toLowerCase()}@example.com`,
+        email: student.email || '',
         linkCode: linkCode,
         status: student.isActive !== false ? 'Active' : 'Inactive',
-        lastLoginAt: loginRes.rows.length > 0 ? loginRes.rows[0].login_time : (student.lastLoginAt || new Date().toISOString()),
+        lastLoginAt: loginRes.rows.length > 0 ? loginRes.rows[0].login_time : null,
         createdAt: student.createdAt || new Date().toISOString(),
-        appData: appData || {}
       },
       aiAnalytics,
-      weeklyData: (appData && appData.weeklyData) || [
-        { day: 'Mon', focus: 75, goalCompletion: 80 },
-        { day: 'Tue', focus: 85, goalCompletion: 85 },
-        { day: 'Wed', focus: 70, goalCompletion: 75 },
-        { day: 'Thu', focus: 90, goalCompletion: 92 },
-        { day: 'Fri', focus: 95, goalCompletion: 96 },
-      ],
+      weeklyData: [], // We rely entirely on AI Analytics Engine or real metrics now.
       timeData,
       recentActivities,
       toAchieve,
@@ -238,32 +138,10 @@ const getDashboard = asyncHandler(async (req, res) => {
       projects: projectsRes.rows,
       certificates: certsRes.rows,
       notifications: notifRes.rows,
-      aiRecommendations: [
-        { 
-          id: 201, 
-          title: 'Boost Abstract Problem Solving', 
-          desc: `${firstName}'s skill gap analysis indicates opportunities in complex multi-step abstract algorithms. AI recommends 20 mins daily interactive Socratic review.`, 
-          priority: 'High',
-          why: aiAnalytics.skillGap?.why || 'Algorithm pattern matched.'
-        },
-        { 
-          id: 202, 
-          title: 'Advanced Masterclass Ready', 
-          desc: `Consistent 90%+ scores in core technical tracks indicate ${firstName}'s readiness for high-scale architectural design modules.`, 
-          priority: 'Medium',
-          why: aiAnalytics.careerReadiness?.why || 'Consistently top percentile.'
-        }
-      ],
+      aiRecommendations: [], // Driven entirely by real analysis
       careerInsights,
       parentAlertSettings: {
-        gradeDrop: true,
-        screenTime: true,
-        aiFlag: true,
-        weeklySummary: true,
-        smsEnabled: false,
-        emailEnabled: true,
-        whatsappEnabled: true,
-        phoneNumber: '+91 9876543210'
+        emailEnabled: true
       }
     }
   });
@@ -294,22 +172,11 @@ const getStudentDetails = asyncHandler(async (req, res) => {
     attendance: attRes.rows,
     sessions: sessionRes.rows,
     analytics: {
-      math: 85,
-      science: 90,
-      english: 88,
-      history: 92,
-      trend: [
-        { month: 'Sep', math: 80, science: 85 },
-        { month: 'Oct', math: 82, science: 88 },
-        { month: 'Nov', math: 85, science: 90 },
-      ]
+      trend: []
     },
-    activityTimeline: [
-      { id: 1, date: new Date().toISOString(), type: 'attendance', message: 'Present in Homeroom' },
-      { id: 2, date: new Date(Date.now() - 86400000).toISOString(), type: 'grade', message: 'Scored 90/100 in Math Quiz' }
-    ],
+    activityTimeline: [],
     fees: {
-      status: 'Paid',
+      status: 'Unknown',
       dueDate: null,
       amountDue: 0
     }

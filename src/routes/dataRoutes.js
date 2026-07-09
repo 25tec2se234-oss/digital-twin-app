@@ -9,6 +9,9 @@ const router = express.Router();
 router.get('/me', authenticate, requirePremium, dataController.getMyData);
 router.put('/me', authenticate, requirePremium, dataController.saveMyData);
 
+// Real-time Event Tracking
+router.post('/track', authenticate, requirePremium, dataController.trackAction);
+
 // Parent viewing their student's data
 router.get('/students/:studentId', authenticate, requirePremium, authorizeParentOfStudent, dataController.getStudentData);
 

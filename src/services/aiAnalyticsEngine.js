@@ -42,21 +42,20 @@ class AIAnalyticsEngine {
       const goals = goalsQuery.rows;
 
       // Base calculations & heuristics
-      let avgQuizScore = quizzes.length > 0 ? quizzes.reduce((acc, q) => acc + parseFloat(q.score), 0) / quizzes.length : 86.5;
-      let avgAccuracy = quizzes.length > 0 ? quizzes.reduce((acc, q) => acc + parseFloat(q.accuracy_percentage), 0) / quizzes.length : 88.0;
+      let avgQuizScore = quizzes.length > 0 ? quizzes.reduce((acc, q) => acc + parseFloat(q.score), 0) / quizzes.length : 0;
+      let avgAccuracy = quizzes.length > 0 ? quizzes.reduce((acc, q) => acc + parseFloat(q.accuracy_percentage), 0) / quizzes.length : 0;
       let totalTimeMinutes = sessions.reduce((acc, s) => acc + parseInt(s.duration_minutes || 0), 0);
-      if (totalTimeMinutes === 0) {
-        // Check appData fallback if relational table was just migrated
-        if (appData.timeData && Array.isArray(appData.timeData)) {
-          totalTimeMinutes = appData.timeData.reduce((acc, t) => acc + (t.minutes || 0), 0);
-        } else {
-          totalTimeMinutes = 540; // Default 9 hours
-        }
-      }
 
       const completedGoals = goals.filter(g => g.status === 'Achieved').length;
-      const totalGoals = goals.length || 5;
-      const goalCompletionRate = (completedGoals / totalGoals) * 100 || 85.0;
+      const totalGoals = goals.length;
+      const goalCompletionRate = totalGoals > 0 ? (completedGoals / totalGoals) * 100 : 0;
+
+      if (quizzes.length === 0 && sessions.length === 0 && activities.length === 0 && goals.length === 0) {
+        return {
+          insufficientData: true,
+          message: "Insufficient data for AI analysis. Please complete more activities."
+        };
+      }
 
       // 1. Learning Trend & Growth
       const learningTrend = avgQuizScore >= 85 ? 'Upward / Accelerating' : (avgQuizScore >= 70 ? 'Stable' : 'Needs Attention');
@@ -175,21 +174,8 @@ class AIAnalyticsEngine {
       logger.error('Error generating AI analytics:', { error: error.message, stack: error.stack });
       // Return robust fallback in case of transient database errors
       return {
-        learningTrend: { value: 'Upward / Stable', why: 'Derived from baseline interaction logs.' },
-        improvementPercentage: { value: '+12.5%', why: 'Comparative analysis of session milestones.' },
-        weeklyGrowth: { value: '+5.0%', why: 'Tracking weekly task completions.' },
-        monthlyGrowth: { value: '+18.5%', why: 'Aggregated monthly mastery index.' },
-        careerReadiness: { value: '91.5%', why: 'Weighted evaluation of domain competency.' },
-        learningRisk: { value: 'Low Risk', why: 'Steady engagement observed across modules.' },
-        examReadiness: { value: '89.0%', why: 'Cumulative accuracy in test environments.' },
-        skillGap: { value: 'Minimal', why: 'Consistent performance across core subjects.' },
-        productivityScore: { value: 88.5, why: 'Excellent active focus duration ratio.' },
-        consistencyScore: { value: 90.2, why: 'High daily streak and routine adherence.' },
-        studyHabitScore: { value: 89.3, why: 'Composite index of focus longevity.' },
-        timeManagementScore: { value: 87.4, why: 'Punctual submission of scheduled tasks.' },
-        behaviorScore: { value: 89.1, why: 'Positive engagement with Socratic tutoring.' },
-        careerRecommendation: { value: 'Space Tech Architect', why: 'Strong logical abstraction skills.' },
-        overallGrowthIndex: { value: 89.5, why: 'Holistic multi-dimensional growth average.' }
+        insufficientData: true,
+        message: "Error generating analytics: " + error.message
       };
     }
   }
