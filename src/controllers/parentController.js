@@ -38,9 +38,9 @@ const getDashboard = asyncHandler(async (req, res) => {
   }
   parentAppData = parentAppData || {};
 
-  const studentName = student.name || student.email || 'Kumar Kartikey';
+  const studentName = student.name || student.email || 'Student';
   const firstName = studentName.split(' ')[0];
-  const linkCode = student.linkCode || 'FC0D52';
+  const linkCode = student.linkCode || 'N/A';
 
   // Fetch real AI analytics & scores with WHY explanations
   const aiAnalytics = await aiAnalyticsEngine.generateStudentAnalytics(student.id);
@@ -206,7 +206,7 @@ const generateReport = asyncHandler(async (req, res) => {
     throw new ApiError(404, 'Student not found');
   }
 
-  const studentName = student.name || student.email || 'Kumar Kartikey';
+  const studentName = student.name || student.email || 'Student';
   const aiAnalytics = await aiAnalyticsEngine.generateStudentAnalytics(studentId);
 
   const doc = new PDFDocument({ margin: 50 });

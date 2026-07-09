@@ -155,7 +155,7 @@ async function verifyPayment(req, res, next) {
 
 async function verifyPaymentProof(req, res, next) {
   try {
-    const name = req.body.name || 'Kumar Kartikey';
+    const name = req.body.name || 'Student';
     const mobile_number = req.body.mobile_number || '+917520119837';
     const plan_duration = req.body.plan_duration || '1m';
     const reference_id = req.body.reference_id;
@@ -304,7 +304,7 @@ async function verifyPaymentProof(req, res, next) {
     // Update user subscription_expires_at securely
     let updatedUser = { 
       email: 'kumarkartikey020@gmail.com', 
-      name: name || 'Kumar Kartikey', 
+      name: name || 'Student', 
       subscription_expires_at: new Date(Date.now() + (plan_duration === '1m' ? 30 : (plan_duration === '6m' ? 180 : 365)) * 24 * 60 * 60 * 1000) 
     };
 
