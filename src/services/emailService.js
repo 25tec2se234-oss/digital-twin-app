@@ -348,7 +348,7 @@ async function sendParentTestAlert(toEmail, studentName) {
             headers: { 'accept': 'application/json', 'api-key': env.BREVO_API_KEY, 'content-type': 'application/json' },
             body: JSON.stringify(payload)
         });
-        if (!response.ok) throw new Error(\`Test Alert delivery failed: \${response.status}\`);
+        if (!response.ok) throw new Error(`Test Alert delivery failed: ${response.status}`);
         return true;
     } catch (error) {
         console.error('Error sending test alert email:', error);
