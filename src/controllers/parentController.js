@@ -17,15 +17,25 @@ const subscribeLiveStream = asyncHandler(async (req, res) => {
 /**
  * Enterprise getDashboard: Pulls 100% live data from normalized Postgres tables and AI Engine.
  */
-const getDashboard = asyncHandler(async (req, res) => {
+const getDashboard = asyncHandler(async function(req, res) {
   const parentId = req.user.id;
+  const requestedCode = req.query.studentCode;
+  
   const students = await userModel.getLinkedStudents(parentId);
   
   if (!students || students.length === 0) {
     return res.json({ students: [] });
   }
 
-  const student = students[0]; // Fetch the first linked student
+  let student = students[0]; // Fetch the first linked student by default
+  
+  // If a specific student code is requested (e.g. from the UI login), prioritize it
+  if (requestedCode) {
+    const matchedStudent = students.find(s => s.linkCode === requestedCode);
+    if (matchedStudent) {
+      student = matchedStudent;
+    }
+  }
   let appData = await userModel.getAppData(student.id);
   if (typeof appData === 'string') {
     try { appData = JSON.parse(appData); } catch (e) { appData = {}; }
