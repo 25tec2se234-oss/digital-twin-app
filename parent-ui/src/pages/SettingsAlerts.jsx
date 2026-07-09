@@ -78,6 +78,41 @@ const SettingsAlerts = memo(function SettingsAlerts() {
     }
   };
 
+  const handlePushToggle = async () => {
+    const newState = !alerts.pushEnabled;
+    if (newState) {
+      if (!('Notification' in window)) {
+        showToast('❌ Your browser does not support Desktop Push Notifications.');
+        return;
+      }
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        setAlerts({ ...alerts, pushEnabled: true });
+        showToast('✅ Desktop Push Notifications enabled successfully!');
+      } else {
+        showToast('⚠️ Push Notification permission denied by browser.');
+      }
+    } else {
+      setAlerts({ ...alerts, pushEnabled: false });
+    }
+  };
+
+  const handleTestPush = () => {
+    if (!alerts.pushEnabled) {
+      showToast('⚠️ Please enable Web Push Alerts toggle first!');
+      return;
+    }
+    if (Notification.permission === 'granted') {
+      new Notification('🚨 Digital Twin Test Alert', {
+        body: 'This is a simulated AI Academic Trigger notification!',
+        icon: '/favicon.ico'
+      });
+      showToast('✅ Test Web Push Notification sent to your desktop!');
+    } else {
+      showToast('❌ Browser permission for notifications is missing.');
+    }
+  };
+
   const handleTestEmail = async () => {
     if (!alertEmail || !alertEmail.includes('@')) {
       showToast('⚠️ Please enter a valid email address first.');
@@ -261,21 +296,36 @@ const SettingsAlerts = memo(function SettingsAlerts() {
             </h3>
             <div className="space-y-4">
               
-              {/* Custom Push Notifications */}
-              <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors">
-                <div className="flex items-center gap-3">
-                  <BellRing size={18} className="text-purple-400" />
-                  <div>
-                    <h4 className="text-white font-medium">Custom Web Push Alerts</h4>
-                    <p className="text-xs text-text-muted">Real-time desktop browser popups</p>
+              {/* Custom Web Push Alerts */}
+              <div className="p-5 bg-purple-500/10 rounded-2xl border border-purple-500/20 transition-all hover:bg-purple-500/20">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400">
+                      <BellRing size={20} />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-white text-sm">Custom Web Push Alerts</h4>
+                      <p className="text-xs text-slate-400">Real-time desktop browser popups</p>
+                    </div>
                   </div>
+                  <button 
+                    onClick={handlePushToggle}
+                    className={`w-12 h-6 rounded-full transition-colors relative ${alerts.pushEnabled ? 'bg-purple-500' : 'bg-slate-700'}`}
+                  >
+                    <div className={`absolute top-1 left-1 bg-white w-4 h-4 rounded-full transition-transform ${alerts.pushEnabled ? 'translate-x-6' : 'translate-x-0'}`} />
+                  </button>
                 </div>
-                <button 
-                  onClick={() => toggleAlert('pushEnabled')}
-                  className={`w-12 h-6 rounded-full transition-colors relative ${alerts.pushEnabled ? 'bg-purple-500' : 'bg-gray-600'}`}
-                >
-                  <div className={`w-4 h-4 bg-white rounded-full absolute top-1 transition-transform ${alerts.pushEnabled ? 'left-7' : 'left-1'}`}></div>
-                </button>
+                {alerts.pushEnabled && (
+                  <div className="mt-4 pt-4 border-t border-white/5 animate-in fade-in slide-in-from-top-2">
+                    <button 
+                      onClick={handleTestPush}
+                      className="w-full py-2.5 bg-gradient-to-r from-purple-500 to-fuchsia-600 hover:from-purple-600 hover:to-fuchsia-700 text-white rounded-xl font-bold text-sm shadow-[0_0_15px_rgba(168,85,247,0.3)] transition-all flex items-center justify-center gap-2 transform hover:scale-[1.02] active:scale-95"
+                    >
+                      <BellRing size={16} />
+                      Test Desktop Push Notification
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Email Notifications */}
