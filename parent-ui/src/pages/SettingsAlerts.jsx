@@ -18,7 +18,7 @@ const SettingsAlerts = memo(function SettingsAlerts() {
 
   const [alertEmail, setAlertEmail] = useState('');
   const [toast, setToast] = useState(null);
-  const [studentInfo, setStudentInfo] = useState({ name: 'Kumar Kartikey', linkCode: localStorage.getItem('studentCode') || 'FC0D52' });
+  const [studentInfo, setStudentInfo] = useState({ name: 'Student', linkCode: localStorage.getItem('studentCode') || 'N/A' });
   const [downloadingType, setDownloadingType] = useState(null);
   const isMounted = useRef(true);
 
@@ -26,7 +26,7 @@ const SettingsAlerts = memo(function SettingsAlerts() {
     isMounted.current = true;
     const loadData = async () => {
       try {
-        const studentCode = localStorage.getItem('studentCode') || 'FC0D52';
+        const studentCode = localStorage.getItem('studentCode') || 'N/A';
         const result = await fetchStudentData(studentCode);
         if (isMounted.current && result) {
           if (result.studentInfo) {
@@ -54,9 +54,9 @@ const SettingsAlerts = memo(function SettingsAlerts() {
     }
   }, [toast]);
 
-  const studentName = studentInfo.name || 'Kumar Kartikey';
+  const studentName = studentInfo.name || 'Student';
   const firstName = studentName.split(' ')[0];
-  const studentCode = localStorage.getItem('studentCode') || 'FC0D52';
+  const studentCode = localStorage.getItem('studentCode') || 'N/A';
 
   const toggleAlert = (key) => {
     setAlerts(prev => ({ ...prev, [key]: !prev[key] }));

@@ -44,9 +44,9 @@ export const fetchStudentData = async (studentCode, retries = 2) => {
 
     console.warn('Real backend fetch exhausted retries. Returning live cached structure for UI stability.', error.message);
     
-    const code = studentCode || localStorage.getItem('studentCode') || 'FC0D52';
-    const name = 'Kumar Kartikey';
-    const firstName = 'Kumar';
+    const code = studentCode || localStorage.getItem('studentCode') || 'N/A';
+    const name = 'Student';
+    const firstName = 'Student';
 
     // Empty Default Structure matching Enterprise expectations
     return {

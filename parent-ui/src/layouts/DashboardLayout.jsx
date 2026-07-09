@@ -11,8 +11,8 @@ export default function DashboardLayout() {
   const [notificationsList, setNotificationsList] = useState([]);
   const [liveToast, setLiveToast] = useState(null);
   const [studentInfo, setStudentInfo] = useState({
-    name: 'Kumar Kartikey',
-    linkCode: localStorage.getItem('studentCode') || 'FC0D52'
+    name: 'Student',
+    linkCode: localStorage.getItem('studentCode') || 'N/A'
   });
   const location = useLocation();
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export default function DashboardLayout() {
     isMounted.current = true;
     const loadData = async () => {
       try {
-        const studentCode = localStorage.getItem('studentCode') || 'FC0D52';
+        const studentCode = localStorage.getItem('studentCode') || 'N/A';
         const result = await fetchStudentData(studentCode);
         if (isMounted.current && result && result.studentInfo) {
           setStudentInfo(result.studentInfo);
@@ -82,10 +82,10 @@ export default function DashboardLayout() {
     { name: 'Admin Management', path: '/dashboard/admin', icon: <Shield size={20} /> },
   ];
 
-  const studentName = studentInfo.name || 'Kumar Kartikey';
+  const studentName = studentInfo.name || 'Student';
   const firstName = studentName.split(' ')[0];
   const initials = studentName.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
-  const linkCode = studentInfo.linkCode || localStorage.getItem('studentCode') || 'FC0D52';
+  const linkCode = studentInfo.linkCode || localStorage.getItem('studentCode') || 'N/A';
 
   return (
     <div className="flex h-screen bg-bg overflow-hidden relative">
