@@ -122,3 +122,25 @@ export const fetchAdminData = async (page = 1, limit = 10, search = '', sort = '
     };
   }
 };
+
+export const saveParentPreferences = async (preferences) => {
+  const response = await apiClient.post('/v1/parent/preferences', preferences);
+  return response.data;
+};
+
+export const downloadPdfReport = async (studentId, type) => {
+  const response = await apiClient.get(`/v1/parent/student/${studentId}/report`, {
+    params: { type },
+    responseType: 'blob'
+  });
+  
+  const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', `DigitalTwin-${type}-report.pdf`);
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.URL.revokeObjectURL(url);
+  return true;
+};
