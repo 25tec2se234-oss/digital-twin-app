@@ -222,18 +222,9 @@ export default function DashboardLayout() {
                       </div>
                     ))
                   ) : (
-                    <>
-                      <div className="p-4 border-b border-white/5 hover:bg-white/5 transition-colors cursor-pointer">
-                        <p className="text-sm text-white font-medium mb-1">🔥 10-Day Streak Reached!</p>
-                        <p className="text-xs text-text-muted">{firstName} has successfully logged in and studied for 10 consecutive days.</p>
-                        <p className="text-[10px] text-text-muted mt-2">2 hours ago</p>
-                      </div>
-                      <div className="p-4 border-b border-white/5 hover:bg-white/5 transition-colors cursor-pointer">
-                        <p className="text-sm text-white font-medium mb-1">⚠️ Subject Time Imbalance</p>
-                        <p className="text-xs text-text-muted">{firstName} spent 420 mins on Computer Sci but only 120 mins on English. AI has adjusted the schedule.</p>
-                        <p className="text-[10px] text-text-muted mt-2">Yesterday</p>
-                      </div>
-                    </>
+                    <div className="p-4 text-center">
+                      <p className="text-sm text-text-muted">No new notifications</p>
+                    </div>
                   )}
                 </div>
                 <div className="p-3 text-center bg-white/5">
