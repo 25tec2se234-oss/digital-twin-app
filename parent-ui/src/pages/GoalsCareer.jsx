@@ -54,34 +54,11 @@ const GoalsCareer = memo(function GoalsCareer() {
     );
   }
 
-  const toAchieve = data.toAchieve || [
-    { title: 'Master Data Structures', deadline: 'Next Week', priority: 'High', type: 'Skill', impact: '+15% Algorithm Match' },
-    { title: 'Build Full-stack E-commerce', deadline: 'End of Month', priority: 'Medium', type: 'Project', impact: '+25% System Design' },
-    { title: 'Clear Mock Interview L1', deadline: 'Tomorrow', priority: 'High', type: 'Assessment', impact: '+10% Communication' },
-    { title: 'Optimizing Virtual DOM state', deadline: 'In 3 Days', priority: 'High', type: 'Frameworks', impact: '+18% Frontend Arch' }
-  ];
-
-  const achieved = data.achieved || [
-    { title: 'Python Fundamentals', date: '2 days ago', type: 'Course Completed', score: '98% Accuracy' },
-    { title: '10-day Study Streak', date: 'Last week', type: 'Milestone', score: 'Flawless Execution' },
-    { title: 'Top 5% in Logic Quiz', date: 'Last week', type: 'Achievement', score: 'Percentile 95' },
-    { title: 'React Performance Foundations', date: '2 weeks ago', type: 'Certification', score: 'Elite Badge Passed' }
-  ];
-
-  const skills = data.skills || [
-    { skill_name: 'Abstract Logic', proficiency_level: 'Advanced', score: 94.5, improvement_percentage: 12.5 },
-    { skill_name: 'Systems Architecture', proficiency_level: 'Advanced', score: 91.0, improvement_percentage: 15.0 }
-  ];
-
-  const projects = data.projects || [
-    { title: 'High-Scale AI Agent Network', description: 'Multi-agent simulation environment.', status: 'Completed', problem_solving_score: 96.5 },
-    { title: 'Orbital Habitat Simulation', description: 'Zero-gravity physics calculation engine.', status: 'In_Progress', problem_solving_score: 92.0 }
-  ];
-
-  const chosenCareers = data.careerInsights || [
-    { title: 'Software Architect', match: 94, status: 'Primary Path', growth: '+28% Demand', salary: '$160k - $220k', focus: 'System Design & High-scale Cloud' },
-    { title: 'AI Research Scientist', match: 88, status: 'Alternative Path', growth: '+45% Demand', salary: '$180k - $250k', focus: 'Deep Learning & Advanced Calculus' }
-  ];
+  const toAchieve = data.toAchieve || [];
+  const achieved = data.achieved || [];
+  const skills = data.skills || [];
+  const projects = data.projects || [];
+  const chosenCareers = data.careerInsights || [];
 
   const aiAnalytics = data.aiAnalytics || {};
   const studentName = data.studentInfo?.name || 'Kumar Kartikey';
@@ -121,47 +98,53 @@ const GoalsCareer = memo(function GoalsCareer() {
           <p className="text-xs text-blue-200 leading-relaxed">{aiAnalytics.careerReadiness?.why || 'Calculated by evaluating student problem-solving persistence and active logical assessment execution.'}</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
-          {chosenCareers.map((career, idx) => (
-            <div 
-              key={idx} 
-              onClick={() => setSelectedCareer(career)}
-              className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-purple-500/40 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer flex flex-col justify-between group shadow-sm hover:shadow-[0_8px_25px_rgba(168,85,247,0.15)]"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3.5">
-                    <div className={`p-3.5 rounded-2xl border ${idx === 0 ? 'bg-purple-500/20 text-purple-400 border-purple-500/30 group-hover:bg-purple-500 group-hover:text-white' : 'bg-blue-500/20 text-blue-400 border-blue-500/30 group-hover:bg-blue-500 group-hover:text-white'} transition-colors shadow-[0_0_15px_rgba(168,85,247,0.1)]`}>
-                      <Briefcase size={22} />
+        {chosenCareers.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+            {chosenCareers.map((career, idx) => (
+              <div 
+                key={idx} 
+                onClick={() => setSelectedCareer(career)}
+                className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-purple-500/40 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer flex flex-col justify-between group shadow-sm hover:shadow-[0_8px_25px_rgba(168,85,247,0.15)]"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3.5">
+                      <div className={`p-3.5 rounded-2xl border ${idx === 0 ? 'bg-purple-500/20 text-purple-400 border-purple-500/30 group-hover:bg-purple-500 group-hover:text-white' : 'bg-blue-500/20 text-blue-400 border-blue-500/30 group-hover:bg-blue-500 group-hover:text-white'} transition-colors shadow-[0_0_15px_rgba(168,85,247,0.1)]`}>
+                        <Briefcase size={22} />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-bold text-lg group-hover:text-purple-300 transition-colors">{career.title}</h4>
+                        <p className="text-xs text-purple-300 font-medium mt-0.5">{career.status}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="text-white font-bold text-lg group-hover:text-purple-300 transition-colors">{career.title}</h4>
-                      <p className="text-xs text-purple-300 font-medium mt-0.5">{career.status}</p>
+                    <div className="text-right">
+                      <span className="block text-3xl font-bold text-white tracking-tighter">{career.match}%</span>
+                      <span className="text-[10px] uppercase tracking-wider font-bold text-text-muted">AI Match</span>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <span className="block text-3xl font-bold text-white tracking-tighter">{career.match}%</span>
-                    <span className="text-[10px] uppercase tracking-wider font-bold text-text-muted">AI Match</span>
+                  <div className="grid grid-cols-2 gap-2 my-4 pt-4 border-t border-white/5 text-xs">
+                    <div className="bg-black/30 p-2.5 rounded-xl border border-white/5">
+                      <span className="text-text-muted block text-[10px] uppercase font-bold tracking-wider mb-1">Growth Forecast</span>
+                      <span className="text-green-400 font-bold flex items-center gap-1"><TrendingUp size={14} /> {career.growth || 'Demand Unknown'}</span>
+                    </div>
+                    <div className="bg-black/30 p-2.5 rounded-xl border border-white/5">
+                      <span className="text-text-muted block text-[10px] uppercase font-bold tracking-wider mb-1">Target Compensation</span>
+                      <span className="text-white font-bold">{career.salary || 'Salary Unknown'}</span>
+                    </div>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-2 my-4 pt-4 border-t border-white/5 text-xs">
-                  <div className="bg-black/30 p-2.5 rounded-xl border border-white/5">
-                    <span className="text-text-muted block text-[10px] uppercase font-bold tracking-wider mb-1">Growth Forecast</span>
-                    <span className="text-green-400 font-bold flex items-center gap-1"><TrendingUp size={14} /> {career.growth || '+32% Demand'}</span>
-                  </div>
-                  <div className="bg-black/30 p-2.5 rounded-xl border border-white/5">
-                    <span className="text-text-muted block text-[10px] uppercase font-bold tracking-wider mb-1">Target Compensation</span>
-                    <span className="text-white font-bold">{career.salary || '$160k - $210k'}</span>
-                  </div>
+                <div className="flex items-center justify-between text-xs font-bold text-purple-400 pt-2 group-hover:text-purple-300 transition-colors">
+                  <span>View Real-time Interactive Simulation</span>
+                  <ChevronRight size={18} className="transform group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
-              <div className="flex items-center justify-between text-xs font-bold text-purple-400 pt-2 group-hover:text-purple-300 transition-colors">
-                <span>View Real-time Interactive Simulation</span>
-                <ChevronRight size={18} className="transform group-hover:translate-x-1 transition-transform" />
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="p-8 text-center text-blue-200 bg-white/5 border border-white/10 rounded-2xl relative z-10">
+            Student has not accumulated enough data for AI Career Matching.
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -174,18 +157,20 @@ const GoalsCareer = memo(function GoalsCareer() {
               <Star size={20} className="text-yellow-400" />
             </div>
             <div className="space-y-4 max-h-80 overflow-y-auto custom-scrollbar pr-1">
-              {skills.map((s, idx) => (
+              {skills.length > 0 ? skills.map((s, idx) => (
                 <div key={idx} className="p-4 rounded-xl bg-white/5 border border-white/10 flex justify-between items-center hover:bg-white/10 transition-all">
                   <div>
                     <span className="text-[10px] font-bold text-yellow-300 bg-yellow-500/10 border border-yellow-500/20 px-2.5 py-0.5 rounded-full mb-1.5 inline-block">{s.proficiency_level || 'Advanced'}</span>
                     <h4 className="text-white font-bold block">{s.skill_name}</h4>
                   </div>
                   <div className="text-right">
-                    <span className="text-xs font-bold text-green-400 block">{parseFloat(s.score || 92).toFixed(1)}% Mastery</span>
-                    <span className="text-[10px] text-text-muted block mt-0.5">+{s.improvement_percentage || 10}% growth</span>
+                    <span className="text-xs font-bold text-green-400 block">{parseFloat(s.score || 0).toFixed(1)}% Mastery</span>
+                    <span className="text-[10px] text-text-muted block mt-0.5">+{s.improvement_percentage || 0}% growth</span>
                   </div>
                 </div>
-              ))}
+              )) : (
+                <p className="text-text-muted text-center py-4">No skills verified yet.</p>
+              )}
             </div>
           </div>
         </div>
@@ -198,7 +183,7 @@ const GoalsCareer = memo(function GoalsCareer() {
               <Code size={20} className="text-blue-400" />
             </div>
             <div className="space-y-4 max-h-80 overflow-y-auto custom-scrollbar pr-1">
-              {projects.map((p, idx) => (
+              {projects.length > 0 ? projects.map((p, idx) => (
                 <div key={idx} className="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-between hover:bg-white/10 transition-all">
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="text-white font-bold">{p.title}</h4>
@@ -209,10 +194,12 @@ const GoalsCareer = memo(function GoalsCareer() {
                   <p className="text-xs text-blue-200 mb-3">{p.description}</p>
                   <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-text-muted font-bold">
                     <span>Problem Solving Rating</span>
-                    <span className="text-purple-400">{parseFloat(p.problem_solving_score || 95).toFixed(1)} / 100</span>
+                    <span className="text-purple-400">{parseFloat(p.problem_solving_score || 0).toFixed(1)} / 100</span>
                   </div>
                 </div>
-              ))}
+              )) : (
+                <p className="text-text-muted text-center py-4">No projects completed yet.</p>
+              )}
             </div>
           </div>
         </div>
@@ -225,7 +212,7 @@ const GoalsCareer = memo(function GoalsCareer() {
               <Target size={20} className="text-orange-400" />
             </div>
             <div className="space-y-4">
-              {toAchieve.map((goal, idx) => (
+              {toAchieve.length > 0 ? toAchieve.map((goal, idx) => (
                 <div 
                   key={idx} 
                   onClick={() => showToast(`🟢 Action Triggered: Live AI tutor has prioritized "${goal.title}" for ${firstName}'s next 24-hour study cycle.`)}
@@ -246,7 +233,9 @@ const GoalsCareer = memo(function GoalsCareer() {
                   </div>
                   <PlayCircle size={24} className="text-white/30 group-hover:text-orange-400 transition-colors shrink-0" />
                 </div>
-              ))}
+              )) : (
+                <p className="text-text-muted text-center py-4">No active goals set yet.</p>
+              )}
             </div>
           </div>
         </div>
@@ -259,7 +248,7 @@ const GoalsCareer = memo(function GoalsCareer() {
               <Trophy size={20} className="text-yellow-400" />
             </div>
             <div className="space-y-4">
-              {achieved.map((item, idx) => (
+              {achieved.length > 0 ? achieved.map((item, idx) => (
                 <div key={idx} className="p-5 rounded-2xl bg-gradient-to-r from-green-500/10 to-transparent border border-green-500/20 flex gap-4 items-center hover:border-green-500/40 transition-all duration-300 group hover:scale-[1.01]">
                   <div className="p-3 bg-green-500/20 rounded-2xl text-green-400 border border-green-500/30 group-hover:bg-green-500 group-hover:text-white transition-colors shadow-[0_0_15px_rgba(34,197,94,0.2)]">
                     <Award size={24} />
@@ -274,7 +263,9 @@ const GoalsCareer = memo(function GoalsCareer() {
                     <p className="text-xs text-green-300/80 font-medium">{item.type} • {item.date}</p>
                   </div>
                 </div>
-              ))}
+              )) : (
+                <p className="text-text-muted text-center py-4">No milestones achieved yet.</p>
+              )}
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@ import { fetchAdminData } from '../services/apiService';
 
 const AdminPanel = memo(function AdminPanel() {
   const [data, setData] = useState({
-    pagination: { page: 1, limit: 10, total: 12, totalPages: 2 },
+    pagination: { page: 1, limit: 10, total: 0, totalPages: 1 },
     students: [],
     courses: [],
     recentLogs: []
@@ -106,7 +106,7 @@ const AdminPanel = memo(function AdminPanel() {
         <div className="glass-panel p-6 border-purple-500/20 flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-purple-300 uppercase tracking-wider mb-1">Enrolled Students</p>
-            <h3 className="text-3xl font-extrabold text-white">{data.pagination?.total || data.students?.length || 12}</h3>
+            <h3 className="text-3xl font-extrabold text-white">{data.pagination?.total || data.students?.length || 0}</h3>
             <p className="text-xs text-emerald-400 mt-2 font-medium flex items-center gap-1">
               <span>▲ 100% Verified Profiles</span>
             </p>
@@ -119,7 +119,7 @@ const AdminPanel = memo(function AdminPanel() {
         <div className="glass-panel p-6 border-blue-500/20 flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-blue-300 uppercase tracking-wider mb-1">Active Courses & Modules</p>
-            <h3 className="text-3xl font-extrabold text-white">{data.courses?.length || 3}</h3>
+            <h3 className="text-3xl font-extrabold text-white">{data.courses?.length || 0}</h3>
             <p className="text-xs text-blue-400 mt-2 font-medium">Fully Interactive VR/AI Aligned</p>
           </div>
           <div className="p-4 bg-blue-500/10 rounded-2xl border border-blue-500/20">
@@ -130,7 +130,7 @@ const AdminPanel = memo(function AdminPanel() {
         <div className="glass-panel p-6 border-emerald-500/20 flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-emerald-300 uppercase tracking-wider mb-1">Real-Time Audit Events</p>
-            <h3 className="text-3xl font-extrabold text-white">{data.recentLogs?.length || 2}</h3>
+            <h3 className="text-3xl font-extrabold text-white">{data.recentLogs?.length || 0}</h3>
             <p className="text-xs text-emerald-400 mt-2 font-medium">Active SSE Live Streaming</p>
           </div>
           <div className="p-4 bg-emerald-500/10 rounded-2xl border border-emerald-500/20">
@@ -267,65 +267,77 @@ const AdminPanel = memo(function AdminPanel() {
               </table>
             </div>
           ) : activeTab === 'courses' ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {data.courses?.map((course) => (
-                <div key={course.id} className="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all flex flex-col justify-between group">
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="px-3 py-1 rounded-lg text-[10px] font-extrabold bg-blue-500/20 text-blue-300 border border-blue-500/30 uppercase tracking-wider">
-                        {course.category}
-                      </span>
-                      <span className="px-3 py-1 rounded-lg text-[10px] font-extrabold bg-orange-500/20 text-orange-300 border border-orange-500/30 uppercase tracking-wider">
-                        {course.difficulty_level}
-                      </span>
+            data.courses && data.courses.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {data.courses.map((course) => (
+                  <div key={course.id} className="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all flex flex-col justify-between group">
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="px-3 py-1 rounded-lg text-[10px] font-extrabold bg-blue-500/20 text-blue-300 border border-blue-500/30 uppercase tracking-wider">
+                          {course.category}
+                        </span>
+                        <span className="px-3 py-1 rounded-lg text-[10px] font-extrabold bg-orange-500/20 text-orange-300 border border-orange-500/30 uppercase tracking-wider">
+                          {course.difficulty_level}
+                        </span>
+                      </div>
+                      <h4 className="text-white font-bold text-base mb-3 group-hover:text-purple-300 transition-colors">{course.title}</h4>
+                      <p className="text-xs text-text-muted leading-relaxed mb-6">Fully immersive VR & AI interactive syllabus module complete with automated daily quizzes and project milestones.</p>
                     </div>
-                    <h4 className="text-white font-bold text-base mb-3 group-hover:text-purple-300 transition-colors">{course.title}</h4>
-                    <p className="text-xs text-text-muted leading-relaxed mb-6">Fully immersive VR & AI interactive syllabus module complete with automated daily quizzes and project milestones.</p>
+                    <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-300 font-bold">
+                      <span>Estimated Duration</span>
+                      <span className="text-emerald-400">{course.estimated_hours} Hours</span>
+                    </div>
                   </div>
-                  <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-300 font-bold">
-                    <span>Estimated Duration</span>
-                    <span className="text-emerald-400">{course.estimated_hours} Hours</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="p-8 text-center text-text-muted font-medium bg-white/5 border border-white/10 rounded-2xl">
+                No courses or modules available.
+              </div>
+            )
           ) : (
-            <div className="space-y-4">
-              {data.recentLogs?.map((log) => {
-                let parsedDetails = {};
-                try {
-                  parsedDetails = typeof log.action_details === 'string' ? JSON.parse(log.action_details) : log.action_details;
-                } catch {
-                  // ignore parse error
-                }
-
-                return (
-                  <div key={log.id} className="p-4 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-between hover:bg-white/10 transition-colors">
-                    <div className="flex items-center gap-4">
-                      <div className="p-3 bg-emerald-500/20 rounded-xl border border-emerald-500/30">
-                        <Activity className="text-emerald-400" size={20} />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="px-2.5 py-0.5 rounded-lg text-[10px] font-extrabold bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase tracking-wider">
-                            {log.action_type}
-                          </span>
-                          <span className="text-xs text-text-muted font-medium">
-                            {new Date(log.performed_at).toLocaleString()}
-                          </span>
+            data.recentLogs && data.recentLogs.length > 0 ? (
+              <div className="space-y-4">
+                {data.recentLogs.map((log) => {
+                  let parsedDetails = {};
+                  try {
+                    parsedDetails = typeof log.action_details === 'string' ? JSON.parse(log.action_details) : log.action_details;
+                  } catch {
+                    // ignore parse error
+                  }
+  
+                  return (
+                    <div key={log.id} className="p-4 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-between hover:bg-white/10 transition-colors">
+                      <div className="flex items-center gap-4">
+                        <div className="p-3 bg-emerald-500/20 rounded-xl border border-emerald-500/30">
+                          <Activity className="text-emerald-400" size={20} />
                         </div>
-                        <p className="text-sm font-bold text-white">
-                          {log.action_type === 'Quiz_Submit' ? `Student submitted assessment: "${parsedDetails.title || 'Quiz'}" with Score ${parsedDetails.score}` : `Initiated lesson module: "${parsedDetails.title || 'Module'}"`}
-                        </p>
+                        <div>
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="px-2.5 py-0.5 rounded-lg text-[10px] font-extrabold bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase tracking-wider">
+                              {log.action_type}
+                            </span>
+                            <span className="text-xs text-text-muted font-medium">
+                              {new Date(log.performed_at).toLocaleString()}
+                            </span>
+                          </div>
+                          <p className="text-sm font-bold text-white">
+                            {log.action_type === 'Quiz_Submit' ? `Student submitted assessment: "${parsedDetails.title || 'Quiz'}" with Score ${parsedDetails.score}` : `Initiated lesson module: "${parsedDetails.title || 'Module'}"`}
+                          </p>
+                        </div>
                       </div>
+                      <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-xl border border-emerald-500/20">
+                        Logged Successfully
+                      </span>
                     </div>
-                    <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-xl border border-emerald-500/20">
-                      Logged Successfully
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="p-8 text-center text-text-muted font-medium bg-white/5 border border-white/10 rounded-2xl">
+                No recent system audit logs available.
+              </div>
+            )
           )}
 
           {/* Pagination Footer */}

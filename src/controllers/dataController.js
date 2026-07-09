@@ -41,8 +41,27 @@ const getStudentData = asyncHandler(async function(req, res) {
   res.json({ data: data });
 });
 
+const trackAction = asyncHandler(async function(req, res) {
+  if (req.user.role === 'parent') {
+    throw new ApiError(403, 'Parents cannot track student actions directly.');
+  }
+
+  const { actionType, details } = req.body;
+  if (!actionType) {
+    throw new ApiError(400, 'actionType is required');
+  }
+
+  // Dispatch asynchronously
+  liveSyncService.dispatchStudentAction(req.user.id, actionType, details || {}, req.ip || '127.0.0.1').catch(err => {
+    console.error('Failed to dispatch tracking action:', err);
+  });
+
+  res.json({ success: true, message: 'Action tracked successfully' });
+});
+
 module.exports = {
   getMyData,
   saveMyData,
-  getStudentData
+  getStudentData,
+  trackAction
 };

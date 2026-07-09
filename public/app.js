@@ -513,6 +513,25 @@
             } catch (_ignored) {}
         }
 
+        function trackStudentAction(actionType, details) {
+            if (!APP_DATA.userData || !APP_DATA.userData.token || APP_DATA.userData.role === 'parent') return;
+            try {
+                fetch('/api/v1/track', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + APP_DATA.userData.token
+                    },
+                    body: JSON.stringify({
+                        actionType: actionType,
+                        details: details || {}
+                    })
+                }).catch(function(e) { logClientError('Tracking failed', e); });
+            } catch(err) {
+                logClientError('Tracking failed', err);
+            }
+        }
+
         function escapeHTML(value) {
             return String(value == null ? '' : value)
                 .replace(/&/g, '&amp;')
@@ -2089,6 +2108,7 @@
                 subject: subject,
                 chapter: chapter
             });
+            trackStudentAction('course_started', { chapter: chapter, subject: subject });
             subjectEl.value = '';
             chapterEl.value = '';
             syncData();
@@ -2147,6 +2167,7 @@
                 name: name,
                 date: date
             });
+            trackStudentAction('course_completed', { exam: name, date: date });
             nameEl.value = '';
             dateEl.value = '';
             syncData();
@@ -2210,6 +2231,7 @@
                 score: score,
                 max: max
             });
+            trackStudentAction('course_completed', { subject: subject, score: score, max: max });
             subjectEl.value = '';
             scoreEl.value = '';
             maxEl.value = '';
@@ -2289,6 +2311,7 @@
                 task: task,
                 createdAt: new Date().toISOString()
             });
+            trackStudentAction('routine_completed', { task: task, time: time });
             if (timeEl) timeEl.value = '';
             taskEl.value = '';
             syncData();
@@ -2360,6 +2383,7 @@
                 minutes: minutes,
                 at: new Date().toISOString()
             });
+            trackStudentAction('routine_completed', { subject: subject, minutes: minutes });
             subjectEl.value = '';
             minutesEl.value = '';
             syncData();
@@ -3269,6 +3293,9 @@
             });
             setAgentActive(detectAgent(text));
             showTyping();
+
+            // Track action for Parent Portal
+            trackStudentAction('ai_interaction', { message: text });
 
             // Store in APP_DATA
             APP_DATA.AIResponses.push({

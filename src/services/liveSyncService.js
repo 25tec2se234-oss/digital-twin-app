@@ -135,6 +135,11 @@ class LiveSyncService {
           'INSERT INTO goals (student_id, title, category, status, impact) VALUES ($1, $2, $3, $4, $5)',
           [studentId, details.title || 'Completed Key Objective', 'Daily', 'Achieved', '+25% System Design']
         );
+      } else if (actionType === 'Study_Session' || actionType === 'SESSION') {
+        await pool.query(
+          'INSERT INTO learning_sessions (student_id, subject, duration_minutes, focus_score, session_type) VALUES ($1, $2, $3, $4, $5)',
+          [studentId, details.subject || 'General Study', details.timeSpent || 30, details.focusScore || 85, 'Self-Study']
+        );
       }
 
       // Generate notification record
