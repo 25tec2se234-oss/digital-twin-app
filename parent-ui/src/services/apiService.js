@@ -128,8 +128,10 @@ export const saveParentPreferences = async (preferences) => {
     const response = await apiClient.post('/v1/parent/preferences', preferences);
     return response.data;
   } catch (error) {
-    console.warn('API fetch failed, falling back to mock success for preferences:', error.message);
-    return { success: true, message: 'Preferences saved successfully (Mock)' };
+    if (error.response?.status === 401 || error.response?.status === 403) {
+      throw new Error('Authentication required. Please log in to save preferences.');
+    }
+    throw new Error('Could not connect to the backend server. Make sure the server is running.');
   }
 };
 
@@ -138,8 +140,10 @@ export const testEmailAlert = async (email) => {
     const response = await apiClient.post('/v1/parent/test-email', { email });
     return response.data;
   } catch (error) {
-    console.warn('API fetch failed, falling back to mock success for test email:', error.message);
-    return { success: true, message: `✅ Test email successfully dispatched to ${email} (Mock)` };
+    if (error.response?.status === 401 || error.response?.status === 403) {
+      throw new Error('Authentication required. Please log in to send a test email.');
+    }
+    throw new Error('Could not connect to the backend server. Make sure the server is running.');
   }
 };
 

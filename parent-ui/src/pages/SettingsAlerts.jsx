@@ -74,7 +74,7 @@ const SettingsAlerts = memo(function SettingsAlerts() {
       await saveParentPreferences(payload);
       showToast('✅ All Alert Preferences and Delivery Configurations saved successfully.');
     } catch (err) {
-      showToast('❌ Failed to save preferences.');
+      showToast(`❌ ${err.message || 'Failed to save preferences.'}`);
     }
   };
 
@@ -128,7 +128,7 @@ const SettingsAlerts = memo(function SettingsAlerts() {
       const res = await testEmailAlert(alertEmail);
       showToast(res.message || `✅ Test email successfully dispatched to ${alertEmail}`);
     } catch (err) {
-      showToast('❌ Failed to send test email. Please check server logs.');
+      showToast(`❌ ${err.message || 'Failed to send test email.'}`);
     }
   };
 
