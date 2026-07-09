@@ -1,6 +1,6 @@
 import { BellRing, Smartphone, Mail, AlertTriangle, Clock, MessageSquare, CheckCircle2, Send, Download, FileText } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { fetchStudentData } from '../services/apiService';
+import { fetchStudentData, saveParentPreferences, downloadPdfReport } from '../services/apiService';
 
 import { memo, useRef } from 'react';
 
@@ -28,8 +28,16 @@ const SettingsAlerts = memo(function SettingsAlerts() {
       try {
         const studentCode = localStorage.getItem('studentCode') || 'FC0D52';
         const result = await fetchStudentData(studentCode);
-        if (isMounted.current && result && result.studentInfo) {
-          setStudentInfo(result.studentInfo);
+        if (isMounted.current && result) {
+          if (result.studentInfo) {
+            setStudentInfo(result.studentInfo);
+          }
+          if (result.parentAlertSettings) {
+            setAlerts(prev => ({ ...prev, ...result.parentAlertSettings }));
+            if (result.parentAlertSettings.phoneNumber) {
+              setPhone(result.parentAlertSettings.phoneNumber);
+            }
+          }
         }
       } catch (err) {
         console.error('Failed to load student info', err);
@@ -58,31 +66,43 @@ const SettingsAlerts = memo(function SettingsAlerts() {
     setToast(msg);
   };
 
-  const handleTestWhatsApp = () => {
+  const handleTestWhatsApp = async () => {
     if (!alerts.whatsappEnabled) {
       showToast('⚠️ Please enable WhatsApp Alerts toggle first!');
       return;
     }
-    showToast(`🟢 WhatsApp Simulation sent to ${phone}: "DTV AI Alert: ${studentName} has reached a 10-day study streak! Focus score is up by 12%."`);
+    showToast(`⏳ Sending WhatsApp Simulation to ${phone}...`);
+    try {
+      const res = await testWhatsappAlert(phone);
+      showToast(res.message || `🟢 WhatsApp Simulation sent to ${phone}`);
+    } catch (err) {
+      showToast('❌ Failed to send WhatsApp alert.');
+    }
   };
 
-  const handleSave = () => {
-    showToast('✅ All Alert Preferences and Delivery Configurations saved successfully.');
+  const handleSave = async () => {
+    showToast('⏳ Saving preferences...');
+    try {
+      const payload = { ...alerts, phoneNumber: phone };
+      await saveParentPreferences(payload);
+      showToast('✅ All Alert Preferences and Delivery Configurations saved successfully.');
+    } catch (err) {
+      showToast('❌ Failed to save preferences.');
+    }
   };
 
   const handleDownloadPDF = async (type, title) => {
     setDownloadingType(type);
     showToast(`⏳ Generating Enterprise PDF Report: "${title}" for ${studentName}...`);
     try {
-      // Direct window location or fetch blob
-      window.open(`/api/parent/pdf-report?studentCode=${studentCode}&type=${type}`, '_blank');
-      setTimeout(() => {
-        showToast(`✅ PDF Report "${title}" generated and downloaded successfully!`);
-        setDownloadingType(null);
-      }, 2000);
+      // Use the actual backend user ID if available, otherwise studentCode
+      const actualId = studentInfo.id || studentCode;
+      await downloadPdfReport(actualId, type);
+      showToast(`✅ PDF Report "${title}" generated and downloaded successfully!`);
     } catch (err) {
       console.error('Failed to download PDF', err);
       showToast(`❌ Failed to generate PDF report.`);
+    } finally {
       setDownloadingType(null);
     }
   };
@@ -236,47 +256,6 @@ const SettingsAlerts = memo(function SettingsAlerts() {
             </h3>
             <div className="space-y-4">
               
-              {/* WhatsApp Simulation Channel */}
-              <div className="p-4 bg-emerald-500/10 rounded-2xl border border-emerald-500/20 space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <MessageSquare size={20} className="text-emerald-400" />
-                    <div>
-                      <h4 className="text-white font-bold">WhatsApp AI Alerts</h4>
-                      <p className="text-xs text-emerald-300">Instant AI notifications on your mobile</p>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => toggleAlert('whatsappEnabled')}
-                    className={`w-12 h-6 rounded-full transition-colors relative ${alerts.whatsappEnabled ? 'bg-emerald-500' : 'bg-gray-600'}`}
-                  >
-                    <div className={`w-4 h-4 bg-white rounded-full absolute top-1 transition-transform ${alerts.whatsappEnabled ? 'left-7' : 'left-1'}`}></div>
-                  </button>
-                </div>
-                
-                {alerts.whatsappEnabled && (
-                  <div className="space-y-3 pt-2 border-t border-emerald-500/20 animate-in fade-in duration-200">
-                    <div>
-                      <label className="text-xs text-emerald-300 font-medium block mb-1">Target Phone Number</label>
-                      <input 
-                        type="text" 
-                        value={phone} 
-                        onChange={(e) => setPhone(e.target.value)}
-                        className="w-full bg-slate-900/80 border border-emerald-500/30 rounded-xl px-4 py-2.5 text-white font-bold focus:outline-none focus:border-emerald-400 text-sm"
-                        placeholder="+91 9876543210"
-                      />
-                    </div>
-                    <button 
-                      onClick={handleTestWhatsApp}
-                      className="w-full py-2.5 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white rounded-xl font-bold text-sm shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all flex items-center justify-center gap-2 transform hover:scale-[1.02] active:scale-95"
-                    >
-                      <Send size={16} />
-                      Test WhatsApp Alert Simulation
-                    </button>
-                  </div>
-                )}
-              </div>
-
               {/* Custom Push Notifications */}
               <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors">
                 <div className="flex items-center gap-3">
@@ -311,23 +290,8 @@ const SettingsAlerts = memo(function SettingsAlerts() {
                 </button>
               </div>
 
-              {/* SMS Alerts */}
-              <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors">
-                <div className="flex items-center gap-3">
-                  <Smartphone size={18} className="text-amber-400" />
-                  <div>
-                    <h4 className="text-white font-medium">SMS Alerts</h4>
-                    <p className="text-xs text-text-muted">{phone}</p>
-                  </div>
-                </div>
-                <button 
-                  onClick={() => toggleAlert('smsEnabled')}
-                  className={`w-12 h-6 rounded-full transition-colors relative ${alerts.smsEnabled ? 'bg-amber-500' : 'bg-gray-600'}`}
-                >
-                  <div className={`w-4 h-4 bg-white rounded-full absolute top-1 transition-transform ${alerts.smsEnabled ? 'left-7' : 'left-1'}`}></div>
-                </button>
-              </div>
               
+
             </div>
           </div>
 

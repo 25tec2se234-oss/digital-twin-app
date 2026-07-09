@@ -32,6 +32,12 @@ const getDashboard = asyncHandler(async (req, res) => {
   }
   appData = appData || {};
 
+  let parentAppData = await userModel.getAppData(parentId);
+  if (typeof parentAppData === 'string') {
+    try { parentAppData = JSON.parse(parentAppData); } catch (e) { parentAppData = {}; }
+  }
+  parentAppData = parentAppData || {};
+
   const studentName = student.name || student.email || 'Kumar Kartikey';
   const firstName = studentName.split(' ')[0];
   const linkCode = student.linkCode || 'FC0D52';
@@ -140,8 +146,13 @@ const getDashboard = asyncHandler(async (req, res) => {
       notifications: notifRes.rows,
       aiRecommendations: [], // Driven entirely by real analysis
       careerInsights,
-      parentAlertSettings: {
-        emailEnabled: true
+      parentAlertSettings: parentAppData.parentAlertSettings || {
+        gradeDrop: true,
+        screenTime: true,
+        aiFlag: true,
+        weeklySummary: true,
+        emailEnabled: true,
+        pushEnabled: true
       }
     }
   });
@@ -313,10 +324,29 @@ const getAdminDashboard = asyncHandler(async (req, res) => {
   });
 });
 
+/**
+ * savePreferences: Stores parent alert preferences in database
+ */
+const savePreferences = asyncHandler(async (req, res) => {
+  const parentId = req.user.id;
+  const preferences = req.body;
+  
+  let appData = await userModel.getAppData(parentId);
+  if (typeof appData === 'string') {
+    try { appData = JSON.parse(appData); } catch(e) { appData = {}; }
+  }
+  appData = appData || {};
+  appData.parentAlertSettings = { ...appData.parentAlertSettings, ...preferences };
+  await userModel.saveAppData(parentId, appData);
+  
+  res.json({ success: true, message: 'Preferences saved successfully' });
+});
+
 module.exports = {
   subscribeLiveStream,
   getDashboard,
   getStudentDetails,
   generateReport,
-  getAdminDashboard
+  getAdminDashboard,
+  savePreferences
 };

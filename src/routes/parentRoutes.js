@@ -18,6 +18,9 @@ router.get('/dashboard', parentController.getDashboard);
 router.get('/student/:studentId', authorizeParentOfStudent, parentController.getStudentDetails);
 router.get('/student/:studentId/report', authorizeParentOfStudent, parentController.generateReport);
 
+// Settings & Preferences
+router.post('/preferences', parentController.savePreferences);
+
 // Admin Management Dashboard with Pagination, Sorting, Filtering
 router.get('/admin/dashboard', authorizeAdmin, parentController.getAdminDashboard);
 
