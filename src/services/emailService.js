@@ -316,6 +316,46 @@ async function sendSubscriptionExpiredEmail(toEmail, userName) {
     }
 }
 
+async function sendParentTestAlert(toEmail, studentName) {
+    if (!env.BREVO_API_KEY) {
+        console.warn('⚠️ BREVO_API_KEY not set.');
+        console.log(`\n📧 MOCK TEST ALERT EMAIL TO: ${toEmail}\n`);
+        return true;
+    }
+
+    const payload = {
+        sender: { name: "Digital Twin Verse", email: "kumarkartikey020@gmail.com" },
+        to: [{ email: toEmail }],
+        subject: `🚨 Test Alert: AI Academic Trigger for ${studentName}`,
+        htmlContent: `
+        <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; background: #0b1322; color: #e8f0f8; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
+            <div style="text-align: center; padding-bottom: 20px;">
+                <h1 style="color: #ffd700; margin: 0; font-size: 28px;">Digital Twin Verse</h1>
+                <span style="background: #e12a2a; color: #fff; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold;">TEST NOTIFICATION</span>
+            </div>
+            <h2 style="color: #ffffff;">Hello Parent,</h2>
+            <p style="font-size: 16px; line-height: 1.6; color: #cbd5e1;">This is a test notification to confirm that your email preferences are working correctly.</p>
+            <p style="font-size: 16px; line-height: 1.6; color: #cbd5e1;">You will now receive AI-driven alerts about ${studentName}'s academic performance, behavioral flags, and weekly summaries here.</p>
+            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;" />
+            <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by Eco-Novators. All rights reserved.</p>
+        </div>
+        `
+    };
+
+    try {
+        const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+            method: 'POST',
+            headers: { 'accept': 'application/json', 'api-key': env.BREVO_API_KEY, 'content-type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        if (!response.ok) throw new Error(\`Test Alert delivery failed: \${response.status}\`);
+        return true;
+    } catch (error) {
+        console.error('Error sending test alert email:', error);
+        throw error;
+    }
+}
+
 module.exports = {
     sendVerificationEmail,
     sendPasswordResetEmail,
@@ -323,5 +363,6 @@ module.exports = {
     sendPremiumConfirmation,
     sendParentInvitation,
     sendDemoEndingSoonEmail,
-    sendSubscriptionExpiredEmail
+    sendSubscriptionExpiredEmail,
+    sendParentTestAlert
 };

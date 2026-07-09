@@ -20,6 +20,7 @@ router.get('/student/:studentId/report', authorizeParentOfStudent, parentControl
 
 // Settings & Preferences
 router.post('/preferences', parentController.savePreferences);
+router.post('/test-email', parentController.testEmailAlert);
 
 // Admin Management Dashboard with Pagination, Sorting, Filtering
 router.get('/admin/dashboard', authorizeAdmin, parentController.getAdminDashboard);

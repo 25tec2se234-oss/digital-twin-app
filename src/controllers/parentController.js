@@ -342,11 +342,28 @@ const savePreferences = asyncHandler(async (req, res) => {
   res.json({ success: true, message: 'Preferences saved successfully' });
 });
 
+/**
+ * testEmailAlert: Sends a simulated email notification to the parent
+ */
+const testEmailAlert = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  const parentId = req.user.id;
+  
+  const students = await userModel.getLinkedStudents(parentId);
+  const studentName = students?.length > 0 ? students[0].name : 'Student';
+  
+  const emailService = require('../services/emailService');
+  await emailService.sendParentTestAlert(email, studentName);
+  
+  res.json({ success: true, message: 'Test email alert sent successfully!' });
+});
+
 module.exports = {
   subscribeLiveStream,
   getDashboard,
   getStudentDetails,
   generateReport,
   getAdminDashboard,
-  savePreferences
+  savePreferences,
+  testEmailAlert
 };
