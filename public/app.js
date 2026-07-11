@@ -5476,7 +5476,7 @@ window.handleReactLogin = async function(email, pass, rememberMe) {
             closeMod();
             unlockSite();
             window.trackAnalyticsEvent('Login Success', { email: email });
-            showToast('?', 'Signed in successfully.');
+            showToast('✅', 'Signed in successfully.');
             if (typeof window.pendingAuthAction === 'function') {
                 window.pendingAuthAction();
                 window.pendingAuthAction = null;
@@ -5490,7 +5490,7 @@ window.handleReactLogin = async function(email, pass, rememberMe) {
         return { success: true };
     } catch (err) {
         window.trackAnalyticsEvent('Login Failure', { error: err.message, email: email });
-        showToast('?', err.message);
+        showToast('❌', err.message);
         return { success: false, error: err.message };
     }
 };
@@ -5539,7 +5539,7 @@ window.handleReactSignup = async function(name, email, pass, role, phone, city) 
             closeMod();
             unlockSite();
             window.trackAnalyticsEvent('Signup Conversion', { role: APP_DATA.userData.role });
-            showToast('?', 'Account created and signed in successfully.');
+            showToast('✅', 'Account created and signed in successfully.');
             if (typeof window.pendingAuthAction === 'function') {
                 window.pendingAuthAction();
                 window.pendingAuthAction = null;
@@ -5552,7 +5552,7 @@ window.handleReactSignup = async function(name, email, pass, role, phone, city) 
         }
         return { success: true };
     } catch (err) {
-        showToast('?', err.message);
+        showToast('❌', err.message);
         return { success: false, error: err.message };
     }
 };
@@ -5565,14 +5565,14 @@ window.handleReactForgotPassword = async function(email) {
             body: JSON.stringify({ email })
         });
         if (res.ok) {
-            showToast('?', 'Reset instructions sent to ' + email);
+            showToast('✅', 'Reset instructions sent to ' + email);
             return { success: true };
         } else {
             const data = await res.json();
             throw new Error(data.error || 'Failed to send reset link.');
         }
     } catch (err) {
-        showToast('?', err.message);
+        showToast('❌', err.message);
         return { success: false, error: err.message };
     }
 };
