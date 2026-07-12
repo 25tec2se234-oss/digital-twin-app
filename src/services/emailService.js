@@ -131,7 +131,7 @@ async function sendWelcomeEmail(toEmail, userName) {
             </div>
             <p style="font-size: 14px; color: #94a3b8;">Log in now to set your goals and explore your personalized dashboard.</p>
             <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;" />
-            <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by Eco-Novators. All rights reserved.</p>
+            <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by DTV Family. All rights reserved.</p>
         </div>
         `
     };
@@ -179,7 +179,7 @@ async function sendPremiumConfirmation(toEmail, userName, planName, amountPaid, 
             </div>
             <p style="font-size: 14px; color: #94a3b8;">You now have unhindered access to our advanced AI Advisor, custom study plan generation, and the active Parent Portal link.</p>
             <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;" />
-            <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by Eco-Novators. All rights reserved.</p>
+            <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by DTV Family. All rights reserved.</p>
         </div>
         `
     };
@@ -222,7 +222,7 @@ async function sendParentInvitation(parentEmail, studentName, inviteLink) {
             </div>
             <p style="font-size: 14px; color: #94a3b8;">If the button above does not work, copy and paste this link into your browser:<br><br><a href="${inviteLink}" style="color: #a78bfa;">${inviteLink}</a></p>
             <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;" />
-            <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by Eco-Novators. All rights reserved.</p>
+            <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by DTV Family. All rights reserved.</p>
         </div>
         `
     };
@@ -262,7 +262,7 @@ async function sendDemoEndingSoonEmail(toEmail, userName, expiryDate) {
             <p style="font-size: 16px; line-height: 1.6; color: #cbd5e1;">Your Premium Demo will expire on <strong>${expiryDate}</strong>.</p>
             <p style="font-size: 16px; line-height: 1.6; color: #cbd5e1;">Don't lose access to your personalized AI Career Guidance, Study Routines, and Premium Analytics. Renew your subscription today to ensure uninterrupted service.</p>
             <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;" />
-            <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by Eco-Novators. All rights reserved.</p>
+            <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by DTV Family. All rights reserved.</p>
         </div>
         `
     };
@@ -300,7 +300,7 @@ async function sendSubscriptionExpiredEmail(toEmail, userName) {
             <p style="font-size: 16px; line-height: 1.6; color: #cbd5e1;">Your Premium Access has expired. Your AI insights, reports, and personalized routines are now locked.</p>
             <p style="font-size: 16px; line-height: 1.6; color: #cbd5e1;">Log in to the dashboard and upgrade your plan to restore access immediately. Nothing is lost, but you'll need an active plan to view your data.</p>
             <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;" />
-            <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by Eco-Novators. All rights reserved.</p>
+            <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by DTV Family. All rights reserved.</p>
         </div>
         `
     };
@@ -337,7 +337,7 @@ async function sendParentTestAlert(toEmail, studentName) {
             <p style="font-size: 16px; line-height: 1.6; color: #cbd5e1;">This is a test notification to confirm that your email preferences are working correctly.</p>
             <p style="font-size: 16px; line-height: 1.6; color: #cbd5e1;">You will now receive AI-driven alerts about ${studentName}'s academic performance, behavioral flags, and weekly summaries here.</p>
             <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;" />
-            <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by Eco-Novators. All rights reserved.</p>
+            <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by DTV Family. All rights reserved.</p>
         </div>
         `
     };
