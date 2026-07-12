@@ -65,7 +65,7 @@
             demoMode: false,
             formspreeId: 'mvzdpwyv',
             siteUrl: 'https://digitaltwinvrs.com/',
-            shareText: 'Check out Digital Twin Verse by Eco-Novators — AI career simulation platform!'
+            shareText: 'Check out Digital Twin Verse by DTV Family — AI career simulation platform!'
         };
 
         /* ═══════════════════════════════════════════════════════════════
@@ -1299,7 +1299,7 @@
                     doc.text('Digital Twin Verse', ml, y);
                     doc.setFontSize(9);
                     doc.setTextColor(194, 208, 224);
-                    doc.text('Career Report  |  Eco-Novators  |  https://digitaltwinvrs.com/', ml, y + 7);
+                    doc.text('Career Report  |  DTV Family  |  https://digitaltwinvrs.com/', ml, y + 7);
                     doc.setFontSize(8);
                     doc.setTextColor(122, 143, 168);
                     doc.text('Generated: ' + dateStr, pw - mr, y + 7, {
@@ -1453,7 +1453,7 @@
                     doc.setFontSize(7);
                     doc.setFont('helvetica', 'normal');
                     doc.setTextColor(122, 143, 168);
-                    doc.text('© 2026 Eco-Novators · Digital Twin Verse · digitaltwinverse@gmail.com · +91 75201 19837 · https://digitaltwinvrs.com/', pw / 2, 289, {
+                    doc.text('© 2026 DTV Family · Digital Twin Verse · digitaltwinverse@gmail.com · +91 75201 19837 · https://digitaltwinvrs.com/', pw / 2, 289, {
                         align: 'center'
                     });
 
@@ -1466,7 +1466,7 @@
                 // Fallback: plain text download
                 var lines = [
                     'DIGITAL TWIN VERSE — CAREER REPORT',
-                    'Eco-Novators | https://digitaltwinvrs.com/',
+                    'DTV Family | https://digitaltwinvrs.com/',
                     'Generated: ' + dateStr,
                     '═══════════════════════════════════════════',
                     '',
@@ -1511,7 +1511,7 @@
                 }
                 lines.push('');
                 lines.push('───────────────────────────────────────────');
-                lines.push('© 2026 Eco-Novators | Digital Twin Verse | digitaltwinverse@gmail.com | +91 75201 19837 | https://digitaltwinvrs.com/');
+                lines.push('© 2026 DTV Family | Digital Twin Verse | digitaltwinverse@gmail.com | +91 75201 19837 | https://digitaltwinvrs.com/');
 
                 var blob = new Blob([lines.join('\n')], {
                     type: 'text/plain'
