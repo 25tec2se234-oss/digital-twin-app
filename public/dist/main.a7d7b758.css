@@ -5180,7 +5180,7 @@
         }
 
         .dashboard-panel.open {
-            max-height: 6000px;
+            max-height: 20000px;
             opacity: 1;
             transform: translateY(0);
             visibility: visible;
