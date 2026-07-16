@@ -911,7 +911,7 @@
 
         .btn-blue {
             background: var(--blue);
-            color: #fff;
+            color: var(--wh);
             padding: .75rem 1.8rem;
             border-radius: 8px;
             font-size: .88rem;
@@ -994,7 +994,7 @@
         }
 
         .desc {
-            color: #ffffff;
+            color: var(--wh);
             font-size: .97rem;
             line-height: 1.82;
             max-width: 520px;
@@ -2208,7 +2208,7 @@
         .ai-voice-btn:hover,
         .ai-voice-btn.listening {
             background: var(--blue);
-            color: #fff;
+            color: var(--wh);
             border-color: var(--blue);
         }
 
@@ -2252,7 +2252,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            color: var(--wh);
             font-weight: 700;
         }
 
@@ -2516,7 +2516,7 @@
         .cp-mic:hover,
         .cp-mic.on {
             background: var(--blue);
-            color: #fff;
+            color: var(--wh);
             border-color: var(--blue);
         }
 
@@ -2999,7 +2999,7 @@
         .skill-cb.done {
             background: var(--green);
             border-color: var(--green);
-            color: #fff;
+            color: var(--wh);
         }
 
         .skill-name {
@@ -4025,7 +4025,7 @@
 
         .sh-wa {
             background: #25d366;
-            color: #fff;
+            color: var(--wh);
         }
 
         .sh-wa:hover {
@@ -4034,7 +4034,7 @@
 
         .sh-li {
             background: #0a66c2;
-            color: #fff;
+            color: var(--wh);
         }
 
         .sh-li:hover {
@@ -4043,7 +4043,7 @@
 
         .sh-tw {
             background: #1d9bf0;
-            color: #fff;
+            color: var(--wh);
         }
 
         .sh-tw:hover {
@@ -4668,7 +4668,7 @@
             align-items: center;
             gap: .45rem;
             background: linear-gradient(135deg, var(--blue), var(--blue2));
-            color: #fff;
+            color: var(--wh);
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
             font-size: .82rem;
@@ -4695,7 +4695,7 @@
             width: 12px;
             height: 12px;
             border: 2px solid rgba(255, 255, 255, .3);
-            border-top-color: #fff;
+            border-top-color: var(--wh);
             border-radius: 50%;
             animation: sp .6s linear infinite;
         }
@@ -4794,7 +4794,7 @@
 
         .restore-btn {
             background: var(--blue);
-            color: #fff;
+            color: var(--wh);
             border: none;
             border-radius: 6px;
             padding: .38rem .9rem;
@@ -4995,7 +4995,7 @@
             align-items: center;
             gap: .5rem;
             background: #25d366;
-            color: #fff;
+            color: var(--wh);
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
             font-size: .95rem;
@@ -5840,12 +5840,12 @@ footer {
 .why-choose-title {
     font-size: 1.25rem;
     font-weight: 700;
-    color: #fff;
+    color: var(--wh);
     margin: 0;
 }
 .why-choose-desc {
     font-size: 0.95rem;
-    color: #94a3b8;
+    color: var(--mu);
     line-height: 1.6;
     margin: 0;
 }
@@ -5871,7 +5871,7 @@ footer {
     width: 100%;
     background: transparent;
     border: none;
-    color: #fff;
+    color: var(--wh);
     padding: 1.5rem;
     display: flex;
     justify-content: space-between;
@@ -5895,7 +5895,7 @@ footer {
     max-height: 0;
     padding: 0 1.5rem;
     opacity: 0;
-    color: #cbd5e1;
+    color: var(--wh2);
     font-size: 0.95rem;
     line-height: 1.7;
     transition: all 0.3s ease;
@@ -5937,7 +5937,7 @@ footer {
 }
 .trust-text {
     font-size: 0.9rem;
-    color: #cbd5e1;
+    color: var(--wh2);
     font-weight: 600;
 }
 
