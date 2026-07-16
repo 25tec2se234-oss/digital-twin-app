@@ -5955,3 +5955,48 @@ footer {
     }
 }
 
+
+
+/* ═══ MOBILE HORIZONTAL SCROLL FIXES ════════════════════════════════ */
+@media (max-width: 680px) {
+    html, body {
+        overflow-x: hidden !important;
+        width: 100vw !important;
+        position: relative;
+    }
+    
+    * {
+        box-sizing: border-box !important;
+    }
+    
+    /* Ensure no container breaks the viewport width */
+    .wrap, .container, .modal-content, .tool-card, .tool-input-row, .tool-grid, section, div, img {
+        max-width: 100% !important;
+    }
+    
+    /* Fix tool input rows breaking out of cards */
+    .tool-input-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+    
+    .tool-input-row .fi {
+        min-width: 0 !important;
+        width: 100% !important;
+    }
+    
+    .tool-input-row .tool-btn {
+        width: 100% !important;
+    }
+    
+    /* Fix any hardcoded widths on tool cards */
+    .tool-card {
+        padding: 1rem !important;
+        margin: 0 !important;
+        width: 100% !important;
+    }
+    
+    .analyzer-modal {
+        padding: 1rem !important;
+    }
+}
