@@ -54,9 +54,9 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.e9173dfd.css?v=d0fc172acbd9d432" as="style">
+    <link rel="preload" href="/dist/main.4f19e5c4.css?v=8882a08c10b6521f" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.e9173dfd.css?v=d0fc172acbd9d432">
+    <link rel="stylesheet" href="/dist/main.4f19e5c4.css?v=8882a08c10b6521f">
 
     <!-- JSON-LD Structured Data Schema -->
     
@@ -421,6 +421,17 @@
             <li><a href="#ai-section">AI Advisor</a></li>
             <li><a href="/parent" style="color: #a78bfa; font-weight: 600;">Parent Portal</a></li>
             <li><a href="#rev">Reviews</a></li>
+            <li class="theme-switcher-menu" id="theme-switcher" style="position: relative; margin-left: 0.5rem;">
+                <button class="nav-pill" onclick="toggleThemeDropdown()" style="padding: 0.5rem 1rem; border: 1px solid var(--bdr); background: transparent; color: var(--wh);">
+                    🎨 <span id="theme-active-label" style="display:none;">Theme</span>
+                </button>
+                <div class="account-panel" id="theme-dropdown" style="right: 0; left: auto; top: 120%;">
+                    <button class="acc-item" onclick="setTheme('midnight')">Midnight Dark</button>
+                    <button class="acc-item" onclick="setTheme('light')">Light Professional</button>
+                    <button class="acc-item" onclick="setTheme('navy')">Deep Navy</button>
+                    <button class="acc-item" onclick="setTheme('slate')">Slate Graphite</button>
+                </div>
+            </li>
             <li><button type="button" onclick="requireAuth(openPricingPage); return false;" class="nav-pill">💎 Go Premium</button>
             </li>
 
@@ -457,6 +468,15 @@
         <button type="button" onclick="requireAuth(function(){openPricingPage(); togMenu();}); return false;" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: #e88c2a; width: 100%; text-align: left; font-size: 1.1rem; font-weight: 700;">💎 Go Premium</button>
         <button type="button" onclick="openAnalyzer(); togMenu();" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: var(--wh, #fff); width: 100%; text-align: left; font-size: 1.1rem; font-weight: 600;">🧠
             Achievement Analyzer</button>
+        <div style="padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 0.5rem;">
+            <p style="color: var(--mu); font-size: 0.9rem; margin-bottom: 0.5rem;">Select Theme</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                <button onclick="setTheme('midnight'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #fff;">Midnight</button>
+                <button onclick="setTheme('light'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: #fff; border-radius: 6px; font-size: 0.9rem; color: #000;">Light</button>
+                <button onclick="setTheme('navy'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #60a5fa;">Navy</button>
+                <button onclick="setTheme('slate'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #a1a1aa;">Slate</button>
+            </div>
+        </div>
 
     </div>
 
@@ -650,7 +670,7 @@
                 <div class="ti">Roadmap Planning<span class="sp">◆</span></div>
                 <div class="ti">Market Alerts<span class="sp">◆</span></div>
                 <div class="ti">Internship Guidance<span class="sp">◆</span></div>
-                <div class="ti">1800+ Career Paths<span class="sp">◆</span></div>
+                <div class="ti">6000+ Career Paths<span class="sp">◆</span></div>
                 <div class="ti">Voice + Chat AI<span class="sp">◆</span></div>
                 <div class="ti">DTV Family · 2026<span class="sp">◆</span></div>
                 <div class="ti">AI Career Simulation<span class="sp">◆</span></div>
@@ -658,7 +678,7 @@
                 <div class="ti">Roadmap Planning<span class="sp">◆</span></div>
                 <div class="ti">Market Alerts<span class="sp">◆</span></div>
                 <div class="ti">Internship Guidance<span class="sp">◆</span></div>
-                <div class="ti">1800+ Career Paths<span class="sp">◆</span></div>
+                <div class="ti">6000+ Career Paths<span class="sp">◆</span></div>
                 <div class="ti">Voice + Chat AI<span class="sp">◆</span></div>
                 <div class="ti">DTV Family · 2026<span class="sp">◆</span></div>
             </div>
@@ -901,6 +921,101 @@
                                 <button class="tool-link" onclick="useFirstPendingGoal()">Use first item from Things to
                                     Achieve</button>
                             </article>
+
+                            <!-- NEW WIDGETS FOR DASHBOARD UPGRADE -->
+                            <article class="tool-card" id="streak-card">
+                                <div class="tool-head">
+                                    <div>
+                                        <h3>🔥 Study Streak</h3>
+                                        <p class="tool-desc">Daily habit tracker.</p>
+                                    </div>
+                                    <span class="tool-tag" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2);">Streak</span>
+                                </div>
+                                <div class="summary-grid" style="margin: 1rem 0;">
+                                    <div class="summary-row"><span>Current Streak</span><strong id="dash-streak-count">0 Days</strong></div>
+                                    <div class="summary-row"><span>Best Streak</span><strong id="dash-streak-best" style="color: var(--mu);">0 Days</strong></div>
+                                </div>
+                                <button class="tool-btn" onclick="incrementStreak()" id="btn-increment-streak">Mark Today Complete</button>
+                            </article>
+
+                            <article class="tool-card" id="smart-goals-card">
+                                <div class="tool-head">
+                                    <div>
+                                        <h3>🎯 Smart Goals</h3>
+                                        <p class="tool-desc">AI-suggested next steps based on profile.</p>
+                                    </div>
+                                    <span class="tool-tag" style="background: rgba(42, 125, 225, 0.1); color: #5ba3f5; border: 1px solid rgba(42, 125, 225, 0.2);">AI</span>
+                                </div>
+                                <ul class="checklist" id="smart-goals-list" style="margin: 1rem 0; min-height: 80px;">
+                                    <li style="font-size: 0.85rem; color: var(--mu); list-style: none;">Select a profile to see goals</li>
+                                </ul>
+                                <button class="tool-link" onclick="refreshSmartGoals()">↻ Refresh Goals</button>
+                            </article>
+
+                            <article class="tool-card" id="deadlines-card">
+                                <div class="tool-head">
+                                    <div>
+                                        <h3>📅 Upcoming Deadlines</h3>
+                                        <p class="tool-desc">Prioritized timeline of exams.</p>
+                                    </div>
+                                    <span class="tool-tag" style="background: rgba(167, 139, 250, 0.1); color: #c4b5fd; border: 1px solid rgba(167, 139, 250, 0.2);">Schedule</span>
+                                </div>
+                                <div id="deadlines-list" style="margin: 1rem 0; display: flex; flex-direction: column; gap: 0.5rem; min-height: 60px;">
+                                    <div style="font-size: 0.85rem; color: var(--mu);">No upcoming deadlines pinned.</div>
+                                </div>
+                                <div class="tool-input-row" style="flex-wrap: wrap;">
+                                    <input class="fi" id="new-deadline-input" placeholder="e.g. Mock Test" style="flex: 1 1 100px;">
+                                    <input class="fi" id="new-deadline-date" type="date" style="flex: 0 0 auto; padding-right: 0.5rem; width: auto;">
+                                    <button class="tool-btn" onclick="addDeadline()">Add</button>
+                                </div>
+                            </article>
+
+                            <article class="tool-card" id="progress-card">
+                                <div class="tool-head">
+                                    <div>
+                                        <h3>📈 Progress Comparison</h3>
+                                        <p class="tool-desc">This week vs Last week.</p>
+                                    </div>
+                                    <span class="tool-tag" style="background: rgba(34, 197, 94, 0.1); color: #6ee7b7; border: 1px solid rgba(34, 197, 94, 0.2);">Stats</span>
+                                </div>
+                                <div class="summary-grid" style="margin: 1rem 0;">
+                                    <div class="summary-row">
+                                        <span>Study Time (This Wk)</span>
+                                        <strong id="prog-time-tw">0 hrs</strong>
+                                    </div>
+                                    <div class="summary-row">
+                                        <span>Study Time (Last Wk)</span>
+                                        <strong id="prog-time-lw" style="color: var(--mu);">0 hrs</strong>
+                                    </div>
+                                    <div class="summary-row">
+                                        <span>Accuracy (This Wk)</span>
+                                        <strong id="prog-acc-tw">0%</strong>
+                                    </div>
+                                    <div class="summary-row">
+                                        <span>Accuracy (Last Wk)</span>
+                                        <strong id="prog-acc-lw" style="color: var(--mu);">0%</strong>
+                                    </div>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--mu); margin-bottom:0.25rem;">
+                                    <span>Time Trend</span><span id="prog-trend-lbl" style="color: #6ee7b7;">+0%</span>
+                                </div>
+                                <div class="mini-bar"><span id="prog-time-bar" style="width: 50%; background: #22c55e;"></span></div>
+                            </article>
+
+                            <article class="tool-card" id="resources-card">
+                                <div class="tool-head">
+                                    <div>
+                                        <h3>📚 Resource Shortcuts</h3>
+                                        <p class="tool-desc">Contextual links for your stream.</p>
+                                    </div>
+                                    <span class="tool-tag" style="background: rgba(232, 140, 42, 0.1); color: #f5a94e; border: 1px solid rgba(232, 140, 42, 0.2);">Links</span>
+                                </div>
+                                <div class="glass-tags" id="resource-shortcuts-list" style="margin: 1rem 0; min-height: 60px;">
+                                    <span class="glass-tag" style="opacity: 0.7;">Select profile to see resources</span>
+                                </div>
+                            </article>
+                            <!-- END NEW WIDGETS -->
+
 
                             <article class="tool-card">
                                 <div class="tool-head">
@@ -1324,8 +1439,8 @@
                 <div class="rv career-explorer-head">
                     <div>
                         <p class="lbl">Career Explorer</p>
-                        <h2 class="ttl">Explore 1800+ Career Paths<br><span class="serif">with Your Personal Dashboard</span></h2>
-                        <p class="desc">Browse, filter, search, and track 1800+ authentic, cutting-edge, and emerging career opportunities. Save your skill progress, write notes, and build your personalised roadmap — all saved locally on your device.</p>
+                        <h2 class="ttl">Explore 6000+ Career Paths<br><span class="serif">with Your Personal Dashboard</span></h2>
+                        <p class="desc">Browse, filter, search, and track 6000+ authentic, cutting-edge, and emerging career opportunities. Save your skill progress, write notes, and build your personalised roadmap — all saved locally on your device.</p>
                     </div>
                     <button class="career-toggle" id="career-toggle" onclick="requirePremiumFrontend(toggleCareerExplorer)" aria-expanded="false" aria-controls="career-explorer-body">
                         <span class="career-toggle-text">Open Career Explorer</span>
@@ -1589,7 +1704,7 @@
                     <div class="feat-card" style="padding: 2.5rem;">
                         <div style="font-size: 2.5rem; margin-bottom: 1.2rem;">🚀</div>
                         <h3 style="color: var(--wh, #fff); font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem;">Why Students Should Use It</h3>
-                        <p style="color: var(--mu, #94a3b8); font-size: 1rem; line-height: 1.7;">Navigating today's hyper-competitive academic landscape requires more than just traditional textbooks. Students need interactive, real-time insights to discover their true calling. With Digital Twin Verse, learners eliminate the guesswork of course selection and career alignment. By exploring over 1800+ simulated career options, students can experiment with different professional futures, identify their true strengths, and build a customized roadmap that guarantees academic fulfillment and professional confidence.</p>
+                        <p style="color: var(--mu, #94a3b8); font-size: 1rem; line-height: 1.7;">Navigating today's hyper-competitive academic landscape requires more than just traditional textbooks. Students need interactive, real-time insights to discover their true calling. With Digital Twin Verse, learners eliminate the guesswork of course selection and career alignment. By exploring over 6000+ simulated career options, students can experiment with different professional futures, identify their true strengths, and build a customized roadmap that guarantees academic fulfillment and professional confidence.</p>
                     </div>
                     <div class="feat-card" style="padding: 2.5rem;">
                         <div style="font-size: 2.5rem; margin-bottom: 1.2rem;">🧠</div>
@@ -2182,9 +2297,9 @@
     
 
 
-    <script defer="" src="/dist/careers.488719e3.js?v=d0fc172acbd9d432"></script>
-    <script defer="" src="/dist/app.f0f28e85.js?v=d0fc172acbd9d432"></script>
-    <script defer="" src="/dist/ux-engine.31ef492a.js?v=d0fc172acbd9d432"></script>
+    <script defer="" src="/dist/careers.2ad45624.js?v=8882a08c10b6521f"></script>
+    <script defer="" src="/dist/app.bd4497d8.js?v=8882a08c10b6521f"></script>
+    <script defer="" src="/dist/ux-engine.31ef492a.js?v=8882a08c10b6521f"></script>
 
 
 </body></html>

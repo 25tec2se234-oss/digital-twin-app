@@ -5596,3 +5596,323 @@ window.handleReactResetPassword = async function(email, otpCode, newPassword) {
         return { success: false, error: err.message };
     }
 };
+
+// --- DASHBOARD UPGRADES (Streak, Goals, Deadlines, Progress, Resources) ---
+
+function initDashboardUpgrades() {
+    // 1. Theme Initialization
+    var storedTheme = localStorage.getItem('dtv_theme') || 'midnight';
+    setTheme(storedTheme);
+
+    // 2. Load Streak
+    var streak = parseInt(localStorage.getItem('dtv_streak') || '0', 10);
+    var bestStreak = parseInt(localStorage.getItem('dtv_best_streak') || '0', 10);
+    var lastActive = localStorage.getItem('dtv_last_active');
+    var today = new Date().toDateString();
+    
+    // Check if streak was broken (last active was before yesterday)
+    if (lastActive && lastActive !== today) {
+        var yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        if (lastActive !== yesterday.toDateString()) {
+            streak = 0; // Broken streak
+        }
+    }
+    
+    var btnIncStreak = document.getElementById('btn-increment-streak');
+    if (lastActive === today && btnIncStreak) {
+        btnIncStreak.textContent = "Completed for Today";
+        btnIncStreak.disabled = true;
+        btnIncStreak.style.opacity = '0.5';
+    }
+    
+    localStorage.setItem('dtv_streak', streak);
+    localStorage.setItem('dtv_best_streak', bestStreak);
+    
+    updateStreakUI();
+    
+    // 3. Render Deadlines
+    renderDeadlines();
+    
+    // 4. Progress Comparison
+    renderProgressComparison();
+    
+    // 5. If profile exists, render goals and shortcuts
+    if (window.APP_DATA && window.APP_DATA.studentProfile && window.APP_DATA.studentProfile.type) {
+        refreshSmartGoals();
+        renderResourceShortcuts();
+    }
+}
+
+// Ensure init is called after DOM load
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(initDashboardUpgrades, 500);
+});
+
+// Hook into existing renderStudentProfile (monkey patching gently)
+var originalRenderStudentProfile = window.renderStudentProfile;
+if (typeof originalRenderStudentProfile === 'function') {
+    window.renderStudentProfile = function() {
+        originalRenderStudentProfile.apply(this, arguments);
+        refreshSmartGoals();
+        renderResourceShortcuts();
+    };
+} else {
+    // Fallback if not available yet
+    setTimeout(function() {
+        if (typeof window.renderStudentProfile === 'function') {
+            var orig = window.renderStudentProfile;
+            window.renderStudentProfile = function() {
+                orig.apply(this, arguments);
+                refreshSmartGoals();
+                renderResourceShortcuts();
+            };
+        }
+    }, 1000);
+}
+
+window.incrementStreak = function() {
+    var streak = parseInt(localStorage.getItem('dtv_streak') || '0', 10);
+    var bestStreak = parseInt(localStorage.getItem('dtv_best_streak') || '0', 10);
+    var today = new Date().toDateString();
+    
+    streak += 1;
+    if (streak > bestStreak) bestStreak = streak;
+    
+    localStorage.setItem('dtv_streak', streak);
+    localStorage.setItem('dtv_best_streak', bestStreak);
+    localStorage.setItem('dtv_last_active', today);
+    
+    var btn = document.getElementById('btn-increment-streak');
+    if(btn) {
+        btn.textContent = "Completed for Today";
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+    }
+    updateStreakUI();
+    if(typeof showToast === 'function') showToast('🔥', 'Streak increased to ' + streak + ' days!');
+};
+
+function updateStreakUI() {
+    var streak = localStorage.getItem('dtv_streak') || '0';
+    var bestStreak = localStorage.getItem('dtv_best_streak') || '0';
+    
+    var elCur = document.getElementById('dash-streak-count');
+    var elBest = document.getElementById('dash-streak-best');
+    
+    if (elCur) elCur.textContent = streak + (streak == 1 ? ' Day' : ' Days');
+    if (elBest) elBest.textContent = bestStreak + (bestStreak == 1 ? ' Day' : ' Days');
+}
+
+window.refreshSmartGoals = function() {
+    var list = document.getElementById('smart-goals-list');
+    if (!list) return;
+    
+    var profile = window.APP_DATA && window.APP_DATA.studentProfile ? window.APP_DATA.studentProfile : null;
+    if (!profile || !profile.type) {
+        list.innerHTML = '<li style="font-size: 0.85rem; color: var(--mu); list-style: none;">Select a profile to see goals</li>';
+        return;
+    }
+    
+    var goals = [];
+    if (profile.type === 'school') {
+        var cls = parseInt(profile.classLevel || '9', 10);
+        if (cls <= 8) {
+            goals = ["Build basic foundational concepts", "Participate in science Olympiads", "Explore 5 careers in Explorer"];
+        } else if (cls <= 10) {
+            goals = ["Prepare for Board Exams", "Shortlist top 3 career streams", "Take mock aptitude tests"];
+        } else {
+            goals = ["Focus on entrance exam prep", "Finalize college target list", "Build a strong extracurricular profile"];
+        }
+    } else {
+        var st = (profile.stream || '').toLowerCase();
+        if (st.includes('tech') || st.includes('cse')) {
+            goals = ["Master Data Structures & Algorithms", "Build 2 side projects", "Apply for summer internships"];
+        } else if (st.includes('com') || st.includes('mba')) {
+            goals = ["Analyze 3 business case studies", "Improve financial modeling skills", "Join a consulting club"];
+        } else {
+            goals = ["Build a strong resume", "Network with alumni on LinkedIn", "Read industry research reports"];
+        }
+    }
+    
+    // Add a randomize effect
+    goals = goals.sort(function() { return 0.5 - Math.random(); });
+    
+    var html = '';
+    goals.forEach(function(g) {
+        html += '<li class="chk-item" onclick="this.classList.toggle(\'checked\')"><span class="chk-box"></span><span class="chk-lbl">' + g + '</span></li>';
+    });
+    list.innerHTML = html;
+};
+
+window.renderResourceShortcuts = function() {
+    var list = document.getElementById('resource-shortcuts-list');
+    if (!list) return;
+    
+    var profile = window.APP_DATA && window.APP_DATA.studentProfile ? window.APP_DATA.studentProfile : null;
+    if (!profile || !profile.type) {
+        list.innerHTML = '<span class="glass-tag" style="opacity: 0.7;">Select profile to see resources</span>';
+        return;
+    }
+    
+    var tags = [];
+    if (profile.type === 'school') {
+        tags = [
+            {n: 'NCERT Solutions', c: '#93c5fd'},
+            {n: 'Previous Year Papers', c: '#c4b5fd'},
+            {n: 'Mock Tests', c: '#6ee7b7'}
+        ];
+    } else {
+        var st = (profile.stream || '').toLowerCase();
+        if (st.includes('tech') || st.includes('cse')) {
+            tags = [
+                {n: 'LeetCode', c: '#93c5fd'},
+                {n: 'GitHub', c: '#c4b5fd'},
+                {n: 'System Design', c: '#6ee7b7'}
+            ];
+        } else {
+            tags = [
+                {n: 'Case Studies', c: '#93c5fd'},
+                {n: 'Industry Reports', c: '#c4b5fd'},
+                {n: 'Alumni Network', c: '#6ee7b7'}
+            ];
+        }
+    }
+    
+    var html = '';
+    tags.forEach(function(t) {
+        html += '<a href="javascript:void(0)" class="glass-tag" style="background:rgba(255,255,255,0.05); color:'+t.c+'; text-decoration:none;">' + t.n + '</a>';
+    });
+    list.innerHTML = html;
+};
+
+window.addDeadline = function() {
+    var inp = document.getElementById('new-deadline-input');
+    var dateInp = document.getElementById('new-deadline-date');
+    if (!inp || !dateInp) return;
+    
+    var title = inp.value.trim();
+    var dateVal = dateInp.value;
+    if (!title || !dateVal) {
+        if(typeof showToast === 'function') showToast('⚠️', 'Please provide both title and date.');
+        return;
+    }
+    
+    var deadlines = JSON.parse(localStorage.getItem('dtv_deadlines') || '[]');
+    deadlines.push({ title: title, date: dateVal });
+    
+    // Sort by date
+    deadlines.sort(function(a, b) {
+        return new Date(a.date) - new Date(b.date);
+    });
+    
+    localStorage.setItem('dtv_deadlines', JSON.stringify(deadlines));
+    inp.value = '';
+    dateInp.value = '';
+    renderDeadlines();
+};
+
+window.deleteDeadline = function(idx) {
+    var deadlines = JSON.parse(localStorage.getItem('dtv_deadlines') || '[]');
+    deadlines.splice(idx, 1);
+    localStorage.setItem('dtv_deadlines', JSON.stringify(deadlines));
+    renderDeadlines();
+};
+
+function renderDeadlines() {
+    var list = document.getElementById('deadlines-list');
+    if (!list) return;
+    
+    var deadlines = JSON.parse(localStorage.getItem('dtv_deadlines') || '[]');
+    if (deadlines.length === 0) {
+        list.innerHTML = '<div style="font-size: 0.85rem; color: var(--mu);">No upcoming deadlines pinned.</div>';
+        return;
+    }
+    
+    var html = '';
+    deadlines.forEach(function(d, i) {
+        html += '<div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.03); padding:0.5rem; border-radius:6px; font-size:0.85rem;">';
+        html += '<span><strong>' + d.title + '</strong> <br><small style="color:var(--mu);">' + d.date + '</small></span>';
+        html += '<button onclick="deleteDeadline('+i+')" style="background:transparent; border:none; color:var(--red); cursor:pointer;">✕</button>';
+        html += '</div>';
+    });
+    list.innerHTML = html;
+}
+
+function renderProgressComparison() {
+    // Simulated mock stats based on localStorage to provide a "realistic" comparison
+    var twTime = parseInt(localStorage.getItem('dtv_prog_tw') || (Math.floor(Math.random() * 5) + 2));
+    var lwTime = parseInt(localStorage.getItem('dtv_prog_lw') || (Math.floor(Math.random() * 5) + 1));
+    var twAcc = parseInt(localStorage.getItem('dtv_acc_tw') || (Math.floor(Math.random() * 20) + 70));
+    var lwAcc = parseInt(localStorage.getItem('dtv_acc_lw') || (Math.floor(Math.random() * 20) + 60));
+    
+    localStorage.setItem('dtv_prog_tw', twTime);
+    localStorage.setItem('dtv_prog_lw', lwTime);
+    localStorage.setItem('dtv_acc_tw', twAcc);
+    localStorage.setItem('dtv_acc_lw', lwAcc);
+    
+    var elTwT = document.getElementById('prog-time-tw');
+    var elLwT = document.getElementById('prog-time-lw');
+    var elTwA = document.getElementById('prog-acc-tw');
+    var elLwA = document.getElementById('prog-acc-lw');
+    var elTrend = document.getElementById('prog-trend-lbl');
+    var elBar = document.getElementById('prog-time-bar');
+    
+    if (elTwT) elTwT.textContent = twTime + ' hrs';
+    if (elLwT) elLwT.textContent = lwTime + ' hrs';
+    if (elTwA) elTwA.textContent = twAcc + '%';
+    if (elLwA) elLwA.textContent = lwAcc + '%';
+    
+    if (elTrend && elBar) {
+        var diff = twTime - lwTime;
+        var pct = lwTime > 0 ? Math.round((diff / lwTime) * 100) : 100;
+        if (diff >= 0) {
+            elTrend.textContent = '+' + pct + '%';
+            elTrend.style.color = '#6ee7b7';
+            elBar.style.width = Math.min(100, 50 + (pct/2)) + '%';
+            elBar.style.background = '#22c55e';
+        } else {
+            elTrend.textContent = pct + '%';
+            elTrend.style.color = '#ef4444';
+            elBar.style.width = Math.max(10, 50 + (pct/2)) + '%';
+            elBar.style.background = '#ef4444';
+        }
+    }
+}
+
+// --- THEME SWITCHER (Task 4) ---
+window.setTheme = function(themeName) {
+    document.documentElement.setAttribute('data-theme', themeName);
+    localStorage.setItem('dtv_theme', themeName);
+    
+    // Update theme toggle UI if it exists
+    var themeLabel = document.getElementById('theme-active-label');
+    if (themeLabel) {
+        var labels = {
+            'midnight': 'Midnight Dark',
+            'light': 'Light Professional',
+            'navy': 'Deep Navy',
+            'slate': 'Slate Graphite'
+        };
+        themeLabel.textContent = labels[themeName] || 'Midnight Dark';
+    }
+    
+    var dropdown = document.getElementById('theme-dropdown');
+    if (dropdown) dropdown.classList.remove('show');
+};
+
+window.toggleThemeDropdown = function() {
+    var dropdown = document.getElementById('theme-dropdown');
+    if (dropdown) {
+        dropdown.classList.toggle('show');
+    }
+};
+
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('#theme-switcher')) {
+        var dropdown = document.getElementById('theme-dropdown');
+        if (dropdown && dropdown.classList.contains('show')) {
+            dropdown.classList.remove('show');
+        }
+    }
+});
