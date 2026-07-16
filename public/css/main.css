@@ -31,6 +31,16 @@
             --fab-right: 2rem;
             --fab-bottom: 2rem;
             --fab-gap: 3.6rem;
+            
+            /* Enhanced Theme Variables - Midnight (Default) */
+            --glow1: rgba(0, 240, 255, 0.18);
+            --glow2: rgba(94, 23, 235, 0.18);
+            --glow3: rgba(232, 140, 42, 0.08);
+            --grad-main: linear-gradient(135deg, var(--amb), #ff6b00);
+            --grad-hover: linear-gradient(135deg, #f5a94e, #ff8533);
+            --btn-text: #ffffff;
+            --body-bg: #0a0d14;
+            --body-after-bg: #030508;
         }
 
         [data-theme="light"] {
@@ -43,7 +53,7 @@
             --mu: #475569;
             --card: rgba(0, 0, 0, 0.04);
             --bdr: rgba(0, 0, 0, 0.08);
-            /* Keep accents same but slightly darker for contrast */
+            
             --amb: #d97706;
             --amb2: #f59e0b;
             --blue: #2563eb;
@@ -51,6 +61,16 @@
             --cyan: #0284c7;
             --purple: #7c3aed;
             --purple2: #8b5cf6;
+            
+            /* Enhanced Theme Variables - Light Professional */
+            --glow1: rgba(37, 99, 235, 0.1);
+            --glow2: rgba(13, 148, 136, 0.1);
+            --glow3: rgba(234, 88, 12, 0.08);
+            --grad-main: linear-gradient(135deg, #2563eb, #3b82f6);
+            --grad-hover: linear-gradient(135deg, #1d4ed8, #2563eb);
+            --btn-text: #ffffff;
+            --body-bg: #f1f5f9;
+            --body-after-bg: #f8fafc;
         }
 
         [data-theme="navy"] {
@@ -65,6 +85,16 @@
             --bdr: rgba(255, 255, 255, 0.06);
             --amb: #e88c2a;
             --amb2: #f5a94e;
+            
+            /* Enhanced Theme Variables - Deep Navy */
+            --glow1: rgba(34, 211, 238, 0.15);
+            --glow2: rgba(129, 140, 248, 0.15);
+            --glow3: rgba(56, 189, 248, 0.1);
+            --grad-main: linear-gradient(135deg, #0ea5e9, #0284c7);
+            --grad-hover: linear-gradient(135deg, #38bdf8, #0ea5e9);
+            --btn-text: #ffffff;
+            --body-bg: #020617;
+            --body-after-bg: #0b1120;
         }
 
         [data-theme="slate"] {
@@ -77,6 +107,16 @@
             --mu: #a1a1aa;
             --card: rgba(255, 255, 255, 0.05);
             --bdr: rgba(255, 255, 255, 0.1);
+            
+            /* Enhanced Theme Variables - Slate Graphite */
+            --glow1: rgba(255, 255, 255, 0.03);
+            --glow2: rgba(217, 119, 6, 0.05);
+            --glow3: rgba(161, 161, 170, 0.04);
+            --grad-main: linear-gradient(135deg, #3f3f46, #52525b);
+            --grad-hover: linear-gradient(135deg, #52525b, #71717a);
+            --btn-text: #ffffff;
+            --body-bg: #09090b;
+            --body-after-bg: #18181b;
         }
 
         #page-main {
@@ -171,7 +211,7 @@
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: #0a0d14; /* Solid dark background to prevent white flashes on scroll */
+            background: var(--body-bg); /* Solid background to prevent flashes on scroll */
             color: var(--wh);
             overflow-x: hidden;
             position: relative;
@@ -208,10 +248,10 @@
             z-index: 0;
             opacity: 0.9;
             background: 
-                radial-gradient(circle at 20% 30%, rgba(0, 240, 255, 0.18) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(94, 23, 235, 0.18) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(232, 140, 42, 0.08) 0%, transparent 50%);
-            background-color: #030508;
+                radial-gradient(circle at 20% 30%, var(--glow1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, var(--glow2) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, var(--glow3) 0%, transparent 50%);
+            background-color: var(--body-after-bg);
             filter: blur(80px);
             animation: orbMove 25s ease-in-out infinite alternate;
         }

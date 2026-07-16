@@ -54,9 +54,9 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.f40cf576.css?v=269e5e0317234702" as="style">
+    <link rel="preload" href="/dist/main.6f0adc8e.css?v=6181e1d43d7c9ff8" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.f40cf576.css?v=269e5e0317234702">
+    <link rel="stylesheet" href="/dist/main.6f0adc8e.css?v=6181e1d43d7c9ff8">
 
     <!-- JSON-LD Structured Data Schema -->
     
@@ -112,7 +112,7 @@
             inset: 0;
             border-radius: inherit;
             background: radial-gradient(400px circle at var(--mouse-x, 0) var(--mouse-y, 0),
-                    rgba(0, 240, 255, 0.15),
+                    var(--glow1),
                     transparent 40%);
             z-index: 0;
             pointer-events: none;
@@ -147,24 +147,23 @@
         .dash-card:hover,
         .info-card:hover {
             transform: translateY(-8px) scale(1.01) !important;
-            border-color: rgba(0, 240, 255, 0.3) !important;
-            border-top-color: rgba(0, 240, 255, 0.6) !important;
+            border-color: var(--glow1) !important;
+            border-top-color: var(--glow2) !important;
             /* Enhance 3D shadow on hover */
             box-shadow:
-                inset 0 1px 2px rgba(255, 255, 255, 0.3),
-                inset 0 -6px 15px rgba(0, 0, 0, 0.8),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.9),
-                0 24px 50px rgba(0, 0, 0, 0.7),
-                0 10px 20px rgba(0, 240, 255, 0.15) !important;
+                inset 0 1px 2px rgba(255, 255, 255, 0.1),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+                0 15px 30px var(--card),
+                0 10px 20px var(--glow1) !important;
         }
 
         .btn-amb {
-            box-shadow: 0 4px 14px rgba(232, 140, 42, 0.3);
+            box-shadow: 0 4px 14px var(--glow3);
             transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s ease;
         }
 
         .btn-amb:hover {
-            box-shadow: 0 8px 24px rgba(232, 140, 42, 0.5) !important;
+            box-shadow: 0 8px 24px var(--glow1) !important;
         }
 
         .btn-out {
@@ -2297,9 +2296,9 @@
     
 
 
-    <script defer="" src="/dist/careers.2ad45624.js?v=269e5e0317234702"></script>
-    <script defer="" src="/dist/app.c3e3bf2e.js?v=269e5e0317234702"></script>
-    <script defer="" src="/dist/ux-engine.31ef492a.js?v=269e5e0317234702"></script>
+    <script defer="" src="/dist/careers.2ad45624.js?v=6181e1d43d7c9ff8"></script>
+    <script defer="" src="/dist/app.c3e3bf2e.js?v=6181e1d43d7c9ff8"></script>
+    <script defer="" src="/dist/ux-engine.31ef492a.js?v=6181e1d43d7c9ff8"></script>
 
 
 </body></html>
