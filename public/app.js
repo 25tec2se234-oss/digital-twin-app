@@ -5904,15 +5904,15 @@ window.setTheme = function(themeName) {
 window.toggleThemeDropdown = function() {
     var dropdown = document.getElementById('theme-dropdown');
     if (dropdown) {
-        dropdown.classList.toggle('show');
+        dropdown.classList.toggle('open');
     }
 };
 
 document.addEventListener('click', function(e) {
     if (!e.target.closest('#theme-switcher')) {
         var dropdown = document.getElementById('theme-dropdown');
-        if (dropdown && dropdown.classList.contains('show')) {
-            dropdown.classList.remove('show');
+        if (dropdown && dropdown.classList.contains('open')) {
+            dropdown.classList.remove('open');
         }
     }
 });
