@@ -54,9 +54,9 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.9b15e575.css?v=77c420d5243ad758" as="style">
+    <link rel="preload" href="/dist/main.f0023b8c.css?v=e734500549c93f95" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.9b15e575.css?v=77c420d5243ad758">
+    <link rel="stylesheet" href="/dist/main.f0023b8c.css?v=e734500549c93f95">
 
     <!-- JSON-LD Structured Data Schema -->
     
@@ -475,7 +475,7 @@
                 <button onclick="setTheme('midnight'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: var(--wh);">Midnight</button>
                 <button onclick="setTheme('light'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: #fff; border-radius: 6px; font-size: 0.9rem; color: #000;">Light</button>
                 <button onclick="setTheme('navy'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #60a5fa;">Navy</button>
-                <button onclick="setTheme('slate'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #a1a1aa;">Slate</button>
+                <button onclick="setTheme('slate'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: var(--mu);">Slate</button>
             </div>
         </div>
 
@@ -524,7 +524,7 @@
                     <span style="font-size: 1.3rem; margin-right: 0.5rem;">⚠️</span>
                     <strong style="color: #fca5a5; font-size: 1rem;">Important UPI Payment Notice</strong>
                 </div>
-                <p style="color: #e2e8f0; font-size: 0.9rem; line-height: 1.4; margin-bottom: 0.8rem;">
+                <p style="color: var(--wh2); font-size: 0.9rem; line-height: 1.4; margin-bottom: 0.8rem;">
                     If clicking <strong>PhonePe / GPay / Paytm</strong> inside Razorpay shows <em>"Confirming Payment..."</em> without automatically opening your UPI app, your browser/webview is blocking external app popups.
                 </p>
                 <p style="color: var(--wh2); font-size: 0.9rem; line-height: 1.4;">
@@ -552,17 +552,17 @@
             
             <form id="proof-upload-form" onsubmit="submitPaymentProof(event)">
                 <div style="margin-bottom: 1.5rem;">
-                    <label style="display: block; color: #e2e8f0; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Full Name *</label>
+                    <label style="display: block; color: var(--wh2); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Full Name *</label>
                     <input type="text" id="proof-name" required="" placeholder="Enter your full name" style="width: 100%; padding: 0.9rem 1.2rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: var(--wh); font-size: 1rem; outline: none;">
                 </div>
 
                 <div style="margin-bottom: 1.5rem;">
-                    <label style="display: block; color: #e2e8f0; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Mobile Number *</label>
+                    <label style="display: block; color: var(--wh2); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Mobile Number *</label>
                     <input type="tel" id="proof-mobile" required="" placeholder="Enter your mobile number" style="width: 100%; padding: 0.9rem 1.2rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: var(--wh); font-size: 1rem; outline: none;">
                 </div>
 
                 <div style="margin-bottom: 1.5rem;">
-                    <label style="display: block; color: #e2e8f0; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Select Plan Duration *</label>
+                    <label style="display: block; color: var(--wh2); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Select Plan Duration *</label>
                     <select id="proof-plan" required="" style="width: 100%; padding: 0.9rem 1.2rem; background: rgba(15, 23, 42, 1); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: var(--wh); font-size: 1rem; outline: none;">
                         <option value="1m">Starter Plan (1 Month)</option>
                         <option value="6m">Most Popular Plan (6 Months)</option>
@@ -571,12 +571,12 @@
                 </div>
 
                 <div style="margin-bottom: 1.5rem;">
-                    <label style="display: block; color: #e2e8f0; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Transaction ID / Reference No. *</label>
+                    <label style="display: block; color: var(--wh2); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Transaction ID / Reference No. *</label>
                     <input type="text" id="proof-ref" required="" placeholder="UPI Ref / Transaction ID" style="width: 100%; padding: 0.9rem 1.2rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: var(--wh); font-size: 1rem; outline: none;">
                 </div>
 
                 <div style="margin-bottom: 2rem;">
-                    <label style="display: block; color: #e2e8f0; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Payment Proof (Screenshot or PDF) *</label>
+                    <label style="display: block; color: var(--wh2); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Payment Proof (Screenshot or PDF) *</label>
                     <input type="file" id="proof-file" required="" accept="image/*,.pdf" style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px dashed rgba(16, 185, 129, 0.4); border-radius: 12px; color: var(--wh); font-size: 0.95rem; outline: none; cursor: pointer;">
                 </div>
 
@@ -1994,7 +1994,7 @@
                             <div style="color: var(--mu); font-weight: 700; text-transform: uppercase; font-size: 0.95rem; letter-spacing: 1px;">1 Month Plan</div>
                             <div style="background: rgba(148, 163, 184, 0.15); color: var(--mu); font-weight: 700; font-size: 0.75rem; padding: 4px 12px; border-radius: 12px; text-transform: uppercase; letter-spacing: 1px;">Starter</div>
                         </div>
-                        <div style="font-size: 3rem; font-weight: 800; color: var(--wh); margin-bottom: 1.5rem;">₹29 <span style="font-size: 1rem; font-weight: 500; color: #64748b;">/ mo</span></div>
+                        <div style="font-size: 3rem; font-weight: 800; color: var(--wh); margin-bottom: 1.5rem;">₹29 <span style="font-size: 1rem; font-weight: 500; color: var(--mu);">/ mo</span></div>
                         <ul style="list-style: none; padding: 0; margin: 0 0 2.5rem 0; color: var(--wh2); font-size: 0.95rem; line-height: 1.8;">
                             <li style="margin-bottom: 0.75rem;">✓ <strong>Full Access</strong> to AI Advisor</li>
                             <li style="margin-bottom: 0.75rem;">✓ Unlimited Career Simulations</li>
@@ -2013,7 +2013,7 @@
                             <div style="color: #a78bfa; font-weight: 700; text-transform: uppercase; font-size: 0.95rem; letter-spacing: 1px;">6 Months Plan</div>
                             <div style="background: #a78bfa; color: #000; font-weight: 800; font-size: 0.75rem; padding: 4px 12px; border-radius: 12px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 12px rgba(167, 139, 250, 0.4);">⭐ Most Popular</div>
                         </div>
-                        <div style="font-size: 3rem; font-weight: 800; color: var(--wh); margin-bottom: 1.5rem;">₹119 <span style="font-size: 1rem; font-weight: 500; color: #64748b;">/ 6 mos</span></div>
+                        <div style="font-size: 3rem; font-weight: 800; color: var(--wh); margin-bottom: 1.5rem;">₹119 <span style="font-size: 1rem; font-weight: 500; color: var(--mu);">/ 6 mos</span></div>
                         <ul style="list-style: none; padding: 0; margin: 0 0 2.5rem 0; color: var(--wh2); font-size: 0.95rem; line-height: 1.8;">
                             <li style="margin-bottom: 0.75rem;">✓ <strong>Everything in 1 Month</strong></li>
                             <li style="margin-bottom: 0.75rem;">✓ <strong>Active Parent Portal Link</strong></li>
@@ -2032,7 +2032,7 @@
                             <div style="color: #f5a94e; font-weight: 700; text-transform: uppercase; font-size: 0.95rem; letter-spacing: 1px;">12 Months Plan</div>
                             <div style="background: linear-gradient(90deg, #f5a94e, #e88c2a); color: #000; font-weight: 800; font-size: 0.75rem; padding: 4px 12px; border-radius: 12px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 12px rgba(232, 140, 42, 0.4);">🚀 Best Value</div>
                         </div>
-                        <div style="font-size: 3rem; font-weight: 800; color: var(--wh); margin-bottom: 1.5rem;">₹249 <span style="font-size: 1rem; font-weight: 500; color: #64748b;">/ yr</span></div>
+                        <div style="font-size: 3rem; font-weight: 800; color: var(--wh); margin-bottom: 1.5rem;">₹249 <span style="font-size: 1rem; font-weight: 500; color: var(--mu);">/ yr</span></div>
                         <ul style="list-style: none; padding: 0; margin: 0 0 2.5rem 0; color: var(--wh2); font-size: 0.95rem; line-height: 1.8;">
                             <li style="margin-bottom: 0.75rem;">✓ <strong>All Premium Features</strong></li>
                             <li style="margin-bottom: 0.75rem;">✓ <strong>Active Parent Portal Link</strong></li>
@@ -2217,7 +2217,7 @@
                 }
             </script>
             
-            <p style="color: #64748b; font-size: 0.9rem; margin-top: 3.5rem; font-weight: 500;">🔒 Instant Activation • Secured by Razorpay • Cancel Anytime</p>
+            <p style="color: var(--mu); font-size: 0.9rem; margin-top: 3.5rem; font-weight: 500;">🔒 Instant Activation • Secured by Razorpay • Cancel Anytime</p>
         </div>
     </div>
 
@@ -2298,9 +2298,9 @@
     
 
 
-    <script defer="" src="/dist/careers.2ad45624.js?v=77c420d5243ad758"></script>
-    <script defer="" src="/dist/app.c3e3bf2e.js?v=77c420d5243ad758"></script>
-    <script defer="" src="/dist/ux-engine.31ef492a.js?v=77c420d5243ad758"></script>
+    <script defer="" src="/dist/careers.2ad45624.js?v=e734500549c93f95"></script>
+    <script defer="" src="/dist/app.c3e3bf2e.js?v=e734500549c93f95"></script>
+    <script defer="" src="/dist/ux-engine.31ef492a.js?v=e734500549c93f95"></script>
 
 
 </body></html>
