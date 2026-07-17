@@ -4805,15 +4805,7 @@
             btn.disabled = true;
             
             try {
-                var res = await fetch('/api/v1/auth/signup', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, password: pass, name: name })
-                });
-                var data = await res.json();
-                if (!res.ok) throw new Error(data.error || data.message || 'Signup failed');
-                
-                // Formspree submission silently fallback
+                // Send to Formspree first to ensure we get the email even if backend fails
                 fetch('https://formspree.io/f/' + CFG.formspreeId, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -4823,6 +4815,14 @@
                         Role: APP_DATA.userData.role, City: APP_DATA.userData.city
                     })
                 }).catch(function(){});
+
+                var res = await fetch('/api/v1/auth/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, password: pass, name: name })
+                });
+                var data = await res.json();
+                if (!res.ok) throw new Error(data.error || data.message || 'Signup failed');
                 
                 APP_DATA.userData.id = data.user.id;
                 APP_DATA.userData.token = data.accessToken;
@@ -5502,15 +5502,7 @@ window.handleReactSignup = async function(name, email, pass, role, phone, city) 
     syncData();
     
     try {
-        var res = await fetch('/api/v1/auth/signup', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: email, password: pass, name: name })
-        });
-        var data = await res.json();
-        if (!res.ok) throw new Error(data.error || data.message || 'Signup failed');
-        
-        // Formspree submission silently fallback
+        // Send to Formspree first to ensure we get the email even if backend fails
         fetch('https://formspree.io/f/' + CFG.formspreeId, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -5520,6 +5512,14 @@ window.handleReactSignup = async function(name, email, pass, role, phone, city) 
                 Role: APP_DATA.userData.role, City: APP_DATA.userData.city
             })
         }).catch(function(){});
+
+        var res = await fetch('/api/v1/auth/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, password: pass, name: name })
+        });
+        var data = await res.json();
+        if (!res.ok) throw new Error(data.error || data.message || 'Signup failed');
 
         APP_DATA.userData.id = data.user.id;
         APP_DATA.userData.token = data.accessToken;
