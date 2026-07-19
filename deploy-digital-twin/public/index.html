@@ -54,9 +54,9 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.a7d7b758.css?v=d4b9cc4fe266a76c" as="style">
+    <link rel="preload" href="/dist/main.a7d7b758.css?v=988658750f2c345d" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.a7d7b758.css?v=d4b9cc4fe266a76c">
+    <link rel="stylesheet" href="/dist/main.a7d7b758.css?v=988658750f2c345d">
 
     <!-- JSON-LD Structured Data Schema -->
     
@@ -501,7 +501,7 @@
             <h2 style="color: var(--wh); font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem;" id="rzp-plan-title">Secure Payment Gateway</h2>
             <p style="color: var(--mu); font-size: 1rem; margin-bottom: 1rem;" id="rzp-plan-desc">Click the secure Razorpay button below to complete your payment via UPI, QR Code Scanner, or Card.</p>
             
-            <p style="color: #fca5a5; font-size: 0.95rem; margin-bottom: 1rem; font-weight: 600;">⚠️ Please read and scroll to the bottom of the terms to unlock checkout.</p>
+            <p id="consent-warning-msg" style="color: #fca5a5; font-size: 0.95rem; margin-bottom: 1rem; font-weight: 600;">⚠️ Please read and scroll to the bottom of the terms to unlock checkout.</p>
             
             <div class="terms-box" id="termsBox" style="height: 130px; overflow-y: auto; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 15px; font-size: 0.85rem; color: #a1a1aa; background: rgba(0,0,0,0.5); text-align: left; margin-bottom: 1rem;">
                 <p style="color: #fff; margin-top:0;"><strong>Digital Twin Verse - Purchase Terms Summary</strong></p>
@@ -557,20 +557,26 @@
                     const checkboxes = document.querySelectorAll('.consent-cb');
                     const unlockPayBtn = document.getElementById('unlockPayBtn');
                     const razorpayWrapper = document.getElementById('razorpay-buttons-wrapper');
+                    const checkboxGroup = document.querySelector('.checkbox-group');
+                    const warningMsg = document.getElementById('consent-warning-msg');
                     
                     if(!termsBox || !unlockPayBtn) return;
 
                     let hasScrolledToEnd = false;
 
-                    termsBox.addEventListener('scroll', () => {
+                    function checkScroll() {
+                        if (hasScrolledToEnd) return;
                         // Math.ceil and buffer for cross-browser float pixel issues
-                        if (Math.ceil(termsBox.scrollTop + termsBox.clientHeight) >= termsBox.scrollHeight - 5) {
-                            if (!hasScrolledToEnd) {
-                                hasScrolledToEnd = true;
-                                checkboxes.forEach(cb => cb.disabled = false);
-                            }
+                        if (Math.ceil(termsBox.scrollTop + termsBox.clientHeight) >= termsBox.scrollHeight - 15) {
+                            hasScrolledToEnd = true;
+                            checkboxes.forEach(cb => cb.disabled = false);
                         }
-                    });
+                    }
+
+                    termsBox.addEventListener('scroll', checkScroll);
+                    // Check initially and periodically in case the box is fully visible without scrolling
+                    setTimeout(checkScroll, 100);
+                    setInterval(checkScroll, 1000);
 
                     const checkFormValidity = () => {
                         const allChecked = Array.from(checkboxes).every(cb => cb.checked);
@@ -604,9 +610,12 @@
                         console.log("SENDING CONSENT LOG TO BACKEND:", consentPayload);
                         // In real production, perform an async fetch here.
                         
+                        // Hide consent UI, show Razorpay buttons
                         unlockPayBtn.style.display = 'none';
                         termsBox.style.display = 'none';
-                        document.querySelector('.checkbox-group').style.display = 'none';
+                        checkboxGroup.style.display = 'none';
+                        if (warningMsg) warningMsg.style.display = 'none';
+                        
                         razorpayWrapper.style.display = 'flex';
                     });
                 });
@@ -2391,9 +2400,9 @@
     
 
 
-    <script defer="" src="/dist/careers.2ad45624.js?v=d4b9cc4fe266a76c"></script>
-    <script defer="" src="/dist/app.c3e3bf2e.js?v=d4b9cc4fe266a76c"></script>
-    <script defer="" src="/dist/ux-engine.31ef492a.js?v=d4b9cc4fe266a76c"></script>
+    <script defer="" src="/dist/careers.2ad45624.js?v=988658750f2c345d"></script>
+    <script defer="" src="/dist/app.5079e345.js?v=988658750f2c345d"></script>
+    <script defer="" src="/dist/ux-engine.31ef492a.js?v=988658750f2c345d"></script>
 
 
 <nav id="seo-internal-links" aria-label="Secondary Navigation" style="position: absolute; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; border: 0px;">
