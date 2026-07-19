@@ -7,6 +7,7 @@ const env = require('../config/env');
 const ApiError = require('../utils/apiError');
 const userModel = require('../models/userModel');
 const emailService = require('../services/emailService');
+const consentModel = require('../models/consentModel');
 
 const getKeyId = () => (env.RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID || process.env['RAZORPAY_KEY_ID '] || 'rzp_live_T6IRvwv0PhxTVR').trim();
 const getKeySecret = () => (env.RAZORPAY_KEY_SECRET || process.env.RAZORPAY_KEY_SECRET || process.env['RAZORPAY_KEY_SECRET '] || '9cR9t2PHsqpB152wlYSw7eOO').trim();
@@ -345,9 +346,35 @@ async function verifyPaymentProof(req, res, next) {
   }
 }
 
+async function logConsent(req, res, next) {
+  try {
+    const { userId, termsVersion, consents, userAgent } = req.body;
+    
+    // Extract IP safely behind proxies
+    const ipAddress = req.headers['x-forwarded-for'] || req.socket.remoteAddress || req.ip || 'unknown';
+    
+    const payload = {
+      userId,
+      termsVersion,
+      ipAddress,
+      userAgent,
+      consents
+    };
+    
+    await consentModel.logConsent(payload);
+    
+    res.json({ success: true, message: 'Consent logged successfully' });
+  } catch (err) {
+    console.error('logConsent error:', err);
+    // Don't fail the user payment if logging fails slightly, just log it.
+    res.status(200).json({ success: false, error: 'Failed to log consent, but proceeding.' });
+  }
+}
+
 module.exports = {
   createOrder,
   verifyPayment,
-  verifyPaymentProof
+  verifyPaymentProof,
+  logConsent
 };
 

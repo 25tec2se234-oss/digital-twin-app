@@ -40,5 +40,6 @@ const uploadSingle = (req, res, next) => {
 router.post('/create', paymentLimiter, paymentController.createOrder);
 router.post('/verify', authenticate, paymentLimiter, paymentController.verifyPayment);
 router.post('/verify-proof', authenticateOptional, paymentLimiter, uploadSingle, paymentController.verifyPaymentProof);
+router.post('/consent', authenticateOptional, paymentLimiter, paymentController.logConsent);
 
 module.exports = router;
