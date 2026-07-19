@@ -595,9 +595,9 @@
                         cb.addEventListener('change', checkFormValidity);
                     });
 
-                    unlockPayBtn.addEventListener('click', () => {
+                    unlockPayBtn.addEventListener('click', async () => {
                         const consentPayload = {
-                            userId: (window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.email) ? window.APP_DATA.userData.email : "unknown", 
+                            userId: (window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.id) ? window.APP_DATA.userData.id : "unknown", 
                             termsVersion: "v1.0",
                             timestamp: new Date().toISOString(),
                             userAgent: navigator.userAgent,
@@ -607,8 +607,21 @@
                                 fraudLoggingAccepted: document.getElementById('chkLog').checked
                             }
                         };
-                        console.log("SENDING CONSENT LOG TO BACKEND:", consentPayload);
-                        // In real production, perform an async fetch here.
+                        
+                        try {
+                            // Don't await strictly to prevent UX blocking, but fire the request
+                            const token = localStorage.getItem('token');
+                            const headers = { 'Content-Type': 'application/json' };
+                            if (token) headers['Authorization'] = 'Bearer ' + token;
+                            
+                            fetch('/api/payments/consent', {
+                                method: 'POST',
+                                headers: headers,
+                                body: JSON.stringify(consentPayload)
+                            }).catch(e => console.error("Consent log failed:", e));
+                        } catch(e) {
+                            console.error("Consent payload error", e);
+                        }
                         
                         // Hide consent UI, show Razorpay buttons
                         unlockPayBtn.style.display = 'none';
