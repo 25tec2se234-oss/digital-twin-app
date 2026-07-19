@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Twin Verse - Secure Checkout</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f4f4f5;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-container {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 20px;
+            background: #2563eb;
+            color: white;
+            text-align: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .modal-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .terms-box {
+            height: 150px;
+            overflow-y: auto;
+            border: 1px solid #e4e4e7;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 0.85rem;
+            color: #3f3f46;
+            background: #f8fafc;
+        }
+
+        .terms-box p {
+            margin-top: 0;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-top: 3px;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            font-size: 0.9rem;
+            color: #18181b;
+            cursor: pointer;
+            line-height: 1.4;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            background: #f4f4f5;
+            border-top: 1px solid #e4e4e7;
+            text-align: center;
+        }
+
+        .pay-btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            background: #2563eb;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .pay-btn:disabled {
+            background: #a1a1aa;
+            cursor: not-allowed;
+        }
+
+        .pay-btn:not(:disabled):hover {
+            background: #1d4ed8;
+        }
+
+        .backend-spec {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            text-align: left;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Go Premium (₹249/yr)</h2>
+            </div>
+            
+            <div class="modal-body">
+                <p style="margin: 0; font-size: 0.9rem; color: #52525b; font-weight: 500;">Please read and scroll to the bottom of the terms to enable checkout.</p>
+                
+                <div class="terms-box" id="termsBox">
+                    <p><strong>Digital Twin Verse - Purchase Terms Summary</strong></p>
+                    <p>1. <strong>Strict No-Refund Policy:</strong> By purchasing this premium subscription, you immediately gain access to proprietary digital content and features. Therefore, all sales are final. No refunds will be issued under any circumstances except as mandated by Indian law.</p>
+                    <p>2. <strong>Mandatory First Contact:</strong> You agree that before initiating any payment dispute or chargeback with your bank or Razorpay, you will contact our support team to attempt resolution.</p>
+                    <p>3. <strong>Anti-Fraud Measures:</strong> We actively log your IP address, device ID, timestamp, and consent status. Filing a false chargeback (e.g., claiming "service not rendered" despite active usage) constitutes fraud. We reserve the right to ban your account and submit this log data to your bank and law enforcement as proof of delivery and consent.</p>
+                    <p>4. <strong>Parental Consent:</strong> If you are under 18, you confirm that your parent or guardian has authorized this purchase.</p>
+                    <p><em>End of terms. Please check the boxes below to proceed.</em></p>
+                </div>
+
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="chkRefund" class="consent-cb" disabled>
+                        <label for="chkRefund">I have read and agree to the Strict No-Refund Policy.</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="chkDispute" class="consent-cb" disabled>
+                        <label for="chkDispute">I agree to contact Support before initiating any bank dispute.</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="chkLog" class="consent-cb" disabled>
+                        <label for="chkLog">I acknowledge my IP, timestamp, and consent are logged for fraud prevention.</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="payBtn" class="pay-btn" disabled>Pay ₹249 Now via Razorpay</button>
+                
+                <!-- Displaying the spec for developer reference -->
+                <div class="backend-spec" id="specBox">
+// BACKEND ENDPOINT SPEC
+// POST /api/v1/payments/log-consent
+// Headers: { "Content-Type": "application/json", "Authorization": "Bearer <TOKEN>" }
+// Payload Example:
+/*
+{
+  "userId": "usr_987654321",
+  "termsVersion": "v1.2_July2026",
+  "clientIp": "192.168.1.45",
+  "timestamp": "2026-07-19T20:15:00Z",
+  "userAgent": "Mozilla/5.0...",
+  "consents": {
+    "refundPolicyAccepted": true,
+    "disputePolicyAccepted": true,
+    "fraudLoggingAccepted": true
+  }
+}
+*/
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const termsBox = document.getElementById('termsBox');
+            const checkboxes = document.querySelectorAll('.consent-cb');
+            const payBtn = document.getElementById('payBtn');
+            const specBox = document.getElementById('specBox');
+
+            let hasScrolledToEnd = false;
+
+            // 1. Enable checkboxes only when user scrolls to the bottom of the terms
+            termsBox.addEventListener('scroll', () => {
+                // Add a small buffer (5px) for browser rounding issues
+                if (termsBox.scrollTop + termsBox.clientHeight >= termsBox.scrollHeight - 5) {
+                    if (!hasScrolledToEnd) {
+                        hasScrolledToEnd = true;
+                        checkboxes.forEach(cb => cb.disabled = false);
+                    }
+                }
+            });
+
+            // 2. Enable Pay button only when all checkboxes are checked
+            const checkFormValidity = () => {
+                const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+                payBtn.disabled = !allChecked;
+            };
+
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', checkFormValidity);
+            });
+
+            // 3. Log consent on click and simulate Razorpay trigger
+            payBtn.addEventListener('click', async () => {
+                // Prevent double clicks
+                payBtn.disabled = true;
+                payBtn.innerText = "Processing securely...";
+
+                // Mock fetching client IP (in production, backend often captures this, but frontend can pass it if using a third-party IP API)
+                const mockClientIp = "122.161.45.89"; 
+                const currentTimestamp = new Date().toISOString();
+                
+                const consentPayload = {
+                    userId: "usr_987654321", // Replace with dynamic user ID
+                    termsVersion: "v1.2_July2026",
+                    clientIp: mockClientIp,
+                    timestamp: currentTimestamp,
+                    userAgent: navigator.userAgent,
+                    consents: {
+                        refundPolicyAccepted: document.getElementById('chkRefund').checked,
+                        disputePolicyAccepted: document.getElementById('chkDispute').checked,
+                        fraudLoggingAccepted: document.getElementById('chkLog').checked
+                    }
+                };
+
+                console.log("SENDING CONSENT LOG TO BACKEND:", JSON.stringify(consentPayload, null, 2));
+                
+                // Show spec box for demonstration purposes
+                specBox.style.display = "block";
+
+                /*
+                // ACTUAL IMPLEMENTATION EXAMPLE:
+                try {
+                    await fetch('/api/v1/payments/log-consent', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(consentPayload)
+                    });
+                    
+                    // After successful log, trigger Razorpay
+                    const options = {
+                        key: "YOUR_RAZORPAY_KEY",
+                        amount: "24900", // 249 INR
+                        // ... other razorpay options
+                    };
+                    const rzp = new Razorpay(options);
+                    rzp.open();
+                } catch (err) {
+                    alert("Error processing consent. Please try again.");
+                }
+                */
+
+                setTimeout(() => {
+                    payBtn.innerText = "Razorpay UI Triggered (Simulated)";
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>
