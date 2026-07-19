@@ -522,6 +522,10 @@
                     I agree to contact Support before initiating any bank dispute.
                 </label>
                 <label style="font-size: 0.85rem; color: #e4e4e7; cursor: pointer; display: flex; align-items: flex-start; gap: 8px;">
+                    <input type="checkbox" id="chkAge" class="consent-cb" disabled style="margin-top: 3px;">
+                    I am over 18 years old OR I am a parent authorizing this transaction.
+                </label>
+                <label style="font-size: 0.85rem; color: #e4e4e7; cursor: pointer; display: flex; align-items: flex-start; gap: 8px;">
                     <input type="checkbox" id="chkLog" class="consent-cb" disabled style="margin-top: 3px;">
                     I acknowledge my IP, timestamp, and consent are logged for fraud prevention.
                 </label>
@@ -598,12 +602,13 @@
                     unlockPayBtn.addEventListener('click', async () => {
                         const consentPayload = {
                             userId: (window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.id) ? window.APP_DATA.userData.id : "unknown", 
-                            termsVersion: "v1.0",
+                            termsVersion: "v2.0",
                             timestamp: new Date().toISOString(),
                             userAgent: navigator.userAgent,
                             consents: {
                                 refundPolicyAccepted: document.getElementById('chkRefund').checked,
                                 disputePolicyAccepted: document.getElementById('chkDispute').checked,
+                                ageAndParentalConsent: document.getElementById('chkAge').checked,
                                 fraudLoggingAccepted: document.getElementById('chkLog').checked
                             }
                         };

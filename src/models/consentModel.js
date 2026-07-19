@@ -6,9 +6,10 @@ async function logConsent(data) {
     const text = `
       INSERT INTO payment_consents(
         user_id, terms_version, ip_address, user_agent, 
-        refund_accepted, dispute_accepted, fraud_logging_accepted
+        refund_accepted, dispute_accepted, fraud_logging_accepted,
+        age_and_parental_consent
       ) 
-      VALUES($1, $2, $3, $4, $5, $6, $7)
+      VALUES($1, $2, $3, $4, $5, $6, $7, $8)
       RETURNING id, created_at
     `;
     const values = [
@@ -18,7 +19,8 @@ async function logConsent(data) {
       data.userAgent || 'unknown',
       data.consents?.refundPolicyAccepted === true,
       data.consents?.disputePolicyAccepted === true,
-      data.consents?.fraudLoggingAccepted === true
+      data.consents?.fraudLoggingAccepted === true,
+      data.consents?.ageAndParentalConsent === true
     ];
     
     const result = await db.query(text, values);
