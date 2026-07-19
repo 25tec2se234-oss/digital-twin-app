@@ -117,7 +117,24 @@ router.get('/:slug', (req, res) => {
         }
 
         let relatedHtml = '';
-        // If we want related articles, we can add logic later. For now, empty or mock if none.
+        if (blog.relatedArticles && blog.relatedArticles.length > 0) {
+            const relatedBlogs = blogs.filter(b => blog.relatedArticles.includes(b.slug));
+            if (relatedBlogs.length > 0) {
+                relatedHtml = '<div class="related-section" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);"><h2 style="color: #fff; margin-bottom: 1.5rem; font-size: 1.8rem;">Related Articles</h2><div class="related-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">';
+                relatedBlogs.forEach(b => {
+                    relatedHtml += `
+                    <a href="/blog/${b.slug}" class="blog-card" style="text-decoration: none; display: block; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; transition: transform 0.2s;">
+                        <img src="${b.featuredImage}" alt="${b.title}" loading="lazy" decoding="async" style="width: 100%; height: 200px; object-fit: cover;">
+                        <div class="blog-card-content" style="padding: 1.5rem;">
+                            <div class="blog-card-meta" style="color: #3b82f6; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">${b.publishedDate} • ${b.readingTime}</div>
+                            <h3 class="blog-card-title" style="color: #fff; font-size: 1.25rem; margin-bottom: 0.5rem; line-height: 1.4;">${b.title}</h3>
+                            <p style="color: #a1a1aa; font-size: 0.95rem; margin: 0; line-height: 1.5;">${b.metaDescription}</p>
+                        </div>
+                    </a>`;
+                });
+                relatedHtml += '</div></div>';
+            }
+        }
         
         const schemaString = generateSchema(blog);
         const seoTags = `
@@ -158,6 +175,7 @@ router.get('/:slug', (req, res) => {
                 ${blog.content}
                 ${faqHtml}
             </div>
+            ${relatedHtml}
         `;
 
         template = template.replace('{{SEO_TAGS}}', seoTags).replace('{{CONTENT}}', contentHtml);
