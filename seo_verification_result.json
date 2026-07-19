@@ -1,0 +1,35 @@
+{
+  "pagesChecked": [
+    "index.html",
+    "login.html"
+  ],
+  "pagesModified": [
+    "login.html"
+  ],
+  "pagesNeedingOptimization": [
+    "login.html"
+  ],
+  "details": {
+    "index.html": {
+      "title": true,
+      "metaDescription": true,
+      "h1": true,
+      "canonical": true,
+      "schema": true,
+      "inSitemap": true,
+      "fixesApplied": []
+    },
+    "login.html": {
+      "title": true,
+      "metaDescription": true,
+      "h1": true,
+      "canonical": true,
+      "schema": false,
+      "inSitemap": false,
+      "fixesApplied": [
+        "Added missing Schema.org markup",
+        "Added to sitemap.xml"
+      ]
+    }
+  }
+}

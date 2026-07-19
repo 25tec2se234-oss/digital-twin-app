@@ -17,7 +17,7 @@ function getBlogs() {
 }
 
 function generateSchema(blog) {
-    return JSON.stringify([
+    const schemas = [
         {
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
@@ -36,7 +36,24 @@ function generateSchema(blog) {
             "datePublished": blog.publishedDate,
             "description": blog.metaDescription
         }
-    ]);
+    ];
+
+    if (blog.faq && blog.faq.length > 0) {
+        schemas.push({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": blog.faq.map(item => ({
+                "@type": "Question",
+                "name": item.question,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": item.answer
+                }
+            }))
+        });
+    }
+
+    return JSON.stringify(schemas);
 }
 
 router.get('/', (req, res) => {
@@ -107,6 +124,15 @@ router.get('/:slug', (req, res) => {
             <title>${blog.title} | Digital Twin Verse</title>
             <meta name="description" content="${blog.metaDescription}">
             <link rel="canonical" href="https://digitaltwinvrs.com/blog/${blog.slug}">
+            <meta property="og:title" content="${blog.title} | Digital Twin Verse">
+            <meta property="og:description" content="${blog.metaDescription}">
+            <meta property="og:image" content="${blog.featuredImage}">
+            <meta property="og:url" content="https://digitaltwinvrs.com/blog/${blog.slug}">
+            <meta property="og:type" content="article">
+            <meta name="twitter:card" content="summary_large_image">
+            <meta name="twitter:title" content="${blog.title} | Digital Twin Verse">
+            <meta name="twitter:description" content="${blog.metaDescription}">
+            <meta name="twitter:image" content="${blog.featuredImage}">
             <script type="application/ld+json">${schemaString}</script>
         `;
 
