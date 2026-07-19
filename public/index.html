@@ -23,6 +23,32 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="author" content="DTV Family">
     <meta name="publisher" content="DTV Family">
+    
+    <!-- Z++ Security: Anti-DevTools -->
+    <script>
+      // Disable Right Click
+      document.addEventListener('contextmenu', event => event.preventDefault());
+      // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+      document.onkeydown = function(e) {
+        if (e.keyCode == 123) return false;
+        if (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0))) return false;
+        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
+      }
+    </script>
+
+    <!-- Z++ Responsive Fixes -->
+    <style>
+      @media (max-width: 450px) {
+        .mod-wrap { padding: 1.5rem !important; }
+        #rzp-plan-title { font-size: 1.4rem !important; }
+        .terms-box { height: 100px !important; }
+        .consent-cb { margin-top: 2px !important; }
+      }
+      @media (max-width: 350px) {
+        .mod-wrap { padding: 1.2rem !important; }
+        #rzp-plan-title { font-size: 1.2rem !important; }
+      }
+    </style>
     <meta name="copyright" content="DTV Family">
     <meta name="generator" content="Digital Twin Verse AI Engine">
     <meta name="application-name" content="Digital Twin Verse">

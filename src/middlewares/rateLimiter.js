@@ -10,10 +10,10 @@ const generalLimiter = rateLimit({
 
 const authLimiter = rateLimit({
   windowMs: env.RATE_LIMIT_WINDOW_MS,
-  max: env.AUTH_RATE_LIMIT_MAX,
+  max: 5, // Strict 5 attempts per window to prevent brute force
   standardHeaders: true,
   legacyHeaders: false,
-  message: { error: 'Too many authentication attempts. Please retry later.' }
+  message: { error: 'SECURITY ALERT: Too many authentication attempts. Please retry later.' }
 });
 
 const aiLimiter = rateLimit({
