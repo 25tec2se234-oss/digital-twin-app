@@ -203,7 +203,7 @@
         html {
             scroll-behavior: smooth;
             overflow-x: hidden;
-            overscroll-behavior-y: none;
+            overscroll-behavior-y: auto;
         }
 
         /* Interactive Cursor */
