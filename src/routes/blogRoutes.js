@@ -179,7 +179,7 @@ router.get('/', (req, res) => {
                     const itemCat = item.getAttribute('data-category');
                     if (cat === 'All' || itemCat.includes(cat)) {
                         item.style.display = 'flex'; // Wait! flex is required for blog-card to work properly because I set flex-direction: column inside the CSS!
-                        // Actually, I set `.blog-card { display: flex; flex-direction: column; ... }`. So 'flex' is correct here.
+                        // Actually, I set '.blog-card { display: flex; flex-direction: column; ... }'. So 'flex' is correct here.
                         visibleCount++;
                     } else {
                         item.style.display = 'none';
@@ -233,6 +233,15 @@ router.get('/', (req, res) => {
             }
         </script>
         `;
+
+        template = template.replace('{{CONTENT}}', gridHtml);
+        res.send(template);
+    } catch (e) {
+        console.error(e);
+        res.status(500).send("Server Error");
+    }
+});
+
 router.get('/:slug', (req, res) => {
     try {
         const blogs = getBlogs();
