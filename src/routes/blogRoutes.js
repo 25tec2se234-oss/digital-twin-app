@@ -328,9 +328,9 @@ router.get('/:slug', (req, res) => {
         <style>
             #reading-progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 5px; background: transparent; z-index: 999999; }
             #reading-progress-bar { height: 100%; background: linear-gradient(90deg, #a78bfa, #3b82f6); width: 0%; box-shadow: 0 0 10px rgba(167,139,250,0.8); transition: width 0.1s; }
-            .blog-container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
-            .blog-hero { max-width: 900px; margin: 0 auto 3rem; text-align: center; display: flex; flex-direction: column; align-items: center; }
-            .blog-layout { display: flex; gap: 4rem; align-items: flex-start; max-width: 1200px; margin: 0 auto; }
+            .blog-container { max-width: 1440px; margin: 0 auto; padding: 0 5%; }
+            .blog-hero { max-width: 1000px; margin: 0 auto 3rem; text-align: center; display: flex; flex-direction: column; align-items: center; }
+            .blog-layout { display: flex; gap: 4rem; align-items: flex-start; max-width: 1440px; margin: 0 auto; }
             .blog-main { flex: 1; min-width: 0; }
             .blog-sidebar { width: 320px; position: sticky; top: 100px; flex-shrink: 0; }
             @media(max-width: 992px) {
