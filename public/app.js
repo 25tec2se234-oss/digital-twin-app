@@ -5323,7 +5323,7 @@
                 if (count <= 0) {
                     clearInterval(waTimer);
                     if (cdTxt) cdTxt.textContent = 'Opening WhatsApp…';
-                    window.open('https://chat.whatsapp.com/Ctw2D8EcHIc6PG6AKfpkuK', '_blank');
+                    window.location.href = 'https://chat.whatsapp.com/Ctw2D8EcHIc6PG6AKfpkuK';
                     setTimeout(function() {
                         closeWAOverlay();
                         showTY();
