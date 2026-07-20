@@ -80,9 +80,9 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.a7d7b758.css?v=988658750f2c345d" as="style">
+    <link rel="preload" href="/dist/main.a7d7b758.css?v=0de11b9789caa234" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.a7d7b758.css?v=988658750f2c345d">
+    <link rel="stylesheet" href="/dist/main.a7d7b758.css?v=0de11b9789caa234">
 
     <!-- JSON-LD Structured Data Schema -->
     
@@ -445,6 +445,7 @@
             <li><a href="#ai-section">AI Advisor</a></li>
             <li><a href="/parent" style="color: #a78bfa; font-weight: 600;">Parent Portal</a></li>
             <li><a href="#rev">Reviews</a></li>
+            <li><a href="/blog">Blog</a></li>
             <li class="theme-switcher-menu" id="theme-switcher" style="position: relative; margin-left: 0.5rem;">
                 <button class="account-btn" onclick="toggleThemeDropdown()" style="padding: 0 0.8rem; font-size: 1.2rem;">
                     🎨 <span id="theme-active-label" style="display:none;">Theme</span>
@@ -492,6 +493,7 @@
         <a href="#ai-section" onclick="togMenu()">AI Advisor</a>
         <a href="/parent" style="color: #a78bfa; font-weight: 600;" onclick="togMenu()">Parent Portal</a>
         <a href="#rev" onclick="togMenu()">Reviews</a>
+        <a href="/blog" onclick="togMenu()">Blog</a>
         <button type="button" onclick="requireAuth(function(){openPricingPage(); togMenu();}); return false;" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: #e88c2a; width: 100%; text-align: left; font-size: 1.1rem; font-weight: 700;">💎 Go Premium</button>
         <button type="button" onclick="openAnalyzer(); togMenu();" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: var(--wh, #fff); width: 100%; text-align: left; font-size: 1.1rem; font-weight: 600;">🧠
             Achievement Analyzer</button>
@@ -1832,7 +1834,22 @@
 
 
 
-
+        <!-- LATEST CAREER BLOGS -->
+        <section id="latest-blogs" class="sec surf">
+            <div class="wrap">
+                <div class="rv text-center" style="text-align: center; max-width: 850px; margin: 0 auto 3.5rem;">
+                    <p class="lbl" style="justify-content: center;">Latest Career Blogs</p>
+                    <h2 class="ttl">Stay Updated with DTV</h2>
+                    <p class="desc" style="margin: 0 auto;">Explore AI-powered career guidance, education insights, career planning, future jobs, student success tips and Digital Twin technology.</p>
+                </div>
+                <div id="home-blog-grid" class="grid2 rv" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem;">
+                    <!-- JS will inject blogs here -->
+                </div>
+                <div class="rv text-center" style="text-align: center; margin-top: 3.5rem;">
+                    <button class="so-btn" onclick="window.location.href='/blog'" style="width: auto; padding: 1rem 2.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">Explore All Blogs &rarr;</button>
+                </div>
+            </div>
+        </section>
 
         <!-- WHY DIGITAL TWIN VERSE -->
         <section id="why-dtv" class="sec surf">
@@ -2444,9 +2461,9 @@
     
 
 
-    <script defer="" src="/dist/careers.2ad45624.js?v=988658750f2c345d"></script>
-    <script defer="" src="/dist/app.5079e345.js?v=988658750f2c345d"></script>
-    <script defer="" src="/dist/ux-engine.31ef492a.js?v=988658750f2c345d"></script>
+    <script defer="" src="/dist/careers.2ad45624.js?v=0de11b9789caa234"></script>
+    <script defer="" src="/dist/app.403116d3.js?v=0de11b9789caa234"></script>
+    <script defer="" src="/dist/ux-engine.31ef492a.js?v=0de11b9789caa234"></script>
 
 
 </body></html>
