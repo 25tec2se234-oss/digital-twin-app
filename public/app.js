@@ -1062,7 +1062,6 @@
                 '</div></div>' +
                 '<div style="display:flex;flex-direction:column;gap:.6rem;align-items:flex-end;">' +
                 '<button class="cd-close" onclick="closeCareer()">✕ Close</button>' +
-                '<button class="dl-report-btn" id="dl-btn-' + id + '" onclick="downloadReport(\'' + id + '\')"><span class="dl-icon">⬇ Download Report</span><span class="spin"></span></button>' +
                 '</div></div>'
                 // — Prediction Score card —
                 +
