@@ -87,7 +87,7 @@ app.use(cors({
 }));
 app.use(compression());
 app.use(sanitizeInput);
-app.use(generalLimiter);
+app.use('/api', generalLimiter);
 
 const { authenticateOptional } = require('./middlewares/auth');
 const { requirePremium } = require('./middlewares/subscription');
