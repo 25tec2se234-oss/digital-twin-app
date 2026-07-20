@@ -5296,7 +5296,7 @@
                 if (count <= 0) {
                     clearInterval(waTimer);
                     if (cdTxt) cdTxt.textContent = 'Opening WhatsApp…';
-                    window.open('https://chat.whatsapp.com/EoeMkImMW9u2NzEn2XTjr9?mode=gi_t', '_blank');
+                    window.open('https://chat.whatsapp.com/Ctw2D8EcHIc6PG6AKfpkuK', '_blank');
                     setTimeout(function() {
                         closeWAOverlay();
                         showTY();
