@@ -686,7 +686,15 @@
                     '<p>' + escapeHTML(desc) + '</p>' +
                     '<div class="fd-pills">' + pills + '</div>' +
                     '</div>';
-                detail.classList.add('open');
+                            detail.classList.add('open');
+
+            var _cg = document.getElementById('career-grid');
+            if (_cg) _cg.style.display = 'none';
+            var _dc = document.querySelector('.dash-controls');
+            if (_dc) _dc.style.display = 'none';
+            var _dov = document.getElementById('dash-overall');
+            if (_dov) _dov.style.display = 'none';
+
 
                 cards.forEach(function(c) {
                     var selected = c === card;
@@ -1133,7 +1141,15 @@
                 '</div></div>' +
                 '</div>';
 
-            detail.classList.add('open');
+                        detail.classList.add('open');
+
+            var _cg = document.getElementById('career-grid');
+            if (_cg) _cg.style.display = 'none';
+            var _dc = document.querySelector('.dash-controls');
+            if (_dc) _dc.style.display = 'none';
+            var _dov = document.getElementById('dash-overall');
+            if (_dov) _dov.style.display = 'none';
+
 
             var notesInput = document.getElementById('notes-' + id);
             if (notesInput) notesInput.value = saved.notes || '';
@@ -1174,7 +1190,18 @@
             document.querySelectorAll('.ccard').forEach(function(el) {
                 el.classList.remove('selected');
             });
+            
+            var _cg = document.getElementById('career-grid');
+            if (_cg) _cg.style.display = '';
+            var _dc = document.querySelector('.dash-controls');
+            if (_dc) _dc.style.display = '';
+            var _dov = document.getElementById('dash-overall');
+            if (_dov) _dov.style.display = '';
+            
+            var _db = document.getElementById('dashboard');
+            if (_db) _db.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+
 
         function togSkill(careerId, skillKey, el) {
             var data = getLSD();
