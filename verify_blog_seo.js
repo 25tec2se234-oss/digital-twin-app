@@ -7,7 +7,7 @@ const app = express();
 app.use('/blog', blogRoutes);
 
 async function verify() {
-    const res = await request(app).get('/blog/best-career-options-after-10th-india-2026');
+    const res = await request(app).get('/blog/top-10-career-options-after-graduation-india');
     
     if (res.status !== 200) {
         console.error("Failed to load blog! Status:", res.status);
@@ -42,7 +42,7 @@ async function verify() {
     console.log("H1 Tag Present ->", hasH1);
     
     const sitemap = fs.readFileSync('deploy-digital-twin/public/sitemap.xml', 'utf-8');
-    const sitemapUpdated = sitemap.includes('best-career-options-after-10th-india-2026');
+    const sitemapUpdated = sitemap.includes('top-10-career-options-after-graduation-india');
     console.log("Sitemap Updated ->", sitemapUpdated);
 }
 

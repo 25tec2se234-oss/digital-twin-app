@@ -1,0 +1,2 @@
+﻿Γùç injected env (33) from .env // tip: Γîÿ custom filepath { path: '/custom/path/.env' }
+{"level":"info","message":"Digital Twin server running on http://localhost:3000","timestamp":"2026-05-20T19:41:02.971Z"}
