@@ -686,14 +686,7 @@
                     '<p>' + escapeHTML(desc) + '</p>' +
                     '<div class="fd-pills">' + pills + '</div>' +
                     '</div>';
-                            detail.classList.add('open');
-
-            var _cg = document.getElementById('career-grid');
-            if (_cg) _cg.style.display = 'none';
-            var _dc = document.querySelector('.dash-controls');
-            if (_dc) _dc.style.display = 'none';
-            var _dov = document.getElementById('dash-overall');
-            if (_dov) _dov.style.display = 'none';
+                detail.classList.add('open');
 
 
                 cards.forEach(function(c) {

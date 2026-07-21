@@ -686,14 +686,7 @@
                     '<p>' + escapeHTML(desc) + '</p>' +
                     '<div class="fd-pills">' + pills + '</div>' +
                     '</div>';
-                            detail.classList.add('open');
-
-            var _cg = document.getElementById('career-grid');
-            if (_cg) _cg.style.display = 'none';
-            var _dc = document.querySelector('.dash-controls');
-            if (_dc) _dc.style.display = 'none';
-            var _dov = document.getElementById('dash-overall');
-            if (_dov) _dov.style.display = 'none';
+                detail.classList.add('open');
 
 
                 cards.forEach(function(c) {
@@ -5942,3 +5935,25 @@ document.addEventListener('click', function(e) {
         }
     }
 });
+
+
+/* Fetch Latest Blogs for Homepage */
+async function fetchLatestBlogs() {
+    const grid = document.getElementById('home-blog-grid');
+    if (!grid) return;
+    try {
+        const res = await fetch('/blog/api/latest');
+        if (!res.ok) return;
+        const blogs = await res.json();
+        if (!blogs || blogs.length === 0) return;
+        grid.innerHTML = blogs.map(b => `<a href='/blog/${b.slug}' class='blog-card'>
+            <img src='${b.featuredImage}' alt='${b.title}' loading='lazy' decoding='async'>
+            <div class='blog-card-content'>
+                <div class='blog-card-meta'>${b.publishedDate} &bull; ${b.readingTime}</div>
+                <h2 class='blog-card-title'>${b.title}</h2>
+                <p style='color: #a1a1aa; font-size: 0.95rem;'>${b.metaDescription}</p>
+            </div>
+        </a>`).join('');
+    } catch (e) { console.error('Error fetching blogs:', e); }
+}
+document.addEventListener('DOMContentLoaded', fetchLatestBlogs);
