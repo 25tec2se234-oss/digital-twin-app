@@ -21,6 +21,8 @@ function getS3Client() {
     assertS3Config();
     s3Client = new S3Client({
       region: env.AWS_REGION,
+      endpoint: env.S3_ENDPOINT || undefined,
+      forcePathStyle: env.S3_FORCE_PATH_STYLE,
       credentials: {
         accessKeyId: env.AWS_ACCESS_KEY_ID,
         secretAccessKey: env.AWS_SECRET_ACCESS_KEY

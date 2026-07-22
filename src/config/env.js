@@ -35,6 +35,8 @@ const schema = Joi.object({
   AWS_SECRET_ACCESS_KEY: Joi.string().allow(''),
   S3_BUCKET: Joi.string().allow(''),
   S3_PUBLIC_BASE_URL: Joi.string().allow(''),
+  S3_ENDPOINT: Joi.string().allow(''),
+  S3_FORCE_PATH_STYLE: Joi.boolean().truthy('true').falsy('false').default(false),
   GOOGLE_CLIENT_ID: Joi.string().allow(''),
   SENTRY_DSN: Joi.string().allow(''),
   ANTHROPIC_API_KEY: Joi.string().allow(''),
