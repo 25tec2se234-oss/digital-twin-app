@@ -25,6 +25,7 @@
         .wrap { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
         nav { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 0; border-bottom: 1px solid var(--bdr); }
         .logo { font-size: 1.5rem; font-weight: 800; color: var(--wh); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+        .logo img { width: 36px; height: 36px; border-radius: 8px; }
         .logo span { color: var(--ac); }
         
         /* Leaderboard Container */
@@ -59,7 +60,7 @@
             background: var(--surf);
             border: 1px solid var(--bdr);
             border-radius: 16px;
-            overflow: hidden;
+            overflow-x: auto;
             margin-bottom: 4rem;
         }
         table { width: 100%; border-collapse: collapse; }
@@ -135,12 +136,32 @@
         input:checked + .slider { background-color: var(--ac); }
         input:checked + .slider:before { transform: translateX(18px); }
 
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .lb-header h1 { font-size: 2rem; }
+            .lb-header p { font-size: 0.95rem; }
+            th, td { padding: 1rem; }
+            .rank { width: 50px; font-size: 1.1rem; }
+            .user-name { font-size: 1rem; }
+            .city { font-size: 0.8rem; }
+            .score { font-size: 1rem; }
+            .my-rank-content { flex-direction: column; text-align: center; gap: 0.5rem; }
+            .my-rank-content > div { text-align: center !important; }
+        }
+        @media (max-width: 480px) {
+            th, td { padding: 0.75rem 0.5rem; }
+            .filter-btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
+        }
+
     </style>
 </head>
 <body>
 
     <nav class="wrap">
-        <a href="/" class="logo">Digital Twin <span>Verse</span></a>
+        <a href="/" class="logo">
+            <img src="/img/dtv-logo.jpg" alt="DTV">
+            <div>Digital Twin <span>Verse</span></div>
+        </a>
         <div>
             <a href="/" style="color: var(--mu); text-decoration: none; margin-right: 1.5rem;">Home</a>
             <a href="/login.html" style="color: var(--wh); text-decoration: none; font-weight: 600;">Sign In</a>

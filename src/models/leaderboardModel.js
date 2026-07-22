@@ -36,7 +36,7 @@ async function getLeaderboardSnapshot(period, page, limit) {
   const offset = (page - 1) * limit;
   // We join with users to filter out those who opted out. Guests (session_id) are always opted in by default.
   const query = `
-    SELECT ls.user_id, ls.session_id, ls.score, ls.rank, ls.previous_rank, ls.display_name, ls.city, ls.updated_at
+    SELECT ls.user_id, ls.session_id, ls.score, ls.rank, ls.previous_rank, ls.display_name, ls.city
     FROM leaderboard_snapshot ls
     LEFT JOIN users u ON ls.user_id = u.id
     WHERE ls.period = $1
