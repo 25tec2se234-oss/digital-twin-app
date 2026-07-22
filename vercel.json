@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "installCommand": "echo 'Skipping Vercel install'",
-  "buildCommand": "echo 'Skipping Vercel build'",
-  "outputDirectory": "public",
   "rewrites": [
     {
       "source": "/api/:path*",
       "destination": "https://digital-twin-verse-app.onrender.com/api/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/public/$1"
     }
   ]
 }
