@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://api.digitaltwinvrs.com/api/:path*"
+      "destination": "https://digital-twin-verse-app.onrender.com/api/:path*"
     }
   ]
 }
