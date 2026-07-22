@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Global Leaderboard | Digital Twin Verse</title>
+    <meta name="description" content="View the top-performing students on Digital Twin Verse.">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b0f19;
+            --wh: #ffffff;
+            --mu: #94a3b8;
+            --ac: #00f0ff;
+            --surf: #111827;
+            --bdr: rgba(255, 255, 255, 0.1);
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--wh);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .wrap { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        nav { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 0; border-bottom: 1px solid var(--bdr); }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--wh); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+        .logo span { color: var(--ac); }
+        
+        /* Leaderboard Container */
+        .lb-header { text-align: center; margin: 4rem 0 2rem; }
+        .lb-header h1 { font-size: 3rem; margin-bottom: 1rem; }
+        .lb-header p { color: var(--mu); max-width: 600px; margin: 0 auto; font-size: 1.1rem; line-height: 1.6; }
+        
+        /* Filters */
+        .filters { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; }
+        .filter-btn {
+            background: var(--surf);
+            border: 1px solid var(--bdr);
+            color: var(--wh);
+            padding: 0.75rem 1.5rem;
+            border-radius: 99px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .filter-btn.active {
+            background: var(--ac);
+            color: #000;
+            border-color: var(--ac);
+        }
+        .filter-btn:hover:not(.active) {
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        /* Table */
+        .lb-table-wrap {
+            background: var(--surf);
+            border: 1px solid var(--bdr);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 4rem;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 1.25rem 1.5rem; text-align: left; }
+        th { color: var(--mu); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--bdr); }
+        td { border-bottom: 1px solid rgba(255,255,255,0.05); }
+        tr:last-child td { border-bottom: none; }
+        
+        .rank { font-weight: 800; font-size: 1.2rem; width: 80px; }
+        .rank.top-1 { color: #fbbf24; }
+        .rank.top-2 { color: #94a3b8; }
+        .rank.top-3 { color: #b45309; }
+        
+        .user-name { font-weight: 600; font-size: 1.1rem; display: flex; align-items: center; gap: 0.75rem; }
+        .city { color: var(--mu); font-size: 0.9rem; margin-top: 0.25rem; display: block;}
+        .score { font-weight: 700; color: var(--ac); font-size: 1.1rem; text-align: right; }
+        .trend { font-size: 1rem; width: 50px; text-align: center; }
+        .trend-up { color: #10b981; }
+        .trend-down { color: #ef4444; }
+        .trend-same { color: var(--mu); }
+        
+        /* Sticky Footer for Current User */
+        .my-rank-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(17, 24, 39, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--ac);
+            padding: 1.25rem 0;
+            z-index: 100;
+            display: none;
+        }
+        .my-rank-content { display: flex; justify-content: space-between; align-items: center; }
+        .my-rank-info h3 { margin: 0 0 0.25rem 0; font-size: 1.2rem; }
+        .my-rank-info p { margin: 0; color: var(--mu); font-size: 0.9rem; }
+        
+        .loading, .empty { text-align: center; padding: 4rem; color: var(--mu); }
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top: 3px solid var(--ac);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Privacy Toggle */
+        .privacy-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            color: var(--mu);
+            font-size: 0.9rem;
+        }
+        .switch {
+            position: relative; display: inline-block; width: 40px; height: 22px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--bdr); transition: .4s; border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px;
+            background-color: white; transition: .4s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--ac); }
+        input:checked + .slider:before { transform: translateX(18px); }
+
+    </style>
+</head>
+<body>
+
+    <nav class="wrap">
+        <a href="/" class="logo">Digital Twin <span>Verse</span></a>
+        <div>
+            <a href="/" style="color: var(--mu); text-decoration: none; margin-right: 1.5rem;">Home</a>
+            <a href="/login.html" style="color: var(--wh); text-decoration: none; font-weight: 600;">Sign In</a>
+        </div>
+    </nav>
+
+    <div class="wrap">
+        <div class="lb-header">
+            <h1>Global Leaderboard</h1>
+            <p>Compete with students globally. Complete simulations, daily tasks, and skill assessments to climb the ranks.</p>
+        </div>
+        
+        <div class="privacy-toggle" id="privacyToggleWrapper" style="display: none;">
+            <span>Show my profile publicly</span>
+            <label class="switch">
+                <input type="checkbox" id="privacyCheckbox" checked onchange="togglePrivacy(this.checked)">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" onclick="loadLeaderboard('weekly', this)">Weekly</button>
+            <button class="filter-btn" onclick="loadLeaderboard('monthly', this)">Monthly</button>
+            <button class="filter-btn" onclick="loadLeaderboard('all_time', this)">All Time</button>
+        </div>
+
+        <div class="lb-table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 80px;">Rank</th>
+                        <th>Student</th>
+                        <th style="width: 50px; text-align: center;">Trend</th>
+                        <th style="text-align: right;">Score</th>
+                    </tr>
+                </thead>
+                <tbody id="lb-body">
+                    <!-- JS Injected -->
+                </tbody>
+            </table>
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                Loading Leaderboard...
+            </div>
+            <div id="empty" class="empty" style="display: none;">
+                No activity found for this period. Be the first to earn points!
+            </div>
+        </div>
+    </div>
+
+    <!-- Sticky Footer -->
+    <div id="myRankFooter" class="my-rank-footer">
+        <div class="wrap my-rank-content">
+            <div class="my-rank-info">
+                <h3 id="myRankText">Your Rank: --</h3>
+                <p id="myProgressText">Participate in activities to get ranked.</p>
+            </div>
+            <div style="text-align: right;">
+                <h3 id="myScoreText" style="color: var(--ac); margin: 0 0 0.25rem 0; font-size: 1.2rem;">0 Points</h3>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPeriod = 'weekly';
+        let isLoggedIn = false;
+
+        async function fetchMe() {
+            try {
+                const res = await fetch('/api/v1/auth/me'); // Check if logged in
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.user) {
+                        isLoggedIn = true;
+                        document.getElementById('privacyToggleWrapper').style.display = 'flex';
+                        document.getElementById('privacyCheckbox').checked = data.user.public_leaderboard_opt_in !== false;
+                    }
+                }
+            } catch (e) {
+                console.log('Not logged in');
+            }
+
+            try {
+                const res = await fetch('/api/leaderboard/me');
+                if (res.ok) {
+                    const data = await res.json();
+                    window.myRanks = data;
+                    updateMyRankFooter();
+                }
+            } catch(e) {}
+        }
+
+        function updateMyRankFooter() {
+            const footer = document.getElementById('myRankFooter');
+            if (!window.myRanks) return;
+            const rankData = window.myRanks[currentPeriod];
+            
+            if (!rankData || rankData.rank === 0) {
+                document.getElementById('myRankText').innerText = 'Your Rank: --';
+                document.getElementById('myScoreText').innerText = '0 Pts';
+                document.getElementById('myProgressText').innerText = 'Start completing activities to get on the board!';
+            } else {
+                document.getElementById('myRankText').innerText = `Your Rank: #${rankData.rank}`;
+                document.getElementById('myScoreText').innerText = `${rankData.score} Pts`;
+                document.getElementById('myProgressText').innerText = `Keep learning to climb higher!`;
+            }
+            footer.style.display = 'block';
+        }
+
+        async function loadLeaderboard(period, btnElement) {
+            currentPeriod = period;
+            
+            // Update UI buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+            
+            const tbody = document.getElementById('lb-body');
+            const loading = document.getElementById('loading');
+            const empty = document.getElementById('empty');
+            
+            tbody.innerHTML = '';
+            loading.style.display = 'block';
+            empty.style.display = 'none';
+
+            try {
+                const res = await fetch(`/api/leaderboard?period=${period}&limit=50`);
+                const json = await res.json();
+                
+                loading.style.display = 'none';
+                
+                if (!json.data || json.data.length === 0) {
+                    empty.style.display = 'block';
+                    return;
+                }
+
+                json.data.forEach(user => {
+                    const tr = document.createElement('tr');
+                    
+                    // Rank class
+                    let rankClass = 'rank';
+                    if (user.rank === 1) rankClass += ' top-1';
+                    else if (user.rank === 2) rankClass += ' top-2';
+                    else if (user.rank === 3) rankClass += ' top-3';
+                    
+                    // Trend
+                    let trendHtml = '<span class="trend-same">—</span>';
+                    if (user.previous_rank) {
+                        if (user.rank < user.previous_rank) trendHtml = '<span class="trend-up">▲</span>';
+                        else if (user.rank > user.previous_rank) trendHtml = '<span class="trend-down">▼</span>';
+                    }
+
+                    // Name + City
+                    const cityHtml = user.city ? `<span class="city">${sanitize(user.city)}</span>` : '';
+                    
+                    tr.innerHTML = `
+                        <td class="${rankClass}">#${user.rank}</td>
+                        <td>
+                            <div class="user-name">${sanitize(user.display_name)}</div>
+                            ${cityHtml}
+                        </td>
+                        <td class="trend">${trendHtml}</td>
+                        <td class="score">${user.score.toLocaleString()}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+                
+            } catch (err) {
+                loading.style.display = 'none';
+                empty.style.display = 'block';
+                empty.innerText = 'Failed to load leaderboard. Please try again later.';
+            }
+
+            updateMyRankFooter();
+        }
+
+        async function togglePrivacy(optIn) {
+            if (!isLoggedIn) return;
+            try {
+                await fetch('/api/leaderboard/preference', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ optIn })
+                });
+            } catch(e) {}
+        }
+
+        function sanitize(str) {
+            const temp = document.createElement('div');
+            temp.textContent = str;
+            return temp.innerHTML;
+        }
+
+        // Init
+        fetchMe();
+        loadLeaderboard('weekly');
+    </script>
+</body>
+</html>
