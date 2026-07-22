@@ -32,7 +32,7 @@ async function setPublicOptIn(userId, isOptedIn) {
 /**
  * Get paginated leaderboard for a given period (excluding opted-out users).
  */
-async function getLeaderboardSnapshot(period, page, limit) {
+async function getLeaderboardSnapshot(period, page, limit, isAdmin = false) {
   const offset = (page - 1) * limit;
   // We join with users to filter out those who opted out. Guests (session_id) are always opted in by default.
   const query = `
@@ -40,7 +40,7 @@ async function getLeaderboardSnapshot(period, page, limit) {
     FROM leaderboard_snapshot ls
     LEFT JOIN users u ON ls.user_id = u.id
     WHERE ls.period = $1
-      AND (ls.user_id IS NULL OR u.public_leaderboard_opt_in = true)
+      ${isAdmin ? '' : 'AND (ls.user_id IS NULL OR u.public_leaderboard_opt_in = true)'}
     ORDER BY ls.rank ASC
     LIMIT $2 OFFSET $3
   `;

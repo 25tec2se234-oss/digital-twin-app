@@ -47,7 +47,7 @@ const trackLimiter = rateLimit({
 /**
  * GET /api/leaderboard?period=weekly&page=1&limit=25
  */
-router.get('/', guestSessionMiddleware, async (req, res, next) => {
+router.get('/', authenticateOptional, guestSessionMiddleware, async (req, res, next) => {
   try {
     const period = req.query.period || 'weekly';
     if (!['all_time', 'monthly', 'weekly'].includes(period)) {
@@ -60,13 +60,14 @@ router.get('/', guestSessionMiddleware, async (req, res, next) => {
       return res.status(400).json({ error: 'Invalid page or limit parameters.' });
     }
 
-    const cacheKey = `leaderboard_${period}_${page}_${limit}`;
+    const isAdmin = req.user && req.user.role === 'admin';
+    const cacheKey = `leaderboard_${period}_${page}_${limit}_${isAdmin}`;
     const cached = cache.get(cacheKey);
     if (cached && (Date.now() - cached.timestamp < CACHE_TTL_MS)) {
       return res.json({ data: cached.data });
     }
 
-    const data = await leaderboardModel.getLeaderboardSnapshot(period, page, limit);
+    const data = await leaderboardModel.getLeaderboardSnapshot(period, page, limit, isAdmin);
     cache.set(cacheKey, { timestamp: Date.now(), data });
     
     res.json({ data });
