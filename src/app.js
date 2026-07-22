@@ -50,7 +50,6 @@ app.use(helmet({
       scriptSrc: [
         "'self'", 
         "'unsafe-inline'", 
-        "'unsafe-eval'", 
         "https://www.googletagmanager.com", 
         "https://checkout.razorpay.com", 
         "https://cdnjs.cloudflare.com"
@@ -82,8 +81,18 @@ app.use(function(req, res, next) {
   res.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   next();
 });
+const allowedOrigins = env.CORS_ORIGINS 
+  ? env.CORS_ORIGINS.split(',').map(o => o.trim()) 
+  : ['http://localhost:3000', 'http://localhost:1234', 'https://digitaltwinvrs.com', 'https://www.digitaltwinvrs.com'];
+
 app.use(cors({
-  origin: true,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS Policy Blocked: ' + origin));
+    }
+  },
   credentials: true
 }));
 app.use(compression());

@@ -101,5 +101,6 @@ module.exports = {
   set,
   ping,
   isReady,
-  quit
+  quit,
+  getClient
 };
