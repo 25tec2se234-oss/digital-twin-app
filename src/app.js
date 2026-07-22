@@ -21,6 +21,7 @@ const dashboardRoutes = require('./routes/dashboardRoutes');
 const parentRoutes = require('./routes/parentRoutes');
 const adminSubscriptionRoutes = require('./routes/adminSubscriptionRoutes');
 const blogRoutes = require('./routes/blogRoutes');
+const leaderboardRoutes = require('./routes/leaderboardRoutes');
 const app = express();
 
 app.disable('x-powered-by');
@@ -116,6 +117,9 @@ app.use('/dashboard', dashboardRoutes);
 
 // Blog System
 app.use('/blog', blogRoutes);
+
+// Leaderboard API
+app.use('/api/leaderboard', leaderboardRoutes);
 
 const publicDir = path.join(__dirname, '..', 'public');
 const parentUiDir = path.join(__dirname, '..', 'parent-ui', 'dist');
