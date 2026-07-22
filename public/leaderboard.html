@@ -15,6 +15,13 @@
             --surf: #111827;
             --bdr: rgba(255, 255, 255, 0.1);
         }
+        [data-theme="light"] { --bg: #f8fafc; --surf: #ffffff; --wh: #0f172a; --mu: #475569; --bdr: rgba(0, 0, 0, 0.08); --ac: #0284c7; }
+        [data-theme="navy"] { --bg: #0b1120; --surf: #1e293b; --wh: #f1f5f9; --mu: #94a3b8; --bdr: rgba(255, 255, 255, 0.06); --ac: #38bdf8; }
+        [data-theme="slate"] { --bg: #18181b; --surf: #27272a; --wh: #f4f4f5; --mu: #a1a1aa; --bdr: rgba(255, 255, 255, 0.1); --ac: #a1a1aa; }
+        [data-theme="forest"] { --bg: #022c22; --surf: #064e3b; --wh: #ecfdf5; --mu: #6ee7b7; --bdr: rgba(255, 255, 255, 0.1); --ac: #34d399; }
+        [data-theme="crimson"] { --bg: #450a0a; --surf: #7f1d1d; --wh: #fef2f2; --mu: #fca5a5; --bdr: rgba(255, 255, 255, 0.1); --ac: #f87171; }
+        [data-theme="magenta"] { --bg: #4a044e; --surf: #701a75; --wh: #fdf4ff; --mu: #f0abfc; --bdr: rgba(255, 255, 255, 0.1); --ac: #e879f9; }
+
         body {
             background-color: var(--bg);
             color: var(--wh);
@@ -158,13 +165,15 @@
 <body>
 
     <nav class="wrap">
-        <a href="/" class="logo">
+        <a href="/" class="logo" style="text-decoration:none;">
             <img src="/img/dtv-logo.jpg" alt="DTV">
-            <div>Digital Twin <span>Verse</span></div>
+            <div style="display:flex; flex-direction:column; justify-content:center;">
+                <h1 style="margin:0; padding:0; font-size:inherit; font-weight:inherit; display:flex; align-items:center;">Digital<em style="color:var(--ac); font-style:normal; margin-left:0.25rem;">Twin Verse</em></h1>
+                <div style="font-size:0.7rem; color:var(--mu); font-weight:400; margin-top:-2px;">by DTV Family</div>
+            </div>
         </a>
         <div>
-            <a href="/" style="color: var(--mu); text-decoration: none; margin-right: 1.5rem;">Home</a>
-            <a href="/login.html" style="color: var(--wh); text-decoration: none; font-weight: 600;">Sign In</a>
+            <a href="/" style="color: var(--mu); text-decoration: none;">Home</a>
         </div>
     </nav>
 
@@ -229,9 +238,19 @@
         let currentPeriod = 'weekly';
         let isLoggedIn = false;
 
+        // Apply theme from localStorage
+        (function() {
+            const storedTheme = localStorage.getItem('dtv_theme') || 'midnight';
+            document.documentElement.setAttribute('data-theme', storedTheme);
+        })();
+
         async function fetchMe() {
             try {
-                const res = await fetch('/api/v1/auth/me'); // Check if logged in
+                const token = localStorage.getItem('token');
+                const headers = {};
+                if (token) headers['Authorization'] = 'Bearer ' + token;
+                
+                const res = await fetch('/api/v1/auth/me', { headers }); // Check if logged in
                 if (res.ok) {
                     const data = await res.json();
                     if (data.user) {
@@ -245,7 +264,11 @@
             }
 
             try {
-                const res = await fetch('/api/leaderboard/me');
+                const token = localStorage.getItem('token');
+                const headers = {};
+                if (token) headers['Authorization'] = 'Bearer ' + token;
+
+                const res = await fetch('/api/leaderboard/me', { headers });
                 if (res.ok) {
                     const data = await res.json();
                     window.myRanks = data;
@@ -287,7 +310,11 @@
             empty.style.display = 'none';
 
             try {
-                const res = await fetch(`/api/leaderboard?period=${period}&limit=50`);
+                const token = localStorage.getItem('token');
+                const headers = {};
+                if (token) headers['Authorization'] = 'Bearer ' + token;
+
+                const res = await fetch(`/api/leaderboard?period=${period}&limit=50`, { headers });
                 const json = await res.json();
                 
                 loading.style.display = 'none';
