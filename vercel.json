@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "installCommand": "echo 'Skipping Vercel install'",
   "buildCommand": "echo 'Skipping Vercel build'",
   "outputDirectory": "public",
   "rewrites": [
