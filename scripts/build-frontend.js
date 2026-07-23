@@ -49,13 +49,24 @@ const versionPath = path.join(__dirname, '..', 'build-version.json');
 fs.writeFileSync(versionPath, JSON.stringify({ version: buildVersion }));
 console.log(`Build version generated: ${buildVersion}`);
 
-// Update index.html in both public and deploy-digital-twin/public
-const indexPaths = [
-    path.join(publicDir, 'index.html'),
-    path.join(__dirname, '..', 'deploy-digital-twin', 'public', 'index.html')
+// Find all HTML files in both public and deploy-digital-twin/public
+const directories = [
+    publicDir,
+    path.join(__dirname, '..', 'deploy-digital-twin', 'public')
 ];
 
-indexPaths.forEach(indexPath => {
+let htmlPaths = [];
+directories.forEach(dir => {
+    if (fs.existsSync(dir)) {
+        fs.readdirSync(dir).forEach(file => {
+            if (file.endsWith('.html')) {
+                htmlPaths.push(path.join(dir, file));
+            }
+        });
+    }
+});
+
+htmlPaths.forEach(indexPath => {
     if (fs.existsSync(indexPath)) {
         let indexHtml = fs.readFileSync(indexPath, 'utf8');
         
@@ -81,7 +92,7 @@ indexPaths.forEach(indexPath => {
         }
         
         fs.writeFileSync(indexPath, indexHtml);
-        console.log(`Updated ${indexPath} with hashed assets and cache buster ?v=${buildVersion}`);
+        console.log(`Updated ${path.basename(indexPath)} with hashed assets and cache buster ?v=${buildVersion}`);
     }
 });
 
