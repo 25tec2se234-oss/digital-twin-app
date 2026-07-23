@@ -6168,7 +6168,7 @@ nav.nav-modern {
 }
 
 @media(max-width: 1250px) {
-    .nav-right-container { display: none !important; }
+    .nav-right-container, .nav-actions-modern, .nav-divider { display: none !important; }
     .nav-modern .logo-sub { display: none !important; }
 }
 @media(max-width: 600px) {
