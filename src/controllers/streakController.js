@@ -3,14 +3,15 @@ const userModel = require('../models/userModel');
 async function incrementStreak(req, res, next) {
   try {
     const userId = req.user.id;
+    const { clientStreak, clientBest, clientLastActive } = req.body || {};
     const appData = await userModel.getAppData(userId);
     
-    // Initialize streak object if it doesn't exist
-    if (!appData.streak) {
+    // Initialize streak object if it doesn't exist or is completely 0 (migration logic)
+    if (!appData.streak || (appData.streak.current === 0 && clientStreak > 0)) {
       appData.streak = {
-        current: 0,
-        best: 0,
-        lastActive: null
+        current: clientStreak ? parseInt(clientStreak, 10) : 0,
+        best: clientBest ? parseInt(clientBest, 10) : 0,
+        lastActive: clientLastActive || null
       };
     }
 
