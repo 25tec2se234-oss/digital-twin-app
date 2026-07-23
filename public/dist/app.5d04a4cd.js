@@ -5316,7 +5316,7 @@
                 if (count <= 0) {
                     clearInterval(waTimer);
                     if (cdTxt) cdTxt.textContent = 'Opening WhatsApp…';
-                    window.open('https://chat.whatsapp.com/Ctw2D8EcHIc6PG6AKfpkuK', '_blank');
+                    window.location.href = 'https://chat.whatsapp.com/Ctw2D8EcHIc6PG6AKfpkuK';
                     setTimeout(function() {
                         closeWAOverlay();
                         showTY();
@@ -5629,6 +5629,20 @@ function initDashboardUpgrades() {
     var lastActive = localStorage.getItem('dtv_last_active');
     var today = new Date().toDateString();
     
+    // Check if secure backend data is available
+    if (window.APP_DATA && window.APP_DATA.streak && typeof window.APP_DATA.streak.current !== 'undefined') {
+        streak = window.APP_DATA.streak.current;
+        bestStreak = window.APP_DATA.streak.best;
+        lastActive = window.APP_DATA.streak.lastActive;
+        
+        // Sync securely down to local storage
+        localStorage.setItem('dtv_streak', streak);
+        localStorage.setItem('dtv_best_streak', bestStreak);
+        if (lastActive) {
+            localStorage.setItem('dtv_last_active', lastActive);
+        }
+    }
+    
     // Check if streak was broken (last active was before yesterday)
     if (lastActive && lastActive !== today) {
         var yesterday = new Date();
@@ -5690,10 +5704,59 @@ if (typeof originalRenderStudentProfile === 'function') {
     }, 1000);
 }
 
-window.incrementStreak = function() {
+window.incrementStreak = async function() {
+    var today = new Date().toDateString();
+    
+    // SECURE MODE: Use backend if logged in
+    if (window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.token) {
+        try {
+            var res = await fetch('/api/v1/users/streak/increment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + window.APP_DATA.userData.token
+                }
+            });
+            var data = await res.json();
+            
+            if (res.ok) {
+                if (!window.APP_DATA.streak) window.APP_DATA.streak = {};
+                window.APP_DATA.streak.current = data.streak;
+                window.APP_DATA.streak.best = data.bestStreak;
+                window.APP_DATA.streak.lastActive = today;
+                
+                localStorage.setItem('dtv_streak', data.streak);
+                localStorage.setItem('dtv_best_streak', data.bestStreak);
+                localStorage.setItem('dtv_last_active', today);
+                
+                var btn = document.getElementById('btn-increment-streak');
+                if(btn) {
+                    btn.textContent = "Completed for Today";
+                    btn.disabled = true;
+                    btn.style.opacity = '0.5';
+                }
+                updateStreakUI();
+                
+                if(typeof showToast === 'function') {
+                    if (data.message === 'Already claimed today') {
+                        showToast('ℹ️', 'Streak already completed for today!');
+                    } else {
+                        showToast('🔥', 'Streak increased to ' + data.streak + ' days!');
+                    }
+                }
+            } else {
+                if(typeof showToast === 'function') showToast('?', 'Failed to update streak securely.');
+            }
+        } catch (e) {
+            console.error('Streak API Error:', e);
+            if(typeof showToast === 'function') showToast('?', 'Network error while updating streak.');
+        }
+        return;
+    }
+
+    // GUEST MODE: Fallback to local storage
     var streak = parseInt(localStorage.getItem('dtv_streak') || '0', 10);
     var bestStreak = parseInt(localStorage.getItem('dtv_best_streak') || '0', 10);
-    var today = new Date().toDateString();
     
     streak += 1;
     if (streak > bestStreak) bestStreak = streak;
@@ -5715,6 +5778,11 @@ window.incrementStreak = function() {
 function updateStreakUI() {
     var streak = localStorage.getItem('dtv_streak') || '0';
     var bestStreak = localStorage.getItem('dtv_best_streak') || '0';
+    
+    if (window.APP_DATA && window.APP_DATA.streak && typeof window.APP_DATA.streak.current !== 'undefined') {
+        streak = window.APP_DATA.streak.current;
+        bestStreak = window.APP_DATA.streak.best;
+    }
     
     var elCur = document.getElementById('dash-streak-count');
     var elBest = document.getElementById('dash-streak-best');
