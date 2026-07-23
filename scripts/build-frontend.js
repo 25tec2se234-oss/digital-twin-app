@@ -18,8 +18,8 @@ fs.readdirSync(distDir).forEach(file => {
 });
 
 function hashFile(filePath) {
-    const content = fs.readFileSync(filePath);
-    const hash = crypto.createHash('md5').update(content).digest('hex').slice(0, 8);
+    const contentStr = fs.readFileSync(filePath, 'utf8').replace(/\r\n/g, '\n');
+    const hash = crypto.createHash('md5').update(contentStr, 'utf8').digest('hex').slice(0, 8);
     return hash;
 }
 
