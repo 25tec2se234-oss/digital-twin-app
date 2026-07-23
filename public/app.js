@@ -5710,12 +5710,22 @@ window.incrementStreak = async function() {
     // SECURE MODE: Use backend if logged in
     if (window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.token) {
         try {
+            // Fetch local storage values to send for migration
+            var localStreak = parseInt(localStorage.getItem('dtv_streak') || '0', 10);
+            var localBest = parseInt(localStorage.getItem('dtv_best_streak') || '0', 10);
+            var localLastActive = localStorage.getItem('dtv_last_active');
+
             var res = await fetch('/api/v1/users/streak/increment', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + window.APP_DATA.userData.token
-                }
+                },
+                body: JSON.stringify({
+                    clientStreak: localStreak,
+                    clientBest: localBest,
+                    clientLastActive: localLastActive
+                })
             });
             var data = await res.json();
             
