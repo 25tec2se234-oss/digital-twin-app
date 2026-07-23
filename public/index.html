@@ -430,27 +430,36 @@
 
     <div class="noise-overlay"></div>
     <!-- NAV -->
-    <nav id="nav">
-        <div class="logo" onclick="goHome()">
-            <img src="/img/dtv-logo.jpg" alt="DTV" fetchpriority="high" width="36" height="36" style="width:36px; height:36px; border-radius:8px;">
-            <div>
-                <h1 class="logo-text" style="margin:0; padding:0; font-size:inherit; font-weight:inherit; line-height:inherit; display:flex; align-items:center;">Digital<em>Twin Verse</em></h1>
+    <nav id="nav" class="nav-modern">
+        <div class="logo-modern" onclick="goHome()">
+            <img src="/img/dtv-logo.jpg" alt="DTV" fetchpriority="high" width="38" height="38">
+            <div class="logo-text-modern">
+                <h1>Digital<em>Twin Verse</em></h1>
                 <div class="logo-sub">by DTV Family</div>
             </div>
         </div>
-        <ul class="nav-ul">
-            <li><a href="#how">How It Works</a></li>
-            <li><a href="#student-dashboard" onclick="requirePremiumFrontend(openDashboardShortcut)">Personalised Dashboard</a></li>
-            <li><a href="#dashboard">Career Explorer</a></li>
-            <li><a href="#ai-section">AI Advisor</a></li>
-            <li><a href="/parent" style="color: #a78bfa; font-weight: 600;">Parent Portal</a></li>
-            <li><a href="#rev">Reviews</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="/leaderboard.html" style="color: #fbbf24; font-weight: 600;">🏆 Leaderboard</a></li>
-            <li class="theme-switcher-menu" id="theme-switcher" style="position: relative; margin-left: 0.5rem;">
-                <button class="account-btn" onclick="toggleThemeDropdown()" style="padding: 0 0.8rem; font-size: 1.2rem;">
-                    🎨 <span id="theme-active-label" style="display:none;">Theme</span>
-                </button>
+        
+        <div class="nav-links-modern">
+            <a href="#student-dashboard" onclick="requirePremiumFrontend(openDashboardShortcut)" class="nav-link">Dashboard</a>
+            <a href="#ai-section" class="nav-link">AI Advisor</a>
+            <a href="/parent" class="nav-link special-purple">Parent Portal</a>
+            <a href="/leaderboard.html" class="nav-link special-gold">🏆 Leaderboard</a>
+            
+            <div class="nav-dropdown">
+                <span class="nav-link dropdown-toggle">More <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:-2px; margin-left: 2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+                <div class="dropdown-menu">
+                    <a href="#how">How It Works</a>
+                    <a href="#dashboard">Career Explorer</a>
+                    <a href="#rev">Reviews</a>
+                    <a href="/blog">Blog</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-actions-modern">
+            <!-- Theme -->
+            <div class="theme-switcher-menu" id="theme-switcher">
+                <button class="account-btn theme-btn-modern" onclick="toggleThemeDropdown()" title="Theme">🎨</button>
                 <div class="account-panel" id="theme-dropdown" style="right: 0; left: auto; top: 120%;">
                     <button class="acc-item" onclick="setTheme('midnight')">Midnight Dark</button>
                     <button class="acc-item" onclick="setTheme('light')">Light Professional</button>
@@ -460,14 +469,19 @@
                     <button class="acc-item" onclick="setTheme('crimson')">Sunset Crimson</button>
                     <button class="acc-item" onclick="setTheme('magenta')">Cyber Magenta</button>
                 </div>
-            </li>
-            <li><button type="button" onclick="requireAuth(openPricingPage); return false;" class="nav-pill">💎 Go Premium</button>
-            </li>
+            </div>
 
-            <li class="account-menu" id="nav-account-wrap">
+            <!-- Analyzer -->
+            <button type="button" onclick="openAnalyzer()" class="nav-pill-purple">🧠 Analyzer</button>
+
+            <!-- Go Premium -->
+            <button type="button" onclick="requireAuth(openPricingPage); return false;" class="nav-pill">💎 Premium</button>
+
+            <!-- Account -->
+            <div class="account-menu" id="nav-account-wrap">
                 <button class="account-btn" id="nav-account-btn" onclick="toggleAccountMenu(event)">
                     <span class="account-avatar" id="nav-account-avatar">DT</span>
-                    <span id="nav-account-label">Account</span>
+                    <span id="nav-account-label" class="hide-mobile">Account</span>
                 </button>
                 <div class="account-panel" id="nav-account-panel">
                     <div class="acc-item" id="nav-account-link-code" style="display:none; cursor:default; color:#a78bfa; justify-content:space-between;"><span>Parent Code:</span> <strong id="ui-link-code">-</strong></div>
@@ -476,9 +490,9 @@
                     <button class="acc-item" id="nav-account-admindb" onclick="openAdminDashboard(); hideAccountMenu()" style="display:none; color:#f5a94e;">Developer DB</button>
                     <button class="acc-item logout" id="nav-account-logout" onclick="if (doLogout()) hideAccountMenu()">Log Out</button>
                 </div>
-            </li>
-            <li><button type="button" onclick="openAnalyzer()" class="nav-pill-purple">🧠 Analyzer</button></li>
-        </ul>
+            </div>
+        </div>
+
         <div class="hbg" id="hbg" onclick="togMenu()"><span></span><span></span><span></span></div>
     </nav>
     <div class="mob" id="mob">
