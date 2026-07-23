@@ -235,6 +235,10 @@ router.get('/', (req, res) => {
         `;
 
         template = template.replace('{{CONTENT}}', gridHtml);
+        template = template.replace('{{SEO_TAGS}}', `
+            <title>Career Guidance Blog | Digital Twin Verse</title>
+            <meta name="description" content="Read our latest articles on AI career guidance, educational tips, and more.">
+        `);
         res.send(template);
     } catch (e) {
         console.error(e);
