@@ -6174,3 +6174,20 @@ nav.nav-modern {
 @media(max-width: 600px) {
     .hide-mobile { display: none !important; }
 }
+
+/* GUARANTEED MOBILE NAV FIXES */
+@media(max-width: 1250px) {
+    nav.nav-modern {
+        background: rgba(12, 12, 16, 0.95) !important;
+        display: flex !important;
+        padding: 0.8rem 5% !important;
+        z-index: 9999 !important;
+    }
+    .nav-modern .hbg {
+        display: flex !important;
+        z-index: 10000 !important;
+    }
+    .nav-modern .hbg span {
+        background: #ffffff !important;
+    }
+}
