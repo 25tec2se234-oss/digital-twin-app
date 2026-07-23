@@ -9,8 +9,14 @@ const userModel = require('../models/userModel');
 const emailService = require('../services/emailService');
 const consentModel = require('../models/consentModel');
 
-const getKeyId = () => (env.RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID || process.env['RAZORPAY_KEY_ID '] || 'rzp_live_T6IRvwv0PhxTVR').trim();
-const getKeySecret = () => (env.RAZORPAY_KEY_SECRET || process.env.RAZORPAY_KEY_SECRET || process.env['RAZORPAY_KEY_SECRET '] || '9cR9t2PHsqpB152wlYSw7eOO').trim();
+const getKeyId = () => {
+  let key = (env.RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID || process.env['RAZORPAY_KEY_ID '] || 'rzp_live_T6IRvwv0PhxTVR');
+  return key.split('\n')[0].trim();
+};
+const getKeySecret = () => {
+  let secret = (env.RAZORPAY_KEY_SECRET || process.env.RAZORPAY_KEY_SECRET || process.env['RAZORPAY_KEY_SECRET '] || '9cR9t2PHsqpB152wlYSw7eOO');
+  return secret.split('\n')[0].trim();
+};
 
 const razorpay = new Razorpay({
   key_id: getKeyId(),
