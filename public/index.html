@@ -439,43 +439,46 @@
             </div>
         </div>
         
-        <div class="nav-links-modern">
-            <a href="#student-dashboard" onclick="requirePremiumFrontend(openDashboardShortcut)" class="nav-link">Dashboard</a>
-            <a href="#ai-section" class="nav-link">AI Advisor</a>
-            <a href="/parent" class="nav-link special-purple">Parent Portal</a>
-            <a href="/leaderboard.html" class="nav-link special-gold">🏆 Leaderboard</a>
-            
-            <div class="nav-dropdown">
-                <span class="nav-link dropdown-toggle">More <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:-2px; margin-left: 2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-                <div class="dropdown-menu">
-                    <a href="#how">How It Works</a>
-                    <a href="#dashboard">Career Explorer</a>
-                    <a href="#rev">Reviews</a>
-                    <a href="/blog">Blog</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="nav-actions-modern">
-            <!-- Theme -->
-            <div class="theme-switcher-menu" id="theme-switcher">
-                <button class="account-btn theme-btn-modern" onclick="toggleThemeDropdown()" title="Theme">🎨</button>
-                <div class="account-panel" id="theme-dropdown" style="right: 0; left: auto; top: 120%;">
-                    <button class="acc-item" onclick="setTheme('midnight')">Midnight Dark</button>
-                    <button class="acc-item" onclick="setTheme('light')">Light Professional</button>
-                    <button class="acc-item" onclick="setTheme('navy')">Deep Navy</button>
-                    <button class="acc-item" onclick="setTheme('slate')">Slate Graphite</button>
-                    <button class="acc-item" onclick="setTheme('forest')">Forest Emerald</button>
-                    <button class="acc-item" onclick="setTheme('crimson')">Sunset Crimson</button>
-                    <button class="acc-item" onclick="setTheme('magenta')">Cyber Magenta</button>
+        <div class="nav-right-container">
+            <div class="nav-links-modern">
+                <a href="#student-dashboard" onclick="requirePremiumFrontend(openDashboardShortcut)" class="nav-link">Dashboard</a>
+                <a href="#ai-section" class="nav-link">AI Advisor</a>
+                <a href="/parent" class="nav-link">Parent Portal</a>
+                <a href="/leaderboard.html" class="nav-link">Leaderboard</a>
+                
+                <div class="nav-dropdown">
+                    <span class="nav-link dropdown-toggle">More <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:-2px; margin-left: 2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+                    <div class="dropdown-menu">
+                        <a href="#how">How It Works</a>
+                        <a href="#dashboard">Career Explorer</a>
+                        <a href="#rev">Reviews</a>
+                        <a href="/blog">Blog</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- Analyzer -->
-            <button type="button" onclick="openAnalyzer()" class="nav-pill-purple">🧠 Analyzer</button>
+            <div class="nav-divider"></div>
 
-            <!-- Go Premium -->
-            <button type="button" onclick="requireAuth(openPricingPage); return false;" class="nav-pill">💎 Premium</button>
+            <div class="nav-actions-modern">
+                <!-- Theme -->
+                <div class="theme-switcher-menu" id="theme-switcher">
+                    <button class="account-btn theme-btn-modern" onclick="toggleThemeDropdown()" title="Theme">🎨</button>
+                    <div class="account-panel" id="theme-dropdown" style="right: 0; left: auto; top: 120%;">
+                        <button class="acc-item" onclick="setTheme('midnight')">Midnight Dark</button>
+                        <button class="acc-item" onclick="setTheme('light')">Light Professional</button>
+                        <button class="acc-item" onclick="setTheme('navy')">Deep Navy</button>
+                        <button class="acc-item" onclick="setTheme('slate')">Slate Graphite</button>
+                        <button class="acc-item" onclick="setTheme('forest')">Forest Emerald</button>
+                        <button class="acc-item" onclick="setTheme('crimson')">Sunset Crimson</button>
+                        <button class="acc-item" onclick="setTheme('magenta')">Cyber Magenta</button>
+                    </div>
+                </div>
+
+                <!-- Analyzer -->
+                <button type="button" onclick="openAnalyzer()" class="nav-pill-purple">🧠 Analyzer</button>
+
+                <!-- Go Premium -->
+                <button type="button" onclick="requireAuth(openPricingPage); return false;" class="nav-pill">💎 Premium</button>
 
             <!-- Account -->
             <div class="account-menu" id="nav-account-wrap">
