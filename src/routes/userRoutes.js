@@ -1,6 +1,7 @@
 const express = require('express');
 const Joi = require('joi');
 const userController = require('../controllers/userController');
+const streakController = require('../controllers/streakController');
 const validate = require('../middlewares/validate');
 const { authenticate, authorize } = require('../middlewares/auth');
 const cacheResponse = require('../middlewares/cache');
@@ -110,5 +111,7 @@ router.patch('/:id/role', authenticate, authorize('admin'), validate(roleSchema)
  *         description: Updated user status
  */
 router.patch('/:id/status', authenticate, authorize('admin'), validate(statusSchema), userController.updateStatus);
+
+router.post('/streak/increment', authenticate, streakController.incrementStreak);
 
 module.exports = router;
