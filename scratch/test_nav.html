@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/css/main.css">
+    <style>
+        body { background: #ff0000; height: 2000px; } /* red background to easily see nav */
+    </style>
+</head>
+<body>
+    <nav id="nav" class="nav-modern">
+        <div class="logo-modern" onclick="goHome()">
+            <img src="/img/dtv-logo.jpg" alt="DTV" fetchpriority="high" width="38" height="38">
+            <div class="logo-text-modern">
+                <h1>Digital<em>Twin Verse</em></h1>
+                <div class="logo-sub">by DTV Family</div>
+            </div>
+        </div>
+        
+        <div class="nav-right-container">
+            <a href="#student-dashboard" class="nav-link">Dashboard</a>
+        </div>
+        <div class="nav-divider"></div>
+        <div class="nav-actions-modern">
+            <button class="nav-pill-purple">?? Analyzer</button>
+        </div>
+
+        <div class="hbg" id="hbg" onclick="togMenu()"><span></span><span></span><span></span></div>
+    </nav>
+</body>
+</html>
