@@ -557,6 +557,24 @@
         }
 
         /* ═══ NAV ═══════════════════════════════════════ */
+        .mob {
+            display: none;
+            position: fixed;
+            top: 58px;
+            left: 0;
+            right: 0;
+            z-index: 699;
+            background: rgba(0, 0, 0, .95);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--bdr);
+            flex-direction: column;
+            padding: 1.3rem 5%;
+            gap: 1rem;
+            max-height: calc(100vh - 58px);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
         nav {
             position: fixed;
             top: 0;
@@ -818,20 +836,7 @@
             transform: translateY(-7px) rotate(-45deg);
         }
 
-        .mob {
-            display: none;
-            position: fixed;
-            top: 58px;
-            left: 0;
-            right: 0;
-            z-index: 699;
-            background: rgba(0, 0, 0, .95);
-            backdrop-filter: blur(18px);
-            border-bottom: 1px solid var(--bdr);
-            flex-direction: column;
-            padding: 1.3rem 5%;
-            gap: 1rem;
-        }
+
 
         .mob.open {
             display: flex;
