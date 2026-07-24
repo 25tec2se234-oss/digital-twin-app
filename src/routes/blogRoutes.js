@@ -2,16 +2,31 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const fs = require('fs');
+const { query } = require('../db/index');
 
 const publicDir = path.join(__dirname, '..', '..', 'deploy-digital-twin', 'public');
-const blogsFilePath = path.join(__dirname, '..', 'data', 'blogs.json');
 
-function getBlogs() {
+async function getBlogs() {
     try {
-        if (!fs.existsSync(blogsFilePath)) return [];
-        return JSON.parse(fs.readFileSync(blogsFilePath, 'utf-8'));
+        const result = await query('SELECT * FROM blogs ORDER BY published_date DESC');
+        return result.rows.map(b => ({
+            id: b.id,
+            slug: b.slug,
+            title: b.title,
+            featuredImage: b.featured_image,
+            metaDescription: b.meta_description,
+            publishedDate: b.published_date ? new Date(b.published_date).toISOString().split('T')[0] : '', // Convert Date to YYYY-MM-DD
+            readingTime: b.reading_time,
+            author: b.author,
+            tags: b.tags,
+            relatedArticles: b.related_articles,
+            toc: b.toc,
+            content: b.content,
+            faq: b.faq,
+            category: b.category
+        }));
     } catch (err) {
-        console.error('Error reading blogs.json:', err);
+        console.error('Error fetching blogs from DB:', err);
         return [];
     }
 }
@@ -57,11 +72,11 @@ function generateSchema(blog) {
 }
 
 // API endpoint for homepage latest blogs
-router.get('/api/latest', (req, res) => {
+router.get('/api/latest', async (req, res) => {
     try {
-        const blogs = getBlogs();
-        const sortedBlogs = blogs.sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate));
-        const latestBlogs = sortedBlogs.slice(0, 3);
+        const blogs = await getBlogs();
+        // blogs are already sorted by published_date DESC from DB
+        const latestBlogs = blogs.slice(0, 3);
         res.json(latestBlogs);
     } catch (e) {
         console.error(e);
@@ -69,9 +84,9 @@ router.get('/api/latest', (req, res) => {
     }
 });
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        const blogs = getBlogs();
+        const blogs = await getBlogs();
         let template = fs.readFileSync(path.join(publicDir, 'blog.html'), 'utf-8');
         
         let gridHtml = `
@@ -246,9 +261,9 @@ router.get('/', (req, res) => {
     }
 });
 
-router.get('/:slug', (req, res) => {
+router.get('/:slug', async (req, res) => {
     try {
-        const blogs = getBlogs();
+        const blogs = await getBlogs();
         const blog = blogs.find(b => b.slug === req.params.slug);
         
         if (!blog) return res.status(404).send("Blog not found");
