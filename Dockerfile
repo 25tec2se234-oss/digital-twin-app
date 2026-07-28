@@ -11,7 +11,7 @@ RUN npm install --include=dev
 COPY . .
 
 RUN npm --prefix parent-ui install --include=dev
-RUN npm run build
+RUN npm --prefix parent-ui run build
 
 # Switch back to production for runtime execution
 ENV NODE_ENV=production
