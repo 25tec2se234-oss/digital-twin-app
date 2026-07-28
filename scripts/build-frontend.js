@@ -49,21 +49,31 @@ const versionPath = path.join(__dirname, '..', 'build-version.json');
 fs.writeFileSync(versionPath, JSON.stringify({ version: buildVersion }));
 console.log(`Build version generated: ${buildVersion}`);
 
-// Find all HTML files in both public and deploy-digital-twin/public
+// Find all HTML files recursively in both public and deploy-digital-twin/public
 const directories = [
     publicDir,
     path.join(__dirname, '..', 'deploy-digital-twin', 'public')
 ];
 
+function getHtmlFilesRecursively(dir) {
+    let results = [];
+    if (!fs.existsSync(dir)) return results;
+    const list = fs.readdirSync(dir);
+    list.forEach(file => {
+        const filePath = path.join(dir, file);
+        const stat = fs.statSync(filePath);
+        if (stat && stat.isDirectory()) {
+            results = results.concat(getHtmlFilesRecursively(filePath));
+        } else if (file.endsWith('.html')) {
+            results.push(filePath);
+        }
+    });
+    return results;
+}
+
 let htmlPaths = [];
 directories.forEach(dir => {
-    if (fs.existsSync(dir)) {
-        fs.readdirSync(dir).forEach(file => {
-            if (file.endsWith('.html')) {
-                htmlPaths.push(path.join(dir, file));
-            }
-        });
-    }
+    htmlPaths = htmlPaths.concat(getHtmlFilesRecursively(dir));
 });
 
 htmlPaths.forEach(indexPath => {
@@ -73,21 +83,25 @@ htmlPaths.forEach(indexPath => {
         // Replace script src tags with hashed manifest paths plus a cache buster query param
         // For app.js
         indexHtml = indexHtml.replace(/src="\/app\.js(\?[^"]*)?"/g, `src="${manifest['app.js']}?v=${buildVersion}"`);
+        indexHtml = indexHtml.replace(/src="\/dist\/app\.js(\?[^"]*)?"/g, `src="${manifest['app.js']}?v=${buildVersion}"`);
         indexHtml = indexHtml.replace(/src="\/dist\/app\.[a-f0-9]+\.js(\?[^"]*)?"/g, `src="${manifest['app.js']}?v=${buildVersion}"`);
         
         // For ux-engine.js
         indexHtml = indexHtml.replace(/src="\/ux-engine\.js(\?[^"]*)?"/g, `src="${manifest['ux-engine.js']}?v=${buildVersion}"`);
+        indexHtml = indexHtml.replace(/src="\/dist\/ux-engine\.js(\?[^"]*)?"/g, `src="${manifest['ux-engine.js']}?v=${buildVersion}"`);
         indexHtml = indexHtml.replace(/src="\/dist\/ux-engine\.[a-f0-9]+\.js(\?[^"]*)?"/g, `src="${manifest['ux-engine.js']}?v=${buildVersion}"`);
         
         // For main.css
         if (manifest['css/main.css']) {
             indexHtml = indexHtml.replace(/href="\/css\/main\.css(\?[^"]*)?"/g, `href="${manifest['css/main.css']}?v=${buildVersion}"`);
+            indexHtml = indexHtml.replace(/href="\/dist\/main\.css(\?[^"]*)?"/g, `href="${manifest['css/main.css']}?v=${buildVersion}"`);
             indexHtml = indexHtml.replace(/href="\/dist\/main\.[a-f0-9]+\.css(\?[^"]*)?"/g, `href="${manifest['css/main.css']}?v=${buildVersion}"`);
         }
         
         // For careers.js
         if (manifest['js/data/careers.js']) {
             indexHtml = indexHtml.replace(/src="\/js\/data\/careers\.js(\?[^"]*)?"/g, `src="${manifest['js/data/careers.js']}?v=${buildVersion}"`);
+            indexHtml = indexHtml.replace(/src="\/dist\/careers\.js(\?[^"]*)?"/g, `src="${manifest['js/data/careers.js']}?v=${buildVersion}"`);
             indexHtml = indexHtml.replace(/src="\/dist\/careers\.[a-f0-9]+\.js(\?[^"]*)?"/g, `src="${manifest['js/data/careers.js']}?v=${buildVersion}"`);
         }
         
