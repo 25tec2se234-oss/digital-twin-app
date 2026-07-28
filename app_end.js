@@ -34,7 +34,7 @@ window.handleReactLogin = async function(email, pass, rememberMe) {
             closeMod();
             unlockSite();
             window.trackAnalyticsEvent('Login Success', { email: email });
-            showToast('?', 'Signed in successfully.');
+            showToast('✅', 'Signed in successfully.');
             if (typeof window.pendingAuthAction === 'function') {
                 window.pendingAuthAction();
                 window.pendingAuthAction = null;
@@ -48,7 +48,7 @@ window.handleReactLogin = async function(email, pass, rememberMe) {
         return { success: true };
     } catch (err) {
         window.trackAnalyticsEvent('Login Failure', { error: err.message, email: email });
-        showToast('?', err.message);
+        showToast('❌', err.message);
         return { success: false, error: err.message };
     }
 };

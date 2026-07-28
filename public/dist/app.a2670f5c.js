@@ -5604,14 +5604,14 @@ window.handleReactResetPassword = async function(email, otpCode, newPassword) {
             body: JSON.stringify({ email, otpCode, newPassword })
         });
         if (res.ok) {
-            showToast('?', 'Password reset successfully. You can now login.');
+            showToast('✅', 'Password reset successfully. You can now login.');
             return { success: true };
         } else {
             const data = await res.json();
             throw new Error(data.error || 'Failed to reset password.');
         }
     } catch (err) {
-        showToast('?', err.message);
+        showToast('❌', err.message);
         return { success: false, error: err.message };
     }
 };
@@ -5755,11 +5755,11 @@ window.incrementStreak = async function() {
                     }
                 }
             } else {
-                if(typeof showToast === 'function') showToast('?', 'Failed to update streak securely.');
+                if(typeof showToast === 'function') showToast('❌', 'Failed to update streak securely.');
             }
         } catch (e) {
             console.error('Streak API Error:', e);
-            if(typeof showToast === 'function') showToast('?', 'Network error while updating streak.');
+            if(typeof showToast === 'function') showToast('❌', 'Network error while updating streak.');
         }
         return;
     }
