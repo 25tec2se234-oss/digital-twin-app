@@ -5739,7 +5739,8 @@ window.incrementStreak = async function() {
                 body: JSON.stringify({
                     clientStreak: localStreak,
                     clientBest: localBest,
-                    clientLastActive: localLastActive
+                    clientLastActive: localLastActive,
+                    clientToday: today
                 })
             });
             var data = await res.json();
