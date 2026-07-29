@@ -4393,7 +4393,7 @@
             if (!isLoggedIn()) {
                 window.trackAnalyticsEvent('Premium Gate Triggered', { planId: planId });
                 window.pendingAuthAction = function() { initiatePayment(planId); };
-                openPremiumAuthModal();
+                openLoginGate();
                 return;
             }
 
