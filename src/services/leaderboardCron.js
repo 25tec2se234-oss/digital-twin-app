@@ -43,7 +43,7 @@ async function runAggregationForPeriod(period, startDate, endDate) {
     const aggregates = await leaderboardModel.aggregateScores(startDate, endDate);
     if (aggregates.length === 0) {
       logInfo(`[Leaderboard Cron] No activity for period ${period}. Clearing snapshot.`);
-      await leaderboardModel.bulkUpsertSnapshots([{ period }]); // Empty will be handled as NO-OP or clear.
+      await leaderboardModel.clearSnapshot(period);
       return;
     }
 

@@ -161,7 +161,7 @@
                         if (u && Object.keys(u).length > 0) {
                             APP_DATA.userData = Object.assign(APP_DATA.userData || {}, u);
                             // Infer loggedIn state if token is present (Fixes React app login missing loggedIn flag)
-                            if (u.token && typeof APP_DATA.userData.loggedIn !== 'boolean') {
+                            if (u.token) {
                                 APP_DATA.userData.loggedIn = true;
                                 APP_DATA.userData.loggedInAt = APP_DATA.userData.loggedInAt || new Date().toISOString();
                             }
@@ -4071,6 +4071,8 @@
                 
                 if (!rememberMe && (now - loginTime > hours48)) {
                     APP_DATA.userData.token = null;
+                    localStorage.removeItem('dt_user');
+                    sessionStorage.removeItem('dt_appdata_v3');
                     setLoggedIn(false);
                     window.trackAnalyticsEvent('Session Expiry');
                     showToast('🔒', 'Session Expired. Please login again to continue.');
@@ -4479,7 +4481,18 @@
                 headers: headers,
                 body: JSON.stringify({ plan: planId })
             })
-            .then(res => res.json())
+            .then(res => {
+                if (res.status === 401) {
+                    APP_DATA.userData.token = null;
+                    localStorage.removeItem('dt_user');
+                    sessionStorage.removeItem('dt_appdata_v3');
+                    if(typeof setLoggedIn === 'function') setLoggedIn(false);
+                    if(typeof showToast === 'function') showToast('❌', 'Session expired. Please sign in again.');
+                    setTimeout(() => window.location.href = '/login.html', 1500);
+                    throw new Error('Unauthorized');
+                }
+                return res.json();
+            })
             .then(data => {
                 btnElem.disabled = false;
                 btnElem.innerHTML = originalText;
@@ -4714,6 +4727,8 @@
                 console.error(e);
             }
             APP_DATA.userData.token = null;
+            localStorage.removeItem('dt_user');
+            sessionStorage.removeItem('dt_appdata_v3');
             setLoggedIn(false);
             loginGateActive = false;
             closeMod();
@@ -5743,9 +5758,12 @@ window.incrementStreak = async function() {
                     clientToday: today
                 })
             });
-            var data = await res.json();
+            var data;
+            try {
+                data = await res.json();
+            } catch(e) {}
             
-            if (res.ok) {
+            if (res.ok && data) {
                 if (!window.APP_DATA.streak) window.APP_DATA.streak = {};
                 window.APP_DATA.streak.current = data.streak;
                 window.APP_DATA.streak.best = data.bestStreak;
@@ -5770,6 +5788,27 @@ window.incrementStreak = async function() {
                         showToast('🔥', 'Streak increased to ' + data.streak + ' days!');
                     }
                 }
+            } else if (res.status === 401) {
+                // Attempt silent refresh
+                var rf = await fetch('/api/v1/auth/refresh', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                if (rf.ok) {
+                    var rd = await rf.json();
+                    if (rd && rd.accessToken) {
+                        APP_DATA.userData.token = rd.accessToken;
+                        // Retry the streak increment once
+                        return window.incrementStreak();
+                    }
+                }
+                if(typeof showToast === 'function') showToast('❌', 'Session expired. Please sign in again.');
+                APP_DATA.userData.token = null;
+                localStorage.removeItem('dt_user');
+                sessionStorage.removeItem('dt_appdata_v3');
+                if(typeof setLoggedIn === 'function') setLoggedIn(false);
+                setTimeout(function() { window.location.href = '/login.html'; }, 1500);
             } else {
                 if(typeof showToast === 'function') showToast('❌', 'Failed to update streak securely.');
             }
