@@ -4392,6 +4392,7 @@
             
             if (!isLoggedIn()) {
                 window.trackAnalyticsEvent('Premium Gate Triggered', { planId: planId });
+                sessionStorage.setItem('pending_payment_plan', planId);
                 window.pendingAuthAction = function() { initiatePayment(planId); };
                 openLoginGate();
                 return;
@@ -5680,6 +5681,15 @@ function initDashboardUpgrades() {
 // Ensure init is called after DOM load
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(initDashboardUpgrades, 500);
+    
+    // Resume pending payment if returning from login redirect
+    setTimeout(function() {
+        var pendingPlan = sessionStorage.getItem('pending_payment_plan');
+        if (pendingPlan && isLoggedIn()) {
+            sessionStorage.removeItem('pending_payment_plan');
+            initiatePayment(pendingPlan);
+        }
+    }, 1000);
 });
 
 // Hook into existing renderStudentProfile (monkey patching gently)
