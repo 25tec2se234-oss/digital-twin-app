@@ -10,18 +10,26 @@ const emailService = require('../services/emailService');
 const consentModel = require('../models/consentModel');
 
 const getKeyId = () => {
-  let key = (env.RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID || process.env['RAZORPAY_KEY_ID '] || 'rzp_live_T6IRvwv0PhxTVR');
+  const key = (env.RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID || process.env['RAZORPAY_KEY_ID ']);
+  if (!key) throw new ApiError(500, 'Razorpay is not configured. Contact support.');
   return key.split('\n')[0].trim();
 };
 const getKeySecret = () => {
-  let secret = (env.RAZORPAY_KEY_SECRET || process.env.RAZORPAY_KEY_SECRET || process.env['RAZORPAY_KEY_SECRET '] || '9cR9t2PHsqpB152wlYSw7eOO');
+  const secret = (env.RAZORPAY_KEY_SECRET || process.env.RAZORPAY_KEY_SECRET || process.env['RAZORPAY_KEY_SECRET ']);
+  if (!secret) throw new ApiError(500, 'Razorpay is not configured. Contact support.');
   return secret.split('\n')[0].trim();
 };
 
-const razorpay = new Razorpay({
-  key_id: getKeyId(),
-  key_secret: getKeySecret(),
-});
+let razorpay;
+try {
+  razorpay = new Razorpay({
+    key_id: getKeyId(),
+    key_secret: getKeySecret(),
+  });
+} catch (e) {
+  // Razorpay will be initialized per-request if env vars are set; graceful degradation
+  razorpay = null;
+}
 
 const PLAN_RATES = {
   '1w': 2900,
@@ -95,8 +103,9 @@ async function verifyPayment(req, res, next) {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
     const body = razorpay_order_id + "|" + razorpay_payment_id;
+    const keySecret = getKeySecret();
     const expectedSignature = crypto
-      .createHmac('sha256', env.RAZORPAY_KEY_SECRET || 'dummy_secret')
+      .createHmac('sha256', keySecret)
       .update(body.toString())
       .digest('hex');
 
