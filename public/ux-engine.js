@@ -1,3 +1,10 @@
+// Global Image Fallback Handler to prevent any broken images on the website
+window.addEventListener('error', (e) => {
+    if (e.target && e.target.tagName === 'IMG') {
+        e.target.src = '/img/dtv-logo.jpg';
+    }
+}, true);
+
 document.addEventListener("DOMContentLoaded", () => {
     const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
 
