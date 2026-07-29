@@ -4694,6 +4694,8 @@
         }
 
         function openLoginGate() {
+            var mob = document.getElementById('mob');
+            if (mob) mob.classList.remove('active');
             window.location.href = '/login.html';
         }
 
