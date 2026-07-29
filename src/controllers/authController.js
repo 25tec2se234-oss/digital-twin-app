@@ -182,7 +182,7 @@ const smtpDebug = asyncHandler(async function(req, res) {
   const env = require('../config/env');
   
   if (!env.SMTP_USER || !env.SMTP_PASS) {
-    return res.status(500).json({ error: 'SMTP credentials not configured on server', user: env.SMTP_USER });
+    return res.status(500).json({ error: 'SMTP credentials not configured on server' });
   }
 
   try {

@@ -19,7 +19,7 @@ const listSchema = Joi.object({
 
 const roleSchema = Joi.object({
   body: Joi.object({
-    role: Joi.string().valid('admin', 'user').required()
+    role: Joi.string().valid('admin', 'user', 'student', 'parent').required()
   }).required(),
   params: Joi.object({
     id: Joi.string().uuid().required()
