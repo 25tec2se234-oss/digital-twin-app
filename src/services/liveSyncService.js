@@ -148,11 +148,7 @@ class LiveSyncService {
       
       // Find parent user ID to attach notification
       const parentQuery = `
-        SELECT parent_id FROM parent_student_mappings WHERE student_id = $1
-        UNION
-        SELECT id as parent_id FROM users WHERE parent_student_link = (
-          SELECT link_code FROM users WHERE id = $1
-        ) LIMIT 1
+        SELECT parent_id FROM parent_student_mappings WHERE student_id = $1 LIMIT 1
       `;
       const pRes = await pool.query(parentQuery, [studentId]);
       if (pRes.rows.length > 0) {
