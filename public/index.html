@@ -667,7 +667,7 @@
                             const headers = { 'Content-Type': 'application/json' };
                             if (token) headers['Authorization'] = 'Bearer ' + token;
                             
-                            fetch('/api/payments/consent', {
+                            fetch('/api/v1/payments/consent', {
                                 method: 'POST',
                                 headers: headers,
                                 body: JSON.stringify(consentPayload)
