@@ -5743,9 +5743,12 @@ window.incrementStreak = async function() {
                     clientToday: today
                 })
             });
-            var data = await res.json();
+            var data;
+            try {
+                data = await res.json();
+            } catch(e) {}
             
-            if (res.ok) {
+            if (res.ok && data) {
                 if (!window.APP_DATA.streak) window.APP_DATA.streak = {};
                 window.APP_DATA.streak.current = data.streak;
                 window.APP_DATA.streak.best = data.bestStreak;
@@ -5770,6 +5773,23 @@ window.incrementStreak = async function() {
                         showToast('🔥', 'Streak increased to ' + data.streak + ' days!');
                     }
                 }
+            } else if (res.status === 401) {
+                // Attempt silent refresh
+                var rf = await fetch('/api/v1/auth/refresh', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                if (rf.ok) {
+                    var rd = await rf.json();
+                    if (rd && rd.accessToken) {
+                        APP_DATA.userData.token = rd.accessToken;
+                        // Retry the streak increment once
+                        return window.incrementStreak();
+                    }
+                }
+                if(typeof showToast === 'function') showToast('❌', 'Session expired. Please sign in again.');
+                setTimeout(function() { window.location.href = '/login.html'; }, 1500);
             } else {
                 if(typeof showToast === 'function') showToast('❌', 'Failed to update streak securely.');
             }
