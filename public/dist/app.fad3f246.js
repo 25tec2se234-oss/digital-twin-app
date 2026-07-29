@@ -160,6 +160,11 @@
                         var u = JSON.parse(dtUser);
                         if (u && Object.keys(u).length > 0) {
                             APP_DATA.userData = Object.assign(APP_DATA.userData || {}, u);
+                            // Infer loggedIn state if token is present (Fixes React app login missing loggedIn flag)
+                            if (u.token && typeof APP_DATA.userData.loggedIn !== 'boolean') {
+                                APP_DATA.userData.loggedIn = true;
+                                APP_DATA.userData.loggedInAt = APP_DATA.userData.loggedInAt || new Date().toISOString();
+                            }
                         }
                     } catch(ue) {}
                 }
