@@ -4694,9 +4694,7 @@
         }
 
         function openLoginGate() {
-            lockSite();
-            closeMod();
-            openAuthPage();
+            window.location.href = '/login.html';
         }
 
         async function doLogout() {
