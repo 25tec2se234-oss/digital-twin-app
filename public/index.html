@@ -478,7 +478,7 @@
                 <button type="button" onclick="openAnalyzer()" class="nav-pill-purple">🧠 Analyzer</button>
 
                 <!-- Go Premium -->
-                <button type="button" onclick="requireAuth(openPricingPage); return false;" class="nav-pill">💎 Premium</button>
+                <button type="button" onclick="openPricingPage(); return false;" class="nav-pill">💎 Premium</button>
 
             <!-- Account -->
             <div class="account-menu" id="nav-account-wrap">
@@ -514,7 +514,7 @@
         <a href="#rev" onclick="togMenu()">Reviews</a>
         <a href="/blog" onclick="togMenu()">Blog</a>
         <a href="/leaderboard.html" style="color: #fbbf24; font-weight: 600;" onclick="togMenu()">🏆 Leaderboard</a>
-        <button type="button" onclick="requireAuth(function(){openPricingPage(); togMenu();}); return false;" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: #e88c2a; width: 100%; text-align: left; font-size: 1.1rem; font-weight: 700;">💎 Go Premium</button>
+        <button type="button" onclick="openPricingPage(); togMenu(); return false;" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: #e88c2a; width: 100%; text-align: left; font-size: 1.1rem; font-weight: 700;">💎 Go Premium</button>
         <button type="button" onclick="openAnalyzer(); togMenu();" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: var(--wh, #fff); width: 100%; text-align: left; font-size: 1.1rem; font-weight: 600;">🧠
             Achievement Analyzer</button>
         <div style="padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 0.5rem;">
@@ -1070,7 +1070,7 @@
                                 </div>
                                 <div class="mini-bar"><span id="tracker-progress-bar" style="width: 100%; background: #f5a94e;"></span></div>
                                 <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
-                                    <button class="tool-btn" style="background: linear-gradient(90deg, #f5a94e, #e88c2a); color: #000; font-weight: 700; width: 100%;" onclick="requireAuth(openPricingPage)">Renew / Upgrade Plan</button>
+                                    <button class="tool-btn" style="background: linear-gradient(90deg, #f5a94e, #e88c2a); color: #000; font-weight: 700; width: 100%;" onclick="openPricingPage()">Renew / Upgrade Plan</button>
                                 </div>
                             </article>
                             <article class="tool-card">
