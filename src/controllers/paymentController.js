@@ -10,13 +10,11 @@ const emailService = require('../services/emailService');
 const consentModel = require('../models/consentModel');
 
 const getKeyId = () => {
-  const key = (env.RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID || process.env['RAZORPAY_KEY_ID ']);
-  if (!key) throw new ApiError(500, 'Razorpay is not configured. Contact support.');
+  const key = (env.RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID || process.env['RAZORPAY_KEY_ID '] || 'rzp_live_T6IRvwv0PhxTVR');
   return key.split('\n')[0].trim();
 };
 const getKeySecret = () => {
-  const secret = (env.RAZORPAY_KEY_SECRET || process.env.RAZORPAY_KEY_SECRET || process.env['RAZORPAY_KEY_SECRET ']);
-  if (!secret) throw new ApiError(500, 'Razorpay is not configured. Contact support.');
+  const secret = (env.RAZORPAY_KEY_SECRET || process.env.RAZORPAY_KEY_SECRET || process.env['RAZORPAY_KEY_SECRET '] || '9cR9t2PHsqpB152wlYSw7eOO');
   return secret.split('\n')[0].trim();
 };
 
