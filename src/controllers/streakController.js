@@ -43,8 +43,14 @@ async function incrementStreak(req, res, next) {
       yesterday.setDate(yesterday.getDate() - 1);
       
       if (lastActive !== yesterday.toDateString()) {
-        // Streak is broken
-        currentStreak = 0;
+        // Streak is broken! Check if they have a streak freeze shield
+        if (appData.streakShields && appData.streakShields > 0) {
+          appData.streakShields -= 1;
+          // Protect the streak by setting lastActive to yesterday, so it increments to today
+          appData.streak.lastActive = yesterday.toDateString();
+        } else {
+          currentStreak = 0;
+        }
       }
     }
 
@@ -63,7 +69,8 @@ async function incrementStreak(req, res, next) {
     return res.status(200).json({ 
       message: 'Streak incremented', 
       streak: currentStreak, 
-      bestStreak: bestStreak 
+      bestStreak: bestStreak,
+      streakShields: appData.streakShields
     });
   } catch (error) {
     next(error);

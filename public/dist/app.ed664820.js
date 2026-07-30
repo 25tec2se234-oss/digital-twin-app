@@ -5792,12 +5792,10 @@ window.incrementStreak = async function() {
                 localStorage.setItem('dtv_best_streak', data.bestStreak);
                 localStorage.setItem('dtv_last_active', today);
                 
-                var btn = document.getElementById('btn-increment-streak');
-                if(btn) {
-                    btn.textContent = "Completed for Today";
-                    btn.disabled = true;
-                    btn.style.opacity = '0.5';
+                if (typeof data.streakShields !== 'undefined' && window.APP_DATA.studentTools) {
+                    window.APP_DATA.studentTools.streakShields = data.streakShields;
                 }
+                
                 updateStreakUI();
                 
                 if(typeof showToast === 'function') {
@@ -5862,10 +5860,12 @@ window.incrementStreak = async function() {
 function updateStreakUI() {
     var streak = localStorage.getItem('dtv_streak') || '0';
     var bestStreak = localStorage.getItem('dtv_best_streak') || '0';
+    var lastActive = localStorage.getItem('dtv_last_active');
     
     if (window.APP_DATA && window.APP_DATA.streak && typeof window.APP_DATA.streak.current !== 'undefined') {
         streak = window.APP_DATA.streak.current;
         bestStreak = window.APP_DATA.streak.best;
+        lastActive = window.APP_DATA.streak.lastActive;
     }
     
     var elCur = document.getElementById('dash-streak-count');
@@ -5873,6 +5873,34 @@ function updateStreakUI() {
     
     if (elCur) elCur.textContent = streak + (streak == 1 ? ' Day' : ' Days');
     if (elBest) elBest.textContent = bestStreak + (bestStreak == 1 ? ' Day' : ' Days');
+
+    // Update button status based on 12:00 AM daily timing
+    var today = new Date().toDateString();
+    var btn = document.getElementById('btn-increment-streak');
+    if (btn) {
+        if (lastActive === today) {
+            btn.textContent = "Completed for Today";
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            btn.style.cursor = 'default';
+        } else {
+            btn.textContent = "Mark Today Complete";
+            btn.disabled = false;
+            btn.style.opacity = '1';
+            btn.style.cursor = 'pointer';
+        }
+    }
+
+    // Render visual 7-day calendar bubbles
+    if (typeof renderStreakCalendar === 'function') {
+        renderStreakCalendar();
+    }
+
+    // Render streak shields count
+    var countEl = document.getElementById('streak-shield-count');
+    if (countEl && window.APP_DATA && window.APP_DATA.studentTools) {
+        countEl.textContent = window.APP_DATA.studentTools.streakShields || 0;
+    }
 }
 
 window.refreshSmartGoals = function() {
@@ -6653,4 +6681,50 @@ function animateParticle(el, angle, velocity, spin) {
         }
     }
     requestAnimationFrame(update);
+}
+
+function renderStreakCalendar() {
+    var container = document.getElementById('streak-calendar-row');
+    if (!container) return;
+    
+    var todayDate = new Date();
+    var currentDayOfWeek = todayDate.getDay(); // 0 (Sun) to 6 (Sat)
+    var daysShort = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    
+    var lastActive = localStorage.getItem('dtv_last_active');
+    var currentStreak = parseInt(localStorage.getItem('dtv_streak') || '0', 10);
+    
+    if (window.APP_DATA && window.APP_DATA.streak && typeof window.APP_DATA.streak.current !== 'undefined') {
+        lastActive = window.APP_DATA.streak.lastActive;
+        currentStreak = window.APP_DATA.streak.current;
+    }
+    
+    var html = '';
+    for (var i = 0; i < 7; i++) {
+        var dayName = daysShort[i];
+        var isActive = false;
+        
+        if (i === currentDayOfWeek) {
+            isActive = (lastActive === todayDate.toDateString());
+        } else if (i < currentDayOfWeek) {
+            var diff = currentDayOfWeek - i;
+            var todayIsActive = (lastActive === todayDate.toDateString());
+            if (todayIsActive) {
+                isActive = (currentStreak > diff);
+            } else {
+                isActive = (currentStreak >= diff);
+            }
+        }
+        
+        var bg = isActive ? 'linear-gradient(135deg, #ef4444, #f5a94e)' : 'rgba(255,255,255,0.06)';
+        var color = isActive ? '#000' : 'var(--mu)';
+        var border = isActive ? 'none' : '1px solid rgba(255,255,255,0.1)';
+        var fontWeight = isActive ? 'bold' : 'normal';
+        
+        html += '<div style="display:flex; flex-direction:column; align-items:center; gap:0.25rem;">';
+        html += '<span style="font-size:0.7rem; color:var(--mu);">' + dayName + '</span>';
+        html += '<div style="width:24px; height:24px; border-radius:50%; background:' + bg + '; color:' + color + '; border:' + border + '; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:' + fontWeight + '; transition: all 0.3s ease;">' + (isActive ? '✓' : '') + '</div>';
+        html += '</div>';
+    }
+    container.innerHTML = html;
 }
