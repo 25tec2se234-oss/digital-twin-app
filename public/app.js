@@ -3018,6 +3018,7 @@ function renderCareers(filter) {
                 }
             }
         }
+        window.toggleDashboard = toggleDashboard;
 
         function openDashboardShortcut() {
             setDashboardOpen(true, true);
@@ -3060,6 +3061,7 @@ function renderCareers(filter) {
                 }
             }
         }
+        window.toggleCareerExplorer = toggleCareerExplorer;
 
         function initCareerExplorerToggle() {
             setCareerExplorerOpen(false, false);
@@ -4076,6 +4078,7 @@ function renderCareers(filter) {
                 }
             });
         }
+        window.requirePremiumFrontend = requirePremiumFrontend;
 
         function isLoggedIn() {
             if (!APP_DATA.userData || !APP_DATA.userData.loggedIn) return false;
