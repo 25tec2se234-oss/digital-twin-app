@@ -1908,8 +1908,9 @@
             var list = APP_DATA.studentTools.items.achieve;
             if (!list || index < 0 || index >= list.length) return;
             var item = list.splice(index, 1)[0];
+            const text = typeof item === 'string' ? item : item.text || '';
             APP_DATA.studentTools.items.achieved.unshift({
-                text: item,
+                text: text,
                 at: new Date().toISOString()
             });
             syncData();
@@ -1918,6 +1919,10 @@
             updateAccuracy();
             renderNextStep();
             refreshWeeklySummary();
+
+            // Premium Upgrade: Confetti celebration and XP points!
+            if (typeof triggerConfetti === 'function') triggerConfetti();
+            if (typeof awardXpForGoal === 'function') awardXpForGoal(text);
         }
 
         function renderToolList(key) {
@@ -5695,6 +5700,11 @@ function initDashboardUpgrades() {
     if (window.APP_DATA && window.APP_DATA.studentProfile && window.APP_DATA.studentProfile.type) {
         refreshSmartGoals();
         renderResourceShortcuts();
+
+        // Invoke Premium Renders
+        if (typeof renderLeaderboard === 'function') renderLeaderboard();
+        if (typeof renderXpProgress === 'function') renderXpProgress();
+        if (typeof renderStreakShields === 'function') renderStreakShields();
     }
 
     window.renderAll = function() {
@@ -6277,3 +6287,370 @@ async function fetchLatestBlogs() {
     } catch (e) { console.error('Error fetching blogs:', e); }
 }
 document.addEventListener('DOMContentLoaded', fetchLatestBlogs);
+
+/* ========================================================
+   PREMIUM GAMIFICATION & PRODUCTIVITY FEATURES
+   ======================================================== */
+
+async function renderXpProgress() {
+    var loggedIn = window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.token;
+    if (!loggedIn) {
+        var card = document.getElementById('xp-profile-card');
+        if (card) card.style.display = 'none';
+        return;
+    }
+    try {
+        var res = await fetch('/api/v1/users/leaderboard', {
+            headers: { 'Authorization': 'Bearer ' + window.APP_DATA.userData.token }
+        });
+        if (res.ok) {
+            var data = await res.json();
+            var xp = data.userXp || 0;
+            var level = Math.floor(xp / 150) + 1;
+            var currentLevelXp = xp % 150;
+            if (xp < 0) {
+                level = 1;
+                currentLevelXp = 0;
+            }
+
+            var badges = ['🟫 Bronze', '🟫 Bronze', '🟫 Bronze', '⬜ Silver', '⬜ Silver', '🟨 Gold', '🟨 Gold', '💎 Platinum'];
+            var badge = badges[Math.min(level, badges.length - 1)];
+
+            var levelEl = document.getElementById('profile-level');
+            if (levelEl) {
+                levelEl.innerHTML = '<span style="color:#60a5fa;">Level ' + level + '</span> <small style="color:var(--mu); font-size:0.75rem;">(' + badge + ')</small>';
+            }
+
+            var xpText = document.getElementById('profile-xp-text');
+            var xpBar = document.getElementById('profile-xp-bar');
+            var card = document.getElementById('xp-profile-card');
+            
+            if (xpText) xpText.textContent = currentLevelXp + ' / 150 XP';
+            if (xpBar) xpBar.style.width = ((currentLevelXp / 150) * 100) + '%';
+            if (card) card.style.display = 'block';
+        }
+    } catch(e) {
+        console.error('Error rendering XP progress:', e);
+    }
+}
+
+async function renderLeaderboard() {
+    var list = document.getElementById('leaderboard-list');
+    var optInChk = document.getElementById('leaderboard-opt-in-chk');
+    if (!list) return;
+
+    var loggedIn = window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.token;
+    if (!loggedIn) {
+        list.innerHTML = '<div style="font-size: 0.85rem; color: var(--mu);">Log in to view rankings</div>';
+        return;
+    }
+
+    try {
+        var res = await fetch('/api/v1/users/leaderboard', {
+            headers: { 'Authorization': 'Bearer ' + window.APP_DATA.userData.token }
+        });
+        if (res.ok) {
+            var data = await res.json();
+            var board = data.leaderboard || [];
+            
+            if (optInChk) {
+                optInChk.checked = data.optIn;
+            }
+
+            if (board.length === 0) {
+                list.innerHTML = '<div style="font-size: 0.85rem; color: var(--mu);">No rankings generated yet</div>';
+                return;
+            }
+
+            var html = '';
+            var trophies = ['🥇', '🥈', '🥉'];
+            var colors = ['#f59e0b', '#cbd5e1', '#b45309'];
+            
+            board.forEach(function(item, idx) {
+                var trophy = trophies[idx] || '⭐';
+                var color = colors[idx] || 'var(--mu)';
+                var isSelf = item.user_id === window.APP_DATA.userData.id;
+                
+                html += '<div style="display:flex; justify-content:space-between; align-items:center; background:' + (isSelf ? 'rgba(59,130,246,0.1)' : 'rgba(255,255,255,0.02)') + '; padding:0.5rem; border-radius:6px; border:1px solid ' + (isSelf ? 'rgba(59,130,246,0.3)' : 'rgba(255,255,255,0.04)') + '; font-size:0.85rem;">';
+                html += '<span><span style="color:' + color + '; margin-right:0.4rem;">' + trophy + '</span><strong>' + escapeHTML(item.display_name) + '</strong> <small style="color:var(--mu);">(' + escapeHTML(item.city || 'India') + ')</small></span>';
+                html += '<strong style="color:#6ee7b7;">' + item.score + ' pts</strong>';
+                html += '</div>';
+            });
+            
+            var inTop3 = board.some(function(item) { return item.user_id === window.APP_DATA.userData.id; });
+            if (!inTop3 && data.userRank && data.userRank !== '-') {
+                html += '<div style="text-align:center; font-size:0.75rem; color:var(--mu); margin:0.25rem 0;">...</div>';
+                html += '<div style="display:flex; justify-content:space-between; align-items:center; background:rgba(59,130,246,0.1); padding:0.5rem; border-radius:6px; border:1px solid rgba(59,130,246,0.3); font-size:0.85rem;">';
+                html += '<span><span style="margin-right:0.4rem;">🎖️ Rank ' + data.userRank + '</span><strong>' + escapeHTML(window.APP_DATA.userData.name || 'Me') + '</strong> <small style="color:var(--mu);">(' + escapeHTML(window.APP_DATA.userData.city || 'India') + ')</small></span>';
+                html += '<strong style="color:#6ee7b7;">' + data.userScore + ' pts</strong>';
+                html += '</div>';
+            }
+            
+            list.innerHTML = html;
+        }
+    } catch(e) {
+        console.error('Error rendering leaderboard:', e);
+    }
+}
+
+async function toggleLeaderboardOptIn(checked) {
+    var loggedIn = window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.token;
+    if (!loggedIn) return;
+    try {
+        await fetch('/api/v1/users/leaderboard/opt-in', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + window.APP_DATA.userData.token
+            },
+            body: JSON.stringify({ optIn: checked })
+        });
+        if (typeof showToast === 'function') {
+            showToast('🛡️', checked ? 'Leaderboard visibility enabled.' : 'Leaderboard visibility disabled.');
+        }
+        renderLeaderboard();
+    } catch(e) {
+        console.error('Error toggling leaderboard opt-in:', e);
+    }
+}
+
+async function renderStreakShields() {
+    var countEl = document.getElementById('streak-shield-count');
+    if (!countEl) return;
+
+    var loggedIn = window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.token;
+    if (!loggedIn) return;
+    
+    ensureStudentDefaults();
+    var count = window.APP_DATA.studentTools.streakShields || 0;
+    countEl.textContent = count;
+}
+
+async function purchaseStreakShield() {
+    var loggedIn = window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.token;
+    if (!loggedIn) {
+        if (typeof showToast === 'function') showToast('⚠️', 'Please log in to purchase a Streak Shield.');
+        return;
+    }
+    try {
+        var res = await fetch('/api/v1/users/streak/freeze', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + window.APP_DATA.userData.token
+            }
+        });
+        if (res.ok) {
+            var data = await res.json();
+            ensureStudentDefaults();
+            window.APP_DATA.studentTools.streakShields = data.streakShields;
+            
+            if (typeof showToast === 'function') {
+                showToast('🛡️', 'Streak Shield Purchased! remaining XP: ' + data.remainingXp);
+            }
+            renderStreakShields();
+            renderXpProgress();
+        } else {
+            var err = await res.json();
+            if (typeof showToast === 'function') {
+                showToast('⚠️', err.error || 'Failed to purchase shield.');
+            }
+        }
+    } catch(e) {
+        console.error('Error purchasing streak shield:', e);
+    }
+}
+
+async function awardXpForGoal(title) {
+    var loggedIn = window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.token;
+    if (!loggedIn) return;
+    try {
+        var resGoal = await fetch('/api/v1/users/goals', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + window.APP_DATA.userData.token
+            },
+            body: JSON.stringify({ title: title, category: 'Daily' })
+        });
+        if (resGoal.ok) {
+            var goalData = await resGoal.json();
+            await fetch('/api/v1/users/goals/' + goalData.goal.id, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + window.APP_DATA.userData.token
+                },
+                body: JSON.stringify({ status: 'Achieved' })
+            });
+            
+            if (typeof showToast === 'function') {
+                showToast('🎉', 'Goal Completed! +50 XP Awarded.');
+            }
+            renderXpProgress();
+            renderLeaderboard();
+        }
+    } catch(e) {
+        console.error('Error logging goal achievement XP:', e);
+    }
+}
+
+async function downloadReportCard() {
+    var loggedIn = window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.token;
+    if (!loggedIn) {
+        if (typeof showToast === 'function') showToast('⚠️', 'Please log in to generate report card.');
+        return;
+    }
+    try {
+        var res = await fetch('/api/v1/users/report-card', {
+            headers: {
+                'Authorization': 'Bearer ' + window.APP_DATA.userData.token
+            }
+        });
+        if (res.ok) {
+            var data = await res.json();
+            var printWindow = window.open('', '_blank');
+            if (!printWindow) {
+                if (typeof showToast === 'function') showToast('⚠️', 'Pop-up blocked. Please allow pop-ups for this site.');
+                return;
+            }
+            
+            var html = '<html><head><title>Academic Progress Report Card</title>';
+            html += '<style>';
+            html += 'body { font-family: "Outfit", "Inter", sans-serif; background: #0f172a; color: #f1f5f9; padding: 2rem; }';
+            html += '.card { max-width: 800px; margin: 0 auto; background: #1e293b; padding: 2rem; border-radius: 12px; border: 1px solid #334155; }';
+            html += '.header { text-align: center; border-bottom: 2px solid #3b82f6; padding-bottom: 1.5rem; margin-bottom: 1.5rem; }';
+            html += 'h1 { margin: 0; color: #3b82f6; font-size: 2.2rem; }';
+            html += '.meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; background: #0f172a; padding: 1rem; border-radius: 8px; }';
+            html += '.meta-item span { color: #94a3b8; font-size: 0.85rem; }';
+            html += '.meta-item strong { display: block; font-size: 1.1rem; color: #f1f5f9; }';
+            html += 'h3 { border-bottom: 1px solid #475569; padding-bottom: 0.5rem; color: #60a5fa; }';
+            html += 'table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }';
+            html += 'th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #334155; }';
+            html += 'th { background: #334155; color: #f1f5f9; }';
+            html += '.print-btn { display: block; width: 200px; margin: 2rem auto 0 auto; padding: 0.75rem; background: #3b82f6; color: white; border: none; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; text-align: center; }';
+            html += '@media print { .print-btn { display: none; } }';
+            html += '</style></head><body>';
+            html += '<div class="card">';
+            html += '<div class="header"><h1>Digital Twin Verse</h1><p>Student Academic & Study Progress Report Card</p></div>';
+            html += '<div class="meta-grid">';
+            html += '<div class="meta-item"><span>Student Name</span><strong>' + (data.user.name || 'Alex Rivera') + '</strong></div>';
+            html += '<div class="meta-item"><span>Registered Email</span><strong>' + (data.user.email || '-') + '</strong></div>';
+            html += '<div class="meta-item"><span>Field of Study</span><strong>' + (data.user.field_of_study || 'Computer Science & AI') + '</strong></div>';
+            html += '<div class="meta-item"><span>Target Career</span><strong>' + (data.user.target_career || 'AI Research Scientist') + '</strong></div>';
+            html += '</div>';
+            
+            html += '<h3>📚 Recent Learning Sessions</h3>';
+            if (data.sessions.length === 0) {
+                html += '<p style="color: #94a3b8; font-size: 0.9rem;">No learning sessions logged yet.</p>';
+            } else {
+                html += '<table><thead><tr><th>Subject</th><th>Duration (min)</th><th>Type</th><th>Logged Date</th></tr></thead><tbody>';
+                data.sessions.forEach(function(s) {
+                    var date = new Date(s.start_time).toLocaleDateString();
+                    html += '<tr><td>' + s.subject + '</td><td>' + s.duration_minutes + ' mins</td><td>' + s.session_type + '</td><td>' + date + '</td></tr>';
+                });
+                html += '</tbody></table>';
+            }
+            
+            html += '<h3>🏆 Recent Assessment & Quiz Performance</h3>';
+            if (data.quizzes.length === 0) {
+                html += '<p style="color: #94a3b8; font-size: 0.9rem;">No quiz attempts logged yet.</p>';
+            } else {
+                html += '<table><thead><tr><th>Quiz Title</th><th>Score</th><th>Accuracy</th><th>Date</th></tr></thead><tbody>';
+                data.quizzes.forEach(function(q) {
+                    var date = new Date(q.created_at).toLocaleDateString();
+                    html += '<tr><td>' + (q.title || 'General Quiz') + '</td><td>' + q.score + '</td><td>' + Math.round(q.accuracy_percentage) + '%</td><td>' + date + '</td></tr>';
+                });
+                html += '</tbody></table>';
+            }
+            
+            html += '<button class="print-btn" onclick="window.print()">Print Report Card</button>';
+            html += '</div>';
+            html += '</body></html>';
+            
+            printWindow.document.write(html);
+            printWindow.document.close();
+        }
+    } catch(e) {
+        console.error('Error generating report card:', e);
+    }
+}
+
+function triggerMentorQuery(queryText) {
+    var inp = document.getElementById('chat-input') || document.querySelector('.chat-input-area input');
+    var sendBtn = document.getElementById('chat-send-btn') || document.getElementById('send-btn') || document.querySelector('.chat-input-area button');
+    
+    if (inp) {
+        inp.value = queryText;
+        if (sendBtn) {
+            sendBtn.click();
+            var chatSec = document.getElementById('chat-section') || document.getElementById('chat') || document.getElementById('ai-assistant');
+            if (chatSec) {
+                chatSec.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    } else {
+        if (typeof window.sendMessage === 'function') {
+            window.sendMessage(queryText);
+        }
+    }
+}
+
+function triggerConfetti() {
+    var colors = ['#f5a94e', '#3b82f6', '#10b981', '#a855f7', '#ef4444'];
+    var container = document.createElement('div');
+    container.style.position = 'fixed';
+    container.style.top = 0;
+    container.style.left = 0;
+    container.style.width = '100vw';
+    container.style.height = '100vh';
+    container.style.pointerEvents = 'none';
+    container.style.zIndex = '999999';
+    document.body.appendChild(container);
+    
+    for (var i = 0; i < 75; i++) {
+        var particle = document.createElement('div');
+        particle.style.position = 'absolute';
+        particle.style.width = (Math.random() * 8 + 6) + 'px';
+        particle.style.height = (Math.random() * 15 + 8) + 'px';
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.left = '50%';
+        particle.style.bottom = '0%';
+        particle.style.borderRadius = '2px';
+        container.appendChild(particle);
+        
+        var angle = Math.random() * Math.PI - Math.PI/2;
+        var velocity = Math.random() * 15 + 15;
+        var spin = Math.random() * 720 - 360;
+        
+        animateParticle(particle, angle, velocity, spin);
+    }
+    
+    setTimeout(function() {
+        container.remove();
+    }, 3000);
+}
+
+function animateParticle(el, angle, velocity, spin) {
+    var x = 0;
+    var y = window.innerHeight;
+    var vx = Math.sin(angle) * velocity;
+    var vy = -Math.cos(angle) * velocity * 1.5;
+    var gravity = 0.6;
+    var currentRotation = 0;
+    
+    function update() {
+        x += vx;
+        y += vy;
+        vy += gravity;
+        currentRotation += spin * 0.03;
+        
+        el.style.left = (window.innerWidth / 2) + x + 'px';
+        el.style.top = y + 'px';
+        el.style.transform = 'rotate(' + currentRotation + 'deg)';
+        
+        if (y < window.innerHeight + 50) {
+            requestAnimationFrame(update);
+        }
+    }
+    requestAnimationFrame(update);
+}
