@@ -5912,38 +5912,106 @@ window.renderResourceShortcuts = function() {
     
     var profile = window.APP_DATA && window.APP_DATA.studentProfile ? window.APP_DATA.studentProfile : null;
     if (!profile || !profile.type) {
-        list.innerHTML = '<span class="glass-tag" style="opacity: 0.7;">Select profile to see resources</span>';
+        list.innerHTML = '<div style="font-size: 0.85rem; color: var(--mu);">Select profile to see resources</div>';
         return;
     }
     
-    var tags = [];
+    var resources = [];
     if (profile.type === 'school') {
-        tags = [
-            {n: 'NCERT Solutions', c: '#93c5fd'},
-            {n: 'Previous Year Papers', c: '#c4b5fd'},
-            {n: 'Mock Tests', c: '#6ee7b7'}
+        resources = [
+            {
+                n: 'NCERT Textbook Solutions', 
+                desc: 'Access official free solutions and e-textbooks.', 
+                url: 'https://ncert.nic.in/textbook.php',
+                c: '#3b82f6',
+                icon: '📚'
+            },
+            {
+                n: 'CBSE Previous Year Papers', 
+                desc: 'Download board examinations and sample papers.', 
+                url: 'https://www.cbse.gov.in/cbsenew/question-paper.html',
+                c: '#a855f7',
+                icon: '📝'
+            },
+            {
+                n: 'Olympiad Mock Tests', 
+                desc: 'Practice logical and scientific mock assessments.', 
+                url: 'https://www.crestolympiads.com/olympiad-mock-tests',
+                c: '#10b981',
+                icon: '🏆'
+            }
         ];
     } else {
         var st = (profile.stream || '').toLowerCase();
         if (st.includes('tech') || st.includes('cse')) {
-            tags = [
-                {n: 'LeetCode', c: '#93c5fd'},
-                {n: 'GitHub', c: '#c4b5fd'},
-                {n: 'System Design', c: '#6ee7b7'}
+            resources = [
+                {
+                    n: 'LeetCode Problem Sets', 
+                    desc: 'Enhance data structures and algorithms practice.', 
+                    url: 'https://leetcode.com/problemset/all/',
+                    c: '#f59e0b',
+                    icon: '💻'
+                },
+                {
+                    n: 'GitHub Student Pack', 
+                    desc: 'Get free premium developer tool subscriptions.', 
+                    url: 'https://education.github.com/pack',
+                    c: '#6366f1',
+                    icon: '🐙'
+                },
+                {
+                    n: 'System Design Handbook', 
+                    desc: 'Learn system design and architecture fundamentals.', 
+                    url: 'https://github.com/donnemartin/system-design-primer',
+                    c: '#06b6d4',
+                    icon: '📐'
+                }
             ];
         } else {
-            tags = [
-                {n: 'Case Studies', c: '#93c5fd'},
-                {n: 'Industry Reports', c: '#c4b5fd'},
-                {n: 'Alumni Network', c: '#6ee7b7'}
+            resources = [
+                {
+                    n: 'HBR Business Case Studies', 
+                    desc: 'Analyze top corporate business scenarios.', 
+                    url: 'https://hbr.org/store/case-studies',
+                    c: '#ef4444',
+                    icon: '📊'
+                },
+                {
+                    n: 'McKinsey Industry Insights', 
+                    desc: 'Read global research reports on modern markets.', 
+                    url: 'https://www.mckinsey.com/featured-insights',
+                    c: '#06b6d4',
+                    icon: '💡'
+                },
+                {
+                    n: 'LinkedIn Alumni Networking', 
+                    desc: 'Connect with strategic career mentors.', 
+                    url: 'https://www.linkedin.com/help/linkedin/answer/a511394/using-the-linkedin-alumni-tool',
+                    c: '#3b82f6',
+                    icon: '🤝'
+                }
             ];
         }
     }
     
-    var html = '';
-    tags.forEach(function(t) {
-        html += '<a href="javascript:void(0)" class="glass-tag" style="background:rgba(255,255,255,0.05); color:'+t.c+'; text-decoration:none;">' + t.n + '</a>';
+    var html = '<div style="display: flex; flex-direction: column; gap: 0.75rem; width: 100%; margin-top: 0.5rem;">';
+    resources.forEach(function(r) {
+        html += '<a href="' + r.url + '" target="_blank" rel="noopener noreferrer" style="' +
+                'display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; ' +
+                'background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); ' +
+                'border-radius: 8px; text-decoration: none; transition: all 0.2s ease; ' +
+                'cursor: pointer;" ' +
+                'onmouseover="this.style.background=\'rgba(255,255,255,0.07)\'; this.style.borderColor=\'' + r.c + '40\';" ' +
+                'onmouseout="this.style.background=\'rgba(255,255,255,0.03)\'; this.style.borderColor=\'rgba(255,255,255,0.06)\';">' +
+                '<span style="font-size: 1.25rem; background: ' + r.c + '15; padding: 0.4rem; border-radius: 6px; display: flex; align-items: center; justify-content: center;">' + r.icon + '</span>' +
+                '<div style="display: flex; flex-direction: column; text-align: left;">' +
+                '<span style="font-weight: 600; font-size: 0.85rem; color: #f3f4f6;">' + escapeHTML(r.n) + '</span>' +
+                '<small style="font-size: 0.72rem; color: var(--mu); margin-top: 0.15rem;">' + escapeHTML(r.desc) + '</small>' +
+                '</div>' +
+                '<span style="margin-left: auto; font-size: 0.8rem; opacity: 0.5; color: ' + r.c + ';">↗</span>' +
+                '</a>';
     });
+    html += '</div>';
     list.innerHTML = html;
 };
 
