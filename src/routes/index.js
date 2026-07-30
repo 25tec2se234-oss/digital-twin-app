@@ -5,6 +5,9 @@ const healthRoutes = require('./healthRoutes');
 const fileRoutes = require('./fileRoutes');
 const aiRoutes = require('./aiRoutes');
 const dataRoutes = require('./dataRoutes');
+const { authenticate } = require('../middlewares/auth');
+const { requirePremium } = require('../middlewares/subscription');
+const dataController = require('../controllers/dataController');
 
 const router = express.Router();
 
@@ -17,6 +20,7 @@ router.use('/health', healthRoutes);
 router.use('/payments', require('./paymentRoutes'));
 router.use('/payment', require('./paymentRoutes'));
 router.use('/data', dataRoutes);
+router.post('/track', authenticate, requirePremium, dataController.trackAction);
 router.use('/admin/subscriptions', require('./adminSubscriptionRoutes'));
 router.use('/', aiRoutes);
 
