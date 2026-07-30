@@ -95,10 +95,10 @@ class LiveSyncService {
       );
 
       // Inspect actionType to update specialized relational tables
-      if (actionType === 'Quiz_Submit' || actionType === 'QUIZ') {
+      if (actionType === 'Quiz_Submit' || actionType === 'QUIZ' || actionType === 'course_completed') {
         const score = details.score || 85.0;
-        const accuracy = details.accuracy || 90.0;
-        const quizTitle = details.title || 'Advanced Systems Assessment';
+        const max = details.max || 100.0;
+        const accuracy = details.accuracy || (max > 0 ? (score / max) * 100.0 : 90.0);
         
         // Ensure a quiz exists
         const quizRes = await pool.query('SELECT id FROM quizzes LIMIT 1');
@@ -110,7 +110,7 @@ class LiveSyncService {
             [quizId, studentId, score, accuracy, 'Completed']
           );
         }
-      } else if (actionType === 'Course_Start' || actionType === 'LESSON') {
+      } else if (actionType === 'Course_Start' || actionType === 'LESSON' || actionType === 'course_started') {
         const courseRes = await pool.query('SELECT id FROM courses LIMIT 1');
         const courseId = courseRes.rows.length > 0 ? courseRes.rows[0].id : null;
         if (courseId) {
@@ -135,10 +135,10 @@ class LiveSyncService {
           'INSERT INTO goals (student_id, title, category, status, impact) VALUES ($1, $2, $3, $4, $5)',
           [studentId, details.title || 'Completed Key Objective', 'Daily', 'Achieved', '+25% System Design']
         );
-      } else if (actionType === 'Study_Session' || actionType === 'SESSION') {
+      } else if (actionType === 'Study_Session' || actionType === 'SESSION' || actionType === 'routine_completed') {
         await pool.query(
           'INSERT INTO learning_sessions (student_id, subject, duration_minutes, focus_score, session_type) VALUES ($1, $2, $3, $4, $5)',
-          [studentId, details.subject || 'General Study', details.timeSpent || 30, details.focusScore || 85, 'Self-Study']
+          [studentId, details.subject || 'General Study', details.minutes || details.timeSpent || 30, details.focusScore || 85, 'Self-Study']
         );
       }
 

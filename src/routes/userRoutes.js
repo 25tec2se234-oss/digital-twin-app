@@ -50,6 +50,8 @@ const statusSchema = Joi.object({
  */
 router.get('/', authenticate, authorize('admin'), validate(listSchema), cacheResponse(env.CACHE_TTL_SECONDS), userController.listUsers);
 
+router.get('/dashboard-stats', authenticate, userController.getDashboardStats);
+
 /**
  * @openapi
  * /users/{id}/role:

@@ -5696,6 +5696,15 @@ function initDashboardUpgrades() {
         refreshSmartGoals();
         renderResourceShortcuts();
     }
+
+    window.renderAll = function() {
+        if (typeof initStudentDashboard === 'function') {
+            initStudentDashboard();
+        }
+        if (typeof initDashboardUpgrades === 'function') {
+            initDashboardUpgrades();
+        }
+    };
 }
 
 // Ensure init is called after DOM load
@@ -5950,24 +5959,30 @@ window.addDeadline = function() {
         return;
     }
     
-    var deadlines = JSON.parse(localStorage.getItem('dtv_deadlines') || '[]');
-    deadlines.push({ title: title, date: dateVal });
+    ensureStudentDefaults();
+    if (!APP_DATA.studentTools.deadlines) {
+        APP_DATA.studentTools.deadlines = [];
+    }
     
-    // Sort by date
-    deadlines.sort(function(a, b) {
+    APP_DATA.studentTools.deadlines.push({ title: title, date: dateVal });
+    
+    APP_DATA.studentTools.deadlines.sort(function(a, b) {
         return new Date(a.date) - new Date(b.date);
     });
     
-    localStorage.setItem('dtv_deadlines', JSON.stringify(deadlines));
+    localStorage.setItem('dtv_deadlines', JSON.stringify(APP_DATA.studentTools.deadlines));
     inp.value = '';
     dateInp.value = '';
+    syncData();
     renderDeadlines();
 };
 
 window.deleteDeadline = function(idx) {
-    var deadlines = JSON.parse(localStorage.getItem('dtv_deadlines') || '[]');
-    deadlines.splice(idx, 1);
-    localStorage.setItem('dtv_deadlines', JSON.stringify(deadlines));
+    ensureStudentDefaults();
+    if (!APP_DATA.studentTools.deadlines) return;
+    APP_DATA.studentTools.deadlines.splice(idx, 1);
+    localStorage.setItem('dtv_deadlines', JSON.stringify(APP_DATA.studentTools.deadlines));
+    syncData();
     renderDeadlines();
 };
 
@@ -5975,7 +5990,17 @@ function renderDeadlines() {
     var list = document.getElementById('deadlines-list');
     if (!list) return;
     
-    var deadlines = JSON.parse(localStorage.getItem('dtv_deadlines') || '[]');
+    ensureStudentDefaults();
+    if (!APP_DATA.studentTools.deadlines || APP_DATA.studentTools.deadlines.length === 0) {
+        var local = JSON.parse(localStorage.getItem('dtv_deadlines') || '[]');
+        if (local && local.length > 0) {
+            APP_DATA.studentTools.deadlines = local;
+        } else {
+            APP_DATA.studentTools.deadlines = [];
+        }
+    }
+    
+    var deadlines = APP_DATA.studentTools.deadlines;
     if (deadlines.length === 0) {
         list.innerHTML = '<div style="font-size: 0.85rem; color: var(--mu);">No upcoming deadlines pinned.</div>';
         return;
@@ -5984,25 +6009,57 @@ function renderDeadlines() {
     var html = '';
     deadlines.forEach(function(d, i) {
         html += '<div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.03); padding:0.5rem; border-radius:6px; font-size:0.85rem;">';
-        html += '<span><strong>' + d.title + '</strong> <br><small style="color:var(--mu);">' + d.date + '</small></span>';
+        html += '<span><strong>' + escapeHTML(d.title) + '</strong> <br><small style="color:var(--mu);">' + escapeHTML(d.date) + '</small></span>';
         html += '<button onclick="deleteDeadline('+i+')" style="background:transparent; border:none; color:var(--red); cursor:pointer;">✕</button>';
         html += '</div>';
     });
     list.innerHTML = html;
 }
 
-function renderProgressComparison() {
-    // Simulated mock stats based on localStorage to provide a "realistic" comparison
-    var twTime = parseInt(localStorage.getItem('dtv_prog_tw') || (Math.floor(Math.random() * 5) + 2));
-    var lwTime = parseInt(localStorage.getItem('dtv_prog_lw') || (Math.floor(Math.random() * 5) + 1));
-    var twAcc = parseInt(localStorage.getItem('dtv_acc_tw') || (Math.floor(Math.random() * 20) + 70));
-    var lwAcc = parseInt(localStorage.getItem('dtv_acc_lw') || (Math.floor(Math.random() * 20) + 60));
-    
-    localStorage.setItem('dtv_prog_tw', twTime);
-    localStorage.setItem('dtv_prog_lw', lwTime);
-    localStorage.setItem('dtv_acc_tw', twAcc);
-    localStorage.setItem('dtv_acc_lw', lwAcc);
-    
+async function renderProgressComparison() {
+    var twTime = 0;
+    var lwTime = 0;
+    var twAcc = 0;
+    var lwAcc = 0;
+
+    var loggedIn = window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.token;
+    if (loggedIn) {
+        try {
+            var res = await fetch('/api/v1/users/dashboard-stats', {
+                headers: {
+                    'Authorization': 'Bearer ' + window.APP_DATA.userData.token
+                }
+            });
+            if (res.ok) {
+                var stats = await res.json();
+                twTime = stats.studyTimeThisWeek || 0;
+                lwTime = stats.studyTimeLastWeek || 0;
+                twAcc = stats.accuracyThisWeek || 0;
+                lwAcc = stats.accuracyLastWeek || 0;
+                
+                localStorage.setItem('dtv_prog_tw', twTime);
+                localStorage.setItem('dtv_prog_lw', lwTime);
+                localStorage.setItem('dtv_acc_tw', twAcc);
+                localStorage.setItem('dtv_acc_lw', lwAcc);
+            } else {
+                twTime = parseFloat(localStorage.getItem('dtv_prog_tw') || '0');
+                lwTime = parseFloat(localStorage.getItem('dtv_prog_lw') || '0');
+                twAcc = parseFloat(localStorage.getItem('dtv_acc_tw') || '0');
+                lwAcc = parseFloat(localStorage.getItem('dtv_acc_lw') || '0');
+            }
+        } catch(e) {
+            twTime = parseFloat(localStorage.getItem('dtv_prog_tw') || '0');
+            lwTime = parseFloat(localStorage.getItem('dtv_prog_lw') || '0');
+            twAcc = parseFloat(localStorage.getItem('dtv_acc_tw') || '0');
+            lwAcc = parseFloat(localStorage.getItem('dtv_acc_lw') || '0');
+        }
+    } else {
+        twTime = parseFloat(localStorage.getItem('dtv_prog_tw') || '0');
+        lwTime = parseFloat(localStorage.getItem('dtv_prog_lw') || '0');
+        twAcc = parseFloat(localStorage.getItem('dtv_acc_tw') || '0');
+        lwAcc = parseFloat(localStorage.getItem('dtv_acc_lw') || '0');
+    }
+
     var elTwT = document.getElementById('prog-time-tw');
     var elLwT = document.getElementById('prog-time-lw');
     var elTwA = document.getElementById('prog-acc-tw');
@@ -6012,12 +6069,12 @@ function renderProgressComparison() {
     
     if (elTwT) elTwT.textContent = twTime + ' hrs';
     if (elLwT) elLwT.textContent = lwTime + ' hrs';
-    if (elTwA) elTwA.textContent = twAcc + '%';
-    if (elLwA) elLwA.textContent = lwAcc + '%';
+    if (elTwA) elTwA.textContent = Math.round(twAcc) + '%';
+    if (elLwA) elLwA.textContent = Math.round(lwAcc) + '%';
     
     if (elTrend && elBar) {
         var diff = twTime - lwTime;
-        var pct = lwTime > 0 ? Math.round((diff / lwTime) * 100) : 100;
+        var pct = lwTime > 0 ? Math.round((diff / lwTime) * 100) : (twTime > 0 ? 100 : 0);
         if (diff >= 0) {
             elTrend.textContent = '+' + pct + '%';
             elTrend.style.color = '#6ee7b7';
