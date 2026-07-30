@@ -731,7 +731,11 @@
         var currentFilteredList = [];
 
 
-        function renderCareers(filter) {
+        
+var currentSalaryFilter = 'all';
+var currentRemoteFilter = 'all';
+
+function renderCareers(filter) {
             if (filter !== undefined && filter !== null) {
                 currentCategory = filter;
             }
@@ -810,6 +814,13 @@
             var dispDemand = c.futureDemand || c.demand || 'High';
             var dispSalary = c.salary || 'Competitive';
             var dispGrowth = c.growthRate || '+25% Growth';
+            
+            var matchPillHtml = '';
+            if (window.APP_DATA && window.APP_DATA.studentProfile && window.APP_DATA.studentProfile.type) {
+                var score = calculateStudentMatchScore(c, window.APP_DATA.studentProfile);
+                matchPillHtml = '<span style="font-size:0.72rem;color:#f59e0b;background:rgba(245, 158, 11, 0.15);padding:2px 6px;border-radius:4px;margin-left:6px;font-weight:bold;border:1px solid rgba(245, 158, 11, 0.25);">✨ ' + score + '% Match</span>';
+            }
+
             return '<div class="ccard" id="cc-' + c.id + '" onclick="openCareer(\'' + c.id + '\')" role="button" tabindex="0" aria-label="Explore ' + c.title + '">' +
                 '<div class="ccard-top-row">' +
                     '<div class="ccard-ic" aria-hidden="true">' + c.icon + '</div>' +
@@ -817,9 +828,9 @@
                 '</div>' +
                 '<h3 class="ccard-title">' + c.title + '</h3>' +
                 '<p class="ccard-desc">' + c.desc + '</p>' +
-                '<div class="ccard-salary">' + dispSalary + ' <span style="font-size:0.75rem;color:#4ade80;background:rgba(74,222,128,0.15);padding:2px 6px;border-radius:4px;margin-left:6px;">' + dispGrowth + '</span></div>' +
+                '<div class="ccard-salary">' + dispSalary + matchPillHtml + '</div>' +
                 '<div class="demand-bar"><div class="demand-fill" style="width:' + dispDp + '%"></div></div>' +
-                '<div class="demand-lbl">Demand: ' + dispDemand + '</div>' +
+                '<div class="demand-lbl">Demand: ' + dispDemand + ' <span style="color:#4ade80;float:right;">' + dispGrowth + '</span></div>' +
                 '<div class="ccard-act"><button class="btn-explore" tabindex="-1">Explore →</button></div>' +
                 '</div>';
         }
@@ -1081,7 +1092,9 @@
                 '<p style="margin-bottom:0.4rem;">' + pred.match + ' based on market demand, your skill progress, and profile alignment.</p>' +
                 '<p style="font-size:0.85rem; color:var(--mu); margin-bottom:0.4rem;"><strong>⚡ AI Impact:</strong> ' + safeAiImpact + ' | <strong>🛡 Automation Risk:</strong> ' + safeAutoRisk + '</p>' +
                 '<p style="font-size:0.85rem; color:var(--mu); margin-bottom:0.6rem;"><strong>🚀 2035 Outlook:</strong> ' + safeOutlook + '</p>' +
-                '<div class="pred-badges">' + predBadgesHtml + '</div></div></div>'
+                '<div class="pred-badges">' + predBadgesHtml + '</div>' +
+                '<button class="tool-btn" style="margin-top: 1rem; background: linear-gradient(90deg, #a855f7, #6366f1) !important; color: white !important; width: 100%; border: none; font-weight: bold; cursor: pointer; padding: 0.75rem; border-radius: 6px; font-size:0.85rem;" onclick="openCareerSimulator(\'' + id + '\')">🔮 Simulate My Career Path (Interactive Roadmapping)</button>' +
+                '</div></div>'
                 // — Progress bar —
                 +
                 '<div class="progress-section">' +
@@ -6727,4 +6740,308 @@ function renderStreakCalendar() {
         html += '</div>';
     }
     container.innerHTML = html;
+}
+
+/* ========================================================
+   CAREER EXPLORER SUBJECT MAP, Personalised MATCHING, & SIMULATOR
+   ======================================================== */
+
+var SUBJECT_MAP = {
+    'math': ['software', 'data', 'actuary', 'quant', 'finance', 'statistics', 'cryptograph', 'engineering', 'researcher', 'machine learning', 'ai/ml', 'algorithms', 'physics', 'architect'],
+    'maths': ['software', 'data', 'actuary', 'quant', 'finance', 'statistics', 'cryptograph', 'engineering', 'researcher', 'machine learning', 'ai/ml', 'algorithms', 'physics', 'architect'],
+    'mathematics': ['software', 'data', 'actuary', 'quant', 'finance', 'statistics', 'cryptograph', 'engineering', 'researcher', 'machine learning', 'ai/ml', 'algorithms', 'physics', 'architect'],
+    'physics': ['engineering', 'hardware', 'aerospace', 'astrophysics', 'researcher', 'scientist', 'robotics', 'nanotechnology', 'nuclear', 'geophysics'],
+    'chemistry': ['chemical', 'pharma', 'medicine', 'biotech', 'forensic', 'material scientist', 'toxicologist', 'pharmacist', 'lab'],
+    'biology': ['medicine', 'doctor', 'biotech', 'geneticist', 'virologist', 'botanist', 'zoologist', 'dentist', 'veterinarian', 'microbiologist', 'marine biologist', 'healthcare'],
+    'bio': ['medicine', 'doctor', 'biotech', 'geneticist', 'virologist', 'botanist', 'zoologist', 'dentist', 'veterinarian', 'microbiologist', 'marine biologist', 'healthcare'],
+    'science': ['research', 'engineering', 'scientist', 'medicine', 'healthcare', 'technology', 'biotech', 'physics', 'chemistry', 'biology'],
+    'accounts': ['chartered accountant', 'ca', 'finance', 'investment bank', 'actuary', 'auditor', 'tax', 'analyst', 'cfo', 'business'],
+    'commerce': ['chartered accountant', 'ca', 'finance', 'investment bank', 'actuary', 'auditor', 'tax', 'analyst', 'cfo', 'business', 'mba', 'marketing', 'product manager'],
+    'economics': ['economist', 'policy analyst', 'investment bank', 'finance', 'consultant', 'data scientist', 'actuary', 'market researcher'],
+    'arts': ['designer', 'creative', 'writer', 'journalist', 'animator', 'ux', 'interior designer', 'fashion', 'artist', 'content creator', 'education'],
+    'social studies': ['policy analyst', 'historian', 'sociologist', 'archaeologist', 'civil services', 'upsc', 'lawyer', 'journalist', 'foreign service'],
+    'history': ['historian', 'archaeologist', 'curator', 'civil services', 'upsc', 'teacher', 'writer']
+};
+
+function calculateStudentMatchScore(c, profile) {
+    var score = 70; // baseline
+    var stream = (c.stream || '').toLowerCase();
+    
+    if (profile.type === 'school') {
+        var cls = parseInt(profile.classLevel || '10', 10);
+        if (cls <= 8) {
+            score += 15;
+        } else if (cls <= 10) {
+            if (stream.includes('science') || stream.includes('creative') || stream.includes('technology')) {
+                score += 20;
+            }
+        } else {
+            var focus = (profile.focusPlan || '').toLowerCase();
+            if (focus.includes('science') && (stream.includes('science') || stream.includes('engineering') || stream.includes('technology'))) {
+                score += 25;
+            } else if (focus.includes('commerce') && (stream.includes('business') || stream.includes('government'))) {
+                score += 25;
+            } else {
+                score += 15;
+            }
+        }
+    } else {
+        var uniStream = (profile.stream || '').toLowerCase();
+        if (uniStream.includes('cse') || uniStream.includes('tech') || uniStream.includes('computer')) {
+            if (stream.includes('technology') || stream.includes('engineering')) {
+                score += 28;
+            }
+        } else if (uniStream.includes('com') || uniStream.includes('bus') || uniStream.includes('mba') || uniStream.includes('econ')) {
+            if (stream.includes('business') || stream.includes('management') || stream.includes('government')) {
+                score += 28;
+            }
+        } else {
+            if (stream.includes('creative') || stream.includes('education')) {
+                score += 28;
+            }
+        }
+    }
+    
+    // Stable hash variance
+    var hash = 0;
+    for (var i = 0; i < c.id.length; i++) {
+        hash = c.id.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    var variance = Math.abs(hash % 10);
+    score += variance;
+    return Math.min(99, score);
+}
+
+function filterCareersSalary(val) {
+    currentSalaryFilter = val;
+    renderCareers();
+}
+
+function filterCareersRemote(val) {
+    currentRemoteFilter = val;
+    renderCareers();
+}
+
+function openCareerSimulator(id) {
+    var c = CAREERS.find(function(x) { return x.id === id; });
+    if (!c) return;
+
+    // Create modal elements
+    var modal = document.createElement('div');
+    modal.id = 'career-simulator-modal';
+    modal.style.position = 'fixed';
+    modal.style.top = '0';
+    modal.style.left = '0';
+    modal.style.width = '100vw';
+    modal.style.height = '100vh';
+    modal.style.background = 'rgba(10, 10, 12, 0.96)';
+    modal.style.zIndex = '99999';
+    modal.style.display = 'flex';
+    modal.style.justifyContent = 'center';
+    modal.style.alignItems = 'center';
+    modal.style.overflowY = 'auto';
+    modal.style.padding = '1.5rem';
+
+    var steps = c.trajectory || [
+        { level: 'Entry-Level', role: 'Junior ' + c.title, salary: c.salary },
+        { level: 'Senior-Level', role: 'Senior ' + c.title, salary: '2x Entry LPA' }
+    ];
+
+    var salGraphHtml = '';
+    steps.forEach(function(s, idx) {
+        var salVal = s.salary.match(/\d+/g);
+        var heightPct = salVal ? Math.min(100, Math.max(30, parseInt(salVal[salVal.length - 1], 10) * 2)) : 40;
+        salGraphHtml += '<div style="display:flex; flex-direction:column; align-items:center; flex:1; gap:0.5rem; justify-content:flex-end; height:120px;">' +
+            '<span style="font-size:0.75rem; color:#6ee7b7; font-weight:bold;">' + escapeHTML(s.salary) + '</span>' +
+            '<div style="width:28px; height:' + heightPct + 'px; background:linear-gradient(0deg, #6366f1, #a855f7); border-radius:4px 4px 0 0; transition:all 0.5s ease;"></div>' +
+            '<span style="font-size:0.7rem; color:var(--mu); text-align:center;">' + escapeHTML(s.level) + '</span>' +
+            '</div>';
+    });
+
+    var skillsListHtml = c.skills.map(function(s, idx) {
+        return '<label style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.6rem; font-size:0.85rem; color:var(--wh2); cursor:pointer;">' +
+            '<input type="checkbox" onchange="simulateAcquireSkill(\'' + c.id + '\', ' + idx + ', this)" style="cursor:pointer;">' +
+            '<span><strong>' + escapeHTML(s.n) + '</strong> (' + escapeHTML(s.l) + ')</span>' +
+            '</label>';
+    }).join('');
+
+    modal.innerHTML = '<div style="background:#1e293b; border:1px solid #334155; border-radius:12px; max-width:850px; width:100%; max-height:90vh; overflow-y:auto; padding:2rem; position:relative; box-shadow:0 20px 25px -5px rgba(0,0,0,0.5);">' +
+        '<button onclick="closeCareerSimulator()" style="position:absolute; top:1.25rem; right:1.25rem; background:transparent; border:none; color:var(--mu); font-size:1.5rem; cursor:pointer;">✕</button>' +
+        '<div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:1rem;">' +
+            '<span style="font-size:2.2rem;">' + c.icon + '</span>' +
+            '<div>' +
+                '<h2 style="margin:0; font-size:1.6rem; color:#f5a94e;">' + escapeHTML(c.title) + ' trajectory simulator</h2>' +
+                '<p style="margin:0.25rem 0 0 0; font-size:0.85rem; color:var(--mu);">' + escapeHTML(c.stream) + '</p>' +
+            '</div>' +
+        '</div>' +
+        '<p style="font-size:0.9rem; color:var(--mu); line-height:1.6; margin-bottom:1.5rem;">Simulate your skills development and career pathway milestones. Acquire key milestones to complete your career simulation and test your readiness.</p>' +
+        
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.5rem; flex-wrap:wrap;">' +
+            '<div style="background:#0f172a; padding:1.2rem; border-radius:8px; border:1px solid #334155;">' +
+                '<h3 style="margin-top:0; color:#60a5fa; font-size:1rem; border-bottom:1px solid #334155; padding-bottom:0.4rem; margin-bottom:0.8rem;">🛠️ Target Core Milestones</h3>' +
+                '<div style="display:flex; flex-direction:column;">' + skillsListHtml + '</div>' +
+            '</div>' +
+            '<div style="display:flex; flex-direction:column; gap:1rem;">' +
+                '<div style="background:#0f172a; padding:1.2rem; border-radius:8px; border:1px solid #334155;">' +
+                    '<h3 style="margin-top:0; color:#60a5fa; font-size:1rem; margin-bottom:0.8rem;">📈 Projected Earnings Scale</h3>' +
+                    '<div style="display:flex; gap:1rem; align-items:flex-end; justify-content:space-around;">' + salGraphHtml + '</div>' +
+                '</div>' +
+                '<div style="background:#0f172a; padding:1.2rem; border-radius:8px; border:1px solid #334155; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">' +
+                    '<span style="font-size:0.8rem; color:var(--mu); margin-bottom:0.25rem;">SIMULATOR COMPLETION</span>' +
+                    '<strong id="sim-progress-pct" style="font-size:1.8rem; color:#ef4444; font-weight:bold;">0%</strong>' +
+                    '<div class="mini-bar" style="margin-top:0.5rem; background:rgba(255,255,255,0.08); height:8px; width:150px; border-radius:4px; overflow:hidden;"><span id="sim-progress-bar" style="width:0%; background:#ef4444; height:8px; display:block; transition:all 0.3s ease;"></span></div>' +
+                '</div>' +
+            '</div>' +
+        '</div>' +
+        '<div style="text-align:right;">' +
+            '<button id="btn-complete-simulation" disabled style="background:var(--mu); color:#000; font-weight:bold; padding:0.75rem 2rem; border-radius:6px; border:none; cursor:default; font-size:0.9rem; transition:all 0.3s ease;" onclick="completeSimulation(\'' + c.id + '\')">🔮 Complete Simulation (+50 XP)</button>' +
+        '</div>' +
+        '</div>';
+    
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCareerSimulator() {
+    var modal = document.getElementById('career-simulator-modal');
+    if (modal) modal.remove();
+    document.body.style.overflow = 'auto';
+}
+
+async function simulateAcquireSkill(careerId, idx, checkbox) {
+    var modal = document.getElementById('career-simulator-modal');
+    if (!modal) return;
+
+    var c = CAREERS.find(function(x) { return x.id === careerId; });
+    if (!c) return;
+
+    var checkedCount = modal.querySelectorAll('input[type="checkbox"]:checked').length;
+    var pct = Math.round((checkedCount / c.skills.length) * 100);
+
+    var pctEl = document.getElementById('sim-progress-pct');
+    var barEl = document.getElementById('sim-progress-bar');
+    
+    if (pctEl) {
+        pctEl.textContent = pct + '%';
+        if (pct >= 100) {
+            pctEl.style.color = '#10b981';
+        } else if (pct >= 50) {
+            pctEl.style.color = '#f59e0b';
+        } else {
+            pctEl.style.color = '#ef4444';
+        }
+    }
+    if (barEl) {
+        barEl.style.width = pct + '%';
+        if (pct >= 100) {
+            barEl.style.background = '#10b981';
+        } else if (pct >= 50) {
+            barEl.style.background = '#f59e0b';
+        } else {
+            barEl.style.background = '#ef4444';
+        }
+    }
+
+    // Update complete button status
+    var completeBtn = document.getElementById('btn-complete-simulation');
+    if (completeBtn) {
+        if (pct >= 100) {
+            completeBtn.disabled = false;
+            completeBtn.style.background = 'linear-gradient(90deg, #10b981, #34d399)';
+            completeBtn.style.color = '#fff';
+            completeBtn.style.cursor = 'pointer';
+        } else {
+            completeBtn.disabled = true;
+            completeBtn.style.background = 'var(--mu)';
+            completeBtn.style.color = '#000';
+            completeBtn.style.cursor = 'default';
+        }
+    }
+
+    // Award +10 XP for checkbox change
+    if (checkbox.checked) {
+        // Trigger small particle pop or sound
+        var loggedIn = window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.token;
+        if (loggedIn) {
+            try {
+                // Add skill simulation goal to database
+                var skillName = c.skills[idx].n;
+                var res = await fetch('/api/v1/users/goals', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + window.APP_DATA.userData.token
+                    },
+                    body: JSON.stringify({ title: 'Acquired ' + skillName + ' (Simulated in ' + c.title + ')', category: 'Simulation' })
+                });
+                if (res.ok) {
+                    var goalData = await res.json();
+                    await fetch('/api/v1/users/goals/' + goalData.goal.id, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + window.APP_DATA.userData.token
+                        },
+                        body: JSON.stringify({ status: 'Achieved' })
+                    });
+                    if (typeof showToast === 'function') {
+                        showToast('🔮', 'Milestone Acquired! +10 XP.');
+                    }
+                    renderXpProgress();
+                    renderLeaderboard();
+                }
+            } catch(e) {
+                console.error('Error logging milestone XP:', e);
+            }
+        } else {
+            if (typeof showToast === 'function') {
+                showToast('🔮', 'Milestone Acquired (Guest Mode).');
+            }
+        }
+    }
+}
+
+async function completeSimulation(careerId) {
+    var c = CAREERS.find(function(x) { return x.id === careerId; });
+    if (!c) return;
+    
+    closeCareerSimulator();
+    if (typeof triggerConfetti === 'function') triggerConfetti();
+
+    var loggedIn = window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.token;
+    if (loggedIn) {
+        try {
+            // Log simulation completion to get +50 XP
+            var res = await fetch('/api/v1/users/goals', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + window.APP_DATA.userData.token
+                },
+                body: JSON.stringify({ title: 'Completed ' + c.title + ' Career Simulation', category: 'Simulation' })
+            });
+            if (res.ok) {
+                var goalData = await res.json();
+                await fetch('/api/v1/users/goals/' + goalData.goal.id, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + window.APP_DATA.userData.token
+                    },
+                    body: JSON.stringify({ status: 'Achieved' })
+                });
+                if (typeof showToast === 'function') {
+                    showToast('🏆', 'Career simulation complete! +50 XP.');
+                }
+                renderXpProgress();
+                renderLeaderboard();
+            }
+        } catch(e) {
+            console.error('Error completing simulation:', e);
+        }
+    } else {
+        if (typeof showToast === 'function') {
+            showToast('🏆', 'Career simulation complete (Guest Mode).');
+        }
+    }
 }

@@ -80,9 +80,9 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.df159346.css?v=88ee2ff6bf02c809" as="style">
+    <link rel="preload" href="/dist/main.df159346.css?v=bba962889cdb5b84" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.df159346.css?v=88ee2ff6bf02c809">
+    <link rel="stylesheet" href="/dist/main.df159346.css?v=bba962889cdb5b84">
 
     <!-- JSON-LD Structured Data Schema -->
     
@@ -1694,14 +1694,31 @@
                     </div>
 
                     <!-- Dynamic Search & Category Filters -->
-                    <div class="dash-controls rv">
                         <div class="search-box">
                             <span class="search-icon" aria-hidden="true">🔍</span>
                             <input type="text" id="career-search" class="fi search-input" placeholder="Search careers (e.g. UPSC, Software Developer, MBA, CA...)" oninput="handleSearchCareer(this.value)" aria-label="Search Careers">
                             <button class="search-clear" id="search-clear" onclick="clearSearchCareer()" aria-label="Clear Search" style="display:none;">✕</button>
                         </div>
-                        <div class="dash-filters">
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <select id="filter-salary" class="fi" onchange="filterCareersSalary(this.value)" style="width: auto; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: var(--wh); font-size: 0.85rem; padding: 0 1rem; border-radius: 6px; height: 42px;">
+                                <option value="all">💰 All Salary Tiers</option>
+                                <option value="high">🔥 High Paying (>15 LPA)</option>
+                                <option value="mid">⚡ Mid-Tier (6-15 LPA)</option>
+                                <option value="entry">🌱 Entry-Level (<6 LPA)</option>
+                            </select>
+                            <select id="filter-remote" class="fi" onchange="filterCareersRemote(this.value)" style="width: auto; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: var(--wh); font-size: 0.85rem; padding: 0 1rem; border-radius: 6px; height: 42px;">
+                                <option value="all">🌐 Any Work Mode</option>
+                                <option value="remote">🏠 Remote Friendly</option>
+                                <option value="growth">📈 High Growth Rate</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Category Filters -->
+                    <div class="dash-controls rv" style="margin-top: 0.5rem; padding-top: 0;">
+                        <div class="dash-filters" style="width: 100%;">
                             <button class="df on" onclick="filterCareer(this,'all')">All Careers</button>
+                            <button class="df" id="btn-rec-for-me" onclick="filterCareer(this,'recommended')" style="background: linear-gradient(90deg, rgba(232, 140, 42, 0.1), rgba(245, 158, 11, 0.15)) !important; border: 1px solid rgba(245, 158, 11, 0.3) !important; color: #f59e0b !important; font-weight: 700;">✨ Recommended for Me</button>
                             <button class="df" onclick="filterCareer(this,'Technology &amp; IT')">Technology</button>
                             <button class="df" onclick="filterCareer(this,'Business &amp; Management')">Business &amp; Management</button>
                             <button class="df" onclick="filterCareer(this,'Creative &amp; Design')">Creative</button>
@@ -2519,9 +2536,9 @@
     
 
 
-    <script defer="" src="/dist/careers.e4a25189.js?v=88ee2ff6bf02c809"></script>
-    <script defer="" src="/dist/app.ed664820.js?v=88ee2ff6bf02c809"></script>
-    <script defer="" src="/dist/ux-engine.429b6548.js?v=88ee2ff6bf02c809"></script>
+    <script defer="" src="/dist/careers.e4a25189.js?v=bba962889cdb5b84"></script>
+    <script defer="" src="/dist/app.9cc6983e.js?v=bba962889cdb5b84"></script>
+    <script defer="" src="/dist/ux-engine.429b6548.js?v=bba962889cdb5b84"></script>
 
 
 </body></html>
