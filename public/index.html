@@ -80,9 +80,9 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.df159346.css?v=1338a1da970bd9a3" as="style">
+    <link rel="preload" href="/dist/main.df159346.css?v=38c50fd8932845c8" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.df159346.css?v=1338a1da970bd9a3">
+    <link rel="stylesheet" href="/dist/main.df159346.css?v=38c50fd8932845c8">
 
     <!-- JSON-LD Structured Data Schema -->
     
@@ -1014,6 +1014,10 @@
                                     <span class="meta-label">Level</span>
                                     <strong id="profile-level">-</strong>
                                 </div>
+                                <div class="profile-card" id="xp-profile-card" style="display: none; min-width: 180px;">
+                                    <span class="meta-label" style="display: flex; justify-content: space-between;"><span>XP Progress</span><span id="profile-xp-text" style="color: var(--wh);">0 / 150</span></span>
+                                    <div class="mini-bar" style="margin-top: 0.25rem; background: rgba(255,255,255,0.08); height: 6px;"><span id="profile-xp-bar" style="width: 0%; background: linear-gradient(90deg, #3b82f6, #60a5fa); transition: width 0.3s ease; height: 6px; display: block; border-radius: 4px;"></span></div>
+                                </div>
                                 <button class="profile-reset" onclick="openStudentOnboard()">Change Profile</button>
                             </div>
                         </div>
@@ -1105,6 +1109,10 @@
                                     <div class="summary-row"><span>Best Streak</span><strong id="dash-streak-best" style="color: var(--mu);">0 Days</strong></div>
                                 </div>
                                 <button class="tool-btn" onclick="incrementStreak()" id="btn-increment-streak">Mark Today Complete</button>
+                                <div id="streak-shield-container" style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem;">
+                                    <span style="color: var(--mu); display: flex; align-items: center; gap: 0.25rem;">🛡️ Streak Shields: <strong id="streak-shield-count" style="color: var(--wh);">0</strong></span>
+                                    <button class="tool-link" onclick="purchaseStreakShield()" style="margin: 0; font-size: 0.75rem; cursor: pointer; background: transparent; border: none; padding: 0;">Buy Shield (-100 XP)</button>
+                                </div>
                             </article>
 
                             <article class="tool-card" id="smart-goals-card">
@@ -1169,6 +1177,9 @@
                                     <span>Time Trend</span><span id="prog-trend-lbl" style="color: #6ee7b7;">+0%</span>
                                 </div>
                                 <div class="mini-bar"><span id="prog-time-bar" style="width: 50%; background: #22c55e;"></span></div>
+                                <div style="margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.75rem;">
+                                    <button class="tool-btn" style="background: rgba(34, 197, 94, 0.1); color: #6ee7b7; width: 100%; border: 1px solid rgba(34, 197, 94, 0.2); cursor: pointer;" onclick="downloadReportCard()">📋 Generate & Download Report Card</button>
+                                </div>
                             </article>
 
                             <article class="tool-card" id="resources-card">
@@ -1181,6 +1192,39 @@
                                 </div>
                                 <div class="glass-tags" id="resource-shortcuts-list" style="margin: 1rem 0; min-height: 60px;">
                                     <span class="glass-tag" style="opacity: 0.7;">Select profile to see resources</span>
+                                </div>
+                            </article>
+                            <article class="tool-card" id="leaderboard-card">
+                                <div class="tool-head">
+                                    <div>
+                                        <h3>🏆 Weekly Leaderboard</h3>
+                                        <p class="tool-desc">Compete with other learners.</p>
+                                    </div>
+                                    <span class="tool-tag" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.2);">Rankings</span>
+                                </div>
+                                <div id="leaderboard-list" style="margin: 1rem 0; display: flex; flex-direction: column; gap: 0.5rem; min-height: 80px;">
+                                    <!-- Rendered in JS -->
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.75rem;">
+                                    <label style="font-size: 0.75rem; color: var(--mu); display: flex; align-items: center; gap: 0.4rem; cursor: pointer; margin: 0;">
+                                        <input type="checkbox" id="leaderboard-opt-in-chk" checked onchange="toggleLeaderboardOptIn(this.checked)" style="cursor: pointer; margin: 0;">
+                                        Appear Publicly on Leaderboard
+                                    </label>
+                                </div>
+                            </article>
+
+                            <article class="tool-card" id="ai-mentor-card">
+                                <div class="tool-head">
+                                    <div>
+                                        <h3>🤖 AI Career Mentor</h3>
+                                        <p class="tool-desc">Quick analysis & recommendations.</p>
+                                    </div>
+                                    <span class="tool-tag" style="background: rgba(99, 102, 241, 0.1); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.2);">Mentor</span>
+                                </div>
+                                <div style="margin: 1rem 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <button class="tool-btn" style="background: rgba(255,255,255,0.02); color: var(--wh); text-align: left; justify-content: flex-start; border: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; cursor: pointer;" onclick="triggerMentorQuery('Analyze my weekly study hours trend and suggest improvements.')">📊 Analyze my study trends</button>
+                                    <button class="tool-btn" style="background: rgba(255,255,255,0.02); color: var(--wh); text-align: left; justify-content: flex-start; border: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; cursor: pointer;" onclick="triggerMentorQuery('Recommend hot career options matching my current study profile.')">🚀 Recommend career options</button>
+                                    <button class="tool-btn" style="background: rgba(255,255,255,0.02); color: var(--wh); text-align: left; justify-content: flex-start; border: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; cursor: pointer;" onclick="triggerMentorQuery('Explain what skills I need to acquire to become a successful professional.')">🧠 Review my required skills</button>
                                 </div>
                             </article>
                             <!-- END NEW WIDGETS -->
@@ -2474,9 +2518,9 @@
     
 
 
-    <script defer="" src="/dist/careers.e4a25189.js?v=1338a1da970bd9a3"></script>
-    <script defer="" src="/dist/app.a7866987.js?v=1338a1da970bd9a3"></script>
-    <script defer="" src="/dist/ux-engine.429b6548.js?v=1338a1da970bd9a3"></script>
+    <script defer="" src="/dist/careers.e4a25189.js?v=38c50fd8932845c8"></script>
+    <script defer="" src="/dist/app.9134ccf7.js?v=38c50fd8932845c8"></script>
+    <script defer="" src="/dist/ux-engine.429b6548.js?v=38c50fd8932845c8"></script>
 
 
 </body></html>

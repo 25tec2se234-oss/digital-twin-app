@@ -51,6 +51,13 @@ const statusSchema = Joi.object({
 router.get('/', authenticate, authorize('admin'), validate(listSchema), cacheResponse(env.CACHE_TTL_SECONDS), userController.listUsers);
 
 router.get('/dashboard-stats', authenticate, userController.getDashboardStats);
+router.get('/leaderboard', authenticate, userController.getLeaderboardData);
+router.patch('/leaderboard/opt-in', authenticate, userController.updateLeaderboardOptIn);
+router.get('/goals', authenticate, userController.getUserGoals);
+router.post('/goals', authenticate, userController.createUserGoal);
+router.patch('/goals/:id', authenticate, userController.toggleGoalStatus);
+router.post('/streak/freeze', authenticate, userController.purchaseStreakShield);
+router.get('/report-card', authenticate, userController.generateReportCard);
 
 /**
  * @openapi
