@@ -6036,28 +6036,10 @@ async function renderProgressComparison() {
                 lwTime = stats.studyTimeLastWeek || 0;
                 twAcc = stats.accuracyThisWeek || 0;
                 lwAcc = stats.accuracyLastWeek || 0;
-                
-                localStorage.setItem('dtv_prog_tw', twTime);
-                localStorage.setItem('dtv_prog_lw', lwTime);
-                localStorage.setItem('dtv_acc_tw', twAcc);
-                localStorage.setItem('dtv_acc_lw', lwAcc);
-            } else {
-                twTime = parseFloat(localStorage.getItem('dtv_prog_tw') || '0');
-                lwTime = parseFloat(localStorage.getItem('dtv_prog_lw') || '0');
-                twAcc = parseFloat(localStorage.getItem('dtv_acc_tw') || '0');
-                lwAcc = parseFloat(localStorage.getItem('dtv_acc_lw') || '0');
             }
         } catch(e) {
-            twTime = parseFloat(localStorage.getItem('dtv_prog_tw') || '0');
-            lwTime = parseFloat(localStorage.getItem('dtv_prog_lw') || '0');
-            twAcc = parseFloat(localStorage.getItem('dtv_acc_tw') || '0');
-            lwAcc = parseFloat(localStorage.getItem('dtv_acc_lw') || '0');
+            console.error('Error fetching dashboard stats:', e);
         }
-    } else {
-        twTime = parseFloat(localStorage.getItem('dtv_prog_tw') || '0');
-        lwTime = parseFloat(localStorage.getItem('dtv_prog_lw') || '0');
-        twAcc = parseFloat(localStorage.getItem('dtv_acc_tw') || '0');
-        lwAcc = parseFloat(localStorage.getItem('dtv_acc_lw') || '0');
     }
 
     var elTwT = document.getElementById('prog-time-tw');
