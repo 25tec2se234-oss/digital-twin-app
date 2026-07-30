@@ -5918,74 +5918,154 @@ window.renderResourceShortcuts = function() {
     
     var resources = [];
     if (profile.type === 'school') {
-        resources = [
-            {
-                n: 'NCERT Textbook Solutions', 
-                desc: 'Access official free solutions and e-textbooks.', 
-                url: 'https://ncert.nic.in/textbook.php',
-                c: '#3b82f6',
-                icon: '📚'
-            },
-            {
-                n: 'CBSE Previous Year Papers', 
-                desc: 'Download board examinations and sample papers.', 
-                url: 'https://www.cbse.gov.in/cbsenew/question-paper.html',
-                c: '#a855f7',
-                icon: '📝'
-            },
-            {
-                n: 'Olympiad Mock Tests', 
-                desc: 'Practice logical and scientific mock assessments.', 
-                url: 'https://www.crestolympiads.com/olympiad-mock-tests',
-                c: '#10b981',
-                icon: '🏆'
-            }
-        ];
-    } else {
-        var st = (profile.stream || '').toLowerCase();
-        if (st.includes('tech') || st.includes('cse')) {
+        var cls = parseInt(profile.classLevel || '9', 10);
+        
+        if (cls >= 11) {
             resources = [
                 {
-                    n: 'LeetCode Problem Sets', 
-                    desc: 'Enhance data structures and algorithms practice.', 
-                    url: 'https://leetcode.com/problemset/all/',
-                    c: '#f59e0b',
-                    icon: '💻'
+                    n: 'Class ' + cls + ' NCERT Solutions', 
+                    desc: 'Expert answers for Higher Secondary Physics, Chemistry & Math.', 
+                    url: 'https://www.learncbse.in/ncert-solutions-for-class-' + cls + '/',
+                    c: '#3b82f6',
+                    icon: '📚'
                 },
                 {
-                    n: 'GitHub Student Pack', 
-                    desc: 'Get free premium developer tool subscriptions.', 
-                    url: 'https://education.github.com/pack',
-                    c: '#6366f1',
-                    icon: '🐙'
+                    n: 'CBSE Class 12 Boards Papers', 
+                    desc: 'Download board examination and evaluation keys.', 
+                    url: 'https://www.cbse.gov.in/cbsenew/question-paper.html',
+                    c: '#a855f7',
+                    icon: '📝'
                 },
                 {
-                    n: 'System Design Handbook', 
-                    desc: 'Learn system design and architecture fundamentals.', 
-                    url: 'https://github.com/donnemartin/system-design-primer',
-                    c: '#06b6d4',
-                    icon: '📐'
+                    n: 'JEE / NEET Prep Guide', 
+                    desc: 'Official practice tests and previous year papers from NTA.', 
+                    url: 'https://www.nta.ac.in/',
+                    c: '#10b981',
+                    icon: '🚀'
+                }
+            ];
+        } else if (cls >= 9) {
+            resources = [
+                {
+                    n: 'Class ' + cls + ' NCERT Solutions', 
+                    desc: 'Free textbook solutions for Class ' + cls + ' Board Foundation.', 
+                    url: 'https://www.learncbse.in/ncert-solutions-for-class-' + cls + '/',
+                    c: '#3b82f6',
+                    icon: '📚'
+                },
+                {
+                    n: 'CBSE Class 10 Boards Papers', 
+                    desc: 'Download board sample questions and mock tests.', 
+                    url: 'https://www.cbse.gov.in/cbsenew/question-paper.html',
+                    c: '#a855f7',
+                    icon: '📝'
+                },
+                {
+                    n: 'High School Olympiads Prep', 
+                    desc: 'Logical Reasoning and Science Olympiad practice mock papers.', 
+                    url: 'https://www.crestolympiads.com/olympiad-mock-tests',
+                    c: '#10b981',
+                    icon: '🏆'
                 }
             ];
         } else {
             resources = [
                 {
-                    n: 'HBR Business Case Studies', 
-                    desc: 'Analyze top corporate business scenarios.', 
+                    n: 'Class ' + cls + ' NCERT Solutions', 
+                    desc: 'Easy-to-understand solutions for Class ' + cls + ' syllabus.', 
+                    url: 'https://www.learncbse.in/ncert-solutions/',
+                    c: '#3b82f6',
+                    icon: '📚'
+                },
+                {
+                    n: 'Middle School STEM Practice', 
+                    desc: 'Interactive math, grammar, and science lessons.', 
+                    url: 'https://www.khanacademy.org/',
+                    c: '#a855f7',
+                    icon: '🧬'
+                },
+                {
+                    n: 'Junior Olympiads Prep', 
+                    desc: 'Practice logical and science assessments for kids.', 
+                    url: 'https://www.crestolympiads.com/',
+                    c: '#10b981',
+                    icon: '🏆'
+                }
+            ];
+        }
+    } else {
+        var st = (profile.stream || '').toLowerCase();
+        var yr = (profile.uniLevel || '1st Year').toLowerCase();
+        
+        if (st.includes('tech') || st.includes('cse')) {
+            if (yr.includes('3rd') || yr.includes('4th') || yr.includes('final')) {
+                resources = [
+                    {
+                        n: 'LeetCode Interview Prep', 
+                        desc: 'Advanced problem sets for placements and FAANG preparation.', 
+                        url: 'https://leetcode.com/problemset/all/',
+                        c: '#f59e0b',
+                        icon: '💻'
+                    },
+                    {
+                        n: 'System Design Primer', 
+                        desc: 'Learn high-scale system design and architectural principles.', 
+                        url: 'https://github.com/donnemartin/system-design-primer',
+                        c: '#6366f1',
+                        icon: '📐'
+                    },
+                    {
+                        n: 'Developer Resume Builder', 
+                        desc: 'Build a premium developer resume and portfolio.', 
+                        url: 'https://resume.io/',
+                        c: '#06b6d4',
+                        icon: '📄'
+                    }
+                ];
+            } else {
+                resources = [
+                    {
+                        n: 'Coding Foundations', 
+                        desc: 'Master basic data structures and algorithms.', 
+                        url: 'https://leetcode.com/problemset/all/',
+                        c: '#f59e0b',
+                        icon: '💻'
+                    },
+                    {
+                        n: 'GitHub Student Pack', 
+                        desc: 'Get free premium developer tools and cloud credits.', 
+                        url: 'https://education.github.com/pack',
+                        c: '#6366f1',
+                        icon: '🐙'
+                    },
+                    {
+                        n: 'Web Development MDN Guide', 
+                        desc: 'Complete documentation for HTML, CSS, and JS.', 
+                        url: 'https://developer.mozilla.org/',
+                        c: '#06b6d4',
+                        icon: '🌐'
+                    }
+                ];
+            }
+        } else {
+            resources = [
+                {
+                    n: 'Harvard Business Review Cases', 
+                    desc: 'Analyze top corporate business and finance scenarios.', 
                     url: 'https://hbr.org/store/case-studies',
                     c: '#ef4444',
                     icon: '📊'
                 },
                 {
-                    n: 'McKinsey Industry Insights', 
-                    desc: 'Read global research reports on modern markets.', 
+                    n: 'McKinsey Market Insights', 
+                    desc: 'Read strategic global research reports on modern industries.', 
                     url: 'https://www.mckinsey.com/featured-insights',
                     c: '#06b6d4',
                     icon: '💡'
                 },
                 {
-                    n: 'LinkedIn Alumni Networking', 
-                    desc: 'Connect with strategic career mentors.', 
+                    n: 'LinkedIn Alumni Network Guide', 
+                    desc: 'Learn how to strategically connect with professional mentors.', 
                     url: 'https://www.linkedin.com/help/linkedin/answer/a511394/using-the-linkedin-alumni-tool',
                     c: '#3b82f6',
                     icon: '🤝'
