@@ -6,7 +6,7 @@
     <title>No Personalisation in Traditional Counseling | Digital Twin Verse</title>
     <meta name="description" content="Discover why generic career advice fails modern students and how AI-powered personal digital twins deliver hyper-personalized career trajectories.">
     <link rel="canonical" href="https://digitaltwinvrs.com/problem/no-personalisation">
-    <link rel="stylesheet" href="/dist/main.dc44bb66.css?v=81aad64113f2b6d4">
+    <link rel="stylesheet" href="/dist/main.dc44bb66.css?v=246f7502f615f6d0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -238,6 +238,8 @@
             border-radius: 999px;
             font-weight: 600;
             text-decoration: none;
+            border: none;
+            cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
@@ -388,6 +390,60 @@
         }
         .ai-drawer-input button:hover { background: #6d28d9; }
 
+        /* SKILL ROADMAP BUILDER MODAL */
+        .roadmap-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 10, 20, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 999999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .roadmap-modal-overlay.active { display: flex; }
+        .roadmap-card {
+            background: linear-gradient(135deg, #1e1b4b, #0f172a);
+            border: 1px solid rgba(167, 139, 250, 0.35);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 35px rgba(124, 58, 237, 0.25);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 620px;
+            padding: 2rem;
+            position: relative;
+            color: #fff;
+        }
+        .roadmap-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.2rem;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
+        .roadmap-close:hover { color: #fff; }
+        .roadmap-select-box select {
+            width: 100%;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            padding: 0.6rem 0.8rem;
+            color: #fff;
+            outline: none;
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+        }
+        .roadmap-select-box select option { background: #0f172a; color: #fff; }
+        .roadmap-phase-list {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 1.2rem;
+        }
+
         @media (max-width: 768px) {
             .prob-stats-grid { grid-template-columns: 1fr; }
             .news-grid { grid-template-columns: 1fr; }
@@ -469,7 +525,7 @@
 
             <div class="action-btns">
                 <button onclick="openLiveAIMentor('no-personalisation')" class="btn-primary-dtv">Talk to AI Career Mentor &rarr;</button>
-                <a href="/leaderboard" class="btn-secondary-dtv">View Student Leaderboard &rarr;</a>
+                <button onclick="openRoadmapModal()" class="btn-secondary-dtv">Generate My AI Skill Roadmap 🧬</button>
             </div>
         </div>
     </main>
@@ -493,11 +549,36 @@
             <div class="ai-quick-prompts">
                 <span class="prompt-pill" onclick="sendQuickPrompt('Build a personalized roadmap for AI Engineering')">🤖 AI Engineer Roadmap</span>
                 <span class="prompt-pill" onclick="sendQuickPrompt('How does DTV personalize my skill twin?')">🧬 How Skill Twin works</span>
-                <span class="prompt-pill" onclick="sendQuickPrompt('Compare CS vs UI/UX design for my profile')">⚖️ Compare CS vs UI/UX</span>
+                <span class="prompt-pill" onclick="sendQuickPrompt('Generate Skill Roadmap')">🧬 Skill Roadmap</span>
             </div>
             <div class="ai-drawer-input">
                 <input type="text" id="ai-user-input" placeholder="Type your career question..." onkeypress="handleChatKeyPress(event)">
                 <button onclick="sendUserMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SKILL ROADMAP BUILDER MODAL -->
+    <div id="skill-roadmap-overlay" class="roadmap-modal-overlay">
+        <div class="roadmap-card">
+            <button class="roadmap-close" onclick="closeRoadmapModal()">&times;</button>
+            <h2 style="margin-top:0; font-size:1.4rem; color:#fff;">🧬 Instant AI Skill Roadmap Builder</h2>
+            <p style="color:#cbd5e1; font-size:0.85rem; margin-bottom:1rem;">Select your target 2026 career role to build a 4-phase personalized skill milestone checklist.</p>
+            
+            <div class="roadmap-select-box">
+                <select id="roadmap-target-role" onchange="renderRoadmapPhases()">
+                    <option value="ai-eng">Full-Stack AI Engineer (Python, PyTorch, LLM Agents)</option>
+                    <option value="ai-pm">AI Product Manager (PRDs, Metrics, User Journey)</option>
+                    <option value="design">AI UI/UX Architect (Figma, Prompt Interface, Systems)</option>
+                </select>
+            </div>
+
+            <div class="roadmap-phase-list" id="roadmap-phase-box">
+                <!-- Dynamically Rendered -->
+            </div>
+
+            <div style="margin-top:1.5rem; text-align:center;">
+                <button onclick="closeRoadmapModal(); openLiveAIMentor('no-personalisation');" class="btn-primary-dtv" style="width:100%; justify-content:center;">Track Skill Twin Milestones Free &rarr;</button>
             </div>
         </div>
     </div>
@@ -510,7 +591,46 @@
         function closeLiveAIMentor() {
             document.getElementById('ai-mentor-overlay').classList.remove('active');
         }
+        function openRoadmapModal() {
+            document.getElementById('skill-roadmap-overlay').classList.add('active');
+            renderRoadmapPhases();
+        }
+        function closeRoadmapModal() {
+            document.getElementById('skill-roadmap-overlay').classList.remove('active');
+        }
+        function renderRoadmapPhases() {
+            const role = document.getElementById('roadmap-target-role').value;
+            const box = document.getElementById('roadmap-phase-box');
+            
+            if (role === 'ai-eng') {
+                box.innerHTML = `
+                    <div style="margin-bottom:0.8rem; font-size:0.88rem; color:#a78bfa; font-weight:700;">Phase 1 (Month 1): Python &amp; Data Structures</div>
+                    <div style="margin-bottom:0.8rem; font-size:0.88rem; color:#34d399; font-weight:700;">Phase 2 (Month 2): Neural Networks &amp; PyTorch</div>
+                    <div style="margin-bottom:0.8rem; font-size:0.88rem; color:#facc15; font-weight:700;">Phase 3 (Month 3): LangChain, RAG &amp; Vector DBs</div>
+                    <div style="font-size:0.88rem; color:#60a5fa; font-weight:700;">Phase 4 (Month 4): DTV Avatar Portfolio Deployment</div>
+                `;
+            } else if (role === 'ai-pm') {
+                box.innerHTML = `
+                    <div style="margin-bottom:0.8rem; font-size:0.88rem; color:#a78bfa; font-weight:700;">Phase 1 (Month 1): AI Product Strategy &amp; PRDs</div>
+                    <div style="margin-bottom:0.8rem; font-size:0.88rem; color:#34d399; font-weight:700;">Phase 2 (Month 2): User Feedback Loops &amp; A/B Metrics</div>
+                    <div style="margin-bottom:0.8rem; font-size:0.88rem; color:#facc15; font-weight:700;">Phase 3 (Month 3): Model Economics &amp; API Costs</div>
+                    <div style="font-size:0.88rem; color:#60a5fa; font-weight:700;">Phase 4 (Month 4): DTV AI PM Case Study Avatar</div>
+                `;
+            } else {
+                box.innerHTML = `
+                    <div style="margin-bottom:0.8rem; font-size:0.88rem; color:#a78bfa; font-weight:700;">Phase 1 (Month 1): Visual Hierarchy &amp; Figma Systems</div>
+                    <div style="margin-bottom:0.8rem; font-size:0.88rem; color:#34d399; font-weight:700;">Phase 2 (Month 2): Generative AI Design Tools</div>
+                    <div style="margin-bottom:0.8rem; font-size:0.88rem; color:#facc15; font-weight:700;">Phase 3 (Month 3): Conversational UI &amp; Voice Interfaces</div>
+                    <div style="font-size:0.88rem; color:#60a5fa; font-weight:700;">Phase 4 (Month 4): DTV Spatial Design Portfolio Avatar</div>
+                `;
+            }
+        }
         function sendQuickPrompt(text) {
+            if (text.includes('Skill Roadmap')) {
+                closeLiveAIMentor();
+                openRoadmapModal();
+                return;
+            }
             document.getElementById('ai-user-input').value = text;
             sendUserMessage();
         }
@@ -541,7 +661,7 @@
                 if (lower.includes('roadmap') || lower.includes('ai engineer')) {
                     response = "🤖 <strong>Personalized AI Engineer Roadmap (2026):</strong><br>1. <strong>Core Math &amp; Logic:</strong> Linear algebra + Python fundamentals.<br>2. <strong>AI Frameworks:</strong> PyTorch, LangChain, Transformers.<br>3. <strong>Avatar Simulation:</strong> Build 2 LLM Agent projects on DTV.<br>4. <strong>Salary Expectation:</strong> ₹14L–₹22L starting CTC.";
                 } else if (lower.includes('compare') || lower.includes('design')) {
-                    response = "⚖️ <strong>CS vs UI/UX Personalisation:</strong><br>• If you love structured problem-solving &amp; logic -> CS / AI Engineering.<br>• If you love visual psychology, user research &amp; aesthetics -> Product Design / UI/UX.<br>👉 Run micro-simulations for both inside DTV to see which avatar feels natural!";
+                    response = "⚖️ <strong>CS vs UI/UX Personalisation:</strong><br>• If you love structured problem-solving &amp; logic -> CS / AI Engineering.<br>• If you love visual psychology, user research &amp; aesthetics -> Product Design / UI/UX.";
                 } else {
                     response = "✨ <strong>Hyper-Personalized AI Advice:</strong><br>Unlike 20-minute static tests, your DTV digital twin continuously tracks your learning velocity across projects, ensuring your roadmap stays updated in real time.";
                 }
