@@ -956,7 +956,7 @@ function renderCareers(filter) {
         function openCareer(id) {
             if (!isLoggedIn()) {
                 showToast('🔒', 'Please sign in to access Career Explorer & details.');
-                openLoginPage();
+                openLoginGate();
                 return;
             }
             var c = CAREERS.find(function(x) {
