@@ -126,6 +126,16 @@ app.use('/dashboard', dashboardRoutes);
 
 // Blog System
 app.use('/blog', blogRoutes);
+// Pillar Landing Page Route: Career Guidance After 12th
+app.get(['/career-guidance-after-12th', '/career-guidance-after-12th/'], (req, res) => {
+  const pillarPath = path.join(publicDir, 'career-guidance-after-12th', 'index.html');
+  if (require('fs').existsSync(pillarPath)) {
+    res.set('Cache-Control', 'public, max-age=3600, must-revalidate');
+    return res.sendFile(pillarPath);
+  }
+  res.sendFile(path.join(publicDir, 'career-guidance-after-12th.html'));
+});
+
 
 // Leaderboard API
 app.use('/api/leaderboard', leaderboardRoutes);
@@ -190,6 +200,7 @@ app.get('/sitemap.xml', (req, res, next) => {
       });
       // Add /blog index too
       blogEntries += `\n  <url>\n    <loc>https://digitaltwinvrs.com/blog</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.9</priority>\n  </url>`;
+      blogEntries += `\n  <url>\n    <loc>https://digitaltwinvrs.com/career-guidance-after-12th</loc>\n    <lastmod>2026-08-02</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>1.0</priority>\n  </url>`;
       sitemap = sitemap.replace('</urlset>', blogEntries + '\n</urlset>');
     }
     res.set('Content-Type', 'application/xml');
