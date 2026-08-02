@@ -136,6 +136,17 @@ app.get(['/career-guidance-after-12th', '/career-guidance-after-12th/'], (req, r
   res.sendFile(path.join(publicDir, 'career-guidance-after-12th.html'));
 });
 
+// Dedicated Problem Topic Pages Route
+app.get(['/problem/:topic', '/problem/:topic/'], (req, res) => {
+  const problemTopic = req.params.topic;
+  const probPath = path.join(publicDir, 'problem', problemTopic, 'index.html');
+  if (require('fs').existsSync(probPath)) {
+    res.set('Cache-Control', 'public, max-age=3600, must-revalidate');
+    return res.sendFile(probPath);
+  }
+  res.redirect('/');
+});
+
 
 // Leaderboard API
 app.use('/api/leaderboard', leaderboardRoutes);
