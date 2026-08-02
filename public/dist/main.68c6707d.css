@@ -1157,7 +1157,7 @@
         .hero-copy .badge {
             align-self: center;
             width: fit-content;
-            margin: 0 auto;
+            margin: 0.8rem auto 2.2rem auto;
         }
 
         .hero-visual {
@@ -4185,8 +4185,10 @@
             }
 
             .hero-copy .badge {
-                align-self: center;
-            }
+            align-self: center;
+            width: fit-content;
+            margin: 0.8rem auto 2.2rem auto;
+        }
 
             .hero-btns {
                 justify-content: center;
