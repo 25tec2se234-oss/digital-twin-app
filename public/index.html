@@ -442,7 +442,7 @@
         <div class="nav-right-container">
             <div class="nav-links-modern">
                 <a href="#student-dashboard" onclick="requirePremiumFrontend(openDashboardShortcut)" class="nav-link">Dashboard</a>
-                <a href="#ai-section" class="nav-link">AI Advisor</a>
+                <a href="#ai-section" onclick="requirePremiumFrontend(function(){location.hash='#ai-section';})" class="nav-link">AI Advisor</a>
                 <a href="/parent" class="nav-link">Parent Portal</a>
                 <a href="/leaderboard.html" class="nav-link">Leaderboard</a>
                 
@@ -450,7 +450,7 @@
                     <span class="nav-link dropdown-toggle">More <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:-2px; margin-left: 2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
                     <div class="dropdown-menu">
                         <a href="#how">How It Works</a>
-                        <a href="#dashboard">Career Explorer</a>
+                        <a href="#dashboard" onclick="requirePremiumFrontend(function(){location.hash='#dashboard';})">Career Explorer</a>
                         <a href="#rev">Reviews</a>
                         <a href="/blog">Blog</a>
                     </div>

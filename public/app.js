@@ -954,6 +954,11 @@ function renderCareers(filter) {
 
         /* ═══ CAREER DETAIL WITH PREDICTION + SUGGESTIONS ═══════════ */
         function openCareer(id) {
+            if (!isLoggedIn()) {
+                showToast('🔒', 'Please sign in to access Career Explorer & details.');
+                openLoginPage();
+                return;
+            }
             var c = CAREERS.find(function(x) {
                 return x.id === id;
             });
@@ -2561,6 +2566,11 @@ function renderCareers(filter) {
         }
 
         async function downloadStudentPlan() {
+            if (!isLoggedIn()) {
+                showToast('🔒', 'Please sign in to download your custom study plan.');
+                openLoginPage();
+                return;
+            }
             ensureStudentDefaults();
             var jsPDFLib = await ensureJsPDFLoaded().catch(function() {
                 return null;
@@ -3003,6 +3013,11 @@ function renderCareers(filter) {
         }
 
         function toggleDashboard(forceOpen) {
+            if (!isLoggedIn()) {
+                showToast('🔒', 'Please sign in to access your Personalised Dashboard.');
+                openLoginPage();
+                return;
+            }
             var panel = document.getElementById('dashboard-panel');
             if (!panel) return;
             var isOpen = panel.classList.contains('open');
@@ -3021,6 +3036,11 @@ function renderCareers(filter) {
         window.toggleDashboard = toggleDashboard;
 
         function openDashboardShortcut() {
+            if (!isLoggedIn()) {
+                showToast('🔒', 'Please sign in to access your Personalised Dashboard.');
+                openLoginPage();
+                return;
+            }
             setDashboardOpen(true, true);
         }
 
@@ -3228,6 +3248,11 @@ function renderCareers(filter) {
 
         /* ═══ CHAT FUNCTIONS ═════════════════════════════════════════ */
         function togChat() {
+            if (!isLoggedIn()) {
+                showToast('🔒', 'Please sign in to access AI Mentor & Advisor.');
+                openLoginPage();
+                return;
+            }
             chatOpen = !chatOpen;
             var panel = document.getElementById('chat-panel');
             panel.classList.toggle('open', chatOpen);
@@ -6539,9 +6564,9 @@ async function awardXpForGoal(title) {
 }
 
 async function downloadReportCard() {
-    var loggedIn = window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.token;
-    if (!loggedIn) {
-        if (typeof showToast === 'function') showToast('⚠️', 'Please log in to generate report card.');
+    if (!isLoggedIn()) {
+        if (typeof showToast === 'function') showToast('🔒', 'Please sign in to generate and download your report card.');
+        openLoginPage();
         return;
     }
     try {
@@ -6826,6 +6851,11 @@ function filterCareersRemote(val) {
 }
 
 function openCareerSimulator(id) {
+    if (!isLoggedIn()) {
+        showToast('🔒', 'Please sign in to access Career Simulator.');
+        openLoginPage();
+        return;
+    }
     var c = CAREERS.find(function(x) { return x.id === id; });
     if (!c) return;
 
@@ -7048,3 +7078,19 @@ async function completeSimulation(careerId) {
         }
     }
 }
+
+
+        function checkProtectedHashRoutes() {
+            var hash = window.location.hash;
+            var protectedPrefixes = ['#student-dashboard', '#ai-section', '#analyzer-promo', '#dashboard'];
+            var isProtected = protectedPrefixes.some(function(p) { return hash === p || hash.startswith(p + '/'); });
+            if (isProtected && !isLoggedIn()) {
+                window.location.hash = '';
+                showToast('🔒', 'Please sign in to access premium feature sections.');
+                openLoginPage();
+                return false;
+            }
+            return true;
+        }
+
+        window.addEventListener('hashchange', checkProtectedHashRoutes);
