@@ -421,20 +421,14 @@
             background: transparent;
         }
 
-        .auth-page.active {
+                .auth-page.active {
             display: flex;
             align-items: flex-start;
-        .auth-shell {
-            margin: auto;
-            width: 100%;
-            max-width: 1180px;
-            display: grid;
-            grid-template-columns: 1.1fr .9fr;
-            gap: 1.4rem;
-            align-items: stretch;
         }
 
-        .pc {
+        .auth-shell {
+            margin: auto;
+                   .pc {
             background: var(--card);
             border: 1px solid var(--bdr);
             border-radius: var(--r);
@@ -721,9 +715,11 @@
             .prob-news-grid { grid-template-columns: 1fr; }
             .prob-modal-actions { flex-direction: column; }
             .prob-modal-actions .btn { width: 100%; text-align: center; }
+        }      grid-template-columns: 1.1fr .9fr;
+            gap: 1.4rem;
+            align-items: stretch;
         }
 
-        .auth-hero,
         .auth-card {
             border: 1px solid var(--bdr);
             border-radius: 26px;
