@@ -20,6 +20,7 @@ router.use('/health', healthRoutes);
 router.use('/payments', require('./paymentRoutes'));
 router.use('/payment', require('./paymentRoutes'));
 router.use('/data', dataRoutes);
+router.use('/wheel', require('./wheelRoutes'));
 router.post('/track', authenticate, requirePremium, dataController.trackAction);
 router.use('/admin/subscriptions', require('./adminSubscriptionRoutes'));
 router.use('/', aiRoutes);
