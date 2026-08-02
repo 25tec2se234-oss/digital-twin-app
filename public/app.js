@@ -7123,3 +7123,266 @@ async function completeSimulation(careerId) {
         }
 
         window.addEventListener('hashchange', checkProtectedHashRoutes);
+
+/* ========================================================
+   DEDICATED PROBLEM CARDS INSIGHT READER MODAL
+   ======================================================== */
+
+const PROBLEM_INSIGHTS_DATA = {
+    'years-wasted': {
+        icon: '⏳',
+        tag: 'Time & Career Alignment Loss',
+        title: 'The High Cost of Time: Why 2–4 Years Are Wasted in Wrong Career Paths',
+        summary: 'Millions of Indian students realize after 2 to 4 years of college that their chosen stream does not align with their actual strengths, market reality, or personal interests.',
+        stats: [
+            { label: 'Degree Mismatch Rate', val: '44%', desc: 'Graduates who realize mid-way or after graduation that they picked the wrong course.' },
+            { label: 'Avg Financial Loss', val: '₹3L – ₹10L', desc: 'Direct tuition and living expenses spent on misaligned academic degrees.' },
+            { label: 'Pivot Career Delay', val: '2.5 Years', desc: 'Average time lost retraining or switching fields post-graduation.' }
+        ],
+        deepDive: [
+            {
+                heading: 'Why Does Career Mismatch Happen Early?',
+                text: 'Traditional education forces 16-18 year old students to make irreversible stream choices (Engineering, Medical, Commerce, Humanities) based on class 10/12 marks rather than cognitive strengths, aptitude, or 5-year industry hiring projections.'
+            },
+            {
+                heading: 'The Friction of Late Pivoting',
+                text: 'Switching fields after spending 3-4 years in college requires unlearning legacy subjects, taking expensive upskilling bootcamps, and starting at entry-level salaries alongside candidates 4 years younger.'
+            }
+        ],
+        news: [
+            {
+                date: 'Aug 2026',
+                source: 'Tech India Market Report',
+                title: 'AI Skill-First Hiring Replaces Rigid Degree Filters',
+                desc: 'Over 62% of top tech employers in Bengaluru and Gurgaon now prioritize practical portfolio projects and cognitive problem-solving over specific college degree names.'
+            },
+            {
+                date: 'Jul 2026',
+                source: 'Education Policy Review',
+                title: 'NITI Aayog Urges Early Aptitude Simulations in Colleges',
+                desc: 'National report highlights that early exposure to multi-agent career simulations prevents over ₹4,000 Crore in wasted tuition across tier-2 and tier-3 cities.'
+            }
+        ],
+        dtvSolution: {
+            title: 'How Digital Twin Verse Eliminates Wasted Years',
+            points: [
+                'Simulate 50+ career paths in 10 minutes using AI digital twins before enrolling in costly courses.',
+                'Inspect real-world day-in-the-life tasks, salary trajectories, and skill requirements for 2026–2030.',
+                'Get personalized stream transition roadmaps without discarding your existing academic background.'
+            ]
+        }
+    },
+    'mounting-stress': {
+        icon: '😰',
+        tag: 'Mental Health & Decision Anxiety',
+        title: 'The Career Anxiety Epidemic: Navigating Family Pressure & Peer Comparison',
+        summary: 'Career ambiguity and unvetted advice from relatives create widespread decision paralysis, anxiety, and burnout among Indian students aged 16–24.',
+        stats: [
+            { label: 'High Career Stress', val: '68%', desc: 'Students reporting severe anxiety regarding post-college employment.' },
+            { label: 'Conflicting Guidance', val: '81%', desc: 'Students overwhelmed by contradictory advice from parents, coaching centers, and social media.' },
+            { label: 'Confidence Boost', val: '3.2x', desc: 'Higher clarity and mental peace reported when using data-backed AI career simulations.' }
+        ],
+        deepDive: [
+            {
+                heading: 'The Paradox of Endless Information',
+                text: 'Students today are flooded with hyped YouTube videos, LinkedIn flexing, and aggressive coaching institute ads. Without objective data, every option feels risky, leading to chronic FOMO and decision paralysis.'
+            },
+            {
+                heading: 'Parental Expectation vs. 2026 Market Realities',
+                text: 'Parents often push for traditional 1990s career stability (government exams, classical software engineering) while missing emerging high-growth roles in AI Product Management, MLOps, Data Science, and Cybersecurity.'
+            }
+        ],
+        news: [
+            {
+                date: 'Jul 2026',
+                source: 'Indian Journal of Youth Wellbeing',
+                title: 'Student Stress Shifts From Exams to Career Trajectory Ambiguity',
+                desc: 'Survey of 15,000 students reveals that 74% experience greater anxiety about choosing the wrong long-term career path than passing final semester examinations.'
+            },
+            {
+                date: 'Jun 2026',
+                source: 'EdTech Today',
+                title: 'Private AI Career Guidance Replaces High-Pressure Coaching',
+                desc: 'Interactive AI counselors are proving 4x more effective at reducing career anxiety by providing unbiased, data-validated clarity in a private, non-judgmental environment.'
+            }
+        ],
+        dtvSolution: {
+            title: 'How Digital Twin Verse Reduces Career Anxiety',
+            points: [
+                'Provides a private, judgment-free AI mentor accessible 24/7 via text and voice.',
+                'Visualizes clear, milestone-driven roadmaps so you always know your exact next step.',
+                'Offers dedicated Parent-Guide reports to help align family expectations with real 2026 market data.'
+            ]
+        }
+    },
+    'no-personalisation': {
+        icon: '🎯',
+        tag: 'Hyper-Personalized Guidance',
+        title: 'One Size Fits None: Why Generic Career Counseling Fails Students',
+        summary: 'Institutional career counseling in India relies on 1:3000 counselor ratios and static, outdated aptitude templates that ignore individual cognitive uniqueness.',
+        stats: [
+            { label: 'Student-to-Counselor', val: '1 : 3,000', desc: 'Average institutional counselor ratio across Indian colleges and schools.' },
+            { label: 'Outdated Advice', val: '78%', desc: 'Counseling sessions using decade-old industry job descriptions.' },
+            { label: 'Cognitive Profiling', val: '100%', desc: 'Multi-dimensional AI modeling tailored to your specific strengths and speed.' }
+        ],
+        deepDive: [
+            {
+                heading: 'The Flaw of Standardized Tests',
+                text: 'Legacy psychometric tests categorize complex human minds into 4-5 generic boxes. They ignore non-linear skill combinations—such as combining artistic design with data analytics or psychological insight with AI prompt engineering.'
+            },
+            {
+                heading: 'Ignoring Rapid Market Telemetry',
+                text: 'Static career counseling cannot adapt to fast-evolving tech shifts. A guide written 2 years ago misses Retrieval-Augmented Generation (RAG), Autonomous AI Agents, and specialized Cloud Security roles.'
+            }
+        ],
+        news: [
+            {
+                date: 'Aug 2026',
+                source: 'Future of Work Forum',
+                title: 'Hybrid Micro-Specializations Surge in Indian Tech Ecosystem',
+                desc: 'Employers report that 1 in 3 new job descriptions requires hybrid skills (e.g., Domain Expertise + Generative AI Literacy) that standard counselors fail to evaluate.'
+            },
+            {
+                date: 'Jul 2026',
+                source: 'AI in Education Summit',
+                title: 'Cognitive Digital Twins Revolutionize Student Mentorship',
+                desc: 'Next-gen career platforms build dynamic digital replicas of student skills to provide continuous, real-time guidance rather than one-time static advice.'
+            }
+        ],
+        dtvSolution: {
+            title: 'How Digital Twin Verse Delivers 100% Personalization',
+            points: [
+                'Models your unique cognitive profile, interests, learning pace, and ambition using multi-agent AI.',
+                'Dynamically updates your career recommendations as you complete projects, earn certifications, or acquire skills.',
+                'Maps hyper-specific niche career paths aligned with your exact personal strengths.'
+            ]
+        }
+    },
+    'missed-earnings': {
+        icon: '💸',
+        tag: 'Lifetime Compensation & Trajectory',
+        title: 'The Hidden Price Tag: How Early Career Misalignment Costs Millions',
+        summary: 'Starting in a misaligned or low-demand role leads to lower initial CTC, delayed promotions, and an estimated ₹30L–₹50L income gap over a 10-year period.',
+        stats: [
+            { label: 'Starting Salary Premium', val: '35% – 50%', desc: 'Higher entry-level CTC achieved by students entering high-fit specialized roles.' },
+            { label: '10-Yr Compounding Gap', val: '₹40+ Lakhs', desc: 'Estimated cumulative loss in lifetime earnings due to early role misalignment.' },
+            { label: 'Promotion Velocity', val: '2x Faster', desc: 'Career progression speed when skills match high-demand market telemetry.' }
+        ],
+        deepDive: [
+            {
+                heading: 'The Compounding Effect of Early Career Entry',
+                text: 'Your first job determines your baseline salary, promotion trajectory, and network. Starting in a declining sector requires years of uphill effort to match the compensation of peers who aligned with high-growth industries from day one.'
+            },
+            {
+                heading: 'The 2026 Salary Polarization',
+                text: 'The Indian job market is splitting: generic generalist software jobs are stagnating, while specialized roles (Data Engineering, AI Product Leads, DevOps, Cybersecurity) command 40–70% higher compensation and faster equity grants.'
+            }
+        ],
+        news: [
+            {
+                date: 'Aug 2026',
+                source: 'India Compensation Survey 2026',
+                title: 'Specialized Tech & AI Salaries Reach All-Time High in Tier 1-2 Cities',
+                desc: 'Fresh graduates skilled in Generative AI workflows and Cloud Security earn starting packages between ₹12 LPA – ₹22 LPA compared to ₹3.5 LPA for generic roles.'
+            },
+            {
+                date: 'Jun 2026',
+                source: 'Economic Times Tech',
+                title: 'High Career Growth Velocity Linked to Early Placement Matching',
+                desc: 'Data shows students who utilize career trajectory simulation tools achieve senior-level titles 3 years faster than average graduates.'
+            }
+        ],
+        dtvSolution: {
+            title: 'How Digital Twin Verse Maximizes Your Earnings Potential',
+            points: [
+                'Simulate 10-year salary trajectories and growth rates across 1,000+ modern roles before making stream choices.',
+                'Identify high-ROI skills and certifications that yield the highest starting compensation packages in India.',
+                'Track your readiness with automated placement scorecards to negotiate job offers with complete confidence.'
+            ]
+        }
+    }
+};
+
+function openProblemInsight(problemId) {
+    const modal = document.getElementById('problem-insight-modal');
+    const body = document.getElementById('prob-modal-body');
+    if (!modal || !body) return;
+
+    const data = PROBLEM_INSIGHTS_DATA[problemId];
+    if (!data) return;
+
+    body.innerHTML = `
+        <div class="prob-modal-header">
+            <div class="prob-modal-icon">${data.icon}</div>
+            <div>
+                <span class="prob-modal-tag">${data.tag}</span>
+                <h2 class="prob-modal-title">${data.title}</h2>
+            </div>
+        </div>
+        <p class="prob-modal-summary">${data.summary}</p>
+
+        <!-- STATS GRID -->
+        <div class="prob-modal-stats">
+            ${data.stats.map(s => `
+                <div class="prob-stat-card">
+                    <div class="prob-stat-val">${s.val}</div>
+                    <div class="prob-stat-lbl">${s.label}</div>
+                    <div class="prob-stat-desc">${s.desc}</div>
+                </div>
+            `).join('')}
+        </div>
+
+        <!-- DEEP DIVE SECTION -->
+        <div class="prob-modal-sec">
+            <h3 class="prob-sec-title">💡 Deep Dive Analysis</h3>
+            ${data.deepDive.map(d => `
+                <div class="prob-deep-box">
+                    <h4>${d.heading}</h4>
+                    <p>${d.text}</p>
+                </div>
+            `).join('')}
+        </div>
+
+        <!-- LATEST 2026 NEWS & MARKET TELEMETRY -->
+        <div class="prob-modal-sec">
+            <h3 class="prob-sec-title">📰 Latest 2026 Industry News & Market Updates</h3>
+            <div class="prob-news-grid">
+                ${data.news.map(n => `
+                    <div class="prob-news-card">
+                        <div class="prob-news-meta"><span>${n.source}</span> • <span>${n.date}</span></div>
+                        <h4 class="prob-news-title">${n.title}</h4>
+                        <p class="prob-news-desc">${n.desc}</p>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+
+        <!-- HOW DTV SOLVES IT -->
+        <div class="prob-modal-sol">
+            <h3>🚀 ${data.dtvSolution.title}</h3>
+            <ul>
+                ${data.dtvSolution.points.map(p => `<li>${p}</li>`).join('')}
+            </ul>
+            <div class="prob-modal-actions">
+                <a href="#ai-section" onclick="closeProblemInsight()" class="btn btn-out" style="border-color:#a78bfa; color:#a78bfa;">Talk to AI Mentor</a>
+                <button onclick="closeProblemInsight(); openAnalyzer();" class="btn btn-out" style="background:linear-gradient(135deg, #a78bfa, #3b82f6); color:#fff; border:none; cursor:pointer;">Analyze My Career Profile →</button>
+            </div>
+        </div>
+    `;
+
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeProblemInsight() {
+    const modal = document.getElementById('problem-insight-modal');
+    if (!modal) return;
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeProblemInsight();
+    }
+});
