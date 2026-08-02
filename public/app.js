@@ -6357,6 +6357,35 @@ async function fetchLatestBlogs() {
 }
 document.addEventListener('DOMContentLoaded', fetchLatestBlogs);
 
+/* Fetch & Update Student Journeys Blog Cards dynamically */
+async function fetchStudentJourneyBlogs() {
+    const grid = document.getElementById('student-journeys-grid');
+    if (!grid) return;
+    try {
+        const res = await fetch('/blog/api/latest');
+        if (!res.ok) return;
+        const blogs = await res.json();
+        if (!blogs || blogs.length === 0) return;
+        
+        const top3 = blogs.slice(0, 3);
+        grid.innerHTML = top3.map((b, idx) => `
+            <a href="/blog/${b.slug}" class="story-card rv d${idx + 1} visible" style="opacity: 1; transform: translateY(0px);">
+                <div class="story-media">
+                    <img loading="lazy" decoding="async" src="${b.featuredImage}" alt="${b.title}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&fm=webp&q=80';">
+                </div>
+                <div class="story-overlay">
+                    <span class="story-tag">${b.category || b.tag || 'Blog'}</span>
+                    <h3 class="story-title">${b.title}</h3>
+                    <p class="story-copy">${b.metaDescription || b.excerpt || ''}</p>
+                </div>
+            </a>
+        `).join('');
+    } catch (e) {
+        console.error('Error fetching student journey blogs:', e);
+    }
+}
+document.addEventListener('DOMContentLoaded', fetchStudentJourneyBlogs);
+
 /* ========================================================
    PREMIUM GAMIFICATION & PRODUCTIVITY FEATURES
    ======================================================== */
