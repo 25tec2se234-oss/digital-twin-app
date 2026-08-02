@@ -6,7 +6,7 @@
     <title>Mounting Career Stress & Anxiety | Digital Twin Verse</title>
     <meta name="description" content="Understand the growing career-anxiety epidemic among Indian students and how AI personalized guidance alleviates parental and peer pressure.">
     <link rel="canonical" href="https://digitaltwinvrs.com/problem/mounting-stress">
-    <link rel="stylesheet" href="/dist/main.dc44bb66.css?v=3373721a0359f34a">
+    <link rel="stylesheet" href="/dist/main.dc44bb66.css?v=81aad64113f2b6d4">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -218,8 +218,13 @@
             border-radius: 999px;
             font-weight: 700;
             text-decoration: none;
+            border: none;
+            cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
         }
         .btn-primary-dtv:hover {
             transform: translateY(-2px);
@@ -233,16 +238,161 @@
             border-radius: 999px;
             font-weight: 600;
             text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
             transition: background 0.3s ease;
         }
         .btn-secondary-dtv:hover {
             background: rgba(255, 255, 255, 0.18);
         }
+
+        /* LIVE AI MENTOR DRAWER MODAL */
+        .ai-drawer-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 10, 20, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 999999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .ai-drawer-overlay.active { display: flex; }
+        .ai-drawer-box {
+            background: linear-gradient(135deg, #0f172a, #0b0f19);
+            border: 1px solid rgba(167, 139, 250, 0.35);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(167, 139, 250, 0.2);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 650px;
+            height: 80vh;
+            max-height: 650px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+        .ai-drawer-header {
+            padding: 1.2rem 1.5rem;
+            background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .ai-drawer-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .ai-drawer-status {
+            font-size: 0.72rem;
+            color: #34d399;
+            background: rgba(52, 211, 153, 0.15);
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+        .ai-drawer-close {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.6rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .ai-drawer-close:hover { color: #fff; }
+        .ai-chat-messages {
+            flex: 1;
+            padding: 1.2rem 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .chat-msg {
+            max-width: 85%;
+            padding: 0.9rem 1.2rem;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .chat-msg.ai {
+            background: rgba(167, 139, 250, 0.12);
+            border: 1px solid rgba(167, 139, 250, 0.25);
+            color: #e2e8f0;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+        .chat-msg.user {
+            background: #7c3aed;
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+        .ai-quick-prompts {
+            padding: 0.6rem 1.5rem;
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            background: rgba(0,0,0,0.2);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .prompt-pill {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: #cbd5e1;
+            font-size: 0.78rem;
+            padding: 0.35rem 0.8rem;
+            border-radius: 999px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .prompt-pill:hover {
+            background: rgba(167, 139, 250, 0.2);
+            color: #fff;
+            border-color: rgba(167, 139, 250, 0.4);
+        }
+        .ai-drawer-input {
+            padding: 1rem 1.5rem;
+            background: rgba(0,0,0,0.4);
+            border-top: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            gap: 0.8rem;
+        }
+        .ai-drawer-input input {
+            flex: 1;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 0.7rem 1rem;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .ai-drawer-input button {
+            background: #7c3aed;
+            border: none;
+            color: #fff;
+            font-weight: 700;
+            padding: 0.7rem 1.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .ai-drawer-input button:hover { background: #6d28d9; }
+
         @media (max-width: 768px) {
             .prob-stats-grid { grid-template-columns: 1fr; }
             .news-grid { grid-template-columns: 1fr; }
             .action-btns { flex-direction: column; }
-            .action-btns a { text-align: center; }
+            .action-btns button, .action-btns a { text-align: center; justify-content: center; width: 100%; }
         }
     </style>
 </head>
@@ -318,10 +468,91 @@
             </ul>
 
             <div class="action-btns">
-                <a href="/login" class="btn-primary-dtv">Talk to AI Career Mentor &rarr;</a>
-                <a href="/parent" class="btn-secondary-dtv">Explore Parent Portal</a>
+                <button onclick="openLiveAIMentor('mounting-stress')" class="btn-primary-dtv">Talk to AI Career Mentor &rarr;</button>
+                <a href="/parent" class="btn-secondary-dtv">Explore Parent Portal &rarr;</a>
             </div>
         </div>
     </main>
+
+    <!-- LIVE AI MENTOR DRAWER MODAL -->
+    <div id="ai-mentor-overlay" class="ai-drawer-overlay">
+        <div class="ai-drawer-box">
+            <div class="ai-drawer-header">
+                <div class="ai-drawer-title">
+                    🤖 DTV AI Career Mentor
+                    <span class="ai-drawer-status">● Live 24/7</span>
+                </div>
+                <button class="ai-drawer-close" onclick="closeLiveAIMentor()">&times;</button>
+            </div>
+            <div class="ai-chat-messages" id="ai-chat-body">
+                <div class="chat-msg ai">
+                    👋 <strong>Hello! I am your DTV AI Career Advisor.</strong><br>
+                    I understand how overwhelming career decisions and parental expectations can feel. Ask me anything about career anxiety, finding your true passion, or explaining new AI careers to your parents.
+                </div>
+            </div>
+            <div class="ai-quick-prompts">
+                <span class="prompt-pill" onclick="sendQuickPrompt('How do I talk to my parents about taking up an unconventional AI career?')">💬 Talk to parents</span>
+                <span class="prompt-pill" onclick="sendQuickPrompt('I am confused between engineering vs management. How do I decide?')">🎯 Stream selection</span>
+                <span class="prompt-pill" onclick="sendQuickPrompt('How can Digital Twin Verse predict my career aptitude?')">🤖 DTV AI twin</span>
+            </div>
+            <div class="ai-drawer-input">
+                <input type="text" id="ai-user-input" placeholder="Type your career question..." onkeypress="handleChatKeyPress(event)">
+                <button onclick="sendUserMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openLiveAIMentor(topic) {
+            document.getElementById('ai-mentor-overlay').classList.add('active');
+            document.getElementById('ai-user-input').focus();
+        }
+        function closeLiveAIMentor() {
+            document.getElementById('ai-mentor-overlay').classList.remove('active');
+        }
+        function sendQuickPrompt(text) {
+            document.getElementById('ai-user-input').value = text;
+            sendUserMessage();
+        }
+        function handleChatKeyPress(e) {
+            if (e.key === 'Enter') sendUserMessage();
+        }
+        function sendUserMessage() {
+            const input = document.getElementById('ai-user-input');
+            const val = input.value.trim();
+            if (!val) return;
+            
+            const chatBody = document.getElementById('ai-chat-body');
+            
+            // Add user message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'chat-msg user';
+            userMsg.textContent = val;
+            chatBody.appendChild(userMsg);
+            
+            input.value = '';
+            chatBody.scrollTop = chatBody.scrollHeight;
+            
+            // Generate intelligent AI response
+            setTimeout(() => {
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'chat-msg ai';
+                
+                let response = "";
+                const lower = val.toLowerCase();
+                if (lower.includes('parent')) {
+                    response = "💡 <strong>Talking to Parents Strategy:</strong><br>Parents value security & transparent income data. Instead of saying 'I want to try a new course', share DTV's Parent Dashboard report showing 2026 market growth (e.g., AI Engineers earn 3.5x average entry salaries). Offer to test drive the career avatar on DTV for 2 weeks first!";
+                } else if (lower.includes('stream') || lower.includes('confused') || lower.includes('engineering')) {
+                    response = "🎯 <strong>Stream Selection Insight:</strong><br>Don't choose based on stream names alone! Test drive a 10-minute micro-simulation avatar on Digital Twin Verse. It evaluates your problem-solving speed and actual enjoyment of daily tasks before you commit tuition rupees.";
+                } else {
+                    response = "✨ <strong>AI Mentor Advice:</strong><br>Every student has a unique learning velocity. DTV creates your digital twin to map your core strengths in real-time, matching you with high-growth 2026 roles in AI, Design, Product, and Technology. You can also save your progress anytime by creating your free avatar!";
+                }
+                
+                aiMsg.innerHTML = response;
+                chatBody.appendChild(aiMsg);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 600);
+        }
+    </script>
 </body>
 </html>
