@@ -6,7 +6,7 @@
     <title>Years Wasted in Wrong Career Paths | Digital Twin Verse</title>
     <meta name="description" content="Discover why millions of Indian students waste 2–4 years in degree programs before discovering career mismatch, and how AI simulation provides early clarity.">
     <link rel="canonical" href="https://digitaltwinvrs.com/problem/years-wasted">
-    <link rel="stylesheet" href="/dist/main.dc44bb66.css?v=81aad64113f2b6d4">
+    <link rel="stylesheet" href="/dist/main.dc44bb66.css?v=246f7502f615f6d0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -238,6 +238,8 @@
             border-radius: 999px;
             font-weight: 600;
             text-decoration: none;
+            border: none;
+            cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
@@ -388,6 +390,77 @@
         }
         .ai-drawer-input button:hover { background: #6d28d9; }
 
+        /* STREAM COMPATIBILITY ASSESSOR MODAL */
+        .assessor-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 10, 20, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 999999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .assessor-modal-overlay.active { display: flex; }
+        .assessor-card {
+            background: linear-gradient(135deg, #1e1b4b, #0f172a);
+            border: 1px solid rgba(167, 139, 250, 0.35);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 35px rgba(124, 58, 237, 0.25);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 600px;
+            padding: 2rem;
+            position: relative;
+            color: #fff;
+        }
+        .assessor-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.2rem;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
+        .assessor-close:hover { color: #fff; }
+        .assessor-field {
+            margin-bottom: 1.2rem;
+        }
+        .assessor-field label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #a78bfa;
+            margin-bottom: 0.4rem;
+        }
+        .assessor-field select {
+            width: 100%;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            padding: 0.6rem 0.8rem;
+            color: #fff;
+            outline: none;
+            font-size: 0.9rem;
+        }
+        .assessor-field select option { background: #0f172a; color: #fff; }
+        .assessor-result {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(167, 139, 250, 0.25);
+            border-radius: 14px;
+            padding: 1.2rem;
+            text-align: center;
+            margin-top: 1.2rem;
+        }
+        .assessor-score {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #34d399;
+            margin-bottom: 0.2rem;
+        }
+
         @media (max-width: 768px) {
             .prob-stats-grid { grid-template-columns: 1fr; }
             .news-grid { grid-template-columns: 1fr; }
@@ -469,7 +542,7 @@
 
             <div class="action-btns">
                 <button onclick="openLiveAIMentor('years-wasted')" class="btn-primary-dtv">Talk to AI Career Mentor &rarr;</button>
-                <a href="/wheel.html" class="btn-secondary-dtv">Explore 50+ Career Avatars &rarr;</a>
+                <button onclick="openStreamAssessor()" class="btn-secondary-dtv">Run Stream Compatibility Check 🎯</button>
             </div>
         </div>
     </main>
@@ -493,11 +566,49 @@
             <div class="ai-quick-prompts">
                 <span class="prompt-pill" onclick="sendQuickPrompt('How do I know if I am in the wrong course?')">⏳ Signs of course mismatch</span>
                 <span class="prompt-pill" onclick="sendQuickPrompt('What are top AI &amp; Tech careers in 2026?')">🚀 2026 Top AI Careers</span>
-                <span class="prompt-pill" onclick="sendQuickPrompt('How can I test drive a career avatar on DTV?')">🎮 Test drive avatar</span>
+                <span class="prompt-pill" onclick="sendQuickPrompt('Run Stream Compatibility Check')">🎯 Compatibility check</span>
             </div>
             <div class="ai-drawer-input">
                 <input type="text" id="ai-user-input" placeholder="Type your career question..." onkeypress="handleChatKeyPress(event)">
                 <button onclick="sendUserMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- STREAM COMPATIBILITY ASSESSOR MODAL -->
+    <div id="assessor-overlay" class="assessor-modal-overlay">
+        <div class="assessor-card">
+            <button class="assessor-close" onclick="closeStreamAssessor()">&times;</button>
+            <h2 style="margin-top:0; font-size:1.4rem; color:#fff;">🎯 Early Stream Compatibility Assessor</h2>
+            <p style="color:#cbd5e1; font-size:0.85rem; margin-bottom:1rem;">Evaluate whether your target degree stream aligns with your natural problem-solving velocity.</p>
+            
+            <div class="assessor-field">
+                <label>Current Education Level</label>
+                <select id="assess-level" onchange="runAssessment()">
+                    <option value="10th">Class 10th Student (Choosing Stream)</option>
+                    <option value="12th">Class 12th Student (Choosing College Degree)</option>
+                    <option value="college">College Student (Pivot or Upskilling)</option>
+                </select>
+            </div>
+
+            <div class="assessor-field">
+                <label>Target Interest / Domain</label>
+                <select id="assess-domain" onchange="runAssessment()">
+                    <option value="ai">AI Engineering &amp; Data Science (Logic &amp; Coding)</option>
+                    <option value="pm">AI Product Management &amp; Strategy (Leadership)</option>
+                    <option value="design">UI/UX &amp; Creative Product Design (Visual Psychology)</option>
+                    <option value="traditional">Traditional Legacy Stream (IT Support / Core)</option>
+                </select>
+            </div>
+
+            <div class="assessor-result">
+                <div class="assessor-score" id="assess-score-val">92% Match</div>
+                <div style="font-size:0.88rem; color:#fff; font-weight:700; margin-bottom:0.4rem;" id="assess-title">High Future Growth Alignment</div>
+                <div style="font-size:0.8rem; color:#94a3b8;" id="assess-desc">Your target path aligns strongly with 2026 AI skill demand. Test drive micro-projects on DTV to solidify your portfolio!</div>
+            </div>
+
+            <div style="margin-top:1.5rem; text-align:center;">
+                <button onclick="closeStreamAssessor(); openLiveAIMentor('years-wasted');" class="btn-primary-dtv" style="width:100%; justify-content:center;">Get Tailored AI Study Plan Free &rarr;</button>
             </div>
         </div>
     </div>
@@ -510,7 +621,43 @@
         function closeLiveAIMentor() {
             document.getElementById('ai-mentor-overlay').classList.remove('active');
         }
+        function openStreamAssessor() {
+            document.getElementById('assessor-overlay').classList.add('active');
+            runAssessment();
+        }
+        function closeStreamAssessor() {
+            document.getElementById('assessor-overlay').classList.remove('active');
+        }
+        function runAssessment() {
+            const domain = document.getElementById('assess-domain').value;
+            const scoreVal = document.getElementById('assess-score-val');
+            const title = document.getElementById('assess-title');
+            const desc = document.getElementById('assess-desc');
+            
+            if (domain === 'ai') {
+                scoreVal.textContent = "94% Match";
+                title.textContent = "🚀 High Growth AI Trajectory";
+                desc.textContent = "Top 1% demand in 2026. Focus on Python, Mathematics, and PyTorch/LLM agents.";
+            } else if (domain === 'pm') {
+                scoreVal.textContent = "89% Match";
+                title.textContent = "💡 High Strategic Demand";
+                desc.textContent = "AI PMs bridge tech & user experience. Great fit for strategic communicators.";
+            } else if (domain === 'design') {
+                scoreVal.textContent = "87% Match";
+                title.textContent = "🎨 Creative Technology Alignment";
+                desc.textContent = "Strong demand for AI-assisted spatial & UI/UX design architects.";
+            } else {
+                scoreVal.textContent = "48% Match";
+                title.textContent = "⚠️ High Stagnation Risk";
+                desc.textContent = "Traditional legacy support roles face automation. Consider adding AI skills early!";
+            }
+        }
         function sendQuickPrompt(text) {
+            if (text.includes('Compatibility check')) {
+                closeLiveAIMentor();
+                openStreamAssessor();
+                return;
+            }
             document.getElementById('ai-user-input').value = text;
             sendUserMessage();
         }
@@ -539,11 +686,11 @@
                 let response = "";
                 const lower = val.toLowerCase();
                 if (lower.includes('mismatch') || lower.includes('wrong') || lower.includes('signs')) {
-                    response = "⏳ <strong>Course Mismatch Signs:</strong><br>1. You find lectures disengaging and study only for passing marks.<br>2. You feel zero excitement about entry-level roles in your current field.<br>3. You spend free time learning unrelated topics (e.g. AI tools, UI design, stock markets).<br><br>👉 On DTV, you can run a 10-minute micro-simulation avatar to test your actual aptitude for 50+ roles!";
+                    response = "⏳ <strong>Course Mismatch Signs:</strong><br>1. You find lectures disengaging and study only for passing marks.<br>2. You feel zero excitement about entry-level roles in your current field.<br>3. You spend free time learning unrelated topics (e.g. AI tools, UI design, stock markets).<br><br>👉 On DTV, you can run an instant compatibility check to find your true fit!";
                 } else if (lower.includes('careers') || lower.includes('top') || lower.includes('2026')) {
-                    response = "🚀 <strong>Top 2026 AI &amp; Tech Careers:</strong><br>• AI Systems Architect (Avg CTC ₹18–28 LPA)<br>• AI Product Manager (Avg CTC ₹16–25 LPA)<br>• Full-Stack AI Engineer (Avg CTC ₹14–22 LPA)<br>• Cyber-Defense Analyst (Avg CTC ₹12–20 LPA)<br><br>Test drive any of these inside the DTV Wheel Simulator!";
+                    response = "🚀 <strong>Top 2026 AI &amp; Tech Careers:</strong><br>• AI Systems Architect (Avg CTC ₹18–28 LPA)<br>• AI Product Manager (Avg CTC ₹16–25 LPA)<br>• Full-Stack AI Engineer (Avg CTC ₹14–22 LPA)<br>• Cyber-Defense Analyst (Avg CTC ₹12–20 LPA)";
                 } else {
-                    response = "✨ <strong>AI Mentor Insight:</strong><br>To prevent wasting 2-4 years in an unaligned degree, DTV builds a predictive digital twin of your skills. Try spinning the Career Wheel simulator to explore interactive avatars!";
+                    response = "✨ <strong>AI Mentor Insight:</strong><br>To prevent wasting 2-4 years in an unaligned degree, DTV builds a predictive digital twin of your skills. Run our Stream Compatibility Check modal to assess your target fit!";
                 }
                 
                 aiMsg.innerHTML = response;

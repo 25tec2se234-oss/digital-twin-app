@@ -6,7 +6,7 @@
     <title>Mounting Career Stress & Anxiety | Digital Twin Verse</title>
     <meta name="description" content="Understand the growing career-anxiety epidemic among Indian students and how AI personalized guidance alleviates parental and peer pressure.">
     <link rel="canonical" href="https://digitaltwinvrs.com/problem/mounting-stress">
-    <link rel="stylesheet" href="/dist/main.dc44bb66.css?v=81aad64113f2b6d4">
+    <link rel="stylesheet" href="/dist/main.dc44bb66.css?v=246f7502f615f6d0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -238,6 +238,8 @@
             border-radius: 999px;
             font-weight: 600;
             text-decoration: none;
+            border: none;
+            cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
@@ -388,6 +390,54 @@
         }
         .ai-drawer-input button:hover { background: #6d28d9; }
 
+        /* PARENT REPORT GENERATOR MODAL */
+        .parent-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 10, 20, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 999999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .parent-modal-overlay.active { display: flex; }
+        .parent-report-card {
+            background: linear-gradient(135deg, #1e1b4b, #0f172a);
+            border: 1px solid rgba(167, 139, 250, 0.35);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 35px rgba(124, 58, 237, 0.25);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 620px;
+            padding: 2rem;
+            position: relative;
+            color: #fff;
+        }
+        .parent-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.2rem;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
+        .parent-close:hover { color: #fff; }
+        .report-preview-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 1.2rem;
+            margin-top: 1.2rem;
+        }
+        .report-preview-box h4 {
+            margin-top: 0;
+            color: #a78bfa;
+            font-size: 0.95rem;
+        }
+
         @media (max-width: 768px) {
             .prob-stats-grid { grid-template-columns: 1fr; }
             .news-grid { grid-template-columns: 1fr; }
@@ -469,7 +519,7 @@
 
             <div class="action-btns">
                 <button onclick="openLiveAIMentor('mounting-stress')" class="btn-primary-dtv">Talk to AI Career Mentor &rarr;</button>
-                <a href="/parent" class="btn-secondary-dtv">Explore Parent Portal &rarr;</a>
+                <button onclick="openParentReportModal()" class="btn-secondary-dtv">Generate Parent Transparency Report 📄</button>
             </div>
         </div>
     </main>
@@ -493,11 +543,33 @@
             <div class="ai-quick-prompts">
                 <span class="prompt-pill" onclick="sendQuickPrompt('How do I talk to my parents about taking up an unconventional AI career?')">💬 Talk to parents</span>
                 <span class="prompt-pill" onclick="sendQuickPrompt('I am confused between engineering vs management. How do I decide?')">🎯 Stream selection</span>
-                <span class="prompt-pill" onclick="sendQuickPrompt('How can Digital Twin Verse predict my career aptitude?')">🤖 DTV AI twin</span>
+                <span class="prompt-pill" onclick="sendQuickPrompt('Generate Parent Report')">📄 Parent Report</span>
             </div>
             <div class="ai-drawer-input">
                 <input type="text" id="ai-user-input" placeholder="Type your career question..." onkeypress="handleChatKeyPress(event)">
                 <button onclick="sendUserMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PARENT REPORT GENERATOR MODAL -->
+    <div id="parent-report-overlay" class="parent-modal-overlay">
+        <div class="parent-report-card">
+            <button class="parent-close" onclick="closeParentReportModal()">&times;</button>
+            <h2 style="margin-top:0; font-size:1.4rem; color:#fff;">📄 Parent Career Transparency Report Generator</h2>
+            <p style="color:#cbd5e1; font-size:0.85rem; margin-bottom:1rem;">Generate an objective 2026 Industry Report to present market demand, salary growth, and job security data to your parents.</p>
+            
+            <div class="report-preview-box">
+                <h4>📊 2026 Executive Summary for Parents</h4>
+                <ul style="padding-left:1.2rem; margin:0; font-size:0.85rem; color:#cbd5e1; line-height:1.7;">
+                    <li><strong>Market Growth:</strong> AI &amp; Product roles grew by +240% in India in 2025–26.</li>
+                    <li><strong>Starting Package:</strong> ₹14L–₹22L average starting CTC for verified skill-first avatars.</li>
+                    <li><strong>Job Security:</strong> 3.2x lower automation risk compared to legacy core/administrative roles.</li>
+                </ul>
+            </div>
+
+            <div style="margin-top:1.5rem; text-align:center;">
+                <a href="/parent" class="btn-primary-dtv" style="width:100%; justify-content:center;">View Full Parent Dashboard Portal &rarr;</a>
             </div>
         </div>
     </div>
@@ -510,7 +582,18 @@
         function closeLiveAIMentor() {
             document.getElementById('ai-mentor-overlay').classList.remove('active');
         }
+        function openParentReportModal() {
+            document.getElementById('parent-report-overlay').classList.add('active');
+        }
+        function closeParentReportModal() {
+            document.getElementById('parent-report-overlay').classList.remove('active');
+        }
         function sendQuickPrompt(text) {
+            if (text.includes('Parent Report')) {
+                closeLiveAIMentor();
+                openParentReportModal();
+                return;
+            }
             document.getElementById('ai-user-input').value = text;
             sendUserMessage();
         }
@@ -524,7 +607,6 @@
             
             const chatBody = document.getElementById('ai-chat-body');
             
-            // Add user message
             const userMsg = document.createElement('div');
             userMsg.className = 'chat-msg user';
             userMsg.textContent = val;
@@ -533,7 +615,6 @@
             input.value = '';
             chatBody.scrollTop = chatBody.scrollHeight;
             
-            // Generate intelligent AI response
             setTimeout(() => {
                 const aiMsg = document.createElement('div');
                 aiMsg.className = 'chat-msg ai';
@@ -541,11 +622,11 @@
                 let response = "";
                 const lower = val.toLowerCase();
                 if (lower.includes('parent')) {
-                    response = "💡 <strong>Talking to Parents Strategy:</strong><br>Parents value security & transparent income data. Instead of saying 'I want to try a new course', share DTV's Parent Dashboard report showing 2026 market growth (e.g., AI Engineers earn 3.5x average entry salaries). Offer to test drive the career avatar on DTV for 2 weeks first!";
+                    response = "💡 <strong>Talking to Parents Strategy:</strong><br>Parents value security & transparent income data. Generate our Parent Transparency Report to show 2026 market growth (AI Engineers earn 3.5x average entry salaries). Offer to test drive the career avatar on DTV for 2 weeks first!";
                 } else if (lower.includes('stream') || lower.includes('confused') || lower.includes('engineering')) {
-                    response = "🎯 <strong>Stream Selection Insight:</strong><br>Don't choose based on stream names alone! Test drive a 10-minute micro-simulation avatar on Digital Twin Verse. It evaluates your problem-solving speed and actual enjoyment of daily tasks before you commit tuition rupees.";
+                    response = "🎯 <strong>Stream Selection Insight:</strong><br>Don't choose based on stream names alone! Test drive a 10-minute micro-simulation avatar on Digital Twin Verse to evaluate your real problem-solving speed.";
                 } else {
-                    response = "✨ <strong>AI Mentor Advice:</strong><br>Every student has a unique learning velocity. DTV creates your digital twin to map your core strengths in real-time, matching you with high-growth 2026 roles in AI, Design, Product, and Technology. You can also save your progress anytime by creating your free avatar!";
+                    response = "✨ <strong>AI Mentor Advice:</strong><br>Every student has a unique learning velocity. DTV creates your digital twin to map your core strengths in real-time, matching you with high-growth 2026 roles.";
                 }
                 
                 aiMsg.innerHTML = response;
