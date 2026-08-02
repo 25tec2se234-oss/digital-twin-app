@@ -9,7 +9,9 @@ const targetAssetsDirs = [
 
 const loginHtmlPaths = [
     path.join(__dirname, '..', 'public', 'login.html'),
-    path.join(__dirname, '..', 'deploy-digital-twin', 'public', 'login.html')
+    path.join(__dirname, '..', 'deploy-digital-twin', 'public', 'login.html'),
+    path.join(__dirname, '..', 'public', 'wheel.html'),
+    path.join(__dirname, '..', 'deploy-digital-twin', 'public', 'wheel.html')
 ];
 
 console.log('--- STARTING LOGIN HTML AND ASSET SYNC ---');
