@@ -1,7 +1,11 @@
 import os
 
-old_link = "https://chat.whatsapp.com/EoeMkImMW9u2NzEn2XTjr9?mode=gi_t"
-new_link = "https://chat.whatsapp.com/Ctw2D8EcHIc6PG6AKfpkuK"
+old_links = [
+    "https://chat.whatsapp.com/Ctw2D8EcHIc6PG6AKfpkuK",
+    "https://chat.whatsapp.com/EoeMkImMW9u2NzEn2XTjr9?mode=gi_t",
+    "https://chat.whatsapp.com/EoeMkImMW9u2NzEn2XTjr9"
+]
+new_link = "https://whatsapp.com/channel/0029Vb7v5JeFHWprvjppb207"
 
 updated_count = 0
 
@@ -14,8 +18,12 @@ for root, dirs, files in os.walk('.'):
             try:
                 with open(filepath, 'r', encoding='utf-8') as f:
                     content = f.read()
-                if old_link in content:
-                    content = content.replace(old_link, new_link)
+                modified = False
+                for old_link in old_links:
+                    if old_link in content:
+                        content = content.replace(old_link, new_link)
+                        modified = True
+                if modified:
                     with open(filepath, 'w', encoding='utf-8') as f:
                         f.write(content)
                     print(f"Updated {filepath}")
