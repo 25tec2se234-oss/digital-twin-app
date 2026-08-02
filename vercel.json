@@ -11,7 +11,6 @@
       "src": "/api/(.*)",
       "dest": "https://digital-twin-verse-app.onrender.com/api/$1"
     },
-
     {
       "src": "/parent(.*)",
       "dest": "https://digital-twin-verse-app.onrender.com/parent$1"
@@ -19,6 +18,14 @@
     {
       "src": "/dashboard(.*)",
       "dest": "https://digital-twin-verse-app.onrender.com/dashboard$1"
+    },
+    {
+      "src": "/wheel(.*)",
+      "dest": "/public/wheel.html"
+    },
+    {
+      "src": "/login(.*)",
+      "dest": "/public/login.html"
     },
     {
       "src": "/(.*)",
