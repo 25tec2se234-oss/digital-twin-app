@@ -4582,7 +4582,7 @@ function renderCareers(filter) {
             .catch(err => {
                 btnElem.disabled = false;
                 btnElem.innerHTML = originalText;
-                window.location.href = 'https://rzp.io/l/' + fallbackLinkId;
+                window.location.href = 'https://pages.razorpay.com/' + fallbackLinkId + '/view';
             });
         }
 
