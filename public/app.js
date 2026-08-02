@@ -5383,7 +5383,7 @@ function renderCareers(filter) {
                 if (count <= 0) {
                     clearInterval(waTimer);
                     if (cdTxt) cdTxt.textContent = 'Opening WhatsApp…';
-                    window.location.href = 'https://chat.whatsapp.com/Ctw2D8EcHIc6PG6AKfpkuK';
+                    window.location.href = 'https://whatsapp.com/channel/0029Vb7v5JeFHWprvjppb207';
                     setTimeout(function() {
                         closeWAOverlay();
                         showTY();
