@@ -1654,6 +1654,16 @@
             min-height: 280px;
             box-shadow: 0 14px 28px rgba(0, 0, 0, .3);
             animation: floatCard 7s ease-in-out infinite;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            transition: border-color .35s ease, box-shadow .35s ease;
+        }
+
+        .story-card:hover {
+            border-color: rgba(167, 139, 250, .45);
+            box-shadow: 0 18px 40px rgba(123, 47, 255, .3);
         }
 
         .story-card:nth-child(2) {
