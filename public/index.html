@@ -80,9 +80,9 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.68c6707d.css?v=164ba6e564218441" as="style">
+    <link rel="preload" href="/dist/main.65379e94.css?v=27b6e43cc92a65e6" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.68c6707d.css?v=164ba6e564218441">
+    <link rel="stylesheet" href="/dist/main.65379e94.css?v=27b6e43cc92a65e6">
 
     <!-- JSON-LD Structured Data Schema -->
     
@@ -908,28 +908,29 @@
                         zero personalised guidance. The consequences compound over decades.</p>
                 </div>
                 <div class="pcg rv d1">
-                    <div class="pc">
+                    <div class="pc" onclick="openProblemInsight('years-wasted')" data-problem-id="years-wasted">
                         <div class="pc-ic">⏳</div>
                         <h4>Years Wasted</h4>
                         <p>2–4 years in the wrong course before realising the mismatch — too late to pivot easily.</p>
+                        <span class="pc-hint">View full insight &amp; news &rarr;</span>
                     </div>
-                    <div class="pc">
+                    <div class="pc" onclick="openProblemInsight('mounting-stress')" data-problem-id="mounting-stress">
                         <div class="pc-ic">😰</div>
                         <h4>Mounting Stress</h4>
-                        <p>Family pressure, peer comparison, and zero clarity create a widespread career-anxiety crisis.
-                        </p>
+                        <p>Family pressure, peer comparison, and zero clarity create a widespread career-anxiety crisis.</p>
+                        <span class="pc-hint">View full insight &amp; news &rarr;</span>
                     </div>
-                    <div class="pc">
+                    <div class="pc" onclick="openProblemInsight('no-personalisation')" data-problem-id="no-personalisation">
                         <div class="pc-ic">🎯</div>
                         <h4>No Personalisation</h4>
-                        <p>Generic counsellors give generic advice. Your unique profile, strengths and potential are
-                            ignored.</p>
+                        <p>Generic counsellors give generic advice. Your unique profile, strengths and potential are ignored.</p>
+                        <span class="pc-hint">View full insight &amp; news &rarr;</span>
                     </div>
-                    <div class="pc">
+                    <div class="pc" onclick="openProblemInsight('missed-earnings')" data-problem-id="missed-earnings">
                         <div class="pc-ic">💸</div>
                         <h4>Missed Earnings</h4>
-                        <p>Wrong decisions at the right age directly reduce lifetime earnings and career satisfaction.
-                        </p>
+                        <p>Wrong decisions at the right age directly reduce lifetime earnings and career satisfaction.</p>
+                        <span class="pc-hint">View full insight &amp; news &rarr;</span>
                     </div>
                 </div>
             </div>
@@ -2535,9 +2536,19 @@
     
 
 
-    <script defer="" src="/dist/careers.e4a25189.js?v=164ba6e564218441"></script>
-    <script defer="" src="/dist/app.c4444e20.js?v=164ba6e564218441"></script>
-    <script defer="" src="/dist/ux-engine.429b6548.js?v=164ba6e564218441"></script>
+    <script defer="" src="/dist/careers.e4a25189.js?v=27b6e43cc92a65e6"></script>
+    <script defer="" src="/dist/app.fc177a9e.js?v=27b6e43cc92a65e6"></script>
+    <script defer="" src="/dist/ux-engine.429b6548.js?v=27b6e43cc92a65e6"></script>
 
+
+    <!-- PROBLEM INSIGHT MODAL -->
+    <div id="problem-insight-modal" class="prob-modal-backdrop" style="display:none;" onclick="if(event.target === this) closeProblemInsight()">
+        <div class="prob-modal-content">
+            <button class="prob-modal-close" onclick="closeProblemInsight()" aria-label="Close Modal">&times;</button>
+            <div id="prob-modal-body">
+                <!-- Content dynamically populated by JS -->
+            </div>
+        </div>
+    </div>
 
 </body></html>
