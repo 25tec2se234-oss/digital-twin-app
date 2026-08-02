@@ -9,6 +9,9 @@ const REWARDS = [
   { id: "try", title: "TRY AGAIN", weight: 45, label: "Try Again Tomorrow" },
 ];
 
+// In-memory fallback map for active backend session persistence
+const inMemoryWheelMap = new Map();
+
 function getTodayString() {
   const now = new Date();
   const year = now.getFullYear();
@@ -24,55 +27,76 @@ function pickWeightedIndex() {
     roll -= REWARDS[i].weight;
     if (roll <= 0) return i;
   }
-  return 5; // fallback to 'try'
+  return 5;
 }
 
-async function getWheelState(req, res) {
-  try {
-    const userId = req.user ? req.user.id : null;
-    const today = getTodayString();
-
-    if (!userId) {
-      return res.json({
-        success: true,
-        lastSpinDate: today,
-        spinsToday: 0,
-        extraSpinsRemaining: 0,
-        remainingSpins: 1,
-        claimedRewards: []
-      });
-    }
-
-    const result = await pool.query(
-      'SELECT wheel_state FROM user_data WHERE user_id = $1',
-      [userId]
-    ).catch(() => ({ rows: [] }));
-
-    let wheelState = {
+function getMemoryState(key, today) {
+  let mem = inMemoryWheelMap.get(key);
+  if (!mem || mem.lastSpinDate !== today) {
+    mem = {
       lastSpinDate: today,
       spinsToday: 0,
       extraSpinsRemaining: 0,
       claimedRewards: []
     };
+    inMemoryWheelMap.set(key, mem);
+  }
+  return mem;
+}
 
-    if (result.rows.length > 0 && result.rows[0].wheel_state) {
-      wheelState = result.rows[0].wheel_state;
-      if (wheelState.lastSpinDate !== today) {
-        wheelState.lastSpinDate = today;
-        wheelState.spinsToday = 0;
+async function getWheelState(req, res) {
+  try {
+    const today = getTodayString();
+    const userId = req.user ? req.user.id : null;
+    const clientKey = userId ? `user_${userId}` : `ip_${req.ip || '127.0.0.1'}`;
+    const memState = getMemoryState(clientKey, today);
+
+    let dbState = null;
+    if (userId) {
+      const result = await pool.query(
+        'SELECT wheel_state FROM user_data WHERE user_id = $1',
+        [userId]
+      ).catch(() => ({ rows: [] }));
+
+      if (result.rows.length > 0 && result.rows[0].wheel_state) {
+        dbState = result.rows[0].wheel_state;
+        if (dbState.lastSpinDate !== today) {
+          dbState.lastSpinDate = today;
+          dbState.spinsToday = 0;
+        }
       }
     }
 
-    const freeDailyRemaining = Math.max(0, 1 - (wheelState.spinsToday || 0));
-    const totalRemaining = freeDailyRemaining + (wheelState.extraSpinsRemaining || 0);
+    // Merge in-memory and db state so spinsToday is NEVER downgraded to 0
+    const finalSpinsToday = Math.max(
+      memState.spinsToday || 0,
+      dbState ? (dbState.spinsToday || 0) : 0
+    );
+
+    const finalExtraSpins = Math.max(
+      memState.extraSpinsRemaining || 0,
+      dbState ? (dbState.extraSpinsRemaining || 0) : 0
+    );
+
+    const mergedState = {
+      lastSpinDate: today,
+      spinsToday: finalSpinsToday,
+      extraSpinsRemaining: finalExtraSpins,
+      claimedRewards: dbState ? dbState.claimedRewards : memState.claimedRewards
+    };
+
+    inMemoryWheelMap.set(clientKey, mergedState);
+
+    const freeDailyRemaining = Math.max(0, 1 - mergedState.spinsToday);
+    const totalRemaining = freeDailyRemaining + mergedState.extraSpinsRemaining;
 
     return res.json({
       success: true,
-      lastSpinDate: wheelState.lastSpinDate,
-      spinsToday: wheelState.spinsToday || 0,
-      extraSpinsRemaining: wheelState.extraSpinsRemaining || 0,
+      lastSpinDate: mergedState.lastSpinDate,
+      spinsToday: mergedState.spinsToday,
+      extraSpinsRemaining: mergedState.extraSpinsRemaining,
       remainingSpins: totalRemaining,
-      claimedRewards: wheelState.claimedRewards || []
+      claimedRewards: mergedState.claimedRewards || []
     });
   } catch (error) {
     console.error('[WheelController] getWheelState error:', error);
@@ -82,15 +106,11 @@ async function getWheelState(req, res) {
 
 async function spinWheel(req, res) {
   try {
-    const userId = req.user ? req.user.id : null;
     const today = getTodayString();
+    const userId = req.user ? req.user.id : null;
+    const clientKey = userId ? `user_${userId}` : `ip_${req.ip || '127.0.0.1'}`;
 
-    let wheelState = {
-      lastSpinDate: today,
-      spinsToday: 0,
-      extraSpinsRemaining: 0,
-      claimedRewards: []
-    };
+    const currentState = getMemoryState(clientKey, today);
 
     if (userId) {
       const result = await pool.query(
@@ -99,16 +119,16 @@ async function spinWheel(req, res) {
       ).catch(() => ({ rows: [] }));
 
       if (result.rows.length > 0 && result.rows[0].wheel_state) {
-        wheelState = result.rows[0].wheel_state;
-        if (wheelState.lastSpinDate !== today) {
-          wheelState.lastSpinDate = today;
-          wheelState.spinsToday = 0;
+        const dbState = result.rows[0].wheel_state;
+        if (dbState.lastSpinDate === today) {
+          currentState.spinsToday = Math.max(currentState.spinsToday, dbState.spinsToday || 0);
+          currentState.extraSpinsRemaining = Math.max(currentState.extraSpinsRemaining, dbState.extraSpinsRemaining || 0);
         }
       }
     }
 
-    const freeDailyRemaining = Math.max(0, 1 - (wheelState.spinsToday || 0));
-    const totalRemaining = freeDailyRemaining + (wheelState.extraSpinsRemaining || 0);
+    const freeDailyRemaining = Math.max(0, 1 - (currentState.spinsToday || 0));
+    const totalRemaining = freeDailyRemaining + (currentState.extraSpinsRemaining || 0);
 
     if (totalRemaining <= 0) {
       return res.status(400).json({
@@ -117,11 +137,11 @@ async function spinWheel(req, res) {
       });
     }
 
-    // Consume spin
-    if (wheelState.spinsToday < 1) {
-      wheelState.spinsToday = (wheelState.spinsToday || 0) + 1;
-    } else if (wheelState.extraSpinsRemaining > 0) {
-      wheelState.extraSpinsRemaining -= 1;
+    // Consume 1 spin immediately
+    if (currentState.spinsToday < 1) {
+      currentState.spinsToday = 1;
+    } else if (currentState.extraSpinsRemaining > 0) {
+      currentState.extraSpinsRemaining -= 1;
     }
 
     // Authoritative backend RNG selection
@@ -130,7 +150,7 @@ async function spinWheel(req, res) {
     let claimCode = null;
 
     if (chosenReward.id === 'extraspin') {
-      wheelState.extraSpinsRemaining = (wheelState.extraSpinsRemaining || 0) + 1;
+      currentState.extraSpinsRemaining = (currentState.extraSpinsRemaining || 0) + 1;
     } else if (chosenReward.id === 'mentor1w') {
       claimCode = `DTV-MENTOR-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
     }
@@ -143,20 +163,21 @@ async function spinWheel(req, res) {
       claimCode
     };
 
-    wheelState.claimedRewards = wheelState.claimedRewards || [];
-    wheelState.claimedRewards.push(winRecord);
+    currentState.claimedRewards = currentState.claimedRewards || [];
+    currentState.claimedRewards.push(winRecord);
+    inMemoryWheelMap.set(clientKey, currentState);
 
     if (userId) {
       await pool.query(
         `INSERT INTO user_data (user_id, wheel_state, updated_at)
          VALUES ($1, $2, NOW())
          ON CONFLICT (user_id) DO UPDATE SET wheel_state = EXCLUDED.wheel_state, updated_at = NOW()`,
-        [userId, JSON.stringify(wheelState)]
+        [userId, JSON.stringify(currentState)]
       ).catch(() => {});
     }
 
-    const updatedFreeDaily = Math.max(0, 1 - (wheelState.spinsToday || 0));
-    const updatedTotalRemaining = updatedFreeDaily + (wheelState.extraSpinsRemaining || 0);
+    const updatedFreeDaily = Math.max(0, 1 - (currentState.spinsToday || 0));
+    const updatedTotalRemaining = updatedFreeDaily + (currentState.extraSpinsRemaining || 0);
 
     return res.json({
       success: true,
@@ -165,7 +186,7 @@ async function spinWheel(req, res) {
       rewardLabel: chosenReward.label,
       claimCode,
       remainingSpins: updatedTotalRemaining,
-      wheelState
+      wheelState: currentState
     });
   } catch (error) {
     console.error('[WheelController] spinWheel error:', error);
