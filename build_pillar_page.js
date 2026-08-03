@@ -950,33 +950,48 @@ const htmlContent = `<!DOCTYPE html>
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(5, 8, 16, 0.85);
+            background: rgba(5, 8, 16, 0.88);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            z-index: 99999;
+            z-index: 999999;
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 1.5rem;
-            overflow-y: auto;
+            padding: 1rem;
+            box-sizing: border-box;
         }
         .pillar-modal-backdrop.active {
             display: flex;
         }
         .pillar-modal-card {
-            background: rgba(18, 24, 38, 0.96);
+            background: rgba(18, 24, 38, 0.98);
             border: 1px solid var(--pillar-purple);
             border-radius: 24px;
             width: 100%;
             max-width: 780px;
-            max-height: 90vh;
+            max-height: 88vh;
             overflow-y: auto;
             padding: 2.2rem;
             box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(167, 139, 250, 0.25);
             position: relative;
             color: var(--wh);
+            box-sizing: border-box;
             animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
+        
+        /* Custom Sleek Scrollbar for Modal */
+        .pillar-modal-card::-webkit-scrollbar {
+            width: 6px;
+        }
+        .pillar-modal-card::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+        .pillar-modal-card::-webkit-scrollbar-thumb {
+            background: var(--pillar-purple);
+            border-radius: 10px;
+        }
+
         @keyframes modalSlideUp {
             from { opacity: 0; transform: translateY(24px) scale(0.96); }
             to { opacity: 1; transform: translateY(0) scale(1); }
@@ -997,6 +1012,7 @@ const htmlContent = `<!DOCTYPE html>
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s;
+            z-index: 10;
         }
         .pillar-modal-close:hover {
             background: var(--pillar-purple);
@@ -1032,6 +1048,7 @@ const htmlContent = `<!DOCTYPE html>
             color: var(--wh);
             font-size: 0.95rem;
             outline: none;
+            box-sizing: border-box;
         }
         .ai-select:focus, .ai-input:focus {
             border-color: var(--pillar-purple);
@@ -1044,7 +1061,7 @@ const htmlContent = `<!DOCTYPE html>
             .btn-primary-hero, .btn-secondary-hero { width: 100%; justify-content: center; }
             .toc-links { grid-template-columns: 1fr; }
             .career-card-grid, .stream-grid { grid-template-columns: 1fr; }
-            .pillar-modal-card { padding: 1.5rem; }
+            .pillar-modal-card { padding: 1.5rem; max-height: 92vh; }
         }
     </style>
 </head>
@@ -1071,7 +1088,7 @@ const htmlContent = `<!DOCTYPE html>
                         <option value="light">☀️ Light</option>
                         <option value="navy">🌌 Navy</option>
                     </select>
-                    <button class="btn-header-cta" onclick="openAiAdvisorModal()">AI Advisor</button>
+                    <button type="button" class="btn-header-cta" onclick="openAiAdvisorModal()">AI Advisor</button>
                 </div>
             </nav>
         </div>
@@ -1087,11 +1104,11 @@ const htmlContent = `<!DOCTYPE html>
             </p>
 
             <div class="hero-cta-group">
-                <button onclick="scrollToSection('categories')" class="btn-primary-hero">
+                <button type="button" onclick="scrollToSection('categories')" class="btn-primary-hero">
                     <span>Explore 21 Careers</span>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
-                <button onclick="openAiAdvisorModal()" class="btn-secondary-hero">
+                <button type="button" onclick="openAiAdvisorModal()" class="btn-secondary-hero">
                     <span>Talk to AI Career Advisor</span>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-4.5a1 1 0 0 1-2 0V7a1 1 0 0 1 2 0z"/></svg>
                 </button>
@@ -1185,7 +1202,7 @@ const htmlContent = `<!DOCTYPE html>
                             <li class="stream-meta-item"><span class="lbl">10-Year Growth:</span> <span class="val">Very High (AI Boom)</span></li>
                         </ul>
                     </div>
-                    <button class="btn-stream-explore" onclick="filterByStream('tech')">View PCM Careers →</button>
+                    <button type="button" class="btn-stream-explore" onclick="filterByStream('tech')">View PCM Careers →</button>
                 </div>
 
                 <!-- PCB -->
@@ -1201,7 +1218,7 @@ const htmlContent = `<!DOCTYPE html>
                             <li class="stream-meta-item"><span class="lbl">10-Year Growth:</span> <span class="val">Evergreen & Essential</span></li>
                         </ul>
                     </div>
-                    <button class="btn-stream-explore" onclick="filterByStream('medical')">View PCB Careers →</button>
+                    <button type="button" class="btn-stream-explore" onclick="filterByStream('medical')">View PCB Careers →</button>
                 </div>
 
                 <!-- Commerce -->
@@ -1217,7 +1234,7 @@ const htmlContent = `<!DOCTYPE html>
                             <li class="stream-meta-item"><span class="lbl">10-Year Growth:</span> <span class="val">High Corporate Demand</span></li>
                         </ul>
                     </div>
-                    <button class="btn-stream-explore" onclick="filterByStream('business')">View Commerce Careers →</button>
+                    <button type="button" class="btn-stream-explore" onclick="filterByStream('business')">View Commerce Careers →</button>
                 </div>
 
                 <!-- Arts / Humanities -->
@@ -1233,7 +1250,7 @@ const htmlContent = `<!DOCTYPE html>
                             <li class="stream-meta-item"><span class="lbl">10-Year Growth:</span> <span class="val">High Creative & Legal Demand</span></li>
                         </ul>
                     </div>
-                    <button class="btn-stream-explore" onclick="filterByStream('creative')">View Arts Careers →</button>
+                    <button type="button" class="btn-stream-explore" onclick="filterByStream('creative')">View Arts Careers →</button>
                 </div>
 
                 <!-- Diploma -->
@@ -1249,7 +1266,7 @@ const htmlContent = `<!DOCTYPE html>
                             <li class="stream-meta-item"><span class="lbl">10-Year Growth:</span> <span class="val">Steady Technical Demand</span></li>
                         </ul>
                     </div>
-                    <button class="btn-stream-explore" onclick="filterByStream('all')">View Diploma Careers →</button>
+                    <button type="button" class="btn-stream-explore" onclick="filterByStream('all')">View Diploma Careers →</button>
                 </div>
 
                 <!-- Vocational -->
@@ -1265,7 +1282,7 @@ const htmlContent = `<!DOCTYPE html>
                             <li class="stream-meta-item"><span class="lbl">10-Year Growth:</span> <span class="val">Fast-Track Employment</span></li>
                         </ul>
                     </div>
-                    <button class="btn-stream-explore" onclick="filterByStream('all')">View Vocational Careers →</button>
+                    <button type="button" class="btn-stream-explore" onclick="filterByStream('all')">View Vocational Careers →</button>
                 </div>
             </div>
         </div>
@@ -1285,12 +1302,12 @@ const htmlContent = `<!DOCTYPE html>
             <input type="text" id="categorySearch" class="category-search-input" placeholder="🔍 Search any career (e.g. AI, Law, Pilot, CA, Design)..." onkeyup="filterCareers()">
 
             <div class="category-filter-bar">
-                <button class="filter-btn active" id="tab-all" onclick="filterCategoryTab('all')">All 21 Careers</button>
-                <button class="filter-btn" id="tab-tech" onclick="filterCategoryTab('tech')">Technology & AI</button>
-                <button class="filter-btn" id="tab-medical" onclick="filterCategoryTab('medical')">Medical & Healthcare</button>
-                <button class="filter-btn" id="tab-business" onclick="filterCategoryTab('business')">Commerce & Finance</button>
-                <button class="filter-btn" id="tab-creative" onclick="filterCategoryTab('creative')">Design & Media</button>
-                <button class="filter-btn" id="tab-gov" onclick="filterCategoryTab('gov')">Defence & Gov</button>
+                <button type="button" class="filter-btn active" id="tab-all" onclick="filterCategoryTab('all')">All 21 Careers</button>
+                <button type="button" class="filter-btn" id="tab-tech" onclick="filterCategoryTab('tech')">Technology & AI</button>
+                <button type="button" class="filter-btn" id="tab-medical" onclick="filterCategoryTab('medical')">Medical & Healthcare</button>
+                <button type="button" class="filter-btn" id="tab-business" onclick="filterCategoryTab('business')">Commerce & Finance</button>
+                <button type="button" class="filter-btn" id="tab-creative" onclick="filterCategoryTab('creative')">Design & Media</button>
+                <button type="button" class="filter-btn" id="tab-gov" onclick="filterCategoryTab('gov')">Defence & Gov</button>
             </div>
 
             <div class="career-card-grid" id="careerGrid">
@@ -1325,7 +1342,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹7 - ₹30+ LPA</span>
-                        <button onclick="openCareerModal('engineering')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('engineering')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1360,7 +1377,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹8 - ₹35+ LPA</span>
-                        <button onclick="openCareerModal('medical')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('medical')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1395,7 +1412,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹8 - ₹24+ LPA</span>
-                        <button onclick="openCareerModal('law')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('law')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1430,7 +1447,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹7 - ₹28+ LPA</span>
-                        <button onclick="openCareerModal('management')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('management')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1465,7 +1482,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹6 - ₹18+ LPA</span>
-                        <button onclick="openCareerModal('commerce')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('commerce')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1500,7 +1517,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹8 - ₹16+ LPA + Perks</span>
-                        <button onclick="openCareerModal('gov')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('gov')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1535,7 +1552,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹10 - ₹22+ LPA + Allowances</span>
-                        <button onclick="openCareerModal('defence')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('defence')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1570,7 +1587,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹10 - ₹35+ LPA</span>
-                        <button onclick="openCareerModal('ai')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('ai')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1605,7 +1622,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹9 - ₹32+ LPA</span>
-                        <button onclick="openCareerModal('ml')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('ml')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1640,7 +1657,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹7 - ₹25+ LPA</span>
-                        <button onclick="openCareerModal('cyber')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('cyber')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1675,7 +1692,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹8 - ₹26+ LPA</span>
-                        <button onclick="openCareerModal('cloud')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('cloud')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1710,7 +1727,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹8 - ₹28+ LPA</span>
-                        <button onclick="openCareerModal('datascience')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('datascience')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1745,7 +1762,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹6.5 - ₹22+ LPA</span>
-                        <button onclick="openCareerModal('design')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('design')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1780,7 +1797,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹5 - ₹18+ LPA</span>
-                        <button onclick="openCareerModal('animation')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('animation')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1815,7 +1832,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹4.5 - ₹15+ LPA</span>
-                        <button onclick="openCareerModal('media')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('media')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1850,7 +1867,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹4.5 - ₹16+ LPA</span>
-                        <button onclick="openCareerModal('hotel')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('hotel')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1885,7 +1902,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹15 - ₹40+ LPA</span>
-                        <button onclick="openCareerModal('pilot')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('pilot')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1920,7 +1937,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹9 - ₹25+ LPA</span>
-                        <button onclick="openCareerModal('ca')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('ca')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1955,7 +1972,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹7 - ₹20+ LPA</span>
-                        <button onclick="openCareerModal('cs')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('cs')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1990,7 +2007,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹5 - ₹18+ LPA</span>
-                        <button onclick="openCareerModal('digitalmarketing')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('digitalmarketing')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -2025,7 +2042,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 Unlimited Upside</span>
-                        <button onclick="openCareerModal('entrepreneurship')" class="btn-stream-explore">Start Roadmap</button>
+                        <button type="button" onclick="openCareerModal('entrepreneurship')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
             </div>
@@ -2171,7 +2188,7 @@ const htmlContent = `<!DOCTYPE html>
                         <li><span class="check">✓</span> <strong>Real-Time Skill Gap Mapping:</strong> Compares your current skills against top 2026 job requirements.</li>
                         <li><span class="check">✓</span> <strong>Simulated Day-in-the-Life Sandbox:</strong> Test-drive different careers inside interactive virtual project environments.</li>
                     </ul>
-                    <button onclick="openAiAdvisorModal()" class="btn-primary-hero" style="margin-top:1rem;">
+                    <button type="button" onclick="openAiAdvisorModal()" class="btn-primary-hero" style="margin-top:1rem;">
                         <span>Create Your Digital Twin Now</span>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
@@ -2365,7 +2382,7 @@ const htmlContent = `<!DOCTYPE html>
             <div class="faq-accordion" id="faqAccordion">
                 ${faqs.map((faq, index) => `
                 <div class="faq-item ${index === 0 ? 'active' : ''}">
-                    <button class="faq-question" onclick="toggleFaq(this)">
+                    <button type="button" class="faq-question" onclick="toggleFaq(this)">
                         <span>${index + 1}. ${faq.q}</span>
                         <span class="toggle-icon">+</span>
                     </button>
@@ -2383,7 +2400,7 @@ const htmlContent = `<!DOCTYPE html>
         <div class="wrap">
             <h2>Ready to Discover Your Ideal Career?</h2>
             <p>Let our AI Career Advisor build your personalized Digital Twin, analyze your cognitive strengths, and map your 2026 career roadmap today.</p>
-            <button onclick="openAiAdvisorModal()" class="btn-primary-hero" style="font-size:1.15rem; padding:1.1rem 2.5rem;">
+            <button type="button" onclick="openAiAdvisorModal()" class="btn-primary-hero" style="font-size:1.15rem; padding:1.1rem 2.5rem;">
                 <span>Talk to AI Career Advisor Free</span>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
@@ -2393,7 +2410,7 @@ const htmlContent = `<!DOCTYPE html>
     <!-- Interactive Career Detail Modal -->
     <div id="careerModal" class="pillar-modal-backdrop" onclick="if(event.target===this) closeCareerModal()">
         <div class="pillar-modal-card">
-            <button class="pillar-modal-close" onclick="closeCareerModal()">&times;</button>
+            <button type="button" class="pillar-modal-close" onclick="closeCareerModal()">&times;</button>
             <div id="careerModalBody">
                 <!-- Dynamically populated -->
             </div>
@@ -2403,7 +2420,7 @@ const htmlContent = `<!DOCTYPE html>
     <!-- Interactive AI Advisor Assessment Modal -->
     <div id="aiAdvisorModal" class="pillar-modal-backdrop" onclick="if(event.target===this) closeAiAdvisorModal()">
         <div class="pillar-modal-card" style="max-width:680px;">
-            <button class="pillar-modal-close" onclick="closeAiAdvisorModal()">&times;</button>
+            <button type="button" class="pillar-modal-close" onclick="closeAiAdvisorModal()">&times;</button>
             <div style="text-align:center; margin-bottom:1.5rem;">
                 <div style="font-size:2.8rem; margin-bottom:0.4rem;">🤖</div>
                 <h3 style="font-size:1.6rem; font-weight:800; color:var(--wh);">DTV AI Cognitive Career Counselor</h3>
@@ -2444,12 +2461,11 @@ const htmlContent = `<!DOCTYPE html>
                 </div>
 
                 <button type="submit" class="btn-primary-hero" style="width:100%; justify-content:center; margin-top:1rem;">
-                    <span>Generate AI Career Match Score</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <span>Generate AI Career Match Score →</span>
                 </button>
             </form>
 
-            <div id="aiResultBox" style="display:none; margin-top:1.5rem; background:rgba(0,0,0,0.4); border:1px solid var(--pillar-purple); border-radius:16px; padding:1.5rem; text-align:left;">
+            <div id="aiResultBox" style="display:none; margin-top:1rem; background:rgba(0,0,0,0.4); border:1px solid var(--pillar-purple); border-radius:16px; padding:1.5rem; text-align:left;">
                 <!-- Dynamically populated AI Result -->
             </div>
         </div>
@@ -2865,8 +2881,8 @@ const htmlContent = `<!DOCTYPE html>
                 </div>
 
                 <div style="border-top:1px solid var(--bdr); padding-top:1.2rem; display:flex; gap:1rem; flex-wrap:wrap; justify-content:flex-end;">
-                    <button class="btn-secondary-hero" onclick="closeCareerModal()" style="padding:0.7rem 1.5rem; font-size:0.95rem;">Close</button>
-                    <button class="btn-primary-hero" onclick="closeCareerModal(); openAiAdvisorModal();" style="padding:0.7rem 1.5rem; font-size:0.95rem;">
+                    <button type="button" class="btn-secondary-hero" onclick="closeCareerModal()" style="padding:0.7rem 1.5rem; font-size:0.95rem;">Close</button>
+                    <button type="button" class="btn-primary-hero" onclick="closeCareerModal(); openAiAdvisorModal();" style="padding:0.7rem 1.5rem; font-size:0.95rem;">
                         <span>Assess Fit with AI Counselor</span>
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
@@ -2875,6 +2891,7 @@ const htmlContent = `<!DOCTYPE html>
 
             document.getElementById('careerModal').classList.add('active');
             document.body.style.overflow = 'hidden';
+            document.querySelector('#careerModal .pillar-modal-card').scrollTop = 0;
         }
 
         function closeCareerModal() {
@@ -2886,11 +2903,21 @@ const htmlContent = `<!DOCTYPE html>
         function openAiAdvisorModal() {
             document.getElementById('aiAdvisorModal').classList.add('active');
             document.body.style.overflow = 'hidden';
+            // Ensure form is visible
+            document.getElementById('aiAssessmentForm').style.display = 'block';
+            document.getElementById('aiResultBox').style.display = 'none';
+            document.querySelector('#aiAdvisorModal .pillar-modal-card').scrollTop = 0;
         }
 
         function closeAiAdvisorModal() {
             document.getElementById('aiAdvisorModal').classList.remove('active');
             document.body.style.overflow = '';
+        }
+
+        function resetAiForm() {
+            document.getElementById('aiAssessmentForm').style.display = 'block';
+            document.getElementById('aiResultBox').style.display = 'none';
+            document.querySelector('#aiAdvisorModal .pillar-modal-card').scrollTop = 0;
         }
 
         // Handle AI Counselor Calculation
@@ -2902,21 +2929,43 @@ const htmlContent = `<!DOCTYPE html>
 
             let recs = [];
             if (stream === 'pcm') {
-                recs = [careerData.ai, careerData.engineering, careerData.pilot];
+                recs = [
+                    { key: 'ai', data: careerData.ai },
+                    { key: 'engineering', data: careerData.engineering },
+                    { key: 'pilot', data: careerData.pilot }
+                ];
             } else if (stream === 'pcb') {
-                recs = [careerData.medical, careerData.datascience, careerData.ai];
+                recs = [
+                    { key: 'medical', data: careerData.medical },
+                    { key: 'datascience', data: careerData.datascience },
+                    { key: 'ai', data: careerData.ai }
+                ];
             } else if (stream === 'commerce') {
-                recs = [careerData.ca, careerData.commerce, careerData.management];
+                recs = [
+                    { key: 'ca', data: careerData.ca },
+                    { key: 'commerce', data: careerData.commerce },
+                    { key: 'management', data: careerData.management }
+                ];
             } else if (stream === 'arts') {
-                recs = [careerData.law, careerData.design, careerData.media];
+                recs = [
+                    { key: 'law', data: careerData.law },
+                    { key: 'design', data: careerData.design },
+                    { key: 'media', data: careerData.media }
+                ];
             } else {
-                recs = [careerData.engineering, careerData.digitalmarketing, careerData.cyber];
+                recs = [
+                    { key: 'engineering', data: careerData.engineering },
+                    { key: 'digitalmarketing', data: careerData.digitalmarketing },
+                    { key: 'cyber', data: careerData.cyber }
+                ];
             }
 
+            // Hide form and show result
+            document.getElementById('aiAssessmentForm').style.display = 'none';
             const resultBox = document.getElementById('aiResultBox');
             resultBox.style.display = 'block';
             resultBox.innerHTML = \`
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
                     <h4 style="font-size:1.2rem; font-weight:800; color:var(--wh); margin:0;">✨ AI Digital Twin Recommendations</h4>
                     <span style="background:rgba(167,139,250,0.2); color:var(--pillar-purple); font-weight:700; padding:0.3rem 0.8rem; border-radius:20px; font-size:0.82rem;">Match Score: 98.6%</span>
                 </div>
@@ -2925,22 +2974,30 @@ const htmlContent = `<!DOCTYPE html>
                     Based on your <strong>\${stream.toUpperCase()}</strong> stream and <strong>\${aptitude.toUpperCase()}</strong> strength, your top 3 recommended career trajectories for 2026 are:
                 </p>
 
-                <div style="display:flex; flex-direction:column; gap:0.8rem; margin-bottom:1.2rem;">
-                    \${recs.map((r, i) => \`
-                        <div style="background:rgba(255,255,255,0.05); border:1px solid var(--bdr); border-radius:12px; padding:0.8rem 1rem; display:flex; justify-content:space-between; align-items:center;">
-                            <div>
-                                <strong style="color:var(--wh); font-size:0.98rem;">\${i+1}. \${r.title}</strong>
-                                <div style="color:var(--mu); font-size:0.82rem;">\${r.salary}</div>
+                <div style="display:flex; flex-direction:column; gap:0.9rem; margin-bottom:1.4rem;">
+                    \${recs.map((item, i) => \`
+                        <div style="background:rgba(255,255,255,0.04); border:1px solid var(--bdr); border-radius:14px; padding:1rem 1.2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem;">
+                            <div style="flex:1; min-width:200px;">
+                                <strong style="color:var(--wh); font-size:1.02rem; display:block; margin-bottom:0.2rem;">\${i+1}. \${item.data.title}</strong>
+                                <div style="color:var(--mu); font-size:0.85rem;">\${item.data.salary}</div>
                             </div>
-                            <button onclick="closeAiAdvisorModal(); openCareerModal('\${Object.keys(careerData).find(k=>careerData[k].title===r.title)}');" class="btn-stream-explore" style="padding:0.4rem 0.8rem; font-size:0.82rem;">View Roadmap</button>
+                            <button type="button" onclick="closeAiAdvisorModal(); openCareerModal('\${item.key}');" class="btn-stream-explore" style="padding:0.5rem 1rem; font-size:0.85rem; cursor:pointer;">View Roadmap</button>
                         </div>
                     \`).join('')}
                 </div>
 
-                <div style="text-align:center;">
-                    <a href="/login.html" class="btn-header-cta" style="display:inline-block; padding:0.7rem 1.5rem; text-decoration:none;">Save Profile to Digital Twin Dashboard →</a>
+                <div style="display:flex; flex-direction:column; gap:0.8rem; align-items:center;">
+                    <a href="/login.html" class="btn-primary-hero" style="width:100%; justify-content:center; padding:0.85rem; font-size:0.98rem; text-decoration:none;">
+                        <span>Save Profile to Digital Twin Dashboard →</span>
+                    </a>
+                    <button type="button" onclick="resetAiForm()" style="background:none; border:none; color:var(--mu); font-size:0.88rem; cursor:pointer; text-decoration:underline; padding:0.4rem;">
+                        🔄 Re-take Assessment
+                    </button>
                 </div>
             \`;
+
+            // Scroll modal container to top so result is instantly visible
+            document.querySelector('#aiAdvisorModal .pillar-modal-card').scrollTop = 0;
         }
 
         // Stream Filter Functionality
