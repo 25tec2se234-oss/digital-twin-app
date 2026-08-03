@@ -187,8 +187,26 @@ const htmlContent = `<!DOCTYPE html>
             --pillar-purple: #a78bfa;
             --pillar-blue: #3b82f6;
             --pillar-green: #10b981;
-            --pillar-card-bg: rgba(18, 24, 38, 0.75);
+            --pillar-card-bg: rgba(18, 24, 38, 0.85);
             --pillar-glow: 0 16px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Themes support */
+        [data-theme="light"] {
+            --bg: #f8fafc;
+            --pillar-card-bg: #ffffff;
+            --wh: #0f172a;
+            --wh2: #334155;
+            --mu: #64748b;
+            --bdr: #cbd5e1;
+        }
+        [data-theme="navy"] {
+            --bg: #070d1e;
+            --pillar-card-bg: #0d172e;
+            --wh: #ffffff;
+            --wh2: #cbd5e1;
+            --mu: #94a3b8;
+            --bdr: #1e293b;
         }
         
         body {
@@ -209,7 +227,7 @@ const htmlContent = `<!DOCTYPE html>
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(10, 13, 20, 0.88);
+            background: rgba(10, 13, 20, 0.92);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--bdr);
@@ -240,21 +258,23 @@ const htmlContent = `<!DOCTYPE html>
             align-items: center;
             gap: 1.5rem;
             list-style: none;
+            margin: 0;
+            padding: 0;
         }
         .nav-links a {
             color: var(--mu);
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 0.92rem;
             transition: color 0.2s;
         }
         .nav-links a:hover {
-            color: var(--wh);
+            color: var(--pillar-purple);
         }
         .btn-header-cta {
             background: linear-gradient(135deg, var(--pillar-purple), var(--pillar-blue));
             color: #fff !important;
-            padding: 0.55rem 1.3rem;
+            padding: 0.6rem 1.4rem;
             border-radius: 30px;
             font-weight: 700;
             font-size: 0.9rem;
@@ -262,10 +282,55 @@ const htmlContent = `<!DOCTYPE html>
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(167, 139, 250, 0.3);
             transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
         }
         .btn-header-cta:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 22px rgba(167, 139, 250, 0.5);
+        }
+
+        /* Mobile Hamburger Drawer */
+        .mobile-nav-toggle {
+            display: none;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid var(--bdr);
+            color: var(--wh);
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+        .mobile-drawer {
+            display: none;
+            position: fixed;
+            top: 72px;
+            left: 0;
+            width: 100vw;
+            background: rgba(10, 13, 20, 0.96);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--bdr);
+            padding: 1.5rem;
+            box-sizing: border-box;
+            z-index: 999;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .mobile-drawer.active {
+            display: flex;
+        }
+        .mobile-drawer a {
+            color: var(--wh);
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 700;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         /* Hero Section */
@@ -296,9 +361,7 @@ const htmlContent = `<!DOCTYPE html>
             line-height: 1.15;
             margin-bottom: 1.2rem;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #ffffff 30%, var(--mu) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--wh);
         }
         .pillar-hero h1 span.gradient-text {
             background: linear-gradient(135deg, var(--pillar-purple), var(--pillar-ac));
@@ -333,6 +396,7 @@ const htmlContent = `<!DOCTYPE html>
             gap: 0.6rem;
             box-shadow: 0 8px 24px rgba(167, 139, 250, 0.35);
             transition: all 0.3s;
+            min-height: 48px;
         }
         .btn-primary-hero:hover {
             transform: translateY(-3px);
@@ -354,6 +418,7 @@ const htmlContent = `<!DOCTYPE html>
             gap: 0.6rem;
             backdrop-filter: blur(8px);
             transition: all 0.3s;
+            min-height: 48px;
         }
         .btn-secondary-hero:hover {
             background: rgba(255, 255, 255, 0.1);
@@ -551,6 +616,7 @@ const htmlContent = `<!DOCTYPE html>
             font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.2s;
+            min-height: 44px;
         }
         .btn-stream-explore:hover {
             background: var(--pillar-purple);
@@ -565,19 +631,21 @@ const htmlContent = `<!DOCTYPE html>
             overflow-x: auto;
             padding-bottom: 1rem;
             margin-bottom: 2rem;
+            -webkit-overflow-scrolling: touch;
             scrollbar-width: thin;
         }
         .filter-btn {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--bdr);
             color: var(--mu);
-            padding: 0.5rem 1.1rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 30px;
             font-size: 0.88rem;
             font-weight: 600;
             cursor: pointer;
             white-space: nowrap;
             transition: all 0.2s;
+            min-height: 44px;
         }
         .filter-btn.active, .filter-btn:hover {
             background: var(--pillar-purple);
@@ -595,6 +663,7 @@ const htmlContent = `<!DOCTYPE html>
             font-size: 0.95rem;
             margin-bottom: 2rem;
             outline: none;
+            box-sizing: border-box;
         }
         .category-search-input:focus {
             border-color: var(--pillar-purple);
@@ -859,6 +928,14 @@ const htmlContent = `<!DOCTYPE html>
             font-size: 0.92rem;
             line-height: 1.6;
         }
+        .info-card a {
+            color: var(--pillar-purple);
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .info-card a:hover {
+            color: var(--pillar-ac);
+        }
 
         /* FAQ Accordions */
         .faq-accordion {
@@ -891,6 +968,7 @@ const htmlContent = `<!DOCTYPE html>
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
+            min-height: 48px;
         }
         .faq-question span.toggle-icon {
             font-size: 1.2rem;
@@ -936,11 +1014,12 @@ const htmlContent = `<!DOCTYPE html>
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--bdr);
             color: var(--wh);
-            padding: 0.4rem 0.8rem;
+            padding: 0.5rem 0.9rem;
             border-radius: 20px;
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             outline: none;
             cursor: pointer;
+            min-height: 44px;
         }
 
         /* Modal Backdrop & Cards */
@@ -1003,8 +1082,8 @@ const htmlContent = `<!DOCTYPE html>
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid var(--bdr);
             color: var(--wh);
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             font-size: 1.4rem;
             display: flex;
@@ -1049,6 +1128,7 @@ const htmlContent = `<!DOCTYPE html>
             font-size: 0.95rem;
             outline: none;
             box-sizing: border-box;
+            min-height: 44px;
         }
         .ai-select:focus, .ai-input:focus {
             border-color: var(--pillar-purple);
@@ -1056,6 +1136,7 @@ const htmlContent = `<!DOCTYPE html>
 
         @media (max-width: 768px) {
             .nav-links { display: none; }
+            .mobile-nav-toggle { display: flex; }
             .pillar-hero { padding: 3rem 0 2rem; }
             .hero-cta-group { flex-direction: column; }
             .btn-primary-hero, .btn-secondary-hero { width: 100%; justify-content: center; }
@@ -1089,10 +1170,21 @@ const htmlContent = `<!DOCTYPE html>
                         <option value="navy">🌌 Navy</option>
                     </select>
                     <button type="button" class="btn-header-cta" onclick="openAiAdvisorModal()">AI Advisor</button>
+                    <button type="button" class="mobile-nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Navigation Menu">☰</button>
                 </div>
             </nav>
         </div>
     </header>
+
+    <!-- Mobile Drawer Overlay -->
+    <div class="mobile-drawer" id="mobileNavDrawer">
+        <a href="#streams" onclick="toggleMobileNav()">🎓 Educational Streams</a>
+        <a href="#categories" onclick="toggleMobileNav()">🚀 21 Career Pathways</a>
+        <a href="#comparison" onclick="toggleMobileNav()">📊 Stream Comparison Matrix</a>
+        <a href="#framework" onclick="toggleMobileNav()">🎯 6-Pillar Decision Framework</a>
+        <a href="#scholarships" onclick="toggleMobileNav()">💰 Scholarships & Education Loans</a>
+        <a href="#faqs" onclick="toggleMobileNav()">❓ FAQs & Solutions</a>
+    </div>
 
     <!-- Hero Section -->
     <section class="pillar-hero">
@@ -1266,7 +1358,7 @@ const htmlContent = `<!DOCTYPE html>
                             <li class="stream-meta-item"><span class="lbl">10-Year Growth:</span> <span class="val">Steady Technical Demand</span></li>
                         </ul>
                     </div>
-                    <button type="button" class="btn-stream-explore" onclick="filterByStream('all')">View Diploma Careers →</button>
+                    <button type="button" class="btn-stream-explore" onclick="filterByStream('tech')">View Diploma Careers →</button>
                 </div>
 
                 <!-- Vocational -->
@@ -1282,7 +1374,7 @@ const htmlContent = `<!DOCTYPE html>
                             <li class="stream-meta-item"><span class="lbl">10-Year Growth:</span> <span class="val">Fast-Track Employment</span></li>
                         </ul>
                     </div>
-                    <button type="button" class="btn-stream-explore" onclick="filterByStream('all')">View Vocational Careers →</button>
+                    <button type="button" class="btn-stream-explore" onclick="filterByStream('business')">View Vocational Careers →</button>
                 </div>
             </div>
         </div>
@@ -2252,8 +2344,8 @@ const htmlContent = `<!DOCTYPE html>
                 <div class="info-card">
                     <h4>🏛️ Government Scholarships</h4>
                     <p>
-                        • <strong>Central Sector Scheme (NSP):</strong> ₹12,000/yr for top 20th percentile 12th board students.<br>
-                        • <strong>INSPIRE Scholarship:</strong> ₹80,000/yr for natural science and research students.<br>
+                        • <strong>Central Sector Scheme (<a href="https://scholarships.gov.in" target="_blank" rel="noopener noreferrer">NSP ↗</a>):</strong> ₹12,000/yr for top 20th percentile 12th board students.<br>
+                        • <strong>INSPIRE Scholarship (<a href="https://online-inspire.gov.in" target="_blank" rel="noopener noreferrer">DST ↗</a>):</strong> ₹80,000/yr for natural science and research students.<br>
                         • <strong>PMSSS:</strong> Full tuition & maintenance fee coverage for J&K students.
                     </p>
                 </div>
@@ -2270,7 +2362,7 @@ const htmlContent = `<!DOCTYPE html>
                     <p>
                         • <strong>Collateral-Free Limit:</strong> Loans up to ₹7.5 Lakhs require zero collateral under CSIS scheme.<br>
                         • <strong>Moratorium Period:</strong> Repayment starts 12 months after course completion or 6 months after securing employment.<br>
-                        • <strong>Portal:</strong> Apply directly via official Vidya Lakshmi Portal (vidyalakshmi.co.in).
+                        • <strong>Official Portal:</strong> Apply directly via <a href="https://www.vidyalakshmi.co.in" target="_blank" rel="noopener noreferrer">vidyalakshmi.co.in ↗</a>
                     </p>
                 </div>
             </div>
@@ -2836,6 +2928,12 @@ const htmlContent = `<!DOCTYPE html>
             }
         }
 
+        // Mobile Nav Drawer Toggle
+        function toggleMobileNav() {
+            const drawer = document.getElementById('mobileNavDrawer');
+            if (drawer) drawer.classList.toggle('active');
+        }
+
         // Open Career Detail Modal
         function openCareerModal(careerId) {
             const data = careerData[careerId];
@@ -2903,7 +3001,6 @@ const htmlContent = `<!DOCTYPE html>
         function openAiAdvisorModal() {
             document.getElementById('aiAdvisorModal').classList.add('active');
             document.body.style.overflow = 'hidden';
-            // Ensure form is visible
             document.getElementById('aiAssessmentForm').style.display = 'block';
             document.getElementById('aiResultBox').style.display = 'none';
             document.querySelector('#aiAdvisorModal .pillar-modal-card').scrollTop = 0;
@@ -2920,7 +3017,7 @@ const htmlContent = `<!DOCTYPE html>
             document.querySelector('#aiAdvisorModal .pillar-modal-card').scrollTop = 0;
         }
 
-        // Handle AI Counselor Calculation
+        // Multi-dimensional AI Assessment Engine
         function calculateAiFit(event) {
             event.preventDefault();
             const stream = document.getElementById('userStream').value;
@@ -2928,39 +3025,85 @@ const htmlContent = `<!DOCTYPE html>
             const goal = document.getElementById('userGoal').value;
 
             let recs = [];
-            if (stream === 'pcm') {
-                recs = [
-                    { key: 'ai', data: careerData.ai },
-                    { key: 'engineering', data: careerData.engineering },
-                    { key: 'pilot', data: careerData.pilot }
-                ];
-            } else if (stream === 'pcb') {
+            
+            if (aptitude === 'coding') {
+                if (stream === 'pcm') {
+                    recs = [
+                        { key: 'ai', data: careerData.ai },
+                        { key: 'engineering', data: careerData.engineering },
+                        { key: 'cyber', data: careerData.cyber }
+                    ];
+                } else if (stream === 'commerce') {
+                    recs = [
+                        { key: 'datascience', data: careerData.datascience },
+                        { key: 'ca', data: careerData.ca },
+                        { key: 'management', data: careerData.management }
+                    ];
+                } else {
+                    recs = [
+                        { key: 'design', data: careerData.design },
+                        { key: 'digitalmarketing', data: careerData.digitalmarketing },
+                        { key: 'media', data: careerData.media }
+                    ];
+                }
+            } else if (aptitude === 'healthcare') {
                 recs = [
                     { key: 'medical', data: careerData.medical },
                     { key: 'datascience', data: careerData.datascience },
                     { key: 'ai', data: careerData.ai }
                 ];
-            } else if (stream === 'commerce') {
+            } else if (aptitude === 'finance') {
                 recs = [
                     { key: 'ca', data: careerData.ca },
                     { key: 'commerce', data: careerData.commerce },
                     { key: 'management', data: careerData.management }
                 ];
-            } else if (stream === 'arts') {
+            } else if (aptitude === 'creative') {
+                recs = [
+                    { key: 'design', data: careerData.design },
+                    { key: 'animation', data: careerData.animation },
+                    { key: 'digitalmarketing', data: careerData.digitalmarketing }
+                ];
+            } else if (aptitude === 'law') {
                 recs = [
                     { key: 'law', data: careerData.law },
-                    { key: 'design', data: careerData.design },
+                    { key: 'gov', data: careerData.gov },
                     { key: 'media', data: careerData.media }
                 ];
             } else {
-                recs = [
-                    { key: 'engineering', data: careerData.engineering },
-                    { key: 'digitalmarketing', data: careerData.digitalmarketing },
-                    { key: 'cyber', data: careerData.cyber }
-                ];
+                if (stream === 'pcm') {
+                    recs = [
+                        { key: 'ai', data: careerData.ai },
+                        { key: 'engineering', data: careerData.engineering },
+                        { key: 'pilot', data: careerData.pilot }
+                    ];
+                } else if (stream === 'pcb') {
+                    recs = [
+                        { key: 'medical', data: careerData.medical },
+                        { key: 'datascience', data: careerData.datascience },
+                        { key: 'ai', data: careerData.ai }
+                    ];
+                } else if (stream === 'commerce') {
+                    recs = [
+                        { key: 'ca', data: careerData.ca },
+                        { key: 'commerce', data: careerData.commerce },
+                        { key: 'management', data: careerData.management }
+                    ];
+                } else if (stream === 'arts') {
+                    recs = [
+                        { key: 'law', data: careerData.law },
+                        { key: 'design', data: careerData.design },
+                        { key: 'media', data: careerData.media }
+                    ];
+                } else {
+                    recs = [
+                        { key: 'engineering', data: careerData.engineering },
+                        { key: 'digitalmarketing', data: careerData.digitalmarketing },
+                        { key: 'cyber', data: careerData.cyber }
+                    ];
+                }
             }
 
-            // Hide form and show result
             document.getElementById('aiAssessmentForm').style.display = 'none';
             const resultBox = document.getElementById('aiResultBox');
             resultBox.style.display = 'block';
@@ -2996,7 +3139,6 @@ const htmlContent = `<!DOCTYPE html>
                 </div>
             \`;
 
-            // Scroll modal container to top so result is instantly visible
             document.querySelector('#aiAdvisorModal .pillar-modal-card').scrollTop = 0;
         }
 
@@ -3006,36 +3148,61 @@ const htmlContent = `<!DOCTYPE html>
             scrollToSection('categories');
         }
 
-        // Category Tab Filter Functionality
+        // Combined Filter Engine
+        let currentTabFilter = 'all';
+
         function filterCategoryTab(tab) {
+            currentTabFilter = tab;
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             const targetTab = document.getElementById('tab-' + tab);
             if (targetTab) targetTab.classList.add('active');
-            
-            const cards = document.querySelectorAll('.career-card');
-            cards.forEach(card => {
-                const cat = card.getAttribute('data-cat');
-                if (tab === 'all' || cat === tab) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+            applyCombinedCareerFilter();
         }
 
-        // Search Careers Filter Functionality
         function filterCareers() {
-            const query = document.getElementById('categorySearch').value.toLowerCase();
+            applyCombinedCareerFilter();
+        }
+
+        function applyCombinedCareerFilter() {
+            const query = document.getElementById('categorySearch').value.toLowerCase().trim();
             const cards = document.querySelectorAll('.career-card');
-            
+            let visibleCount = 0;
+
             cards.forEach(card => {
+                const cat = card.getAttribute('data-cat');
                 const text = card.textContent.toLowerCase();
-                if (text.includes(query)) {
+                const matchesTab = (currentTabFilter === 'all' || cat === currentTabFilter);
+                const matchesSearch = (!query || text.includes(query));
+
+                if (matchesTab && matchesSearch) {
                     card.style.display = 'flex';
+                    visibleCount++;
                 } else {
                     card.style.display = 'none';
                 }
             });
+
+            let emptyState = document.getElementById('noCareersFound');
+            if (visibleCount === 0) {
+                if (!emptyState) {
+                    const grid = document.getElementById('careerGrid');
+                    grid.insertAdjacentHTML('beforeend', \`
+                        <div id="noCareersFound" style="grid-column: 1 / -1; text-align:center; padding: 3rem 1.5rem; background: var(--pillar-card-bg); border: 1px solid var(--bdr); border-radius: 18px; margin-top: 1rem;">
+                            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔍</div>
+                            <h4 style="font-size: 1.2rem; color: var(--wh); margin-bottom: 0.4rem;">No matching careers found</h4>
+                            <p style="color: var(--mu); font-size: 0.92rem; margin-bottom: 1.2rem;">Try searching for a different keyword like 'Engineering', 'Law', 'Medical', or clear your search query.</p>
+                            <button type="button" onclick="resetCareerFilters()" class="btn-secondary-hero" style="padding:0.6rem 1.4rem; font-size:0.9rem;">Reset Search Filters</button>
+                        </div>
+                    \`);
+                }
+            } else {
+                if (emptyState) emptyState.remove();
+            }
+        }
+
+        function resetCareerFilters() {
+            document.getElementById('categorySearch').value = '';
+            filterCategoryTab('all');
         }
 
         // FAQ Accordion Toggle
@@ -3065,13 +3232,15 @@ const htmlContent = `<!DOCTYPE html>
             if (e.key === 'Escape') {
                 closeCareerModal();
                 closeAiAdvisorModal();
+                const drawer = document.getElementById('mobileNavDrawer');
+                if (drawer) drawer.classList.remove('active');
             }
         });
     </script>
 </body>
 </html>`;
 
-// 2. File paths to generate
+// File writing and build triggers
 const pillarDir = path.join(__dirname, 'public', pillarSlug);
 if (!fs.existsSync(pillarDir)) {
     fs.mkdirSync(pillarDir, { recursive: true });
@@ -3082,7 +3251,6 @@ const targetFiles = [
     path.join(__dirname, 'public', `${pillarSlug}.html`)
 ];
 
-// Check if deploy-digital-twin exists and save there as well
 const deployDir = path.join(__dirname, 'deploy-digital-twin', 'public', pillarSlug);
 if (fs.existsSync(path.join(__dirname, 'deploy-digital-twin', 'public'))) {
     if (!fs.existsSync(deployDir)) {
@@ -3096,98 +3264,5 @@ targetFiles.forEach(file => {
     fs.writeFileSync(file, htmlContent, 'utf8');
     console.log(`✅ Saved master pillar page HTML to ${file}`);
 });
-
-// 3. Update sitemap.xml files
-const sitemapPaths = [
-    path.join(__dirname, 'public', 'sitemap.xml'),
-    path.join(__dirname, 'deploy-digital-twin', 'public', 'sitemap.xml'),
-    path.join(__dirname, 'scratch', 'digital-twin-frontend-repo', 'main-site', 'public', 'sitemap.xml')
-];
-
-const sitemapAddition = `  <url>
-    <loc>${pillarUrl}</loc>
-    <lastmod>2026-08-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-`;
-
-sitemapPaths.forEach(sitemapPath => {
-    if (fs.existsSync(sitemapPath)) {
-        let content = fs.readFileSync(sitemapPath, 'utf8');
-        if (!content.includes(pillarUrl)) {
-            content = content.replace('</urlset>', sitemapAddition + '</urlset>');
-            fs.writeFileSync(sitemapPath, content, 'utf8');
-            console.log(`✅ Updated sitemap at ${sitemapPath}`);
-        }
-    }
-});
-
-// 4. Update src/app.js to add explicit route if not present
-const appJsPath = path.join(__dirname, 'src', 'app.js');
-if (fs.existsSync(appJsPath)) {
-    let appJs = fs.readFileSync(appJsPath, 'utf8');
-    
-    if (!appJs.includes('/career-guidance-after-12th')) {
-        const routeCode = `
-// Pillar Landing Page Route: Career Guidance After 12th
-app.get(['/career-guidance-after-12th', '/career-guidance-after-12th/'], (req, res) => {
-  const pillarPath = path.join(publicDir, 'career-guidance-after-12th', 'index.html');
-  if (require('fs').existsSync(pillarPath)) {
-    res.set('Cache-Control', 'public, max-age=3600, must-revalidate');
-    return res.sendFile(pillarPath);
-  }
-  res.sendFile(path.join(publicDir, 'career-guidance-after-12th.html'));
-});
-`;
-        appJs = appJs.replace("app.use('/blog', blogRoutes);", "app.use('/blog', blogRoutes);" + routeCode);
-        
-        if (!appJs.includes(pillarUrl)) {
-            appJs = appJs.replace(
-                "blogEntries += `\\n  <url>\\n    <loc>https://digitaltwinvrs.com/blog</loc>\\n    <changefreq>weekly</changefreq>\\n    <priority>0.9</priority>\\n  </url>`;",
-                "blogEntries += `\\n  <url>\\n    <loc>https://digitaltwinvrs.com/blog</loc>\\n    <changefreq>weekly</changefreq>\\n    <priority>0.9</priority>\\n  </url>`;\\n      blogEntries += `\\n  <url>\\n    <loc>https://digitaltwinvrs.com/career-guidance-after-12th</loc>\\n    <lastmod>2026-08-03</lastmod>\\n    <changefreq>weekly</changefreq>\\n    <priority>1.0</priority>\\n  </url>`;"
-            );
-        }
-        
-        fs.writeFileSync(appJsPath, appJs, 'utf8');
-        console.log('✅ Updated src/app.js with explicit pillar page route');
-    }
-}
-
-// 5. Update src/data/blogs.json to inject internal links pointing to this pillar page
-const blogsPath = path.join(__dirname, 'src', 'data', 'blogs.json');
-if (fs.existsSync(blogsPath)) {
-    let blogs = JSON.parse(fs.readFileSync(blogsPath, 'utf8'));
-    let updatedCount = 0;
-    
-    blogs.forEach(b => {
-        if (b.content && !b.content.includes('/career-guidance-after-12th')) {
-            if (b.content.includes("How to Choose the Right Career After 12th")) {
-                b.content = b.content.replace(
-                    "How to Choose the Right Career After 12th",
-                    "How to Choose the Right Career After 12th (explore our master <a href='/career-guidance-after-12th' style='color:#a78bfa; text-decoration:underline;'>Career Guidance After 12th</a> roadmap)"
-                );
-                updatedCount++;
-            } else if (b.content.includes("career options after 12th")) {
-                b.content = b.content.replace(
-                    "career options after 12th",
-                    "<a href='/career-guidance-after-12th' style='color:#a78bfa; text-decoration:underline;'>career options after 12th</a>"
-                );
-                updatedCount++;
-            } else if (b.content.includes("career after 12th")) {
-                b.content = b.content.replace(
-                    "career after 12th",
-                    "<a href='/career-guidance-after-12th' style='color:#a78bfa; text-decoration:underline;'>career after 12th</a>"
-                );
-                updatedCount++;
-            }
-        }
-    });
-    
-    if (updatedCount > 0) {
-        fs.writeFileSync(blogsPath, JSON.stringify(blogs, null, 2), 'utf8');
-        console.log(`✅ Injected internal links to pillar page in ${updatedCount} blogs in blogs.json`);
-    }
-}
 
 console.log('🎉 Production-Ready SEO Pillar Page build script completed successfully!');
