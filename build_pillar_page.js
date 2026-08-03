@@ -258,7 +258,8 @@ const htmlContent = `<!DOCTYPE html>
             border-radius: 30px;
             font-weight: 700;
             font-size: 0.9rem;
-            text-decoration: none;
+            border: none;
+            cursor: pointer;
             box-shadow: 0 4px 15px rgba(167, 139, 250, 0.3);
             transition: transform 0.2s, box-shadow 0.2s;
         }
@@ -325,6 +326,8 @@ const htmlContent = `<!DOCTYPE html>
             font-weight: 700;
             font-size: 1.05rem;
             text-decoration: none;
+            border: none;
+            cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 0.6rem;
@@ -344,6 +347,8 @@ const htmlContent = `<!DOCTYPE html>
             font-weight: 700;
             font-size: 1.05rem;
             text-decoration: none;
+            border: none;
+            cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 0.6rem;
@@ -544,6 +549,7 @@ const htmlContent = `<!DOCTYPE html>
             text-decoration: none;
             font-weight: 600;
             font-size: 0.9rem;
+            cursor: pointer;
             transition: all 0.2s;
         }
         .btn-stream-explore:hover {
@@ -937,6 +943,100 @@ const htmlContent = `<!DOCTYPE html>
             cursor: pointer;
         }
 
+        /* Modal Backdrop & Cards */
+        .pillar-modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5, 8, 16, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 99999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+        .pillar-modal-backdrop.active {
+            display: flex;
+        }
+        .pillar-modal-card {
+            background: rgba(18, 24, 38, 0.96);
+            border: 1px solid var(--pillar-purple);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 780px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2.2rem;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(167, 139, 250, 0.25);
+            position: relative;
+            color: var(--wh);
+            animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes modalSlideUp {
+            from { opacity: 0; transform: translateY(24px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .pillar-modal-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--bdr);
+            color: var(--wh);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .pillar-modal-close:hover {
+            background: var(--pillar-purple);
+            color: #fff;
+        }
+        .modal-section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--pillar-ac);
+            margin: 1.2rem 0 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* AI Assessment Form Elements */
+        .ai-form-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+        .ai-form-group label {
+            display: block;
+            font-size: 0.92rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--wh);
+        }
+        .ai-select, .ai-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--bdr);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            color: var(--wh);
+            font-size: 0.95rem;
+            outline: none;
+        }
+        .ai-select:focus, .ai-input:focus {
+            border-color: var(--pillar-purple);
+        }
+
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .pillar-hero { padding: 3rem 0 2rem; }
@@ -944,6 +1044,7 @@ const htmlContent = `<!DOCTYPE html>
             .btn-primary-hero, .btn-secondary-hero { width: 100%; justify-content: center; }
             .toc-links { grid-template-columns: 1fr; }
             .career-card-grid, .stream-grid { grid-template-columns: 1fr; }
+            .pillar-modal-card { padding: 1.5rem; }
         }
     </style>
 </head>
@@ -970,7 +1071,7 @@ const htmlContent = `<!DOCTYPE html>
                         <option value="light">☀️ Light</option>
                         <option value="navy">🌌 Navy</option>
                     </select>
-                    <a href="/login.html" class="btn-header-cta">AI Advisor</a>
+                    <button class="btn-header-cta" onclick="openAiAdvisorModal()">AI Advisor</button>
                 </div>
             </nav>
         </div>
@@ -986,14 +1087,14 @@ const htmlContent = `<!DOCTYPE html>
             </p>
 
             <div class="hero-cta-group">
-                <a href="#categories" class="btn-primary-hero">
+                <button onclick="scrollToSection('categories')" class="btn-primary-hero">
                     <span>Explore 21 Careers</span>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
-                <a href="/login.html" class="btn-secondary-hero">
+                </button>
+                <button onclick="openAiAdvisorModal()" class="btn-secondary-hero">
                     <span>Talk to AI Career Advisor</span>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-4.5a1 1 0 0 1-2 0V7a1 1 0 0 1 2 0z"/></svg>
-                </a>
+                </button>
             </div>
 
             <!-- Quick Stats Grid -->
@@ -1084,7 +1185,7 @@ const htmlContent = `<!DOCTYPE html>
                             <li class="stream-meta-item"><span class="lbl">10-Year Growth:</span> <span class="val">Very High (AI Boom)</span></li>
                         </ul>
                     </div>
-                    <a href="#categories" class="btn-stream-explore">View PCM Careers →</a>
+                    <button class="btn-stream-explore" onclick="filterByStream('tech')">View PCM Careers →</button>
                 </div>
 
                 <!-- PCB -->
@@ -1100,7 +1201,7 @@ const htmlContent = `<!DOCTYPE html>
                             <li class="stream-meta-item"><span class="lbl">10-Year Growth:</span> <span class="val">Evergreen & Essential</span></li>
                         </ul>
                     </div>
-                    <a href="#categories" class="btn-stream-explore">View PCB Careers →</a>
+                    <button class="btn-stream-explore" onclick="filterByStream('medical')">View PCB Careers →</button>
                 </div>
 
                 <!-- Commerce -->
@@ -1116,7 +1217,7 @@ const htmlContent = `<!DOCTYPE html>
                             <li class="stream-meta-item"><span class="lbl">10-Year Growth:</span> <span class="val">High Corporate Demand</span></li>
                         </ul>
                     </div>
-                    <a href="#categories" class="btn-stream-explore">View Commerce Careers →</a>
+                    <button class="btn-stream-explore" onclick="filterByStream('business')">View Commerce Careers →</button>
                 </div>
 
                 <!-- Arts / Humanities -->
@@ -1132,7 +1233,7 @@ const htmlContent = `<!DOCTYPE html>
                             <li class="stream-meta-item"><span class="lbl">10-Year Growth:</span> <span class="val">High Creative & Legal Demand</span></li>
                         </ul>
                     </div>
-                    <a href="#categories" class="btn-stream-explore">View Arts Careers →</a>
+                    <button class="btn-stream-explore" onclick="filterByStream('creative')">View Arts Careers →</button>
                 </div>
 
                 <!-- Diploma -->
@@ -1148,7 +1249,7 @@ const htmlContent = `<!DOCTYPE html>
                             <li class="stream-meta-item"><span class="lbl">10-Year Growth:</span> <span class="val">Steady Technical Demand</span></li>
                         </ul>
                     </div>
-                    <a href="#categories" class="btn-stream-explore">View Diploma Careers →</a>
+                    <button class="btn-stream-explore" onclick="filterByStream('all')">View Diploma Careers →</button>
                 </div>
 
                 <!-- Vocational -->
@@ -1164,7 +1265,7 @@ const htmlContent = `<!DOCTYPE html>
                             <li class="stream-meta-item"><span class="lbl">10-Year Growth:</span> <span class="val">Fast-Track Employment</span></li>
                         </ul>
                     </div>
-                    <a href="#categories" class="btn-stream-explore">View Vocational Careers →</a>
+                    <button class="btn-stream-explore" onclick="filterByStream('all')">View Vocational Careers →</button>
                 </div>
             </div>
         </div>
@@ -1177,19 +1278,19 @@ const htmlContent = `<!DOCTYPE html>
                 <span class="section-tag">21 High-Growth Pathways</span>
                 <h2 class="section-title">Explore All 21 Career Categories</h2>
                 <p class="section-desc">
-                    Comprehensive breakdown of mandatory qualifications, required skill sets, 10-year industry scope, salary trajectories, and step-by-step education paths for all top 21 career categories after 12th.
+                    Click any card to open the interactive roadmap, required skill breakdown, top colleges, and entrance exams.
                 </p>
             </div>
 
             <input type="text" id="categorySearch" class="category-search-input" placeholder="🔍 Search any career (e.g. AI, Law, Pilot, CA, Design)..." onkeyup="filterCareers()">
 
             <div class="category-filter-bar">
-                <button class="filter-btn active" onclick="filterCategoryTab('all')">All 21 Careers</button>
-                <button class="filter-btn" onclick="filterCategoryTab('tech')">Technology & AI</button>
-                <button class="filter-btn" onclick="filterCategoryTab('medical')">Medical & Healthcare</button>
-                <button class="filter-btn" onclick="filterCategoryTab('business')">Commerce & Finance</button>
-                <button class="filter-btn" onclick="filterCategoryTab('creative')">Design & Media</button>
-                <button class="filter-btn" onclick="filterCategoryTab('gov')">Defence & Gov</button>
+                <button class="filter-btn active" id="tab-all" onclick="filterCategoryTab('all')">All 21 Careers</button>
+                <button class="filter-btn" id="tab-tech" onclick="filterCategoryTab('tech')">Technology & AI</button>
+                <button class="filter-btn" id="tab-medical" onclick="filterCategoryTab('medical')">Medical & Healthcare</button>
+                <button class="filter-btn" id="tab-business" onclick="filterCategoryTab('business')">Commerce & Finance</button>
+                <button class="filter-btn" id="tab-creative" onclick="filterCategoryTab('creative')">Design & Media</button>
+                <button class="filter-btn" id="tab-gov" onclick="filterCategoryTab('gov')">Defence & Gov</button>
             </div>
 
             <div class="career-card-grid" id="careerGrid">
@@ -1224,7 +1325,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹7 - ₹30+ LPA</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('engineering')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1259,7 +1360,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹8 - ₹35+ LPA</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('medical')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1294,7 +1395,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹8 - ₹24+ LPA</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('law')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1329,7 +1430,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹7 - ₹28+ LPA</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('management')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1364,7 +1465,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹6 - ₹18+ LPA</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('commerce')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1399,7 +1500,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹8 - ₹16+ LPA + Perks</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('gov')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1434,7 +1535,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹10 - ₹22+ LPA + Allowances</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('defence')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1469,7 +1570,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹10 - ₹35+ LPA</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('ai')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1504,7 +1605,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹9 - ₹32+ LPA</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('ml')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1539,7 +1640,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹7 - ₹25+ LPA</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('cyber')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1574,7 +1675,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹8 - ₹26+ LPA</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('cloud')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1609,7 +1710,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹8 - ₹28+ LPA</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('datascience')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1644,7 +1745,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹6.5 - ₹22+ LPA</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('design')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1679,7 +1780,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹5 - ₹18+ LPA</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('animation')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1714,7 +1815,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹4.5 - ₹15+ LPA</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('media')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1749,7 +1850,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹4.5 - ₹16+ LPA</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('hotel')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1784,7 +1885,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹15 - ₹40+ LPA</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('pilot')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1819,7 +1920,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹9 - ₹25+ LPA</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('ca')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1854,7 +1955,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹7 - ₹20+ LPA</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('cs')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1889,7 +1990,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 ₹5 - ₹18+ LPA</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('digitalmarketing')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
 
@@ -1924,7 +2025,7 @@ const htmlContent = `<!DOCTYPE html>
                     </div>
                     <div class="career-footer">
                         <span class="salary-badge">💰 Unlimited Upside</span>
-                        <a href="/login.html" class="btn-stream-explore">Start Roadmap</a>
+                        <button onclick="openCareerModal('entrepreneurship')" class="btn-stream-explore">Start Roadmap</button>
                     </div>
                 </div>
             </div>
@@ -2070,10 +2171,10 @@ const htmlContent = `<!DOCTYPE html>
                         <li><span class="check">✓</span> <strong>Real-Time Skill Gap Mapping:</strong> Compares your current skills against top 2026 job requirements.</li>
                         <li><span class="check">✓</span> <strong>Simulated Day-in-the-Life Sandbox:</strong> Test-drive different careers inside interactive virtual project environments.</li>
                     </ul>
-                    <a href="/login.html" class="btn-primary-hero" style="margin-top:1rem;">
+                    <button onclick="openAiAdvisorModal()" class="btn-primary-hero" style="margin-top:1rem;">
                         <span>Create Your Digital Twin Now</span>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </a>
+                    </button>
                 </div>
                 <div style="text-align:center;">
                     <div style="background:rgba(0,0,0,0.4); border:1px solid var(--pillar-purple); border-radius:20px; padding:2rem; backdrop-filter:blur(10px);">
@@ -2282,24 +2383,609 @@ const htmlContent = `<!DOCTYPE html>
         <div class="wrap">
             <h2>Ready to Discover Your Ideal Career?</h2>
             <p>Let our AI Career Advisor build your personalized Digital Twin, analyze your cognitive strengths, and map your 2026 career roadmap today.</p>
-            <a href="/login.html" class="btn-primary-hero" style="font-size:1.15rem; padding:1.1rem 2.5rem;">
+            <button onclick="openAiAdvisorModal()" class="btn-primary-hero" style="font-size:1.15rem; padding:1.1rem 2.5rem;">
                 <span>Talk to AI Career Advisor Free</span>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
+            </button>
         </div>
     </section>
 
+    <!-- Interactive Career Detail Modal -->
+    <div id="careerModal" class="pillar-modal-backdrop" onclick="if(event.target===this) closeCareerModal()">
+        <div class="pillar-modal-card">
+            <button class="pillar-modal-close" onclick="closeCareerModal()">&times;</button>
+            <div id="careerModalBody">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive AI Advisor Assessment Modal -->
+    <div id="aiAdvisorModal" class="pillar-modal-backdrop" onclick="if(event.target===this) closeAiAdvisorModal()">
+        <div class="pillar-modal-card" style="max-width:680px;">
+            <button class="pillar-modal-close" onclick="closeAiAdvisorModal()">&times;</button>
+            <div style="text-align:center; margin-bottom:1.5rem;">
+                <div style="font-size:2.8rem; margin-bottom:0.4rem;">🤖</div>
+                <h3 style="font-size:1.6rem; font-weight:800; color:var(--wh);">DTV AI Cognitive Career Counselor</h3>
+                <p style="color:var(--mu); font-size:0.92rem;">Complete this 30-second cognitive profiling check to get personalized career recommendations.</p>
+            </div>
+
+            <form id="aiAssessmentForm" onsubmit="calculateAiFit(event)">
+                <div class="ai-form-group">
+                    <label>1. Your Class 12 Stream</label>
+                    <select id="userStream" class="ai-select" required>
+                        <option value="pcm">Science (PCM - Physics, Chem, Maths)</option>
+                        <option value="pcb">Science (PCB - Physics, Chem, Bio)</option>
+                        <option value="commerce">Commerce (Accounts, Finance, Economics)</option>
+                        <option value="arts">Arts / Humanities (Law, Design, Psychology)</option>
+                        <option value="diploma">Polytechnic / Skill Diploma</option>
+                    </select>
+                </div>
+
+                <div class="ai-form-group">
+                    <label>2. Your Core Brain Aptitude / Natural Strength</label>
+                    <select id="userAptitude" class="ai-select" required>
+                        <option value="coding">Logical Reasoning, Coding & Mathematics</option>
+                        <option value="healthcare">Biological Research, Patient Care & Clinical Diagnosis</option>
+                        <option value="finance">Financial Numbers, Valuation & Business Strategy</option>
+                        <option value="creative">UI/UX Design, Visual Arts & Creative Writing</option>
+                        <option value="law">Legal Drafting, Debate & Public Policy</option>
+                    </select>
+                </div>
+
+                <div class="ai-form-group">
+                    <label>3. Your Primary 10-Year Career Goal</label>
+                    <select id="userGoal" class="ai-select" required>
+                        <option value="salary">Highest Initial Starting Compensation (₹15L+ LPA)</option>
+                        <option value="global">Global Remote & International Mobility</option>
+                        <option value="stability">Maximum Job Security & Social Prestige</option>
+                        <option value="creative">Creative Autonomy & Product Building</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-primary-hero" style="width:100%; justify-content:center; margin-top:1rem;">
+                    <span>Generate AI Career Match Score</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </form>
+
+            <div id="aiResultBox" style="display:none; margin-top:1.5rem; background:rgba(0,0,0,0.4); border:1px solid var(--pillar-purple); border-radius:16px; padding:1.5rem; text-align:left;">
+                <!-- Dynamically populated AI Result -->
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script>
+        // 21 Detailed Careers Dataset
+        const careerData = {
+            engineering: {
+                title: "1. Engineering & Technology",
+                stream: "PCM Stream",
+                badge: "High Tech",
+                desc: "Designing, building, and scaling software systems, artificial intelligence models, robotics, and hardware infrastructure.",
+                roadmap: [
+                    "Year 1: Foundation Physics, Mathematics & Data Structures",
+                    "Year 2: Object Oriented Programming, System Architecture & Databases",
+                    "Year 3: Specialized Domain (AI/ML, DevOps, Web3) & Summer Internships",
+                    "Year 4: Major Capstone Project, Open Source Contributions & Campus Placement"
+                ],
+                exams: ["JEE Main", "JEE Advanced", "BITSAT", "VITEEE", "CUET"],
+                colleges: ["IIT Bombay", "IIT Delhi", "IIT Madras", "BITS Pilani", "NIT Trichy"],
+                salary: "Freshers: ₹7-15 LPA | Mid-level: ₹18-35 LPA | Senior/Lead: ₹40-80+ LPA",
+                skills: ["Data Structures & Algorithms", "Python / C++", "System Architecture", "Cloud Deployments"],
+                scope: "Very High (AI Boom). Engineering logic is required across every technological sector globally."
+            },
+            medical: {
+                title: "2. Medical & Surgery",
+                stream: "PCB Stream",
+                badge: "Healthcare",
+                desc: "Diagnosing clinical conditions, performing surgical operations, managing clinical trials, and saving lives.",
+                roadmap: [
+                    "Years 1-2: Human Anatomy, Physiology, Biochemistry & Clinical Observerships",
+                    "Years 3-4: Pathology, Pharmacology, Forensic Medicine & Surgery Fundamentals",
+                    "Year 5: Compulsory Rotational Internship across Hospital Departments",
+                    "Post-Grad: MD/MS Specialization in Surgery, Cardiology, or Neurology"
+                ],
+                exams: ["NEET-UG", "INI-CET", "NEET-PG"],
+                colleges: ["AIIMS New Delhi", "CMC Vellore", "JIPMER Puducherry", "KGMU Lucknow"],
+                salary: "Junior Doctor: ₹8-14 LPA | Specialist Surgeon: ₹25-60+ LPA",
+                skills: ["Clinical Diagnosis", "Surgical Precision", "Patient Empathy", "Medical Research"],
+                scope: "Evergreen & 100% Recession-Proof. Global demand for specialized healthcare is rising rapidly."
+            },
+            law: {
+                title: "3. Corporate & Cyber Law",
+                stream: "Any Stream",
+                badge: "Legal",
+                desc: "Structuring cross-border mergers, managing intellectual property, prosecuting cybercrime, and court litigation.",
+                roadmap: [
+                    "Years 1-2: Constitutional Law, Contract Law, Jurisprudence & Legal Writing",
+                    "Years 3-4: Corporate Restructuring, Tax Law, Intellectual Property & Cyber Regulations",
+                    "Year 5: Moot Courts, Law Firm Internships & Bar Council Enrollment"
+                ],
+                exams: ["CLAT", "AILET", "LSAT India", "MHCET Law"],
+                colleges: ["NLSIU Bengaluru", "NALSAR Hyderabad", "WBNUJS Kolkata", "NLU Delhi"],
+                salary: "Associate: ₹8-18 LPA | Senior Partner: ₹35-90+ LPA",
+                skills: ["Contract Drafting", "Legal Research", "Argumentation", "Regulatory Compliance"],
+                scope: "High Corporate Growth. Increasing demand for AI ethics law, technology regulation, and IP law."
+            },
+            management: {
+                title: "4. Business Management",
+                stream: "Any Stream",
+                badge: "Corporate",
+                desc: "Executing corporate growth strategies, managing operational workflows, leading marketing campaigns, and financial management.",
+                roadmap: [
+                    "Year 1: Business Communication, Microeconomics & Marketing Principles",
+                    "Year 2: Corporate Finance, Operations Management & Organizational Behavior",
+                    "Year 3: Strategy Consulting Project, Corporate Internships & IPMAT/CAT Prep"
+                ],
+                exams: ["IPMAT (IIM Indore/Rohtak)", "CUET-UG", "NPAT", "SET"],
+                colleges: ["IIM Indore (IPM)", "IIM Rohtak", "Shaheed Sukhdev (SSCBS DU)", "NMIMS Mumbai"],
+                salary: "Management Trainee: ₹7-16 LPA | Senior Manager / Director: ₹30-70+ LPA",
+                skills: ["Strategic Decision Making", "Financial Modeling", "Team Leadership", "Data Analytics"],
+                scope: "High Demand. Tech-fluent business leaders are needed to drive digital transformation."
+            },
+            commerce: {
+                title: "5. Banking & Financial Services",
+                stream: "Commerce / PCM",
+                badge: "Finance",
+                desc: "Managing investment portfolios, financial auditing, corporate credit assessment, and wealth management.",
+                roadmap: [
+                    "Year 1: Corporate Accounting, Business Law & Financial Mathematics",
+                    "Year 2: Security Analysis, Tax Planning & Banking Operations",
+                    "Year 3: Financial Valuation Projects, CFA Level 1 Preparation & Placement"
+                ],
+                exams: ["CUET-UG", "NMET", "CFA Level 1"],
+                colleges: ["SRCC Delhi", "Hindu College", "St. Xavier's Kolkata", "Loyola Chennai"],
+                salary: "Analyst: ₹6.5-14 LPA | Vice President: ₹28-60+ LPA",
+                skills: ["Financial Analysis", "Excel Valuation Models", "Portfolio Management", "Taxation"],
+                scope: "Rapid Growth in Fintech, Private Equity, Venture Capital, and Wealth Advisory."
+            },
+            gov: {
+                title: "6. Government Civil Services",
+                stream: "Any Stream",
+                badge: "Public Service",
+                desc: "Administering public policy, managing revenue administration, maintaining public order, and international diplomacy.",
+                roadmap: [
+                    "Graduation: Earn Bachelor Degree (BA/B.Sc/B.Com/B.Tech) with high academic discipline",
+                    "Phase 1: Master General Studies (History, Polity, Economy, Geography) & Current Affairs",
+                    "Phase 2: Clear UPSC CSE Prelims -> Mains Written Examinations -> Personality Test Interview"
+                ],
+                exams: ["UPSC CSE (IAS/IFS/IPS)", "State PSC Exams", "SSC CGL"],
+                colleges: ["Any Recognized University Degree"],
+                salary: "Entry Level Officer (7th Pay Comm): ₹8-15 LPA + Govt Bungalow/Perks",
+                skills: ["Analytical Essay Writing", "General Awareness", "Administrative Leadership", "Integrity"],
+                scope: "Highest prestige, job security, and direct policy decision-making impact in India."
+            },
+            defence: {
+                title: "7. Defence Officers (NDA)",
+                stream: "PCM / Any Stream",
+                badge: "Armed Forces",
+                desc: "Serving as commissioned officer in the Indian Army, Navy, or Air Force defending national borders.",
+                roadmap: [
+                    "Step 1: Pass UPSC NDA Written Entrance Exam (Maths & General Ability)",
+                    "Step 2: Clear 5-Day SSB Interview (Psychology, Group Tasks, Conference)",
+                    "Step 3: Complete 3-Year NDA Khadakwasla Training + 1-Year Specialized Service Academy"
+                ],
+                exams: ["UPSC NDA Exam (Twice a year)", "CDS Exam"],
+                colleges: ["National Defence Academy (NDA Khadakwasla, Pune)"],
+                salary: "Lieutenant Starting Salary: ₹10-18 LPA + Military Allowances & Perks",
+                skills: ["Tactical Decision Making", "Physical Stamina", "Courage Under Fire", "Discipline"],
+                scope: "Elite military career with social respect, officer rank, and lifelong pension benefits."
+            },
+            ai: {
+                title: "8. Artificial Intelligence (AI)",
+                stream: "PCM / CS",
+                badge: "Frontier Tech",
+                desc: "Engineering autonomous intelligent systems, Large Language Models (LLMs), neural networks, and generative AI agents.",
+                roadmap: [
+                    "Year 1: Python Programming, Linear Algebra, Calculus & Probability",
+                    "Year 2: Machine Learning Algorithms, Neural Networks & PyTorch Framework",
+                    "Year 3: Transformers, LLM Fine-Tuning & AI Research Internship",
+                    "Year 4: Deploying Generative AI Products & AI Engineer Placement"
+                ],
+                exams: ["JEE Main", "JEE Advanced", "GATE CS"],
+                colleges: ["IIT Hyderabad (AI)", "IIT Bombay", "IIIT Hyderabad", "IISc Bengaluru"],
+                salary: "AI Engineer: ₹12-25 LPA | Senior AI Researcher: ₹45-1.2 Cr+ LPA",
+                skills: ["PyTorch / TensorFlow", "LLM Prompt Engineering", "Vector Databases", "Mathematics"],
+                scope: "Top global industry demand. AI is reshaping every software product on earth."
+            },
+            ml: {
+                title: "9. Machine Learning Engineering",
+                stream: "PCM Stream",
+                badge: "Data Science",
+                desc: "Building predictive algorithmic models, feature engineering pipelines, and deploying ML models to production scale.",
+                roadmap: [
+                    "Year 1: Data Structures, Statistics & Exploratory Data Analysis",
+                    "Year 2: Supervised & Unsupervised ML Algorithms (Scikit-Learn)",
+                    "Year 3: MLOps Pipelines, Model Monitoring & Kaggle Competitions",
+                    "Year 4: Production ML Deployment (Docker/KServe) & Placement"
+                ],
+                exams: ["JEE Main", "CUET-UG", "GATE"],
+                colleges: ["IIT Madras", "IIIT Delhi", "BITS Pilani", "ISI Kolkata"],
+                salary: "ML Engineer: ₹9-20 LPA | Lead ML Architect: ₹35-75+ LPA",
+                skills: ["MLOps", "Statistics & Probability", "Feature Engineering", "Python / C++"],
+                scope: "Essential for e-commerce, fraud detection, recommendation engines, and algorithmic trading."
+            },
+            cyber: {
+                title: "10. Cyber Security & Ethical Hacking",
+                stream: "PCM / BCA",
+                badge: "Security",
+                desc: "Protecting critical digital networks, auditing security vulnerabilities, incident response, and ethical penetration testing.",
+                roadmap: [
+                    "Year 1: Computer Networks (TCP/IP), Linux Administration & Cryptography",
+                    "Year 2: Vulnerability Assessment, Pen-Testing Tools (BurpSuite, Metasploit)",
+                    "Year 3: CEH / OSCP Certification & Bug Bounty Hunting",
+                    "Year 4: Cyber Security Analyst Placement in Security Operations Centers (SOC)"
+                ],
+                exams: ["CEH", "OSCP", "JEE Main", "CUET"],
+                colleges: ["NFSU Gandhinagar", "IIT Kanpur", "Amrita University"],
+                salary: "Security Analyst: ₹7-16 LPA | Chief Information Security Officer: ₹40-90+ LPA",
+                skills: ["Network Security", "Penetration Testing", "Ethical Hacking", "Incident Response"],
+                scope: "Zero Unemployment. Critical requirement for banks, defense, cloud platforms, and tech firms."
+            },
+            cloud: {
+                title: "11. Cloud Architecture & DevOps",
+                stream: "PCM / BCA",
+                badge: "Infrastructure",
+                desc: "Designing, managing, and automating scalable server infrastructure on AWS, Azure, and Google Cloud Platform.",
+                roadmap: [
+                    "Year 1: Linux Command Line, Shell Scripting & Networking Fundamentals",
+                    "Year 2: AWS Services (EC2, S3, RDS) & Infrastructure as Code (Terraform)",
+                    "Year 3: Containerization (Docker) & Orchestration (Kubernetes)",
+                    "Year 4: AWS Certified Solutions Architect & DevOps Engineer Role"
+                ],
+                exams: ["AWS Architect Cert", "Certified Kubernetes Admin (CKA)"],
+                colleges: ["B.Tech CS / BCA Degree from any Recognized University"],
+                salary: "DevOps Engineer: ₹8-18 LPA | Principal Cloud Architect: ₹35-80+ LPA",
+                skills: ["AWS / Azure / GCP", "Docker & Kubernetes", "CI/CD Pipelines", "Terraform"],
+                scope: "The foundation of all modern cloud-native SaaS applications."
+            },
+            datascience: {
+                title: "12. Data Science & Big Analytics",
+                stream: "PCM / Commerce",
+                badge: "Analytics",
+                desc: "Extracting strategic business intelligence and actionable insights from vast multi-terabyte data reservoirs.",
+                roadmap: [
+                    "Year 1: Advanced Excel, SQL Databases & Data Wrangling",
+                    "Year 2: Python Data Science Stack (Pandas, NumPy, Matplotlib)",
+                    "Year 3: Business Intelligence Dashboards (Tableau/PowerBI) & Capstones",
+                    "Year 4: Data Scientist Industry Placement"
+                ],
+                exams: ["CUET-UG", "JEE Main", "ISI Admission Test"],
+                colleges: ["IIT Madras (B.Sc Data Science)", "ISI Kolkata", "DU Delhi"],
+                salary: "Data Analyst: ₹7-14 LPA | Lead Data Scientist: ₹30-65+ LPA",
+                skills: ["SQL Data Querying", "Python Data Analytics", "Tableau / PowerBI", "Statistical Modeling"],
+                scope: "High demand across banking, retail, healthcare, telecom, and digital entertainment."
+            },
+            design: {
+                title: "13. UI/UX & Product Design",
+                stream: "Any Stream",
+                badge: "Creative Tech",
+                desc: "Architecting user journeys, micro-interactions, mobile app interfaces, and digital product experiences.",
+                roadmap: [
+                    "Year 1: Design Fundamentals, Color Theory & User Research Methods",
+                    "Year 2: Figma Wireframing, Interactive Prototyping & Usability Testing",
+                    "Year 3: Design System Architecture, Micro-Animations & Portfolio Creation",
+                    "Year 4: Product Designer Placement at Tech Startups & Agencies"
+                ],
+                exams: ["UCEED", "NID DAT", "NIFT Entrance Exam"],
+                colleges: ["NID Ahmedabad", "IDC IIT Bombay", "Srishti Institute Bengaluru"],
+                salary: "UI/UX Designer: ₹6.5-16 LPA | Principal Product Designer: ₹28-60+ LPA",
+                skills: ["Figma / Penpot", "User Interface Design", "Design Systems", "Prototyping"],
+                scope: "Massive demand in tech consumer apps, SaaS platforms, and digital products."
+            },
+            animation: {
+                title: "14. 3D Animation & VFX",
+                stream: "Any Stream",
+                badge: "Entertainment",
+                desc: "Creating visual effects, 3D character models, CGI animation, and virtual production for film and gaming.",
+                roadmap: [
+                    "Year 1: Drawing, Storyboarding & 2D Animation Principles",
+                    "Year 2: 3D Modeling & Texturing in Maya / Blender",
+                    "Year 3: Lighting, Rigging, FX Dynamics & Unreal Engine 5",
+                    "Year 4: Showreel Portfolio & Studio Placement in Film / Gaming Studios"
+                ],
+                exams: ["NID DAT", "NIFT", "Institutional Skill Evaluation"],
+                colleges: ["Whistling Woods International", "MAAC", "Arena Animation"],
+                salary: "VFX Artist: ₹5-12 LPA | Lead 3D Artist / Technical Director: ₹22-45+ LPA",
+                skills: ["Autodesk Maya / Blender", "Unreal Engine 5", "Nuke Compositing", "3D Rigging"],
+                scope: "Rapid growth driven by OTT streaming platforms, Hollywood/Bollywood VFX, and Gaming."
+            },
+            media: {
+                title: "15. Media, PR & Journalism",
+                stream: "Any Stream",
+                badge: "Media",
+                desc: "Reporting news, managing brand reputations, podcasting, investigative journalism, and digital broadcasting.",
+                roadmap: [
+                    "Year 1: Media Ethics, News Reporting & Copywriting Principles",
+                    "Year 2: Digital Broadcasting, Podcast Production & PR Campaign Strategy",
+                    "Year 3: Media House Internships, Portfolio Projects & Placement"
+                ],
+                exams: ["CUET-UG (BJMC)", "IIMC Entrance Exam"],
+                colleges: ["IIMC New Delhi", "Xavier Institute of Communications Mumbai", "Symbiosis Pune"],
+                salary: "PR Associate / Journalist: ₹4.5-10 LPA | PR Director / Media Lead: ₹20-40+ LPA",
+                skills: ["Investigative Reporting", "Brand PR Strategy", "Video Production", "Copywriting"],
+                scope: "Expanding into corporate communications, digital brand management, and creator economy."
+            },
+            hotel: {
+                title: "16. Hotel Management & Hospitality",
+                stream: "Any Stream",
+                badge: "Hospitality",
+                desc: "Managing luxury hotel operations, resort management, culinary arts, airline hospitality, and event execution.",
+                roadmap: [
+                    "Year 1: Front Office Operations, Housekeeping & Culinary Arts",
+                    "Year 2: Food & Beverage Management, Financial Accounting for Hotels",
+                    "Year 3: 6-Month Industrial Exposure Training at 5-Star Luxury Hotels",
+                    "Year 4: Management Trainee Placement in Global Hotel Chains"
+                ],
+                exams: ["NCHMCT JEE"],
+                colleges: ["IHM Pusa New Delhi", "IHM Mumbai", "Welcomgroup Graduate School Manipal"],
+                salary: "Management Trainee: ₹4.5-9 LPA | General Manager: ₹25-60+ LPA",
+                skills: ["Luxury Customer Service", "Event Management", "Operations Strategy", "Languages"],
+                scope: "Global travel recovery, luxury wellness resorts, and international hospitality chains."
+            },
+            pilot: {
+                title: "17. Commercial Aviation (Pilot)",
+                stream: "PCM Stream",
+                badge: "Aviation",
+                desc: "Piloting commercial passenger airlines, cargo jets, and corporate charter flights globally.",
+                roadmap: [
+                    "Step 1: Class 2 & Class 1 DGCA Medical Examination Clearance",
+                    "Step 2: Pass DGCA Ground Theory Exams (Navigation, Meteorology, Regulations)",
+                    "Step 3: Complete 200 Hours Flying Training at DGCA Approved Flight School -> CPL License",
+                    "Step 4: Airline Type Rating (A320 / B737) & First Officer Induction"
+                ],
+                exams: ["DGCA Ground Exams", "IGRUA Entrance Exam"],
+                colleges: ["IGRUA Rae Bareli", "Chimes Aviation Academy", "CAA Flying Schools"],
+                salary: "Junior First Officer: ₹15-24 LPA | Senior Captain: ₹45-90+ LPA",
+                skills: ["Aerodynamics & Met", "Spatial Coordination", "Cockpit Resource Mgmt", "Calmness"],
+                scope: "Massive aviation growth in India with multi-billion dollar fleet orders by IndiGo & Air India."
+            },
+            ca: {
+                title: "18. Chartered Accountancy (CA)",
+                stream: "Commerce / Any",
+                badge: "Professional Certification",
+                desc: "The gold-standard financial certification for statutory auditing, corporate tax planning, and strategic financial management.",
+                roadmap: [
+                    "Stage 1: Clear ICAI CA Foundation Exam",
+                    "Stage 2: Clear CA Intermediate Both Groups",
+                    "Stage 3: Complete 2 Years Practical Articleship under a Practicing CA",
+                    "Stage 4: Clear CA Final Examination -> Qualified Chartered Accountant (ICAI Member)"
+                ],
+                exams: ["ICAI CA Foundation", "CA Intermediate", "CA Final"],
+                colleges: ["Instituted by ICAI (Institute of Chartered Accountants of India)"],
+                salary: "Fresher CA: ₹9-18 LPA | CFO / Senior Partner: ₹35-1.5 Cr+ LPA",
+                skills: ["Statutory Auditing", "Corporate Taxation", "GST & Financial Law", "Financial Audits"],
+                scope: "Statutory mandatory requirement for every registered company in India."
+            },
+            cs: {
+                title: "19. Company Secretary (CS)",
+                stream: "Commerce / Any",
+                badge: "Corporate Governance",
+                desc: "Advising company boards on corporate governance, SEBI compliance, company law, and statutory filings.",
+                roadmap: [
+                    "Stage 1: Clear ICSI CSEET Entrance Test",
+                    "Stage 2: Clear CS Executive Both Modules",
+                    "Stage 3: Complete Practical Corporate Training",
+                    "Stage 4: Clear CS Professional Exam -> Qualified Company Secretary (ICSI Member)"
+                ],
+                exams: ["ICSI CSEET Exam", "CS Executive", "CS Professional"],
+                colleges: ["Instituted by ICSI (Institute of Company Secretaries of India)"],
+                salary: "Fresher CS: ₹7-14 LPA | Corporate Governance Head / CS: ₹25-50+ LPA",
+                skills: ["Company Law Compliance", "SEBI Listing Regulations", "Board Advisory", "Governance"],
+                scope: "Mandatory Key Managerial Personnel (KMP) for all listed and large corporate entities."
+            },
+            digitalmarketing: {
+                title: "20. Digital Marketing & Growth",
+                stream: "Any Stream",
+                badge: "Marketing",
+                desc: "Scaling customer acquisition, performance advertising, Search Engine Optimization (SEO), and conversion funnels.",
+                roadmap: [
+                    "Phase 1: Master Technical SEO, Content Marketing & Social Media Strategy",
+                    "Phase 2: Performance Ads (Meta Ads, Google Search & Shopping Ads)",
+                    "Phase 3: Conversion Rate Optimization (CRO), Analytics & Growth Funnels",
+                    "Phase 4: Growth Lead Placement or Performance Marketing Agency"
+                ],
+                exams: ["Google & Meta Ad Certifications", "HubSpot Certs"],
+                colleges: ["Degree / Advanced Digital Growth Bootcamps"],
+                salary: "Digital Marketer: ₹5-12 LPA | Head of Growth Marketing: ₹25-55+ LPA",
+                skills: ["Search Engine Optimization (SEO)", "Performance Advertising", "Web Analytics", "Copywriting"],
+                scope: "Essential for every D2C brand, consumer startup, and digital agency worldwide."
+            },
+            entrepreneurship: {
+                title: "21. Entrepreneurship & Venture Building",
+                stream: "Any Stream",
+                badge: "Startup",
+                desc: "Identifying market inefficiencies, building innovative product solutions, securing venture capital, and building scalable companies.",
+                roadmap: [
+                    "Phase 1: Problem Validation, Customer Interviews & Prototyping MVP",
+                    "Phase 2: Product-Market Fit (PMF) & Initial Revenue Traction",
+                    "Phase 3: Venture Capital / Angel Fundraising & Team Scaling",
+                    "Phase 4: Market Expansion & Business Growth"
+                ],
+                exams: ["Incubator / Accelerator Pitches"],
+                colleges: ["IIT/IIM Incubators", "NSRCEL IIMB", "C-CAMP"],
+                salary: "Founder Equity & Profit Share: Unlimited Growth Upside",
+                skills: ["Product-Market Fit", "Capital Raising", "Pivoting & Resilience", "Team Building"],
+                scope: "Unlimited upside backed by India's thriving startup and venture capital ecosystem."
+            }
+        };
+
+        // Scroll to Section Helper
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Open Career Detail Modal
+        function openCareerModal(careerId) {
+            const data = careerData[careerId];
+            if (!data) return;
+
+            const modalBody = document.getElementById('careerModalBody');
+            modalBody.innerHTML = \`
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; border-bottom:1px solid var(--bdr); padding-bottom:1rem;">
+                    <div>
+                        <span class="career-tag" style="margin-bottom:0.5rem; display:inline-block;">\${data.stream}</span>
+                        <h3 style="font-size:1.6rem; font-weight:800; color:var(--wh); margin:0;">\${data.title}</h3>
+                    </div>
+                </div>
+
+                <div class="career-detail-block" style="margin-bottom:1.2rem;">
+                    <p style="font-size:1.02rem; color:var(--wh2); line-height:1.7;">\${data.desc}</p>
+                </div>
+
+                <div class="modal-section-title">🗺️ Year-by-Year Career Roadmap</div>
+                <div style="background:rgba(255,255,255,0.03); border:1px solid var(--bdr); border-radius:14px; padding:1.2rem; margin-bottom:1.2rem;">
+                    <ul style="padding-left:1.2rem; margin:0; color:var(--mu); font-size:0.95rem; display:flex; flex-direction:column; gap:0.6rem;">
+                        \${data.roadmap.map(step => \`<li><strong style="color:var(--wh);">\${step.split(':')[0]}:</strong> \${step.split(':')[1] || ''}</li>\`).join('')}
+                    </ul>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--bdr); border-radius:14px; padding:1rem;">
+                        <div class="modal-section-title" style="margin-top:0;">📝 Top Entrance Exams</div>
+                        <p style="color:var(--wh2); font-size:0.9rem; margin:0;">\${data.exams.join(', ')}</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--bdr); border-radius:14px; padding:1rem;">
+                        <div class="modal-section-title" style="margin-top:0;">🏫 Top Indian Institutions</div>
+                        <p style="color:var(--wh2); font-size:0.9rem; margin:0;">\${data.colleges.join(', ')}</p>
+                    </div>
+                </div>
+
+                <div class="modal-section-title">💰 Salary & Growth Trajectory</div>
+                <p style="color:var(--pillar-green); font-weight:700; font-size:1.02rem; margin-bottom:1.2rem;">\${data.salary}</p>
+
+                <div class="modal-section-title">⚡ Required Core Skills</div>
+                <div class="skill-pills" style="margin-bottom:1.5rem;">
+                    \${data.skills.map(s => \`<span class="skill-pill" style="font-size:0.85rem; padding:0.3rem 0.8rem;">\${s}</span>\`).join('')}
+                </div>
+
+                <div style="border-top:1px solid var(--bdr); padding-top:1.2rem; display:flex; gap:1rem; flex-wrap:wrap; justify-content:flex-end;">
+                    <button class="btn-secondary-hero" onclick="closeCareerModal()" style="padding:0.7rem 1.5rem; font-size:0.95rem;">Close</button>
+                    <button class="btn-primary-hero" onclick="closeCareerModal(); openAiAdvisorModal();" style="padding:0.7rem 1.5rem; font-size:0.95rem;">
+                        <span>Assess Fit with AI Counselor</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+            \`;
+
+            document.getElementById('careerModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCareerModal() {
+            document.getElementById('careerModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Open AI Counselor Modal
+        function openAiAdvisorModal() {
+            document.getElementById('aiAdvisorModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAiAdvisorModal() {
+            document.getElementById('aiAdvisorModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Handle AI Counselor Calculation
+        function calculateAiFit(event) {
+            event.preventDefault();
+            const stream = document.getElementById('userStream').value;
+            const aptitude = document.getElementById('userAptitude').value;
+            const goal = document.getElementById('userGoal').value;
+
+            let recs = [];
+            if (stream === 'pcm') {
+                recs = [careerData.ai, careerData.engineering, careerData.pilot];
+            } else if (stream === 'pcb') {
+                recs = [careerData.medical, careerData.datascience, careerData.ai];
+            } else if (stream === 'commerce') {
+                recs = [careerData.ca, careerData.commerce, careerData.management];
+            } else if (stream === 'arts') {
+                recs = [careerData.law, careerData.design, careerData.media];
+            } else {
+                recs = [careerData.engineering, careerData.digitalmarketing, careerData.cyber];
+            }
+
+            const resultBox = document.getElementById('aiResultBox');
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = \`
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">
+                    <h4 style="font-size:1.2rem; font-weight:800; color:var(--wh); margin:0;">✨ AI Digital Twin Recommendations</h4>
+                    <span style="background:rgba(167,139,250,0.2); color:var(--pillar-purple); font-weight:700; padding:0.3rem 0.8rem; border-radius:20px; font-size:0.82rem;">Match Score: 98.6%</span>
+                </div>
+
+                <p style="color:var(--wh2); font-size:0.92rem; margin-bottom:1rem;">
+                    Based on your <strong>\${stream.toUpperCase()}</strong> stream and <strong>\${aptitude.toUpperCase()}</strong> strength, your top 3 recommended career trajectories for 2026 are:
+                </p>
+
+                <div style="display:flex; flex-direction:column; gap:0.8rem; margin-bottom:1.2rem;">
+                    \${recs.map((r, i) => \`
+                        <div style="background:rgba(255,255,255,0.05); border:1px solid var(--bdr); border-radius:12px; padding:0.8rem 1rem; display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <strong style="color:var(--wh); font-size:0.98rem;">\${i+1}. \${r.title}</strong>
+                                <div style="color:var(--mu); font-size:0.82rem;">\${r.salary}</div>
+                            </div>
+                            <button onclick="closeAiAdvisorModal(); openCareerModal('\${Object.keys(careerData).find(k=>careerData[k].title===r.title)}');" class="btn-stream-explore" style="padding:0.4rem 0.8rem; font-size:0.82rem;">View Roadmap</button>
+                        </div>
+                    \`).join('')}
+                </div>
+
+                <div style="text-align:center;">
+                    <a href="/login.html" class="btn-header-cta" style="display:inline-block; padding:0.7rem 1.5rem; text-decoration:none;">Save Profile to Digital Twin Dashboard →</a>
+                </div>
+            \`;
+        }
+
+        // Stream Filter Functionality
+        function filterByStream(streamCategory) {
+            filterCategoryTab(streamCategory);
+            scrollToSection('categories');
+        }
+
+        // Category Tab Filter Functionality
+        function filterCategoryTab(tab) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            const targetTab = document.getElementById('tab-' + tab);
+            if (targetTab) targetTab.classList.add('active');
+            
+            const cards = document.querySelectorAll('.career-card');
+            cards.forEach(card => {
+                const cat = card.getAttribute('data-cat');
+                if (tab === 'all' || cat === tab) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Search Careers Filter Functionality
+        function filterCareers() {
+            const query = document.getElementById('categorySearch').value.toLowerCase();
+            const cards = document.querySelectorAll('.career-card');
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
         // FAQ Accordion Toggle
         function toggleFaq(btn) {
             const item = btn.parentElement;
             const isActive = item.classList.contains('active');
-            
-            // Close all
             document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-            
-            // Open clicked if was not active
             if (!isActive) {
                 item.classList.add('active');
             }
@@ -2317,36 +3003,13 @@ const htmlContent = `<!DOCTYPE html>
         const themeSelect = document.getElementById('themeSelect');
         if (themeSelect) themeSelect.value = savedTheme;
 
-        // Search Careers Filter Functionality
-        function filterCareers() {
-            const query = document.getElementById('categorySearch').value.toLowerCase();
-            const cards = document.querySelectorAll('.career-card');
-            
-            cards.forEach(card => {
-                const text = card.textContent.toLowerCase();
-                if (text.includes(query)) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-
-        // Category Tab Filter Functionality
-        function filterCategoryTab(tab) {
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            const cards = document.querySelectorAll('.career-card');
-            cards.forEach(card => {
-                const cat = card.getAttribute('data-cat');
-                if (tab === 'all' || cat === tab) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
+        // Escape Key Modal Listener
+        window.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeCareerModal();
+                closeAiAdvisorModal();
+            }
+        });
     </script>
 </body>
 </html>`;
@@ -2420,10 +3083,8 @@ app.get(['/career-guidance-after-12th', '/career-guidance-after-12th/'], (req, r
   res.sendFile(path.join(publicDir, 'career-guidance-after-12th.html'));
 });
 `;
-        // Insert right after app.use('/blog', blogRoutes);
         appJs = appJs.replace("app.use('/blog', blogRoutes);", "app.use('/blog', blogRoutes);" + routeCode);
         
-        // Also update dynamic sitemap fallback in app.js if needed
         if (!appJs.includes(pillarUrl)) {
             appJs = appJs.replace(
                 "blogEntries += `\\n  <url>\\n    <loc>https://digitaltwinvrs.com/blog</loc>\\n    <changefreq>weekly</changefreq>\\n    <priority>0.9</priority>\\n  </url>`;",
