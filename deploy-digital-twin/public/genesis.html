@@ -100,7 +100,7 @@
         /* ═══ GENESIS DESIGN SYSTEM TOKENS ═══ */
         :root {
             --bg-main: #0b0f19;
-            --bg-card: rgba(17, 24, 39, 0.7);
+            --bg-card: rgba(17, 24, 39, 0.75);
             --bg-card-hover: rgba(31, 41, 61, 0.85);
             --border-glow: rgba(99, 102, 241, 0.25);
             --border-subtle: rgba(255, 255, 255, 0.08);
@@ -977,17 +977,19 @@
             border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
-        /* MODAL PREVIEW */
+        /* MODAL PREVIEW & MOBILE RESPONSIVENESS AUDIT */
         .modal-backdrop {
             display: none;
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             z-index: 2000;
             align-items: center;
             justify-content: center;
-            padding: 1.5rem;
+            padding: 1rem;
+            overflow-y: auto;
         }
 
         .modal-backdrop.open {
@@ -1000,29 +1002,49 @@
             border-radius: 24px;
             width: 100%;
             max-width: 720px;
-            padding: 2rem;
+            padding: 2.25rem;
             position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
         }
 
         .modal-close-btn {
             position: absolute;
             top: 1.25rem;
             right: 1.25rem;
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
+            background: rgba(255,255,255,0.08);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-primary);
             cursor: pointer;
             width: 36px;
             height: 36px;
-            border-radius: 8px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: var(--transition-smooth);
+            z-index: 10;
         }
 
         .modal-close-btn:hover {
-            color: var(--text-primary);
-            background: rgba(255,255,255,0.1);
+            color: var(--accent-cyan);
+            border-color: var(--accent-cyan);
+            background: rgba(56, 189, 248, 0.15);
+            transform: scale(1.08);
+        }
+
+        .modal-preview-box {
+            background: rgba(0,0,0,0.4);
+            border-radius: 16px;
+            height: 240px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-subtle);
+            margin-top: 1rem;
+            padding: 1rem;
         }
 
         /* FOOTER */
@@ -1085,7 +1107,7 @@
             font-size: 0.85rem;
         }
 
-        /* RESPONSIVE BREAKPOINTS */
+        /* RESPONSIVE BREAKPOINTS (320px, 480px, 768px, 992px) */
         @media (max-width: 992px) {
             .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
             .assessment-grid { grid-template-columns: 1fr; gap: 2rem; }
@@ -1106,6 +1128,42 @@
             .footer-grid { grid-template-columns: 1fr; }
             .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
             .btn-primary-glow, .btn-secondary-glass { width: 100%; justify-content: center; }
+        }
+
+        @media (max-width: 600px) {
+            .modal-backdrop {
+                padding: 0.75rem;
+            }
+            .modal-content {
+                padding: 1.25rem 1rem 1.5rem 1rem;
+                border-radius: 16px;
+                max-height: 92vh;
+            }
+            .modal-close-btn {
+                top: 0.85rem;
+                right: 0.85rem;
+                width: 32px;
+                height: 32px;
+            }
+            #modal-title {
+                font-size: 1.2rem !important;
+                margin-bottom: 0.5rem !important;
+                padding-right: 2.2rem;
+            }
+            .modal-preview-box {
+                height: 180px !important;
+            }
+            .modal-preview-box .core-orb {
+                width: 64px !important;
+                height: 64px !important;
+            }
+            .modal-preview-box .core-orb svg {
+                width: 28px !important;
+                height: 28px !important;
+            }
+            .modal-preview-box p {
+                font-size: 0.85rem !important;
+            }
         }
     </style>
 </head>
@@ -1569,11 +1627,11 @@
             <button id="modal-close" class="modal-close-btn" aria-label="Close modal">
                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
-            <h3 id="modal-title" style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-primary);">Genesis Interactive Walkthrough</h3>
-            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Experience how Genesis ingests real-time cognitive telemetry to spawn your lifelong Digital Twin profile.</p>
-            <div style="background: rgba(0,0,0,0.4); border-radius: 16px; height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid var(--border-subtle);">
-                <div class="core-orb" style="width: 90px; height: 90px;">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="40" height="40"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <h3 id="modal-title" style="font-size: 1.5rem; margin-bottom: 0.75rem; color: var(--text-primary);">Genesis Interactive Walkthrough</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1.25rem; font-size: 0.95rem;">Experience how Genesis ingests real-time cognitive telemetry to spawn your lifelong Digital Twin profile.</p>
+            <div class="modal-preview-box">
+                <div class="core-orb" style="width: 80px; height: 80px;">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="36" height="36"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </div>
                 <p style="margin-top: 1rem; font-weight: 600; color: var(--accent-cyan);">Genesis Multi-Agent Orchestration Preview</p>
             </div>
