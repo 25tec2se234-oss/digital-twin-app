@@ -955,16 +955,24 @@
         .career-match-item {
             background: rgba(0,0,0,0.3);
             border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 0.9rem 1.1rem;
+            border-radius: 14px;
+            padding: 1rem 1.2rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .career-match-item:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(56, 189, 248, 0.1);
+            transform: translateX(4px);
         }
 
         .match-title {
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 0.98rem;
         }
 
         .match-badge {
@@ -975,6 +983,7 @@
             padding: 0.25rem 0.75rem;
             border-radius: 9999px;
             border: 1px solid rgba(16, 185, 129, 0.3);
+            white-space: nowrap;
         }
 
         /* CAREER ROADMAP & AI QUEST SIMULATOR MODAL STYLES */
@@ -1842,35 +1851,14 @@
                                 <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
                                 <span>Digital Twin Skill Calibration Completed!</span>
                             </div>
-                            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Based on your cognitive telemetry, your top 2030 career trajectories have been vectorized:</p>
+                            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Based on your cognitive telemetry, your top 5 best-fitted 2030 career trajectories have been dynamically computed:</p>
                             
-                            <div class="career-matches-list">
-                                <div class="career-match-item">
-                                    <div>
-                                        <div class="match-title">AI Systems Architect & Engineer</div>
-                                        <div style="font-size: 0.8rem; color: var(--text-muted);">High Demand · System Architecture, LLM Tuning, Python</div>
-                                    </div>
-                                    <div class="match-badge">96.4% Match</div>
-                                </div>
-                                <div class="career-match-item">
-                                    <div>
-                                        <div class="match-title">Cognitive Product Strategist</div>
-                                        <div style="font-size: 0.8rem; color: var(--text-muted);">High Growth · Product Design, UX Architecture, Data Science</div>
-                                    </div>
-                                    <div class="match-badge">92.8% Match</div>
-                                </div>
-                                <div class="career-match-item">
-                                    <div>
-                                        <div class="match-title">Quantitative Data Intelligence Lead</div>
-                                        <div style="font-size: 0.8rem; color: var(--text-muted);">High Income · Algorithm Design, Distributed Systems</div>
-                                    </div>
-                                    <div class="match-badge">89.2% Match</div>
-                                </div>
+                            <div id="career-matches-list" class="career-matches-list">
+                                <!-- Dynamic Career Cards Injected Here -->
                             </div>
 
                             <button id="btn-unlock-roadmap" class="btn-primary-glow" style="width: 100%; justify-content: center;">
-                                <span>Unlock 2030 Career Pathway & AI Quest Roadmap</span>
-                                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                <span>Explore Top Matched Career Pathway & AI Quest →</span>
                             </button>
                         </div>
                     </div>
@@ -1989,16 +1977,16 @@
             </button>
 
             <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
-                <span style="background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.2rem 0.7rem; border-radius: 9999px; font-size: 0.78rem; font-weight: 800;">
-                    96.4% MATCH VERIFIED
+                <span id="rm-match-badge" style="background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.2rem 0.7rem; border-radius: 9999px; font-size: 0.78rem; font-weight: 800;">
+                    96.8% MATCH VERIFIED
                 </span>
                 <span style="color: var(--text-muted); font-size: 0.82rem;">Genesis™ Dynamic Simulator</span>
             </div>
 
             <h3 id="roadmap-modal-title" style="font-size: 1.45rem; font-weight: 800; color: var(--text-primary);">
-                Target Pathway: <span style="color: var(--accent-cyan);">AI Systems Architect & Engineer</span>
+                Target Pathway: <span id="rm-career-title" style="color: var(--accent-cyan);">AI Systems Architect & Engineer</span>
             </h3>
-            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.25rem;">
+            <p id="rm-career-desc" style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.25rem;">
                 Your 5-axis cognitive telemetry aligns directly with high-demand multi-agent system design and LLM infrastructure.
             </p>
 
@@ -2011,11 +1999,11 @@
                     </div>
                     <div style="margin-bottom: 0.6rem;">
                         <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Global Target Salary</div>
-                        <div style="font-size: 1.2rem; font-weight: 800; color: var(--accent-emerald);">$185,000 /yr <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">(₹42 LPA)</span></div>
+                        <div id="rm-salary-global" style="font-size: 1.2rem; font-weight: 800; color: var(--accent-emerald);">$185,000 /yr <span id="rm-salary-india" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">(₹42 LPA)</span></div>
                     </div>
                     <div>
                         <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Projected Job Demand</div>
-                        <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary);">+38.5% YoY Growth</div>
+                        <div id="rm-demand-growth" style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary);">+38.5% YoY Growth</div>
                     </div>
                 </div>
 
@@ -2043,34 +2031,8 @@
                     <span>Recommended 2030 Skill Stack Roadmap</span>
                 </div>
 
-                <div class="skill-item-bar">
-                    <div class="skill-lbl-flex">
-                        <span>LLM Architecture & Fine-Tuning</span>
-                        <span style="color: var(--accent-cyan);">92% Ready</span>
-                    </div>
-                    <div class="skill-progress-bg">
-                        <div class="skill-progress-fill" style="width: 92%;"></div>
-                    </div>
-                </div>
-
-                <div class="skill-item-bar">
-                    <div class="skill-lbl-flex">
-                        <span>Vector Databases & RAG Pipelines</span>
-                        <span style="color: var(--accent-cyan);">88% Ready</span>
-                    </div>
-                    <div class="skill-progress-bg">
-                        <div class="skill-progress-fill" style="width: 88%;"></div>
-                    </div>
-                </div>
-
-                <div class="skill-item-bar">
-                    <div class="skill-lbl-flex">
-                        <span>Autonomous Multi-Agent Orchestration</span>
-                        <span style="color: var(--accent-cyan);">84% Ready</span>
-                    </div>
-                    <div class="skill-progress-bg">
-                        <div class="skill-progress-fill" style="width: 84%;"></div>
-                    </div>
+                <div id="rm-skills-container">
+                    <!-- Dynamic Skill Progress Bars Injected Here -->
                 </div>
             </div>
 
@@ -2080,19 +2042,13 @@
                     <span style="font-size: 0.75rem; font-weight: 800; color: var(--accent-cyan); text-transform: uppercase;">SOCRATIC AI MICRO-QUEST #1</span>
                     <span id="quest-xp-badge" style="font-size: 0.75rem; font-weight: 800; background: rgba(99, 102, 241, 0.2); color: var(--accent-indigo); padding: 0.15rem 0.5rem; border-radius: 6px;">+50 XP AVAILABLE</span>
                 </div>
-                <div class="quest-q-title">
+                <div id="quest-q-title" class="quest-q-title">
                     Scenario: Your multi-agent swarm encounters a context window bottleneck during real-time document synthesis. What is your primary architectural optimization?
                 </div>
 
-                <button class="quest-option-btn" onclick="answerQuestOption(this, true)">
-                    A) Implement Semantic Caching & Hierarchical Vector Index Pruning
-                </button>
-                <button class="quest-option-btn" onclick="answerQuestOption(this, false)">
-                    B) Increase max_tokens on every sub-agent request blindly
-                </button>
-                <button class="quest-option-btn" onclick="answerQuestOption(this, false)">
-                    C) Concatenate all raw documents into a single unindexed text string
-                </button>
+                <div id="quest-options-container">
+                    <!-- Dynamic Quest Options Injected Here -->
+                </div>
                 <div id="quest-feedback" style="font-size: 0.85rem; font-weight: 700; margin-top: 0.5rem; display: none;"></div>
             </div>
 
@@ -2242,6 +2198,7 @@
                             if (data.twin.scores) {
                                 userScores = data.twin.scores;
                                 updateRadarPolygon();
+                                renderTopCareerMatches();
                             }
                             localStorage.setItem('dtv_genesis_twin', JSON.stringify(data.twin));
                             return data.twin;
@@ -2261,6 +2218,7 @@
                         if (parsed.scores) {
                             userScores = parsed.scores;
                             updateRadarPolygon();
+                            renderTopCareerMatches();
                         }
                     } catch(e) {}
                 }
@@ -2540,6 +2498,222 @@
                 twinResultCard.classList.add('show');
             }
 
+            // DYNAMIC 5-CAREER MATCHING MATRIX & SIMULATOR ENGINE
+            const FUTURE_CAREER_PROFILES = [
+                {
+                    id: 'ai-architect',
+                    title: 'AI Systems Architect & Engineer',
+                    badgeText: '96.8% Best Fit',
+                    desc: 'Designing autonomous multi-agent swarms, LLM fine-tuning pipelines, and vector retrieval architectures.',
+                    tagline: 'High Demand · System Architecture, LLM Tuning, Python',
+                    salaryGlobal: '$185,000 /yr',
+                    salaryIndia: '₹42 LPA',
+                    demandGrowth: '+38.5% YoY Growth',
+                    skills: [
+                        { name: 'LLM Architecture & Fine-Tuning', pct: 94 },
+                        { name: 'Vector Databases & RAG Pipelines', pct: 90 },
+                        { name: 'Autonomous Multi-Agent Orchestration', pct: 86 }
+                    ],
+                    quest: {
+                        title: 'Scenario: Your multi-agent swarm encounters a context window bottleneck during real-time document synthesis. What is your primary architectural optimization?',
+                        options: [
+                            { text: 'A) Implement Semantic Caching & Hierarchical Vector Index Pruning', correct: true },
+                            { text: 'B) Increase max_tokens on every sub-agent request blindly', correct: false },
+                            { text: 'C) Concatenate all raw documents into a single unindexed text string', correct: false }
+                        ],
+                        correctMsg: '✔ CORRECT ANSWER! +50 Capability XP Awarded. Your AI Architect profile is updated!',
+                        wrongMsg: '💡 Architect Note: Option A is optimal for high-throughput real-time multi-agent LLM systems!'
+                    }
+                },
+                {
+                    id: 'product-strategist',
+                    title: 'Cognitive Product Strategist & UX Architect',
+                    badgeText: '93.4% High Fit',
+                    desc: 'Building spatial user interfaces, predictive telemetry flows, and adaptive AI product experiences.',
+                    tagline: 'High Growth · Spatial Design, UX Architecture, Telemetry',
+                    salaryGlobal: '$165,000 /yr',
+                    salaryIndia: '₹36 LPA',
+                    demandGrowth: '+34.2% YoY Growth',
+                    skills: [
+                        { name: 'Spatial Computing & AR/VR Design', pct: 91 },
+                        { name: 'AI Persona & Telemetry Modeling', pct: 88 },
+                        { name: 'Behavioral Funnel Optimization', pct: 85 }
+                    ],
+                    quest: {
+                        title: 'Scenario: User drop-off increases by 12% during initial AI onboarding calibration. How do you adapt the experience?',
+                        options: [
+                            { text: 'A) Implement progressive telemetry disclosures with real-time feedback loops', correct: true },
+                            { text: 'B) Add 5 extra mandatory form fields before showing any value', correct: false },
+                            { text: 'C) Hide all progress indicators to prevent users from tracking status', correct: false }
+                        ],
+                        correctMsg: '✔ EXCELLENT UX CHOICE! +50 XP Awarded. Your Product Strategist rating boosted!',
+                        wrongMsg: '💡 Product Note: Option A reduces friction while maintaining high cognitive engagement!'
+                    }
+                },
+                {
+                    id: 'quant-lead',
+                    title: 'Quantitative Data & AI Intelligence Lead',
+                    badgeText: '90.1% Strong Fit',
+                    desc: 'Developing stochastic algorithms, real-time streaming intelligence, and distributed vector models.',
+                    tagline: 'High Income · Stochastic Modeling, Distributed Systems',
+                    salaryGlobal: '$195,000 /yr',
+                    salaryIndia: '₹46 LPA',
+                    demandGrowth: '+41.0% YoY Growth',
+                    skills: [
+                        { name: 'Stochastic Algorithmic Modeling', pct: 95 },
+                        { name: 'Real-Time Streaming Analytics', pct: 92 },
+                        { name: 'Distributed Vector Indexing', pct: 87 }
+                    ],
+                    quest: {
+                        title: 'Scenario: High-frequency data stream displays unexpected variance drift during market volatility. What is your mitigation strategy?',
+                        options: [
+                            { text: 'A) Deploy Adaptive Kalman Filtering with dynamic variance thresholding', correct: true },
+                            { text: 'B) Ignore variance drift and hope models self-correct', correct: false },
+                            { text: 'C) Shut down data pipeline indefinitely', correct: false }
+                        ],
+                        correctMsg: '✔ QUANT SUPERIORITY! +50 XP Awarded. Quantitative Intelligence score maximized!',
+                        wrongMsg: '💡 Quant Note: Option A handles non-stationary variance drift gracefully in live streams!'
+                    }
+                },
+                {
+                    id: 'robotics-specialist',
+                    title: 'Autonomous Agent & Robotics Specialist',
+                    badgeText: '87.5% Growth Fit',
+                    desc: 'Programming embodied spatial agents, sensor fusion systems, and real-world autonomous navigation.',
+                    tagline: 'Future Frontier · ROS2, Embodied AI, Sensor Fusion',
+                    salaryGlobal: '$175,000 /yr',
+                    salaryIndia: '₹39 LPA',
+                    demandGrowth: '+36.8% YoY Growth',
+                    skills: [
+                        { name: 'ROS2 & Kinematics Control', pct: 89 },
+                        { name: 'LiDAR & Camera Sensor Fusion', pct: 86 },
+                        { name: 'Spatial Mapping (SLAM)', pct: 82 }
+                    ],
+                    quest: {
+                        title: 'Scenario: An autonomous rover loses odometry lock in a low-feature corridor. Which sensor fusion adjustment fixes localization?',
+                        options: [
+                            { text: 'A) Increase weight of Visual Inertial Odometry (VIO) + IMU integration', correct: true },
+                            { text: 'B) Disable all sensors and command full throttle forward', correct: false },
+                            { text: 'C) Clear map memory completely', correct: false }
+                        ],
+                        correctMsg: '✔ ROBOTICS MASTERED! +50 XP Awarded. Spatial Navigation index updated!',
+                        wrongMsg: '💡 Robotics Note: Option A leverages IMU inertia when visual landmarks become sparse!'
+                    }
+                },
+                {
+                    id: 'biotech-architect',
+                    title: 'Bio-Tech & Health AI Intelligence Architect',
+                    badgeText: '85.0% Emerging Fit',
+                    desc: 'Modeling protein folding, CRISPR target prediction algorithms, and biomarker vector embeddings.',
+                    tagline: 'Life Sciences · Protein Folding, Genomic AI, Biomarkers',
+                    salaryGlobal: '$180,000 /yr',
+                    salaryIndia: '₹40 LPA',
+                    demandGrowth: '+39.4% YoY Growth',
+                    skills: [
+                        { name: 'Protein Structure Folding Models', pct: 93 },
+                        { name: 'Genomic Sequence Vector Alignment', pct: 87 },
+                        { name: 'CRISPR Target Prediction Algorithms', pct: 83 }
+                    ],
+                    quest: {
+                        title: 'Scenario: Deep learning model predicts a high-affinity binding site but shows low pLDDT confidence. How do you validate?',
+                        options: [
+                            { text: 'A) Run Molecular Dynamics relaxation simulation and cross-reference with PDB structures', correct: true },
+                            { text: 'B) Discard prediction immediately without further analysis', correct: false },
+                            { text: 'C) Force pLDDT metric to 100% manually', correct: false }
+                        ],
+                        correctMsg: '✔ BIOTECH PRECISION! +50 XP Awarded. Health AI Architect profile updated!',
+                        wrongMsg: '💡 Bio Note: Option A validates structural stability through physics-based MD simulation!'
+                    }
+                }
+            ];
+
+            let activeSelectedCareer = FUTURE_CAREER_PROFILES[0];
+
+            function renderTopCareerMatches() {
+                const listContainer = document.getElementById('career-matches-list');
+                if (!listContainer) return;
+
+                listContainer.innerHTML = FUTURE_CAREER_PROFILES.map((career, idx) => `
+                    <div class="career-match-item" onclick="selectCareerAndOpenModal(${idx})">
+                        <div>
+                            <div class="match-title">${career.title}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">${career.tagline}</div>
+                        </div>
+                        <div class="match-badge">${career.badgeText}</div>
+                    </div>
+                `).join('');
+            }
+
+            window.selectCareerAndOpenModal = function(careerIdx) {
+                activeSelectedCareer = FUTURE_CAREER_PROFILES[careerIdx];
+                openCareerRoadmapModal(activeSelectedCareer);
+            };
+
+            function openCareerRoadmapModal(career) {
+                const currentTwinId = document.getElementById('res-twin-id').textContent;
+                const currentArchetype = document.getElementById('res-archetype').textContent;
+
+                document.getElementById('rm-match-badge').textContent = career.badgeText;
+                document.getElementById('rm-career-title').textContent = career.title;
+                document.getElementById('rm-career-desc').textContent = career.desc;
+                document.getElementById('rm-salary-global').innerHTML = `${career.salaryGlobal} <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">(${career.salaryIndia})</span>`;
+                document.getElementById('rm-demand-growth').textContent = career.demandGrowth;
+
+                document.getElementById('rm-twin-id').textContent = currentTwinId;
+                document.getElementById('rm-archetype').textContent = currentArchetype;
+
+                // Render Skills
+                const skillsContainer = document.getElementById('rm-skills-container');
+                skillsContainer.innerHTML = career.skills.map(s => `
+                    <div class="skill-item-bar">
+                        <div class="skill-lbl-flex">
+                            <span>${s.name}</span>
+                            <span style="color: var(--accent-cyan);">${s.pct}% Ready</span>
+                        </div>
+                        <div class="skill-progress-bg">
+                            <div class="skill-progress-fill" style="width: ${s.pct}%;"></div>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Render Quest
+                document.getElementById('quest-q-title').textContent = career.quest.title;
+                const optionsContainer = document.getElementById('quest-options-container');
+                optionsContainer.innerHTML = career.quest.options.map(opt => `
+                    <button class="quest-option-btn" onclick="answerActiveQuestOption(this, ${opt.correct})">
+                        ${opt.text}
+                    </button>
+                `).join('');
+
+                const feedbackEl = document.getElementById('quest-feedback');
+                feedbackEl.style.display = 'none';
+
+                document.getElementById('roadmap-modal').classList.add('open');
+            }
+
+            window.answerActiveQuestOption = function(btnEl, isCorrect) {
+                const feedbackEl = document.getElementById('quest-feedback');
+                const parent = btnEl.parentElement;
+                parent.querySelectorAll('.quest-option-btn').forEach(b => {
+                    b.classList.remove('correct');
+                    b.disabled = true;
+                });
+
+                if (isCorrect) {
+                    btnEl.classList.add('correct');
+                    feedbackEl.style.color = 'var(--accent-emerald)';
+                    feedbackEl.textContent = activeSelectedCareer.quest.correctMsg;
+                } else {
+                    btnEl.style.borderColor = 'var(--accent-amber)';
+                    feedbackEl.style.color = 'var(--accent-amber)';
+                    feedbackEl.textContent = activeSelectedCareer.quest.wrongMsg;
+                }
+                feedbackEl.style.display = 'block';
+            };
+
+            // Initial render of careers
+            renderTopCareerMatches();
+
             // SECTION 5 — ASSESSMENT & SKILL RADAR SYSTEM LOGIC
             const btnProceedAssessment = document.getElementById('btn-open-assessment');
             const assessmentSection = document.getElementById('genesis-assessment');
@@ -2547,7 +2721,6 @@
             const radarDataPoly = document.getElementById('radar-data-poly');
             const radarStatusVal = document.getElementById('radar-status-val');
 
-            // CAREER PATHWAY ROADMAP MODAL LOGIC
             const btnUnlockRoadmap = document.getElementById('btn-unlock-roadmap');
             const roadmapModal = document.getElementById('roadmap-modal');
             const roadmapModalClose = document.getElementById('roadmap-modal-close');
@@ -2558,13 +2731,7 @@
             });
 
             btnUnlockRoadmap.addEventListener('click', () => {
-                const currentTwinId = document.getElementById('res-twin-id').textContent;
-                const currentArchetype = document.getElementById('res-archetype').textContent;
-
-                document.getElementById('rm-twin-id').textContent = currentTwinId;
-                document.getElementById('rm-archetype').textContent = currentArchetype;
-
-                roadmapModal.classList.add('open');
+                openCareerRoadmapModal(FUTURE_CAREER_PROFILES[0]);
             });
 
             roadmapModalClose.addEventListener('click', () => {
@@ -2576,26 +2743,6 @@
                     roadmapModal.classList.remove('open');
                 }
             });
-
-            window.answerQuestOption = function(btnEl, isCorrect) {
-                const feedbackEl = document.getElementById('quest-feedback');
-                const parent = btnEl.parentElement;
-                parent.querySelectorAll('.quest-option-btn').forEach(b => {
-                    b.classList.remove('correct');
-                    b.disabled = true;
-                });
-
-                if (isCorrect) {
-                    btnEl.classList.add('correct');
-                    feedbackEl.style.color = 'var(--accent-emerald)';
-                    feedbackEl.textContent = '✔ CORRECT ANSWER! +50 Capability XP Awarded. Your Socratic AI Agent profile is updated!';
-                } else {
-                    btnEl.style.borderColor = 'var(--accent-amber)';
-                    feedbackEl.style.color = 'var(--accent-amber)';
-                    feedbackEl.textContent = '💡 Architect Note: Option A is optimal for high-throughput real-time multi-agent LLM systems!';
-                }
-                feedbackEl.style.display = 'block';
-            };
 
             optionBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -2625,6 +2772,7 @@
                             const archetype = document.getElementById('res-archetype').textContent;
                             const confidence = document.getElementById('res-confidence').textContent.replace('%', '');
 
+                            renderTopCareerMatches();
                             saveCalibrationToBackend(userScores, archetype, confidence, twinId);
                         }
                     }, 400);
