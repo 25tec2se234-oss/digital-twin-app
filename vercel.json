@@ -24,6 +24,10 @@
       "dest": "/public/wheel.html"
     },
     {
+      "src": "/genesis(.*)",
+      "dest": "/public/genesis/index.html"
+    },
+    {
       "src": "/login(.*)",
       "dest": "/public/login.html"
     },

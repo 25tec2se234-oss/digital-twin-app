@@ -18,19 +18,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-
-  <url>
-    <loc>https://digitaltwinvrs.com/login.html</loc>
-    <lastmod>2026-07-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://digitaltwinvrs.com/blog/best-career-options-after-10th-india-2026</loc>
-    <lastmod>2026-07-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
   <url>
     <loc>https://digitaltwinvrs.com/blog/how-to-choose-right-career-after-12th-complete-guide</loc>
     <lastmod>2026-07-20</lastmod>
@@ -142,6 +129,12 @@
   <url>
     <loc>https://digitaltwinvrs.com/ai-career-roadmap</loc>
     <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://digitaltwinvrs.com/genesis</loc>
+    <lastmod>2026-08-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
