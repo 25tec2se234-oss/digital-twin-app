@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#0b0f19">
+
+    <!-- Technical SEO Meta Tags -->
+    <title>Genesis™ | Create Your AI-Powered Digital Self — Digital Twin Verse</title>
+    <meta name="description" content="Genesis™ is the flagship onboarding experience by Digital Twin Verse. Spawn your AI-powered Digital Self, discover your cognitive DNA, and unlock lifelong academic and career intelligence.">
+    <meta name="keywords" content="Genesis Digital Twin, AI Digital Self, Digital Twin Verse onboarding, AI student companion, academic digital twin, career simulation">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="author" content="Digital Twin Verse">
+    <meta name="publisher" content="Digital Twin Verse">
+    <link rel="canonical" href="https://digitaltwinvrs.com/genesis">
+
+    <!-- Manifest & Icons -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/img/dtv-logo.jpg" type="image/jpeg">
+    <link rel="apple-touch-icon" href="/img/dtv-logo.jpg">
+
+    <!-- Open Graph & Social Sharing -->
+    <meta property="og:title" content="Genesis™ | Create Your AI-Powered Digital Self — Digital Twin Verse">
+    <meta property="og:description" content="The Future Already Knows You. Genesis creates your AI-powered Digital Self and becomes your lifelong academic and career companion.">
+    <meta property="og:url" content="https://digitaltwinvrs.com/genesis">
+    <meta property="og:image" content="https://digitaltwinvrs.com/img/dtv-logo.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Digital Twin Verse">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Genesis™ | Create Your AI-Powered Digital Self">
+    <meta name="twitter:description" content="Genesis creates your AI-powered Digital Self and becomes your lifelong academic and career companion.">
+    <meta name="twitter:image" content="https://digitaltwinvrs.com/img/dtv-logo.jpg">
+
+    <!-- Fonts & Preload -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+    <!-- JSON-LD Structured Data Schemas -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://digitaltwinvrs.com/genesis#webpage",
+          "url": "https://digitaltwinvrs.com/genesis",
+          "name": "Genesis™ | Create Your AI-Powered Digital Self",
+          "description": "Genesis creates your AI-powered Digital Self and becomes your lifelong academic and career companion.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://digitaltwinvrs.com/#website",
+            "name": "Digital Twin Verse",
+            "url": "https://digitaltwinvrs.com/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://digitaltwinvrs.com/genesis#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://digitaltwinvrs.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Genesis™",
+              "item": "https://digitaltwinvrs.com/genesis"
+            }
+          ]
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://digitaltwinvrs.com/#organization",
+          "name": "Digital Twin Verse",
+          "url": "https://digitaltwinvrs.com/",
+          "logo": "https://digitaltwinvrs.com/img/dtv-logo.jpg"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Genesis™ Digital Self Engine",
+          "operatingSystem": "All",
+          "applicationCategory": "EducationalApplication",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        /* ═══ GENESIS DESIGN SYSTEM TOKENS ═══ */
+        :root {
+            --bg-main: #0b0f19;
+            --bg-card: rgba(17, 24, 39, 0.7);
+            --bg-card-hover: rgba(31, 41, 61, 0.85);
+            --border-glow: rgba(99, 102, 241, 0.25);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --accent-indigo: #6366f1;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #38bdf8;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --glow-indigo: 0 0 40px rgba(99, 102, 241, 0.35);
+            --glow-purple: 0 0 50px rgba(139, 92, 246, 0.35);
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-serif: 'Instrument Serif', Georgia, serif;
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        html.light {
+            --bg-main: #f8fafc;
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --bg-card-hover: rgba(241, 245, 249, 0.95);
+            --border-glow: rgba(99, 102, 241, 0.3);
+            --border-subtle: rgba(0, 0, 0, 0.08);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --glow-indigo: 0 10px 30px rgba(99, 102, 241, 0.15);
+            --glow-purple: 0 10px 30px rgba(139, 92, 246, 0.15);
+        }
+
+        /* RESET & BASE */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* ACCESSIBILITY FOCUS RING */
+        :focus-visible {
+            outline: 2px solid var(--accent-indigo);
+            outline-offset: 4px;
+        }
+
+        /* REDUCED MOTION ACCESSIBILITY */
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(11, 15, 25, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition-smooth);
+        }
+
+        html.light .navbar {
+            background: rgba(248, 250, 252, 0.85);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 1px solid var(--border-glow);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle-btn {
+            background: transparent;
+            border: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--accent-indigo);
+            background: var(--bg-card);
+        }
+
+        /* BUTTONS */
+        .btn-primary-glow {
+            background: linear-gradient(135deg, var(--accent-indigo), var(--accent-purple));
+            color: #ffffff;
+            border: none;
+            padding: 0.9rem 1.8rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: var(--glow-indigo);
+            transition: var(--transition-smooth);
+            text-decoration: none;
+        }
+
+        .btn-primary-glow:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 0 50px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-secondary-glass {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
+            padding: 0.9rem 1.8rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            backdrop-filter: blur(12px);
+            transition: var(--transition-smooth);
+            text-decoration: none;
+        }
+
+        .btn-secondary-glass:hover {
+            border-color: var(--accent-indigo);
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+        }
+
+        /* CONTAINER & LAYOUT */
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* HERO SECTION */
+        .hero-section {
+            min-height: 100vh;
+            padding-top: 9rem;
+            padding-bottom: 5rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            border-radius: 9999px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: var(--accent-indigo);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        html.light .badge-pill {
+            background: rgba(99, 102, 241, 0.08);
+        }
+
+        .hero-headline {
+            font-size: clamp(2.8rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-headline span {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-weight: 400;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subheading {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 580px;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        /* HERO TWIN CANVAS CARD */
+        .twin-visual-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 2rem;
+            backdrop-filter: blur(24px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+            transform: translateZ(0);
+        }
+
+        .twin-avatar-core {
+            height: 320px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .core-orb {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, var(--accent-cyan), var(--accent-purple));
+            box-shadow: 0 0 60px rgba(139, 92, 246, 0.6);
+            animation: pulseOrb 4s ease-in-out infinite alternate;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes pulseOrb {
+            0% { transform: scale(1); box-shadow: 0 0 40px rgba(99, 102, 241, 0.4); }
+            100% { transform: scale(1.08); box-shadow: 0 0 80px rgba(139, 92, 246, 0.7); }
+        }
+
+        .core-orb svg {
+            width: 60px;
+            height: 60px;
+            color: #ffffff;
+        }
+
+        .twin-telemetry-badge {
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            background: rgba(0,0,0,0.25);
+            padding: 0.8rem 1.5rem;
+            border-radius: 14px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .telemetry-item {
+            text-align: center;
+        }
+
+        .telemetry-val {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--accent-cyan);
+        }
+
+        .telemetry-lbl {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* SECTION HEADERS */
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* SECTION 2 — STORY TIMELINE */
+        .story-section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .timeline-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(16px);
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .timeline-card:hover {
+            border-color: var(--accent-indigo);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .timeline-step-num {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--accent-indigo);
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .timeline-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* SECTION 3 — WHY GENESIS FEATURE GRID */
+        .why-section {
+            padding: 6rem 0;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.75rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 2.25rem;
+            backdrop-filter: blur(16px);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent-purple);
+            background: var(--bg-card-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+        }
+
+        .feature-icon-wrapper {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+            border: 1px solid var(--border-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-cyan);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-icon-wrapper svg {
+            width: 26px;
+            height: 26px;
+        }
+
+        .feature-h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+        }
+
+        .feature-p {
+            color: var(--text-secondary);
+            font-size: 0.98rem;
+        }
+
+        /* SECTION 4 — GENESIS EXPERIENCE SCANNER */
+        .scanner-section {
+            padding: 6rem 0 8rem 0;
+            position: relative;
+        }
+
+        .scanner-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 28px;
+            padding: 3.5rem 2.5rem;
+            backdrop-filter: blur(24px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+            text-align: center;
+            max-width: 860px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .scanner-progress-ring {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 2rem auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ring-svg {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+
+        .ring-bg {
+            stroke: rgba(255,255,255,0.08);
+            stroke-width: 8;
+        }
+
+        .ring-bar {
+            stroke: url(#ringGradient);
+            stroke-width: 8;
+            stroke-dasharray: 440;
+            stroke-dashoffset: 440;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .progress-percent {
+            position: absolute;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .scanner-status-text {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            min-height: 2.2rem;
+        }
+
+        .scanner-subtext {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .scan-steps-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .step-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            transition: var(--transition-smooth);
+        }
+
+        .step-dot.active {
+            background: var(--accent-cyan);
+            box-shadow: 0 0 12px var(--accent-cyan);
+        }
+
+        .step-dot.complete {
+            background: var(--accent-emerald);
+        }
+
+        /* TWIN RESULT PASSPORT CARD */
+        .twin-result-card {
+            display: none;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--accent-emerald);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .twin-result-card.show {
+            display: block;
+        }
+
+        .result-header {
+            color: var(--accent-emerald);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .twin-passport-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .passport-item {
+            background: var(--bg-card);
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .passport-lbl {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .passport-val {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* MODAL PREVIEW */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(16px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .modal-backdrop.open {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 720px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* FOOTER */
+        .footer {
+            border-top: 1px solid var(--border-subtle);
+            padding: 4rem 0 2rem 0;
+            background: rgba(11, 15, 25, 0.95);
+        }
+
+        html.light .footer {
+            background: #f1f5f9;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 1rem;
+            max-width: 320px;
+        }
+
+        .footer-col h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* RESPONSIVE BREAKPOINTS */
+        @media (max-width: 992px) {
+            .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .navbar { padding: 0.8rem 1rem; }
+            .nav-links { display: none; }
+            .hero-section { padding-top: 7rem; }
+            .hero-headline { font-size: 2.4rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SVG GRADIENT DEFINITIONS -->
+    <svg width="0" height="0" style="position: absolute;">
+        <defs>
+            <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#38bdf8" />
+                <stop offset="50%" stop-color="#6366f1" />
+                <stop offset="100%" stop-color="#8b5cf6" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <!-- HEADER / NAVBAR -->
+    <header class="navbar" role="banner">
+        <a href="/" class="nav-brand" aria-label="Digital Twin Verse Home">
+            <img src="/img/dtv-logo.jpg" alt="Digital Twin Verse Logo" class="nav-logo" width="38" height="38">
+            <span>Digital Twin Verse</span>
+        </a>
+
+        <nav role="navigation" aria-label="Main Navigation">
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/#platform" class="nav-link">Platform</a></li>
+                <li><a href="/genesis" class="nav-link active" aria-current="page">Genesis™</a></li>
+                <li><a href="/blog" class="nav-link">Blog</a></li>
+                <li><a href="/wheel.html" class="nav-link">Wheel & Rewards</a></li>
+            </ul>
+        </nav>
+
+        <div class="nav-actions">
+            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark and light theme">
+                <svg id="theme-icon-sun" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display: none;"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                <svg id="theme-icon-moon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            </button>
+            <a href="/#begin-genesis" class="btn-primary-glow" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">Begin Genesis</a>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+
+        <!-- SECTION 1 — HERO -->
+        <section class="hero-section" aria-labelledby="hero-heading">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <div class="badge-pill">
+                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                            <span>Genesis™ Flagship Onboarding</span>
+                        </div>
+                        <h1 id="hero-heading" class="hero-headline">
+                            The Future Already <span>Knows You.</span>
+                        </h1>
+                        <p class="hero-subheading">
+                            Genesis creates your AI-powered Digital Self and becomes your lifelong academic and career companion.
+                        </p>
+                        <div class="hero-cta-group">
+                            <button id="btn-begin-genesis" class="btn-primary-glow" aria-controls="genesis-scanner">
+                                <span>Begin Genesis</span>
+                                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                            <button id="btn-watch-demo" class="btn-secondary-glass">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg>
+                                <span>Watch How Genesis Works</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="hero-visual" aria-hidden="true">
+                        <div class="twin-visual-card">
+                            <div class="twin-avatar-core">
+                                <div class="core-orb">
+                                    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zM12 6a6 6 0 100 12 6 6 0 000-12zM12 10a2 2 0 100 4 2 2 0 000-4z"/>
+                                    </svg>
+                                </div>
+                                <div class="twin-telemetry-badge">
+                                    <div class="telemetry-item">
+                                        <div class="telemetry-val">98.4%</div>
+                                        <div class="telemetry-lbl">Calibration</div>
+                                    </div>
+                                    <div class="telemetry-item" style="border-left: 1px solid var(--border-subtle); padding-left: 1.5rem;">
+                                        <div class="telemetry-val" style="color: var(--accent-emerald);">Active</div>
+                                        <div class="telemetry-lbl">Twin State</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2 — STORY EXPERIENCE -->
+        <section class="story-section" aria-labelledby="story-heading">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="story-heading" class="section-title">How Your Digital Self Is Born</h2>
+                    <p class="section-subtitle">An interactive journey transforming your raw curiosity into measurable future readiness.</p>
+                </div>
+
+                <div class="timeline-grid">
+                    <div class="timeline-card">
+                        <div class="timeline-step-num">01</div>
+                        <h3 class="timeline-title">Student</h3>
+                        <p class="timeline-desc">The initial baseline capturing your unique interests, subject preferences, and learning pace.</p>
+                    </div>
+
+                    <div class="timeline-card">
+                        <div class="timeline-step-num">02</div>
+                        <h3 class="timeline-title">Genesis Learns</h3>
+                        <p class="timeline-desc">Real-time cognitive telemetry measures problem-solving speed, error patterns, and decision friction.</p>
+                    </div>
+
+                    <div class="timeline-card">
+                        <div class="timeline-step-num">03</div>
+                        <h3 class="timeline-title">Digital Self Evolves</h3>
+                        <p class="timeline-desc">A multi-dimensional vector model takes shape, continuously updating your capability graph.</p>
+                    </div>
+
+                    <div class="timeline-card">
+                        <div class="timeline-step-num">04</div>
+                        <h3 class="timeline-title">Skills Grow</h3>
+                        <p class="timeline-desc">Socratic AI tutoring provides targeted micro-challenges that eliminate knowledge bottlenecks.</p>
+                    </div>
+
+                    <div class="timeline-card">
+                        <div class="timeline-step-num">05</div>
+                        <h3 class="timeline-title">Career Becomes Clearer</h3>
+                        <p class="timeline-desc">Global job market demand maps directly to your verified skills, uncovering 2030 job matches.</p>
+                    </div>
+
+                    <div class="timeline-card">
+                        <div class="timeline-step-num">06</div>
+                        <h3 class="timeline-title">Future Becomes Measurable</h3>
+                        <p class="timeline-desc">Replace static grades with a verified capability index recognized by universities and employers.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3 — WHY GENESIS -->
+        <section class="why-section" aria-labelledby="why-heading">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="why-heading" class="section-title">Why Genesis™ Is Flagship Engine</h2>
+                    <p class="section-subtitle">Designed from the ground up for lifelong academic and professional impact.</p>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        </div>
+                        <h3 class="feature-h3">AI-Powered Digital Self</h3>
+                        <p class="feature-p">A dynamic cognitive reflection engine that simulates your decision pathways and learning preferences.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <h3 class="feature-h3">Skill Evolution</h3>
+                        <p class="feature-p">Real-time knowledge graph tracking mastery velocity and concept retention over time.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        </div>
+                        <h3 class="feature-h3">Career Intelligence</h3>
+                        <p class="feature-p">Continuous alignment with live global market demand, skill shortages, and high-growth job roles.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+                        </div>
+                        <h3 class="feature-h3">Learning Personalization</h3>
+                        <p class="feature-p">Dynamic Socratic tutoring adapting guidance to your personal cognitive style.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                        </div>
+                        <h3 class="feature-h3">Future Simulation</h3>
+                        <p class="feature-p">Interactive sandbox environments allowing you to test-drive 2030 job roles before committing.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 012-2h2a2 2 0 012 2v6a2 2 0 01-2 2h-2a2 2 0 01-2-2zM9 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5z"/></svg>
+                        </div>
+                        <h3 class="feature-h3">Daily Growth Tracking</h3>
+                        <p class="feature-p">Non-toxic habit loops, streak shields, and milestone achievements designed for continuous growth.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4 — THE GENESIS EXPERIENCE SCANNER -->
+        <section id="genesis-scanner" class="scanner-section" aria-labelledby="scanner-heading">
+            <div class="container">
+                <div class="scanner-panel">
+                    <h2 id="scanner-heading" class="section-title" style="font-size: 2rem;">Genesis Initialization Engine</h2>
+                    <p class="scanner-subtext">Click 'Begin Genesis' to launch the real-time cognitive scanning sequence.</p>
+
+                    <div class="scanner-progress-ring" aria-live="polite">
+                        <svg class="ring-svg" viewBox="0 0 160 160">
+                            <circle class="ring-bg" cx="80" cy="80" r="70" fill="none"></circle>
+                            <circle id="scan-ring-bar" class="ring-bar" cx="80" cy="80" r="70" fill="none"></circle>
+                        </svg>
+                        <span id="scan-percent-text" class="progress-percent">0%</span>
+                    </div>
+
+                    <div id="scan-status-text" class="scanner-status-text" aria-live="polite">Ready to Initialize</div>
+
+                    <div class="scan-steps-indicator" aria-label="Scanning Progress Steps">
+                        <div class="step-dot" id="dot-1" title="Initialization"></div>
+                        <div class="step-dot" id="dot-2" title="Scanning Interests"></div>
+                        <div class="step-dot" id="dot-3" title="Scanning Learning Behaviour"></div>
+                        <div class="step-dot" id="dot-4" title="Scanning Strengths"></div>
+                        <div class="step-dot" id="dot-5" title="Scanning Growth Potential"></div>
+                        <div class="step-dot" id="dot-6" title="Creating Digital Self"></div>
+                        <div class="step-dot" id="dot-7" title="Genesis Complete"></div>
+                    </div>
+
+                    <button id="btn-start-scan" class="btn-primary-glow">
+                        <span>Initialize Genesis Sequence</span>
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </button>
+
+                    <!-- PASSPORT RESULT CARD -->
+                    <div id="twin-result-card" class="twin-result-card" aria-live="polite">
+                        <div class="result-header">
+                            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                            <span>Your Digital Self has been successfully created.</span>
+                        </div>
+
+                        <div class="twin-passport-details">
+                            <div class="passport-item">
+                                <div class="passport-lbl">Digital Twin ID</div>
+                                <div class="passport-val" id="res-twin-id">DTV-GEN-8942-X</div>
+                            </div>
+                            <div class="passport-item">
+                                <div class="passport-lbl">Cognitive Archetype</div>
+                                <div class="passport-val" id="res-archetype">The Creative Architect</div>
+                            </div>
+                            <div class="passport-item">
+                                <div class="passport-lbl">Capability Confidence</div>
+                                <div class="passport-val" id="res-confidence" style="color: var(--accent-cyan);">94.8%</div>
+                            </div>
+                        </div>
+
+                        <a href="/wheel.html" class="btn-primary-glow" style="text-decoration: none;">
+                            <span>Proceed to Assessment & Skill Radar</span>
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL WALKTHROUGH PREVIEW -->
+    <div id="demo-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-content">
+            <button id="modal-close" class="modal-close-btn" aria-label="Close modal">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <h3 id="modal-title" style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-primary);">Genesis Interactive Walkthrough</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Experience how Genesis ingests real-time cognitive telemetry to spawn your lifelong Digital Twin profile.</p>
+            <div style="background: rgba(0,0,0,0.4); border-radius: 16px; height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid var(--border-subtle);">
+                <div class="core-orb" style="width: 90px; height: 90px;">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="40" height="40"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <p style="margin-top: 1rem; font-weight: 600; color: var(--accent-cyan);">Genesis Multi-Agent Orchestration Preview</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="nav-brand">
+                        <img src="/img/dtv-logo.jpg" alt="Digital Twin Verse Logo" class="nav-logo" width="34" height="34">
+                        <span>Digital Twin Verse</span>
+                    </a>
+                    <p>India's flagship AI-powered learning and career simulation platform. Create your Digital Self and achieve your true potential.</p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Platform</h4>
+                    <ul class="footer-links">
+                        <li><a href="/genesis">Genesis™ Onboarding</a></li>
+                        <li><a href="/#platform">Skill Radar</a></li>
+                        <li><a href="/wheel.html">Wheel & Rewards</a></li>
+                        <li><a href="/leaderboard.html">Leaderboard</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="/blog">AI Career Blog</a></li>
+                        <li><a href="/ai-career-roadmap">AI Career Roadmap</a></li>
+                        <li><a href="/ai-tools-for-students">AI Tools for Students</a></li>
+                        <li><a href="/career-guidance-after-12th">After 12th Guide</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Legal & Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/#contact">Contact Support</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Digital Twin Verse. All rights reserved.</p>
+                <p>Genesis™ Engine v1.0 — Powered by Multi-Agent Cognitive Intelligence</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE LOGIC & STATE MACHINE -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme Toggle Logic
+            const themeBtn = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('theme-icon-sun');
+            const moonIcon = document.getElementById('theme-icon-moon');
+            const htmlEl = document.documentElement;
+
+            const savedTheme = localStorage.getItem('dtv_theme') || 'dark';
+            setTheme(savedTheme);
+
+            themeBtn.addEventListener('click', () => {
+                const currentTheme = htmlEl.classList.contains('light') ? 'light' : 'dark';
+                const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                setTheme(nextTheme);
+            });
+
+            function setTheme(theme) {
+                if (theme === 'light') {
+                    htmlEl.classList.remove('dark');
+                    htmlEl.classList.add('light');
+                    sunIcon.style.display = 'block';
+                    moonIcon.style.display = 'none';
+                    localStorage.setItem('dtv_theme', 'light');
+                } else {
+                    htmlEl.classList.remove('light');
+                    htmlEl.classList.add('dark');
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
+                    localStorage.setItem('dtv_theme', 'dark');
+                }
+            }
+
+            // Demo Modal Logic
+            const watchDemoBtn = document.getElementById('btn-watch-demo');
+            const demoModal = document.getElementById('demo-modal');
+            const modalClose = document.getElementById('modal-close');
+
+            watchDemoBtn.addEventListener('click', () => {
+                demoModal.classList.add('open');
+            });
+
+            modalClose.addEventListener('click', () => {
+                demoModal.classList.remove('open');
+            });
+
+            demoModal.addEventListener('click', (e) => {
+                if (e.target === demoModal) {
+                    demoModal.classList.remove('open');
+                }
+            });
+
+            // Smooth Scroll to Genesis Scanner
+            const beginGenesisBtn = document.getElementById('btn-begin-genesis');
+            const scannerSection = document.getElementById('genesis-scanner');
+
+            beginGenesisBtn.addEventListener('click', () => {
+                scannerSection.scrollIntoView({ behavior: 'smooth' });
+                startGenesisScanSequence();
+            });
+
+            // Genesis Real-Time State Machine Scanner Logic
+            const startScanBtn = document.getElementById('btn-start-scan');
+            const scanRingBar = document.getElementById('scan-ring-bar');
+            const scanPercentText = document.getElementById('scan-percent-text');
+            const scanStatusText = document.getElementById('scan-status-text');
+            const twinResultCard = document.getElementById('twin-result-card');
+
+            startScanBtn.addEventListener('click', () => {
+                startGenesisScanSequence();
+            });
+
+            let isScanning = false;
+
+            function startGenesisScanSequence() {
+                if (isScanning) return;
+                isScanning = true;
+                startScanBtn.style.display = 'none';
+                twinResultCard.classList.remove('show');
+
+                const scanPhases = [
+                    { percent: 14, status: "Initialization Animation...", dot: 1 },
+                    { percent: 28, status: "Scanning Interests...", dot: 2 },
+                    { percent: 42, status: "Scanning Learning Behaviour...", dot: 3 },
+                    { percent: 57, status: "Scanning Strengths...", dot: 4 },
+                    { percent: 71, status: "Scanning Growth Potential...", dot: 5 },
+                    { percent: 85, status: "Creating Digital Self...", dot: 6 },
+                    { percent: 100, status: "Genesis Complete", dot: 7 }
+                ];
+
+                let currentIdx = 0;
+
+                const interval = setInterval(() => {
+                    if (currentIdx >= scanPhases.length) {
+                        clearInterval(interval);
+                        isScanning = false;
+                        onGenesisScanComplete();
+                        return;
+                    }
+
+                    const phase = scanPhases[currentIdx];
+                    updateProgress(phase.percent, phase.status, phase.dot);
+                    currentIdx++;
+                }, 800);
+            }
+
+            function updateProgress(percent, statusText, dotIndex) {
+                // Update SVG ring stroke (dashoffset range: 440 to 0)
+                const offset = 440 - (440 * (percent / 100));
+                scanRingBar.style.strokeDashoffset = offset;
+                scanPercentText.textContent = `${percent}%`;
+                scanStatusText.textContent = statusText;
+
+                // Update Step Dots
+                for (let i = 1; i <= 7; i++) {
+                    const dot = document.getElementById(`dot-${i}`);
+                    if (i < dotIndex) {
+                        dot.className = 'step-dot complete';
+                    } else if (i === dotIndex) {
+                        dot.className = 'step-dot active';
+                    } else {
+                        dot.className = 'step-dot';
+                    }
+                }
+            }
+
+            function onGenesisScanComplete() {
+                // Generate dynamic archetype & twin ID for student
+                const archetypes = [
+                    "The Bio-Tech Innovator",
+                    "The Creative AI Architect",
+                    "The Quantum Strategist",
+                    "The Full-Stack Polymath",
+                    "The Data Intelligence Explorer"
+                ];
+
+                const randomArchetype = archetypes[Math.floor(Math.random() * archetypes.length)];
+                const randomTwinId = `DTV-GEN-${Math.floor(1000 + Math.random() * 9000)}-X`;
+                const confidence = (92 + Math.random() * 7.5).toFixed(1);
+
+                document.getElementById('res-twin-id').textContent = randomTwinId;
+                document.getElementById('res-archetype').textContent = randomArchetype;
+                document.getElementById('res-confidence').textContent = `${confidence}%`;
+
+                scanStatusText.textContent = "Your Digital Self has been successfully created.";
+                twinResultCard.classList.add('show');
+            }
+        });
+    </script>
+</body>
+</html>
