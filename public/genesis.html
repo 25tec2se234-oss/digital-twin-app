@@ -977,7 +977,7 @@
             border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
-        /* MODAL PREVIEW & YOUTUBE-STYLE VIDEO PLAYER SYSTEM */
+        /* MODAL PREVIEW & DTV-BRANDED VIDEO PLAYER SYSTEM */
         .modal-backdrop {
             display: none;
             position: fixed;
@@ -1034,11 +1034,11 @@
             transform: scale(1.08);
         }
 
-        /* YOUTUBE PLAYER STYLES */
+        /* DTV BRANDED VIDEO PLAYER STYLES */
         .yt-player-box {
-            background: #0f0f0f;
+            background: #0b0f19;
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid var(--border-glow);
             overflow: hidden;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
             margin-top: 1rem;
@@ -1059,26 +1059,53 @@
             user-select: none;
         }
 
-        /* Large Center YouTube Play/Pause Button */
+        /* DTV Brand Center Play Button Overlay */
         .yt-center-play {
-            width: 64px;
-            height: 64px;
+            width: 72px;
+            height: 72px;
             border-radius: 50%;
-            background: rgba(255, 0, 0, 0.92);
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+            position: relative;
+            background: linear-gradient(135deg, var(--accent-indigo), var(--accent-purple));
+            box-shadow: 0 0 35px rgba(99, 102, 241, 0.7);
+            border: 2px solid var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-bottom: 0.85rem;
+            z-index: 5;
+            overflow: hidden;
+        }
+
+        .dtv-center-logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            opacity: 0.85;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .dtv-play-overlay-icon {
+            position: absolute;
+            inset: 0;
+            background: rgba(11, 15, 25, 0.55);
             display: flex;
             align-items: center;
             justify-content: center;
             color: #ffffff;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            margin-bottom: 0.85rem;
-            z-index: 5;
+            backdrop-filter: blur(2px);
+            transition: background 0.3s ease;
         }
 
         .yt-video-screen:hover .yt-center-play {
             transform: scale(1.12);
-            background: #ff0000;
-            box-shadow: 0 0 45px rgba(255, 0, 0, 0.85);
+            box-shadow: 0 0 50px rgba(56, 189, 248, 0.9);
+            border-color: #ffffff;
+        }
+
+        .yt-video-screen:hover .dtv-play-overlay-icon {
+            background: rgba(99, 102, 241, 0.45);
         }
 
         .yt-video-screen.playing .yt-center-play {
@@ -1118,10 +1145,10 @@
             line-height: 1.4;
         }
 
-        /* YouTube Progress Bar */
+        /* DTV Branded Progress Bar */
         .yt-progress-container {
             height: 8px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             cursor: pointer;
             position: relative;
             transition: height 0.2s ease;
@@ -1133,7 +1160,7 @@
 
         .yt-progress-fill {
             height: 100%;
-            background: #ff0000;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
             width: 0%;
             position: relative;
             transition: width 0.1s linear;
@@ -1146,9 +1173,9 @@
             transform: translateY(-50%) scale(0);
             width: 14px;
             height: 14px;
-            background: #ff0000;
+            background: var(--accent-cyan);
             border-radius: 50%;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+            box-shadow: 0 0 12px var(--accent-cyan);
             transition: transform 0.2s ease;
         }
 
@@ -1158,13 +1185,14 @@
 
         /* YouTube Controls Bar */
         .yt-controls-bar {
-            background: #181818;
+            background: #111827;
             padding: 0.75rem 1rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
             flex-wrap: wrap;
+            border-top: 1px solid var(--border-subtle);
         }
 
         .yt-controls-left {
@@ -1216,9 +1244,9 @@
         }
 
         .yt-dot.active {
-            background: #ff0000;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-indigo));
             color: #ffffff;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
         }
 
         /* FOOTER */
@@ -1328,7 +1356,7 @@
             .modal-close-btn { top: 0.75rem; right: 0.75rem; width: 32px; height: 32px; }
             #modal-title { font-size: 1.15rem !important; margin-bottom: 0.4rem !important; padding-right: 2rem; }
             .yt-video-screen { height: 200px; padding: 1rem; }
-            .yt-center-play { width: 52px; height: 52px; }
+            .yt-center-play { width: 56px; height: 56px; }
             .yt-step-title { font-size: 1.1rem; }
             .yt-step-desc { font-size: 0.8rem; }
             .yt-controls-bar { justify-content: center; padding: 0.6rem; }
@@ -1789,7 +1817,7 @@
 
     </main>
 
-    <!-- MODAL WALKTHROUGH PREVIEW & YOUTUBE-STYLE VIDEO PLAYER SYSTEM -->
+    <!-- MODAL WALKTHROUGH PREVIEW & DTV-BRANDED VIDEO PLAYER SYSTEM -->
     <div id="demo-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div class="modal-content">
             <button id="modal-close" class="modal-close-btn" aria-label="Close modal">
@@ -1802,10 +1830,13 @@
             <div class="yt-player-box">
                 <!-- VIDEO DISPLAY SCREEN -->
                 <div id="yt-video-screen" class="yt-video-screen" title="Click to Play / Pause Video">
-                    <div id="yt-center-play" class="yt-center-play" aria-label="Play Video">
-                        <svg id="yt-center-icon" width="28" height="28" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M8 5v14l11-7z"/>
-                        </svg>
+                    <div id="yt-center-play" class="yt-center-play" aria-label="Play Genesis Walkthrough">
+                        <img src="/img/dtv-logo.jpg" alt="Digital Twin Verse Logo" class="dtv-center-logo-img">
+                        <div class="dtv-play-overlay-icon">
+                            <svg id="yt-center-icon" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
                     </div>
                     <div id="yt-step-badge" class="yt-step-badge">STEP 1 / 4 — TELEMETRY INGESTION</div>
                     <h4 id="yt-step-title" class="yt-step-title">Ingesting Raw Student Telemetry</h4>
