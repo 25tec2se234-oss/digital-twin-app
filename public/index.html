@@ -414,16 +414,21 @@
         // Bulletproof JavaScript loader animation for laptops and desktops
         (function() {
             const bar = document.getElementById('splash-loader-bar');
+            const splash = document.getElementById('splash-screen');
             if (bar) {
                 let width = 0;
                 const interval = setInterval(() => {
                     if (width >= 100) {
                         clearInterval(interval);
+                        if (splash) {
+                            splash.classList.add('hidden');
+                            setTimeout(function() { splash.style.display = 'none'; }, 800);
+                        }
                     } else {
-                        width += 2;
+                        width += 4;
                         bar.style.width = width + '%';
                     }
-                }, 30);
+                }, 20);
             }
         })();
     </script>
@@ -441,6 +446,7 @@
         
         <div class="nav-right-container">
             <div class="nav-links-modern">
+                <a href="/genesis" class="nav-link" style="color: #38bdf8; font-weight: 700;">Genesis™</a>
                 <a href="#student-dashboard" onclick="requirePremiumFrontend(openDashboardShortcut)" class="nav-link">Dashboard</a>
                 <a href="#ai-section" onclick="requirePremiumFrontend(function(){location.hash='#ai-section';})" class="nav-link">AI Advisor</a>
                 <a href="/parent" class="nav-link">Parent Portal</a>
