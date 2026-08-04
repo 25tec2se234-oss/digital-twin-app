@@ -117,6 +117,7 @@ app.get('/ping', function(req, res) {
 });
 
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api/genesis', require('./routes/genesisRoutes'));
 app.use('/api', aiRoutes);
 app.use('/api/v1/parent', parentRoutes);
 app.use('/api/v1', routes);
