@@ -1981,6 +1981,67 @@
                 });
             }
 
+            // PERSISTENT BACKEND DIGITAL TWIN INTEGRATION
+            let getGenesisSessionId = () => {
+                let sid = localStorage.getItem('dtv_genesis_session_id');
+                if (!sid) {
+                    sid = 'dtv_sess_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
+                    localStorage.setItem('dtv_genesis_session_id', sid);
+                }
+                return sid;
+            };
+
+            let currentDigitalTwinState = null;
+            let userScores = { logic: 80, creativity: 75, velocity: 85, domain: 70, grit: 82 };
+
+            async function syncGenesisBackend() {
+                const sessionId = getGenesisSessionId();
+                try {
+                    const res = await fetch('/api/genesis/init', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-genesis-session-id': sessionId
+                        },
+                        body: JSON.stringify({ session_id: sessionId })
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.success && data.twin) {
+                            currentDigitalTwinState = data.twin;
+                            document.getElementById('res-twin-id').textContent = data.twin.twinId;
+                            document.getElementById('res-archetype').textContent = data.twin.archetype;
+                            document.getElementById('res-confidence').textContent = `${data.twin.confidence}%`;
+                            if (data.twin.scores) {
+                                userScores = data.twin.scores;
+                                updateRadarPolygon();
+                            }
+                            localStorage.setItem('dtv_genesis_twin', JSON.stringify(data.twin));
+                            return data.twin;
+                        }
+                    }
+                } catch (err) {
+                    console.warn('Genesis backend offline/local fallback:', err);
+                }
+                const cached = localStorage.getItem('dtv_genesis_twin');
+                if (cached) {
+                    try {
+                        const parsed = JSON.parse(cached);
+                        currentDigitalTwinState = parsed;
+                        document.getElementById('res-twin-id').textContent = parsed.twinId;
+                        document.getElementById('res-archetype').textContent = parsed.archetype;
+                        document.getElementById('res-confidence').textContent = `${parsed.confidence}%`;
+                        if (parsed.scores) {
+                            userScores = parsed.scores;
+                            updateRadarPolygon();
+                        }
+                    } catch(e) {}
+                }
+            }
+
+            // Sync on page load immediately so Digital Twin ID is locked & persistent!
+            syncGenesisBackend();
+
             // YOUTUBE-STYLE VIDEO PLAYER STATE MACHINE
             const walkthroughChapters = [
                 {
@@ -2017,7 +2078,7 @@
                 }
             ];
 
-            const TOTAL_DURATION = 16; // 16 seconds total video
+            const TOTAL_DURATION = 16;
             let currentTime = 0;
             let isYtPlaying = false;
             let ytInterval = null;
@@ -2042,7 +2103,6 @@
             const ytTimeDisplay = document.getElementById('yt-time-display');
             const ytLaunchBtn = document.getElementById('yt-launch-btn');
 
-            // SVG Icons for YouTube Play & Pause
             const playSvgPath = '<path d="M8 5v14l11-7z"/>';
             const pauseSvgPath = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
 
@@ -2234,22 +2294,20 @@
                 }
             }
 
-            function onGenesisScanComplete() {
-                const archetypes = [
-                    "The Bio-Tech Innovator",
-                    "The Creative AI Architect",
-                    "The Quantum Strategist",
-                    "The Full-Stack Polymath",
-                    "The Data Intelligence Explorer"
-                ];
+            async function onGenesisScanComplete() {
+                let persistentTwin = await syncGenesisBackend();
+                if (!persistentTwin) {
+                    const cached = localStorage.getItem('dtv_genesis_twin');
+                    if (cached) {
+                        persistentTwin = JSON.parse(cached);
+                    }
+                }
 
-                const randomArchetype = archetypes[Math.floor(Math.random() * archetypes.length)];
-                const randomTwinId = `DTV-GEN-${Math.floor(1000 + Math.random() * 9000)}-X`;
-                const confidence = (92 + Math.random() * 7.5).toFixed(1);
-
-                document.getElementById('res-twin-id').textContent = randomTwinId;
-                document.getElementById('res-archetype').textContent = randomArchetype;
-                document.getElementById('res-confidence').textContent = `${confidence}%`;
+                if (persistentTwin) {
+                    document.getElementById('res-twin-id').textContent = persistentTwin.twinId;
+                    document.getElementById('res-archetype').textContent = persistentTwin.archetype;
+                    document.getElementById('res-confidence').textContent = `${persistentTwin.confidence}%`;
+                }
 
                 scanStatusText.textContent = "Your Digital Self has been successfully created.";
                 twinResultCard.classList.add('show');
@@ -2261,8 +2319,6 @@
             const optionBtns = document.querySelectorAll('.option-btn');
             const radarDataPoly = document.getElementById('radar-data-poly');
             const radarStatusVal = document.getElementById('radar-status-val');
-
-            let userScores = { logic: 80, creativity: 75, velocity: 85, domain: 70, grit: 82 };
 
             btnProceedAssessment.addEventListener('click', () => {
                 assessmentSection.classList.add('show');
@@ -2291,20 +2347,40 @@
                             if (nextCard) nextCard.classList.add('active');
                         } else {
                             document.getElementById('assessment-summary').classList.add('show');
-                            radarStatusVal.textContent = "Twin Calibration Complete! Saved to Profile.";
+                            radarStatusVal.textContent = "Twin Calibration Complete! Saved to Profile & Backend DB.";
                             
-                            const twinData = {
-                                twinId: document.getElementById('res-twin-id').textContent,
-                                archetype: document.getElementById('res-archetype').textContent,
-                                confidence: document.getElementById('res-confidence').textContent,
-                                scores: userScores,
-                                timestamp: new Date().toISOString()
-                            };
-                            localStorage.setItem('dtv_genesis_twin', JSON.stringify(twinData));
+                            const twinId = document.getElementById('res-twin-id').textContent;
+                            const archetype = document.getElementById('res-archetype').textContent;
+                            const confidence = document.getElementById('res-confidence').textContent.replace('%', '');
+
+                            saveCalibrationToBackend(userScores, archetype, confidence, twinId);
                         }
                     }, 400);
                 });
             });
+
+            async function saveCalibrationToBackend(scores, archetype, confidence, twinId) {
+                const sessionId = getGenesisSessionId();
+                try {
+                    await fetch('/api/genesis/calibrate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-genesis-session-id': sessionId,
+                            'x-digital-twin-id': twinId
+                        },
+                        body: JSON.stringify({
+                            session_id: sessionId,
+                            twin_id: twinId,
+                            scores: scores,
+                            archetype: archetype,
+                            confidence: confidence
+                        })
+                    });
+                } catch(e) {
+                    console.warn('Calibration backend sync error:', e);
+                }
+            }
 
             function updateRadarPolygon() {
                 const p1 = getAxisCoord(160, 125, userScores.logic, 70, 0);
