@@ -267,6 +267,7 @@
             box-shadow: var(--glow-indigo);
             transition: var(--transition-smooth);
             text-decoration: none;
+            min-height: 48px;
         }
 
         .btn-primary-glow:hover {
@@ -289,6 +290,7 @@
             backdrop-filter: blur(12px);
             transition: var(--transition-smooth);
             text-decoration: none;
+            min-height: 48px;
         }
 
         .btn-secondary-glass:hover {
@@ -340,7 +342,7 @@
         }
 
         .hero-headline {
-            font-size: clamp(2.8rem, 5vw, 4.5rem);
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
             font-weight: 800;
             line-height: 1.08;
             letter-spacing: -0.03em;
@@ -452,7 +454,7 @@
         }
 
         .section-title {
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 4vw, 2.5rem);
             font-weight: 800;
             letter-spacing: -0.02em;
             margin-bottom: 1rem;
@@ -471,7 +473,7 @@
 
         .timeline-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
             position: relative;
         }
@@ -524,7 +526,7 @@
 
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.75rem;
         }
 
@@ -577,7 +579,7 @@
 
         /* SECTION 4 — GENESIS EXPERIENCE SCANNER */
         .scanner-section {
-            padding: 6rem 0 8rem 0;
+            padding: 6rem 0;
             position: relative;
         }
 
@@ -585,7 +587,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border-glow);
             border-radius: 28px;
-            padding: 3.5rem 2.5rem;
+            padding: 3.5rem 2rem;
             backdrop-filter: blur(24px);
             box-shadow: 0 25px 60px rgba(0,0,0,0.6);
             text-align: center;
@@ -649,6 +651,7 @@
             justify-content: center;
             gap: 0.5rem;
             margin-bottom: 2.5rem;
+            flex-wrap: wrap;
         }
 
         .step-dot {
@@ -701,8 +704,8 @@
 
         .twin-passport-details {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.25rem;
             margin-bottom: 2rem;
             text-align: left;
         }
@@ -724,6 +727,202 @@
             font-size: 1.1rem;
             font-weight: 700;
             color: var(--text-primary);
+        }
+
+        /* SECTION 5 — ASSESSMENT & SKILL RADAR MODULE */
+        .assessment-section {
+            padding: 6rem 0 8rem 0;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .assessment-section.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .assessment-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        .quiz-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 2.5rem;
+            backdrop-filter: blur(20px);
+        }
+
+        .question-card {
+            display: none;
+        }
+
+        .question-card.active {
+            display: block;
+        }
+
+        .q-number {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .q-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .option-btn {
+            background: rgba(0,0,0,0.25);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 1.1rem 1.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.98rem;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .option-btn:hover, .option-btn.selected {
+            border-color: var(--accent-indigo);
+            background: rgba(99, 102, 241, 0.15);
+            transform: translateX(4px);
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+            flex-shrink: 0;
+        }
+
+        /* RADAR CHART VISUALIZER */
+        .radar-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 2.5rem;
+            backdrop-filter: blur(20px);
+            text-align: center;
+        }
+
+        .radar-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .radar-canvas-container {
+            width: 100%;
+            max-width: 340px;
+            height: 340px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .radar-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .radar-grid-poly {
+            fill: none;
+            stroke: rgba(255,255,255,0.1);
+            stroke-width: 1;
+        }
+
+        .radar-axis-line {
+            stroke: rgba(255,255,255,0.12);
+            stroke-width: 1;
+            stroke-dasharray: 4;
+        }
+
+        .radar-data-poly {
+            fill: rgba(99, 102, 241, 0.35);
+            stroke: var(--accent-cyan);
+            stroke-width: 2.5;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .radar-axis-label {
+            font-size: 10px;
+            fill: var(--text-secondary);
+            font-weight: 600;
+            text-anchor: middle;
+        }
+
+        /* ASSESSMENT RESULT SUMMARY */
+        .assessment-summary-card {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--accent-cyan);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: left;
+        }
+
+        .assessment-summary-card.show {
+            display: block;
+        }
+
+        .career-matches-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .career-match-item {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .match-title {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .match-badge {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-emerald);
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
         /* MODAL PREVIEW */
@@ -837,6 +1036,7 @@
         /* RESPONSIVE BREAKPOINTS */
         @media (max-width: 992px) {
             .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .assessment-grid { grid-template-columns: 1fr; gap: 2rem; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
         }
 
@@ -844,9 +1044,12 @@
             .navbar { padding: 0.8rem 1rem; }
             .nav-links { display: none; }
             .hero-section { padding-top: 7rem; }
-            .hero-headline { font-size: 2.4rem; }
+            .hero-headline { font-size: 2.2rem; }
+            .scanner-panel { padding: 2.5rem 1.25rem; }
+            .quiz-panel, .radar-panel { padding: 1.5rem 1.25rem; }
             .footer-grid { grid-template-columns: 1fr; }
             .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+            .btn-primary-glow, .btn-secondary-glass { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -876,7 +1079,7 @@
                 <li><a href="/#platform" class="nav-link">Platform</a></li>
                 <li><a href="/genesis" class="nav-link active" aria-current="page">Genesis™</a></li>
                 <li><a href="/blog" class="nav-link">Blog</a></li>
-                <li><a href="/wheel.html" class="nav-link">Wheel & Rewards</a></li>
+                <li><a href="/#student-dashboard" class="nav-link">Dashboard</a></li>
             </ul>
         </nav>
 
@@ -885,7 +1088,7 @@
                 <svg id="theme-icon-sun" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display: none;"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
                 <svg id="theme-icon-moon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
             </button>
-            <a href="/#begin-genesis" class="btn-primary-glow" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">Begin Genesis</a>
+            <a href="#genesis-scanner" id="btn-top-begin" class="btn-primary-glow" style="padding: 0.6rem 1.2rem; font-size: 0.9rem; min-height: 40px;">Begin Genesis</a>
         </div>
     </header>
 
@@ -1105,10 +1308,171 @@
                             </div>
                         </div>
 
-                        <a href="/wheel.html" class="btn-primary-glow" style="text-decoration: none;">
+                        <button id="btn-open-assessment" class="btn-primary-glow" style="width: 100%; justify-content: center;">
                             <span>Proceed to Assessment & Skill Radar</span>
                             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5 — ASSESSMENT & SKILL RADAR CALIBRATION -->
+        <section id="genesis-assessment" class="assessment-section" aria-labelledby="assessment-heading">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="assessment-heading" class="section-title">Cognitive Assessment & Skill Radar</h2>
+                    <p class="section-subtitle">Calibrate your 5-axis capability graph to unlock personalized career trajectory matching.</p>
+                </div>
+
+                <div class="assessment-grid">
+                    <!-- QUIZ PANEL -->
+                    <div class="quiz-panel">
+                        <!-- QUESTION 1 -->
+                        <div class="question-card active" id="q-card-1">
+                            <div class="q-number">Question 1 of 3 — Logic & Architecture</div>
+                            <h3 class="q-title">When approaching a complex technical or real-world problem, what is your primary solving method?</h3>
+                            <div class="options-list">
+                                <button class="option-btn" data-q="1" data-axis="logic" data-val="95">
+                                    <div class="option-letter">A</div>
+                                    <span>Deconstruct into atomic sub-components and evaluate systematically.</span>
+                                </button>
+                                <button class="option-btn" data-q="1" data-axis="creativity" data-val="90">
+                                    <div class="option-letter">B</div>
+                                    <span>Brainstorm lateral alternatives and prototype unconventional angles.</span>
+                                </button>
+                                <button class="option-btn" data-q="1" data-axis="velocity" data-val="88">
+                                    <div class="option-letter">C</div>
+                                    <span>Build a rapid working sample immediately and iterate on live feedback.</span>
+                                </button>
+                                <button class="option-btn" data-q="1" data-axis="grit" data-val="92">
+                                    <div class="option-letter">D</div>
+                                    <span>Deeply research existing documentation and industry standards first.</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- QUESTION 2 -->
+                        <div class="question-card" id="q-card-2">
+                            <div class="q-number">Question 2 of 3 — Future Domain Focus</div>
+                            <h3 class="q-title">Which emerging 2030 technology domain drives your deepest passion and curiosity?</h3>
+                            <div class="options-list">
+                                <button class="option-btn" data-q="2" data-axis="domain" data-val="98">
+                                    <div class="option-letter">A</div>
+                                    <span>Artificial Intelligence, Autonomous Agents & Large Language Models.</span>
+                                </button>
+                                <button class="option-btn" data-q="2" data-axis="creativity" data-val="95">
+                                    <div class="option-letter">B</div>
+                                    <span>Spatial Computing, Immersive Design & High-Impact Product Experience.</span>
+                                </button>
+                                <button class="option-btn" data-q="2" data-axis="logic" data-val="94">
+                                    <div class="option-letter">C</div>
+                                    <span>Data Intelligence, Quantitative Systems & Distributed Infrastructure.</span>
+                                </button>
+                                <button class="option-btn" data-q="2" data-axis="grit" data-val="91">
+                                    <div class="option-letter">D</div>
+                                    <span>Bio-Tech, Climate Engineering & Sustainable Energy Systems.</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- QUESTION 3 -->
+                        <div class="question-card" id="q-card-3">
+                            <div class="q-number">Question 3 of 3 — Learning Style</div>
+                            <h3 class="q-title">How do you master difficult concepts and achieve peak retention fastest?</h3>
+                            <div class="options-list">
+                                <button class="option-btn" data-q="3" data-axis="velocity" data-val="96">
+                                    <div class="option-letter">A</div>
+                                    <span>Socratic AI Q&A with real-world project simulations.</span>
+                                </button>
+                                <button class="option-btn" data-q="3" data-axis="grit" data-val="94">
+                                    <div class="option-letter">B</div>
+                                    <span>Structured mastery trees with spaced repetition challenges.</span>
+                                </button>
+                                <button class="option-btn" data-q="3" data-axis="creativity" data-val="92">
+                                    <div class="option-letter">C</div>
+                                    <span>Collaborative guild team quests and peer problem solving.</span>
+                                </button>
+                                <button class="option-btn" data-q="3" data-axis="logic" data-val="90">
+                                    <div class="option-letter">D</div>
+                                    <span>Self-paced experimentation with immediate automated code/essay audits.</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- ASSESSMENT COMPLETED SUMMARY -->
+                        <div id="assessment-summary" class="assessment-summary-card">
+                            <div class="result-header">
+                                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                                <span>Digital Twin Skill Calibration Completed!</span>
+                            </div>
+                            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Based on your cognitive telemetry, your top 2030 career trajectories have been vectorized:</p>
+                            
+                            <div class="career-matches-list">
+                                <div class="career-match-item">
+                                    <div>
+                                        <div class="match-title">AI Systems Architect & Engineer</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-muted);">High Demand · System Architecture, LLM Tuning, Python</div>
+                                    </div>
+                                    <div class="match-badge">96.4% Match</div>
+                                </div>
+                                <div class="career-match-item">
+                                    <div>
+                                        <div class="match-title">Cognitive Product Strategist</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-muted);">High Growth · Product Design, UX Architecture, Data Science</div>
+                                    </div>
+                                    <div class="match-badge">92.8% Match</div>
+                                </div>
+                                <div class="career-match-item">
+                                    <div>
+                                        <div class="match-title">Quantitative Data Intelligence Lead</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-muted);">High Income · Algorithm Design, Distributed Systems</div>
+                                    </div>
+                                    <div class="match-badge">89.2% Match</div>
+                                </div>
+                            </div>
+
+                            <a href="/#student-dashboard" class="btn-primary-glow" style="width: 100%; justify-content: center; text-decoration: none;">
+                                <span>Save Calibration & Open Dashboard</span>
+                                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- RADAR PANEL -->
+                    <div class="radar-panel">
+                        <h3 class="radar-title">Live 5-Axis Capability Radar</h3>
+                        
+                        <div class="radar-canvas-container">
+                            <svg class="radar-svg" viewBox="0 0 200 200">
+                                <!-- GRID POLYGONS -->
+                                <polygon class="radar-grid-poly" points="100,20 176,75 147,165 53,165 24,75"></polygon>
+                                <polygon class="radar-grid-poly" points="100,45 152,83 133,144 67,144 48,83"></polygon>
+                                <polygon class="radar-grid-poly" points="100,70 128,90 118,123 82,123 72,90"></polygon>
+
+                                <!-- AXIS LINES -->
+                                <line class="radar-axis-line" x1="100" y1="100" x2="100" y2="20"></line>
+                                <line class="radar-axis-line" x1="100" y1="100" x2="176" y2="75"></line>
+                                <line class="radar-axis-line" x1="100" y1="100" x2="147" y2="165"></line>
+                                <line class="radar-axis-line" x1="100" y1="100" x2="53" y2="165"></line>
+                                <line class="radar-axis-line" x1="100" y1="100" x2="24" y2="75"></line>
+
+                                <!-- RADAR AXIS LABELS -->
+                                <text x="100" y="12" class="radar-axis-label">Logic (LOG)</text>
+                                <text x="185" y="78" class="radar-axis-label">Creativity (CRE)</text>
+                                <text x="155" y="180" class="radar-axis-label">Velocity (VEL)</text>
+                                <text x="45" y="180" class="radar-axis-label">Domain (DOM)</text>
+                                <text x="15" y="78" class="radar-axis-label">Grit (GRI)</text>
+
+                                <!-- DYNAMIC DATA POLYGON -->
+                                <polygon id="radar-data-poly" class="radar-data-poly" points="100,35 155,80 135,150 65,150 45,80"></polygon>
+                            </svg>
+                        </div>
+
+                        <div style="margin-top: 1.5rem; text-align: left; background: rgba(0,0,0,0.25); padding: 1rem; border-radius: 12px; border: 1px solid var(--border-subtle);">
+                            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Calibration Radar Status</div>
+                            <div id="radar-status-val" style="font-weight: 700; color: var(--accent-cyan); font-size: 0.95rem;">Select options to morph your skill profile</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1150,7 +1514,7 @@
                     <ul class="footer-links">
                         <li><a href="/genesis">Genesis™ Onboarding</a></li>
                         <li><a href="/#platform">Skill Radar</a></li>
-                        <li><a href="/wheel.html">Wheel & Rewards</a></li>
+                        <li><a href="/#student-dashboard">Dashboard</a></li>
                         <li><a href="/leaderboard.html">Leaderboard</a></li>
                     </ul>
                 </div>
@@ -1286,17 +1650,15 @@
                     const phase = scanPhases[currentIdx];
                     updateProgress(phase.percent, phase.status, phase.dot);
                     currentIdx++;
-                }, 800);
+                }, 700);
             }
 
             function updateProgress(percent, statusText, dotIndex) {
-                // Update SVG ring stroke (dashoffset range: 440 to 0)
                 const offset = 440 - (440 * (percent / 100));
                 scanRingBar.style.strokeDashoffset = offset;
                 scanPercentText.textContent = `${percent}%`;
                 scanStatusText.textContent = statusText;
 
-                // Update Step Dots
                 for (let i = 1; i <= 7; i++) {
                     const dot = document.getElementById(`dot-${i}`);
                     if (i < dotIndex) {
@@ -1310,7 +1672,6 @@
             }
 
             function onGenesisScanComplete() {
-                // Generate dynamic archetype & twin ID for student
                 const archetypes = [
                     "The Bio-Tech Innovator",
                     "The Creative AI Architect",
@@ -1329,6 +1690,82 @@
 
                 scanStatusText.textContent = "Your Digital Self has been successfully created.";
                 twinResultCard.classList.add('show');
+            }
+
+            // SECTION 5 — ASSESSMENT & SKILL RADAR SYSTEM LOGIC
+            const btnProceedAssessment = document.getElementById('btn-open-assessment');
+            const assessmentSection = document.getElementById('genesis-assessment');
+            const optionBtns = document.querySelectorAll('.option-btn');
+            const radarDataPoly = document.getElementById('radar-data-poly');
+            const radarStatusVal = document.getElementById('radar-status-val');
+
+            let userScores = { logic: 80, creativity: 75, velocity: 85, domain: 70, grit: 82 };
+
+            btnProceedAssessment.addEventListener('click', () => {
+                assessmentSection.classList.add('show');
+                assessmentSection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            optionBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const qNum = parseInt(this.getAttribute('data-q'));
+                    const axis = this.getAttribute('data-axis');
+                    const val = parseInt(this.getAttribute('data-val'));
+
+                    // Highlight option
+                    const currentCard = document.getElementById(`q-card-${qNum}`);
+                    currentCard.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+
+                    // Update Score Axis
+                    if (axis && val) {
+                        userScores[axis] = val;
+                        updateRadarPolygon();
+                    }
+
+                    // Move to next question or show summary
+                    setTimeout(() => {
+                        currentCard.classList.remove('active');
+                        if (qNum < 3) {
+                            const nextCard = document.getElementById(`q-card-${qNum + 1}`);
+                            if (nextCard) nextCard.classList.add('active');
+                        } else {
+                            document.getElementById('assessment-summary').classList.add('show');
+                            radarStatusVal.textContent = "Twin Calibration Complete! Saved to Profile.";
+                            
+                            // Save twin profile to localStorage
+                            const twinData = {
+                                twinId: document.getElementById('res-twin-id').textContent,
+                                archetype: document.getElementById('res-archetype').textContent,
+                                confidence: document.getElementById('res-confidence').textContent,
+                                scores: userScores,
+                                timestamp: new Date().toISOString()
+                            };
+                            localStorage.setItem('dtv_genesis_twin', JSON.stringify(twinData));
+                        }
+                    }, 400);
+                });
+            });
+
+            function updateRadarPolygon() {
+                // Center is (100, 100), radii scaled from center
+                const p1 = getAxisCoord(100, 100, userScores.logic, 90, 0);   // LOGIC (Top)
+                const p2 = getAxisCoord(100, 100, userScores.creativity, 90, 1); // CREATIVITY (Right top)
+                const p3 = getAxisCoord(100, 100, userScores.velocity, 90, 2);   // VELOCITY (Right bottom)
+                const p4 = getAxisCoord(100, 100, userScores.domain, 90, 3);     // DOMAIN (Left bottom)
+                const p5 = getAxisCoord(100, 100, userScores.grit, 90, 4);       // GRIT (Left top)
+
+                radarDataPoly.setAttribute('points', `${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y} ${p4.x},${p4.y} ${p5.x},${p5.y}`);
+                radarStatusVal.textContent = `Morphing Radar: LOG ${userScores.logic}% | CRE ${userScores.creativity}% | VEL ${userScores.velocity}%`;
+            }
+
+            function getAxisCoord(cx, cy, scorePercent, maxRadius, axisIndex) {
+                const angleDeg = -90 + (axisIndex * 72);
+                const angleRad = (angleDeg * Math.PI) / 180;
+                const r = (scorePercent / 100) * maxRadius;
+                const x = Math.round(cx + r * Math.cos(angleRad));
+                const y = Math.round(cy + r * Math.sin(angleRad));
+                return { x, y };
             }
         });
     </script>
