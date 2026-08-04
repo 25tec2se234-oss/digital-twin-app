@@ -977,6 +977,104 @@
             border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
+        /* CAREER ROADMAP & AI QUEST SIMULATOR MODAL STYLES */
+        .roadmap-modal-content {
+            max-width: 800px;
+            padding: 2.25rem;
+        }
+
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        .roadmap-box {
+            background: rgba(0,0,0,0.35);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 1.25rem;
+        }
+
+        .roadmap-box-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .skill-item-bar {
+            margin-bottom: 0.75rem;
+        }
+
+        .skill-lbl-flex {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .skill-progress-bg {
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .skill-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-indigo));
+            border-radius: 9999px;
+        }
+
+        .quest-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
+            border: 1px solid var(--accent-indigo);
+            border-radius: 16px;
+            padding: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .quest-q-title {
+            font-weight: 700;
+            font-size: 0.98rem;
+            margin-bottom: 0.85rem;
+            color: var(--text-primary);
+        }
+
+        .quest-option-btn {
+            width: 100%;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quest-option-btn:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(56, 189, 248, 0.12);
+        }
+
+        .quest-option-btn.correct {
+            border-color: var(--accent-emerald);
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-emerald);
+            font-weight: 700;
+        }
+
         /* MODAL PREVIEW & DTV-BRANDED VIDEO PLAYER SYSTEM */
         .modal-backdrop {
             display: none;
@@ -1316,6 +1414,7 @@
             .hero-cta-group { justify-content: center; }
             .assessment-grid { grid-template-columns: 1fr; gap: 2rem; }
             .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+            .roadmap-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 768px) {
@@ -1769,10 +1868,10 @@
                                 </div>
                             </div>
 
-                            <a href="/#student-dashboard" class="btn-primary-glow" style="width: 100%; justify-content: center; text-decoration: none;">
-                                <span>Save Calibration & Open Dashboard</span>
+                            <button id="btn-unlock-roadmap" class="btn-primary-glow" style="width: 100%; justify-content: center;">
+                                <span>Unlock 2030 Career Pathway & AI Quest Roadmap</span>
                                 <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </a>
+                            </button>
                         </div>
                     </div>
 
@@ -1878,6 +1977,134 @@
                         <span>Launch Genesis</span>
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DEDICATED 2030 CAREER PATHWAY & AI QUEST ROADMAP MODAL -->
+    <div id="roadmap-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="roadmap-modal-title">
+        <div class="modal-content roadmap-modal-content">
+            <button id="roadmap-modal-close" class="modal-close-btn" aria-label="Close modal">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                <span style="background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.2rem 0.7rem; border-radius: 9999px; font-size: 0.78rem; font-weight: 800;">
+                    96.4% MATCH VERIFIED
+                </span>
+                <span style="color: var(--text-muted); font-size: 0.82rem;">Genesis™ Dynamic Simulator</span>
+            </div>
+
+            <h3 id="roadmap-modal-title" style="font-size: 1.45rem; font-weight: 800; color: var(--text-primary);">
+                Target Pathway: <span style="color: var(--accent-cyan);">AI Systems Architect & Engineer</span>
+            </h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.25rem;">
+                Your 5-axis cognitive telemetry aligns directly with high-demand multi-agent system design and LLM infrastructure.
+            </p>
+
+            <div class="roadmap-grid">
+                <!-- BOX 1: 2030 MARKET INTELLIGENCE -->
+                <div class="roadmap-box">
+                    <div class="roadmap-box-title">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                        <span>2030 Market Intelligence</span>
+                    </div>
+                    <div style="margin-bottom: 0.6rem;">
+                        <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Global Target Salary</div>
+                        <div style="font-size: 1.2rem; font-weight: 800; color: var(--accent-emerald);">$185,000 /yr <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">(₹42 LPA)</span></div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Projected Job Demand</div>
+                        <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary);">+38.5% YoY Growth</div>
+                    </div>
+                </div>
+
+                <!-- BOX 2: MATCHING COGNITIVE ARCHETYPE -->
+                <div class="roadmap-box">
+                    <div class="roadmap-box-title">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16z"/></svg>
+                        <span>Verified Digital Self</span>
+                    </div>
+                    <div style="margin-bottom: 0.6rem;">
+                        <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Digital Twin ID</div>
+                        <div id="rm-twin-id" style="font-size: 1rem; font-weight: 800; color: var(--accent-cyan);">DTV-GEN-8942-X</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Cognitive Archetype</div>
+                        <div id="rm-archetype" style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary);">The Creative Architect</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RECOMMENDED 2030 SKILL STACK ROADMAP -->
+            <div class="roadmap-box" style="margin-bottom: 1rem;">
+                <div class="roadmap-box-title">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                    <span>Recommended 2030 Skill Stack Roadmap</span>
+                </div>
+
+                <div class="skill-item-bar">
+                    <div class="skill-lbl-flex">
+                        <span>LLM Architecture & Fine-Tuning</span>
+                        <span style="color: var(--accent-cyan);">92% Ready</span>
+                    </div>
+                    <div class="skill-progress-bg">
+                        <div class="skill-progress-fill" style="width: 92%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item-bar">
+                    <div class="skill-lbl-flex">
+                        <span>Vector Databases & RAG Pipelines</span>
+                        <span style="color: var(--accent-cyan);">88% Ready</span>
+                    </div>
+                    <div class="skill-progress-bg">
+                        <div class="skill-progress-fill" style="width: 88%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item-bar">
+                    <div class="skill-lbl-flex">
+                        <span>Autonomous Multi-Agent Orchestration</span>
+                        <span style="color: var(--accent-cyan);">84% Ready</span>
+                    </div>
+                    <div class="skill-progress-bg">
+                        <div class="skill-progress-fill" style="width: 84%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LIVE SOCRATIC QUEST CHALLENGE -->
+            <div class="quest-box">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.75rem; font-weight: 800; color: var(--accent-cyan); text-transform: uppercase;">SOCRATIC AI MICRO-QUEST #1</span>
+                    <span id="quest-xp-badge" style="font-size: 0.75rem; font-weight: 800; background: rgba(99, 102, 241, 0.2); color: var(--accent-indigo); padding: 0.15rem 0.5rem; border-radius: 6px;">+50 XP AVAILABLE</span>
+                </div>
+                <div class="quest-q-title">
+                    Scenario: Your multi-agent swarm encounters a context window bottleneck during real-time document synthesis. What is your primary architectural optimization?
+                </div>
+
+                <button class="quest-option-btn" onclick="answerQuestOption(this, true)">
+                    A) Implement Semantic Caching & Hierarchical Vector Index Pruning
+                </button>
+                <button class="quest-option-btn" onclick="answerQuestOption(this, false)">
+                    B) Increase max_tokens on every sub-agent request blindly
+                </button>
+                <button class="quest-option-btn" onclick="answerQuestOption(this, false)">
+                    C) Concatenate all raw documents into a single unindexed text string
+                </button>
+                <div id="quest-feedback" style="font-size: 0.85rem; font-weight: 700; margin-top: 0.5rem; display: none;"></div>
+            </div>
+
+            <!-- MODAL ACTION FOOTER -->
+            <div style="display: flex; gap: 0.85rem; margin-top: 1.5rem; flex-wrap: wrap;">
+                <a href="/ai-career-roadmap" class="btn-primary-glow" style="flex: 1; justify-content: center; text-decoration: none;">
+                    <span>Open Full AI Career Roadmap</span>
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="/#student-dashboard" class="btn-secondary-glass" style="justify-content: center; text-decoration: none;">
+                    <span>Launch Student Dashboard</span>
+                </a>
             </div>
         </div>
     </div>
@@ -2320,10 +2547,55 @@
             const radarDataPoly = document.getElementById('radar-data-poly');
             const radarStatusVal = document.getElementById('radar-status-val');
 
+            // CAREER PATHWAY ROADMAP MODAL LOGIC
+            const btnUnlockRoadmap = document.getElementById('btn-unlock-roadmap');
+            const roadmapModal = document.getElementById('roadmap-modal');
+            const roadmapModalClose = document.getElementById('roadmap-modal-close');
+
             btnProceedAssessment.addEventListener('click', () => {
                 assessmentSection.classList.add('show');
                 assessmentSection.scrollIntoView({ behavior: 'smooth' });
             });
+
+            btnUnlockRoadmap.addEventListener('click', () => {
+                const currentTwinId = document.getElementById('res-twin-id').textContent;
+                const currentArchetype = document.getElementById('res-archetype').textContent;
+
+                document.getElementById('rm-twin-id').textContent = currentTwinId;
+                document.getElementById('rm-archetype').textContent = currentArchetype;
+
+                roadmapModal.classList.add('open');
+            });
+
+            roadmapModalClose.addEventListener('click', () => {
+                roadmapModal.classList.remove('open');
+            });
+
+            roadmapModal.addEventListener('click', (e) => {
+                if (e.target === roadmapModal) {
+                    roadmapModal.classList.remove('open');
+                }
+            });
+
+            window.answerQuestOption = function(btnEl, isCorrect) {
+                const feedbackEl = document.getElementById('quest-feedback');
+                const parent = btnEl.parentElement;
+                parent.querySelectorAll('.quest-option-btn').forEach(b => {
+                    b.classList.remove('correct');
+                    b.disabled = true;
+                });
+
+                if (isCorrect) {
+                    btnEl.classList.add('correct');
+                    feedbackEl.style.color = 'var(--accent-emerald)';
+                    feedbackEl.textContent = '✔ CORRECT ANSWER! +50 Capability XP Awarded. Your Socratic AI Agent profile is updated!';
+                } else {
+                    btnEl.style.borderColor = 'var(--accent-amber)';
+                    feedbackEl.style.color = 'var(--accent-amber)';
+                    feedbackEl.textContent = '💡 Architect Note: Option A is optimal for high-throughput real-time multi-agent LLM systems!';
+                }
+                feedbackEl.style.display = 'block';
+            };
 
             optionBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
