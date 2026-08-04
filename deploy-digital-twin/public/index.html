@@ -80,9 +80,9 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.dc44bb66.css?v=3b2f016aaf7029d9" as="style">
+    <link rel="preload" href="/dist/main.dc44bb66.css?v=73257d037f435cd6" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.dc44bb66.css?v=3b2f016aaf7029d9">
+    <link rel="stylesheet" href="/dist/main.dc44bb66.css?v=73257d037f435cd6">
 
     <!-- JSON-LD Structured Data Schema -->
     
@@ -442,15 +442,19 @@
         <div class="nav-right-container">
             <div class="nav-links-modern">
                 <a href="#student-dashboard" onclick="requirePremiumFrontend(openDashboardShortcut)" class="nav-link">Dashboard</a>
-                <a href="#ai-section" class="nav-link">AI Advisor</a>
+                <a href="#ai-section" onclick="requirePremiumFrontend(function(){location.hash='#ai-section';})" class="nav-link">AI Advisor</a>
+                <a href="/ai-tools-for-students" class="nav-link" style="color: #00f0ff; font-weight: 700;">🤖 AI Tools</a>
                 <a href="/parent" class="nav-link">Parent Portal</a>
                 <a href="/leaderboard.html" class="nav-link">Leaderboard</a>
                 
                 <div class="nav-dropdown">
                     <span class="nav-link dropdown-toggle">More <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:-2px; margin-left: 2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
                     <div class="dropdown-menu">
+                        <a href="/ai-tools-for-students" style="color: #00f0ff; font-weight: 700;">🤖 50+ AI Tools Directory</a>
+                        <a href="/career-guidance-after-12th">Career Guidance After 12th</a>
                         <a href="#how">How It Works</a>
-                        <a href="#dashboard">Career Explorer</a>
+                        <a href="#dashboard" onclick="requirePremiumFrontend(function(){location.hash='#dashboard';})">Career Explorer</a>
+                        <a href="/wheel" onclick="event.preventDefault(); requirePremiumFrontend(function(){window.location.href='/wheel';});">Daily Spin Wheel</a>
                         <a href="#rev">Reviews</a>
                         <a href="/blog">Blog</a>
                     </div>
@@ -478,7 +482,7 @@
                 <button type="button" onclick="openAnalyzer()" class="nav-pill-purple">🧠 Analyzer</button>
 
                 <!-- Go Premium -->
-                <button type="button" onclick="requireAuth(openPricingPage); return false;" class="nav-pill">💎 Premium</button>
+                <button type="button" onclick="openPricingPage(); return false;" class="nav-pill">💎 Premium</button>
 
             <!-- Account -->
             <div class="account-menu" id="nav-account-wrap">
@@ -510,11 +514,12 @@
         <a href="#how" onclick="togMenu()">How It Works</a>
         <a href="#dashboard" onclick="togMenu()">Career Explorer</a>
         <a href="#ai-section" onclick="togMenu()">AI Advisor</a>
+        <a href="/ai-tools-for-students" style="color: #00f0ff; font-weight: 700;" onclick="togMenu()">🤖 50+ Free AI Tools</a>
         <a href="/parent" style="color: #a78bfa; font-weight: 600;" onclick="togMenu()">Parent Portal</a>
         <a href="#rev" onclick="togMenu()">Reviews</a>
         <a href="/blog" onclick="togMenu()">Blog</a>
         <a href="/leaderboard.html" style="color: #fbbf24; font-weight: 600;" onclick="togMenu()">🏆 Leaderboard</a>
-        <button type="button" onclick="requireAuth(function(){openPricingPage(); togMenu();}); return false;" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: #e88c2a; width: 100%; text-align: left; font-size: 1.1rem; font-weight: 700;">💎 Go Premium</button>
+        <button type="button" onclick="openPricingPage(); togMenu(); return false;" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: #e88c2a; width: 100%; text-align: left; font-size: 1.1rem; font-weight: 700;">💎 Go Premium</button>
         <button type="button" onclick="openAnalyzer(); togMenu();" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: var(--wh, #fff); width: 100%; text-align: left; font-size: 1.1rem; font-weight: 600;">🧠
             Achievement Analyzer</button>
         <div style="padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 0.5rem;">
@@ -667,7 +672,7 @@
                             const headers = { 'Content-Type': 'application/json' };
                             if (token) headers['Authorization'] = 'Bearer ' + token;
                             
-                            fetch('/api/payments/consent', {
+                            fetch('/api/v1/payments/consent', {
                                 method: 'POST',
                                 headers: headers,
                                 body: JSON.stringify(consentPayload)
@@ -862,40 +867,37 @@
                     <p class="desc">Interactive visuals that represent how students explore options, learn skills, and
                         become placement-ready using Digital Twin Verse.</p>
                 </div>
-                <div class="story-grid">
-                    <article class="story-card rv d1">
+                <div class="story-grid" id="student-journeys-grid">
+                    <a href="/blog/50-best-free-ai-tools-for-students-2026" class="story-card rv d1">
                         <div class="story-media">
-                            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&amp;fit=crop&amp;w=600&amp;fm=webp&amp;q=80" alt="Students collaborating in a modern classroom" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&amp;fit=crop&amp;w=600&amp;fm=webp&amp;q=80';">
+                            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&amp;w=2070&amp;auto=format&amp;fit=crop" alt="50+ Best Free AI Tools Every Student Should Use in 2026" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&amp;fit=crop&amp;w=600&amp;fm=webp&amp;q=80';">
                         </div>
                         <div class="story-overlay">
-                            <span class="story-tag">Explore</span>
-                            <h3 class="story-title">Compare Career Paths With Confidence</h3>
-                            <p class="story-copy">Students can switch streams, inspect salary trends, and test what-if
-                                scenarios in minutes.</p>
+                            <span class="story-tag">AI Guidance</span>
+                            <h3 class="story-title">50+ Best Free AI Tools Every Student Should Use in 2026</h3>
+                            <p class="story-copy">Comprehensive guide to free AI tools for research, coding, writing, and productivity.</p>
                         </div>
-                    </article>
-                    <article class="story-card rv d2">
+                    </a>
+                    <a href="/blog/top-ai-skills-students-should-learn-2026" class="story-card rv d2">
                         <div class="story-media">
-                            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&amp;fit=crop&amp;w=600&amp;fm=webp&amp;q=80" alt="Mentor guiding students during a planning session" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&amp;fit=crop&amp;w=600&amp;fm=webp&amp;q=80';">
+                            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&amp;w=2070&amp;auto=format&amp;fit=crop" alt="Top AI Skills Students Should Learn in 2026" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&amp;fit=crop&amp;w=600&amp;fm=webp&amp;q=80';">
                         </div>
                         <div class="story-overlay">
-                            <span class="story-tag">Plan</span>
-                            <h3 class="story-title">AI Roadmaps That Feel Personal</h3>
-                            <p class="story-copy">The AI mentor creates step-by-step goals based on current skills,
-                                interests, and role demand.</p>
+                            <span class="story-tag">Career Roadmap</span>
+                            <h3 class="story-title">Top AI Skills Students Should Learn in 2026 (Complete Guide)</h3>
+                            <p class="story-copy">Essential technical and strategic AI skills to stay ahead in the placement market.</p>
                         </div>
-                    </article>
-                    <article class="story-card rv d3">
+                    </a>
+                    <a href="/blog/data-scientist-roadmap-india-2026" class="story-card rv d3">
                         <div class="story-media">
-                            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&amp;fit=crop&amp;w=600&amp;fm=webp&amp;q=80" alt="Students preparing together with digital tools" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&amp;fit=crop&amp;w=600&amp;fm=webp&amp;q=80';">
+                            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&amp;w=2070&amp;auto=format&amp;fit=crop" alt="Data Scientist Roadmap India 2026" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&amp;fit=crop&amp;w=600&amp;fm=webp&amp;q=80';">
                         </div>
                         <div class="story-overlay">
-                            <span class="story-tag">Launch</span>
-                            <h3 class="story-title">Track Progress And Get Job Ready</h3>
-                            <p class="story-copy">From skill checklists to AI interview guidance, every milestone is
-                                visible and measurable.</p>
+                            <span class="story-tag">Career Roadmap</span>
+                            <h3 class="story-title">How to Become a Data Scientist in India (Complete Roadmap 2026)</h3>
+                            <p class="story-copy">Step-by-step career path, skills, salary data, and top hiring companies in India.</p>
                         </div>
-                    </article>
+                    </a>
                 </div>
             </div>
         </section>
@@ -910,29 +912,30 @@
                         zero personalised guidance. The consequences compound over decades.</p>
                 </div>
                 <div class="pcg rv d1">
-                    <div class="pc">
+                    <a href="/problem/years-wasted" class="pc" style="text-decoration:none; color:inherit;">
                         <div class="pc-ic">⏳</div>
                         <h4>Years Wasted</h4>
                         <p>2–4 years in the wrong course before realising the mismatch — too late to pivot easily.</p>
-                    </div>
-                    <div class="pc">
+                        <span class="pc-hint">Read full dedicated breakdown &amp; news &rarr;</span>
+                    </a>
+                    <a href="/problem/mounting-stress" class="pc" style="text-decoration:none; color:inherit;">
                         <div class="pc-ic">😰</div>
                         <h4>Mounting Stress</h4>
-                        <p>Family pressure, peer comparison, and zero clarity create a widespread career-anxiety crisis.
-                        </p>
-                    </div>
-                    <div class="pc">
+                        <p>Family pressure, peer comparison, and zero clarity create a widespread career-anxiety crisis.</p>
+                        <span class="pc-hint">Read full dedicated breakdown &amp; news &rarr;</span>
+                    </a>
+                    <a href="/problem/no-personalisation" class="pc" style="text-decoration:none; color:inherit;">
                         <div class="pc-ic">🎯</div>
                         <h4>No Personalisation</h4>
-                        <p>Generic counsellors give generic advice. Your unique profile, strengths and potential are
-                            ignored.</p>
-                    </div>
-                    <div class="pc">
+                        <p>Generic counsellors give generic advice. Your unique profile, strengths and potential are ignored.</p>
+                        <span class="pc-hint">Read full dedicated breakdown &amp; news &rarr;</span>
+                    </a>
+                    <a href="/problem/missed-earnings" class="pc" style="text-decoration:none; color:inherit;">
                         <div class="pc-ic">💸</div>
                         <h4>Missed Earnings</h4>
-                        <p>Wrong decisions at the right age directly reduce lifetime earnings and career satisfaction.
-                        </p>
-                    </div>
+                        <p>Wrong decisions at the right age directly reduce lifetime earnings and career satisfaction.</p>
+                        <span class="pc-hint">Read full dedicated breakdown &amp; news &rarr;</span>
+                    </a>
                 </div>
             </div>
         </section>
@@ -1014,6 +1017,10 @@
                                     <span class="meta-label">Level</span>
                                     <strong id="profile-level">-</strong>
                                 </div>
+                                <div class="profile-card" id="xp-profile-card" style="display: none; min-width: 180px;">
+                                    <span class="meta-label" style="display: flex; justify-content: space-between;"><span>XP Progress</span><span id="profile-xp-text" style="color: var(--wh);">0 / 150</span></span>
+                                    <div class="mini-bar" style="margin-top: 0.25rem; background: rgba(255,255,255,0.08); height: 6px;"><span id="profile-xp-bar" style="width: 0%; background: linear-gradient(90deg, #3b82f6, #60a5fa); transition: width 0.3s ease; height: 6px; display: block; border-radius: 4px;"></span></div>
+                                </div>
                                 <button class="profile-reset" onclick="openStudentOnboard()">Change Profile</button>
                             </div>
                         </div>
@@ -1070,7 +1077,7 @@
                                 </div>
                                 <div class="mini-bar"><span id="tracker-progress-bar" style="width: 100%; background: #f5a94e;"></span></div>
                                 <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
-                                    <button class="tool-btn" style="background: linear-gradient(90deg, #f5a94e, #e88c2a); color: #000; font-weight: 700; width: 100%;" onclick="requireAuth(openPricingPage)">Renew / Upgrade Plan</button>
+                                    <button class="tool-btn" style="background: linear-gradient(90deg, #f5a94e, #e88c2a); color: #000; font-weight: 700; width: 100%;" onclick="openPricingPage()">Renew / Upgrade Plan</button>
                                 </div>
                             </article>
                             <article class="tool-card">
@@ -1104,7 +1111,12 @@
                                     <div class="summary-row"><span>Current Streak</span><strong id="dash-streak-count">0 Days</strong></div>
                                     <div class="summary-row"><span>Best Streak</span><strong id="dash-streak-best" style="color: var(--mu);">0 Days</strong></div>
                                 </div>
+                                <div class="streak-calendar-row" id="streak-calendar-row" style="display: flex; justify-content: space-between; margin: 0.5rem 0 1rem 0; padding: 0.5rem; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px solid rgba(255,255,255,0.04);"></div>
                                 <button class="tool-btn" onclick="incrementStreak()" id="btn-increment-streak">Mark Today Complete</button>
+                                <div id="streak-shield-container" style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem;">
+                                    <span style="color: var(--mu); display: flex; align-items: center; gap: 0.25rem;">🛡️ Streak Shields: <strong id="streak-shield-count" style="color: var(--wh);">0</strong></span>
+                                    <button class="tool-link" onclick="purchaseStreakShield()" style="margin: 0; font-size: 0.75rem; cursor: pointer; background: transparent; border: none; padding: 0;">Buy Shield (-100 XP)</button>
+                                </div>
                             </article>
 
                             <article class="tool-card" id="smart-goals-card">
@@ -1169,6 +1181,9 @@
                                     <span>Time Trend</span><span id="prog-trend-lbl" style="color: #6ee7b7;">+0%</span>
                                 </div>
                                 <div class="mini-bar"><span id="prog-time-bar" style="width: 50%; background: #22c55e;"></span></div>
+                                <div style="margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.75rem;">
+                                    <button class="tool-btn" style="background: rgba(34, 197, 94, 0.1); color: #6ee7b7; width: 100%; border: 1px solid rgba(34, 197, 94, 0.2); cursor: pointer;" onclick="downloadReportCard()">📋 Generate & Download Report Card</button>
+                                </div>
                             </article>
 
                             <article class="tool-card" id="resources-card">
@@ -1181,6 +1196,39 @@
                                 </div>
                                 <div class="glass-tags" id="resource-shortcuts-list" style="margin: 1rem 0; min-height: 60px;">
                                     <span class="glass-tag" style="opacity: 0.7;">Select profile to see resources</span>
+                                </div>
+                            </article>
+                            <article class="tool-card" id="leaderboard-card">
+                                <div class="tool-head">
+                                    <div>
+                                        <h3>🏆 Weekly Leaderboard</h3>
+                                        <p class="tool-desc">Compete with other learners.</p>
+                                    </div>
+                                    <span class="tool-tag" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.2);">Rankings</span>
+                                </div>
+                                <div id="leaderboard-list" style="margin: 1rem 0; display: flex; flex-direction: column; gap: 0.5rem; min-height: 80px;">
+                                    <!-- Rendered in JS -->
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.75rem;">
+                                    <label style="font-size: 0.75rem; color: var(--mu); display: flex; align-items: center; gap: 0.4rem; cursor: pointer; margin: 0;">
+                                        <input type="checkbox" id="leaderboard-opt-in-chk" checked onchange="toggleLeaderboardOptIn(this.checked)" style="cursor: pointer; margin: 0;">
+                                        Appear Publicly on Leaderboard
+                                    </label>
+                                </div>
+                            </article>
+
+                            <article class="tool-card" id="ai-mentor-card">
+                                <div class="tool-head">
+                                    <div>
+                                        <h3>🤖 AI Career Mentor</h3>
+                                        <p class="tool-desc">Quick analysis & recommendations.</p>
+                                    </div>
+                                    <span class="tool-tag" style="background: rgba(99, 102, 241, 0.1); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.2);">Mentor</span>
+                                </div>
+                                <div style="margin: 1rem 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <button class="tool-btn" style="background: rgba(255,255,255,0.02); color: var(--wh); text-align: left; justify-content: flex-start; border: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; cursor: pointer;" onclick="triggerMentorQuery('Analyze my weekly study hours trend and suggest improvements.')">📊 Analyze my study trends</button>
+                                    <button class="tool-btn" style="background: rgba(255,255,255,0.02); color: var(--wh); text-align: left; justify-content: flex-start; border: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; cursor: pointer;" onclick="triggerMentorQuery('Recommend hot career options matching my current study profile.')">🚀 Recommend career options</button>
+                                    <button class="tool-btn" style="background: rgba(255,255,255,0.02); color: var(--wh); text-align: left; justify-content: flex-start; border: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; cursor: pointer;" onclick="triggerMentorQuery('Explain what skills I need to acquire to become a successful professional.')">🧠 Review my required skills</button>
                                 </div>
                             </article>
                             <!-- END NEW WIDGETS -->
@@ -1655,8 +1703,26 @@
                             <input type="text" id="career-search" class="fi search-input" placeholder="Search careers (e.g. UPSC, Software Developer, MBA, CA...)" oninput="handleSearchCareer(this.value)" aria-label="Search Careers">
                             <button class="search-clear" id="search-clear" onclick="clearSearchCareer()" aria-label="Clear Search" style="display:none;">✕</button>
                         </div>
-                        <div class="dash-filters">
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <select id="filter-salary" class="fi" onchange="filterCareersSalary(this.value)" style="width: auto; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: var(--wh); font-size: 0.85rem; padding: 0 1rem; border-radius: 6px; height: 42px;">
+                                <option value="all">💰 All Salary Tiers</option>
+                                <option value="high">🔥 High Paying (>15 LPA)</option>
+                                <option value="mid">⚡ Mid-Tier (6-15 LPA)</option>
+                                <option value="entry">🌱 Entry-Level (<6 LPA)</option>
+                            </select>
+                            <select id="filter-remote" class="fi" onchange="filterCareersRemote(this.value)" style="width: auto; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: var(--wh); font-size: 0.85rem; padding: 0 1rem; border-radius: 6px; height: 42px;">
+                                <option value="all">🌐 Any Work Mode</option>
+                                <option value="remote">🏠 Remote Friendly</option>
+                                <option value="growth">📈 High Growth Rate</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Category Filters -->
+                    <div class="dash-controls rv" style="margin-top: 0.5rem; padding-top: 0;">
+                        <div class="dash-filters" style="width: 100%;">
                             <button class="df on" onclick="filterCareer(this,'all')">All Careers</button>
+                            <button class="df" id="btn-rec-for-me" onclick="filterCareer(this,'recommended')" style="background: linear-gradient(90deg, rgba(232, 140, 42, 0.1), rgba(245, 158, 11, 0.15)) !important; border: 1px solid rgba(245, 158, 11, 0.3) !important; color: #f59e0b !important; font-weight: 700;">✨ Recommended for Me</button>
                             <button class="df" onclick="filterCareer(this,'Technology &amp; IT')">Technology</button>
                             <button class="df" onclick="filterCareer(this,'Business &amp; Management')">Business &amp; Management</button>
                             <button class="df" onclick="filterCareer(this,'Creative &amp; Design')">Creative</button>
@@ -2474,9 +2540,19 @@
     
 
 
-    <script defer="" src="/dist/careers.e4a25189.js?v=3b2f016aaf7029d9"></script>
-    <script defer="" src="/dist/app.6544de95.js?v=3b2f016aaf7029d9"></script>
-    <script defer="" src="/dist/ux-engine.429b6548.js?v=3b2f016aaf7029d9"></script>
+    <script defer="" src="/dist/careers.e4a25189.js?v=73257d037f435cd6"></script>
+    <script defer="" src="/dist/app.6544de95.js?v=73257d037f435cd6"></script>
+    <script defer="" src="/dist/ux-engine.429b6548.js?v=73257d037f435cd6"></script>
 
+
+    <!-- PROBLEM INSIGHT MODAL -->
+    <div id="problem-insight-modal" class="prob-modal-backdrop" style="display:none;" onclick="if(event.target === this) closeProblemInsight()">
+        <div class="prob-modal-content">
+            <button class="prob-modal-close" onclick="closeProblemInsight()" aria-label="Close Modal">&times;</button>
+            <div id="prob-modal-body">
+                <!-- Content dynamically populated by JS -->
+            </div>
+        </div>
+    </div>
 
 </body></html>

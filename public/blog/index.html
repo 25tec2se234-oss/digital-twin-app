@@ -57,9 +57,9 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.dc44bb66.css?v=3b2f016aaf7029d9" as="style">
+    <link rel="preload" href="/dist/main.dc44bb66.css?v=73257d037f435cd6" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.dc44bb66.css?v=3b2f016aaf7029d9">
+    <link rel="stylesheet" href="/dist/main.dc44bb66.css?v=73257d037f435cd6">
 
     <!-- JSON-LD Structured Data Schema -->
     
@@ -391,8 +391,8 @@
 .blog-card-meta { font-size: 0.85rem; color: #a1a1aa; margin-bottom: 1rem; }
 </style>
 
-    <script defer="defer" src="/dist/app.6544de95.js?v=3b2f016aaf7029d9"></script>
-    <script defer="defer" src="/dist/ux-engine.429b6548.js?v=3b2f016aaf7029d9"></script>
+    <script defer="defer" src="/dist/app.6544de95.js?v=73257d037f435cd6"></script>
+    <script defer="defer" src="/dist/ux-engine.429b6548.js?v=73257d037f435cd6"></script>
 </head>
 <body>
 
@@ -470,17 +470,6 @@
         <button type="button" id="mob-signin" onclick="openLoginGate(); togMenu()" class="btn-reset">Sign In</button>
         <button type="button" id="mob-signup" onclick="openLoginGate(); togMenu()" class="btn-reset">Sign Up</button>
         <button type="button" id="mob-admindb" onclick="openAdminDashboard(); togMenu()" style="display:none; color:#f5a94e;" class="btn-reset">Developer DB</button>
-        <button type="button" id="mob-logout" onclick="if (doLogout()) togMenu()" class="btn-reset">Log Out</button>
-        <div id="mob-account-link-code" style="display:none; padding: 1rem 1.5rem; color:#a78bfa; font-size: 1.1rem; font-weight: 600; cursor:default;">Parent Code: <strong id="mob-ui-link-code">-</strong></div>
-        <a href="#student-dashboard" onclick="requirePremiumFrontend(function(){openDashboardShortcut(); togMenu();})">Personalised Dashboard</a>
-        <a href="#how" onclick="togMenu()">How It Works</a>
-        <a href="#dashboard" onclick="togMenu()">Career Explorer</a>
-        <a href="#ai-section" onclick="togMenu()">AI Advisor</a>
-        <a href="/parent" style="color: #a78bfa; font-weight: 600;" onclick="togMenu()">Parent Portal</a>
-        <a href="#rev" onclick="togMenu()">Reviews</a>
-        <a href="/blog" onclick="togMenu()">Blog</a>
-        <a href="/leaderboard.html" style="color: #fbbf24; font-weight: 600;" onclick="togMenu()">🏆 Leaderboard</a>
-        <button type="button" onclick="requireAuth(function(){openPricingPage(); togMenu();}); return false;" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: #e88c2a; width: 100%; text-align: left; font-size: 1.1rem; font-weight: 700;">💎 Go Premium</button>
         <button type="button" onclick="openAnalyzer(); togMenu();" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: var(--wh, #fff); width: 100%; text-align: left; font-size: 1.1rem; font-weight: 600;">🧠
             Achievement Analyzer</button>
         <div style="padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 0.5rem;">
@@ -541,6 +530,17 @@
         <button class="cat-btn" onclick="filterCategory('AI Guidance', this)">AI Guidance</button>
         <button class="cat-btn" onclick="filterCategory('Student Success', this)">Student Success</button>
     </div>
+</div>
+
+<div style="background: linear-gradient(135deg, rgba(0, 240, 255, 0.12), rgba(167, 139, 250, 0.15)); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 20px; padding: 2.2rem; margin-bottom: 3.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; box-shadow: 0 15px 35px rgba(0,0,0,0.3);">
+    <div style="max-width: 720px;">
+        <span style="background: rgba(0,240,255,0.2); color: #00f0ff; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">⚡ NEW EVERGREEN AI HUB</span>
+        <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; margin: 0.8rem 0 0.5rem; color: #fff; font-weight: 800;">50+ Best Free AI Tools Every Student Should Use in 2026</h2>
+        <p style="color: #cbd5e1; margin: 0; font-size: 1.05rem; line-height: 1.6;">Compare 53 top free AI tools for research, coding, presentation slide decks, math solving, vector design & video editing with live filters & bookmarks.</p>
+    </div>
+    <a href="/ai-tools-for-students" style="background: linear-gradient(135deg, #00f0ff, #3b82f6); color: #0b0f19; font-weight: 800; padding: 0.9rem 1.8rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; white-space: nowrap;">
+        Explore 50+ AI Tools Directory &rarr;
+    </a>
 </div>
 
     <div id="featured-section" class="featured-blog" style="margin-bottom: 5rem;">
