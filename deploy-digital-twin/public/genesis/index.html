@@ -977,12 +977,12 @@
             border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
-        /* MODAL PREVIEW & MOBILE RESPONSIVENESS AUDIT */
+        /* MODAL PREVIEW & INTERACTIVE WALKTHROUGH SIMULATOR STYLES */
         .modal-backdrop {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0,0,0,0.88);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             z-index: 2000;
@@ -1001,10 +1001,10 @@
             border: 1px solid var(--border-glow);
             border-radius: 24px;
             width: 100%;
-            max-width: 720px;
-            padding: 2.25rem;
+            max-width: 700px;
+            padding: 2rem;
             position: relative;
-            max-height: 90vh;
+            max-height: 92vh;
             overflow-y: auto;
             box-shadow: 0 25px 60px rgba(0,0,0,0.8);
         }
@@ -1034,17 +1034,130 @@
             transform: scale(1.08);
         }
 
-        .modal-preview-box {
-            background: rgba(0,0,0,0.4);
-            border-radius: 16px;
-            height: 240px;
+        /* INTERACTIVE PLAYER UI */
+        .modal-player-box {
+            background: rgba(0,0,0,0.45);
+            border-radius: 18px;
+            border: 1px solid var(--border-glow);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-top: 1rem;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        .player-stage-visual {
+            min-height: 180px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            text-align: center;
+        }
+
+        .player-step-badge {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            letter-spacing: 0.08em;
+            background: rgba(56, 189, 248, 0.12);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            margin-bottom: 0.6rem;
+        }
+
+        .player-step-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .player-step-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            max-width: 480px;
+            line-height: 1.45;
+        }
+
+        .player-progress-track {
+            height: 6px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 9999px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .player-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 9999px;
+            transition: width 0.4s ease;
+        }
+
+        .player-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .player-controls-left {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .player-ctrl-btn {
+            background: rgba(255,255,255,0.08);
             border: 1px solid var(--border-subtle);
-            margin-top: 1rem;
-            padding: 1rem;
+            color: var(--text-primary);
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+
+        .player-ctrl-btn:hover, .player-ctrl-btn.play-active {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--accent-indigo);
+            color: var(--accent-cyan);
+        }
+
+        .player-steps-dots {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .p-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .p-dot.active {
+            background: var(--accent-indigo);
+            border-color: var(--accent-indigo);
+            color: #ffffff;
+            box-shadow: 0 0 12px var(--accent-indigo);
         }
 
         /* FOOTER */
@@ -1107,7 +1220,7 @@
             font-size: 0.85rem;
         }
 
-        /* ULTIMATE MULTI-DEVICE RESPONSIVE OVERHAUL (320px, 375px, 414px, 768px, 992px) */
+        /* ULTIMATE MULTI-DEVICE RESPONSIVE OVERHAUL */
         @media (max-width: 992px) {
             .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
             .hero-subheading { margin-left: auto; margin-right: auto; }
@@ -1120,7 +1233,7 @@
             .navbar { padding: 0.75rem 1rem; }
             .nav-links { display: none; }
             .mobile-menu-btn { display: flex; }
-            #btn-top-begin { display: none !important; } /* Hide redundant header button on mobile */
+            #btn-top-begin { display: none !important; }
             .hero-section { min-height: auto; padding-top: 6rem; padding-bottom: 3rem; }
             .hero-headline { font-size: clamp(2rem, 8vw, 2.8rem); }
             .hero-subheading { font-size: 1rem; }
@@ -1150,13 +1263,14 @@
             .q-title { font-size: 1.15rem; }
             .option-btn { padding: 0.9rem 1rem; font-size: 0.9rem; }
             .modal-backdrop { padding: 0.5rem; }
-            .modal-content { padding: 1.25rem 0.85rem 1.25rem 0.85rem; border-radius: 16px; max-height: 92vh; }
+            .modal-content { padding: 1.25rem 0.85rem; border-radius: 16px; max-height: 92vh; }
             .modal-close-btn { top: 0.75rem; right: 0.75rem; width: 32px; height: 32px; }
             #modal-title { font-size: 1.15rem !important; margin-bottom: 0.4rem !important; padding-right: 2rem; }
-            .modal-preview-box { height: 160px !important; margin-top: 0.75rem; }
-            .modal-preview-box .core-orb { width: 54px !important; height: 54px !important; }
-            .modal-preview-box .core-orb svg { width: 24px !important; height: 24px !important; }
-            .modal-preview-box p { font-size: 0.8rem !important; }
+            .modal-player-box { padding: 1rem; }
+            .player-stage-visual { min-height: 150px; }
+            .player-step-title { font-size: 1.1rem; }
+            .player-step-desc { font-size: 0.82rem; }
+            .player-toolbar { justify-content: center; }
         }
     </style>
 </head>
@@ -1614,19 +1728,58 @@
 
     </main>
 
-    <!-- MODAL WALKTHROUGH PREVIEW -->
+    <!-- MODAL WALKTHROUGH PREVIEW & INTERACTIVE PLAYER -->
     <div id="demo-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div class="modal-content">
             <button id="modal-close" class="modal-close-btn" aria-label="Close modal">
                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
-            <h3 id="modal-title" style="font-size: 1.5rem; margin-bottom: 0.75rem; color: var(--text-primary);">Genesis Interactive Walkthrough</h3>
-            <p style="color: var(--text-secondary); margin-bottom: 1.25rem; font-size: 0.95rem;">Experience how Genesis ingests real-time cognitive telemetry to spawn your lifelong Digital Twin profile.</p>
-            <div class="modal-preview-box">
-                <div class="core-orb" style="width: 80px; height: 80px;">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="36" height="36"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <h3 id="modal-title" style="font-size: 1.4rem; margin-bottom: 0.4rem; color: var(--text-primary);">Genesis™ Interactive Walkthrough Simulator</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 0.85rem; font-size: 0.88rem;">Live interactive preview showing how Genesis multi-agent intelligence creates your Digital Self.</p>
+
+            <!-- SIMULATOR PLAYER DISPLAY CONTAINER -->
+            <div class="modal-player-box">
+                <div class="player-stage-visual">
+                    <div id="player-orb" class="core-orb" style="width: 76px; height: 76px; margin-bottom: 0.85rem;">
+                        <svg id="player-icon-svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="34" height="34">
+                            <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <div id="player-step-badge" class="player-step-badge">STEP 1 / 4 — TELEMETRY INGESTION</div>
+                    <h4 id="player-step-title" class="player-step-title">Ingesting Raw Student Telemetry</h4>
+                    <p id="player-step-desc" class="player-step-desc">Capturing learning speed, subject preferences, error patterns, and curiosity signals in real time.</p>
                 </div>
-                <p style="margin-top: 1rem; font-weight: 600; color: var(--accent-cyan);">Genesis Multi-Agent Orchestration Preview</p>
+
+                <!-- PROGRESS TIMELINE BAR -->
+                <div class="player-progress-track">
+                    <div id="player-progress-fill" class="player-progress-fill" style="width: 25%;"></div>
+                </div>
+
+                <!-- PLAYER CONTROLS TOOLBAR -->
+                <div class="player-toolbar">
+                    <div class="player-controls-left">
+                        <button id="player-btn-prev" class="player-ctrl-btn" title="Previous Step" aria-label="Previous Step">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+                        </button>
+                        <button id="player-btn-play" class="player-ctrl-btn play-active" title="Play or Pause Simulation" aria-label="Play or Pause Simulation">
+                            <svg id="play-svg-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 9v6l5-3z"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </button>
+                        <button id="player-btn-next" class="player-ctrl-btn" title="Next Step" aria-label="Next Step">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+
+                    <div class="player-steps-dots" aria-label="Walkthrough Step Selectors">
+                        <span class="p-dot active" id="p-dot-1" onclick="jumpToWalkthroughStep(0)">1</span>
+                        <span class="p-dot" id="p-dot-2" onclick="jumpToWalkthroughStep(1)">2</span>
+                        <span class="p-dot" id="p-dot-3" onclick="jumpToWalkthroughStep(2)">3</span>
+                        <span class="p-dot" id="p-dot-4" onclick="jumpToWalkthroughStep(3)">4</span>
+                    </div>
+
+                    <button id="player-btn-launch" class="btn-primary-glow" style="padding: 0.45rem 1rem; font-size: 0.85rem; min-height: 36px;">
+                        <span>Launch Genesis</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -1730,28 +1883,150 @@
                 });
             }
 
-            // Demo Modal Logic
+            // Interactive Walkthrough Demo Player Logic
+            const walkthroughSteps = [
+                {
+                    step: 1,
+                    badge: "STEP 1 / 4 — TELEMETRY INGESTION",
+                    title: "Ingesting Raw Student Telemetry",
+                    desc: "Capturing learning speed, subject preferences, error patterns, and curiosity signals in real time.",
+                    icon: '<path d="M13 10V3L4 14h7v7l9-11h-7z"/>',
+                    progress: 25
+                },
+                {
+                    step: 2,
+                    badge: "STEP 2 / 4 — MULTI-AGENT SYNTHESIS",
+                    title: "Multi-Agent Cognitive Synthesis",
+                    desc: "Socratic Tutor Agent, Skill Radar Agent, and Career Predictor Agent collaborate to model your Digital Self.",
+                    icon: '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>',
+                    progress: 50
+                },
+                {
+                    step: 3,
+                    badge: "STEP 3 / 4 — 5-AXIS RADAR CALIBRATION",
+                    title: "5-Axis Capability Vector Morphing",
+                    desc: "Constructing live capability polygon across Logic, Creativity, Velocity, Domain Focus, and Problem Grit.",
+                    icon: '<path d="M9 19v-6a2 2 0 012-2h2a2 2 0 012 2v6a2 2 0 01-2 2h-2a2 2 0 01-2-2zM9 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5z"/>',
+                    progress: 75
+                },
+                {
+                    step: 4,
+                    badge: "STEP 4 / 4 — 2030 CAREER VECTOR MATCHING",
+                    title: "Matching 2030 Career Trajectories",
+                    desc: "Mapping your verified capability index to live global tech demand and high-growth job roles.",
+                    icon: '<path d="M5 13l4 4L19 7"/>',
+                    progress: 100
+                }
+            ];
+
+            let currentWalkthroughIndex = 0;
+            let isWalkthroughPlaying = false;
+            let walkthroughTimer = null;
+
             const watchDemoBtn = document.getElementById('btn-watch-demo');
             const demoModal = document.getElementById('demo-modal');
             const modalClose = document.getElementById('modal-close');
+            const scannerSection = document.getElementById('genesis-scanner');
+
+            const playerStepBadge = document.getElementById('player-step-badge');
+            const playerStepTitle = document.getElementById('player-step-title');
+            const playerStepDesc = document.getElementById('player-step-desc');
+            const playerIconSvg = document.getElementById('player-icon-svg');
+            const playerProgressFill = document.getElementById('player-progress-fill');
+            const playerBtnPlay = document.getElementById('player-btn-play');
+            const playerBtnPrev = document.getElementById('player-btn-prev');
+            const playerBtnNext = document.getElementById('player-btn-next');
+            const playerBtnLaunch = document.getElementById('player-btn-launch');
+
+            function renderWalkthroughStep(index) {
+                currentWalkthroughIndex = index;
+                const data = walkthroughSteps[index];
+
+                playerStepBadge.textContent = data.badge;
+                playerStepTitle.textContent = data.title;
+                playerStepDesc.textContent = data.desc;
+                playerIconSvg.innerHTML = data.icon;
+                playerProgressFill.style.width = `${data.progress}%`;
+
+                for (let i = 1; i <= 4; i++) {
+                    const dot = document.getElementById(`p-dot-${i}`);
+                    if (dot) {
+                        dot.className = i - 1 === index ? 'p-dot active' : 'p-dot';
+                    }
+                }
+            }
+
+            window.jumpToWalkthroughStep = function(index) {
+                renderWalkthroughStep(index);
+            };
+
+            function playWalkthrough() {
+                if (isWalkthroughPlaying) return;
+                isWalkthroughPlaying = true;
+                playerBtnPlay.classList.add('play-active');
+                
+                walkthroughTimer = setInterval(() => {
+                    let nextIdx = (currentWalkthroughIndex + 1) % walkthroughSteps.length;
+                    renderWalkthroughStep(nextIdx);
+                }, 2400);
+            }
+
+            function pauseWalkthrough() {
+                isWalkthroughPlaying = false;
+                playerBtnPlay.classList.remove('play-active');
+                if (walkthroughTimer) {
+                    clearInterval(walkthroughTimer);
+                    walkthroughTimer = null;
+                }
+            }
+
+            playerBtnPlay.addEventListener('click', () => {
+                if (isWalkthroughPlaying) {
+                    pauseWalkthrough();
+                } else {
+                    playWalkthrough();
+                }
+            });
+
+            playerBtnPrev.addEventListener('click', () => {
+                pauseWalkthrough();
+                let prevIdx = (currentWalkthroughIndex - 1 + walkthroughSteps.length) % walkthroughSteps.length;
+                renderWalkthroughStep(prevIdx);
+            });
+
+            playerBtnNext.addEventListener('click', () => {
+                pauseWalkthrough();
+                let nextIdx = (currentWalkthroughIndex + 1) % walkthroughSteps.length;
+                renderWalkthroughStep(nextIdx);
+            });
+
+            playerBtnLaunch.addEventListener('click', () => {
+                demoModal.classList.remove('open');
+                pauseWalkthrough();
+                scannerSection.scrollIntoView({ behavior: 'smooth' });
+                startGenesisScanSequence();
+            });
 
             watchDemoBtn.addEventListener('click', () => {
                 demoModal.classList.add('open');
+                renderWalkthroughStep(0);
+                playWalkthrough();
             });
 
             modalClose.addEventListener('click', () => {
                 demoModal.classList.remove('open');
+                pauseWalkthrough();
             });
 
             demoModal.addEventListener('click', (e) => {
                 if (e.target === demoModal) {
                     demoModal.classList.remove('open');
+                    pauseWalkthrough();
                 }
             });
 
             // Smooth Scroll to Genesis Scanner
             const beginGenesisBtn = document.getElementById('btn-begin-genesis');
-            const scannerSection = document.getElementById('genesis-scanner');
 
             beginGenesisBtn.addEventListener('click', () => {
                 scannerSection.scrollIntoView({ behavior: 'smooth' });
