@@ -977,7 +977,7 @@
             border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
-        /* MODAL PREVIEW & INTERACTIVE WALKTHROUGH SIMULATOR STYLES */
+        /* MODAL PREVIEW & YOUTUBE-STYLE VIDEO PLAYER SYSTEM */
         .modal-backdrop {
             display: none;
             position: fixed;
@@ -1001,7 +1001,7 @@
             border: 1px solid var(--border-glow);
             border-radius: 24px;
             width: 100%;
-            max-width: 700px;
+            max-width: 720px;
             padding: 2rem;
             position: relative;
             max-height: 92vh;
@@ -1034,29 +1034,65 @@
             transform: scale(1.08);
         }
 
-        /* INTERACTIVE PLAYER UI */
-        .modal-player-box {
-            background: rgba(0,0,0,0.45);
-            border-radius: 18px;
-            border: 1px solid var(--border-glow);
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
+        /* YOUTUBE PLAYER STYLES */
+        .yt-player-box {
+            background: #0f0f0f;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
             margin-top: 1rem;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+            position: relative;
         }
 
-        .player-stage-visual {
-            min-height: 180px;
+        .yt-video-screen {
+            position: relative;
+            height: 250px;
+            background: radial-gradient(circle at center, #1f1b2e 0%, #0b0d14 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
+            padding: 1.5rem;
+            cursor: pointer;
+            user-select: none;
         }
 
-        .player-step-badge {
+        /* Large Center YouTube Play/Pause Button */
+        .yt-center-play {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(255, 0, 0, 0.92);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-bottom: 0.85rem;
+            z-index: 5;
+        }
+
+        .yt-video-screen:hover .yt-center-play {
+            transform: scale(1.12);
+            background: #ff0000;
+            box-shadow: 0 0 45px rgba(255, 0, 0, 0.85);
+        }
+
+        .yt-video-screen.playing .yt-center-play {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.8);
+        }
+
+        .yt-video-screen.playing:hover .yt-center-play {
+            opacity: 0.95;
+            transform: scale(1);
+        }
+
+        .yt-step-badge {
             font-size: 0.72rem;
             font-weight: 800;
             color: var(--accent-cyan);
@@ -1065,39 +1101,65 @@
             padding: 0.25rem 0.75rem;
             border-radius: 9999px;
             border: 1px solid rgba(56, 189, 248, 0.25);
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.5rem;
         }
 
-        .player-step-title {
+        .yt-step-title {
             font-size: 1.25rem;
             font-weight: 800;
-            color: var(--text-primary);
-            margin-bottom: 0.4rem;
+            color: #ffffff;
+            margin-bottom: 0.3rem;
         }
 
-        .player-step-desc {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            max-width: 480px;
-            line-height: 1.45;
+        .yt-step-desc {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.75);
+            max-width: 460px;
+            line-height: 1.4;
         }
 
-        .player-progress-track {
-            height: 6px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 9999px;
-            overflow: hidden;
+        /* YouTube Progress Bar */
+        .yt-progress-container {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
             position: relative;
+            transition: height 0.2s ease;
         }
 
-        .player-progress-fill {
+        .yt-progress-container:hover {
+            height: 12px;
+        }
+
+        .yt-progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
-            border-radius: 9999px;
-            transition: width 0.4s ease;
+            background: #ff0000;
+            width: 0%;
+            position: relative;
+            transition: width 0.1s linear;
         }
 
-        .player-toolbar {
+        .yt-progress-thumb {
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%) scale(0);
+            width: 14px;
+            height: 14px;
+            background: #ff0000;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+            transition: transform 0.2s ease;
+        }
+
+        .yt-progress-container:hover .yt-progress-thumb {
+            transform: translateY(-50%) scale(1);
+        }
+
+        /* YouTube Controls Bar */
+        .yt-controls-bar {
+            background: #181818;
+            padding: 0.75rem 1rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -1105,59 +1167,58 @@
             flex-wrap: wrap;
         }
 
-        .player-controls-left {
+        .yt-controls-left {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
 
-        .player-ctrl-btn {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid var(--border-subtle);
-            color: var(--text-primary);
+        .yt-btn {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 36px;
             height: 36px;
-            border-radius: 10px;
-            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.2s ease;
+        }
+
+        .yt-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .yt-time-text {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.85);
+            font-family: monospace;
+        }
+
+        .yt-chapter-dots {
             display: flex;
             align-items: center;
-            justify-content: center;
-            transition: var(--transition-smooth);
+            gap: 0.4rem;
         }
 
-        .player-ctrl-btn:hover, .player-ctrl-btn.play-active {
-            background: rgba(99, 102, 241, 0.2);
-            border-color: var(--accent-indigo);
-            color: var(--accent-cyan);
-        }
-
-        .player-steps-dots {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .p-dot {
-            width: 28px;
-            height: 28px;
-            border-radius: 8px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid var(--border-subtle);
-            color: var(--text-muted);
-            font-size: 0.78rem;
+        .yt-dot {
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.75rem;
             font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             cursor: pointer;
-            transition: var(--transition-smooth);
+            transition: all 0.2s ease;
         }
 
-        .p-dot.active {
-            background: var(--accent-indigo);
-            border-color: var(--accent-indigo);
+        .yt-dot.active {
+            background: #ff0000;
             color: #ffffff;
-            box-shadow: 0 0 12px var(--accent-indigo);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
         }
 
         /* FOOTER */
@@ -1266,11 +1327,11 @@
             .modal-content { padding: 1.25rem 0.85rem; border-radius: 16px; max-height: 92vh; }
             .modal-close-btn { top: 0.75rem; right: 0.75rem; width: 32px; height: 32px; }
             #modal-title { font-size: 1.15rem !important; margin-bottom: 0.4rem !important; padding-right: 2rem; }
-            .modal-player-box { padding: 1rem; }
-            .player-stage-visual { min-height: 150px; }
-            .player-step-title { font-size: 1.1rem; }
-            .player-step-desc { font-size: 0.82rem; }
-            .player-toolbar { justify-content: center; }
+            .yt-video-screen { height: 200px; padding: 1rem; }
+            .yt-center-play { width: 52px; height: 52px; }
+            .yt-step-title { font-size: 1.1rem; }
+            .yt-step-desc { font-size: 0.8rem; }
+            .yt-controls-bar { justify-content: center; padding: 0.6rem; }
         }
     </style>
 </head>
@@ -1728,55 +1789,61 @@
 
     </main>
 
-    <!-- MODAL WALKTHROUGH PREVIEW & INTERACTIVE PLAYER -->
+    <!-- MODAL WALKTHROUGH PREVIEW & YOUTUBE-STYLE VIDEO PLAYER SYSTEM -->
     <div id="demo-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div class="modal-content">
             <button id="modal-close" class="modal-close-btn" aria-label="Close modal">
                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
-            <h3 id="modal-title" style="font-size: 1.4rem; margin-bottom: 0.4rem; color: var(--text-primary);">Genesis™ Interactive Walkthrough Simulator</h3>
-            <p style="color: var(--text-secondary); margin-bottom: 0.85rem; font-size: 0.88rem;">Live interactive preview showing how Genesis multi-agent intelligence creates your Digital Self.</p>
+            <h3 id="modal-title" style="font-size: 1.35rem; margin-bottom: 0.35rem; color: var(--text-primary);">Genesis™ Interactive Walkthrough Video</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 0.75rem; font-size: 0.88rem;">Live YouTube-style simulation showing how Genesis creates your Digital Self.</p>
 
-            <!-- SIMULATOR PLAYER DISPLAY CONTAINER -->
-            <div class="modal-player-box">
-                <div class="player-stage-visual">
-                    <div id="player-orb" class="core-orb" style="width: 76px; height: 76px; margin-bottom: 0.85rem;">
-                        <svg id="player-icon-svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="34" height="34">
-                            <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            <!-- YOUTUBE PLAYER CONTAINER -->
+            <div class="yt-player-box">
+                <!-- VIDEO DISPLAY SCREEN -->
+                <div id="yt-video-screen" class="yt-video-screen" title="Click to Play / Pause Video">
+                    <div id="yt-center-play" class="yt-center-play" aria-label="Play Video">
+                        <svg id="yt-center-icon" width="28" height="28" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
                         </svg>
                     </div>
-                    <div id="player-step-badge" class="player-step-badge">STEP 1 / 4 — TELEMETRY INGESTION</div>
-                    <h4 id="player-step-title" class="player-step-title">Ingesting Raw Student Telemetry</h4>
-                    <p id="player-step-desc" class="player-step-desc">Capturing learning speed, subject preferences, error patterns, and curiosity signals in real time.</p>
+                    <div id="yt-step-badge" class="yt-step-badge">STEP 1 / 4 — TELEMETRY INGESTION</div>
+                    <h4 id="yt-step-title" class="yt-step-title">Ingesting Raw Student Telemetry</h4>
+                    <p id="yt-step-desc" class="yt-step-desc">Capturing learning speed, subject preferences, error patterns, and curiosity signals in real time.</p>
                 </div>
 
-                <!-- PROGRESS TIMELINE BAR -->
-                <div class="player-progress-track">
-                    <div id="player-progress-fill" class="player-progress-fill" style="width: 25%;"></div>
+                <!-- YOUTUBE SCRUBBABLE PROGRESS BAR -->
+                <div id="yt-progress-container" class="yt-progress-container" title="Click to Seek">
+                    <div id="yt-progress-fill" class="yt-progress-fill">
+                        <div class="yt-progress-thumb"></div>
+                    </div>
                 </div>
 
-                <!-- PLAYER CONTROLS TOOLBAR -->
-                <div class="player-toolbar">
-                    <div class="player-controls-left">
-                        <button id="player-btn-prev" class="player-ctrl-btn" title="Previous Step" aria-label="Previous Step">
-                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+                <!-- YOUTUBE CONTROL TOOLBAR -->
+                <div class="yt-controls-bar">
+                    <div class="yt-controls-left">
+                        <button id="yt-play-toggle" class="yt-btn" title="Play / Pause (Space)" aria-label="Play or Pause Video">
+                            <svg id="yt-play-svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
                         </button>
-                        <button id="player-btn-play" class="player-ctrl-btn play-active" title="Play or Pause Simulation" aria-label="Play or Pause Simulation">
-                            <svg id="play-svg-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 9v6l5-3z"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <button id="yt-prev-btn" class="yt-btn" title="Previous Chapter" aria-label="Previous Chapter">
+                            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
                         </button>
-                        <button id="player-btn-next" class="player-ctrl-btn" title="Next Step" aria-label="Next Step">
-                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                        <button id="yt-next-btn" class="yt-btn" title="Next Chapter" aria-label="Next Chapter">
+                            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
                         </button>
+                        <span id="yt-time-display" class="yt-time-text">00:00 / 00:16</span>
                     </div>
 
-                    <div class="player-steps-dots" aria-label="Walkthrough Step Selectors">
-                        <span class="p-dot active" id="p-dot-1" onclick="jumpToWalkthroughStep(0)">1</span>
-                        <span class="p-dot" id="p-dot-2" onclick="jumpToWalkthroughStep(1)">2</span>
-                        <span class="p-dot" id="p-dot-3" onclick="jumpToWalkthroughStep(2)">3</span>
-                        <span class="p-dot" id="p-dot-4" onclick="jumpToWalkthroughStep(3)">4</span>
+                    <div class="yt-chapter-dots" aria-label="Video Chapters">
+                        <span class="yt-dot active" id="yt-dot-1" onclick="seekToWalkthroughStep(0)">1</span>
+                        <span class="yt-dot" id="yt-dot-2" onclick="seekToWalkthroughStep(1)">2</span>
+                        <span class="yt-dot" id="yt-dot-3" onclick="seekToWalkthroughStep(2)">3</span>
+                        <span class="yt-dot" id="yt-dot-4" onclick="seekToWalkthroughStep(3)">4</span>
                     </div>
 
-                    <button id="player-btn-launch" class="btn-primary-glow" style="padding: 0.45rem 1rem; font-size: 0.85rem; min-height: 36px;">
+                    <button id="yt-launch-btn" class="btn-primary-glow" style="padding: 0.4rem 0.9rem; font-size: 0.85rem; min-height: 36px;">
                         <span>Launch Genesis</span>
                     </button>
                 </div>
@@ -1883,145 +1950,185 @@
                 });
             }
 
-            // Interactive Walkthrough Demo Player Logic
-            const walkthroughSteps = [
+            // YOUTUBE-STYLE VIDEO PLAYER STATE MACHINE
+            const walkthroughChapters = [
                 {
                     step: 1,
                     badge: "STEP 1 / 4 — TELEMETRY INGESTION",
                     title: "Ingesting Raw Student Telemetry",
                     desc: "Capturing learning speed, subject preferences, error patterns, and curiosity signals in real time.",
-                    icon: '<path d="M13 10V3L4 14h7v7l9-11h-7z"/>',
-                    progress: 25
+                    startTime: 0,
+                    endTime: 4
                 },
                 {
                     step: 2,
                     badge: "STEP 2 / 4 — MULTI-AGENT SYNTHESIS",
                     title: "Multi-Agent Cognitive Synthesis",
                     desc: "Socratic Tutor Agent, Skill Radar Agent, and Career Predictor Agent collaborate to model your Digital Self.",
-                    icon: '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>',
-                    progress: 50
+                    startTime: 4,
+                    endTime: 8
                 },
                 {
                     step: 3,
                     badge: "STEP 3 / 4 — 5-AXIS RADAR CALIBRATION",
                     title: "5-Axis Capability Vector Morphing",
                     desc: "Constructing live capability polygon across Logic, Creativity, Velocity, Domain Focus, and Problem Grit.",
-                    icon: '<path d="M9 19v-6a2 2 0 012-2h2a2 2 0 012 2v6a2 2 0 01-2 2h-2a2 2 0 01-2-2zM9 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5z"/>',
-                    progress: 75
+                    startTime: 8,
+                    endTime: 12
                 },
                 {
                     step: 4,
                     badge: "STEP 4 / 4 — 2030 CAREER VECTOR MATCHING",
                     title: "Matching 2030 Career Trajectories",
                     desc: "Mapping your verified capability index to live global tech demand and high-growth job roles.",
-                    icon: '<path d="M5 13l4 4L19 7"/>',
-                    progress: 100
+                    startTime: 12,
+                    endTime: 16
                 }
             ];
 
-            let currentWalkthroughIndex = 0;
-            let isWalkthroughPlaying = false;
-            let walkthroughTimer = null;
+            const TOTAL_DURATION = 16; // 16 seconds total video
+            let currentTime = 0;
+            let isYtPlaying = false;
+            let ytInterval = null;
 
             const watchDemoBtn = document.getElementById('btn-watch-demo');
             const demoModal = document.getElementById('demo-modal');
             const modalClose = document.getElementById('modal-close');
             const scannerSection = document.getElementById('genesis-scanner');
 
-            const playerStepBadge = document.getElementById('player-step-badge');
-            const playerStepTitle = document.getElementById('player-step-title');
-            const playerStepDesc = document.getElementById('player-step-desc');
-            const playerIconSvg = document.getElementById('player-icon-svg');
-            const playerProgressFill = document.getElementById('player-progress-fill');
-            const playerBtnPlay = document.getElementById('player-btn-play');
-            const playerBtnPrev = document.getElementById('player-btn-prev');
-            const playerBtnNext = document.getElementById('player-btn-next');
-            const playerBtnLaunch = document.getElementById('player-btn-launch');
+            const ytVideoScreen = document.getElementById('yt-video-screen');
+            const ytCenterPlay = document.getElementById('yt-center-play');
+            const ytCenterIcon = document.getElementById('yt-center-icon');
+            const ytStepBadge = document.getElementById('yt-step-badge');
+            const ytStepTitle = document.getElementById('yt-step-title');
+            const ytStepDesc = document.getElementById('yt-step-desc');
+            const ytProgressFill = document.getElementById('yt-progress-fill');
+            const ytProgressContainer = document.getElementById('yt-progress-container');
+            const ytPlayToggle = document.getElementById('yt-play-toggle');
+            const ytPlaySvg = document.getElementById('yt-play-svg');
+            const ytPrevBtn = document.getElementById('yt-prev-btn');
+            const ytNextBtn = document.getElementById('yt-next-btn');
+            const ytTimeDisplay = document.getElementById('yt-time-display');
+            const ytLaunchBtn = document.getElementById('yt-launch-btn');
 
-            function renderWalkthroughStep(index) {
-                currentWalkthroughIndex = index;
-                const data = walkthroughSteps[index];
+            // SVG Icons for YouTube Play & Pause
+            const playSvgPath = '<path d="M8 5v14l11-7z"/>';
+            const pauseSvgPath = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
 
-                playerStepBadge.textContent = data.badge;
-                playerStepTitle.textContent = data.title;
-                playerStepDesc.textContent = data.desc;
-                playerIconSvg.innerHTML = data.icon;
-                playerProgressFill.style.width = `${data.progress}%`;
+            function updateYtPlayerUI() {
+                const chapterIndex = Math.min(Math.floor(currentTime / 4), 3);
+                const chapter = walkthroughChapters[chapterIndex];
+
+                ytStepBadge.textContent = chapter.badge;
+                ytStepTitle.textContent = chapter.title;
+                ytStepDesc.textContent = chapter.desc;
+
+                const percent = (currentTime / TOTAL_DURATION) * 100;
+                ytProgressFill.style.width = `${percent}%`;
+
+                const curSec = Math.floor(currentTime).toString().padStart(2, '0');
+                ytTimeDisplay.textContent = `00:${curSec} / 00:16`;
 
                 for (let i = 1; i <= 4; i++) {
-                    const dot = document.getElementById(`p-dot-${i}`);
+                    const dot = document.getElementById(`yt-dot-${i}`);
                     if (dot) {
-                        dot.className = i - 1 === index ? 'p-dot active' : 'p-dot';
+                        dot.className = i - 1 === chapterIndex ? 'yt-dot active' : 'yt-dot';
                     }
                 }
             }
 
-            window.jumpToWalkthroughStep = function(index) {
-                renderWalkthroughStep(index);
+            function playYtVideo() {
+                if (isYtPlaying) return;
+                isYtPlaying = true;
+                ytVideoScreen.classList.add('playing');
+                ytPlaySvg.innerHTML = pauseSvgPath;
+                ytCenterIcon.innerHTML = pauseSvgPath;
+
+                ytInterval = setInterval(() => {
+                    currentTime += 0.2;
+                    if (currentTime >= TOTAL_DURATION) {
+                        currentTime = 0;
+                    }
+                    updateYtPlayerUI();
+                }, 200);
+            }
+
+            function pauseYtVideo() {
+                isYtPlaying = false;
+                ytVideoScreen.classList.remove('playing');
+                ytPlaySvg.innerHTML = playSvgPath;
+                ytCenterIcon.innerHTML = playSvgPath;
+
+                if (ytInterval) {
+                    clearInterval(ytInterval);
+                    ytInterval = null;
+                }
+            }
+
+            function toggleYtPlayPause() {
+                if (isYtPlaying) {
+                    pauseYtVideo();
+                } else {
+                    playYtVideo();
+                }
+            }
+
+            window.seekToWalkthroughStep = function(stepIdx) {
+                currentTime = stepIdx * 4;
+                updateYtPlayerUI();
             };
 
-            function playWalkthrough() {
-                if (isWalkthroughPlaying) return;
-                isWalkthroughPlaying = true;
-                playerBtnPlay.classList.add('play-active');
-                
-                walkthroughTimer = setInterval(() => {
-                    let nextIdx = (currentWalkthroughIndex + 1) % walkthroughSteps.length;
-                    renderWalkthroughStep(nextIdx);
-                }, 2400);
-            }
-
-            function pauseWalkthrough() {
-                isWalkthroughPlaying = false;
-                playerBtnPlay.classList.remove('play-active');
-                if (walkthroughTimer) {
-                    clearInterval(walkthroughTimer);
-                    walkthroughTimer = null;
-                }
-            }
-
-            playerBtnPlay.addEventListener('click', () => {
-                if (isWalkthroughPlaying) {
-                    pauseWalkthrough();
-                } else {
-                    playWalkthrough();
-                }
+            ytVideoScreen.addEventListener('click', toggleYtPlayPause);
+            ytPlayToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleYtPlayPause();
             });
 
-            playerBtnPrev.addEventListener('click', () => {
-                pauseWalkthrough();
-                let prevIdx = (currentWalkthroughIndex - 1 + walkthroughSteps.length) % walkthroughSteps.length;
-                renderWalkthroughStep(prevIdx);
+            ytProgressContainer.addEventListener('click', (e) => {
+                const rect = ytProgressContainer.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+                currentTime = ratio * TOTAL_DURATION;
+                updateYtPlayerUI();
             });
 
-            playerBtnNext.addEventListener('click', () => {
-                pauseWalkthrough();
-                let nextIdx = (currentWalkthroughIndex + 1) % walkthroughSteps.length;
-                renderWalkthroughStep(nextIdx);
+            ytPrevBtn.addEventListener('click', () => {
+                const curChapter = Math.floor(currentTime / 4);
+                const prevChapter = (curChapter - 1 + 4) % 4;
+                currentTime = prevChapter * 4;
+                updateYtPlayerUI();
             });
 
-            playerBtnLaunch.addEventListener('click', () => {
+            ytNextBtn.addEventListener('click', () => {
+                const curChapter = Math.floor(currentTime / 4);
+                const nextChapter = (curChapter + 1) % 4;
+                currentTime = nextChapter * 4;
+                updateYtPlayerUI();
+            });
+
+            ytLaunchBtn.addEventListener('click', () => {
                 demoModal.classList.remove('open');
-                pauseWalkthrough();
+                pauseYtVideo();
                 scannerSection.scrollIntoView({ behavior: 'smooth' });
                 startGenesisScanSequence();
             });
 
             watchDemoBtn.addEventListener('click', () => {
                 demoModal.classList.add('open');
-                renderWalkthroughStep(0);
-                playWalkthrough();
+                currentTime = 0;
+                updateYtPlayerUI();
+                playYtVideo();
             });
 
             modalClose.addEventListener('click', () => {
                 demoModal.classList.remove('open');
-                pauseWalkthrough();
+                pauseYtVideo();
             });
 
             demoModal.addEventListener('click', (e) => {
                 if (e.target === demoModal) {
                     demoModal.classList.remove('open');
-                    pauseWalkthrough();
+                    pauseYtVideo();
                 }
             });
 
