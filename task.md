@@ -1,6 +1,5 @@
-
-- [ ] Fix timezone bug in \src/controllers/streakController.js\ by reading \clientToday\.
-- [ ] Fix dangerous re-initialization logic in \src/controllers/streakController.js\.
-- [ ] Update frontend \public/app.js\ to pass \clientToday\ in the \incrementStreak\ API call.
-- [ ] Rebuild frontend if necessary (Wait, \pp.js\ doesn't require a build, but \uild-frontend.js\ hashes it).
-- [ ] Commit and push to GitHub.
+- [x] Fix timezone bug in `src/controllers/streakController.js` by reading `clientToday`.
+- [x] Fix dangerous re-initialization logic in `src/controllers/streakController.js`.
+- [x] Update frontend `public/app.js` to pass `clientToday` in the `incrementStreak` API call.
+- [x] Rebuild frontend using `node scripts/build-frontend.js`.
+- [x] Run full automated test suite and add `tests/streak.test.js` regression suite.
