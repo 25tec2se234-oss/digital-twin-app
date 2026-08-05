@@ -215,12 +215,16 @@
     <script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
     <style>
-        /* ═══ RESPONSIVE GUARDRAILS (320px to 1920px) ════ */
+        /* ═══ RESPONSIVE GUARDRAILS & MOBILE TOUCH SCROLLING (320px to 1920px) ════ */
         html,
         body {
             width: 100%;
             max-width: 100vw;
             overflow-x: hidden !important;
+            overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch;
+            touch-action: manipulation;
+            overscroll-behavior-x: none;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -254,8 +258,19 @@
             }
         }
 
-        /* Mobile fixes (320px, 375px, 425px) */
-        @media(max-width: 425px) {
+        /* Mobile fixes for all phones & large screen mobile devices (up to 768px) */
+        @media(max-width: 768px) {
+            html, body {
+                overflow-x: hidden !important;
+                position: relative;
+                touch-action: pan-y;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            #cursor, #cursor-ring {
+                display: none !important;
+            }
+
             .grid2 {
                 grid-template-columns: 1fr !important;
                 gap: 2rem !important;
@@ -271,6 +286,8 @@
 
             .sec {
                 padding: 3rem 5% !important;
+                max-width: 100vw !important;
+                overflow-x: hidden !important;
             }
             #hero.sec {
                 padding-top: 7rem !important;
@@ -287,7 +304,12 @@
             }
 
             .nav-ul {
-                display: none;
+                display: none !important;
+            }
+
+            .wa-redirect-ov {
+                -webkit-overflow-scrolling: touch !important;
+                touch-action: pan-y !important;
             }
         }
 
