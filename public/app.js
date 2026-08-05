@@ -5721,12 +5721,6 @@ function initDashboardUpgrades() {
             streak = 0; // Broken streak
         }
     }
-
-    // Restore streak if it was accidentally wiped or set to low
-    if (streak <= 1) {
-        streak = Math.max(streak, 7);
-        bestStreak = Math.max(bestStreak, 7);
-    }
     
     var btnIncStreak = document.getElementById('btn-increment-streak');
     if (lastActive === today && btnIncStreak) {
