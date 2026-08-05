@@ -187,9 +187,18 @@ async function getAppData(userId) {
 }
 
 async function saveAppData(userId, appData) {
+  const existingAppData = await getAppData(userId);
+  const mergedData = {
+    ...existingAppData,
+    ...appData,
+    streak: (appData && appData.streak && typeof appData.streak.current !== 'undefined') 
+      ? appData.streak 
+      : (existingAppData.streak || null)
+  };
+
   const result = await db.query(
     'UPDATE users SET app_data = $1, updated_at = now() WHERE id = $2 RETURNING app_data',
-    [JSON.stringify(appData), userId]
+    [JSON.stringify(mergedData), userId]
   );
   return result.rows[0].app_data;
 }
