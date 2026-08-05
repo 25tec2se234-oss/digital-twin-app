@@ -87,7 +87,7 @@ const allowedOrigins = env.CORS_ORIGINS
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app') || /^http:\/\/localhost:\d+$/.test(origin)) {
       callback(null, true);
     } else {
       callback(new Error('CORS Policy Blocked: ' + origin));
@@ -125,8 +125,9 @@ app.use('/api/v1', routes);
 // Simple admin dashboard to browse DB
 app.use('/dashboard', dashboardRoutes);
 
-// Blog System
-app.use('/blog', blogRoutes);
+const publicDir = path.join(__dirname, '..', 'public');
+const parentUiDir = path.join(__dirname, '..', 'parent-ui', 'dist');
+
 // Pillar Landing Page Route: Career Guidance After 12th
 app.get(['/career-guidance-after-12th', '/career-guidance-after-12th/'], (req, res) => {
   const pillarPath = path.join(publicDir, 'career-guidance-after-12th', 'index.html');
@@ -135,6 +136,16 @@ app.get(['/career-guidance-after-12th', '/career-guidance-after-12th/'], (req, r
     return res.sendFile(pillarPath);
   }
   res.sendFile(path.join(publicDir, 'career-guidance-after-12th.html'));
+});
+
+// Flagship Onboarding Route: Genesis
+app.get(['/genesis', '/genesis/'], (req, res) => {
+  res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+  return res.sendFile('genesis/index.html', { root: publicDir }, (err) => {
+    if (err) {
+      res.sendFile('genesis.html', { root: publicDir });
+    }
+  });
 });
 
 // Dedicated Problem Topic Pages Route
@@ -151,9 +162,6 @@ app.get(['/problem/:topic', '/problem/:topic/'], (req, res) => {
 
 // Leaderboard API
 app.use('/api/leaderboard', leaderboardRoutes);
-
-const publicDir = path.join(__dirname, '..', 'public');
-const parentUiDir = path.join(__dirname, '..', 'parent-ui', 'dist');
 
 app.get('/api/version', (req, res) => {
   try {
