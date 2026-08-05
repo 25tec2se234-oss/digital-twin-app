@@ -84,4 +84,21 @@ describe('Streak Controller & API', function() {
     expect(res.body.streak).toBe(1);
     expect(res.body.bestStreak).toBe(5); // Historical best preserved!
   });
+
+  it('preserves streak when generic appData is saved via /api/v1/data/me', async function() {
+    // Perform generic save without streak object
+    const saveRes = await request(app)
+      .put('/api/v1/data/me')
+      .set('Authorization', 'Bearer ' + accessToken)
+      .send({
+        data: {
+          studentTools: { exams: [] }
+        }
+      });
+
+    expect(saveRes.status).toBe(200);
+    expect(saveRes.body.data.streak).toBeDefined();
+    expect(saveRes.body.data.streak.current).toBe(1);
+    expect(saveRes.body.data.streak.best).toBe(5);
+  });
 });
