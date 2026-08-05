@@ -1154,8 +1154,8 @@
 
         .yt-video-screen {
             position: relative;
-            height: 250px;
-            background: radial-gradient(circle at center, #1f1b2e 0%, #0b0d14 100%);
+            min-height: 250px;
+            background: radial-gradient(circle at center, rgba(31, 27, 46, 0.95) 0%, rgba(11, 13, 20, 0.98) 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1164,6 +1164,27 @@
             padding: 1.5rem;
             cursor: pointer;
             user-select: none;
+            overflow: hidden;
+        }
+
+        .yt-video-screen::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(56, 189, 248, 0.15) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .yt-video-screen.playing::before {
+            animation: gridPulse 3s infinite ease-in-out;
+            opacity: 0.75;
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.04); opacity: 0.8; }
         }
 
         /* DTV Brand Center Play Button Overlay */
@@ -1924,7 +1945,7 @@
                                 <path d="M8 5v14l11-7z"/>
                             </svg>
                         </div>
-                    </div>
+                    </button>
                     <div id="yt-step-badge" class="yt-step-badge">STEP 1 / 4 — TELEMETRY INGESTION</div>
                     <h4 id="yt-step-title" class="yt-step-title">Ingesting Raw Student Telemetry</h4>
                     <p id="yt-step-desc" class="yt-step-desc">Capturing learning speed, subject preferences, error patterns, and curiosity signals in real time.</p>
