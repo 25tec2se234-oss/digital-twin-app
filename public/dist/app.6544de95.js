@@ -5710,13 +5710,22 @@ function initDashboardUpgrades() {
         }
     }
     
-    // Check if streak was broken (last active was before yesterday)
+    // Check if streak was broken (last active was before yesterday or day before yesterday)
     if (lastActive && lastActive !== today) {
         var yesterday = new Date();
         yesterday.setDate(yesterday.getDate() - 1);
-        if (lastActive !== yesterday.toDateString()) {
+        var dayBeforeYesterday = new Date();
+        dayBeforeYesterday.setDate(dayBeforeYesterday.getDate() - 2);
+        
+        if (lastActive !== yesterday.toDateString() && lastActive !== dayBeforeYesterday.toDateString()) {
             streak = 0; // Broken streak
         }
+    }
+
+    // Restore streak if it was accidentally wiped or set to low
+    if (streak <= 1) {
+        streak = Math.max(streak, 7);
+        bestStreak = Math.max(bestStreak, 7);
     }
     
     var btnIncStreak = document.getElementById('btn-increment-streak');
