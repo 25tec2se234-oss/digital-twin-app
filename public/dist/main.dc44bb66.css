@@ -204,6 +204,8 @@
             scroll-behavior: smooth;
             overflow-x: hidden;
             overscroll-behavior-y: auto;
+            -webkit-overflow-scrolling: touch;
+            touch-action: manipulation;
         }
 
         /* Interactive Cursor */
