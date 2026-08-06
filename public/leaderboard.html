@@ -22,12 +22,20 @@
         [data-theme="crimson"] { --bg: #450a0a; --surf: #7f1d1d; --wh: #fef2f2; --mu: #fca5a5; --bdr: rgba(255, 255, 255, 0.1); --ac: #f87171; }
         [data-theme="magenta"] { --bg: #4a044e; --surf: #701a75; --wh: #fdf4ff; --mu: #f0abfc; --bdr: rgba(255, 255, 255, 0.1); --ac: #e879f9; }
 
+        html {
+            scroll-behavior: auto;
+            overflow-x: hidden;
+            overscroll-behavior-y: auto;
+            touch-action: pan-y;
+        }
+
         body {
             background-color: var(--bg);
             color: var(--wh);
             font-family: 'Plus Jakarta Sans', sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 0 0 160px 0;
+            overflow-x: hidden;
         }
         .wrap { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
         nav { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 0; border-bottom: 1px solid var(--bdr); }
@@ -95,14 +103,16 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(17, 24, 39, 0.9);
+            background: rgba(17, 24, 39, 0.95);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-top: 1px solid var(--ac);
             padding: 1.25rem 0;
             z-index: 100;
             display: none;
+            pointer-events: none;
         }
-        .my-rank-content { display: flex; justify-content: space-between; align-items: center; }
+        .my-rank-content { display: flex; justify-content: space-between; align-items: center; pointer-events: auto; }
         .my-rank-info h3 { margin: 0 0 0.25rem 0; font-size: 1.2rem; }
         .my-rank-info p { margin: 0; color: var(--mu); font-size: 0.9rem; }
         
@@ -385,5 +395,7 @@
         fetchMe();
         loadLeaderboard('weekly');
     </script>
+    <script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script defer="" src="/dist/ux-engine.22c84f3f.js?v=339ac94932b24f24"></script>
 </body>
 </html>
