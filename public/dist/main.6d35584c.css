@@ -848,16 +848,21 @@
             top: 58px;
             left: 0;
             right: 0;
-            z-index: 699;
+            z-index: 9998;
             background: rgba(0, 0, 0, .95);
             backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
             border-bottom: 1px solid var(--bdr);
             flex-direction: column;
-            padding: 1.3rem 5%;
+            padding: 1.3rem 5% 3rem 5%;
             gap: 1rem;
             max-height: calc(100vh - 58px);
+            max-height: calc(100dvh - 58px);
             overflow-y: auto;
             overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-y;
+            overscroll-behavior: contain;
         }
 
         nav {
