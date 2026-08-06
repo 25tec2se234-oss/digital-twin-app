@@ -56,6 +56,10 @@ const signup = asyncHandler(async function(req, res) {
   emailService.sendWelcomeEmail(user.email, user.name).catch(() => {});
   const tokens = await tokenService.createAuthTokens(user, getMeta(req));
   setRefreshCookie(res, tokens.refreshToken, tokens.refreshExpiresAt);
+  
+  // Track onboarding activity on leaderboard
+  const leaderboardModel = require('../models/leaderboardModel');
+  leaderboardModel.trackActivity(user.id, null, 'onboarding_complete').catch(() => {});
 
   res.status(201).json({
     user: sanitizeUser(user),
@@ -68,6 +72,10 @@ const login = asyncHandler(async function(req, res) {
   const user = await authService.login(req.body);
   const tokens = await tokenService.createAuthTokens(user, getMeta(req));
   setRefreshCookie(res, tokens.refreshToken, tokens.refreshExpiresAt);
+
+  // Track daily login activity on leaderboard
+  const leaderboardModel = require('../models/leaderboardModel');
+  leaderboardModel.trackActivity(user.id, null, 'daily_login').catch(() => {});
 
   res.json({
     user: sanitizeUser(user),
@@ -97,6 +105,9 @@ const loginWithGoogle = asyncHandler(async function(req, res) {
   const user = await authService.loginWithGoogle(idToken);
   const tokens = await tokenService.createAuthTokens(user, getMeta(req));
   setRefreshCookie(res, tokens.refreshToken, tokens.refreshExpiresAt);
+
+  const leaderboardModel = require('../models/leaderboardModel');
+  leaderboardModel.trackActivity(user.id, null, 'daily_login').catch(() => {});
 
   res.json({
     user: sanitizeUser(user),

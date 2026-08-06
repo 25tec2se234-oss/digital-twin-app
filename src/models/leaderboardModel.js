@@ -175,7 +175,7 @@ async function getPreviousRanks(period) {
   return map;
 }
 
-async function clearSnapshot(period) { await db.query('DELETE FROM leaderboard_snapshot WHERE period = ', [period]); }
+async function clearSnapshot(period) { await db.query('DELETE FROM leaderboard_snapshot WHERE period = $1', [period]); }
 
 module.exports = {
   clearSnapshot,

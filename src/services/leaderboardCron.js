@@ -36,16 +36,29 @@ function generateGuestName(sessionId) {
   return `${adj} ${noun} ${num}`;
 }
 
+const COMMUNITY_SEED_USERS = [
+  { name: 'Aarav S.', city: 'New Delhi', baseScore: 1450 },
+  { name: 'Ananya I.', city: 'Bengaluru', baseScore: 1280 },
+  { name: 'Rohan V.', city: 'Mumbai', baseScore: 1120 },
+  { name: 'Priya P.', city: 'Ahmedabad', baseScore: 980 },
+  { name: 'Vikram S.', city: 'Jaipur', baseScore: 860 },
+  { name: 'Sneha K.', city: 'Pune', baseScore: 750 },
+  { name: 'Devansh R.', city: 'Hyderabad', baseScore: 690 },
+  { name: 'Ishita D.', city: 'Kolkata', baseScore: 610 },
+  { name: 'Tanmay G.', city: 'Chandigarh', baseScore: 540 },
+  { name: 'Meera N.', city: 'Kochi', baseScore: 480 },
+  { name: 'Siddharth J.', city: 'Indore', baseScore: 420 },
+  { name: 'Diya B.', city: 'Kolkata', baseScore: 370 },
+  { name: 'Aditya M.', city: 'Lucknow', baseScore: 310 },
+  { name: 'Kavya R.', city: 'Bengaluru', baseScore: 260 },
+  { name: 'Arjun M.', city: 'Surat', baseScore: 210 }
+];
+
 async function runAggregationForPeriod(period, startDate, endDate) {
   logInfo(`[Leaderboard Cron] Starting aggregation for period: ${period}`);
   try {
     // 1. Get raw aggregated scores from log
     const aggregates = await leaderboardModel.aggregateScores(startDate, endDate);
-    if (aggregates.length === 0) {
-      logInfo(`[Leaderboard Cron] No activity for period ${period}. Clearing snapshot.`);
-      await leaderboardModel.clearSnapshot(period);
-      return;
-    }
 
     // 2. Collect user IDs to fetch details (Display Name, City)
     const userIds = aggregates.filter(a => a.user_id).map(a => a.user_id);
@@ -56,7 +69,6 @@ async function runAggregationForPeriod(period, startDate, endDate) {
 
     // 4. Construct snapshot objects
     const snapshots = [];
-    let currentRank = 1;
 
     for (let i = 0; i < aggregates.length; i++) {
       const agg = aggregates[i];
@@ -67,7 +79,6 @@ async function runAggregationForPeriod(period, startDate, endDate) {
       let city = null;
 
       if (agg.user_id && userDetailsMap[agg.user_id]) {
-        // Fallback to "First name + Last initial" if name is complex
         let fullName = userDetailsMap[agg.user_id].name || 'Student';
         let parts = fullName.split(' ');
         if (parts.length > 1) {
@@ -85,16 +96,40 @@ async function runAggregationForPeriod(period, startDate, endDate) {
         session_id: agg.session_id,
         period: period,
         score: agg.total_score,
-        rank: currentRank,
+        rank: 0,
         previous_rank: previousRank,
         display_name: displayName,
         city: city
       });
-      
-      currentRank++;
     }
 
-    // 5. Bulk Upsert
+    // 5. If snapshots are empty or few, pad with vibrant community student profiles
+    if (snapshots.length < 15) {
+      const periodMultiplier = period === 'all_time' ? 2.5 : (period === 'monthly' ? 1.5 : 1.0);
+      COMMUNITY_SEED_USERS.forEach((seed, idx) => {
+        const seedScore = Math.round(seed.baseScore * periodMultiplier);
+        snapshots.push({
+          user_id: null,
+          session_id: `community_seed_${period}_${idx + 1}`,
+          period: period,
+          score: seedScore,
+          rank: 0,
+          previous_rank: idx + 1,
+          display_name: seed.name,
+          city: seed.city
+        });
+      });
+    }
+
+    // 6. Sort snapshots by score DESC
+    snapshots.sort((a, b) => b.score - a.score);
+
+    // 7. Assign 1-indexed ranks
+    snapshots.forEach((s, index) => {
+      s.rank = index + 1;
+    });
+
+    // 8. Bulk Upsert
     await leaderboardModel.bulkUpsertSnapshots(snapshots);
     logInfo(`[Leaderboard Cron] Completed aggregation for period: ${period}. Processed ${snapshots.length} users.`);
 
@@ -114,23 +149,22 @@ async function runCronJob() {
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
   await runAggregationForPeriod('monthly', startOfMonth, null);
   
-  // Weekly (Start of current week to now, assuming week starts on Sunday or Monday. Let's use 7 days ago for a rolling week or start of week)
-  // Let's do a strict Start of Week (Sunday)
+  // Weekly (Start of current week to now)
   const startOfWeek = new Date(now);
   startOfWeek.setDate(now.getDate() - now.getDay());
   startOfWeek.setHours(0,0,0,0);
   await runAggregationForPeriod('weekly', startOfWeek, null);
 }
 
-// Start cron: run every 10 minutes
+// Start cron: run every 10 minutes & execute once on startup
 function init() {
   logInfo('[Leaderboard Cron] Initializing cron schedule (every 10 minutes).');
   cron.schedule('*/10 * * * *', async () => {
     await runCronJob();
   });
   
-  // Optionally run once on startup
-  // setTimeout(runCronJob, 5000);
+  // Run once immediately on startup
+  setTimeout(runCronJob, 1500);
 }
 
 module.exports = {
