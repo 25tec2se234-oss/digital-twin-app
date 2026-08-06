@@ -366,93 +366,145 @@ window.addEventListener('load', () => {
     window.addEventListener('resize', cleanup);
 });
 
-// --- 11. High-Performance Smooth Scroll Engine (Lenis) ---
+// --- 11. High-Performance Instant Smooth Scroll Engine (Lenis Physics) ---
 (function initSmoothScrolling() {
-    function loadLenis(callback) {
-        if (typeof Lenis !== 'undefined') {
-            callback();
-            return;
+    class InstantLenisEngine {
+        constructor() {
+            this.targetY = window.scrollY || window.pageYOffset || 0;
+            this.currentY = this.targetY;
+            this.isMoving = false;
+            this.rafId = null;
+            this.friction = 0.1; // 60fps/120fps silky momentum factor
+
+            this.init();
         }
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js';
-        script.async = true;
-        script.onload = () => {
-            if (typeof Lenis !== 'undefined') callback();
-        };
-        script.onerror = () => {
-            console.warn('Lenis smooth scroll library script could not be loaded.');
-        };
-        document.head.appendChild(script);
-    }
 
-    function setupSmoothScroll() {
-        if (typeof Lenis === 'undefined' || window.lenisInstance) return;
+        init() {
+            // Guarantee native CSS smooth scroll does not fight wheel momentum
+            document.documentElement.style.scrollBehavior = 'auto';
+            if (document.body) document.body.style.scrollBehavior = 'auto';
 
-        const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            orientation: 'vertical',
-            gestureOrientation: 'vertical',
-            smoothWheel: true,
-            wheelMultiplier: 0.95,
-            touchMultiplier: 1.2,
-            smoothTouch: false, // Let mobile touch scrolling keep native hardware acceleration
-            infinite: false,
-        });
+            // Intercept mouse wheel & trackpad delta for silky momentum on laptop/desktop
+            window.addEventListener('wheel', (e) => this.onWheel(e), { passive: false });
 
-        window.lenisInstance = lenis;
-        window.lenis = lenis;
+            // Maintain alignment if user drags physical scrollbar or uses keyboard navigation
+            window.addEventListener('scroll', () => {
+                if (!this.isMoving) {
+                    this.currentY = window.scrollY || window.pageYOffset || 0;
+                    this.targetY = this.currentY;
+                }
+            }, { passive: true });
 
-        // Connect Lenis with GSAP ScrollTrigger if present
-        if (typeof ScrollTrigger !== 'undefined') {
-            lenis.on('scroll', () => {
-                ScrollTrigger.update();
-            });
-            if (typeof gsap !== 'undefined') {
-                gsap.ticker.add((time) => {
-                    lenis.raf(time * 1000);
+            // Expose globally for GSAP or anchor links
+            window.lenis = this;
+            window.lenisInstance = this;
+
+            // Automatically protect modals and scroll boxes from scroll hijacking
+            const markModalsPreventLenis = () => {
+                const elements = document.querySelectorAll('.prob-modal-backdrop, .wa-redirect-ov, .modal, .modal-content, .drawer, [role="dialog"], .terms-box');
+                elements.forEach(el => {
+                    if (!el.hasAttribute('data-lenis-prevent')) {
+                        el.setAttribute('data-lenis-prevent', '');
+                    }
                 });
-                gsap.ticker.lagSmoothing(0);
+            };
+            markModalsPreventLenis();
+            if (window.MutationObserver) {
+                const observer = new MutationObserver(markModalsPreventLenis);
+                observer.observe(document.body, { childList: true, subtree: true });
             }
-        } else {
-            function raf(time) {
-                lenis.raf(time);
-                requestAnimationFrame(raf);
-            }
-            requestAnimationFrame(raf);
-        }
 
-        // Prevent Lenis smooth scroll inside open modals, popups & scrollable containers
-        const markModalsPreventLenis = () => {
-            const elements = document.querySelectorAll('.prob-modal-backdrop, .wa-redirect-ov, .modal, .modal-content, .drawer, [role="dialog"], .terms-box');
-            elements.forEach(el => {
-                if (!el.hasAttribute('data-lenis-prevent')) {
-                    el.setAttribute('data-lenis-prevent', '');
+            // High-performance smooth scrolling for anchor links (e.g. #hero, #pricing)
+            document.addEventListener('click', (e) => {
+                const anchor = e.target.closest('a[href^="#"]');
+                if (!anchor) return;
+                const href = anchor.getAttribute('href');
+                if (href && href.length > 1 && href !== '#') {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        this.scrollTo(target, { offset: -60 });
+                    }
                 }
             });
-        };
-        markModalsPreventLenis();
-        const observer = new MutationObserver(markModalsPreventLenis);
-        observer.observe(document.body, { childList: true, subtree: true });
+        }
 
-        // Smooth scroll for anchor links
-        document.addEventListener('click', (e) => {
-            const anchor = e.target.closest('a[href^="#"]');
-            if (!anchor) return;
-            const href = anchor.getAttribute('href');
-            if (href && href.length > 1 && href !== '#') {
-                const target = document.querySelector(href);
-                if (target) {
-                    e.preventDefault();
-                    lenis.scrollTo(target, { offset: -60, duration: 1.2 });
+        onWheel(e) {
+            // Allow native scrolling inside open modals, dropdowns, and terms boxes
+            let el = e.target;
+            while (el && el !== document.body && el !== document.documentElement) {
+                if (el.hasAttribute && (el.hasAttribute('data-lenis-prevent') || el.classList.contains('lenis-prevent') || el.classList.contains('prob-modal-backdrop') || el.classList.contains('wa-redirect-ov'))) {
+                    return; // Allow natural container scroll
+                }
+                el = el.parentNode;
+            }
+
+            e.preventDefault();
+
+            let delta = e.deltaY;
+            if (e.deltaMode === 1) delta *= 32;
+            if (e.deltaMode === 2) delta *= window.innerHeight;
+
+            const maxScroll = Math.max(
+                document.documentElement.scrollHeight,
+                document.body.scrollHeight
+            ) - window.innerHeight;
+
+            // Smooth momentum target calculation
+            this.targetY = Math.max(0, Math.min(maxScroll, this.targetY + delta * 0.9));
+
+            if (!this.isMoving) {
+                this.isMoving = true;
+                this.tick();
+            }
+        }
+
+        tick() {
+            const diff = this.targetY - this.currentY;
+
+            if (Math.abs(diff) > 0.3) {
+                this.currentY += diff * this.friction;
+                window.scrollTo(0, this.currentY);
+
+                if (typeof ScrollTrigger !== 'undefined') {
+                    ScrollTrigger.update();
+                }
+
+                this.rafId = requestAnimationFrame(() => this.tick());
+            } else {
+                this.currentY = this.targetY;
+                window.scrollTo(0, this.currentY);
+                this.isMoving = false;
+                if (typeof ScrollTrigger !== 'undefined') {
+                    ScrollTrigger.update();
                 }
             }
-        });
+        }
+
+        scrollTo(target, options = {}) {
+            let y = 0;
+            if (typeof target === 'number') {
+                y = target;
+            } else if (target && target.getBoundingClientRect) {
+                const offset = options.offset || 0;
+                y = target.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || 0) + offset;
+            }
+            const maxScroll = Math.max(
+                document.documentElement.scrollHeight,
+                document.body.scrollHeight
+            ) - window.innerHeight;
+            this.targetY = Math.max(0, Math.min(maxScroll, y));
+
+            if (!this.isMoving) {
+                this.isMoving = true;
+                this.tick();
+            }
+        }
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => loadLenis(setupSmoothScroll));
+        document.addEventListener('DOMContentLoaded', () => new InstantLenisEngine());
     } else {
-        loadLenis(setupSmoothScroll);
+        new InstantLenisEngine();
     }
 })();
