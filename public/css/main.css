@@ -201,11 +201,11 @@
         }
 
         html {
-            scroll-behavior: smooth;
+            scroll-behavior: auto;
             overflow-x: hidden;
             overscroll-behavior-y: auto;
             -webkit-overflow-scrolling: touch;
-            touch-action: manipulation;
+            touch-action: pan-y;
         }
 
         /* Interactive Cursor */
