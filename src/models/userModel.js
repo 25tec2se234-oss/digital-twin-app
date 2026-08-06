@@ -189,38 +189,12 @@ async function getAppData(userId) {
 async function saveAppData(userId, appData) {
   const existingAppData = await getAppData(userId);
 
-  let mergedStreak = existingAppData.streak || null;
-  if (appData && appData.streak && typeof appData.streak.current !== 'undefined') {
-    if (!existingAppData.streak) {
-      mergedStreak = appData.streak;
-    } else {
-      const dbCurrent = parseInt(existingAppData.streak.current || 0, 10);
-      const inCurrent = parseInt(appData.streak.current || 0, 10);
-      const dbBest = parseInt(existingAppData.streak.best || 0, 10);
-      const inBest = parseInt(appData.streak.best || 0, 10);
-
-      const dbLastActive = existingAppData.streak.lastActive;
-      const inLastActive = appData.streak.lastActive;
-      const todayStr = new Date().toDateString();
-
-      const isDbToday = dbLastActive === todayStr || (dbLastActive && new Date(dbLastActive).toDateString() === todayStr);
-
-      if (isDbToday && dbCurrent > inCurrent) {
-        mergedStreak = existingAppData.streak;
-      } else {
-        mergedStreak = {
-          current: Math.max(dbCurrent, inCurrent),
-          best: Math.max(dbBest, inBest, dbCurrent, inCurrent),
-          lastActive: (isDbToday ? dbLastActive : (inLastActive || dbLastActive))
-        };
-      }
-    }
-  }
-
   const mergedData = {
     ...existingAppData,
     ...appData,
-    streak: mergedStreak
+    streak: (appData && appData.streak && typeof appData.streak.current !== 'undefined') 
+      ? appData.streak 
+      : (existingAppData.streak || null)
   };
 
   const result = await db.query(
