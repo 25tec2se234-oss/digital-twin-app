@@ -141,11 +141,23 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Scroll state detector to eliminate mousemove layout thrashing during laptop/touchpad scrolling
+    let isScrolling = false;
+    let scrollTimeout = null;
+    window.addEventListener('scroll', () => {
+        isScrolling = true;
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            isScrolling = false;
+        }, 120);
+    }, { passive: true });
+
     // --- 5. Spotlight Card Effect ---
     if (!isMobile) {
         const spotlightCards = document.querySelectorAll('.feat-card, .auth-card, .dash-card, .glass-panel, .info-card, .step-card');
         spotlightCards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
+                if (isScrolling) return;
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
@@ -158,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const magneticBtns = document.querySelectorAll('.btn-amb, .btn-out, .logo, .nav-ul a, .nav-pill, .account-btn');
         magneticBtns.forEach(btn => {
             btn.addEventListener('mousemove', (e) => {
-                if (typeof gsap === 'undefined') return;
+                if (isScrolling || typeof gsap === 'undefined') return;
                 const rect = btn.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
                 const y = e.clientY - rect.top - rect.height / 2;
@@ -178,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const isAnalyzer = card.classList.contains('analyzer-card');
         
         card.addEventListener('mousemove', (e) => {
-            if (typeof gsap === 'undefined' || ('ontouchstart' in window)) return; // Skip mousemove on touch devices
+            if (isScrolling || typeof gsap === 'undefined' || ('ontouchstart' in window)) return; // Skip mousemove on touch devices & scrolling
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left - rect.width / 2;
             const y = e.clientY - rect.top - rect.height / 2;
@@ -353,3 +365,94 @@ window.addEventListener('load', () => {
     
     window.addEventListener('resize', cleanup);
 });
+
+// --- 11. High-Performance Smooth Scroll Engine (Lenis) ---
+(function initSmoothScrolling() {
+    function loadLenis(callback) {
+        if (typeof Lenis !== 'undefined') {
+            callback();
+            return;
+        }
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js';
+        script.async = true;
+        script.onload = () => {
+            if (typeof Lenis !== 'undefined') callback();
+        };
+        script.onerror = () => {
+            console.warn('Lenis smooth scroll library script could not be loaded.');
+        };
+        document.head.appendChild(script);
+    }
+
+    function setupSmoothScroll() {
+        if (typeof Lenis === 'undefined' || window.lenisInstance) return;
+
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            orientation: 'vertical',
+            gestureOrientation: 'vertical',
+            smoothWheel: true,
+            wheelMultiplier: 0.95,
+            touchMultiplier: 1.2,
+            smoothTouch: false, // Let mobile touch scrolling keep native hardware acceleration
+            infinite: false,
+        });
+
+        window.lenisInstance = lenis;
+        window.lenis = lenis;
+
+        // Connect Lenis with GSAP ScrollTrigger if present
+        if (typeof ScrollTrigger !== 'undefined') {
+            lenis.on('scroll', () => {
+                ScrollTrigger.update();
+            });
+            if (typeof gsap !== 'undefined') {
+                gsap.ticker.add((time) => {
+                    lenis.raf(time * 1000);
+                });
+                gsap.ticker.lagSmoothing(0);
+            }
+        } else {
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+        }
+
+        // Prevent Lenis smooth scroll inside open modals, popups & scrollable containers
+        const markModalsPreventLenis = () => {
+            const elements = document.querySelectorAll('.prob-modal-backdrop, .wa-redirect-ov, .modal, .modal-content, .drawer, [role="dialog"], .terms-box');
+            elements.forEach(el => {
+                if (!el.hasAttribute('data-lenis-prevent')) {
+                    el.setAttribute('data-lenis-prevent', '');
+                }
+            });
+        };
+        markModalsPreventLenis();
+        const observer = new MutationObserver(markModalsPreventLenis);
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        // Smooth scroll for anchor links
+        document.addEventListener('click', (e) => {
+            const anchor = e.target.closest('a[href^="#"]');
+            if (!anchor) return;
+            const href = anchor.getAttribute('href');
+            if (href && href.length > 1 && href !== '#') {
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    lenis.scrollTo(target, { offset: -60, duration: 1.2 });
+                }
+            }
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => loadLenis(setupSmoothScroll));
+    } else {
+        loadLenis(setupSmoothScroll);
+    }
+})();
