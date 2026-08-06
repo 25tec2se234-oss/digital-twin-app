@@ -4276,6 +4276,12 @@ function renderCareers(filter) {
             if (auth) auth.classList.remove('active');
             var signup = document.getElementById('page-signup');
             if (signup) signup.classList.remove('active');
+            var otp = document.getElementById('page-otp');
+            if (otp) otp.classList.remove('active');
+            var fp = document.getElementById('page-forgot-pw');
+            if (fp) fp.classList.remove('active');
+            var rp = document.getElementById('page-reset-pw');
+            if (rp) rp.classList.remove('active');
             goHome();
         }
 
@@ -4824,6 +4830,7 @@ function renderCareers(filter) {
                                 APP_DATA.userData.name = rd.user.name || APP_DATA.userData.name;
                                 APP_DATA.userData.email = rd.user.email || APP_DATA.userData.email;
                                 APP_DATA.userData.role = rd.user.role || APP_DATA.userData.role;
+                                APP_DATA.userData.emailVerified = rd.user.emailVerified !== undefined ? rd.user.emailVerified : APP_DATA.userData.emailVerified;
                                 APP_DATA.userData.linkCode = rd.user.linkCode || null;
                                 APP_DATA.userData.trialExpiresAt = rd.user.trialExpiresAt || APP_DATA.userData.trialExpiresAt;
                                 APP_DATA.userData.subscriptionExpiresAt = rd.user.subscriptionExpiresAt || APP_DATA.userData.subscriptionExpiresAt;
@@ -4850,6 +4857,8 @@ function renderCareers(filter) {
                         openOTPModal();
                         return;
                     }
+                    var otpPage = document.getElementById('page-otp');
+                    if (otpPage) otpPage.classList.remove('active');
                     unlockSite();
                     return;
                 }
@@ -5079,6 +5088,12 @@ function renderCareers(filter) {
 
         /* ═══ OTP VERIFICATION ═══════════════════════════════════════ */
         function openOTPModal() {
+            if (APP_DATA.userData && APP_DATA.userData.emailVerified) {
+                var otpPage = document.getElementById('page-otp');
+                if (otpPage) otpPage.classList.remove('active');
+                unlockSite();
+                return;
+            }
             closeMod(); // Close any other auth modals
             var otpPage = document.getElementById('page-otp');
             if (otpPage) otpPage.classList.add('active');
@@ -5119,9 +5134,19 @@ function renderCareers(filter) {
                     setTimeout(function() { initiatePayment(pendingPlan); }, 800);
                 }
             } catch (err) {
-                showToast('❌', err.message);
-                var errEl = document.getElementById('otp-err');
-                if (errEl) { errEl.textContent = err.message; errEl.style.display = 'block'; }
+                var isAlreadyVerified = err.message && err.message.toLowerCase().includes('already verified');
+                if (isAlreadyVerified) {
+                    APP_DATA.userData.emailVerified = true;
+                    syncData();
+                    var otpPage = document.getElementById('page-otp');
+                    if (otpPage) otpPage.classList.remove('active');
+                    unlockSite();
+                    showToast('✅', 'Email is already verified!');
+                } else {
+                    showToast('❌', err.message);
+                    var errEl = document.getElementById('otp-err');
+                    if (errEl) { errEl.textContent = err.message; errEl.style.display = 'block'; }
+                }
             } finally {
                 btn.textContent = 'Verify Account →';
                 btn.disabled = false;
@@ -5143,7 +5168,17 @@ function renderCareers(filter) {
                     setTimeout(function() { msg.style.display = 'none'; }, 3000);
                 }
             } catch (err) {
-                showToast('❌', err.message);
+                var isAlreadyVerified = err.message && err.message.toLowerCase().includes('already verified');
+                if (isAlreadyVerified) {
+                    APP_DATA.userData.emailVerified = true;
+                    syncData();
+                    var otpPage = document.getElementById('page-otp');
+                    if (otpPage) otpPage.classList.remove('active');
+                    unlockSite();
+                    showToast('✅', 'Email is already verified!');
+                } else {
+                    showToast('❌', err.message);
+                }
             }
         }
 
