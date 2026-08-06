@@ -67,7 +67,15 @@ router.get('/', authenticateOptional, guestSessionMiddleware, async (req, res, n
       return res.json({ data: cached.data });
     }
 
-    const data = await leaderboardModel.getLeaderboardSnapshot(period, page, limit, isAdmin);
+    let data = await leaderboardModel.getLeaderboardSnapshot(period, page, limit, isAdmin);
+    
+    // Fallback: If snapshot is empty, trigger cron calculation immediately once and re-fetch
+    if (!data || data.length === 0) {
+      const leaderboardCron = require('../services/leaderboardCron');
+      await leaderboardCron.runCronJob();
+      data = await leaderboardModel.getLeaderboardSnapshot(period, page, limit, isAdmin);
+    }
+
     cache.set(cacheKey, { timestamp: Date.now(), data });
     
     res.json({ data });
