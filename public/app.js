@@ -179,6 +179,13 @@
                         if (json && json.data && Object.keys(json.data).length > 0) {
                             Object.assign(APP_DATA, json.data);
                             migrateData();
+                            if (APP_DATA.streak && typeof APP_DATA.streak.current !== 'undefined') {
+                                localStorage.setItem('dtv_streak', APP_DATA.streak.current);
+                                localStorage.setItem('dtv_best_streak', APP_DATA.streak.best);
+                                if (APP_DATA.streak.lastActive) {
+                                    localStorage.setItem('dtv_last_active', APP_DATA.streak.lastActive);
+                                }
+                            }
                             if (typeof window.renderAll === 'function') window.renderAll();
                             if (typeof updateSubscriptionTracker === 'function') updateSubscriptionTracker();
                         }
@@ -5733,9 +5740,9 @@ function initDashboardUpgrades() {
     
     // Check if secure backend data is available
     if (window.APP_DATA && window.APP_DATA.streak && typeof window.APP_DATA.streak.current !== 'undefined') {
-        streak = window.APP_DATA.streak.current;
-        bestStreak = window.APP_DATA.streak.best;
-        lastActive = window.APP_DATA.streak.lastActive;
+        streak = Math.max(streak, window.APP_DATA.streak.current);
+        bestStreak = Math.max(bestStreak, window.APP_DATA.streak.best || 0);
+        lastActive = window.APP_DATA.streak.lastActive || lastActive;
         
         // Sync securely down to local storage
         localStorage.setItem('dtv_streak', streak);
@@ -5745,20 +5752,26 @@ function initDashboardUpgrades() {
         }
     }
     
-    // Check if streak was broken (last active was before yesterday or day before yesterday)
-    if (lastActive && lastActive !== today) {
-        var yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-        var dayBeforeYesterday = new Date();
-        dayBeforeYesterday.setDate(dayBeforeYesterday.getDate() - 2);
-        
-        if (lastActive !== yesterday.toDateString() && lastActive !== dayBeforeYesterday.toDateString()) {
-            streak = 0; // Broken streak
+    // Check if streak was broken using reliable calendar day difference
+    if (lastActive) {
+        var lastDate = new Date(lastActive);
+        var todayDate = new Date();
+        if (!isNaN(lastDate.getTime())) {
+            lastDate.setHours(0, 0, 0, 0);
+            todayDate.setHours(0, 0, 0, 0);
+            var diffDays = Math.round((todayDate.getTime() - lastDate.getTime()) / (1000 * 3600 * 24));
+            
+            if (diffDays > 2) {
+                var shields = (window.APP_DATA && window.APP_DATA.studentTools) ? (window.APP_DATA.studentTools.streakShields || 0) : 0;
+                if (shields <= 0) {
+                    streak = 0; // Broken streak
+                }
+            }
         }
     }
     
     var btnIncStreak = document.getElementById('btn-increment-streak');
-    if (lastActive === today && btnIncStreak) {
+    if (lastActive && new Date(lastActive).toDateString() === today && btnIncStreak) {
         btnIncStreak.textContent = "Completed for Today";
         btnIncStreak.disabled = true;
         btnIncStreak.style.opacity = '0.5';
@@ -5876,6 +5889,7 @@ window.incrementStreak = async function() {
                 }
                 
                 updateStreakUI();
+                syncData();
                 
                 if(typeof showToast === 'function') {
                     if (data.message === 'Already claimed today') {
