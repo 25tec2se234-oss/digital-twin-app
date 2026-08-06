@@ -851,30 +851,6 @@
             z-index: 699;
             background: rgba(0, 0, 0, .95);
             backdrop-filter: blur(18px);
-            border-bottom: 1px solid var(--bdr);
-            flex-direction: column;
-            padding: 1.3rem 5%;
-            gap: 1rem;
-            max-height: calc(100vh - 58px);
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 700;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: .9rem clamp(3%, 5vw, 5%);
-            background: var(--nav-bg);
-            backdrop-filter: blur(18px);
-            border-bottom: 1px solid var(--bdr);
-            transition: box-shadow .3s;
-        }
 
         nav.sc {
             box-shadow: 0 2px 28px rgba(0, 0, 0, .5);
@@ -6477,19 +6453,38 @@ nav.nav-modern {
     .hide-mobile { display: none !important; }
 }
 
-/* GUARANTEED MOBILE NAV FIXES */
+/* GUARANTEED MOBILE NAV FIXES FOR ALL DEVICE SIZES */
 @media(max-width: 1250px) {
-    nav.nav-modern {
+    nav, nav.nav-modern, #nav {
         background: rgba(12, 12, 16, 0.95) !important;
         display: flex !important;
         padding: 0.8rem 5% !important;
-        z-index: 9999 !important;
+        z-index: 99999 !important;
     }
-    .nav-modern .hbg {
+    .nav-modern .hbg, .hbg {
         display: flex !important;
-        z-index: 10000 !important;
+        z-index: 100000 !important;
     }
-    .nav-modern .hbg span {
+    .nav-modern .hbg span, .hbg span {
         background: #ffffff !important;
+    }
+}
+
+@media(max-width: 480px) {
+    .logo-text-modern h1, .logo-text {
+        font-size: 1rem !important;
+    }
+    .logo-modern img, .logo-mark {
+        width: 32px !important;
+        height: 32px !important;
+    }
+}
+
+@media(max-width: 340px) {
+    .logo-text-modern h1, .logo-text {
+        font-size: 0.88rem !important;
+    }
+    nav.nav-modern, nav, #nav {
+        padding: 0.6rem 3% !important;
     }
 }
