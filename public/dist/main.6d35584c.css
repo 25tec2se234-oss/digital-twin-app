@@ -854,15 +854,15 @@
             -webkit-backdrop-filter: blur(18px);
             border-bottom: 1px solid var(--bdr);
             flex-direction: column;
-            padding: 1.3rem 5% 3rem 5%;
+            padding: 1.3rem 5% 8rem 5% !important;
             gap: 1rem;
             max-height: calc(100vh - 58px);
             max-height: calc(100dvh - 58px);
-            overflow-y: auto;
-            overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
-            touch-action: pan-y;
-            overscroll-behavior: contain;
+            overflow-y: scroll !important;
+            overflow-x: hidden !important;
+            -webkit-overflow-scrolling: touch !important;
+            touch-action: pan-y !important;
+            overscroll-behavior: contain !important;
         }
 
         nav {
