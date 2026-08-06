@@ -3668,8 +3668,16 @@ function renderCareers(filter) {
 
         /* ═══ NAV ════════════════════════════════════════════════════ */
         function togMenu() {
-            document.getElementById('hbg').classList.toggle('open');
-            document.getElementById('mob').classList.toggle('open');
+            var hbg = document.getElementById('hbg');
+            var mob = document.getElementById('mob');
+            if (!hbg || !mob) return;
+            var isOpen = mob.classList.toggle('open');
+            hbg.classList.toggle('open', isOpen);
+            if (isOpen) {
+                document.body.classList.add('mob-open');
+            } else {
+                document.body.classList.remove('mob-open');
+            }
         }
         var navEl = document.getElementById('nav');
         if (navEl) {
