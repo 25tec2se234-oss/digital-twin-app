@@ -299,7 +299,7 @@ async function verifyPaymentProof(req, res, next) {
         await db.query(
           `INSERT INTO orders (user_id, razorpay_order_id, razorpay_payment_id, razorpay_signature, plan_duration, amount, status, mobile_number, proof_file_path, user_name) 
            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
-          [userId, orderId, cleanRef, 'verified_proof', plan_duration, amount * 100, 'paid', mobile_number || '', proofFilePath, name || '']
+          [userId, orderId, cleanRef, 'pending_verification', plan_duration, amount * 100, 'pending', mobile_number || '', proofFilePath, name || '']
         );
       } catch (insertErr) {
         if (insertErr.code === '23505') { // Postgres Unique Violation
@@ -312,49 +312,34 @@ async function verifyPaymentProof(req, res, next) {
       }
     }
 
-    // Add time to subscription
-    let interval = '';
-    if (plan_duration === '1w') interval = '7 days';
-    if (plan_duration === '1m') interval = '1 month';
-    if (plan_duration === '6m') interval = '6 months';
-    if (plan_duration === '12m') interval = '1 year';
-
-    // Update user subscription_expires_at securely
+    // Add time to subscription ONLY after admin verification (removed instant premium unlock blunder)
+    
+    // Fetch the current user data to return without giving instant access
     let updatedUser = { 
       email: 'kumarkartikey020@gmail.com', 
       name: name || 'Student', 
-      subscription_expires_at: new Date(Date.now() + (plan_duration === '1m' ? 30 : (plan_duration === '6m' ? 180 : 365)) * 24 * 60 * 60 * 1000) 
+      subscription_expires_at: null 
     };
 
     try {
       if (userId) {
-        const updateRes = await db.query(`
-          UPDATE users 
-          SET subscription_expires_at = GREATEST(COALESCE(subscription_expires_at, CURRENT_TIMESTAMP), CURRENT_TIMESTAMP) + interval '${interval}'
-          WHERE id = $1
-          RETURNING email, name, subscription_expires_at
-        `, [userId]);
-        if (updateRes.rows.length > 0) {
-          updatedUser = updateRes.rows[0];
+        const userRes = await db.query(`SELECT email, name, subscription_expires_at FROM users WHERE id = $1`, [userId]);
+        if (userRes.rows.length > 0) {
+          updatedUser = userRes.rows[0];
         }
       }
     } catch (updateErr) {
-      console.error('Update user error:', updateErr);
+      console.error('Fetch user error:', updateErr);
     }
 
+    // We can still send an email to notify them that their proof was received.
     const planName = plan_duration === '1m' ? '1 Month Plan' : (plan_duration === '6m' ? '6 Months Plan' : '12 Months Plan');
 
-    emailService.sendPremiumConfirmation(
-      updatedUser.email, 
-      updatedUser.name, 
-      planName, 
-      amount, 
-      updatedUser.subscription_expires_at
-    ).catch(() => {});
-
+    // emailService.sendPremiumConfirmation(...) could be changed to sendProofReceivedEmail in the future.
+    
     res.json({ 
       success: true, 
-      message: 'Payment proof verified successfully. Premium access unlocked!',
+      message: 'Payment proof submitted successfully. Premium access will be unlocked after admin verification (usually within 24 hours).',
       subscriptionExpiresAt: updatedUser.subscription_expires_at 
     });
   } catch (err) {
