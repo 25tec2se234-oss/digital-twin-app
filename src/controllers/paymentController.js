@@ -111,17 +111,31 @@ async function verifyPayment(req, res, next) {
     const isValidMock = !isProduction && env.ALLOW_MOCK_PAYMENTS === 'true' && (razorpay_signature === 'mock_signature' || razorpay_order_id.startsWith('client_order_'));
 
     if (expectedSignature === razorpay_signature || isValidMock) {
-      // Signature is valid or valid development mock checkout. Update order status and user subscription
-      await db.query(
-        "UPDATE orders SET status = 'paid', razorpay_payment_id = $1, razorpay_signature = $2, updated_at = CURRENT_TIMESTAMP WHERE razorpay_order_id = $3",
+      // 🛡️ SENIOR DEVELOPER FIREWALL: ATOMIC IDEMPOTENCY CHECK
+      // Try to update the order only if it's NOT already paid. This prevents race conditions
+      // where a double-click or network retry grants multiple months of subscription!
+      const updateOrderRes = await db.query(
+        "UPDATE orders SET status = 'paid', razorpay_payment_id = $1, razorpay_signature = $2, updated_at = CURRENT_TIMESTAMP WHERE razorpay_order_id = $3 AND (status != 'paid' OR status IS NULL) RETURNING user_id, plan_duration",
         [razorpay_payment_id, razorpay_signature, razorpay_order_id]
       );
 
-      // Get plan duration
-      const orderRes = await db.query('SELECT user_id, plan_duration FROM orders WHERE razorpay_order_id = $1', [razorpay_order_id]);
-      if (orderRes.rows.length === 0) throw new ApiError(404, 'Order not found');
-      
-      const { user_id, plan_duration } = orderRes.rows[0];
+      if (updateOrderRes.rows.length === 0) {
+        // Order is either already paid, or doesn't exist.
+        const existingOrder = await db.query("SELECT user_id, status FROM orders WHERE razorpay_order_id = $1", [razorpay_order_id]);
+        if (existingOrder.rows.length === 0) throw new ApiError(404, 'Order not found');
+        
+        if (existingOrder.rows[0].status === 'paid') {
+          // Idempotent return: The subscription was already updated in a previous request
+          const userRes = await db.query('SELECT subscription_expires_at FROM users WHERE id = $1', [existingOrder.rows[0].user_id]);
+          return res.json({ 
+            success: true, 
+            message: 'Payment verified successfully. (Already processed)',
+            subscriptionExpiresAt: userRes.rows[0].subscription_expires_at 
+          });
+        }
+      }
+
+      const { user_id, plan_duration } = updateOrderRes.rows[0];
 
       // Add time to subscription
       let interval = '';
