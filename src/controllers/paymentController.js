@@ -111,63 +111,83 @@ async function verifyPayment(req, res, next) {
     const isValidMock = !isProduction && env.ALLOW_MOCK_PAYMENTS === 'true' && (razorpay_signature === 'mock_signature' || razorpay_order_id.startsWith('client_order_'));
 
     if (expectedSignature === razorpay_signature || isValidMock) {
-      // 🛡️ SENIOR DEVELOPER FIREWALL: ATOMIC IDEMPOTENCY CHECK
-      // Try to update the order only if it's NOT already paid. This prevents race conditions
-      // where a double-click or network retry grants multiple months of subscription!
-      const updateOrderRes = await db.query(
-        "UPDATE orders SET status = 'paid', razorpay_payment_id = $1, razorpay_signature = $2, updated_at = CURRENT_TIMESTAMP WHERE razorpay_order_id = $3 AND (status != 'paid' OR status IS NULL) RETURNING user_id, plan_duration",
-        [razorpay_payment_id, razorpay_signature, razorpay_order_id]
-      );
+      // 🛡️ SENIOR DEVELOPER FIREWALL: ATOMIC TRANSACTIONS & ROW LOCKING
+      const client = await db.pool.connect();
+      try {
+        await client.query('BEGIN');
 
-      if (updateOrderRes.rows.length === 0) {
-        // Order is either already paid, or doesn't exist.
-        const existingOrder = await db.query("SELECT user_id, status FROM orders WHERE razorpay_order_id = $1", [razorpay_order_id]);
-        if (existingOrder.rows.length === 0) throw new ApiError(404, 'Order not found');
-        
-        if (existingOrder.rows[0].status === 'paid') {
-          // Idempotent return: The subscription was already updated in a previous request
-          const userRes = await db.query('SELECT subscription_expires_at FROM users WHERE id = $1', [existingOrder.rows[0].user_id]);
+        // LOCK the order row so no other concurrent request can process this at the exact same millisecond
+        const lockRes = await client.query(
+          "SELECT user_id, plan_duration, status FROM orders WHERE razorpay_order_id = $1 FOR UPDATE",
+          [razorpay_order_id]
+        );
+
+        if (lockRes.rows.length === 0) {
+          await client.query('ROLLBACK');
+          throw new ApiError(404, 'Order not found');
+        }
+
+        const order = lockRes.rows[0];
+
+        if (order.status === 'paid') {
+          // Idempotent return: Another transaction got the lock first and already paid it.
+          await client.query('ROLLBACK');
+          const userRes = await db.query('SELECT subscription_expires_at FROM users WHERE id = $1', [order.user_id]);
           return res.json({ 
             success: true, 
             message: 'Payment verified successfully. (Already processed)',
             subscriptionExpiresAt: userRes.rows[0].subscription_expires_at 
           });
         }
+
+        // It is not paid yet, update it
+        await client.query(
+          "UPDATE orders SET status = 'paid', razorpay_payment_id = $1, razorpay_signature = $2, updated_at = CURRENT_TIMESTAMP WHERE razorpay_order_id = $3",
+          [razorpay_payment_id, razorpay_signature, razorpay_order_id]
+        );
+
+        const { user_id, plan_duration } = order;
+
+        // Add time to subscription
+        let interval = '';
+        if (plan_duration === '1w') interval = '7 days';
+        if (plan_duration === '1m') interval = '1 month';
+        if (plan_duration === '6m') interval = '6 months';
+        if (plan_duration === '12m') interval = '1 year';
+
+        // Update user subscription
+        const updateRes = await client.query(`
+          UPDATE users 
+          SET subscription_expires_at = GREATEST(COALESCE(subscription_expires_at, CURRENT_TIMESTAMP), CURRENT_TIMESTAMP) + interval '${interval}'
+          WHERE id = $1
+          RETURNING email, name, subscription_expires_at
+        `, [user_id]);
+
+        await client.query('COMMIT'); // Commit the transaction instantly so the DB state is solid
+
+        const updatedUser = updateRes.rows[0];
+        const planName = plan_duration === '1m' ? '1 Month Plan' : (plan_duration === '6m' ? '6 Months Plan' : '12 Months Plan');
+        const amountPaid = plan_duration === '1m' ? 29 : (plan_duration === '6m' ? 119 : 249);
+        
+        emailService.sendPremiumConfirmation(
+          updatedUser.email, 
+          updatedUser.name, 
+          planName, 
+          amountPaid, 
+          updatedUser.subscription_expires_at
+        ).catch(() => {});
+
+        res.json({ 
+          success: true, 
+          message: 'Payment verified successfully. Premium unlocked.',
+          subscriptionExpiresAt: updatedUser.subscription_expires_at 
+        });
+      } catch (txnErr) {
+        await client.query('ROLLBACK');
+        throw txnErr;
+      } finally {
+        client.release();
       }
-
-      const { user_id, plan_duration } = updateOrderRes.rows[0];
-
-      // Add time to subscription
-      let interval = '';
-      if (plan_duration === '1w') interval = '7 days';
-      if (plan_duration === '1m') interval = '1 month';
-      if (plan_duration === '6m') interval = '6 months';
-      if (plan_duration === '12m') interval = '1 year';
-
-      // If subscription_expires_at is already in future, add to it. Otherwise, add to NOW.
-      const updateRes = await db.query(`
-        UPDATE users 
-        SET subscription_expires_at = GREATEST(COALESCE(subscription_expires_at, CURRENT_TIMESTAMP), CURRENT_TIMESTAMP) + interval '${interval}'
-        WHERE id = $1
-        RETURNING email, name, subscription_expires_at
-      `, [user_id]);
-
-      const updatedUser = updateRes.rows[0];
-      const planName = plan_duration === '1m' ? '1 Month Plan' : (plan_duration === '6m' ? '6 Months Plan' : '12 Months Plan');
-      const amountPaid = plan_duration === '1m' ? 29 : (plan_duration === '6m' ? 119 : 249);
-      emailService.sendPremiumConfirmation(
-        updatedUser.email, 
-        updatedUser.name, 
-        planName, 
-        amountPaid, 
-        updatedUser.subscription_expires_at
-      ).catch(() => {});
-
-      res.json({ 
-        success: true, 
-        message: 'Payment verified successfully. Premium unlocked.',
-        subscriptionExpiresAt: updatedUser.subscription_expires_at 
-      });
     } else {
       await db.query(
         "UPDATE orders SET status = 'failed', updated_at = CURRENT_TIMESTAMP WHERE razorpay_order_id = $1",
