@@ -14,9 +14,11 @@ const inMemoryWheelMap = new Map();
 
 function getTodayString() {
   const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
+  // IST is UTC+5:30 -> 5.5 hours -> 19800000 milliseconds
+  const istDate = new Date(now.getTime() + 19800000);
+  const year = istDate.getUTCFullYear();
+  const month = String(istDate.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(istDate.getUTCDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 }
 
@@ -105,16 +107,21 @@ async function getWheelState(req, res) {
 }
 
 async function spinWheel(req, res) {
+  let client = null;
   try {
     const today = getTodayString();
     const userId = req.user ? req.user.id : null;
     const clientKey = userId ? `user_${userId}` : `ip_${req.ip || '127.0.0.1'}`;
 
-    const currentState = getMemoryState(clientKey, today);
+    const memState = getMemoryState(clientKey, today);
+    const currentState = JSON.parse(JSON.stringify(memState));
 
     if (userId) {
-      const result = await pool.query(
-        'SELECT wheel_state FROM user_data WHERE user_id = $1',
+      client = await pool.connect();
+      await client.query('BEGIN');
+      
+      const result = await client.query(
+        'SELECT wheel_state FROM user_data WHERE user_id = $1 FOR UPDATE',
         [userId]
       ).catch(() => ({ rows: [] }));
 
@@ -123,6 +130,15 @@ async function spinWheel(req, res) {
         if (dbState.lastSpinDate === today) {
           currentState.spinsToday = Math.max(currentState.spinsToday, dbState.spinsToday || 0);
           currentState.extraSpinsRemaining = Math.max(currentState.extraSpinsRemaining, dbState.extraSpinsRemaining || 0);
+        } else {
+          // Carry over extra spins if it's a new day
+          currentState.spinsToday = 0;
+          currentState.extraSpinsRemaining = dbState.extraSpinsRemaining || 0;
+        }
+        
+        // Merge claimed rewards properly
+        if (dbState.claimedRewards && Array.isArray(dbState.claimedRewards)) {
+          currentState.claimedRewards = dbState.claimedRewards;
         }
       }
     }
@@ -131,6 +147,10 @@ async function spinWheel(req, res) {
     const totalRemaining = freeDailyRemaining + (currentState.extraSpinsRemaining || 0);
 
     if (totalRemaining <= 0) {
+      if (client) {
+        await client.query('ROLLBACK');
+        client.release();
+      }
       return res.status(400).json({
         error: 'DailySpinLimitReached',
         message: 'You have already used your daily spin. Please return tomorrow!'
@@ -167,13 +187,16 @@ async function spinWheel(req, res) {
     currentState.claimedRewards.push(winRecord);
     inMemoryWheelMap.set(clientKey, currentState);
 
-    if (userId) {
-      await pool.query(
+    if (userId && client) {
+      await client.query(
         `INSERT INTO user_data (user_id, wheel_state, updated_at)
          VALUES ($1, $2, NOW())
          ON CONFLICT (user_id) DO UPDATE SET wheel_state = EXCLUDED.wheel_state, updated_at = NOW()`,
         [userId, JSON.stringify(currentState)]
-      ).catch(() => {});
+      );
+      await client.query('COMMIT');
+      client.release();
+      client = null;
     }
 
     const updatedFreeDaily = Math.max(0, 1 - (currentState.spinsToday || 0));
@@ -189,6 +212,9 @@ async function spinWheel(req, res) {
       wheelState: currentState
     });
   } catch (error) {
+    if (client) {
+      try { await client.query('ROLLBACK'); client.release(); } catch (e) {}
+    }
     console.error('[WheelController] spinWheel error:', error);
     return res.status(500).json({ error: 'InternalServerError', message: 'Failed to process spin' });
   }
