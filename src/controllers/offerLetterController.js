@@ -175,6 +175,22 @@ async function verifyOffer(req, res, next) {
   }
 }
 
+async function accessOffer(req, res, next) {
+  try {
+    const offer = await offerLetterModel.getOfferByVerificationToken(req.params.token);
+    if (!offer) return next(new ApiError(404, 'Invalid or expired link'));
+    
+    const { email } = req.body;
+    if (!email || !offer.candidate_details || email.toLowerCase() !== offer.candidate_details.email.toLowerCase()) {
+      return next(new ApiError(401, 'Invalid email address'));
+    }
+
+    res.json(offer);
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function acceptOffer(req, res, next) {
   try {
     const offer = await offerLetterModel.getOfferByVerificationToken(req.params.token);
@@ -237,6 +253,7 @@ module.exports = {
   changeOfferStatus,
   getAuditLogs,
   verifyOffer,
+  accessOffer,
   acceptOffer,
   declineOffer,
   deleteOffer

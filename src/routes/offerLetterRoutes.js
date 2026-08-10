@@ -5,6 +5,7 @@ const { authenticate, authorizeAdmin } = require('../middlewares/auth');
 
 // --- Public Endpoints ---
 router.get('/verify/:token', offerLetterController.verifyOffer);
+router.post('/access/:token', offerLetterController.accessOffer);
 router.post('/verify/:token/accept', offerLetterController.acceptOffer);
 router.post('/verify/:token/decline', offerLetterController.declineOffer);
 
