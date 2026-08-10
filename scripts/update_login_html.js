@@ -35,12 +35,12 @@ files.forEach(file => {
     }
 });
 
-if (!indexJsFile || !indexCssFile) {
-    console.error('Could not find main index.js or index.css in built assets!');
+if (!indexJsFile) {
+    console.error('Could not find main index.js in built assets!');
     process.exit(1);
 }
 
-console.log(`Found built assets: JS=${indexJsFile}, CSS=${indexCssFile}`);
+console.log(`Found built assets: JS=${indexJsFile}, CSS=${indexCssFile || 'None'}`);
 
 // 2. Clean and copy files to target assets directories
 targetAssetsDirs.forEach(destDir => {
@@ -76,10 +76,12 @@ loginHtmlPaths.forEach(htmlPath => {
     const scriptRegex = /src="\/assets\/index-[a-zA-Z0-9_-]+\.js"/g;
     htmlContent = htmlContent.replace(scriptRegex, `src="/assets/${indexJsFile}"`);
     
-    // Replace stylesheet href path
-    // Match: href="/assets/index-xxxxxxxx.css"
-    const stylesheetRegex = /href="\/assets\/index-[a-zA-Z0-9_-]+\.css"/g;
-    htmlContent = htmlContent.replace(stylesheetRegex, `href="/assets/${indexCssFile}"`);
+    // Replace stylesheet href path only if CSS file exists
+    if (indexCssFile) {
+        // Match: href="/assets/index-xxxxxxxx.css"
+        const stylesheetRegex = /href="\/assets\/index-[a-zA-Z0-9_-]+\.css"/g;
+        htmlContent = htmlContent.replace(stylesheetRegex, `href="/assets/${indexCssFile}"`);
+    }
     
     fs.writeFileSync(htmlPath, htmlContent, 'utf8');
     console.log(`Updated ${htmlPath} successfully.`);
