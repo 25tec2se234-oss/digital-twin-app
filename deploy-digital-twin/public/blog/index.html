@@ -470,6 +470,17 @@
         <button type="button" id="mob-signin" onclick="openLoginGate(); togMenu()" class="btn-reset">Sign In</button>
         <button type="button" id="mob-signup" onclick="openLoginGate(); togMenu()" class="btn-reset">Sign Up</button>
         <button type="button" id="mob-admindb" onclick="openAdminDashboard(); togMenu()" style="display:none; color:#f5a94e;" class="btn-reset">Developer DB</button>
+        <button type="button" id="mob-logout" onclick="if (doLogout()) togMenu()" class="btn-reset">Log Out</button>
+        <div id="mob-account-link-code" style="display:none; padding: 1rem 1.5rem; color:#a78bfa; font-size: 1.1rem; font-weight: 600; cursor:default;">Parent Code: <strong id="mob-ui-link-code">-</strong></div>
+        <a href="#student-dashboard" onclick="requirePremiumFrontend(function(){openDashboardShortcut(); togMenu();})">Personalised Dashboard</a>
+        <a href="#how" onclick="togMenu()">How It Works</a>
+        <a href="#dashboard" onclick="togMenu()">Career Explorer</a>
+        <a href="#ai-section" onclick="togMenu()">AI Advisor</a>
+        <a href="/parent" style="color: #a78bfa; font-weight: 600;" onclick="togMenu()">Parent Portal</a>
+        <a href="#rev" onclick="togMenu()">Reviews</a>
+        <a href="/blog" onclick="togMenu()">Blog</a>
+        <a href="/leaderboard.html" style="color: #fbbf24; font-weight: 600;" onclick="togMenu()">🏆 Leaderboard</a>
+        <button type="button" onclick="requireAuth(function(){openPricingPage(); togMenu();}); return false;" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: #e88c2a; width: 100%; text-align: left; font-size: 1.1rem; font-weight: 700;">💎 Go Premium</button>
         <button type="button" onclick="openAnalyzer(); togMenu();" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: var(--wh, #fff); width: 100%; text-align: left; font-size: 1.1rem; font-weight: 600;">🧠
             Achievement Analyzer</button>
         <div style="padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 0.5rem;">
@@ -532,52 +543,52 @@
     </div>
 </div>
 
-<div style="margin-bottom: 3.5rem;">
-    <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem; color: #fff; font-weight: 700; display: flex; align-items: center; gap: 0.6rem;">
-        <span>🔥</span> Flagship Career & AI Resource Hubs
-    </h3>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.8rem;">
-        <!-- Card 1: AI Career Roadmap -->
-        <div style="background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(59, 130, 246, 0.12)); border: 1px solid rgba(167, 139, 250, 0.35); border-radius: 20px; padding: 2.2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: transform 0.3s, border-color 0.3s;">
-            <div>
-                <span style="background: rgba(167,139,250,0.22); color: #c084fc; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🚀 FLAGSHIP CAREER ROADMAP</span>
-                <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: #fff; font-weight: 800; line-height: 1.3;">Ultimate AI Career Roadmap (2026–2035)</h2>
-                <p style="color: #cbd5e1; margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Master Artificial Intelligence, ML, Deep Learning & GenAI. Explore 12 AI career paths, step-by-step timeline, salary dashboard & top hiring companies.</p>
+    <div style="margin-bottom: 3.5rem;">
+        <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem; color: #fff; font-weight: 700; display: flex; align-items: center; gap: 0.6rem;">
+            <span>🔥</span> Flagship Career & AI Resource Hubs
+        </h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.8rem;">
+            <!-- Card 1: AI Career Roadmap -->
+            <div style="background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(59, 130, 246, 0.12)); border: 1px solid rgba(167, 139, 250, 0.35); border-radius: 20px; padding: 2.2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: transform 0.3s, border-color 0.3s;">
+                <div>
+                    <span style="background: rgba(167,139,250,0.22); color: #c084fc; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🚀 FLAGSHIP CAREER ROADMAP</span>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: #fff; font-weight: 800; line-height: 1.3;">Ultimate AI Career Roadmap (2026–2035)</h2>
+                    <p style="color: #cbd5e1; margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Master Artificial Intelligence, ML, Deep Learning & GenAI. Explore 12 AI career paths, step-by-step timeline, salary dashboard & top hiring companies.</p>
+                </div>
+                <div>
+                    <a href="/ai-career-roadmap" style="background: linear-gradient(135deg, #a78bfa, #3b82f6); color: #fff; font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
+                        Explore AI Master Roadmap &rarr;
+                    </a>
+                </div>
             </div>
-            <div>
-                <a href="/ai-career-roadmap" style="background: linear-gradient(135deg, #a78bfa, #3b82f6); color: #fff; font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
-                    Explore AI Master Roadmap &rarr;
-                </a>
-            </div>
-        </div>
 
-        <!-- Card 2: 50+ AI Tools Directory -->
-        <div style="background: linear-gradient(135deg, rgba(0, 240, 255, 0.12), rgba(167, 139, 250, 0.12)); border: 1px solid rgba(0, 240, 255, 0.35); border-radius: 20px; padding: 2.2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: transform 0.3s, border-color 0.3s;">
-            <div>
-                <span style="background: rgba(0,240,255,0.2); color: #00f0ff; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">⚡ 50+ FREE AI TOOLS DIRECTORY</span>
-                <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: #fff; font-weight: 800; line-height: 1.3;">50+ Best Free AI Tools Every Student Should Use in 2026</h2>
-                <p style="color: #cbd5e1; margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Compare 53 top free AI tools for research, coding, presentation slide decks, math solving, vector design & video editing with live filters & bookmarks.</p>
-            </div>
-            <div>
-                <a href="/ai-tools-for-students" style="background: linear-gradient(135deg, #00f0ff, #3b82f6); color: #0b0f19; font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
-                    Explore 50+ AI Tools Directory &rarr;
-                </a>
+            <!-- Card 2: 50+ AI Tools Directory -->
+            <div style="background: linear-gradient(135deg, rgba(0, 240, 255, 0.12), rgba(167, 139, 250, 0.12)); border: 1px solid rgba(0, 240, 255, 0.35); border-radius: 20px; padding: 2.2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: transform 0.3s, border-color 0.3s;">
+                <div>
+                    <span style="background: rgba(0,240,255,0.2); color: #00f0ff; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">⚡ 50+ FREE AI TOOLS DIRECTORY</span>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: #fff; font-weight: 800; line-height: 1.3;">50+ Best Free AI Tools Every Student Should Use in 2026</h2>
+                    <p style="color: #cbd5e1; margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Compare 53 top free AI tools for research, coding, presentation slide decks, math solving, vector design & video editing with live filters & bookmarks.</p>
+                </div>
+                <div>
+                    <a href="/ai-tools-for-students" style="background: linear-gradient(135deg, #00f0ff, #3b82f6); color: #0b0f19; font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
+                        Explore 50+ AI Tools Directory &rarr;
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <div id="featured-section" class="featured-blog" style="margin-bottom: 5rem;">
         <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem; color: #fff; font-weight: 600;">Featured Article</h3>
-        <a href="/blog/50-best-free-ai-tools-for-students-2026" class="featured-blog-card">
+        <a href="/blog/how-to-use-ai-for-college-placements-and-interviews-2026" class="featured-blog-card">
             <div class="featured-img-container">
-                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2070&auto=format&fit=crop" alt="50+ Best Free AI Tools Every Student Should Use in 2026" loading="lazy" decoding="async">
+                <img src="/img/placements_ai_cover.png" alt="How to Use AI to Crack College Placements and Job Interviews in 2026" loading="lazy" decoding="async">
             </div>
             <div class="featured-blog-content" style="width: 50%;">
                 <div style="background: rgba(167,139,250,0.15); color: #a78bfa; padding: 0.4rem 1.2rem; border-radius: 20px; font-size: 0.85rem; font-weight: 700; display: inline-block; margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 1px;">Featured</div>
-                <div style="margin-bottom: 1rem; font-size: 0.95rem; color: #a1a1aa;">2026-08-02 &bull; 28 min read</div>
-                <h2 style="font-size: 2.2rem; margin-bottom: 1.2rem; line-height: 1.3; color: #fff; font-weight: 700;">50+ Best Free AI Tools Every Student Should Use in 2026</h2>
-                <p style="color: #94a3b8; font-size: 1.1rem; line-height: 1.6; margin-bottom: 0;">Discover the 50+ best free AI tools for students in 2026. Complete guide covering ChatGPT, Claude, Gemini, NotebookLM, Perplexity, Cursor, Gamma, ElevenLabs, and DTV.</p>
+                <div style="margin-bottom: 1rem; font-size: 0.95rem; color: #a1a1aa;">2026-08-11 &bull; 12 min read</div>
+                <h2 style="font-size: 2.2rem; margin-bottom: 1.2rem; line-height: 1.3; color: #fff; font-weight: 700;">How to Use AI to Crack College Placements and Job Interviews in 2026</h2>
+                <p style="color: #94a3b8; font-size: 1.1rem; line-height: 1.6; margin-bottom: 0;">Learn how to use AI for college placements in 2026. Discover the best AI tools and ChatGPT prompts to pass ATS, write cover letters, and crack job interviews.</p>
                 <div style="color: #a78bfa; margin-top: 1.8rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; font-size: 1.05rem;">Read Full Article <span>&rarr;</span></div>
             </div>
         </a>
@@ -585,6 +596,22 @@
     
     <h3 id="latest-heading" style="margin-bottom: 2rem; font-size: 1.8rem; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">Latest Articles</h3>
     <div class="related-grid" id="blog-grid-container">
+        <a href="/blog/how-non-it-students-can-build-career-in-ai-2026" class="blog-card blog-item" data-category="Career Planning" data-title="how non-it students can build a career in ai (2026 guide for commerce, arts & bba)">
+            <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=2069&auto=format&fit=crop" alt="How Non-IT Students Can Build a Career in AI (2026 Guide for Commerce, Arts & BBA)" loading="lazy" decoding="async"></div>
+            <div class="blog-card-content">
+                <div style="font-size: 0.85rem; color: #a1a1aa; margin-bottom: 0.8rem;">2026-08-10 &bull; 15 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: #fff; line-height: 1.4; font-weight: 600;">How Non-IT Students Can Build a Career in AI (2026 Guide for Commerce, Arts & BBA)</h2>
+                <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">A complete 2026 guide for Commerce, Arts, and BBA students to build a high-paying career in AI without coding. Explore roles like AI Product Manager, Prompt Engineer, and AI Ethics Analyst.</p>
+            </div>
+        </a>
+        <a href="/blog/50-best-free-ai-tools-for-students-2026" class="blog-card blog-item" data-category="AI Guidance" data-title="50+ best free ai tools every student should use in 2026">
+            <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2070&auto=format&fit=crop" alt="50+ Best Free AI Tools Every Student Should Use in 2026" loading="lazy" decoding="async"></div>
+            <div class="blog-card-content">
+                <div style="font-size: 0.85rem; color: #a1a1aa; margin-bottom: 0.8rem;">2026-08-02 &bull; 28 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: #fff; line-height: 1.4; font-weight: 600;">50+ Best Free AI Tools Every Student Should Use in 2026</h2>
+                <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover the 50+ best free AI tools for students in 2026. Complete guide covering ChatGPT, Claude, Gemini, NotebookLM, Perplexity, Cursor, Gamma, ElevenLabs, and DTV.</p>
+            </div>
+        </a>
         <a href="/blog/top-ai-skills-students-should-learn-2026" class="blog-card blog-item" data-category="Career Guidance" data-title="top ai skills students should learn in 2026 (complete guide)">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2070&auto=format&fit=crop" alt="Top AI Skills Students Should Learn in 2026 (Complete Guide)" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
