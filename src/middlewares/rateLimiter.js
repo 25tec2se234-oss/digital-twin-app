@@ -2,26 +2,19 @@ const rateLimit = require('express-rate-limit');
 const env = require('../config/env');
 
 const { RedisStore } = require('rate-limit-redis');
-const { getClient } = require('../services/cacheService');
+const cacheService = require('../services/cacheService');
 
 // Helper to get store configuration based on Redis availability
 function getStoreConfig(prefix) {
-  if (env.NODE_ENV === 'test') return undefined; // Always use memory store in tests to avoid Redis init errors
-  const client = getClient();
-  if (client) {
-    return new RedisStore({
-      sendCommand: async (...args) => {
-        try {
-          return await client.call(...args);
-        } catch (e) {
-          // If redis is down, just return empty so rate limit passes
-          return {};
-        }
-      },
-      prefix: prefix
-    });
-  }
-  return undefined; // Falls back to memory store if Redis is unavailable
+  if (env.NODE_ENV === 'test') return undefined; // Always use memory store in tests
+  // Only use RedisStore when Redis is actually connected and ready
+  if (!cacheService.isReady()) return undefined; // Falls back to memory store
+  const client = cacheService.getClient();
+  if (!client) return undefined;
+  return new RedisStore({
+    sendCommand: (...args) => client.call(...args),
+    prefix: prefix
+  });
 }
 
 const generalLimiter = rateLimit({

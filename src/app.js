@@ -52,10 +52,11 @@ app.use(helmet({
         "'unsafe-inline'", 
         "https://www.googletagmanager.com", 
         "https://checkout.razorpay.com", 
-        "https://cdnjs.cloudflare.com"
+        "https://cdnjs.cloudflare.com",
+        "https://cdn.tailwindcss.com"
       ],
       scriptSrcAttr: ["'unsafe-inline'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdn.tailwindcss.com"],
       fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
       imgSrc: ["'self'", "data:", "blob:", "https://www.google-analytics.com", "https://*.razorpay.com", "https://razorpay.com", "https://images.unsplash.com"],
       connectSrc: ["'self'", "https://www.google-analytics.com", "https://*.analytics.google.com", "https://*.razorpay.com", "wss:"],
@@ -66,7 +67,7 @@ app.use(helmet({
   crossOriginEmbedderPolicy: false,
   crossOriginOpenerPolicy: false,
   crossOriginResourcePolicy: false,
-  frameguard: { action: 'deny' },
+  frameguard: { action: 'sameorigin' },
   noSniff: true,
   xssFilter: true,
   hsts: {
@@ -179,7 +180,35 @@ app.use('/api', function(_req, res) {
   res.status(404).json({ error: 'API route not found.' });
 });
 
-// Self-healing fallback route for trapped Service Workers requesting old hashes
+// Self-healing fallback for React app asset requests (login.html, wheel.html)
+// Serves the latest hashed JS/CSS file when old cached hash is requested
+app.use('/assets', function(req, res, next) {
+  const fs = require('fs');
+  const assetsDir = path.join(publicDir, 'assets');
+  const requestedPath = path.join(assetsDir, req.path);
+
+  // Exact file exists — serve it normally
+  if (fs.existsSync(requestedPath)) return next();
+
+  try {
+    if (fs.existsSync(assetsDir)) {
+      const files = fs.readdirSync(assetsDir);
+      const ext = path.extname(req.path); // .js or .css
+      const latestAsset = files.find(f => f.endsWith(ext));
+      if (latestAsset) {
+        console.log(`[Auto-Heal /assets] ${req.path} → serving latest ${latestAsset}`);
+        if (ext === '.js') res.setHeader('Content-Type', 'application/javascript');
+        if (ext === '.css') res.setHeader('Content-Type', 'text/css');
+        res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+        return res.sendFile(path.join(assetsDir, latestAsset));
+      }
+    }
+  } catch (e) {
+    console.error('[Auto-Heal /assets] Error:', e.message);
+  }
+  next();
+});
+
 app.use('/dist', (req, res, next) => {
   const fs = require('fs');
   const path = require('path');
