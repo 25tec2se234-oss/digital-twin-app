@@ -6505,3 +6505,79 @@ nav.nav-modern {
         background: #ffffff !important;
     }
 }
+
+/* Expandable Feature Cards */
+.expandable-card {
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+}
+
+.expandable-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.card-header-flex {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.card-header-flex .card-icon {
+    font-size: 2.2rem;
+    line-height: 1;
+}
+
+.card-header-flex h3 {
+    margin: 0;
+    flex: 1;
+    color: var(--wh, #fff);
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.card-header-flex .expand-icon {
+    font-size: 1.8rem;
+    color: var(--amb, #3b82f6);
+    font-weight: 300;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
+    line-height: 1;
+}
+
+.expandable-card.expanded .card-header-flex .expand-icon {
+    transform: rotate(45deg);
+    color: var(--grad-main, #d946ef);
+}
+
+.card-body-collapse {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease, margin-top 0.4s ease;
+}
+
+.card-body-collapse p {
+    color: var(--mu, #94a3b8);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.expandable-card.expanded .card-body-collapse {
+    max-height: 800px;
+    opacity: 1;
+    margin-top: 1.5rem;
+}
+
+.fun-card-special {
+    background: linear-gradient(135deg, rgba(217, 70, 239, 0.1), rgba(192, 38, 211, 0.1));
+    border: 1px solid rgba(217, 70, 239, 0.3);
+}
+
+.fun-card-special:hover {
+    box-shadow: 0 0 25px rgba(217, 70, 239, 0.2);
+}
