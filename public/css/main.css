@@ -201,11 +201,17 @@
         }
 
         html {
-            scroll-behavior: auto;
+            scroll-behavior: smooth;
             overflow-x: hidden;
             overscroll-behavior-y: auto;
             -webkit-overflow-scrolling: touch;
             touch-action: pan-y;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
         }
 
         /* Interactive Cursor */
@@ -1227,6 +1233,7 @@
         .sec {
             padding: clamp(3rem, 8vw, 6.5rem) clamp(4%, 5vw, 5%);
             position: relative;
+            scroll-margin-top: 90px;
         }
 
         .surf {
