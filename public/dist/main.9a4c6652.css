@@ -205,7 +205,7 @@
             overflow-x: hidden;
             overscroll-behavior-y: auto;
             -webkit-overflow-scrolling: touch;
-            touch-action: pan-y;
+            touch-action: manipulation;
         }
 
         @media (prefers-reduced-motion: reduce) {
