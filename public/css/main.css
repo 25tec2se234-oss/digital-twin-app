@@ -6529,6 +6529,47 @@ nav.nav-modern {
     scroll-snap-align: center;
     perspective: 1000px;
     cursor: pointer;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden; /* For spotlight to stay inside */
+}
+
+/* Spotlight Hover Effect */
+.spotlight-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 10;
+    background: radial-gradient(
+        400px circle at var(--mouseX, 50%) var(--mouseY, 50%),
+        rgba(59, 130, 246, 0.15),
+        transparent 40%
+    );
+}
+
+.flip-card:hover .spotlight-glow {
+    opacity: 1;
+}
+
+/* Premium Animated SVG Icons */
+.premium-svg {
+    width: 70px;
+    height: 70px;
+    color: var(--amb, #3b82f6);
+    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
+    animation: floatingIcon 3s ease-in-out infinite;
+}
+
+@keyframes floatingIcon {
+    0% { transform: translateY(0px) scale(1); filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5)); }
+    50% { transform: translateY(-8px) scale(1.05); filter: drop-shadow(0 0 20px rgba(217, 70, 239, 0.6)); color: var(--grad-main, #d946ef); }
+    100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5)); }
 }
 
 .flip-card-inner {
