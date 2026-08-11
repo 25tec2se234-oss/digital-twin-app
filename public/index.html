@@ -80,9 +80,9 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.762ab5d6.css?v=df11d74e385719f7" as="style">
+    <link rel="preload" href="/dist/main.762ab5d6.css?v=0cfdca925eb82cfc" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.762ab5d6.css?v=df11d74e385719f7">
+    <link rel="stylesheet" href="/dist/main.762ab5d6.css?v=0cfdca925eb82cfc">
 
     <!-- JSON-LD Structured Data Schema -->
     
@@ -2112,6 +2112,11 @@
                     </div>
 
                 </div>
+                
+                <!-- Unexpected Touch: Dynamic Progress Bar -->
+                <div class="carousel-progress-container" style="max-width: 300px; margin: 2rem auto 0 auto; height: 4px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
+                    <div id="carousel-progress" style="height: 100%; width: 0%; background: var(--grad-main, #d946ef); transition: width 0.1s linear;"></div>
+                </div>
 
                 <script>
                     // Spotlight Effect
@@ -2126,37 +2131,59 @@
                     // Smart Auto-Scroll for Carousel
                     document.addEventListener("DOMContentLoaded", () => {
                         const carousel = document.getElementById("feature-carousel");
+                        const progressBar = document.getElementById("carousel-progress");
                         if(!carousel) return;
                         
-                        let scrollAmount = 0;
-                        let autoScrollInterval;
+                        let isPaused = false;
                         const cardWidth = 340; // card width (320) + gap (20)
                         
-                        function startAutoScroll() {
-                            autoScrollInterval = setInterval(() => {
+                        // Using requestAnimationFrame for buttery smooth progress bar
+                        let startTime = performance.now();
+                        const DURATION = 3000; // 3 seconds
+                        
+                        function animationLoop(currentTime) {
+                            // Check if ANY card is opened (flipped)
+                            const isCardFlipped = carousel.querySelector('.flipped') !== null;
+                            
+                            if (isPaused || isCardFlipped) {
+                                // Reset timer so it doesn't instantly skip when unpaused
+                                startTime = currentTime; 
+                                progressBar.style.background = '#ef4444'; // Red when paused
+                                requestAnimationFrame(animationLoop);
+                                return;
+                            }
+                            
+                            progressBar.style.background = 'var(--grad-main, #d946ef)';
+
+                            let elapsed = currentTime - startTime;
+                            let progressPercent = (elapsed / DURATION) * 100;
+                            
+                            if (progressPercent >= 100) {
+                                // Time to scroll
                                 const maxScroll = carousel.scrollWidth - carousel.clientWidth;
                                 if (carousel.scrollLeft >= maxScroll - 10) {
                                     carousel.scrollTo({ left: 0, behavior: 'smooth' });
                                 } else {
                                     carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
                                 }
-                            }, 3000); // 3 seconds
+                                startTime = currentTime;
+                                progressPercent = 0;
+                            }
+                            
+                            progressBar.style.width = progressPercent + '%';
+                            
+                            requestAnimationFrame(animationLoop);
                         }
+                        
+                        // Start animation loop
+                        requestAnimationFrame(animationLoop);
 
-                        function stopAutoScroll() {
-                            clearInterval(autoScrollInterval);
-                        }
-
-                        // Start initially
-                        startAutoScroll();
-
-                        // Pause on hover or touch
-                        carousel.addEventListener("mouseenter", stopAutoScroll);
-                        carousel.addEventListener("touchstart", stopAutoScroll);
-
-                        // Resume when leaving
-                        carousel.addEventListener("mouseleave", startAutoScroll);
-                        carousel.addEventListener("touchend", startAutoScroll);
+                        // Pause on hover
+                        carousel.addEventListener("mouseenter", () => isPaused = true);
+                        carousel.addEventListener("mouseleave", () => isPaused = false);
+                        
+                        // On touch devices, mouseenter/leave don't work the same, 
+                        // but they tap to read (which adds .flipped), which is covered by isCardFlipped!
                     });
                 </script>
             </div>
@@ -2715,9 +2742,9 @@
     
 
 
-    <script defer="" src="/dist/careers.e4a25189.js?v=df11d74e385719f7"></script>
-    <script defer="" src="/dist/app.1fb03540.js?v=df11d74e385719f7"></script>
-    <script defer="" src="/dist/ux-engine.b3b75cd2.js?v=df11d74e385719f7"></script>
+    <script defer="" src="/dist/careers.e4a25189.js?v=0cfdca925eb82cfc"></script>
+    <script defer="" src="/dist/app.1fb03540.js?v=0cfdca925eb82cfc"></script>
+    <script defer="" src="/dist/ux-engine.b3b75cd2.js?v=0cfdca925eb82cfc"></script>
 
 
     <!-- PROBLEM INSIGHT MODAL -->
