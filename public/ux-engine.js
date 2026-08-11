@@ -366,145 +366,27 @@ window.addEventListener('load', () => {
     window.addEventListener('resize', cleanup);
 });
 
-// --- 11. High-Performance Instant Smooth Scroll Engine (Lenis Physics) ---
+// --- 11. Native Anchor Smooth Scrolling ---
 (function initSmoothScrolling() {
-    class InstantLenisEngine {
-        constructor() {
-            this.targetY = window.scrollY || window.pageYOffset || 0;
-            this.currentY = this.targetY;
-            this.isMoving = false;
-            this.rafId = null;
-            this.friction = 0.1; // 60fps/120fps silky momentum factor
-
-            this.init();
-        }
-
-        init() {
-            // Guarantee native CSS smooth scroll does not fight wheel momentum
-            document.documentElement.style.scrollBehavior = 'auto';
-            if (document.body) document.body.style.scrollBehavior = 'auto';
-
-            // Intercept mouse wheel & trackpad delta for silky momentum on laptop/desktop
-            window.addEventListener('wheel', (e) => this.onWheel(e), { passive: false });
-
-            // Maintain alignment if user drags physical scrollbar or uses keyboard navigation
-            window.addEventListener('scroll', () => {
-                if (!this.isMoving) {
-                    this.currentY = window.scrollY || window.pageYOffset || 0;
-                    this.targetY = this.currentY;
-                }
-            }, { passive: true });
-
-            // Expose globally for GSAP or anchor links
-            window.lenis = this;
-            window.lenisInstance = this;
-
-            // Automatically protect modals and scroll boxes from scroll hijacking
-            const markModalsPreventLenis = () => {
-                const elements = document.querySelectorAll('.prob-modal-backdrop, .wa-redirect-ov, .modal, .modal-content, .drawer, [role="dialog"], .terms-box');
-                elements.forEach(el => {
-                    if (!el.hasAttribute('data-lenis-prevent')) {
-                        el.setAttribute('data-lenis-prevent', '');
-                    }
-                });
-            };
-            markModalsPreventLenis();
-            if (window.MutationObserver) {
-                const observer = new MutationObserver(markModalsPreventLenis);
-                observer.observe(document.body, { childList: true, subtree: true });
-            }
-
-            // High-performance smooth scrolling for anchor links (e.g. #hero, #pricing)
-            document.addEventListener('click', (e) => {
-                const anchor = e.target.closest('a[href^="#"]');
-                if (!anchor) return;
-                const href = anchor.getAttribute('href');
-                if (href && href.length > 1 && href !== '#') {
-                    const target = document.querySelector(href);
-                    if (target) {
-                        e.preventDefault();
-                        this.scrollTo(target, { offset: -60 });
-                    }
-                }
-            });
-        }
-
-        onWheel(e) {
-            // Allow native scrolling inside open modals, dropdowns, and terms boxes
-            let el = e.target;
-            while (el && el !== document.body && el !== document.documentElement) {
-                if (el.hasAttribute && (el.hasAttribute('data-lenis-prevent') || el.classList.contains('lenis-prevent') || el.classList.contains('prob-modal-backdrop') || el.classList.contains('wa-redirect-ov'))) {
-                    return; // Allow natural container scroll
-                }
-                el = el.parentNode;
-            }
-
-            e.preventDefault();
-
-            let delta = e.deltaY;
-            if (e.deltaMode === 1) delta *= 32;
-            if (e.deltaMode === 2) delta *= window.innerHeight;
-
-            const maxScroll = Math.max(
-                document.documentElement.scrollHeight,
-                document.body.scrollHeight
-            ) - window.innerHeight;
-
-            // Smooth momentum target calculation
-            this.targetY = Math.max(0, Math.min(maxScroll, this.targetY + delta * 0.9));
-
-            if (!this.isMoving) {
-                this.isMoving = true;
-                this.tick();
-            }
-        }
-
-        tick() {
-            const diff = this.targetY - this.currentY;
-
-            if (Math.abs(diff) > 0.3) {
-                this.currentY += diff * this.friction;
-                window.scrollTo(0, this.currentY);
-
-                if (typeof ScrollTrigger !== 'undefined') {
-                    ScrollTrigger.update();
-                }
-
-                this.rafId = requestAnimationFrame(() => this.tick());
-            } else {
-                this.currentY = this.targetY;
-                window.scrollTo(0, this.currentY);
-                this.isMoving = false;
-                if (typeof ScrollTrigger !== 'undefined') {
-                    ScrollTrigger.update();
+    function setupNativeScroll() {
+        document.addEventListener('click', (e) => {
+            const anchor = e.target.closest('a[href^="#"]');
+            if (!anchor) return;
+            const href = anchor.getAttribute('href');
+            if (href && href.length > 1 && href !== '#') {
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    // Let CSS handle the scroll-margin-top
+                    target.scrollIntoView({ behavior: 'smooth' });
                 }
             }
-        }
-
-        scrollTo(target, options = {}) {
-            let y = 0;
-            if (typeof target === 'number') {
-                y = target;
-            } else if (target && target.getBoundingClientRect) {
-                const offset = options.offset || 0;
-                y = target.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || 0) + offset;
-            }
-            const maxScroll = Math.max(
-                document.documentElement.scrollHeight,
-                document.body.scrollHeight
-            ) - window.innerHeight;
-            this.targetY = Math.max(0, Math.min(maxScroll, y));
-
-            if (!this.isMoving) {
-                this.isMoving = true;
-                this.tick();
-            }
-        }
+        });
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => new InstantLenisEngine());
+        document.addEventListener('DOMContentLoaded', setupNativeScroll);
     } else {
-        new InstantLenisEngine();
+        setupNativeScroll();
     }
 })();
