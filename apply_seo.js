@@ -120,7 +120,23 @@ function processIndex() {
             "name": "Digital Twin Verse",
             "url": "https://digitaltwinvrs.com",
             "logo": "https://digitaltwinvrs.com/img/dtv-logo.jpg",
-            "description": "AI-powered learning and career simulation platform for students, parents, and schools in India."
+            "description": "AI-powered learning and career simulation platform for students, parents, and schools in India.",
+            "founder": {
+                "@type": "Person",
+                "name": "Kumar Kartikey",
+                "url": "https://digitaltwinvrs.com/founder/kumar-kartikey"
+            }
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Kumar Kartikey",
+            "jobTitle": "Founder",
+            "worksFor": {
+                "@type": "Organization",
+                "name": "Digital Twin Verse"
+            },
+            "url": "https://digitaltwinvrs.com/founder/kumar-kartikey"
         },
         {
             "@context": "https://schema.org",

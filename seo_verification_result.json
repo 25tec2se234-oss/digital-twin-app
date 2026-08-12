@@ -1,15 +1,108 @@
 {
   "pagesChecked": [
+    "ai-career-roadmap.html",
+    "ai-tools-for-students.html",
+    "blog-post.html",
+    "blog.html",
+    "career-guidance-after-12th.html",
+    "genesis.html",
     "index.html",
-    "login.html"
+    "leaderboard.html",
+    "login.html",
+    "wheel.html"
   ],
   "pagesModified": [
-    "login.html"
+    "blog-post.html",
+    "blog.html",
+    "leaderboard.html",
+    "wheel.html"
   ],
   "pagesNeedingOptimization": [
-    "login.html"
+    "ai-career-roadmap.html",
+    "ai-tools-for-students.html",
+    "blog-post.html",
+    "blog.html",
+    "career-guidance-after-12th.html",
+    "genesis.html",
+    "leaderboard.html",
+    "login.html",
+    "wheel.html"
   ],
   "details": {
+    "ai-career-roadmap.html": {
+      "title": true,
+      "metaDescription": true,
+      "h1": true,
+      "canonical": true,
+      "schema": true,
+      "inSitemap": false,
+      "fixesApplied": [
+        "Added to sitemap.xml"
+      ]
+    },
+    "ai-tools-for-students.html": {
+      "title": true,
+      "metaDescription": true,
+      "h1": true,
+      "canonical": true,
+      "schema": true,
+      "inSitemap": false,
+      "fixesApplied": [
+        "Added to sitemap.xml"
+      ]
+    },
+    "blog-post.html": {
+      "title": false,
+      "metaDescription": false,
+      "h1": true,
+      "canonical": false,
+      "schema": false,
+      "inSitemap": false,
+      "fixesApplied": [
+        "Added missing Title",
+        "Added missing Meta Description",
+        "Added missing Canonical",
+        "Added missing Schema.org markup",
+        "Added to sitemap.xml"
+      ]
+    },
+    "blog.html": {
+      "title": false,
+      "metaDescription": false,
+      "h1": true,
+      "canonical": false,
+      "schema": false,
+      "inSitemap": false,
+      "fixesApplied": [
+        "Added missing Title",
+        "Added missing Meta Description",
+        "Added missing Canonical",
+        "Added missing Schema.org markup",
+        "Added to sitemap.xml"
+      ]
+    },
+    "career-guidance-after-12th.html": {
+      "title": true,
+      "metaDescription": true,
+      "h1": true,
+      "canonical": true,
+      "schema": true,
+      "inSitemap": false,
+      "fixesApplied": [
+        "Added to sitemap.xml"
+      ]
+    },
+    "genesis.html": {
+      "title": true,
+      "metaDescription": true,
+      "h1": true,
+      "canonical": true,
+      "schema": true,
+      "inSitemap": false,
+      "fixesApplied": [
+        "Added to sitemap.xml"
+      ]
+    },
     "index.html": {
       "title": true,
       "metaDescription": true,
@@ -19,7 +112,31 @@
       "inSitemap": true,
       "fixesApplied": []
     },
+    "leaderboard.html": {
+      "title": true,
+      "metaDescription": true,
+      "h1": true,
+      "canonical": false,
+      "schema": false,
+      "inSitemap": false,
+      "fixesApplied": [
+        "Added missing Canonical",
+        "Added missing Schema.org markup",
+        "Added to sitemap.xml"
+      ]
+    },
     "login.html": {
+      "title": true,
+      "metaDescription": true,
+      "h1": true,
+      "canonical": true,
+      "schema": true,
+      "inSitemap": false,
+      "fixesApplied": [
+        "Added to sitemap.xml"
+      ]
+    },
+    "wheel.html": {
       "title": true,
       "metaDescription": true,
       "h1": true,
