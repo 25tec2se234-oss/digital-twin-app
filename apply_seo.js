@@ -136,7 +136,11 @@ function processIndex() {
                 "@type": "Organization",
                 "name": "Digital Twin Verse"
             },
-            "url": "https://digitaltwinvrs.com/founder/kumar-kartikey"
+            "url": "https://digitaltwinvrs.com/founder/kumar-kartikey",
+            "sameAs": [
+                "https://www.linkedin.com/in/kumar-kartikey-74626b3a5",
+                "https://www.instagram.com/kartikey_rajputana"
+            ]
         },
         {
             "@context": "https://schema.org",
