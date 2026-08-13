@@ -138,7 +138,7 @@ function processIndex() {
             },
             "url": "https://digitaltwinvrs.com/founder/kumar-kartikey",
             "sameAs": [
-                "https://www.linkedin.com/in/kumar-kartikey-74626b3a5",
+                "https://www.linkedin.com/in/digital-twin-verse-b87055403",
                 "https://www.instagram.com/kartikey_rajputana"
             ]
         },
