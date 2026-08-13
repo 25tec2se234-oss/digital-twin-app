@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const { JSDOM } = require('jsdom');
 
-const INDEX_FILE = path.join(__dirname, 'deploy-digital-twin', 'public', 'index.html');
+const INDEX_FILE_DEPLOY = path.join(__dirname, 'deploy-digital-twin', 'public', 'index.html');
+const INDEX_FILE_MAIN = path.join(__dirname, 'public', 'index.html');
 const LOGIN_FILE = path.join(__dirname, 'deploy-digital-twin', 'public', 'login.html');
 
 function addOrUpdateMeta(doc, nameOrProp, value, content) {
@@ -45,12 +46,12 @@ function processLogin() {
     console.log('login.html SEO updated.');
 }
 
-function processIndex() {
-    if (!fs.existsSync(INDEX_FILE)) {
-        console.log("index.html not found.");
+function processIndex(filepath) {
+    if (!fs.existsSync(filepath)) {
+        console.log(`${filepath} not found.`);
         return;
     }
-    const html = fs.readFileSync(INDEX_FILE, 'utf-8');
+    const html = fs.readFileSync(filepath, 'utf-8');
     const dom = new JSDOM(html);
     const doc = dom.window.document;
 
@@ -124,14 +125,32 @@ function processIndex() {
             "founder": {
                 "@type": "Person",
                 "name": "Kumar Kartikey",
+                "jobTitle": "Founder and CEO",
                 "url": "https://digitaltwinvrs.com/founder/kumar-kartikey"
-            }
+            },
+            "employee": [
+                {
+                    "@type": "Person",
+                    "name": "Kaushiki Singh",
+                    "jobTitle": "Co-Founder"
+                },
+                {
+                    "@type": "Person",
+                    "name": "Rani Singh",
+                    "jobTitle": "Director"
+                },
+                {
+                    "@type": "Person",
+                    "name": "Satyam Dubey",
+                    "jobTitle": "Chief Marketing Officer (CMO)"
+                }
+            ]
         },
         {
             "@context": "https://schema.org",
             "@type": "Person",
             "name": "Kumar Kartikey",
-            "jobTitle": "Founder",
+            "jobTitle": "Founder and CEO",
             "worksFor": {
                 "@type": "Organization",
                 "name": "Digital Twin Verse"
@@ -212,9 +231,10 @@ function processIndex() {
         doc.body.appendChild(seoNav);
     }
 
-    fs.writeFileSync(INDEX_FILE, dom.serialize(), 'utf-8');
-    console.log('index.html SEO updated.');
+    fs.writeFileSync(filepath, dom.serialize(), 'utf-8');
+    console.log(`${filepath} SEO updated.`);
 }
 
 processLogin();
-processIndex();
+processIndex(INDEX_FILE_DEPLOY);
+processIndex(INDEX_FILE_MAIN);
