@@ -163,6 +163,20 @@ if (blogs.length > 0) {
                     </a>
                 </div>
             </div>
+
+            <!-- Card 5: Futureverse -->
+            <div style="background: linear-gradient(135deg, rgba(248, 113, 113, 0.12), rgba(251, 191, 36, 0.12)); border: 1px solid rgba(248, 113, 113, 0.35); border-radius: 20px; padding: 2.2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: transform 0.3s, border-color 0.3s;">
+                <div>
+                    <span style="background: rgba(248,113,113,0.2); color: #f87171; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🪐 3D KNOWLEDGE UNIVERSE</span>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: #fff; font-weight: 800; line-height: 1.3;">DTV Futureverse</h2>
+                    <p style="color: #cbd5e1; margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Step beyond the screen. Explore the future in our immersive 3D interactive knowledge universe. Discover AI, Human Skills, and Emerging Tech.</p>
+                </div>
+                <div>
+                    <a href="/futureverse" style="background: linear-gradient(135deg, #ef4444, #f59e0b); color: #fff; font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
+                        Enter the Universe &rarr;
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
