@@ -70,12 +70,16 @@ let gridHtml = `
     .featured-img-container img { width: 100%; height: 100%; object-fit: cover; max-height: 400px; display: block; transition: transform 0.5s; }
     .featured-blog-card:hover .featured-img-container img { transform: scale(1.05); }
     
-    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 2rem; }
     .blog-card { display: flex; flex-direction: column; background: rgba(255,255,255,0.03); border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s ease, border-color 0.3s; text-decoration: none; color: inherit; height: 100%; }
     .blog-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     .blog-card img { width: 100%; height: 220px; object-fit: cover; transition: transform 0.5s; }
     .blog-card:hover img { transform: scale(1.05); }
     .blog-card-content { padding: 1.8rem; display: flex; flex-direction: column; flex: 1; }
+    
+    .flagship-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 1.8rem; }
+    .flagship-card { border-radius: 20px; padding: 2.2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: transform 0.3s, border-color 0.3s; }
+    .flagship-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.4) !important; }
     
     @media (max-width: 900px) {
         .featured-blog-card { flex-direction: column; padding: 1.5rem; gap: 1.5rem; }
@@ -107,9 +111,9 @@ if (blogs.length > 0) {
         <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem; color: #fff; font-weight: 700; display: flex; align-items: center; gap: 0.6rem;">
             <span>🔥</span> Flagship Career & AI Resource Hubs
         </h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.8rem;">
+        <div class="flagship-grid">
             <!-- Card 1: AI Career Roadmap -->
-            <div style="background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(59, 130, 246, 0.12)); border: 1px solid rgba(167, 139, 250, 0.35); border-radius: 20px; padding: 2.2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: transform 0.3s, border-color 0.3s;">
+            <div class="flagship-card" style="background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(59, 130, 246, 0.12)); border: 1px solid rgba(167, 139, 250, 0.35);">
                 <div>
                     <span style="background: rgba(167,139,250,0.22); color: #c084fc; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🚀 FLAGSHIP CAREER ROADMAP</span>
                     <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: #fff; font-weight: 800; line-height: 1.3;">Ultimate AI Career Roadmap (2026–2035)</h2>
@@ -123,7 +127,7 @@ if (blogs.length > 0) {
             </div>
 
             <!-- Card 2: 50+ AI Tools Directory -->
-            <div style="background: linear-gradient(135deg, rgba(0, 240, 255, 0.12), rgba(167, 139, 250, 0.12)); border: 1px solid rgba(0, 240, 255, 0.35); border-radius: 20px; padding: 2.2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: transform 0.3s, border-color 0.3s;">
+            <div class="flagship-card" style="background: linear-gradient(135deg, rgba(0, 240, 255, 0.12), rgba(167, 139, 250, 0.12)); border: 1px solid rgba(0, 240, 255, 0.35);">
                 <div>
                     <span style="background: rgba(0,240,255,0.2); color: #00f0ff; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">⚡ 50+ FREE AI TOOLS DIRECTORY</span>
                     <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: #fff; font-weight: 800; line-height: 1.3;">50+ Best Free AI Tools Every Student Should Use in 2026</h2>
@@ -137,7 +141,7 @@ if (blogs.length > 0) {
             </div>
 
             <!-- Card 3: AI Reality Lab -->
-            <div style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(167, 139, 250, 0.12)); border: 1px solid rgba(236, 72, 153, 0.35); border-radius: 20px; padding: 2.2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: transform 0.3s, border-color 0.3s;">
+            <div class="flagship-card" style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(167, 139, 250, 0.12)); border: 1px solid rgba(236, 72, 153, 0.35);">
                 <div>
                     <span style="background: rgba(236,72,153,0.2); color: #f472b6; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🧠 FLAGSHIP INTERACTIVE</span>
                     <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: #fff; font-weight: 800; line-height: 1.3;">AI Reality Lab</h2>
@@ -151,7 +155,7 @@ if (blogs.length > 0) {
             </div>
 
             <!-- Card 4: Skill Intelligence Hub -->
-            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(59, 130, 246, 0.12)); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 20px; padding: 2.2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: transform 0.3s, border-color 0.3s;">
+            <div class="flagship-card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(59, 130, 246, 0.12)); border: 1px solid rgba(16, 185, 129, 0.35);">
                 <div>
                     <span style="background: rgba(16,185,129,0.2); color: #34d399; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🗺️ FLAGSHIP EXPLORER</span>
                     <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: #fff; font-weight: 800; line-height: 1.3;">Student Skill Intelligence Hub</h2>
@@ -165,7 +169,7 @@ if (blogs.length > 0) {
             </div>
 
             <!-- Card 5: Futureverse -->
-            <div style="background: linear-gradient(135deg, rgba(248, 113, 113, 0.12), rgba(251, 191, 36, 0.12)); border: 1px solid rgba(248, 113, 113, 0.35); border-radius: 20px; padding: 2.2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: transform 0.3s, border-color 0.3s;">
+            <div class="flagship-card" style="background: linear-gradient(135deg, rgba(248, 113, 113, 0.12), rgba(251, 191, 36, 0.12)); border: 1px solid rgba(248, 113, 113, 0.35);">
                 <div>
                     <span style="background: rgba(248,113,113,0.2); color: #f87171; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🪐 3D KNOWLEDGE UNIVERSE</span>
                     <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: #fff; font-weight: 800; line-height: 1.3;">DTV Futureverse</h2>
