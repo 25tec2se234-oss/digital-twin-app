@@ -596,7 +596,10 @@
             if (controls) controls.enabled = false;
             
             const intro = document.getElementById('entry-overlay');
-            if(intro) intro.classList.add('hidden');
+            if(intro) {
+                intro.classList.add('hidden');
+                intro.style.display = 'none';
+            }
             document.getElementById('controls-hint').classList.add('hidden');
             labelContainers.forEach(l => l.element.style.opacity = '0');
 
@@ -716,7 +719,12 @@
         document.getElementById('back-to-universe-btn').onclick = returnToUniverse;
 
         document.getElementById('enter-btn').onclick = () => {
-            document.getElementById('entry-overlay').classList.add('fade-out');
+            const overlay = document.getElementById('entry-overlay');
+            overlay.classList.add('fade-out');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                overlay.classList.add('hidden');
+            }, 500);
             document.getElementById('progress-indicator').classList.remove('hidden');
             gsap.to(camera.position, {
                 y: 120, z: 180, duration: 4, ease: "power2.out", onUpdate: () => camera.lookAt(0,0,0)
