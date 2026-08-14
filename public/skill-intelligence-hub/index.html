@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#0b0f19">
+
+    <!-- Technical SEO Meta Tags -->
+    <title>Student Skill Intelligence Hub | Future-Proof Your Career — Digital Twin Verse</title>
+    <meta name="description" content="Explore the skills that matter next. An interactive explorer connecting skills to real-world applications, projects, and future opportunities. Build your Personal Skill Map.">
+    <meta name="keywords" content="student skills 2026, future skills, skill intelligence hub, career skills explorer, digital twin verse skills, skill map, career planning skills">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Digital Twin Verse">
+    <meta name="publisher" content="Digital Twin Verse">
+    <link rel="canonical" href="https://digitaltwinvrs.com/skill-intelligence-hub">
+
+    <!-- Manifest & Icons -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/img/dtv-logo.jpg" type="image/jpeg">
+
+    <!-- Open Graph & Social Sharing -->
+    <meta property="og:title" content="Student Skill Intelligence Hub | Future-Proof Your Career">
+    <meta property="og:description" content="Explore the skills that matter next and understand what they actually unlock. Build your personalized skill map.">
+    <meta property="og:url" content="https://digitaltwinvrs.com/skill-intelligence-hub">
+    <meta property="og:image" content="https://digitaltwinvrs.com/img/dtv-logo.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind for rapid premium layout without breaking global scope -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['"Space Grotesk"', 'sans-serif'],
+                        body: ['"Inter"', 'sans-serif']
+                    },
+                    colors: {
+                        dtv: {
+                            bg: '#0b0f19',
+                            card: 'rgba(20, 25, 40, 0.6)',
+                            border: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #0b0f19;
+            color: #f8fafc;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        .glass-card {
+            background: rgba(20, 25, 40, 0.6);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .filter-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.2s;
+        }
+        .filter-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.3);
+        }
+        .filter-btn.active {
+            background: linear-gradient(135deg, #a78bfa, #3b82f6);
+            color: white;
+            border-color: transparent;
+            font-weight: 600;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #a78bfa, #3b82f6, #00f0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-glass {
+            background: rgba(11, 15, 25, 0.8);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Modal Overlay */
+        #skill-modal, #map-modal {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .hide-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scroll {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .map-node {
+            animation: pulse-glow 2s infinite alternate;
+        }
+        @keyframes pulse-glow {
+            from { box-shadow: 0 0 10px rgba(59,130,246,0.3); }
+            to { box-shadow: 0 0 20px rgba(167,139,250,0.6); }
+        }
+    </style>
+</head>
+<body class="antialiased font-sans">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-40 nav-glass px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="/" class="flex items-center gap-3 text-white no-underline">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-sm shadow-[0_0_15px_rgba(99,102,241,0.5)]">DT</div>
+                <span class="font-display font-bold text-xl tracking-tight">Digital Twin<span class="text-indigo-400">Verse</span></span>
+            </a>
+            <div class="hidden md:flex gap-6 text-sm font-medium text-slate-300">
+                <a href="/blog" class="hover:text-white transition">Blog & Resources</a>
+                <a href="/ai-reality-lab" class="hover:text-white transition">AI Reality Lab</a>
+                <a href="/ai-career-roadmap" class="hover:text-white transition">AI Roadmap</a>
+            </div>
+            <button onclick="openMapModal()" id="map-btn-nav" class="px-5 py-2 rounded-full bg-blue-600/20 hover:bg-blue-600/40 text-blue-300 font-medium text-sm transition border border-blue-500/30 hidden items-center gap-2">
+                <span>View Skill Map</span>
+                <span id="map-count" class="bg-blue-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="pt-32 pb-16 px-6 relative overflow-hidden">
+        <div class="absolute top-20 right-0 w-full max-w-2xl h-[500px] bg-gradient-to-bl from-blue-900/30 to-teal-900/30 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
+        <div class="absolute top-20 left-0 w-full max-w-2xl h-[500px] bg-gradient-to-br from-purple-900/30 to-indigo-900/30 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-sm font-semibold text-blue-300 mb-6 uppercase tracking-wider">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                Flagship Intelligence Hub
+            </div>
+            <h1 class="text-5xl md:text-7xl font-display font-bold text-white mb-6 leading-tight tracking-tight">
+                Student Skill <span class="gradient-text">Intelligence</span>
+            </h1>
+            <p class="text-xl text-slate-300 mb-10 max-w-3xl mx-auto font-body leading-relaxed">
+                See the skills that matter next. Understand what they unlock, how to build them, and how they stack together to future-proof your career. Select skills below to generate your Personal Skill Map.
+            </p>
+            
+            <div class="relative max-w-2xl mx-auto mb-8">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <input type="text" id="search-input" onkeyup="filterAndRender()" placeholder="Search skills, applications, or careers..." class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition shadow-inner">
+            </div>
+
+            <div id="category-filters" class="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
+                <!-- Filters injected by JS -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Explorer Section -->
+    <main class="py-12 px-6 min-h-[600px]">
+        <div class="max-w-7xl mx-auto">
+            <div id="skills-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Skill Cards injected by JS -->
+            </div>
+            
+            <div id="no-results" class="hidden text-center py-20">
+                <div class="text-slate-400 text-lg mb-2">No skills found matching your search.</div>
+                <button onclick="resetFilters()" class="text-indigo-400 hover:text-indigo-300 font-medium">Clear Filters</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 bg-[#070b14] py-12 px-6 mt-20">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-6 h-6 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-[10px] text-white">DT</div>
+                <span class="text-slate-300 font-semibold text-sm">Digital Twin Verse &copy; 2026</span>
+            </div>
+            <div class="flex gap-6 text-sm text-slate-400">
+                <a href="/privacy.html" class="hover:text-white transition">Privacy</a>
+                <a href="/terms.html" class="hover:text-white transition">Terms</a>
+                <a href="/blog" class="hover:text-white transition">Resources</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Skill Detail Modal -->
+    <div id="skill-modal" class="fixed inset-0 z-50 bg-black/60 hidden flex items-center justify-center p-4 md:p-6 opacity-0 transition-opacity duration-300">
+        <div class="bg-[#111827] border border-white/10 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto hide-scroll shadow-2xl transform scale-95 transition-transform duration-300" id="skill-modal-content">
+            <!-- Injected by JS -->
+        </div>
+    </div>
+
+    <!-- Personal Skill Map Modal -->
+    <div id="map-modal" class="fixed inset-0 z-50 bg-black/80 hidden flex items-center justify-center p-4 md:p-6 opacity-0 transition-opacity duration-300">
+        <div class="bg-[#0b0f19] border border-blue-500/30 rounded-3xl w-full max-w-5xl max-h-[95vh] overflow-y-auto hide-scroll shadow-[0_0_60px_rgba(59,130,246,0.15)] transform scale-95 transition-transform duration-300" id="map-modal-content">
+            <!-- Injected by JS -->
+        </div>
+    </div>
+
+    <script>
+        // ----------------------------------------------------------------------
+        // SUBSTANTIVE CONTENT DATA (2,500+ Words of educational skill data)
+        // ----------------------------------------------------------------------
+        const skillsData = [
+            {
+                id: "prompt-engineering",
+                name: "Advanced Prompt Engineering",
+                category: "AI & Machine Learning",
+                difficulty: "Intermediate",
+                icon: "⚡",
+                shortDesc: "The ability to structure complex queries for LLMs to generate deterministic, high-quality outputs.",
+                whyItMatters: "In 2026, AI is no longer a novelty; it is a foundational utility. The difference between an amateur and a professional is the ability to bypass AI hallucinations and force the model to execute multi-step logic accurately. Prompt engineering is the new programming language of the human mind.",
+                whereUsed: "Used universally across software development, digital marketing, legal research, financial modeling, and academic synthesis.",
+                beginnerApp: "Generating simple summaries or drafting standard emails.",
+                intermediateApp: "Using few-shot prompting to teach the AI a specific brand voice or coding style before asking it to generate content.",
+                advancedApp: "Building complex 'Chain of Thought' prompt architectures that force the AI to break down a problem, critique its own logic, and output structured JSON data for API integration.",
+                exampleProject: "Build an automated research agent that takes a topic, searches Google Scholar (via an API), extracts abstracts, and synthesizes a literature review in Markdown format.",
+                relatedSkills: ["computational-thinking", "data-literacy"],
+                mistake: "Treating the LLM like a Google search bar. Google retrieves; LLMs synthesize. If you provide generic input, you will get generic, useless output.",
+                nextStep: "Learn about the OpenAI API and how 'System Prompts' differ from 'User Prompts'."
+            },
+            {
+                id: "computational-thinking",
+                name: "Computational Thinking",
+                category: "Problem Solving",
+                difficulty: "Fundamental",
+                icon: "🧠",
+                shortDesc: "Breaking down complex, chaotic problems into structural, algorithmic steps that humans or computers can execute.",
+                whyItMatters: "Before you can write a line of code or prompt an AI, you must understand the architecture of the problem. Computational thinking is the absolute prerequisite for automation. If you cannot describe a process as an algorithm, you cannot automate it.",
+                whereUsed: "Systems architecture, process optimization, data engineering, supply chain logistics, and business strategy.",
+                beginnerApp: "Writing a clear, step-by-step Standard Operating Procedure (SOP) for a repetitive daily task.",
+                intermediateApp: "Designing a flowchart that maps all possible edge cases in a user authentication flow.",
+                advancedApp: "Architecting a highly scalable microservices infrastructure that handles asynchronous data processing across multiple cloud environments.",
+                exampleProject: "Map the exact logical steps required to automate your personal monthly budgeting, identifying the inputs (bank CSV), the process (categorization rules), and the outputs (spending pie chart).",
+                relatedSkills: ["python-foundations", "systems-design"],
+                mistake: "Jumping straight into writing code or software without drawing the logic tree first. This leads to 'spaghetti code' and unscalable solutions.",
+                nextStep: "Study state machines and basic algorithmic flowcharting."
+            },
+            {
+                id: "data-literacy",
+                name: "Data Literacy & Storytelling",
+                category: "Data",
+                difficulty: "Intermediate",
+                icon: "📊",
+                shortDesc: "The ability to read, analyze, and communicate actionable insights from large datasets without being misled by statistical bias.",
+                whyItMatters: "Every modern industry generates terabytes of data. However, raw data is useless. The most valuable professionals are those who can look at a dashboard, identify the signal through the noise, and tell a compelling story that drives a business decision.",
+                whereUsed: "Product management, marketing analytics, public policy, healthcare diagnostics, and financial forecasting.",
+                beginnerApp: "Creating a pivot table in Excel to summarize sales by region.",
+                intermediateApp: "Using SQL and Tableau to join disparate data sources and create an interactive dashboard showing user retention cohorts.",
+                advancedApp: "Applying statistical models to identify causal relationships (not just correlation) and presenting the findings to a non-technical executive board to justify a $5M investment.",
+                exampleProject: "Download a public dataset from Kaggle (e.g., global climate data or movie box office returns). Clean the data, visualize the top 3 trends, and write a 2-page executive summary explaining why these trends occurred.",
+                relatedSkills: ["python-foundations", "emotional-intelligence"],
+                mistake: "Confusing correlation with causation, or creating visualizations that are mathematically accurate but visually incomprehensible to the target audience.",
+                nextStep: "Learn intermediate SQL (JOINs, Window Functions) and the principles of Edward Tufte's data visualization."
+            },
+            {
+                id: "emotional-intelligence",
+                name: "Emotional Intelligence (EQ)",
+                category: "Communication",
+                difficulty: "Advanced",
+                icon: "❤️",
+                shortDesc: "The capacity to be aware of, control, and express one's emotions, and to handle interpersonal relationships judiciously and empathetically.",
+                whyItMatters: "As AI commoditizes technical hard skills, EQ becomes the ultimate differentiator. Algorithms cannot build trust, negotiate a tense contract, or motivate a burnt-out team. Leadership in 2026 is entirely predicated on deep emotional intelligence.",
+                whereUsed: "Leadership, B2B Sales, Human Resources, Medical Care, Dispute Resolution, and UX Design.",
+                beginnerApp: "Active listening: fully focusing on a speaker without interrupting or immediately formulating a response.",
+                intermediateApp: "De-escalating a conflict between two team members by validating their underlying frustrations without taking sides.",
+                advancedApp: "Navigating a high-stakes corporate crisis, managing public relations, and maintaining employee morale while executing difficult structural changes.",
+                exampleProject: "Join a debate club, an improvisational theater group, or a crisis volunteer hotline. These environments force rapid emotional assessment and empathetic response under pressure.",
+                relatedSkills: ["complex-negotiation", "systems-design"],
+                mistake: "Assuming EQ means 'always being nice.' True EQ involves the ability to deliver difficult feedback honestly and constructively without destroying trust.",
+                nextStep: "Read 'Thinking, Fast and Slow' by Daniel Kahneman to understand cognitive biases in human reaction."
+            },
+            {
+                id: "python-foundations",
+                name: "Python Foundations",
+                category: "Software Development",
+                difficulty: "Intermediate",
+                icon: "🐍",
+                shortDesc: "The universal programming language for data, AI, and backend infrastructure.",
+                whyItMatters: "While AI can write Python code for you, you cannot debug, deploy, or architect complex systems if you cannot read it. Python is the lingua franca of the 2026 tech ecosystem. It is the glue that connects LLMs to databases and user interfaces.",
+                whereUsed: "Machine Learning, Backend Web Development (Django/FastAPI), Data Engineering, Scientific Computing, and Automation scripting.",
+                beginnerApp: "Writing a script that automatically renames and organizes files in a directory.",
+                intermediateApp: "Building a web scraper that extracts real estate pricing data and saves it to a PostgreSQL database.",
+                advancedApp: "Deploying a scalable REST API using FastAPI that serves a custom machine learning model in a Dockerized environment.",
+                exampleProject: "Build a Python script that connects to the Spotify API, analyzes your listening history, and generates a custom playlist based on the BPM (beats per minute) of the tracks.",
+                relatedSkills: ["computational-thinking", "data-literacy", "prompt-engineering"],
+                mistake: "Memorizing syntax instead of understanding data structures (lists, dictionaries, sets) and control flow. Syntax can be Googled; logic cannot.",
+                nextStep: "Build a CRUD (Create, Read, Update, Delete) application using Flask or FastAPI."
+            },
+            {
+                id: "systems-design",
+                name: "Systems Design & Architecture",
+                category: "Software Development",
+                difficulty: "Advanced",
+                icon: "🏗️",
+                shortDesc: "The process of defining the architecture, modules, interfaces, and data for a system to satisfy specified requirements.",
+                whyItMatters: "Writing a function is easy; building a system that can handle 10 million concurrent users without crashing is extremely hard. Systems design separates junior developers from principal architects. It requires a deep understanding of trade-offs (e.g., latency vs. throughput).",
+                whereUsed: "Cloud Architecture, DevOps, Database Administration, and Technical Product Management.",
+                beginnerApp: "Understanding the difference between the client (frontend) and the server (backend) in a standard web application.",
+                intermediateApp: "Designing a caching layer using Redis to reduce database load for frequently accessed data.",
+                advancedApp: "Architecting a globally distributed, highly available microservices ecosystem using Kubernetes, Kafka for event streaming, and multi-region database replication.",
+                exampleProject: "Draw a comprehensive system architecture diagram for a system like Netflix or Uber, detailing the load balancers, CDN, API gateways, databases, and worker nodes.",
+                relatedSkills: ["python-foundations", "computational-thinking"],
+                mistake: "Over-engineering. Choosing complex microservices for a project that would run perfectly fine as a simple monolithic application.",
+                nextStep: "Study the CAP Theorem (Consistency, Availability, Partition Tolerance) and read engineering blogs from companies like Stripe and Netflix."
+            },
+            {
+                id: "complex-negotiation",
+                name: "Complex Negotiation",
+                category: "Business",
+                difficulty: "Advanced",
+                icon: "🤝",
+                shortDesc: "The strategic process of resolving disputes or creating mutually beneficial agreements in high-stakes environments.",
+                whyItMatters: "Whether you are negotiating a starting salary, securing venture capital funding, or closing a B2B enterprise software deal, your ability to negotiate directly determines your financial trajectory. AI cannot negotiate on your behalf; it requires reading human nuance and leveraging psychological leverage.",
+                whereUsed: "Venture Capital, Enterprise Sales, Legal Mediation, Procurement, and Executive Leadership.",
+                beginnerApp: "Negotiating the timeline and deliverables for a university group project to ensure fair workload distribution.",
+                intermediateApp: "Negotiating a 15% salary increase during a performance review by presenting quantified business value.",
+                advancedApp: "Structuring a multi-million dollar corporate acquisition, balancing stock options, retention bonuses, and regulatory compliance.",
+                exampleProject: "Role-play a salary negotiation with a mentor or peer. Record the conversation, and analyze your use of silence, anchoring, and value framing.",
+                relatedSkills: ["emotional-intelligence", "data-literacy"],
+                mistake: "Viewing negotiation as a zero-sum game where one party must 'lose.' The best negotiators expand the pie before dividing it (creating win-win scenarios).",
+                nextStep: "Read 'Never Split the Difference' by Chris Voss."
+            },
+            {
+                id: "ux-psychology",
+                name: "UX & Cognitive Psychology",
+                category: "Design",
+                difficulty: "Intermediate",
+                icon: "🎨",
+                shortDesc: "Applying the principles of human cognition and behavior to design intuitive, ethical digital interfaces.",
+                whyItMatters: "A brilliantly engineered backend is useless if the user cannot figure out how to click the 'Buy' button. UX psychology is the bridge between human intent and machine execution. It involves understanding how attention, memory, and cognitive load affect user behavior.",
+                whereUsed: "Product Design, Frontend Development, Digital Marketing, and Conversion Rate Optimization (CRO).",
+                beginnerApp: "Applying 'Fitts's Law' to make primary CTA (Call to Action) buttons larger and easier to click on mobile devices.",
+                intermediateApp: "Conducting user interviews and A/B testing to determine why users are abandoning a checkout process.",
+                advancedApp: "Designing a complex B2B SaaS dashboard that minimizes cognitive load by progressively disclosing information based on user expertise.",
+                exampleProject: "Take an application you find frustrating to use (e.g., your university's student portal). Redesign 3 key screens in Figma, explicitly documenting the psychological principles (like Miller's Law or the Von Restorff effect) you used to improve it.",
+                relatedSkills: ["emotional-intelligence", "computational-thinking"],
+                mistake: "Designing for 'aesthetic beauty' at the expense of usability. If a beautiful animation makes a task take 3 seconds longer, it is a bad design.",
+                nextStep: "Study the 'Gestalt Principles of Visual Perception' and learn the basics of Figma."
+            },
+            {
+                id: "zero-trust-security",
+                name: "Zero Trust Security & Forensics",
+                category: "Cybersecurity",
+                difficulty: "Advanced",
+                icon: "🔐",
+                shortDesc: "A security framework requiring all users, whether inside or outside the organization's network, to be authenticated and authorized continuously.",
+                whyItMatters: "As cyber threats become automated by AI, traditional 'castle-and-moat' security architectures are obsolete. In 2026, understanding how to secure data, authenticate identity, and prevent lateral movement within a network is a critical capability for any software or IT professional.",
+                whereUsed: "Information Security, Cloud Architecture, DevSecOps, and Corporate Compliance.",
+                beginnerApp: "Implementing Multi-Factor Authentication (MFA) and strong password policies across all personal and professional accounts.",
+                intermediateApp: "Designing a web application that implements robust JWT (JSON Web Token) authentication and Role-Based Access Control (RBAC).",
+                advancedApp: "Conducting a forensic analysis of a data breach, identifying the compromised container, isolating the network segment, and patching the vulnerability without downtime.",
+                exampleProject: "Set up a virtual lab using Kali Linux. Attempt to exploit a deliberate vulnerability in an intentionally vulnerable application (like OWASP Juice Shop) to understand how attackers think.",
+                relatedSkills: ["systems-design", "python-foundations"],
+                mistake: "Assuming a system is secure just because it uses a firewall. Security is a continuous process, not a product.",
+                nextStep: "Study the OWASP Top 10 Web Application Security Risks."
+            },
+            {
+                id: "agile-adaptability",
+                name: "Agile Adaptability & Unlearning",
+                category: "Problem Solving",
+                difficulty: "Advanced",
+                icon: "🌪️",
+                shortDesc: "The meta-skill of rapidly discarding obsolete mental models and acquiring new frameworks in response to technological disruption.",
+                whyItMatters: "The specific tools you learn in 2026 will be outdated by 2029. The most valuable skill is not what you currently know, but how fast you can learn what you don't know. Adaptability is the ultimate armor against automation.",
+                whereUsed: "Startup Founders, Agile Project Management, Strategic Consulting, and essentially every role in a volatile economy.",
+                beginnerApp: "Switching from a familiar software tool (like Microsoft Word) to a completely new paradigm (like Notion or Obsidian) and mastering it within a week.",
+                intermediateApp: "Pivoting a project's entire direction mid-semester based on new, contradictory data without experiencing emotional distress or sunk-cost fallacy.",
+                advancedApp: "Leading an entire corporate division through a digital transformation, replacing legacy systems with AI-driven workflows while managing employee anxiety.",
+                exampleProject: "Identify a deeply held professional or academic belief you have. Spend one week aggressively researching the opposing viewpoint. Write an essay arguing against your original belief.",
+                relatedSkills: ["emotional-intelligence", "computational-thinking"],
+                mistake: "Clinging to the 'sunk cost fallacy'—refusing to abandon a failing project or obsolete skill simply because you have already invested significant time into it.",
+                nextStep: "Study 'Agile Methodology' and the psychology of change management."
+            }
+        ];
+
+        // ----------------------------------------------------------------------
+        // STATE MANAGEMENT
+        // ----------------------------------------------------------------------
+        let currentCategory = 'All';
+        let searchQuery = '';
+        let selectedSkillsMap = new Set(); // Stores IDs
+
+        // ----------------------------------------------------------------------
+        // INITIALIZATION
+        // ----------------------------------------------------------------------
+        function init() {
+            // Extract unique categories
+            const categories = ['All', ...new Set(skillsData.map(s => s.category))];
+            
+            // Render category filters
+            const filterContainer = document.getElementById('category-filters');
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = `filter-btn px-5 py-2 rounded-full text-sm font-medium ${cat === 'All' ? 'active' : 'text-slate-300'}`;
+                btn.textContent = cat;
+                btn.onclick = () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active', 'text-slate-300'));
+                    document.querySelectorAll('.filter-btn').forEach(b => {
+                        if (b.textContent === cat) b.classList.add('active');
+                        else b.classList.add('text-slate-300');
+                    });
+                    currentCategory = cat;
+                    filterAndRender();
+                };
+                filterContainer.appendChild(btn);
+            });
+
+            filterAndRender();
+        }
+
+        // ----------------------------------------------------------------------
+        // FILTERING & RENDERING
+        // ----------------------------------------------------------------------
+        function filterAndRender() {
+            searchQuery = document.getElementById('search-input').value.toLowerCase();
+            
+            const filtered = skillsData.filter(s => {
+                const matchCategory = currentCategory === 'All' || s.category === currentCategory;
+                const matchSearch = s.name.toLowerCase().includes(searchQuery) || 
+                                    s.shortDesc.toLowerCase().includes(searchQuery) ||
+                                    s.category.toLowerCase().includes(searchQuery);
+                return matchCategory && matchSearch;
+            });
+
+            const grid = document.getElementById('skills-grid');
+            const noRes = document.getElementById('no-results');
+            
+            grid.innerHTML = '';
+            
+            if (filtered.length === 0) {
+                grid.classList.add('hidden');
+                noRes.classList.remove('hidden');
+            } else {
+                grid.classList.remove('hidden');
+                noRes.classList.add('hidden');
+                
+                filtered.forEach(s => {
+                    const isSelected = selectedSkillsMap.has(s.id);
+                    const btnClass = isSelected 
+                        ? 'bg-blue-600/20 border-blue-500 text-blue-300' 
+                        : 'bg-white/5 border-white/10 text-white hover:bg-white/10';
+                    const btnText = isSelected ? '✓ Added to Map' : '+ Add to Map';
+
+                    const card = document.createElement('div');
+                    card.className = 'skill-card glass-card rounded-2xl p-6 flex flex-col h-full cursor-pointer group relative';
+                    
+                    // Difficulty Badge Color
+                    let diffColor = 'text-green-400 bg-green-400/10 border-green-400/20';
+                    if(s.difficulty === 'Intermediate') diffColor = 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20';
+                    if(s.difficulty === 'Advanced') diffColor = 'text-red-400 bg-red-400/10 border-red-400/20';
+
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-4" onclick="openSkillModal('${s.id}')">
+                            <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                                ${s.icon}
+                            </div>
+                            <span class="text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded-md border ${diffColor}">
+                                ${s.difficulty}
+                            </span>
+                        </div>
+                        <div onclick="openSkillModal('${s.id}')" class="flex-1">
+                            <div class="text-xs font-semibold text-indigo-400 mb-1 tracking-wider uppercase">${s.category}</div>
+                            <h3 class="text-xl font-bold text-white mb-3 group-hover:text-blue-300 transition-colors">${s.name}</h3>
+                            <p class="text-sm text-slate-400 line-clamp-3 mb-6">${s.shortDesc}</p>
+                        </div>
+                        <div class="mt-auto pt-4 border-t border-white/5">
+                            <button onclick="toggleMapSkill(event, '${s.id}')" class="w-full py-2.5 rounded-lg border text-sm font-medium transition-colors flex items-center justify-center gap-2 ${btnClass}">
+                                ${btnText}
+                            </button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+
+        function resetFilters() {
+            document.getElementById('search-input').value = '';
+            document.querySelector('.filter-btn').click(); // Clicks 'All'
+        }
+
+        // ----------------------------------------------------------------------
+        // MAP LOGIC
+        // ----------------------------------------------------------------------
+        function toggleMapSkill(event, id) {
+            event.stopPropagation();
+            if (selectedSkillsMap.has(id)) {
+                selectedSkillsMap.delete(id);
+            } else {
+                selectedSkillsMap.add(id);
+            }
+            updateNavCount();
+            filterAndRender(); // Re-render to update button states
+        }
+
+        function updateNavCount() {
+            const count = selectedSkillsMap.size;
+            const btn = document.getElementById('map-btn-nav');
+            const counter = document.getElementById('map-count');
+            
+            counter.textContent = count;
+            if (count > 0) {
+                btn.classList.remove('hidden');
+                btn.classList.add('flex');
+            } else {
+                btn.classList.add('hidden');
+                btn.classList.remove('flex');
+            }
+        }
+
+        // ----------------------------------------------------------------------
+        // MODALS
+        // ----------------------------------------------------------------------
+        function openSkillModal(id) {
+            const s = skillsData.find(x => x.id === id);
+            if (!s) return;
+
+            const modal = document.getElementById('skill-modal');
+            const content = document.getElementById('skill-modal-content');
+            
+            let diffColor = 'text-green-400 bg-green-400/10 border-green-400/20';
+            if(s.difficulty === 'Intermediate') diffColor = 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20';
+            if(s.difficulty === 'Advanced') diffColor = 'text-red-400 bg-red-400/10 border-red-400/20';
+
+            const relatedHtml = s.relatedSkills.map(relId => {
+                const relSkill = skillsData.find(x => x.id === relId);
+                if(!relSkill) return '';
+                return `
+                    <button onclick="openSkillModal('${relId}')" class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg p-2 text-sm text-left transition">
+                        <span>${relSkill.icon}</span> <span class="text-slate-300">${relSkill.name}</span>
+                    </button>
+                `;
+            }).join('');
+
+            const isSelected = selectedSkillsMap.has(s.id);
+            const btnClass = isSelected ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-white/10 hover:bg-white/20 text-white';
+            const btnText = isSelected ? 'Remove from Map' : 'Add to Personal Map';
+
+            content.innerHTML = `
+                <!-- Header -->
+                <div class="relative p-8 border-b border-white/10 overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 blur-[60px] rounded-full pointer-events-none"></div>
+                    <button onclick="closeModal('skill-modal')" class="absolute top-6 right-6 text-slate-400 hover:text-white transition bg-white/5 p-2 rounded-full">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                    
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-3xl shadow-inner">
+                            ${s.icon}
+                        </div>
+                        <div>
+                            <div class="text-sm font-semibold text-indigo-400 mb-1 tracking-wider uppercase">${s.category}</div>
+                            <h2 class="text-3xl font-display font-bold text-white">${s.name}</h2>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-3 mb-6">
+                        <span class="text-xs uppercase tracking-wider font-bold px-3 py-1.5 rounded-md border ${diffColor}">
+                            ${s.difficulty} Level
+                        </span>
+                    </div>
+                    
+                    <button id="modal-map-btn" onclick="toggleMapSkillModal('${s.id}')" class="px-6 py-2.5 rounded-xl font-medium transition shadow-lg ${btnClass}">
+                        ${btnText}
+                    </button>
+                </div>
+                
+                <!-- Body -->
+                <div class="p-8 space-y-10">
+                    <div>
+                        <h4 class="text-lg font-bold text-white mb-3 flex items-center gap-2"><span class="text-indigo-400">⚡</span> Why it Matters</h4>
+                        <p class="text-slate-300 leading-relaxed text-[1.05rem]">${s.whyItMatters}</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-5">
+                            <div class="text-xs font-bold text-green-400 uppercase tracking-widest mb-2">Beginner</div>
+                            <p class="text-sm text-slate-300">${s.beginnerApp}</p>
+                        </div>
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-5">
+                            <div class="text-xs font-bold text-yellow-400 uppercase tracking-widest mb-2">Intermediate</div>
+                            <p class="text-sm text-slate-300">${s.intermediateApp}</p>
+                        </div>
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-5 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-red-500/5 to-purple-500/5 pointer-events-none"></div>
+                            <div class="text-xs font-bold text-red-400 uppercase tracking-widest mb-2">Advanced</div>
+                            <p class="text-sm text-slate-300">${s.advancedApp}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-indigo-900/20 border border-indigo-500/20 rounded-xl p-6">
+                        <h4 class="text-sm font-bold text-indigo-300 uppercase tracking-widest mb-2">Real-World Project</h4>
+                        <p class="text-slate-200">${s.exampleProject}</p>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="flex-1">
+                            <h4 class="text-sm font-bold text-rose-400 uppercase tracking-widest mb-3">Common Mistake</h4>
+                            <p class="text-slate-300 text-sm leading-relaxed">${s.mistake}</p>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-sm font-bold text-blue-400 uppercase tracking-widest mb-3">Next Step</h4>
+                            <p class="text-slate-300 text-sm leading-relaxed">${s.nextStep}</p>
+                        </div>
+                    </div>
+
+                    ${relatedHtml ? `
+                    <div class="pt-6 border-t border-white/10">
+                        <h4 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Related Skills to Stack</h4>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            ${relatedHtml}
+                        </div>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        }
+
+        function toggleMapSkillModal(id) {
+            toggleMapSkill(new Event('click'), id);
+            // update button in modal
+            const btn = document.getElementById('modal-map-btn');
+            if (selectedSkillsMap.has(id)) {
+                btn.className = "px-6 py-2.5 rounded-xl font-medium transition shadow-lg bg-blue-600 hover:bg-blue-700 text-white";
+                btn.textContent = "Remove from Map";
+            } else {
+                btn.className = "px-6 py-2.5 rounded-xl font-medium transition shadow-lg bg-white/10 hover:bg-white/20 text-white";
+                btn.textContent = "Add to Personal Map";
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            const content = document.getElementById(modalId + '-content');
+            
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Close modal on outside click
+        document.getElementById('skill-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'skill-modal') closeModal('skill-modal');
+        });
+        document.getElementById('map-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'map-modal') closeModal('map-modal');
+        });
+
+        // ----------------------------------------------------------------------
+        // PERSONAL SKILL MAP GENERATION (Rule-based Guided Recommendation)
+        // ----------------------------------------------------------------------
+        function openMapModal() {
+            if (selectedSkillsMap.size === 0) return;
+            
+            const modal = document.getElementById('map-modal');
+            const content = document.getElementById('map-modal-content');
+            
+            const selectedArr = Array.from(selectedSkillsMap).map(id => skillsData.find(s => s.id === id));
+            
+            // Logic for Capstone / Roles
+            const categories = new Set(selectedArr.map(s => s.category));
+            let title = "The Specialist";
+            let roleMatch = "Subject Matter Expert";
+            let capstone = "Build a deep portfolio piece utilizing your selected skills.";
+            
+            if (categories.has("AI & Machine Learning") && categories.has("Software Development")) {
+                title = "The AI Engineer";
+                roleMatch = "AI Solutions Architect / ML Engineer";
+                capstone = "Build a full-stack web application that serves a custom AI model via an API.";
+            }
+            if (categories.has("Data") && categories.has("Communication")) {
+                title = "The Data Storyteller";
+                roleMatch = "Data Strategist / Product Manager";
+                capstone = "Analyze a complex dataset and present the findings as an interactive dashboard tailored for non-technical executives.";
+            }
+            if (categories.has("Design") && categories.has("Problem Solving")) {
+                title = "The Experience Architect";
+                roleMatch = "UX Strategist / Technical Product Manager";
+                capstone = "Redesign a complex software workflow, documenting the cognitive psychology principles used to reduce user friction.";
+            }
+            if (selectedArr.length >= 4 && categories.size >= 3) {
+                title = "The Future-Proof Polymath";
+                roleMatch = "Technical Founder / Innovation Director";
+                capstone = "Design a novel product that combines technical execution, deep data insights, and an empathetic user experience.";
+            }
+
+            const nodesHtml = selectedArr.map((s, index) => {
+                return `
+                <div class="relative flex flex-col items-center">
+                    <div class="w-16 h-16 rounded-full bg-[#1e293b] border-2 border-indigo-500 flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(99,102,241,0.3)] z-10 map-node" style="animation-delay: ${index * 0.2}s">
+                        ${s.icon}
+                    </div>
+                    <div class="mt-3 text-center">
+                        <div class="text-white font-bold text-sm">${s.name}</div>
+                        <div class="text-slate-400 text-xs">${s.category}</div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+
+            content.innerHTML = `
+                <div class="p-8 md:p-12 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 blur-[100px] rounded-full pointer-events-none"></div>
+                    <div class="absolute bottom-0 left-0 w-96 h-96 bg-purple-600/10 blur-[100px] rounded-full pointer-events-none"></div>
+                    
+                    <div class="flex justify-between items-start mb-8 relative z-10">
+                        <div>
+                            <div class="text-sm font-bold text-blue-400 tracking-widest uppercase mb-2">Your Personal Skill Map</div>
+                            <h2 class="text-4xl font-display font-bold text-white mb-2">${title}</h2>
+                            <div class="text-slate-300">Target Role Match: <strong class="text-white">${roleMatch}</strong></div>
+                        </div>
+                        <button onclick="closeModal('map-modal')" class="text-slate-400 hover:text-white transition bg-white/5 p-2 rounded-full">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Nodes Diagram -->
+                    <div class="bg-black/30 border border-white/5 rounded-3xl p-10 mb-10 relative z-10">
+                        <div class="flex flex-wrap justify-center gap-12 relative">
+                            ${nodesHtml}
+                        </div>
+                    </div>
+                    
+                    <!-- Recommendations -->
+                    <div class="grid md:grid-cols-2 gap-6 relative z-10">
+                        <div class="glass-card p-6 rounded-2xl">
+                            <h3 class="text-lg font-bold text-indigo-300 mb-3 uppercase tracking-wider text-sm">Suggested Capstone Project</h3>
+                            <p class="text-slate-200 leading-relaxed">${capstone}</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl">
+                            <h3 class="text-lg font-bold text-green-300 mb-3 uppercase tracking-wider text-sm">Guided Recommendation</h3>
+                            <p class="text-slate-200 leading-relaxed">By combining these ${selectedArr.length} specific skills, you are creating a unique competency moat. Your next step should be building a public portfolio (GitHub, personal site) that demonstrates the <strong>intersection</strong> of these skills, rather than listing them separately on a resume.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-10 text-center relative z-10">
+                        <button onclick="closeModal('map-modal')" class="px-8 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-medium transition border border-white/10">Continue Exploring</button>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        }
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
