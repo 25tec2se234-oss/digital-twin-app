@@ -273,12 +273,19 @@
         const genBtn = document.getElementById('generateMapBtn');
         const synergyBox = document.getElementById('synergyBox');
         const synergyText = document.getElementById('synergyText');
+        const searchInput = document.getElementById('searchInput');
 
         // Initialize Grid
-        function renderGrid(filter = 'all') {
+        function renderGrid(filter = 'all', searchQuery = '') {
             grid.innerHTML = '';
+            
+            const q = searchQuery.toLowerCase().trim();
+
             skillsDB.forEach(skill => {
+                // Category Filter
                 if (filter !== 'all' && skill.cat !== filter) return;
+                // Search Query Filter
+                if (q && !skill.title.toLowerCase().includes(q) && !skill.desc.toLowerCase().includes(q)) return;
                 
                 const isSelected = selectedSkills.find(s => s.id === skill.id);
                 
@@ -303,12 +310,18 @@
             });
         }
 
+        // Search Logic
+        searchInput.addEventListener('input', (e) => {
+            const currentFilter = document.querySelector('.filter-btn.active').dataset.filter;
+            renderGrid(currentFilter, e.target.value);
+        });
+
         // Filter Logic
         filterBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 filterBtns.forEach(b => b.classList.remove('active', 'text-emerald-400'));
                 e.target.classList.add('active', 'text-emerald-400');
-                renderGrid(e.target.dataset.filter);
+                renderGrid(e.target.dataset.filter, searchInput.value);
             });
         });
 
