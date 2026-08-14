@@ -5,33 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="theme-color" content="#0b0f19">
 
-    <!-- Technical SEO Meta Tags -->
-    <title>AI Reality Lab | What AI Can (and Can't) Do — Digital Twin Verse</title>
-    <meta name="description" content="Enter the AI Reality Lab to understand the true capabilities, limitations, and practical applications of artificial intelligence for students. Test your AI thinking profile.">
-    <meta name="keywords" content="AI reality lab, AI capabilities, AI limitations, student AI skills, AI critical thinking, AI for students, AI vs human judgment">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="Digital Twin Verse">
-    <meta name="publisher" content="Digital Twin Verse">
+    <title>AI Reality Lab | The Complete Simulation — Digital Twin Verse</title>
+    <meta name="description" content="Enter the AI Reality Lab to understand the true capabilities, limitations, and practical applications of artificial intelligence for students. Experience the AI Autopsy Room and the 12-stage Simulation.">
+    
     <link rel="canonical" href="https://digitaltwinvrs.com/ai-reality-lab">
-
-    <!-- Manifest & Icons -->
-    <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/img/dtv-logo.jpg" type="image/jpeg">
 
-    <!-- Open Graph & Social Sharing -->
-    <meta property="og:title" content="AI Reality Lab | What AI Can (and Can't) Do">
-    <meta property="og:description" content="Test your AI critical thinking skills and discover where human judgment is still absolutely necessary.">
-    <meta property="og:url" content="https://digitaltwinvrs.com/ai-reality-lab">
-    <meta property="og:image" content="https://digitaltwinvrs.com/img/dtv-logo.jpg">
-    <meta property="og:type" content="website">
-
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Tailwind for rapid premium layout without breaking global scope -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -41,15 +25,6 @@
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                         display: ['"Space Grotesk"', 'sans-serif'],
                         body: ['"Inter"', 'sans-serif']
-                    },
-                    colors: {
-                        dtv: {
-                            bg: '#0b0f19',
-                            card: 'rgba(20, 25, 40, 0.6)',
-                            border: 'rgba(255, 255, 255, 0.1)',
-                            accent: '#a78bfa',
-                            glow: '#3b82f6'
-                        }
                     }
                 }
             }
@@ -57,87 +32,64 @@
     </script>
     
     <style>
-        :root {
-            --bdr-hover: rgba(255, 255, 255, 0.15);
-            --card-glow: 0 16px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-        }
-        body {
-            background-color: #0b0f19;
-            color: #f8fafc;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
+        body { background-color: #0b0f19; color: #f8fafc; overflow-x: hidden; scroll-behavior: smooth; }
         
         .glass-card {
-            background: var(--card, rgba(20, 25, 40, 0.6));
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--bdr, rgba(255, 255, 255, 0.1));
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(20, 25, 40, 0.6); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-top: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 12px 30px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
             transition: transform 0.3s, border-color 0.3s;
         }
         
-        .interactive-btn {
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .interactive-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(167, 139, 250, 0.2);
-        }
+        .interactive-btn { transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .interactive-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(167, 139, 250, 0.2); }
         
-        .scenario-option {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .scenario-option:hover {
-            background: rgba(167,139,250,0.05);
-            border-color: rgba(167,139,250,0.4);
-            transform: translateX(4px);
-        }
-        .scenario-option.selected-correct {
-            background: rgba(16, 185, 129, 0.1);
-            border-color: #10b981;
-        }
-        .scenario-option.selected-incorrect {
-            background: rgba(239, 68, 68, 0.1);
-            border-color: #ef4444;
-        }
+        .scenario-option { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease; cursor: pointer; }
+        .scenario-option:hover { background: rgba(167,139,250,0.05); border-color: rgba(167,139,250,0.4); transform: translateX(4px); }
         
-        .fade-in {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .gradient-text {
-            background: linear-gradient(135deg, #a78bfa, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        .gradient-text { background: linear-gradient(135deg, #a78bfa, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* Progress Bar */
-        .progress-bar-bg {
-            background: rgba(255, 255, 255, 0.1);
-            height: 6px;
-            border-radius: 999px;
-            overflow: hidden;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #a78bfa, #3b82f6);
-            width: 0%;
-            transition: width 0.5s ease-out;
-        }
+        .progress-bar-bg { background: rgba(255, 255, 255, 0.1); height: 6px; border-radius: 999px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #a78bfa, #3b82f6); width: 0%; transition: width 0.5s ease-out; }
         
-        .nav-glass {
-            background: rgba(11, 15, 25, 0.8);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+        .nav-glass { background: rgba(11, 15, 25, 0.8); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        /* Autopsy Room */
+        .hallucination-marker {
+            background-color: rgba(239, 68, 68, 0.2);
+            border-bottom: 2px dashed #ef4444;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            padding: 0 4px;
+            border-radius: 4px;
+        }
+        .hallucination-marker:hover, .hallucination-marker.active {
+            background-color: rgba(239, 68, 68, 0.5);
+        }
+        .bias-marker {
+            background-color: rgba(245, 158, 11, 0.2);
+            border-bottom: 2px dashed #f59e0b;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            padding: 0 4px;
+            border-radius: 4px;
+        }
+        .bias-marker:hover, .bias-marker.active {
+            background-color: rgba(245, 158, 11, 0.5);
+        }
+        .logic-marker {
+            background-color: rgba(16, 185, 129, 0.2);
+            border-bottom: 2px dashed #10b981;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            padding: 0 4px;
+            border-radius: 4px;
+        }
+        .logic-marker:hover, .logic-marker.active {
+            background-color: rgba(16, 185, 129, 0.5);
         }
     </style>
 </head>
@@ -152,134 +104,148 @@
             </a>
             <div class="hidden md:flex gap-6 text-sm font-medium text-slate-300">
                 <a href="/blog" class="hover:text-white transition">Blog & Resources</a>
-                <a href="/ai-career-roadmap" class="hover:text-white transition">AI Roadmap</a>
                 <a href="/skill-intelligence-hub" class="hover:text-white transition">Skill Intelligence</a>
+                <a href="/ai-career-roadmap" class="hover:text-white transition">AI Roadmap</a>
             </div>
             <a href="/login.html" class="px-5 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white font-medium text-sm transition border border-white/5">Sign In</a>
         </div>
     </nav>
 
     <!-- Header Section -->
-    <header class="pt-32 pb-20 px-6 relative overflow-hidden">
-        <!-- Abstract Background -->
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[600px] bg-gradient-to-br from-purple-900/40 to-blue-900/40 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
+    <header class="pt-32 pb-16 px-6 relative overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[600px] bg-gradient-to-br from-purple-900/40 to-blue-900/40 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
         
-        <div class="max-w-4xl mx-auto text-center">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-sm font-semibold text-purple-300 mb-6 uppercase tracking-wider">
+        <div class="max-w-5xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-sm font-semibold text-purple-300 mb-6 uppercase tracking-wider shadow-[0_0_20px_rgba(167,139,250,0.2)]">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"></path></svg>
-                Flagship Interactive Experience
+                DTV Premium Interactive Experience
             </div>
             <h1 class="text-5xl md:text-7xl font-display font-bold text-white mb-6 leading-tight tracking-tight">
                 AI Reality <span class="gradient-text">Lab</span>
             </h1>
-            <p class="text-xl text-slate-300 mb-10 max-w-2xl mx-auto font-body leading-relaxed">
-                What AI can actually do for students — and where it still desperately needs a human. Test your critical thinking, uncover hallucinations, and build a responsible AI workflow.
+            <p class="text-xl text-slate-300 mb-10 max-w-3xl mx-auto font-body leading-relaxed">
+                Most students treat AI as an oracle. The top 1% treat it as a flawed junior assistant. Welcome to the comprehensive laboratory where we deconstruct AI hallucinations, expose biases, and train your human critical reasoning.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button onclick="document.getElementById('scenarios').scrollIntoView({behavior:'smooth'})" class="interactive-btn px-8 py-4 rounded-xl bg-gradient-to-r from-purple-500 to-blue-600 text-white font-bold text-lg shadow-[0_4px_20px_rgba(167,139,250,0.3)]">
-                    Start the Simulation
+                <button onclick="document.getElementById('scenarios').scrollIntoView({behavior:'smooth'})" class="interactive-btn px-8 py-4 rounded-xl bg-gradient-to-r from-purple-500 to-blue-600 text-white font-bold text-lg shadow-[0_4px_20px_rgba(167,139,250,0.4)] border border-purple-400/50">
+                    Enter the 12-Stage Simulation
                 </button>
-                <button onclick="document.getElementById('manifesto').scrollIntoView({behavior:'smooth'})" class="interactive-btn px-8 py-4 rounded-xl glass-card text-white font-bold text-lg">
-                    Read the Manifesto
+                <button onclick="document.getElementById('autopsy').scrollIntoView({behavior:'smooth'})" class="interactive-btn px-8 py-4 rounded-xl glass-card text-white font-bold text-lg hover:bg-white/5 border border-white/20">
+                    Visit the Autopsy Room
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Manifesto / Educational Content (Hidden initially, or placed below) -->
-    <section id="manifesto" class="py-20 px-6 border-t border-white/5 bg-black/20">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="text-3xl font-display font-bold text-white mb-12 text-center">The AI Reality Manifesto</h2>
-            
-            <div class="grid md:grid-cols-2 gap-12">
-                <div class="space-y-8 font-body text-slate-300 leading-relaxed">
-                    <div class="glass-card p-8 rounded-2xl relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-green-500/10 blur-[50px]"></div>
-                        <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
-                            <span class="text-green-400">✓</span> What AI is Actually Good At
-                        </h3>
-                        <p class="mb-4">Artificial Intelligence excels at processing massive volumes of deterministic data. It is a phenomenal synthesis engine. For a student, this means AI is your ultimate accelerator for tasks that require structural organization or pattern recognition.</p>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-2"><span class="text-indigo-400 mt-1">✦</span> <strong>Synthesizing Information:</strong> Turning a 50-page PDF into a 2-page bulleted summary.</li>
-                            <li class="flex items-start gap-2"><span class="text-indigo-400 mt-1">✦</span> <strong>Overcoming the Blank Page:</strong> Generating the first terrible draft of an essay or coding script so you have something to edit.</li>
-                            <li class="flex items-start gap-2"><span class="text-indigo-400 mt-1">✦</span> <strong>Explaining Complex Concepts:</strong> Using prompts like "Explain quantum mechanics to a 10-year-old."</li>
-                            <li class="flex items-start gap-2"><span class="text-indigo-400 mt-1">✦</span> <strong>Syntax Formatting:</strong> Writing boilerplate code or structuring citations in APA format.</li>
-                        </ul>
-                    </div>
+    <!-- The AI Autopsy Room -->
+    <section id="autopsy" class="py-24 px-6 relative border-t border-white/5 bg-black/40">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-display font-bold text-white mb-4">The AI Autopsy Room</h2>
+                <p class="text-lg text-slate-400 max-w-2xl mx-auto">
+                    Interact with real outputs generated by state-of-the-art LLMs. Click the highlighted text to reveal the hidden mechanical failures beneath the confident prose.
+                </p>
+            </div>
 
-                    <div class="glass-card p-8 rounded-2xl relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-[50px]"></div>
-                        <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
-                            <span class="text-blue-400">⚡</span> AI for Coding & Development
-                        </h3>
-                        <p class="mb-4">For computer science students, AI is a superpower, but a dangerous one. Using Copilot or ChatGPT to write a function you don't understand is technological suicide. You become dependent on an oracle.</p>
-                        <p><strong>The Correct Workflow:</strong> Write the pseudo-code yourself. Ask the AI to optimize your logic. When the AI gives you a block of code, ask it to explain *why* it chose that specific method. Use AI as a senior developer reviewing your work, not as a junior developer doing your homework.</p>
+            <div class="grid lg:grid-cols-2 gap-10">
+                <!-- Autopsy Text Display -->
+                <div class="glass-card p-8 rounded-2xl relative">
+                    <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                        <h3 class="font-bold text-white text-xl">Case File 01: The History Essay</h3>
+                        <div class="flex gap-2">
+                            <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                        </div>
                     </div>
                     
-                    <div class="glass-card p-8 rounded-2xl relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 blur-[50px]"></div>
-                        <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
-                            <span class="text-indigo-400">⚖️</span> Academic Integrity & Privacy
-                        </h3>
-                        <p class="mb-4">Universities in 2026 use advanced algorithmic forensics. Submitting raw AI output is not just academically dishonest; it is easily detectable. More importantly, it bypasses the neurological struggle required to actually build neural pathways in your brain (learning).</p>
-                        <p>Furthermore, feeding proprietary research data or personal information into public LLMs means you are actively training commercial models on your private IP. Always sanitize your inputs.</p>
+                    <div class="font-body text-slate-300 leading-loose text-lg">
+                        <p class="mb-4">
+                            During the economic turmoil of the 1930s, several key legislative acts reshaped the American economy. The <span class="hallucination-marker" onclick="showAutopsy('h1', this)">Federal Reserve Stabilization Act of 1932</span> was highly praised by <span class="hallucination-marker" onclick="showAutopsy('h2', this)">Dr. Jonathan Sterling in his seminal paper "Economic Recovery Mechanics" (1935)</span>. 
+                        </p>
+                        <p class="mb-4">
+                            Sterling argued that the primary cause of unemployment was <span class="bias-marker" onclick="showAutopsy('b1', this)">the lack of inherent work ethic among the lower class</span>, a view that was widely accepted at the time. To combat this, <span class="logic-marker" onclick="showAutopsy('l1', this)">the government printed less money to ensure everyone had more cash to spend</span>. This directly led to the end of the Great Depression.
+                        </p>
                     </div>
                 </div>
 
-                <div class="space-y-8 font-body text-slate-300 leading-relaxed">
-                    <div class="glass-card p-8 rounded-2xl relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-red-500/10 blur-[50px]"></div>
-                        <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
-                            <span class="text-red-400">✗</span> What AI is Bad At (The Human Domain)
-                        </h3>
-                        <p class="mb-4">LLMs do not "think." They predict the next most statistically probable word. Because of this architectural limitation, they are fundamentally incapable of certain critical cognitive tasks.</p>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-2"><span class="text-rose-400 mt-1">✦</span> <strong>Fact Checking (Hallucinations):</strong> AI will confidently invent historical events, fabricate academic citations, or hallucinate APIs that do not exist.</li>
-                            <li class="flex items-start gap-2"><span class="text-rose-400 mt-1">✦</span> <strong>Contextual Nuance:</strong> It struggles with deep emotional intelligence, sarcasm, cultural nuances, and localized ethical implications.</li>
-                            <li class="flex items-start gap-2"><span class="text-rose-400 mt-1">✦</span> <strong>Original Thought:</strong> AI interpolates existing knowledge; it does not extrapolate true, paradigm-shifting novel ideas.</li>
-                            <li class="flex items-start gap-2"><span class="text-rose-400 mt-1">✦</span> <strong>Decision Accountability:</strong> An AI cannot take responsibility. If an algorithm suggests a flawed business strategy, the human executive gets fired.</li>
-                        </ul>
+                <!-- Autopsy Analysis Panel -->
+                <div class="glass-card p-8 rounded-2xl bg-[#0a0a0f] border-indigo-500/20 shadow-[0_0_30px_rgba(99,102,241,0.05)]">
+                    <h3 class="font-bold text-indigo-400 text-sm uppercase tracking-widest mb-6">Autopsy Diagnostics</h3>
+                    
+                    <div id="autopsy-default" class="flex flex-col items-center justify-center h-[300px] text-slate-500 text-center">
+                        <svg class="w-16 h-16 mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        <p>Click on any highlighted segment in the case file to analyze the failure mechanism.</p>
                     </div>
-
-                    <div class="glass-card p-8 rounded-2xl relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 blur-[50px]"></div>
-                        <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
-                            <span class="text-purple-400">🧠</span> Human + AI Collaboration
-                        </h3>
-                        <p class="mb-4">The ultimate student workflow is the <strong>Centaur Model</strong> (Human strategy + AI tactical execution). </p>
-                        <p><strong>Example - Research Paper:</strong></p>
-                        <ol class="list-decimal pl-5 space-y-2">
-                            <li><strong>Human:</strong> Decides the original thesis and argument structure.</li>
-                            <li><strong>AI:</strong> Finds counter-arguments and formats citations.</li>
-                            <li><strong>Human:</strong> Analyzes the counter-arguments and synthesizes the conclusion.</li>
-                            <li><strong>AI:</strong> Checks for grammatical flow and conciseness.</li>
-                        </ol>
-                        <p class="mt-4">The human acts as the director; the AI acts as the production crew.</p>
+                    
+                    <div id="autopsy-detail" class="hidden">
+                        <!-- Populated by JS -->
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Interactive Scenario Engine -->
-    <section id="scenarios" class="py-24 px-6 relative">
+    <!-- Deep Manifesto -->
+    <section class="py-20 px-6 relative bg-gradient-to-b from-[#0b0f19] to-[#05070a]">
+        <div class="max-w-5xl mx-auto space-y-12">
+            
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-display font-bold text-white mb-4">The DTV AI Manifesto</h2>
+                <p class="text-lg text-slate-400">If you outsource your thinking, you outsource your value.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="glass-card p-10 rounded-3xl">
+                    <div class="w-12 h-12 bg-rose-500/20 text-rose-400 rounded-xl flex items-center justify-center mb-6 text-2xl">⚠️</div>
+                    <h3 class="text-2xl font-bold text-white mb-4">The Trap of Cognitive Outsourcing</h3>
+                    <p class="text-slate-300 leading-relaxed mb-4">
+                        When you use an LLM to summarize a book, you obtain the information, but you do not build the neural pathways required to process complex ideas. The struggle of reading, organizing, and synthesizing is not an obstacle to learning; <strong>it is the mechanism of learning.</strong>
+                    </p>
+                    <p class="text-slate-300 leading-relaxed">
+                        If an AI does the synthesis for you, your brain literally stops dedicating resources to critical analysis. In a world where everyone has access to an AI summarizer, the only people who stand out are those who possess deep, un-outsourced cognitive endurance.
+                    </p>
+                </div>
+                
+                <div class="glass-card p-10 rounded-3xl">
+                    <div class="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center mb-6 text-2xl">🛡️</div>
+                    <h3 class="text-2xl font-bold text-white mb-4">The Portfolio of the Future</h3>
+                    <p class="text-slate-300 leading-relaxed mb-4">
+                        By 2026, a standard resume or generic cover letter is assumed to be AI-generated and holds zero weight. Employers will hire based on <strong>Proof of Work</strong> that an AI cannot fake.
+                    </p>
+                    <ul class="space-y-3 text-slate-300">
+                        <li class="flex items-start gap-2"><span class="text-blue-400 mt-1">✦</span> Recorded video walkthroughs of your projects explaining your decision logic.</li>
+                        <li class="flex items-start gap-2"><span class="text-blue-400 mt-1">✦</span> Complex Git commit histories showing the evolution of a codebase over months.</li>
+                        <li class="flex items-start gap-2"><span class="text-blue-400 mt-1">✦</span> Documented failures and how you personally engineered a recovery.</li>
+                        <li class="flex items-start gap-2"><span class="text-blue-400 mt-1">✦</span> High emotional intelligence during unscripted live interviews.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 12-STAGE INTERACTIVE SIMULATION -->
+    <section id="scenarios" class="py-24 px-6 relative border-t border-white/5">
         <div class="max-w-4xl mx-auto">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-display font-bold text-white mb-4">The Simulation</h2>
-                <p class="text-lg text-slate-400">Navigate these realistic student scenarios to discover your AI Thinking Profile. Human judgment required.</p>
+                <span class="text-indigo-400 font-bold uppercase tracking-widest text-sm mb-2 block">The Centaur Assessment</span>
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-white mb-6">The 12-Stage Simulation</h2>
+                <p class="text-lg text-slate-400 max-w-2xl mx-auto">
+                    You are entering a 12-stage cognitive gauntlet. These are real situations faced by top-tier students and professionals. Your decisions will calculate your precise AI Competency Profile.
+                </p>
             </div>
 
             <!-- Quiz Container -->
-            <div id="quiz-container" class="glass-card rounded-3xl p-8 md:p-12 min-h-[500px] flex flex-col relative overflow-hidden">
+            <div id="quiz-container" class="glass-card rounded-3xl p-6 md:p-12 min-h-[550px] flex flex-col relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-indigo-500/20">
                 
                 <!-- Progress Header -->
                 <div id="quiz-header" class="mb-10">
-                    <div class="flex justify-between text-sm font-semibold text-slate-400 mb-3">
-                        <span id="scenario-counter" class="uppercase tracking-widest text-indigo-400">Scenario 01 / 05</span>
-                        <span id="score-display">Confidence: Analyzing...</span>
+                    <div class="flex justify-between text-sm font-semibold text-slate-400 mb-4">
+                        <span id="scenario-counter" class="uppercase tracking-widest text-indigo-400 border border-indigo-500/30 px-3 py-1 rounded-full bg-indigo-500/10">Stage 01 / 12</span>
+                        <span id="score-display" class="hidden md:block">Engine: Calibrating...</span>
                     </div>
-                    <div class="progress-bar-bg">
-                        <div id="progress-bar" class="progress-bar-fill" style="width: 20%;"></div>
+                    <div class="progress-bar-bg h-2">
+                        <div id="progress-bar" class="progress-bar-fill shadow-[0_0_10px_rgba(99,102,241,0.5)]" style="width: 8%;"></div>
                     </div>
                 </div>
 
@@ -290,37 +256,38 @@
 
                 <!-- Result Content (Hidden initially) -->
                 <div id="result-content" class="hidden flex-1 flex-col items-center justify-center text-center fade-in">
-                    <div class="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mb-8 shadow-[0_0_40px_rgba(99,102,241,0.5)]">
-                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <div class="w-28 h-28 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mb-8 shadow-[0_0_50px_rgba(99,102,241,0.6)] relative">
+                        <div class="absolute inset-0 border-2 border-white/20 rounded-full animate-ping"></div>
+                        <svg class="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
-                    <h3 class="text-sm font-bold uppercase tracking-widest text-indigo-400 mb-2">Simulation Complete</h3>
-                    <h2 class="text-4xl font-display font-bold text-white mb-4">Your AI Thinking Profile:</h2>
-                    <div id="profile-title" class="text-3xl font-bold gradient-text mb-6">The Centaur Strategist</div>
-                    <p id="profile-desc" class="text-lg text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-                        You have mastered the balance between algorithmic automation and human verification. You use AI as a force multiplier, not a crutch.
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-indigo-400 mb-2">Diagnostic Complete</h3>
+                    <h2 class="text-4xl md:text-5xl font-display font-bold text-white mb-4">Your Intelligence Profile:</h2>
+                    <div id="profile-title" class="text-4xl font-bold gradient-text mb-6">Processing...</div>
+                    <p id="profile-desc" class="text-lg text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed bg-white/5 p-6 rounded-2xl border border-white/10">
+                        ...
                     </p>
                     
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full mb-10">
-                        <div class="glass-card p-4 rounded-xl text-center">
-                            <div class="text-xs text-slate-400 uppercase tracking-wider mb-1">Verification</div>
-                            <div id="stat-verify" class="text-2xl font-bold text-white">95%</div>
+                        <div class="glass-card p-5 rounded-2xl border-b-4 border-indigo-500">
+                            <div class="text-[10px] text-slate-400 uppercase tracking-widest mb-1">Verification</div>
+                            <div id="stat-verify" class="text-3xl font-bold text-white">0%</div>
                         </div>
-                        <div class="glass-card p-4 rounded-xl text-center">
-                            <div class="text-xs text-slate-400 uppercase tracking-wider mb-1">Delegation</div>
-                            <div id="stat-delegate" class="text-2xl font-bold text-white">80%</div>
+                        <div class="glass-card p-5 rounded-2xl border-b-4 border-blue-500">
+                            <div class="text-[10px] text-slate-400 uppercase tracking-widest mb-1">Execution</div>
+                            <div id="stat-delegate" class="text-3xl font-bold text-white">0%</div>
                         </div>
-                        <div class="glass-card p-4 rounded-xl text-center">
-                            <div class="text-xs text-slate-400 uppercase tracking-wider mb-1">Ethics</div>
-                            <div id="stat-ethics" class="text-2xl font-bold text-white">100%</div>
+                        <div class="glass-card p-5 rounded-2xl border-b-4 border-emerald-500">
+                            <div class="text-[10px] text-slate-400 uppercase tracking-widest mb-1">Ethics</div>
+                            <div id="stat-ethics" class="text-3xl font-bold text-white">0%</div>
                         </div>
-                        <div class="glass-card p-4 rounded-xl text-center">
-                            <div class="text-xs text-slate-400 uppercase tracking-wider mb-1">Originality</div>
-                            <div id="stat-original" class="text-2xl font-bold text-white">85%</div>
+                        <div class="glass-card p-5 rounded-2xl border-b-4 border-rose-500">
+                            <div class="text-[10px] text-slate-400 uppercase tracking-widest mb-1">Human Edge</div>
+                            <div id="stat-original" class="text-3xl font-bold text-white">0%</div>
                         </div>
                     </div>
                     
-                    <button onclick="restartSimulation()" class="interactive-btn px-8 py-3 rounded-full border border-white/20 text-white font-medium hover:bg-white/5 transition">
-                        Restart Simulation
+                    <button onclick="restartSimulation()" class="interactive-btn px-10 py-4 rounded-xl border border-white/20 text-white font-bold bg-white/5 hover:bg-white/10 transition">
+                        Recalibrate & Restart
                     </button>
                 </div>
             </div>
@@ -342,124 +309,209 @@
         </div>
     </footer>
 
-    <!-- Interactive Logic -->
+    <!-- INTERACTIVE LOGIC -->
     <script>
+        // --- AUTOPSY ROOM LOGIC ---
+        const autopsyData = {
+            'h1': {
+                title: "Hallucination Detected",
+                color: "text-red-400",
+                icon: "⚠️",
+                desc: "The 'Federal Reserve Stabilization Act of 1932' does not exist. The LLM combined the concepts of the Glass-Steagall Act and the Federal Reserve Act to generate a highly plausible-sounding, but entirely fabricated, piece of legislation."
+            },
+            'h2': {
+                title: "Citation Fabrication",
+                color: "text-red-400",
+                icon: "📚",
+                desc: "Dr. Jonathan Sterling and his 'seminal paper' are pure fabrications. LLMs frequently hallucinate DOIs and academic papers because they learn the *structure* of an academic citation without having access to an actual verified database of truth."
+            },
+            'b1': {
+                title: "Algorithmic Bias Output",
+                color: "text-yellow-400",
+                icon: "⚖️",
+                desc: "The AI is echoing classist biases present in its training data (historical texts from the 1930s). Without explicit human prompting to maintain neutrality or modern historical consensus, LLMs will reflect the dominant (often biased) narrative of the era they are summarizing."
+            },
+            'l1': {
+                title: "Logical Collapse",
+                color: "text-green-400",
+                icon: "🧩",
+                desc: "Printing less money does not result in individuals having more cash to spend (deflationary policy restricts money supply). The AI has lost the thread of logical economic mechanics, stringing together contradictory concepts simply because they frequently appear near each other in macroeconomic texts."
+            }
+        };
+
+        function showAutopsy(id, element) {
+            // Reset active markers
+            document.querySelectorAll('.hallucination-marker, .bias-marker, .logic-marker').forEach(el => {
+                el.classList.remove('active');
+                el.style.backgroundColor = '';
+            });
+            // Set active
+            element.classList.add('active');
+            element.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+
+            const data = autopsyData[id];
+            const panel = document.getElementById('autopsy-detail');
+            const def = document.getElementById('autopsy-default');
+            
+            def.classList.add('hidden');
+            panel.classList.remove('hidden');
+            
+            panel.innerHTML = `
+                <div class="fade-in">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-3xl">${data.icon}</span>
+                        <h4 class="text-2xl font-bold ${data.color}">${data.title}</h4>
+                    </div>
+                    <div class="bg-black/30 p-5 rounded-xl border border-white/5 shadow-inner">
+                        <p class="text-slate-300 leading-relaxed text-lg">${data.desc}</p>
+                    </div>
+                    <div class="mt-6 pt-6 border-t border-white/5">
+                        <span class="text-sm text-slate-500 uppercase font-bold tracking-widest">DTV Guidance</span>
+                        <p class="text-indigo-300 mt-2 text-sm leading-relaxed">Never deploy AI content directly to production or academic submission without line-by-line manual verification.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+
+        // --- 12-STAGE SIMULATION LOGIC ---
         const scenarios = [
+            // Scenarios 1-5 (Original improved)
             {
-                title: "The Midnight Essay Panic",
+                title: "Stage 01: The Midnight Essay Panic",
                 context: "You have an essay due tomorrow morning on the sociological impacts of the French Revolution. You haven't started. You open an AI chatbot.",
                 question: "What is the most effective and ethical prompt to use?",
                 options: [
-                    {
-                        text: "Write a 2000-word essay on the sociological impacts of the French Revolution. Make it sound like a college freshman wrote it.",
-                        type: "incorrect",
-                        feedback: "CRITICAL FAILURE. This is academic dishonesty. Furthermore, the AI will likely invent fake historical sources (hallucination) and write in a generic, detectable pattern. You learn nothing."
-                    },
-                    {
-                        text: "Give me an outline of the 5 main sociological impacts of the French Revolution, and suggest 3 academic sources I can research for each point.",
-                        type: "correct",
-                        feedback: "OPTIMAL. You are using the AI to overcome the 'blank page' paralysis and structure your thinking, but you retain the responsibility of reading the sources and synthesizing the actual argument."
-                    },
-                    {
-                        text: "Explain the French Revolution to me in 500 words so I can just paraphrase it.",
-                        type: "partial",
-                        feedback: "SUB-OPTIMAL. While not strictly plagiarism, paraphrasing a generic AI summary strips your essay of any original academic insight or critical thought. You are acting as a human spellchecker for an algorithm."
-                    }
+                    { text: "Write a 2000-word essay on the sociological impacts of the French Revolution. Make it sound like a college freshman wrote it.", type: "incorrect", feedback: "CRITICAL FAILURE. This is academic dishonesty. Furthermore, the AI will likely invent fake historical sources (hallucination) and write in a generic, detectable pattern." },
+                    { text: "Give me an outline of the 5 main sociological impacts, and suggest 3 academic sources I can research for each point.", type: "correct", feedback: "OPTIMAL. You use AI to overcome 'blank page' paralysis and structure your thinking, but you retain the responsibility of reading sources and synthesizing the argument." },
+                    { text: "Explain the French Revolution to me in 500 words so I can just paraphrase it.", type: "partial", feedback: "SUB-OPTIMAL. Paraphrasing a generic AI summary strips your essay of any original academic insight. You are acting as a human spellchecker for an algorithm." }
                 ],
                 traits: { correct: { verify: 10, delegate: 20, ethics: 20, original: 15 } }
             },
             {
-                title: "The Bug Hunt",
-                context: "You are building a React application for your final project. You get a cryptic 'TypeError: undefined is not an object' that you can't figure out after 30 minutes.",
+                title: "Stage 02: The Bug Hunt",
+                context: "You are building a React application. You get a cryptic 'TypeError: undefined is not an object' that you can't figure out after 30 minutes.",
                 question: "How do you deploy AI to fix this?",
                 options: [
-                    {
-                        text: "Copy the entire 500-line file and paste it into the AI with the prompt 'Fix this error'. Paste the result back into your IDE without reading it.",
-                        type: "incorrect",
-                        feedback: "DANGEROUS. The AI might 'fix' the error by removing the validation logic entirely, introducing a silent security vulnerability. You also fail to learn why the error occurred."
-                    },
-                    {
-                        text: "Paste the specific function and the exact error log. Ask: 'Explain why this error is occurring, and suggest the concept I need to review to fix it.'",
-                        type: "correct",
-                        feedback: "OPTIMAL. You are using the AI as a senior mentor. By asking for the underlying concept, you build your own mental model and prevent the bug from happening again."
-                    },
-                    {
-                        text: "Ask the AI to write a completely new component from scratch that does the same thing, avoiding the error.",
-                        type: "partial",
-                        feedback: "INEFFICIENT. You bypass learning how to debug your own code, which is 80% of software engineering. You are accumulating technical debt."
-                    }
+                    { text: "Copy the entire 500-line file and paste it into the AI with the prompt 'Fix this error'. Paste the result back into your IDE without reading it.", type: "incorrect", feedback: "DANGEROUS. The AI might 'fix' the error by removing validation logic entirely, introducing a silent security vulnerability." },
+                    { text: "Paste the specific function and error log. Ask: 'Explain why this error is occurring, and suggest the concept I need to review.'", type: "correct", feedback: "OPTIMAL. You are using the AI as a senior mentor. By asking for the underlying concept, you build your own mental model." },
+                    { text: "Ask the AI to write a completely new component from scratch.", type: "partial", feedback: "INEFFICIENT. You bypass learning how to debug your own code, which is 80% of software engineering." }
                 ],
                 traits: { correct: { verify: 20, delegate: 10, ethics: 10, original: 10 } }
             },
             {
-                title: "The Research Assistant",
-                context: "You are writing a medical biology paper. You ask the AI to find statistics on the effectiveness of a new mRNA vaccine. It gives you three very specific statistics with academic citations.",
+                title: "Stage 03: The Research Assistant",
+                context: "You are writing a medical biology paper. You ask the AI to find statistics on the effectiveness of a new mRNA vaccine. It gives you three specific statistics with citations.",
                 question: "What is your next immediate step?",
                 options: [
-                    {
-                        text: "Copy and paste the statistics and citations directly into your bibliography. They look legitimate.",
-                        type: "incorrect",
-                        feedback: "CRITICAL FAILURE. LLMs frequently hallucinate plausible-looking citations. They will invent author names and DOI numbers that do not exist. You will fail the assignment."
-                    },
-                    {
-                        text: "Ask the AI, 'Are you absolutely sure these citations are real?' and trust its affirmative answer.",
-                        type: "incorrect",
-                        feedback: "FAILURE. An LLM has no internal concept of truth; if it hallucinated the first time, it will confidently hallucinate an assurance that it is correct."
-                    },
-                    {
-                        text: "Take the author names and paper titles and search for them manually in Google Scholar or PubMed to verify they actually exist and say what the AI claims.",
-                        type: "correct",
-                        feedback: "OPTIMAL. This is the Verification Mindset. AI is excellent for discovery, but human judgment is strictly required for verification."
-                    }
+                    { text: "Copy and paste the statistics and citations directly into your bibliography.", type: "incorrect", feedback: "CRITICAL FAILURE. LLMs frequently hallucinate plausible-looking citations. You will fail the assignment." },
+                    { text: "Ask the AI, 'Are you absolutely sure these citations are real?' and trust its affirmative answer.", type: "incorrect", feedback: "FAILURE. An LLM has no internal concept of truth; it will confidently hallucinate an assurance that it is correct." },
+                    { text: "Take the author names and paper titles and search for them manually in Google Scholar or PubMed to verify they actually exist.", type: "correct", feedback: "OPTIMAL. This is the Verification Mindset. AI is excellent for discovery, but human judgment is strictly required for verification." }
                 ],
                 traits: { correct: { verify: 30, delegate: 5, ethics: 15, original: 5 } }
             },
             {
-                title: "The Creative Block",
+                title: "Stage 04: The Creative Block",
                 context: "You need to brainstorm a unique marketing campaign for a university club project. You've been staring at a wall for an hour.",
                 question: "How should you involve AI?",
                 options: [
-                    {
-                        text: "Ask the AI to generate '5 creative marketing ideas'. Pick the first one and implement it exactly as written.",
-                        type: "incorrect",
-                        feedback: "FAILURE. AI generates ideas based on statistical averages of past data. By definition, its raw output will be generic and derivative, not 'unique'."
-                    },
-                    {
-                        text: "Input 3 wild, unrelated concepts (e.g., 'Coffee, 80s Synthwave, Exam prep') and ask the AI to force connections between them to spark your own imagination.",
-                        type: "correct",
-                        feedback: "OPTIMAL. You are using the AI as a lateral thinking engine. You provide the creative parameters; the AI provides the unexpected synthesis; you execute the final vision."
-                    },
-                    {
-                        text: "Refuse to use AI because creativity must be 100% human, and using an algorithm is cheating.",
-                        type: "partial",
-                        feedback: "SUB-OPTIMAL. You are artificially limiting your brainstorming speed. AI is a tool, like a thesaurus or a mood board. Ignoring it entirely puts you at a competitive disadvantage."
-                    }
+                    { text: "Ask the AI to generate '5 creative marketing ideas'. Pick the first one and implement it.", type: "incorrect", feedback: "FAILURE. AI generates ideas based on statistical averages of past data. Its raw output will be generic, not unique." },
+                    { text: "Input 3 wild, unrelated concepts and ask the AI to force connections between them to spark your imagination.", type: "correct", feedback: "OPTIMAL. You provide the creative parameters; the AI provides the unexpected synthesis; you execute the final vision." },
+                    { text: "Refuse to use AI because creativity must be 100% human.", type: "partial", feedback: "SUB-OPTIMAL. AI is a tool, like a thesaurus or mood board. Ignoring it entirely limits your brainstorming speed." }
                 ],
                 traits: { correct: { verify: 5, delegate: 15, ethics: 5, original: 30 } }
             },
             {
-                title: "The Career Email",
+                title: "Stage 05: The Career Email",
                 context: "You are applying for a highly competitive internship. You need to write a cold email to the Director of Engineering.",
                 question: "How do you draft the email?",
                 options: [
-                    {
-                        text: "Ask the AI: 'Write a persuasive cover letter to the Director of Engineering for an internship.' Send it immediately.",
-                        type: "incorrect",
-                        feedback: "FAILURE. The Director has received 500 emails that start with 'I hope this email finds you well. I am highly motivated...' AI emails lack personal authenticity and are instantly recognizable."
-                    },
-                    {
-                        text: "Write the email yourself, injecting your actual passion and specific reasons you admire the company. Then ask the AI to 'Review for conciseness and tone, but do not change the core message.'",
-                        type: "correct",
-                        feedback: "OPTIMAL. You provide the irreplaceable human element (passion, specific context, authenticity), and you use the AI for what it's best at: structural optimization."
-                    }
+                    { text: "Ask the AI: 'Write a persuasive cover letter to the Director of Engineering.' Send it immediately.", type: "incorrect", feedback: "FAILURE. The Director has received 500 AI-generated emails today. AI emails lack personal authenticity and are instantly recognizable." },
+                    { text: "Write the email yourself, injecting your actual passion. Then ask the AI to 'Review for conciseness and tone, but do not change the core message.'", type: "correct", feedback: "OPTIMAL. You provide the irreplaceable human element, and you use the AI for what it's best at: structural optimization." }
                 ],
                 traits: { correct: { verify: 15, delegate: 15, ethics: 10, original: 20 } }
+            },
+            // Scenarios 6-12 (New Deep Scenarios)
+            {
+                title: "Stage 06: The Startup Pitch",
+                context: "You're pitching a startup idea to a university incubator. You used AI to generate your 3-year financial projections.",
+                question: "During the Q&A, an investor asks how you arrived at a 40% profit margin in Year 2. How do you respond?",
+                options: [
+                    { text: "Honestly state: 'My AI model calculated that based on industry averages, so I trust the math.'", type: "incorrect", feedback: "FATAL FLAW. Investors invest in founders who understand their own business, not founders who outsource core logic to a black box." },
+                    { text: "You can't answer because you didn't check the AI's math, so you try to change the subject.", type: "incorrect", feedback: "FAILURE. You outsourced your cognition and lost control of your own business narrative." },
+                    { text: "You confidently walk them through the unit economics, because you only used the AI to format the spreadsheet, having calculated the core assumptions yourself.", type: "correct", feedback: "OPTIMAL. AI is a formatting tool, not a substitute for financial literacy and business strategy." }
+                ],
+                traits: { correct: { verify: 20, delegate: 5, ethics: 10, original: 15 } }
+            },
+            {
+                title: "Stage 07: The Ethical Dilemma",
+                context: "You are leading a club and need to select 5 applicants out of 100. To save time, you feed all 100 resumes into an AI and ask it to pick the best 5.",
+                question: "What is the primary danger here?",
+                options: [
+                    { text: "The AI might crash because 100 resumes is too much context.", type: "incorrect", feedback: "INCORRECT. Modern LLMs have massive context windows; technical limits are not the primary issue here." },
+                    { text: "The AI will absorb systemic biases from its training data and may unfairly filter out qualified minority or unconventional candidates.", type: "correct", feedback: "OPTIMAL. Algorithmic bias is a massive threat. Outsourcing selection entirely to AI removes the human empathy required for fair evaluation." },
+                    { text: "The AI might select candidates who used AI to write their resumes.", type: "partial", feedback: "PLAUSIBLE, but secondary. The primary danger is systemic discrimination encoded in the model." }
+                ],
+                traits: { correct: { verify: 5, delegate: 5, ethics: 30, original: 10 } }
+            },
+            {
+                title: "Stage 08: The Design Crisis",
+                context: "You need a UI mockup for a project. You prompt an AI image generator to create 'a beautiful modern dashboard'. It gives you a stunning, glowing neon image.",
+                question: "Can you send this directly to your frontend developer to build?",
+                options: [
+                    { text: "Yes, it looks incredibly premium and futuristic.", type: "incorrect", feedback: "FAILURE. AI image generators create 'art', not functional UI. The text is likely gibberish, the contrast fails accessibility standards, and the layout ignores standard DOM flow." },
+                    { text: "No, you must extract the color palette and layout concepts, then manually rebuild it in Figma adhering to UX psychology and accessibility rules.", type: "correct", feedback: "OPTIMAL. You use AI for aesthetic inspiration, but human engineering for structural execution." }
+                ],
+                traits: { correct: { verify: 15, delegate: 15, ethics: 5, original: 20 } }
+            },
+            {
+                title: "Stage 09: The Salary Negotiation",
+                context: "You got a job offer! You prompt an AI to 'Write a strong email demanding 20% more salary'. The AI outputs an aggressive, legalistic email.",
+                question: "Should you send it?",
+                options: [
+                    { text: "Yes, AI knows professional negotiation tactics better than a student.", type: "incorrect", feedback: "CRITICAL FAILURE. The AI does not understand the nuanced power dynamics or emotional context of your specific relationship with the hiring manager. You will likely get the offer rescinded." },
+                    { text: "No, rewrite it completely. Use the AI only to role-play the employer's potential counter-arguments so you can prepare mentally.", type: "correct", feedback: "OPTIMAL. This is 'Centaur' behavior. You use the AI as a sparring partner to sharpen your human communication skills." }
+                ],
+                traits: { correct: { verify: 10, delegate: 10, ethics: 10, original: 25 } }
+            },
+            {
+                title: "Stage 10: The Data Breach",
+                context: "Your team's server was hacked. You export the raw, sensitive user server logs and paste them into a public AI chatbot, asking 'How did the hacker get in?'",
+                question: "What rule did you just break?",
+                options: [
+                    { text: "You exceeded the character limit for the prompt.", type: "incorrect", feedback: "INCORRECT. Again, missing the larger issue." },
+                    { text: "You just leaked sensitive, proprietary company and user data to a third-party commercial LLM, violating data privacy laws and NDAs.", type: "correct", feedback: "OPTIMAL. Zero-Trust Security. Never paste PII (Personally Identifiable Information) or proprietary code into public AI models." },
+                    { text: "You didn't ask the AI politely enough.", type: "incorrect", feedback: "INCORRECT. The AI does not require politeness; it requires sanitized data." }
+                ],
+                traits: { correct: { verify: 20, delegate: 5, ethics: 30, original: 5 } }
+            },
+            {
+                title: "Stage 11: The Endless Refactor",
+                context: "You ask an AI to write a Python script. It doesn't work. You paste the error back. It gives you new code. It still doesn't work. You do this 15 times in a row.",
+                question: "What is happening, and how do you stop it?",
+                options: [
+                    { text: "The AI is stupid. I should buy the more expensive premium version.", type: "incorrect", feedback: "FAILURE. The model is hallucinating in a loop because you are feeding it chaotic context." },
+                    { text: "You are stuck in an 'AI hallucination loop'. You must STOP, read the code manually, understand the architecture, and write the specific logic fix yourself.", type: "correct", feedback: "OPTIMAL. When AI gets confused, human intervention is the only circuit breaker. Stop outsourcing the logic." }
+                ],
+                traits: { correct: { verify: 25, delegate: 10, ethics: 5, original: 15 } }
+            },
+            {
+                title: "Stage 12: The Final Verdict",
+                context: "Your university announces they are banning all AI tools. A rival university embraces them entirely.",
+                question: "As a student preparing for 2026, what is the ultimate truth about AI?",
+                options: [
+                    { text: "AI is a cheating tool that ruins education.", type: "incorrect", feedback: "FALSE. AI is a fundamental technology shift, like the calculator or the internet." },
+                    { text: "AI will replace all human jobs, so there's no point in learning difficult skills.", type: "incorrect", feedback: "FALSE. AI replaces tasks, not entire jobs. It replaces people who act like robots." },
+                    { text: "AI commoditizes average work. To survive, I must build deep human skills (EQ, negotiation, systems thinking) and use AI merely to accelerate my tactical execution.", type: "correct", feedback: "OPTIMAL. Welcome to the top 1%." }
+                ],
+                traits: { correct: { verify: 15, delegate: 20, ethics: 15, original: 30 } }
             }
         ];
 
         let currentScenario = 0;
         let scores = { verify: 0, delegate: 0, ethics: 0, original: 0 };
-        let maxScores = { verify: 80, delegate: 65, ethics: 60, original: 70 }; // Approximate maxes from correct answers
+        // Max scores if user picks perfectly
+        let maxScores = { verify: 185, delegate: 135, ethics: 165, original: 200 };
 
         const contentEl = document.getElementById('scenario-content');
         const headerEl = document.getElementById('quiz-header');
@@ -469,7 +521,7 @@
 
         function initSimulation() {
             currentScenario = 0;
-            scores = { verify: 10, delegate: 10, ethics: 10, original: 10 }; // Base scores
+            scores = { verify: 10, delegate: 10, ethics: 10, original: 10 }; // Base
             headerEl.classList.remove('hidden');
             resultEl.classList.add('hidden');
             contentEl.classList.remove('hidden');
@@ -478,18 +530,22 @@
 
         function renderScenario() {
             const scenario = scenarios[currentScenario];
-            counterEl.textContent = `Scenario 0${currentScenario + 1} / 0${scenarios.length}`;
+            
+            const curStr = (currentScenario + 1).toString().padStart(2, '0');
+            const totalStr = scenarios.length.toString().padStart(2, '0');
+            counterEl.textContent = `Stage ${curStr} / ${totalStr}`;
+            
             progressBarEl.style.width = `${((currentScenario) / scenarios.length) * 100}%`;
 
             let optionsHtml = '';
             scenario.options.forEach((opt, idx) => {
                 optionsHtml += `
-                    <div onclick="selectOption(${idx})" class="scenario-option p-5 rounded-xl mb-4 group relative overflow-hidden">
+                    <div onclick="selectOption(${idx})" class="scenario-option p-5 rounded-2xl mb-4 group relative overflow-hidden shadow-sm">
                         <div class="flex items-start gap-4">
-                            <div class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center font-bold text-sm text-slate-400 group-hover:text-white group-hover:border-indigo-400 transition-colors shrink-0">
+                            <div class="w-10 h-10 rounded-full border-2 border-white/10 flex items-center justify-center font-bold text-sm text-slate-400 group-hover:text-white group-hover:border-indigo-400 group-hover:bg-indigo-500/20 transition-all shrink-0">
                                 ${String.fromCharCode(65 + idx)}
                             </div>
-                            <div class="text-slate-200 font-medium leading-relaxed">${opt.text}</div>
+                            <div class="text-slate-200 font-medium leading-relaxed mt-1 text-[1.05rem]">${opt.text}</div>
                         </div>
                     </div>
                 `;
@@ -497,10 +553,14 @@
 
             contentEl.innerHTML = `
                 <div class="fade-in" id="current-question">
-                    <h3 class="text-2xl font-bold text-white mb-3">${scenario.title}</h3>
-                    <p class="text-slate-300 mb-4">${scenario.context}</p>
-                    <p class="text-lg font-semibold text-indigo-300 mb-8">${scenario.question}</p>
-                    <div class="space-y-3">
+                    <h3 class="text-2xl md:text-3xl font-display font-bold text-white mb-4">${scenario.title}</h3>
+                    <div class="bg-blue-900/10 border-l-4 border-blue-500 p-5 rounded-r-xl mb-6">
+                        <p class="text-slate-300 text-lg leading-relaxed">${scenario.context}</p>
+                    </div>
+                    <p class="text-xl font-bold text-indigo-300 mb-8 flex items-center gap-3">
+                        <span>👉</span> ${scenario.question}
+                    </p>
+                    <div class="space-y-4">
                         ${optionsHtml}
                     </div>
                 </div>
@@ -511,7 +571,6 @@
             const scenario = scenarios[currentScenario];
             const selected = scenario.options[idx];
             
-            // Calculate score if correct
             if (selected.type === 'correct') {
                 scores.verify += scenario.traits.correct.verify;
                 scores.delegate += scenario.traits.correct.delegate;
@@ -521,26 +580,26 @@
                 scores.verify += Math.floor(scenario.traits.correct.verify / 2);
                 scores.delegate += Math.floor(scenario.traits.correct.delegate / 2);
             } else {
-                // penalty
                 scores.verify = Math.max(0, scores.verify - 5);
+                scores.original = Math.max(0, scores.original - 5);
             }
 
-            // Show feedback
             const isCorrect = selected.type === 'correct';
-            const bgColor = isCorrect ? 'bg-green-500/10 border-green-500/30' : 'bg-red-500/10 border-red-500/30';
-            const titleColor = isCorrect ? 'text-green-400' : 'text-red-400';
+            const bgColor = isCorrect ? 'bg-emerald-900/20 border-emerald-500/40' : 'bg-rose-900/20 border-rose-500/40';
+            const titleColor = isCorrect ? 'text-emerald-400' : 'text-rose-400';
             const icon = isCorrect ? '✓' : '✗';
             
             contentEl.innerHTML = `
-                <div class="fade-in flex flex-col h-full justify-center">
-                    <div class="glass-card p-8 rounded-2xl ${bgColor} border">
-                        <h4 class="text-xl font-bold ${titleColor} mb-4 flex items-center gap-2">
-                            <span>${icon}</span> ${isCorrect ? 'Analysis: Optimal' : 'Analysis: Sub-Optimal'}
+                <div class="fade-in flex flex-col h-full justify-center py-10">
+                    <div class="glass-card p-10 rounded-3xl ${bgColor} border-2 shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
+                        <h4 class="text-2xl font-bold ${titleColor} mb-6 flex items-center gap-3">
+                            <span class="w-10 h-10 rounded-full flex items-center justify-center bg-black/30">${icon}</span> 
+                            ${isCorrect ? 'Analysis: Optimal' : 'Analysis: Critical Failure'}
                         </h4>
-                        <p class="text-slate-200 leading-relaxed text-lg mb-8">${selected.feedback}</p>
+                        <p class="text-white leading-relaxed text-xl mb-10">${selected.feedback}</p>
                         
-                        <button onclick="nextScenario()" class="interactive-btn px-6 py-3 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium border border-white/10 w-full md:w-auto">
-                            ${currentScenario === scenarios.length - 1 ? 'Analyze Final Profile &rarr;' : 'Next Scenario &rarr;'}
+                        <button onclick="nextScenario()" class="interactive-btn px-8 py-4 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold border border-white/20 w-full md:w-auto text-lg shadow-lg">
+                            ${currentScenario === scenarios.length - 1 ? 'Analyze Final Profile &rarr;' : 'Proceed to Next Stage &rarr;'}
                         </button>
                     </div>
                 </div>
@@ -561,44 +620,58 @@
             contentEl.classList.add('hidden');
             resultEl.classList.remove('hidden');
             
-            // Calculate percentages
             const pVerify = Math.min(100, Math.max(10, Math.round((scores.verify / maxScores.verify) * 100)));
             const pDelegate = Math.min(100, Math.max(10, Math.round((scores.delegate / maxScores.delegate) * 100)));
             const pEthics = Math.min(100, Math.max(10, Math.round((scores.ethics / maxScores.ethics) * 100)));
             const pOriginal = Math.min(100, Math.max(10, Math.round((scores.original / maxScores.original) * 100)));
 
-            document.getElementById('stat-verify').textContent = pVerify + '%';
-            document.getElementById('stat-delegate').textContent = pDelegate + '%';
-            document.getElementById('stat-ethics').textContent = pEthics + '%';
-            document.getElementById('stat-original').textContent = pOriginal + '%';
+            // Animate counters
+            animateValue('stat-verify', 0, pVerify, 1500);
+            animateValue('stat-delegate', 0, pDelegate, 1500);
+            animateValue('stat-ethics', 0, pEthics, 1500);
+            animateValue('stat-original', 0, pOriginal, 1500);
 
-            // Determine Profile
             let title = "";
             let desc = "";
 
-            if (pVerify >= 80 && pOriginal >= 80) {
-                title = "The Centaur Strategist";
-                desc = "You have mastered the balance between algorithmic automation and human verification. You use AI as a force multiplier, not a crutch, maintaining high academic integrity.";
+            if (pVerify >= 85 && pOriginal >= 85 && pEthics >= 85) {
+                title = "The Centaur Master";
+                desc = "Outstanding. You have mastered the exact balance between algorithmic automation and human verification. You use AI as a force multiplier without surrendering your critical reasoning or ethical boundaries. You are future-proof.";
             } else if (pVerify < 50) {
                 title = "The Trusting Automaton";
-                desc = "You are over-reliant on AI output without applying human verification. You are highly vulnerable to AI hallucinations and algorithmic bias. You must build your critical verification mindset.";
+                desc = "Warning: You are over-reliant on AI output without applying human verification. You are highly vulnerable to AI hallucinations, algorithmic bias, and ultimately, replacement. You must build your critical verification mindset immediately.";
             } else if (pOriginal < 50) {
                 title = "The Paraphraser";
-                desc = "While you might verify facts, you use AI to do your thinking for you. You are sacrificing your own cognitive development and creativity for short-term speed.";
+                desc = "While you avoid obvious ethical traps, you use AI to do your fundamental thinking for you. You are sacrificing your own cognitive development and creativity for short-term speed. You must reclaim your human edge.";
             } else {
                 title = "The Pragmatic Adopter";
-                desc = "You understand the basics of AI collaboration but still occasionally fall into traps of over-reliance. Focus on directing the AI rather than letting it direct you.";
+                desc = "You understand the basics of AI collaboration but still occasionally fall into traps of over-reliance or data leakage. Focus on directing the AI strategically rather than letting it dictate your workflow.";
             }
 
-            document.getElementById('profile-title').textContent = title;
-            document.getElementById('profile-desc').textContent = desc;
+            setTimeout(() => {
+                document.getElementById('profile-title').textContent = title;
+                document.getElementById('profile-desc').innerHTML = desc;
+            }, 500);
+        }
+
+        function animateValue(id, start, end, duration) {
+            let obj = document.getElementById(id);
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start) + '%';
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
         }
 
         function restartSimulation() {
             initSimulation();
         }
 
-        // Init
         document.addEventListener('DOMContentLoaded', initSimulation);
     </script>
 </body>
