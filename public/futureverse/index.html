@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="theme-color" content="#030712">
 
-    <title>DTV Futureverse — Explore the Future | Digital Twin Verse</title>
-    <meta name="description" content="Step beyond the screen. Explore the Futureverse, a 3D interactive knowledge universe featuring insights on AI, Human Skills, Future Careers, and Emerging Tech.">
+    <title>DTV Futureverse — The Infinite Knowledge Universe | Digital Twin Verse</title>
+    <meta name="description" content="Step beyond the screen. Explore the Futureverse, a massive 3D interactive knowledge universe featuring insights on AI, Human Skills, Future Careers, BioTech, Web3, and Emerging Tech.">
     
     <link rel="canonical" href="https://digitaltwinvrs.com/futureverse">
     <link rel="icon" href="/img/dtv-logo.jpg" type="image/jpeg">
@@ -54,7 +54,6 @@
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
         @keyframes fadeOut { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.98); } }
 
-        /* Custom scrollbar for content panel */
         .custom-scroll::-webkit-scrollbar { width: 6px; }
         .custom-scroll::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
         .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
@@ -74,15 +73,26 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             transition: opacity 1s ease;
         }
+
+        #warp-drive-btn {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(167, 139, 250, 0.2));
+            border: 1px solid rgba(167, 139, 250, 0.4);
+            box-shadow: 0 0 15px rgba(167, 139, 250, 0.3);
+            transition: all 0.3s ease;
+        }
+        #warp-drive-btn:hover {
+            box-shadow: 0 0 25px rgba(167, 139, 250, 0.6);
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
 
     <!-- Loading Screen -->
     <div id="loading-screen">
-        <div class="w-16 h-16 rounded-full border-4 border-slate-800 border-t-blue-500 animate-spin mb-6"></div>
-        <h1 class="text-3xl font-display font-bold text-white tracking-widest uppercase">Initializing Universe</h1>
-        <p class="text-slate-500 mt-2 font-mono text-sm" id="loading-text">Loading Geometries...</p>
+        <div class="w-16 h-16 rounded-full border-4 border-slate-800 border-t-purple-500 animate-spin mb-6"></div>
+        <h1 class="text-3xl font-display font-bold text-white tracking-widest uppercase">Initializing The Infinite Universe</h1>
+        <p class="text-slate-500 mt-2 font-mono text-sm" id="loading-text">Loading 9 Realms & 60+ Data Nodes...</p>
     </div>
 
     <!-- 3D Canvas -->
@@ -95,16 +105,19 @@
     <div class="ui-layer flex flex-col justify-between p-6 md:p-10">
         
         <!-- Header Nav -->
-        <header class="flex justify-between items-center pointer-events-auto">
+        <header class="flex justify-between items-center pointer-events-auto w-full max-w-[1920px] mx-auto">
             <div class="flex items-center gap-3">
                 <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center font-bold text-xs border border-white/20">DT</div>
                 <span class="font-display font-bold tracking-widest uppercase text-sm">Futureverse</span>
             </div>
             
             <div class="flex gap-4 items-center">
+                <button id="warp-drive-btn" class="hidden md:flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-purple-300 px-4 py-2 rounded-full pointer-events-auto" onclick="warpToRandomTopic()">
+                    ⚡ Warp Drive
+                </button>
                 <div id="progress-indicator" class="hidden md:flex items-center gap-2 text-xs font-mono text-slate-400 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
                     <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-                    <span id="progress-text">0/6 Worlds Explored</span>
+                    <span id="progress-text">0/9 Worlds Explored</span>
                 </div>
                 <a href="/" class="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-white transition bg-white/5 px-4 py-2 rounded-full border border-white/10">Exit</a>
             </div>
@@ -115,21 +128,24 @@
             <h1 class="text-5xl md:text-8xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-500 mb-4 tracking-tighter text-center px-4">
                 FUTUREVERSE
             </h1>
-            <p class="text-lg md:text-xl text-slate-400 font-light mb-12 tracking-wide text-center">Step beyond the screen. Explore what comes next.</p>
+            <p class="text-lg md:text-xl text-slate-400 font-light mb-12 tracking-wide text-center">9 Worlds. 60+ Deep Insights. Infinite Possibilities.</p>
             <button id="enter-btn" class="px-10 py-4 rounded-full bg-white text-black font-bold tracking-widest uppercase text-sm hover:scale-105 transition shadow-[0_0_40px_rgba(255,255,255,0.3)]">
                 Enter The Universe
             </button>
         </div>
 
-        <!-- World Info Panel (Hidden initially) -->
-        <div id="world-panel" class="hidden absolute top-24 bottom-10 right-6 md:right-10 w-full md:w-[450px] lg:w-[500px] glass-panel rounded-3xl p-8 flex-col pointer-events-auto transition-transform duration-500 translate-x-full">
+        <!-- World Info Panel -->
+        <div id="world-panel" class="hidden absolute top-24 bottom-10 right-6 md:right-10 w-full md:w-[450px] lg:w-[500px] glass-panel rounded-3xl p-8 flex-col pointer-events-auto transition-transform duration-500 translate-x-full z-40">
             <button id="back-to-universe-btn" class="self-start text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-white transition flex items-center gap-2 mb-6">
                 &larr; Return to Universe
             </button>
             
             <div id="world-header" class="mb-8">
                 <h2 id="world-title" class="text-4xl font-display font-bold mb-2">World Title</h2>
-                <p id="world-desc" class="text-slate-400 text-sm">Description</p>
+                <p id="world-desc" class="text-slate-400 text-sm leading-relaxed">Description</p>
+                <div class="mt-4 text-xs font-mono text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                    <span id="world-progress">0</span> / <span id="world-total">0</span> Nodes Decoded
+                </div>
             </div>
             
             <div class="flex-1 overflow-y-auto custom-scroll pr-4 mb-4">
@@ -140,18 +156,26 @@
             </div>
         </div>
 
-        <!-- Topic Detail Modal (Hidden initially) -->
+        <!-- Topic Detail Modal -->
         <div id="topic-modal" class="hidden absolute inset-0 z-[100] bg-black/80 backdrop-blur-md items-center justify-center p-4 pointer-events-auto opacity-0 transition-opacity duration-300">
-            <div class="glass-panel w-full max-w-4xl max-h-[90vh] rounded-3xl flex flex-col overflow-hidden border border-white/20 relative">
+            <div class="glass-panel w-full max-w-4xl max-h-[90vh] rounded-3xl flex flex-col overflow-hidden border border-white/20 relative shadow-2xl">
                 <button id="close-topic-btn" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition z-10">✕</button>
                 
-                <div class="p-8 md:p-12 overflow-y-auto custom-scroll">
-                    <div id="topic-meta" class="text-xs font-bold uppercase tracking-widest mb-4">WORLD &bull; TOPIC</div>
-                    <h2 id="topic-title" class="text-4xl md:text-5xl font-display font-bold text-white mb-6">Topic Title</h2>
+                <div class="p-8 md:p-12 overflow-y-auto custom-scroll flex-1">
+                    <div id="topic-meta" class="text-xs font-bold uppercase tracking-widest mb-4">WORLD &bull; NODE DECODED</div>
+                    <h2 id="topic-title" class="text-4xl md:text-5xl font-display font-bold text-white mb-6 leading-tight">Topic Title</h2>
                     
                     <div class="prose prose-invert max-w-none font-sans text-slate-300 leading-relaxed text-lg" id="topic-content">
                         <!-- Content injected here -->
                     </div>
+                </div>
+                <div class="border-t border-white/10 bg-black/40 p-6 flex justify-between items-center">
+                    <button class="text-slate-400 hover:text-white text-sm font-bold uppercase tracking-widest transition flex items-center gap-2" onclick="closeTopicAndReturnToWorld()">
+                        &larr; Back to World
+                    </button>
+                    <button class="text-purple-400 hover:text-purple-300 text-sm font-bold uppercase tracking-widest transition flex items-center gap-2" onclick="warpToRandomTopic()">
+                        Warp to Next Node ⚡
+                    </button>
                 </div>
             </div>
         </div>
@@ -159,8 +183,8 @@
         <!-- Journey Summary Modal -->
         <div id="journey-modal" class="hidden absolute inset-0 z-[100] bg-black/95 backdrop-blur-xl items-center justify-center p-4 pointer-events-auto opacity-0 transition-opacity duration-500">
             <div class="max-w-2xl text-center">
-                <h3 class="text-indigo-400 font-bold uppercase tracking-widest mb-4">Exploration Complete</h3>
-                <h2 class="text-5xl font-display font-bold text-white mb-8">Your Futureverse Journey</h2>
+                <h3 class="text-indigo-400 font-bold uppercase tracking-widest mb-4">Exploration Analysis</h3>
+                <h2 class="text-5xl font-display font-bold text-white mb-8">Your Cognitive Footprint</h2>
                 
                 <div class="glass-panel p-8 rounded-3xl mb-8">
                     <div class="grid grid-cols-2 gap-8 mb-8">
@@ -175,19 +199,19 @@
                     </div>
                     <div class="border-t border-white/10 pt-6 text-left">
                         <h4 class="text-sm font-bold text-white mb-2 uppercase">Archetype Analysis</h4>
-                        <p class="text-slate-300" id="archetype-desc">Analyzing...</p>
+                        <p class="text-slate-300 leading-relaxed" id="archetype-desc">Analyzing...</p>
                     </div>
                 </div>
                 
                 <button onclick="document.getElementById('journey-modal').classList.add('hidden')" class="px-8 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold transition border border-white/20">
-                    Return to Exploration
+                    Resume Exploration
                 </button>
             </div>
         </div>
         
         <!-- Controls Hint -->
         <div id="controls-hint" class="absolute bottom-6 left-1/2 -translate-x-1/2 text-xs text-slate-500 font-mono tracking-widest uppercase hidden md:block opacity-0 transition-opacity duration-1000">
-            Drag to Rotate &bull; Scroll to Zoom &bull; Click to Enter
+            Drag to Rotate &bull; Scroll to Zoom &bull; Click to Enter Planet
         </div>
     </div>
 
@@ -195,214 +219,126 @@
     <script>
         const universeData = {
             "ai": {
-                name: "AI World",
-                color: 0x8b5cf6,
-                hex: "#8b5cf6",
-                desc: "The architecture of intelligence. Explore the algorithms redefining logic and automation.",
-                radius: 4, distance: 30, speed: 0.002, textureType: 'tech',
+                name: "AI & Automation", color: 0x8b5cf6, hex: "#8b5cf6",
+                desc: "The architecture of intelligence. Explore the algorithms redefining logic, generation, and automation across every industry.",
+                radius: 4, distance: 30, speed: 0.002,
                 topics: [
-                    {
-                        id: "ai-1", title: "Generative AI Fundamentals",
-                        content: `
-                            <h3>Beyond the Chatbot</h3>
-                            <p>Generative AI represents a shift from analytical processing to synthetic creation. By mapping the statistical probability of tokens in a high-dimensional vector space, LLMs construct coherent text, code, and reasoning pathways.</p>
-                            <div class="bg-white/5 border border-white/10 p-5 rounded-xl my-6">
-                                <h4 class="text-white font-bold mb-2">Student Application</h4>
-                                <p class="text-sm text-slate-300 m-0">Don't use it to write essays. Use it to generate Socratic counter-arguments to your thesis to stress-test your logic before writing.</p>
-                            </div>
-                        `
-                    },
-                    {
-                        id: "ai-2", title: "Autonomous Agents",
-                        content: `
-                            <h3>The Digital Workforce</h3>
-                            <p>An AI agent is an LLM wrapped in a control loop (like ReAct) given access to tools (web browsing, code execution, APIs). Instead of waiting for prompts, agents break down a goal, plan steps, and execute them autonomously.</p>
-                            <p>We are transitioning from 'AI as an Oracle' to 'AI as an Employee'.</p>
-                            <ul>
-                                <li><strong>Research Agent:</strong> Scrapes the web and summarizes data.</li>
-                                <li><strong>Code Agent:</strong> Writes, tests, and deploys scripts.</li>
-                                <li><strong>Orchestrator:</strong> Manages the other agents to build a complete product.</li>
-                            </ul>
-                        `
-                    },
-                    {
-                        id: "ai-3", title: "RAG (Retrieval-Augmented Generation)",
-                        content: `
-                            <h3>The Cure for Hallucinations</h3>
-                            <p>LLMs don't know your private data, and fine-tuning them on it is expensive and risky. RAG solves this by converting your documents into numbers (embeddings) and storing them in a Vector Database.</p>
-                            <p>When you ask a question, the system searches the database for the most relevant paragraphs, injects them into the prompt, and says: "Answer the question using ONLY this provided context."</p>
-                        `
-                    },
-                    {
-                        id: "ai-4", title: "Algorithmic Ethics & Bias",
-                        content: `
-                            <h3>The Math of Morality</h3>
-                            <p>Machine learning models are mirrors reflecting the historical data they are trained on. If a company uses 10 years of biased hiring data to train a resume-screening AI, the AI will mathematically encode and scale that bias.</p>
-                            <p>AI Alignment is the engineering discipline of ensuring a model's outputs align with human values and safety constraints, preventing both subtle discrimination and catastrophic misalignment.</p>
-                        `
-                    }
+                    { id: "ai-1", title: "Generative AI Fundamentals", content: "<h3>Beyond the Chatbot</h3><p>Generative AI represents a shift from analytical processing to synthetic creation. By mapping the statistical probability of tokens in a high-dimensional vector space, LLMs construct coherent text, code, and reasoning pathways.</p><div class='bg-white/5 border border-white/10 p-5 rounded-xl my-6'><h4 class='text-white font-bold mb-2'>Student Application</h4><p class='text-sm text-slate-300 m-0'>Don't use it to write essays. Use it to generate Socratic counter-arguments to your thesis to stress-test your logic before writing.</p></div>" },
+                    { id: "ai-2", title: "Autonomous Agents", content: "<h3>The Digital Workforce</h3><p>An AI agent is an LLM wrapped in a control loop given access to tools. Instead of waiting for prompts, agents break down a goal, plan steps, and execute them autonomously. We are transitioning from 'AI as an Oracle' to 'AI as an Employee'.</p>" },
+                    { id: "ai-3", title: "RAG (Retrieval-Augmented Generation)", content: "<h3>The Cure for Hallucinations</h3><p>LLMs don't know private data. RAG solves this by converting documents into vector embeddings. When you ask a question, it retrieves the most relevant data and forces the AI to answer using ONLY that context.</p>" },
+                    { id: "ai-4", title: "Algorithmic Ethics & Bias", content: "<h3>The Math of Morality</h3><p>Models are mirrors reflecting historical data. If a company uses biased hiring data, the AI mathematically scales that bias. AI Alignment ensures outputs align with human values and safety constraints.</p>" },
+                    { id: "ai-5", title: "Model Fine-Tuning (LoRA/PEFT)", content: "<h3>Teaching Old Models New Tricks</h3><p>Fine-tuning adjusts a pre-trained model's weights using a custom dataset. Using parameter-efficient fine-tuning (PEFT) like LoRA, developers can train massive models on cheap consumer GPUs to speak in specific brand voices or output strict JSON.</p>" },
+                    { id: "ai-6", title: "Computer Vision & Multimodality", content: "<h3>When Machines See</h3><p>Multimodal models like GPT-4V or Gemini don't just read text; they process pixels. This unlocks massive potential in medical imaging, autonomous driving, and real-time environment analysis via smartphone cameras.</p>" },
+                    { id: "ai-7", title: "Synthetic Data Generation", content: "<h3>Creating the Training Grounds</h3><p>The world is running out of high-quality human data. Synthetic data generation uses AI to create mathematically realistic but fake datasets, allowing companies to train models without violating privacy laws (like GDPR or HIPAA).</p>" },
+                    { id: "ai-8", title: "Edge AI", content: "<h3>Intelligence on the Fringe</h3><p>Instead of sending data to the cloud, Edge AI runs models directly on your phone, IoT device, or car. This guarantees zero-latency inference and total privacy, crucial for autonomous vehicles and real-time translation.</p>" }
                 ]
             },
             "human": {
-                name: "Human Skills World",
-                color: 0x10b981,
-                hex: "#10b981",
+                name: "Human Psychology", color: 0x10b981, hex: "#10b981",
                 desc: "The un-automatable core. Explore the psychological and cognitive skills machines cannot replicate.",
-                radius: 3.5, distance: 50, speed: 0.0015, textureType: 'organic',
+                radius: 3.5, distance: 55, speed: 0.0015,
                 topics: [
-                    {
-                        id: "hs-1", title: "Cognitive Empathy",
-                        content: `
-                            <h3>The Foundation of Trust</h3>
-                            <p>Cognitive empathy is the ability to consciously understand another person's perspective and mental state. It is not just "feeling bad" for someone; it is the strategic ability to map their emotional context.</p>
-                            <div class="bg-emerald-900/20 border border-emerald-500/20 p-5 rounded-xl my-6">
-                                <h4 class="text-emerald-400 font-bold mb-2">Why AI Fails Here</h4>
-                                <p class="text-sm text-slate-300 m-0">AI can generate empathetic-sounding text, but it has no stakes in the game. Real business and leadership run on human trust, which requires shared vulnerability—something an algorithm physically cannot possess.</p>
-                            </div>
-                        `
-                    },
-                    {
-                        id: "hs-2", title: "Complex Negotiation",
-                        content: `
-                            <h3>Expanding the Pie</h3>
-                            <p>Basic negotiation is haggling over price (zero-sum). Complex negotiation is uncovering the hidden, unstated desires of the other party (fear of failure, ego, timeline constraints) and restructuring the deal so both sides win.</p>
-                            <p>This requires reading micro-expressions, reading the room, and improvising under pressure.</p>
-                        `
-                    },
-                    {
-                        id: "hs-3", title: "Systems Thinking",
-                        content: `
-                            <h3>Seeing the Forest</h3>
-                            <p>A system is a set of interconnected parts that form a complex whole. Systems thinkers don't just solve immediate problems; they look for the feedback loops and root causes that created the problem.</p>
-                            <p>Example: Instead of repeatedly fixing a bug (linear thinking), you redesign the architecture so the class of bug is mathematically impossible (systems thinking).</p>
-                        `
-                    },
-                    {
-                        id: "hs-4", title: "Crisis Management",
-                        content: `
-                            <h3>Decisions Under Darkness</h3>
-                            <p>AI requires structured data to make predictions. In a true crisis (a PR disaster, a server collapse, a pandemic), data is chaotic, contradictory, or absent. Human leaders must exercise judgment and take decisive action in the dark.</p>
-                        `
-                    }
+                    { id: "hs-1", title: "Cognitive Empathy", content: "<h3>The Foundation of Trust</h3><p>Cognitive empathy is the ability to consciously understand another person's perspective. It is the strategic ability to map emotional context. Real business runs on human trust and shared vulnerability—something an algorithm physically cannot possess.</p>" },
+                    { id: "hs-2", title: "Complex Negotiation", content: "<h3>Expanding the Pie</h3><p>Basic negotiation is haggling over price. Complex negotiation is uncovering the hidden, unstated desires of the other party (fear of failure, ego) and restructuring the deal so both sides win. This requires reading micro-expressions and improvising under pressure.</p>" },
+                    { id: "hs-3", title: "Systems Thinking", content: "<h3>Seeing the Forest</h3><p>Systems thinkers don't just solve immediate problems; they look for the feedback loops and root causes that created the problem. Instead of repeatedly fixing a bug, you redesign the architecture so the bug is mathematically impossible.</p>" },
+                    { id: "hs-4", title: "Crisis Management", content: "<h3>Decisions Under Darkness</h3><p>AI requires structured data to make predictions. In a true crisis, data is chaotic or absent. Human leaders must exercise judgment and take decisive action in the dark, managing the emotional panic of their teams.</p>" },
+                    { id: "hs-5", title: "First Principles Reasoning", content: "<h3>Boiling it Down</h3><p>AI relies entirely on analogies (training data). Innovation requires First Principles reasoning—ignoring conventional wisdom and boiling a problem down to fundamental physical or logical truths, then building up from there.</p>" },
+                    { id: "hs-6", title: "High-Stakes Storytelling", content: "<h3>The Engineering of Belief</h3><p>You can have the best product in the world, but if you cannot tell a compelling story, no one will buy it. Storytelling is the API for the human brain. AI can write a memo; it cannot inspire a team to work over the weekend.</p>" },
+                    { id: "hs-7", title: "Behavioral Economics", content: "<h3>Irrational Markets</h3><p>Humans do not act rationally. They are driven by loss aversion, sunk cost fallacies, and social proof. Understanding these biases allows you to design better products and anticipate market movements better than any linear predictive model.</p>" },
+                    { id: "hs-8", title: "Cross-Cultural Communication", content: "<h3>The Global Village</h3><p>The future of work is completely distributed. Navigating low-context (direct) vs high-context (indirect) cultures is critical. Misunderstandings across timezones kill projects faster than bad code.</p>" }
                 ]
             },
             "education": {
-                name: "Education World",
-                color: 0x3b82f6,
-                hex: "#3b82f6",
-                desc: "The evolution of learning. How digital twins and adaptive logic are rebuilding the classroom.",
-                radius: 3.8, distance: 65, speed: 0.001, textureType: 'grid',
+                name: "Future Education", color: 0x3b82f6, hex: "#3b82f6",
+                desc: "The evolution of learning. How digital twins, adaptive logic, and AI tutors are rebuilding the classroom.",
+                radius: 3.8, distance: 80, speed: 0.0011,
                 topics: [
-                    {
-                        id: "ed-1", title: "Adaptive Learning Systems",
-                        content: `
-                            <h3>The End of the Bell Curve</h3>
-                            <p>Traditional classrooms force 30 students to learn at the exact same pace. Adaptive systems track a student's cognitive model in real-time, instantly identifying knowledge gaps.</p>
-                            <p>If you fail a calculus question, the system doesn't just lower your grade; it realizes you are weak in foundational algebra, and seamlessly routes you to practice that specific concept before returning to calculus.</p>
-                        `
-                    },
-                    {
-                        id: "ed-2", title: "The Digital Twin of a Student",
-                        content: `
-                            <h3>Your Cognitive Blueprint</h3>
-                            <p>A digital twin in education is a secure, encrypted data model representing your skills, learning speed, strengths, and weaknesses. It travels with you from high school through your entire career, helping AI tutors perfectly calibrate their instruction to your exact brain.</p>
-                        `
-                    },
-                    {
-                        id: "ed-3", title: "Skill-Based Cryptographic Credentials",
-                        content: `
-                            <h3>Beyond the Degree</h3>
-                            <p>A 4-year degree proves you passed exams, but not that you can do the job. The future of credentials is cryptographic verification of actual projects built, code committed, and problems solved, immutably recorded on a ledger.</p>
-                        `
-                    }
+                    { id: "ed-1", title: "Adaptive Learning Systems", content: "<h3>The End of the Bell Curve</h3><p>Traditional classrooms force 30 students to learn at the exact same pace. Adaptive systems track a student's cognitive model in real-time. If you fail calculus, it routes you back to the specific algebra concept you missed instantly.</p>" },
+                    { id: "ed-2", title: "The Digital Twin of a Student", content: "<h3>Your Cognitive Blueprint</h3><p>A digital twin in education is a secure data model representing your skills, learning speed, strengths, and weaknesses. It travels with you, helping AI tutors perfectly calibrate their instruction to your exact brain.</p>" },
+                    { id: "ed-3", title: "Cryptographic Credentials", content: "<h3>Beyond the Degree</h3><p>The future of credentials is cryptographic verification of actual projects built, code committed, and problems solved, immutably recorded on a ledger. Employers will verify what you *did*, not where you *sat*.</p>" },
+                    { id: "ed-4", title: "Hyper-Personalized AI Tutors", content: "<h3>The Aristotle Model</h3><p>Imagine an AI tutor that knows your interests. If you love basketball, it teaches you physics using projectile motion formulas of a 3-point shot. It is infinitely patient, available 24/7, and speaks your language.</p>" },
+                    { id: "ed-5", title: "Project-Based Reality", content: "<h3>Learning by Building</h3><p>The era of rote memorization is dead. Because AI can recall any fact instantly, the only valuable education is project-based learning: designing a product, testing it in the market, and learning the theory *while* building.</p>" },
+                    { id: "ed-6", title: "Neuro-feedback in Learning", content: "<h3>Closing the Loop</h3><p>Future learning environments will use non-invasive EEG headsets to measure cognitive load and focus. If the system detects you are zoning out or frustrated, it dynamically alters the difficulty or format of the lesson.</p>" }
                 ]
             },
             "career": {
-                name: "Career World",
-                color: 0xf59e0b,
-                hex: "#f59e0b",
-                desc: "The future of work. Discover hybrid roles and how to build an un-automatable portfolio.",
-                radius: 4.2, distance: 85, speed: 0.0018, textureType: 'urban',
+                name: "The New Economy", color: 0xf59e0b, hex: "#f59e0b",
+                desc: "The future of work. Discover hybrid roles, skill-based hiring, and how to build an un-automatable portfolio.",
+                radius: 4.2, distance: 105, speed: 0.0018,
                 topics: [
-                    {
-                        id: "cw-1", title: "The Portfolio Career",
-                        content: `
-                            <h3>The End of the Ladder</h3>
-                            <p>Working for one company for 40 years is over. A portfolio career means maintaining multiple streams of income and identity: consulting part-time, building a SaaS product, and creating content.</p>
-                            <p>This creates extreme resilience. If one industry is disrupted by AI, your other pillars sustain you.</p>
-                        `
-                    },
-                    {
-                        id: "cw-2", title: "Hybrid AI Roles",
-                        content: `
-                            <h3>The Domain Expert + AI</h3>
-                            <p>The highest paid jobs of 2026 won't be pure programmers. They will be hybrid roles. The "AI-Augmented Lawyer" who writes code to automate contract review. The "AI-Augmented Doctor" who uses computer vision models to prescreen MRIs.</p>
-                            <div class="bg-amber-900/20 border border-amber-500/20 p-5 rounded-xl my-6">
-                                <p class="text-sm text-slate-300 m-0">Rule: AI will not replace domain experts. Domain experts who use AI will replace domain experts who don't.</p>
-                            </div>
-                        `
-                    },
-                    {
-                        id: "cw-3", title: "Proof of Work",
-                        content: `
-                            <h3>The New Resume</h3>
-                            <p>When everyone can use AI to write a perfect cover letter, resumes lose all value. Employers will only look at "Proof of Work"—live code deployments, published research, video teardowns, and actual revenue generated.</p>
-                        `
-                    }
+                    { id: "cw-1", title: "The Portfolio Career", content: "<h3>The End of the Ladder</h3><p>Working for one company for 40 years is over. A portfolio career means maintaining multiple streams of income and identity: consulting, building a SaaS, and creating content. This creates extreme resilience against AI disruption.</p>" },
+                    { id: "cw-2", title: "Hybrid AI Roles", content: "<h3>The Domain Expert + AI</h3><p>The highest paid jobs won't be pure programmers. They will be hybrid roles. The 'AI-Augmented Lawyer' or 'AI-Augmented Doctor'. AI will not replace domain experts. Domain experts who use AI will replace those who don't.</p>" },
+                    { id: "cw-3", title: "Proof of Work", content: "<h3>The New Resume</h3><p>When everyone can use AI to write a perfect cover letter, resumes lose all value. Employers will only look at 'Proof of Work'—live code deployments, published research, video teardowns, and actual revenue generated.</p>" },
+                    { id: "cw-4", title: "Skill-Based Hiring", content: "<h3>Bypassing the Gatekeepers</h3><p>Major corporations are dropping degree requirements. They are implementing blind, skill-based assessments. If you can pass the technical rigorous assessment or build the required architecture, you get the job, regardless of your background.</p>" },
+                    { id: "cw-5", title: "The Fractional Executive", content: "<h3>C-Suite on Demand</h3><p>As companies become leaner (using AI to replace middle management), they will hire 'fractional' CMOs or CTOs—highly experienced professionals who work for 4 different companies simultaneously, providing strategic oversight without full-time bloat.</p>" },
+                    { id: "cw-6", title: "Continuous Upskilling", content: "<h3>The Red Queen Hypothesis</h3><p>The half-life of a learned technical skill is dropping from 5 years to 18 months. The most valuable career skill is meta-learning: the ability to rapidly unlearn outdated frameworks and assimilate new paradigms in weeks.</p>" },
+                    { id: "cw-7", title: "Remote-First & Async", content: "<h3>Death of the Office</h3><p>The best talent refuses to commute. Mastering asynchronous communication (writing clear briefs, recording Loom videos, leaving perfect documentation) is a mandatory career skill for the globalized workforce.</p>" }
                 ]
             },
             "creator": {
-                name: "Creator World",
-                color: 0xec4899,
-                hex: "#ec4899",
-                desc: "The age of the builder. How to leverage technology to build digital empires from a dorm room.",
-                radius: 3.2, distance: 105, speed: 0.0025, textureType: 'energy',
+                name: "Creator & Builder", color: 0xec4899, hex: "#ec4899",
+                desc: "The age of the sovereign builder. Leverage technology to build digital empires from a dorm room.",
+                radius: 3.2, distance: 130, speed: 0.0022,
                 topics: [
-                    {
-                        id: "cr-1", title: "The Sovereign Individual",
-                        content: `
-                            <h3>A Company of One</h3>
-                            <p>Historically, building a tech company required millions in VC funding to hire designers, coders, and marketers. Today, one student with an internet connection can prompt an AI to write the code, generate the assets, and optimize the ad spend.</p>
-                            <p>The bottleneck is no longer capital; the bottleneck is taste, vision, and execution.</p>
-                        `
-                    },
-                    {
-                        id: "cr-2", title: "Audience as Leverage",
-                        content: `
-                            <h3>Distribution is King</h3>
-                            <p>You can build the greatest software in the world, but if no one knows it exists, it fails. Building a highly engaged audience through writing, video, or open-source contribution is the ultimate career leverage.</p>
-                        `
-                    }
+                    { id: "cr-1", title: "The Sovereign Individual", content: "<h3>A Company of One</h3><p>Historically, building a tech company required millions in VC funding. Today, one student with an internet connection can prompt an AI to write the code, generate the assets, and optimize the ad spend. The bottleneck is taste and execution.</p>" },
+                    { id: "cr-2", title: "Audience as Leverage", content: "<h3>Distribution is King</h3><p>You can build the greatest software in the world, but if no one knows it exists, it fails. Building a highly engaged audience through writing, video, or open-source contribution is the ultimate career leverage.</p>" },
+                    { id: "cr-3", title: "No-Code / Low-Code", content: "<h3>Democratizing Software</h3><p>Platforms like Bubble, Webflow, and Make allow non-technical founders to build complex applications visually. When combined with AI coding assistants, the barrier to launching a software product has effectively dropped to zero.</p>" },
+                    { id: "cr-4", title: "The Subscription Economy", content: "<h3>Recurring Revenue</h3><p>Transitioning from selling time (freelancing) to selling access (newsletters, SaaS, communities). Building MRR (Monthly Recurring Revenue) is the mathematical foundation of financial independence for digital creators.</p>" },
+                    { id: "cr-5", title: "Content Engineering", content: "<h3>Algorithmic Empathy</h3><p>Understanding how recommendation algorithms (TikTok, YouTube, X) distribute content. It's not just making 'good videos'; it's engineering high-retention hooks, optimizing CTR (Click-Through Rate), and structuring narrative arcs.</p>" },
+                    { id: "cr-6", title: "Digital Product Design", content: "<h3>Selling Zero-Marginal Cost Assets</h3><p>Unlike physical goods, a digital product (a course, a template, a script) costs $0 to duplicate. Creators who master packaging their knowledge into high-value digital products create scalable wealth vehicles.</p>" }
                 ]
             },
             "future": {
-                name: "Future Tech World",
-                color: 0x06b6d4,
-                hex: "#06b6d4",
-                desc: "The bleeding edge. Quantum mechanics, spatial computing, and human-computer symbiosis.",
-                radius: 4.5, distance: 130, speed: 0.0012, textureType: 'crystal',
+                name: "Future Hardware", color: 0x0ea5e9, hex: "#0ea5e9",
+                desc: "The physical bleeding edge. Explore how hardware innovations will reshape our reality.",
+                radius: 4.5, distance: 155, speed: 0.001,
                 topics: [
-                    {
-                        id: "ft-1", title: "Spatial Computing",
-                        content: `
-                            <h3>The Death of the Screen</h3>
-                            <p>We have spent 40 years staring at glowing rectangles. Spatial computing (AR/VR/MR) maps digital interfaces directly into the physical world. Instead of opening an anatomy app on a laptop, a medical student dissects a holographic heart floating in their living room.</p>
-                        `
-                    },
-                    {
-                        id: "ft-2", title: "Quantum Supremacy",
-                        content: `
-                            <h3>Breaking Classical Limits</h3>
-                            <p>Classical computers use bits (0 or 1). Quantum computers use qubits, which can exist in a superposition of both states simultaneously. This isn't just "faster"—it allows for the simulation of complex molecules (curing diseases) and threatens to instantly break all modern RSA encryption.</p>
-                        `
-                    },
-                    {
-                        id: "ft-3", title: "Brain-Computer Interfaces (BCI)",
-                        content: `
-                            <h3>The Final Frontier</h3>
-                            <p>Connecting the human cortex directly to silicon. Early applications are restoring movement to paralyzed individuals. Future applications involve high-bandwidth thought-to-text communication, fundamentally altering what it means to be human.</p>
-                        `
-                    }
+                    { id: "ft-1", title: "Spatial Computing", content: "<h3>The Death of the Screen</h3><p>Spatial computing maps digital interfaces directly into the physical world. Instead of opening an anatomy app on a laptop, a medical student dissects a holographic heart floating in their living room.</p>" },
+                    { id: "ft-2", title: "Advanced Robotics & Humanoids", content: "<h3>The Automation of Labor</h3><p>While AI automates cognitive work, general-purpose humanoid robots (like Tesla Optimus or Figure 01) powered by multimodal AI are preparing to automate physical labor, fundamentally restructuring global supply chains.</p>" },
+                    { id: "ft-3", title: "3D Printing & Additive Manufacturing", content: "<h3>Instant Infrastructure</h3><p>From printing rocket engines in 24 hours to printing biological tissue. Distributed manufacturing means we will email physical objects (blueprints) and print them locally, destroying traditional shipping logistics.</p>" },
+                    { id: "ft-4", title: "Solid-State Batteries", content: "<h3>The Energy Density Leap</h3><p>The bottleneck for drones, robots, and EVs is energy density. Solid-state batteries promise to double the range, eliminate fire risks, and charge in minutes, unlocking electric aviation and untethered robotics.</p>" },
+                    { id: "ft-5", title: "Smart Dust & Micro-Sensors", content: "<h3>The Omnipresent Network</h3><p>Sensors the size of a grain of sand, distributed across agricultural fields or integrated into concrete, forming massive mesh networks that monitor the physical health of the planet in absolute real-time.</p>" },
+                    { id: "ft-6", title: "Neuromorphic Computing", content: "<h3>Silicon Brains</h3><p>Current chips process data sequentially. Neuromorphic chips mimic the human brain's neural structure, processing information in parallel while consuming a fraction of the power, unlocking true mobile AI.</p>" },
+                    { id: "ft-7", title: "Exoskeletons", content: "<h3>Human Augmentation</h3><p>Robotic suits that multiply human strength and endurance. Initially developed for military and medical rehabilitation, they will soon become standard in construction, warehouse logistics, and eldercare.</p>" }
+                ]
+            },
+            "cyber": {
+                name: "Cyber & Web3", color: 0xf43f5e, hex: "#f43f5e",
+                desc: "The battleground of truth. Cryptography, decentralized ledgers, and zero-trust security.",
+                radius: 3.7, distance: 180, speed: 0.0014,
+                topics: [
+                    { id: "cy-1", title: "Zero-Trust Architecture", content: "<h3>Verify Everything</h3><p>The old security model (a strong perimeter with a soft inside) is dead. Zero Trust assumes the network is already breached. Every single request between servers must be cryptographically authenticated, every time.</p>" },
+                    { id: "cy-2", title: "Quantum Cryptography", content: "<h3>The Q-Day Threat</h3><p>When quantum computers become powerful enough, they will instantly shatter modern RSA encryption. The race is on right now to implement Post-Quantum Cryptography (PQC) before state-actors harvest encrypted data today to decrypt tomorrow.</p>" },
+                    { id: "cy-3", title: "Decentralized Finance (DeFi)", content: "<h3>Code as Law</h3><p>Replacing traditional banking infrastructure (brokers, clearinghouses) with automated smart contracts on a blockchain. It allows for peer-to-peer lending and trading with zero intermediaries and 100% transparency.</p>" },
+                    { id: "cy-4", title: "Zero-Knowledge Proofs (ZKPs)", content: "<h3>Privacy by Math</h3><p>A cryptographic breakthrough that allows you to prove you know a secret without revealing the secret itself. Example: Proving you are over 18 to a website without giving them your actual birthdate or ID.</p>" },
+                    { id: "cy-5", title: "AI-Powered Cyber Warfare", content: "<h3>Machine vs Machine</h3><p>Hackers are using AI to generate polymorphic malware that changes its code to evade detection. In response, AI defense systems autonomously patch vulnerabilities in milliseconds. It is a supersonic game of chess.</p>" },
+                    { id: "cy-6", title: "Digital Identity & Deepfakes", content: "<h3>The Crisis of Reality</h3><p>When AI can clone your voice and face perfectly, how do you prove who you are online? Cryptographic signatures embedded in cameras and decentralized identity protocols will become mandatory for digital trust.</p>" }
+                ]
+            },
+            "biotech": {
+                name: "BioTech & The Mind", color: 0x22c55e, hex: "#22c55e",
+                desc: "Hacking the biological code. Neural interfaces, genomic editing, and radical longevity.",
+                radius: 3.4, distance: 205, speed: 0.0009,
+                topics: [
+                    { id: "bio-1", title: "Brain-Computer Interfaces (BCI)", content: "<h3>The Final Frontier</h3><p>Connecting the human cortex directly to silicon. Early applications are restoring movement to paralyzed individuals. Future applications involve high-bandwidth thought-to-text communication, fundamentally altering what it means to be human.</p>" },
+                    { id: "bio-2", title: "CRISPR & Gene Editing", content: "<h3>Debugging DNA</h3><p>CRISPR acts as a molecular scissors, allowing scientists to cut out defective genetic code and paste in healthy sequences. We are moving from treating genetic diseases to outright curing them at the source code level.</p>" },
+                    { id: "bio-3", title: "Synthetic Biology", content: "<h3>Designing Life</h3><p>Instead of relying on nature, engineers are designing custom organisms from scratch to solve problems—like bacteria engineered to consume ocean plastic or produce sustainable biofuels.</p>" },
+                    { id: "bio-4", title: "AI in Drug Discovery", content: "<h3>Folding the Unknown</h3><p>Systems like AlphaFold have predicted the 3D structures of hundreds of millions of proteins. This allows AI to simulate how potential drugs will interact with diseases in a computer, cutting years and billions of dollars off pharmaceutical research.</p>" },
+                    { id: "bio-5", title: "Radical Longevity", content: "<h3>Solving Aging</h3><p>Aging is increasingly viewed not as an inevitability, but as a disease of cellular decay. Through senolytics, epigenetic reprogramming, and telomere extension, science is actively working to push the human healthspan past 120 years.</p>" },
+                    { id: "bio-6", title: "Digital Phenotyping", content: "<h3>Quantified Mental Health</h3><p>Using data from your smartphone (typing speed, scroll patterns, vocal tone) to detect the early onset of depression, anxiety, or Alzheimer's before you even realize you have symptoms.</p>" }
+                ]
+            },
+            "space": {
+                name: "Space & Physics", color: 0xc084fc, hex: "#c084fc",
+                desc: "The multi-planetary future. Orbital mechanics, fusion power, and cosmic expansion.",
+                radius: 4.8, distance: 235, speed: 0.0007,
+                topics: [
+                    { id: "sp-1", title: "Reusable Rockets", content: "<h3>The Economics of Orbit</h3><p>For 50 years, rockets were thrown away after one use. Reusability (like SpaceX's Falcon 9 and Starship) has dropped the cost of launching mass to orbit by 90%, opening space to commercial enterprise.</p>" },
+                    { id: "sp-2", title: "Orbital Manufacturing", content: "<h3>Zero-G Factories</h3><p>Certain materials, like flawless fiber optic cables (ZBLAN) or perfect protein crystals for pharmaceuticals, can only be manufactured in the microgravity of space. Factories are moving to Low Earth Orbit.</p>" },
+                    { id: "sp-3", title: "Nuclear Fusion", content: "<h3>Star Power on Earth</h3><p>Fusing atoms together releases nearly infinite clean energy with zero radioactive waste. Recent breakthroughs in magnetic confinement (Tokamaks) and laser ignition mean commercial fusion could power the grid by 2040.</p>" },
+                    { id: "sp-4", title: "Asteroid Mining", content: "<h3>The Trillion Dollar Rock</h3><p>A single metallic asteroid can contain more platinum and rare earth metals than have ever been mined in human history. The technology to capture, mine, and return these resources is currently in active development.</p>" },
+                    { id: "sp-5", title: "Megaconstellations", content: "<h3>The Orbital Internet</h3><p>Deploying tens of thousands of small satellites in Low Earth Orbit (like Starlink) to blanket the entire planet in high-speed, low-latency broadband, connecting the most remote regions on Earth.</p>" },
+                    { id: "sp-6", title: "Quantum Supremacy", content: "<h3>Breaking Classical Limits</h3><p>Quantum computers use qubits existing in superposition. They don't just calculate faster; they solve problems classical computers never could, simulating complex molecules to cure diseases and create new materials.</p>" }
                 ]
             }
         };
@@ -411,11 +347,17 @@
         let exploredNodes = new Set();
         let exploredWorlds = new Set();
         let totalTopics = 0;
-        Object.values(universeData).forEach(w => totalTopics += w.topics.length);
+        let allTopicsList = []; // For warp drive
+        
+        Object.keys(universeData).forEach(wKey => {
+            const w = universeData[wKey];
+            totalTopics += w.topics.length;
+            w.topics.forEach(t => allTopicsList.push({ worldId: wKey, topic: t }));
+        });
 
         function updateProgress() {
             const worldCount = exploredWorlds.size;
-            document.getElementById('progress-text').textContent = `${worldCount}/6 Worlds Explored`;
+            document.getElementById('progress-text').textContent = `${worldCount}/9 Worlds Explored`;
             
             if (worldCount >= 3 && !document.getElementById('journey-btn')) {
                 const btn = document.createElement('button');
@@ -433,107 +375,137 @@
             document.getElementById('stat-topics').textContent = exploredNodes.size;
             
             let archetype = "The Explorer";
-            if (exploredWorlds.has('ai') && exploredWorlds.has('engineering')) archetype = "The Systems Architect";
-            else if (exploredWorlds.has('human') && exploredWorlds.has('career')) archetype = "The Future-Proof Leader";
-            else if (exploredWorlds.has('creator') && exploredWorlds.has('future')) archetype = "The Visionary Builder";
+            if (exploredWorlds.has('ai') && exploredWorlds.has('cyber') && exploredWorlds.has('future')) archetype = "The Deep Tech Architect";
+            else if (exploredWorlds.has('human') && exploredWorlds.has('career') && exploredWorlds.has('education')) archetype = "The Future-Proof Leader";
+            else if (exploredWorlds.has('creator') && exploredWorlds.has('biotech') && exploredWorlds.has('space')) archetype = "The Visionary Builder";
             else archetype = "The Digital Polymath";
 
-            document.getElementById('archetype-desc').innerHTML = `Based on your unique path through the Futureverse, your cognitive footprint aligns with <strong>${archetype}</strong>. You possess a critical blend of technical curiosity and strategic foresight.`;
+            document.getElementById('archetype-desc').innerHTML = `Based on your unique path across ${exploredNodes.size} data nodes, your cognitive footprint aligns with <strong>${archetype}</strong>. You possess a critical blend of technical curiosity and strategic foresight.`;
 
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             setTimeout(() => modal.classList.remove('opacity-0'), 10);
         }
 
+        function warpToRandomTopic() {
+            const unreadTopics = allTopicsList.filter(t => !exploredNodes.has(t.topic.id));
+            if (unreadTopics.length === 0) {
+                alert("You have explored the entire universe!");
+                return;
+            }
+            
+            const random = unreadTopics[Math.floor(Math.random() * unreadTopics.length)];
+            const targetPlanet = planets.find(p => p.userData.id === random.worldId);
+            
+            // If already in a topic modal, close it first
+            document.getElementById('topic-modal').classList.add('opacity-0');
+            setTimeout(() => {
+                document.getElementById('topic-modal').classList.add('hidden');
+                document.getElementById('topic-modal').classList.remove('flex');
+                
+                // Trigger planetary flight
+                if (targetPlanet) {
+                    enterWorld(targetPlanet, () => {
+                        openTopic(random.topic, universeData[random.worldId]);
+                    });
+                }
+            }, 300);
+        }
+
         // --- 3D ENGINE ---
         let scene, camera, renderer, raycaster, mouse;
         let planets = [];
+        let satellites = [];
         let particlesMesh;
         let isNavigating = false;
         let activePlanet = null;
         let labelContainers = [];
 
         function init3D() {
-            // Setup
             scene = new THREE.Scene();
-            scene.fog = new THREE.FogExp2(0x030712, 0.005);
+            scene.fog = new THREE.FogExp2(0x030712, 0.003); // Lighter fog for deep space
             
-            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.set(0, 40, 180);
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1500);
+            camera.position.set(0, 80, 250);
             camera.lookAt(0, 0, 0);
             
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
             renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Performance
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             document.getElementById('canvas-container').appendChild(renderer.domElement);
             
             raycaster = new THREE.Raycaster();
             mouse = new THREE.Vector2();
 
-            // Lighting
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.15);
             scene.add(ambientLight);
             
-            const coreLight = new THREE.PointLight(0xffffff, 2, 300);
+            const coreLight = new THREE.PointLight(0xffffff, 2, 500);
             coreLight.position.set(0, 0, 0);
             scene.add(coreLight);
 
-            // Create Core (Sun)
-            const coreGeo = new THREE.SphereGeometry(8, 32, 32);
+            // Core
+            const coreGeo = new THREE.SphereGeometry(10, 32, 32);
             const coreMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
             const core = new THREE.Mesh(coreGeo, coreMat);
             scene.add(core);
 
-            // Core Glow
-            const glowGeo = new THREE.SphereGeometry(12, 32, 32);
-            const glowMat = new THREE.MeshBasicMaterial({ 
-                color: 0x3b82f6, transparent: true, opacity: 0.1, blending: THREE.AdditiveBlending 
-            });
-            const glow = new THREE.Mesh(glowGeo, glowMat);
-            scene.add(glow);
+            // Core Glows
+            const glowGeo = new THREE.SphereGeometry(16, 32, 32);
+            const glowMat = new THREE.MeshBasicMaterial({ color: 0x3b82f6, transparent: true, opacity: 0.15, blending: THREE.AdditiveBlending });
+            scene.add(new THREE.Mesh(glowGeo, glowMat));
 
-            // Create Particles (Starfield)
+            // Starfield
             const particlesGeo = new THREE.BufferGeometry();
-            const particlesCount = window.innerWidth < 768 ? 2000 : 5000;
+            const particlesCount = window.innerWidth < 768 ? 2500 : 8000;
             const posArray = new Float32Array(particlesCount * 3);
             for(let i = 0; i < particlesCount * 3; i++) {
-                posArray[i] = (Math.random() - 0.5) * 400;
+                posArray[i] = (Math.random() - 0.5) * 800;
             }
             particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-            const particlesMat = new THREE.PointsMaterial({
-                size: 0.5, color: 0x8ba3cc, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending
-            });
+            const particlesMat = new THREE.PointsMaterial({ size: 0.8, color: 0xa5b4fc, transparent: true, opacity: 0.7, blending: THREE.AdditiveBlending });
             particlesMesh = new THREE.Points(particlesGeo, particlesMat);
             scene.add(particlesMesh);
 
             // Create Worlds
             const labelDomContainer = document.getElementById('labels-container');
+            const planetGeo = new THREE.SphereGeometry(1, 32, 32); // Base size, scaled later
             
             Object.keys(universeData).forEach((key, index) => {
                 const data = universeData[key];
                 
-                // Orbit Ring
-                const ringGeo = new THREE.RingGeometry(data.distance - 0.2, data.distance + 0.2, 64);
-                const ringMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.03, side: THREE.DoubleSide });
+                // Dense Orbit Ring
+                const ringGeo = new THREE.RingGeometry(data.distance - 0.3, data.distance + 0.3, 128);
+                const ringMat = new THREE.MeshBasicMaterial({ color: data.color, transparent: true, opacity: 0.05, side: THREE.DoubleSide, blending: THREE.AdditiveBlending });
                 const ring = new THREE.Mesh(ringGeo, ringMat);
                 ring.rotation.x = Math.PI / 2;
                 scene.add(ring);
 
                 // Planet
-                const planetGeo = new THREE.SphereGeometry(data.radius, 32, 32);
                 const planetMat = new THREE.MeshStandardMaterial({ 
-                    color: data.color, roughness: 0.4, metalness: 0.2, emissive: data.color, emissiveIntensity: 0.2
+                    color: data.color, roughness: 0.5, metalness: 0.3, emissive: data.color, emissiveIntensity: 0.15
                 });
                 const planet = new THREE.Mesh(planetGeo, planetMat);
+                planet.scale.setScalar(data.radius);
                 
-                // Initial Position
                 const angle = (index / Object.keys(universeData).length) * Math.PI * 2;
-                planet.position.x = Math.cos(angle) * data.distance;
-                planet.position.z = Math.sin(angle) * data.distance;
+                planet.position.set(Math.cos(angle) * data.distance, 0, Math.sin(angle) * data.distance);
                 
-                planet.userData = { id: key, angle: angle, speed: data.speed, distance: data.distance, data: data };
+                planet.userData = { id: key, angle: angle, speed: data.speed, distance: data.distance, data: data, type: 'planet' };
                 scene.add(planet);
                 planets.push(planet);
+
+                // Add small orbiting satellites for extra detail
+                for(let i=0; i<3; i++) {
+                    const satSize = Math.random() * 0.4 + 0.2;
+                    const satMesh = new THREE.Mesh(new THREE.SphereGeometry(satSize, 8, 8), new THREE.MeshBasicMaterial({color: 0xffffff}));
+                    const satAngle = Math.random() * Math.PI * 2;
+                    const satDist = data.radius + 1.5 + Math.random() * 2;
+                    
+                    satMesh.userData = { parent: planet, angle: satAngle, distance: satDist, speed: (Math.random() * 0.05 + 0.02) * (Math.random()>0.5?1:-1) };
+                    scene.add(satMesh);
+                    satellites.push(satMesh);
+                }
 
                 // HTML Label
                 const label = document.createElement('div');
@@ -544,12 +516,10 @@
                 labelContainers.push({ mesh: planet, element: label });
             });
 
-            // Events
             window.addEventListener('resize', onWindowResize);
             window.addEventListener('mousemove', onMouseMove);
             window.addEventListener('click', onClick);
             
-            // Touch support
             window.addEventListener('touchstart', (e) => {
                 e.clientX = e.touches[0].clientX;
                 e.clientY = e.touches[0].clientY;
@@ -558,13 +528,12 @@
 
             animate();
             
-            // Remove loading screen
             setTimeout(() => {
                 const ls = document.getElementById('loading-screen');
                 ls.style.opacity = '0';
                 setTimeout(() => ls.style.display = 'none', 1000);
                 setTimeout(() => document.getElementById('controls-hint').classList.remove('opacity-0'), 2000);
-            }, 1500);
+            }, 1800);
         }
 
         function onWindowResize() {
@@ -582,9 +551,8 @@
             raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObjects(planets);
 
-            // Reset emissive
             planets.forEach(p => {
-                gsap.to(p.material, { emissiveIntensity: 0.2, duration: 0.3 });
+                gsap.to(p.material, { emissiveIntensity: 0.15, duration: 0.3 });
                 document.body.style.cursor = 'default';
             });
             
@@ -593,7 +561,7 @@
             if (intersects.length > 0) {
                 document.body.style.cursor = 'pointer';
                 const planet = intersects[0].object;
-                gsap.to(planet.material, { emissiveIntensity: 0.8, duration: 0.3 });
+                gsap.to(planet.material, { emissiveIntensity: 0.9, duration: 0.2 });
                 
                 const labelObj = labelContainers.find(l => l.mesh === planet);
                 if(labelObj) labelObj.element.style.opacity = '1';
@@ -614,11 +582,10 @@
             }
         }
 
-        function enterWorld(planet) {
+        function enterWorld(planet, callback) {
             isNavigating = true;
             activePlanet = planet;
             
-            // Hide intro UI
             const intro = document.getElementById('entry-overlay');
             if(intro) intro.classList.add('hidden');
             document.getElementById('controls-hint').classList.add('hidden');
@@ -628,20 +595,19 @@
             exploredWorlds.add(planet.userData.id);
             updateProgress();
 
-            // Calculate camera position offset from planet
-            const offsetDist = window.innerWidth < 768 ? 20 : 15;
+            const offsetDist = window.innerWidth < 768 ? 22 : 18;
             const targetPos = new THREE.Vector3();
             targetPos.copy(planet.position).normalize().multiplyScalar(planet.userData.distance + offsetDist);
-            targetPos.y = 5;
+            targetPos.y = 8;
 
-            // Animate Camera
             gsap.to(camera.position, {
                 x: targetPos.x, y: targetPos.y, z: targetPos.z,
-                duration: 2, ease: "power3.inOut",
+                duration: 2.5, ease: "power3.inOut",
                 onUpdate: () => camera.lookAt(planet.position),
                 onComplete: () => {
                     isNavigating = false;
                     showWorldPanel(data);
+                    if(callback) callback();
                 }
             });
         }
@@ -650,14 +616,13 @@
             if(isNavigating) return;
             isNavigating = true;
             
-            // Hide Panel
             const panel = document.getElementById('world-panel');
             panel.classList.remove('translate-x-0');
             panel.classList.add('translate-x-full');
 
             gsap.to(camera.position, {
-                x: 0, y: 40, z: 180,
-                duration: 2, ease: "power3.inOut",
+                x: 0, y: 80, z: 250,
+                duration: 2.5, ease: "power3.inOut",
                 onUpdate: () => {
                     if(activePlanet) camera.lookAt(activePlanet.position);
                 },
@@ -677,24 +642,29 @@
             document.getElementById('world-title').style.color = data.hex;
             document.getElementById('world-desc').textContent = data.desc;
             
+            let worldDecoded = 0;
+            data.topics.forEach(t => { if(exploredNodes.has(t.id)) worldDecoded++; });
+            
+            document.getElementById('world-progress').textContent = worldDecoded;
+            document.getElementById('world-total').textContent = data.topics.length;
+            
             const list = document.getElementById('topics-list');
             list.innerHTML = '';
             
             data.topics.forEach(topic => {
                 const isRead = exploredNodes.has(topic.id);
                 const btn = document.createElement('button');
-                btn.className = `topic-btn w-full text-left p-4 rounded-xl border border-white/10 flex justify-between items-center bg-black/40 ${isRead ? 'opacity-60' : ''}`;
-                btn.style.color = data.hex;
+                btn.className = `topic-btn w-full text-left p-4 rounded-xl border border-white/10 flex justify-between items-center bg-black/40 ${isRead ? 'opacity-50' : 'hover:bg-white/5'}`;
+                btn.style.borderLeftColor = isRead ? '#3f3f46' : data.hex;
                 btn.innerHTML = `
                     <span class="font-bold text-white text-sm">${topic.title}</span>
-                    <span class="text-xs ${isRead ? 'text-emerald-500' : 'text-slate-500'}">${isRead ? '✓ DECODED' : 'EXPLORE &rarr;'}</span>
+                    <span class="text-xs ${isRead ? 'text-emerald-500' : 'text-slate-400'} font-bold tracking-widest uppercase">${isRead ? '✓ Decoded' : 'Decode &rarr;'}</span>
                 `;
                 btn.onclick = () => openTopic(topic, data);
                 list.appendChild(btn);
             });
 
             panel.classList.remove('hidden');
-            // small delay for display block to apply before transform
             setTimeout(() => {
                 panel.classList.remove('translate-x-full');
                 panel.classList.add('translate-x-0');
@@ -703,6 +673,7 @@
 
         function openTopic(topic, worldData) {
             exploredNodes.add(topic.id);
+            updateProgress(); // For total topics overall
             
             document.getElementById('topic-meta').textContent = `${worldData.name} • NODE DECODED`;
             document.getElementById('topic-meta').style.color = worldData.hex;
@@ -714,26 +685,27 @@
             modal.classList.add('flex');
             setTimeout(() => modal.classList.remove('opacity-0'), 10);
             
-            // Refresh list to show checkmark
+            // Refresh world panel behind it
             showWorldPanel(worldData);
         }
 
-        document.getElementById('close-topic-btn').onclick = () => {
+        function closeTopicAndReturnToWorld() {
             const modal = document.getElementById('topic-modal');
             modal.classList.add('opacity-0');
             setTimeout(() => {
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
             }, 300);
-        };
+        }
 
+        document.getElementById('close-topic-btn').onclick = closeTopicAndReturnToWorld;
         document.getElementById('back-to-universe-btn').onclick = returnToUniverse;
 
         document.getElementById('enter-btn').onclick = () => {
             document.getElementById('entry-overlay').classList.add('fade-out');
             document.getElementById('progress-indicator').classList.remove('hidden');
             gsap.to(camera.position, {
-                y: 100, z: 120, duration: 3, ease: "power2.out", onUpdate: () => camera.lookAt(0,0,0)
+                y: 120, z: 180, duration: 4, ease: "power2.out", onUpdate: () => camera.lookAt(0,0,0)
             });
         };
 
@@ -741,16 +713,14 @@
         function animate() {
             requestAnimationFrame(animate);
 
-            // Rotate Universe slowly
             if(!activePlanet) {
-                scene.rotation.y -= 0.0005;
-                particlesMesh.rotation.y -= 0.0002;
+                scene.rotation.y -= 0.0003;
+                particlesMesh.rotation.y -= 0.0001;
+                particlesMesh.rotation.x += 0.00005;
             }
 
-            // Move planets along orbits
             planets.forEach(planet => {
                 const data = planet.userData;
-                // Only move if we aren't looking at it
                 if(planet !== activePlanet) {
                     data.angle += data.speed;
                     planet.position.x = Math.cos(data.angle) * data.distance;
@@ -758,22 +728,34 @@
                 }
                 planet.rotation.y += 0.01;
             });
+            
+            // Satellites
+            satellites.forEach(sat => {
+                const data = sat.userData;
+                data.angle += data.speed;
+                // Position relative to parent planet
+                sat.position.x = data.parent.position.x + Math.cos(data.angle) * data.distance;
+                sat.position.z = data.parent.position.z + Math.sin(data.angle) * data.distance;
+                sat.position.y = data.parent.position.y + Math.sin(data.angle * 2) * 1.5; // slight bobbing
+            });
 
-            // Update label positions
             if(!activePlanet && !isNavigating) {
                 labelContainers.forEach(l => {
                     const vector = l.mesh.position.clone();
                     vector.project(camera);
                     
-                    const x = (vector.x * .5 + .5) * window.innerWidth;
-                    const y = (vector.y * -.5 + .5) * window.innerHeight;
-                    
-                    l.element.style.left = `${x}px`;
-                    l.element.style.top = `${y - 40}px`;
+                    // Only show label if planet is roughly in front of camera
+                    if (vector.z < 1) {
+                        const x = (vector.x * .5 + .5) * window.innerWidth;
+                        const y = (vector.y * -.5 + .5) * window.innerHeight;
+                        l.element.style.left = `${x}px`;
+                        l.element.style.top = `${y - 45}px`;
+                    } else {
+                        l.element.style.left = '-1000px';
+                    }
                 });
             }
 
-            // Camera lookAt logic during hover/idle
             if(!isNavigating && activePlanet) {
                 camera.lookAt(activePlanet.position);
             }
@@ -781,11 +763,10 @@
             renderer.render(scene, camera);
         }
 
-        // Init
         if (window.THREE && window.gsap) {
             init3D();
         } else {
-            document.getElementById('loading-text').textContent = "Error: Required libraries failed to load. Please check connection.";
+            document.getElementById('loading-text').textContent = "Error: Required libraries failed to load.";
         }
     </script>
 </body>
