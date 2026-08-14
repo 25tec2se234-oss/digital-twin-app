@@ -135,6 +135,34 @@ if (blogs.length > 0) {
                     </a>
                 </div>
             </div>
+
+            <!-- Card 3: AI Reality Lab -->
+            <div style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(167, 139, 250, 0.12)); border: 1px solid rgba(236, 72, 153, 0.35); border-radius: 20px; padding: 2.2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: transform 0.3s, border-color 0.3s;">
+                <div>
+                    <span style="background: rgba(236,72,153,0.2); color: #f472b6; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🧠 FLAGSHIP INTERACTIVE</span>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: #fff; font-weight: 800; line-height: 1.3;">AI Reality Lab</h2>
+                    <p style="color: #cbd5e1; margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Understand what AI can actually do for you — and where human judgment still fundamentally matters. Test your AI thinking profile.</p>
+                </div>
+                <div>
+                    <a href="/ai-reality-lab" style="background: linear-gradient(135deg, #ec4899, #8b5cf6); color: #fff; font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
+                        Enter AI Reality Lab &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 4: Skill Intelligence Hub -->
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(59, 130, 246, 0.12)); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 20px; padding: 2.2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: transform 0.3s, border-color 0.3s;">
+                <div>
+                    <span style="background: rgba(16,185,129,0.2); color: #34d399; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🗺️ FLAGSHIP EXPLORER</span>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: #fff; font-weight: 800; line-height: 1.3;">Student Skill Intelligence Hub</h2>
+                    <p style="color: #cbd5e1; margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Explore the skills worth building and discover what each skill can unlock. Generate your Personal Skill Map for the AI era.</p>
+                </div>
+                <div>
+                    <a href="/skill-intelligence-hub" style="background: linear-gradient(135deg, #10b981, #3b82f6); color: #fff; font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
+                        Explore Skill Intelligence &rarr;
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
