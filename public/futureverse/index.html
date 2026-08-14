@@ -31,6 +31,7 @@
     
     <!-- Three.js & GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     
     <style>
@@ -135,7 +136,7 @@
         </div>
 
         <!-- World Info Panel -->
-        <div id="world-panel" class="hidden absolute top-24 bottom-10 right-6 md:right-10 w-full md:w-[450px] lg:w-[500px] glass-panel rounded-3xl p-8 flex-col pointer-events-auto transition-transform duration-500 translate-x-full z-40">
+        <div id="world-panel" class="hidden absolute top-24 bottom-10 right-6 md:right-10 w-full md:w-[450px] lg:w-[500px] glass-panel rounded-3xl p-8 flex flex-col pointer-events-auto transition-transform duration-500 translate-x-full z-40">
             <button id="back-to-universe-btn" class="self-start text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-white transition flex items-center gap-2 mb-6">
                 &larr; Return to Universe
             </button>
@@ -413,7 +414,7 @@
         }
 
         // --- 3D ENGINE ---
-        let scene, camera, renderer, raycaster, mouse;
+        let scene, camera, renderer, raycaster, mouse, controls;
         let planets = [];
         let satellites = [];
         let particlesMesh;
@@ -436,6 +437,13 @@
             
             raycaster = new THREE.Raycaster();
             mouse = new THREE.Vector2();
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.maxDistance = 500;
+            controls.minDistance = 50;
+            controls.enablePan = false;
 
             const ambientLight = new THREE.AmbientLight(0xffffff, 0.15);
             scene.add(ambientLight);
@@ -585,6 +593,7 @@
         function enterWorld(planet, callback) {
             isNavigating = true;
             activePlanet = planet;
+            if (controls) controls.enabled = false;
             
             const intro = document.getElementById('entry-overlay');
             if(intro) intro.classList.add('hidden');
@@ -630,6 +639,11 @@
                     activePlanet = null;
                     isNavigating = false;
                     camera.lookAt(0,0,0);
+                    if (controls) {
+                        controls.target.set(0,0,0);
+                        controls.enabled = true;
+                        controls.update();
+                    }
                     setTimeout(() => panel.classList.add('hidden'), 500);
                 }
             });
@@ -713,6 +727,8 @@
         function animate() {
             requestAnimationFrame(animate);
 
+            if (controls && !activePlanet && !isNavigating) controls.update();
+
             if(!activePlanet) {
                 scene.rotation.y -= 0.0003;
                 particlesMesh.rotation.y -= 0.0001;
@@ -722,7 +738,7 @@
             planets.forEach(planet => {
                 const data = planet.userData;
                 if(planet !== activePlanet) {
-                    data.angle += data.speed;
+                    data.angle += data.speed * 0.25;
                     planet.position.x = Math.cos(data.angle) * data.distance;
                     planet.position.z = Math.sin(data.angle) * data.distance;
                 }
@@ -732,7 +748,7 @@
             // Satellites
             satellites.forEach(sat => {
                 const data = sat.userData;
-                data.angle += data.speed;
+                data.angle += data.speed * 0.25;
                 // Position relative to parent planet
                 sat.position.x = data.parent.position.x + Math.cos(data.angle) * data.distance;
                 sat.position.z = data.parent.position.z + Math.sin(data.angle) * data.distance;
