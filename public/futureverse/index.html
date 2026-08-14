@@ -541,14 +541,20 @@
             });
 
             window.addEventListener('resize', onWindowResize);
-            window.addEventListener('mousemove', onMouseMove);
-            window.addEventListener('click', onClick);
+            window.addEventListener('pointermove', onMouseMove);
             
-            window.addEventListener('touchstart', (e) => {
-                e.clientX = e.touches[0].clientX;
-                e.clientY = e.touches[0].clientY;
-                onMouseMove(e);
-            }, {passive: true});
+            let pointerDownPos = { x: 0, y: 0 };
+            window.addEventListener('pointerdown', (e) => {
+                pointerDownPos.x = e.clientX;
+                pointerDownPos.y = e.clientY;
+            });
+            
+            window.addEventListener('pointerup', (e) => {
+                const dist = Math.hypot(e.clientX - pointerDownPos.x, e.clientY - pointerDownPos.y);
+                if (dist < 10) {
+                    onClick(e);
+                }
+            });
 
             animate();
             
