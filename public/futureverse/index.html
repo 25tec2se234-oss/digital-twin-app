@@ -491,10 +491,26 @@
 
                 // Planet
                 const planetMat = new THREE.MeshStandardMaterial({ 
-                    color: data.color, roughness: 0.5, metalness: 0.3, emissive: data.color, emissiveIntensity: 0.15
+                    color: data.color, roughness: 0.5, metalness: 0.2, emissive: data.color, emissiveIntensity: 0.6
                 });
                 const planet = new THREE.Mesh(planetGeo, planetMat);
                 planet.scale.setScalar(data.radius);
+
+                // Add Glow Halo
+                const glowGeo = new THREE.SphereGeometry(1.2, 32, 32);
+                const glowMat = new THREE.MeshBasicMaterial({ 
+                    color: data.color, 
+                    transparent: true, 
+                    opacity: 0.4, 
+                    blending: THREE.AdditiveBlending,
+                    side: THREE.BackSide
+                });
+                const glowMesh = new THREE.Mesh(glowGeo, glowMat);
+                planet.add(glowMesh);
+
+                // Add inner point light to cast actual glow
+                const planetLight = new THREE.PointLight(data.color, 2.5, data.radius * 6);
+                planet.add(planetLight);
                 
                 const angle = (index / Object.keys(universeData).length) * Math.PI * 2;
                 planet.position.set(Math.cos(angle) * data.distance, 0, Math.sin(angle) * data.distance);
@@ -560,7 +576,7 @@
             const intersects = raycaster.intersectObjects(planets);
 
             planets.forEach(p => {
-                gsap.to(p.material, { emissiveIntensity: 0.15, duration: 0.3 });
+                gsap.to(p.material, { emissiveIntensity: 0.6, duration: 0.3 });
                 document.body.style.cursor = 'default';
             });
             
@@ -569,7 +585,7 @@
             if (intersects.length > 0) {
                 document.body.style.cursor = 'pointer';
                 const planet = intersects[0].object;
-                gsap.to(planet.material, { emissiveIntensity: 0.9, duration: 0.2 });
+                gsap.to(planet.material, { emissiveIntensity: 1.5, duration: 0.2 });
                 
                 const labelObj = labelContainers.find(l => l.mesh === planet);
                 if(labelObj) labelObj.element.style.opacity = '1';
