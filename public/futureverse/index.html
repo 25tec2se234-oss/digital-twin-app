@@ -483,8 +483,8 @@
                 const data = universeData[key];
                 
                 // Dense Orbit Ring
-                const ringGeo = new THREE.RingGeometry(data.distance - 0.3, data.distance + 0.3, 128);
-                const ringMat = new THREE.MeshBasicMaterial({ color: data.color, transparent: true, opacity: 0.05, side: THREE.DoubleSide, blending: THREE.AdditiveBlending });
+                const ringGeo = new THREE.RingGeometry(data.distance - 1.5, data.distance + 1.5, 128);
+                const ringMat = new THREE.MeshBasicMaterial({ color: data.color, transparent: true, opacity: 0.25, side: THREE.DoubleSide, blending: THREE.AdditiveBlending });
                 const ring = new THREE.Mesh(ringGeo, ringMat);
                 ring.rotation.x = Math.PI / 2;
                 scene.add(ring);
@@ -813,7 +813,7 @@
             planets.forEach(planet => {
                 const data = planet.userData;
                 if(planet !== activePlanet) {
-                    data.angle += data.speed * 0.25;
+                    data.angle += data.speed * 2.5;
                     planet.position.x = Math.cos(data.angle) * data.distance;
                     planet.position.z = Math.sin(data.angle) * data.distance;
                 }
@@ -823,7 +823,7 @@
             // Satellites
             satellites.forEach(sat => {
                 const data = sat.userData;
-                data.angle += data.speed * 0.25;
+                data.angle += data.speed * 2.5;
                 // Position relative to parent planet
                 sat.position.x = data.parent.position.x + Math.cos(data.angle) * data.distance;
                 sat.position.z = data.parent.position.z + Math.sin(data.angle) * data.distance;
