@@ -36,7 +36,7 @@
     
     <style>
         body, html { margin: 0; padding: 0; overflow: hidden; background-color: #030712; color: #fff; width: 100%; height: 100%; }
-        #canvas-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        #canvas-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; touch-action: none; }
         
         .ui-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; }
         .pointer-events-auto { pointer-events: auto; }
@@ -551,7 +551,7 @@
             
             window.addEventListener('pointerup', (e) => {
                 const dist = Math.hypot(e.clientX - pointerDownPos.x, e.clientY - pointerDownPos.y);
-                if (dist < 10) {
+                if (dist < 25) {
                     onClick(e);
                 }
             });
@@ -579,7 +579,7 @@
             mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
             raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(planets);
+            const intersects = raycaster.intersectObjects(planets, true);
 
             planets.forEach(p => {
                 gsap.to(p.material, { emissiveIntensity: 0.6, duration: 0.3 });
@@ -589,12 +589,16 @@
             labelContainers.forEach(l => l.element.style.opacity = '0');
 
             if (intersects.length > 0) {
-                document.body.style.cursor = 'pointer';
-                const planet = intersects[0].object;
-                gsap.to(planet.material, { emissiveIntensity: 1.5, duration: 0.2 });
-                
-                const labelObj = labelContainers.find(l => l.mesh === planet);
-                if(labelObj) labelObj.element.style.opacity = '1';
+                let planet = intersects[0].object;
+                while(planet && planet.userData.type !== 'planet') {
+                    planet = planet.parent;
+                }
+                if(planet) {
+                    document.body.style.cursor = 'pointer';
+                    gsap.to(planet.material, { emissiveIntensity: 1.5, duration: 0.2 });
+                    const labelObj = labelContainers.find(l => l.mesh === planet);
+                    if(labelObj) labelObj.element.style.opacity = '1';
+                }
             }
         }
 
@@ -605,10 +609,14 @@
             mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
             
             raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(planets);
+            const intersects = raycaster.intersectObjects(planets, true);
             
             if (intersects.length > 0) {
-                enterWorld(intersects[0].object);
+                let planet = intersects[0].object;
+                while(planet && planet.userData.type !== 'planet') {
+                    planet = planet.parent;
+                }
+                if(planet) enterWorld(planet);
             }
         }
 
