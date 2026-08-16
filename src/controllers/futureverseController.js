@@ -191,12 +191,20 @@ Do NOT wrap the JSON in Markdown (like \`\`\`json). Return ONLY raw JSON.`;
         let generatedNode;
         try {
             let aiText = result.data.content[0].text;
-            const match = aiText.match(/\{[\s\S]*\}/);
-            if (!match) {
-                logger.error('No JSON object found in AI response:', aiText);
-                throw new Error("No JSON object found");
+            aiText = aiText.replace(/```json/gi, '').replace(/```/g, '').trim();
+            
+            try {
+                generatedNode = JSON.parse(aiText);
+            } catch (parseErr) {
+                // Fallback: Extract from first '{' to last '}'
+                const firstBrace = aiText.indexOf('{');
+                const lastBrace = aiText.lastIndexOf('}');
+                if (firstBrace !== -1 && lastBrace !== -1) {
+                    generatedNode = JSON.parse(aiText.substring(firstBrace, lastBrace + 1));
+                } else {
+                    throw new Error("No JSON boundaries found");
+                }
             }
-            generatedNode = JSON.parse(match[0]);
             
             // Add required properties
             generatedNode.id = `${worldId}-proc-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
