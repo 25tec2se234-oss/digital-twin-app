@@ -122,6 +122,55 @@
             }
         }
 
+        @keyframes holographicGlitch {
+            0% { clip-path: inset(20% 0 80% 0); transform: translate(-2px, 2px); }
+            10% { clip-path: inset(10% 0 60% 0); transform: translate(2px, -2px); }
+            20% { clip-path: inset(80% 0 5% 0); transform: translate(-2px, 2px); }
+            30% { clip-path: inset(40% 0 40% 0); transform: translate(2px, -2px); }
+            40% { clip-path: inset(60% 0 10% 0); transform: translate(-2px, 2px); }
+            50% { clip-path: inset(15% 0 80% 0); transform: translate(2px, -2px); }
+            60% { clip-path: inset(80% 0 5% 0); transform: translate(-2px, 2px); }
+            70% { clip-path: inset(20% 0 60% 0); transform: translate(2px, -2px); }
+            80% { clip-path: inset(50% 0 30% 0); transform: translate(-2px, 2px); }
+            90% { clip-path: inset(5% 0 80% 0); transform: translate(2px, -2px); }
+            100% { clip-path: inset(30% 0 50% 0); transform: translate(-2px, 2px); }
+        }
+
+        .glitch-anim {
+            position: relative;
+        }
+        
+        .glitch-anim::before, .glitch-anim::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: inherit;
+            border-radius: inherit;
+            z-index: -1;
+        }
+
+        .glitch-active::before {
+            animation: holographicGlitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            background: rgba(255,0,0,0.2);
+            left: -4px;
+        }
+
+        .glitch-active::after {
+            animation: holographicGlitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite reverse;
+            background: rgba(0,255,255,0.2);
+            left: 4px;
+        }
+        
+        @keyframes warpShake {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-2px, 2px) rotate(-0.5deg); }
+            50% { transform: translate(2px, -2px) rotate(0.5deg); }
+            75% { transform: translate(-2px, -2px) rotate(-0.5deg); }
+            100% { transform: translate(2px, 2px) rotate(0.5deg); }
+        }
+        .warp-shake {
+            animation: warpShake 0.1s infinite;
+        }
     </style>
 </head>
 <body>
@@ -172,6 +221,12 @@
                 <button onclick="dismissGuide()" class="px-8 py-3 rounded-full bg-white text-black font-bold tracking-widest uppercase hover:scale-105 transition">Start Exploring</button>
             </div>
         </div>
+    </div>
+
+    <div id="ai-loading-overlay" class="hidden absolute inset-0 z-[200] bg-black/80 backdrop-blur-md items-center justify-center p-4 pointer-events-auto flex-col gap-4 glitch-anim glitch-active">
+        <div class="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+        <div class="text-indigo-400 font-bold uppercase tracking-widest text-sm animate-pulse">Warping to Unknown Sector...</div>
+        <div class="text-slate-400 text-xs">Generating Deep AI Insight</div>
     </div>
 
     <!-- UI Layer -->
@@ -543,58 +598,74 @@
             }
         };
 
-        function generateProceduralNode(worldId) {
-            const templates = proceduralTemplates[worldId] || {
-                prefixes: ['Advanced', 'Next-Gen', 'Theoretical', 'Applied', 'Paradigm-Shifting'],
-                nouns: ['Dynamics', 'Systems', 'Protocols', 'Integration', 'Synthesis'],
-                contexts: ['in the 22nd Century', 'for Enterprise Scaling', 'at the Micro Level', 'in Complex Systems']
-            };
-            
-            const pre = templates.prefixes[Math.floor(Math.random() * templates.prefixes.length)];
-            const noun = templates.nouns[Math.floor(Math.random() * templates.nouns.length)];
-            const ctx = templates.contexts[Math.floor(Math.random() * templates.contexts.length)];
-            
-            const title = `${pre} ${noun} ${ctx}`;
-            const id = `${worldId}-proc-${Date.now()}-${Math.floor(Math.random()*1000)}`;
-            
-            const phaseStr = `Phase ${Math.floor(fvProgress.level / 2) + 2}`;
-            
-            const content = `<h3>[${phaseStr} CLASSIFIED DATA] ${title}</h3>
-            <p>As you delve deeper into the <strong>${worldId.toUpperCase()}</strong> sector, conventional knowledge breaks down. <em>${title}</em> requires redefining fundamental laws of understanding.</p>
-            <p>In this phase, systemic complexities scale exponentially. Our data indicates that manipulating <strong>${noun.toLowerCase()}</strong> using <strong>${pre.toLowerCase()}</strong> methodologies yields unexpected, highly volatile paradigm shifts.</p>
-            <div class='bg-red-500/10 border border-red-500/30 p-5 rounded-xl my-6'>
-            <h4 class='text-red-400 font-bold mb-2'>Critical Insight</h4>
-            <p class='text-sm text-slate-300 m-0'>Standard linear progression is no longer sufficient. You must synthesize cross-domain metrics to survive the cognitive load.</p>
-            </div>`;
-
-            // Randomize correct option position A/B/C/D
-            const options = [];
-            const correctPos = Math.floor(Math.random()*4);
-            const wrongTexts = [
-                `Ignore the ${pre.toLowerCase()} variance and stick to standard legacy protocols.`,
-                `Shutdown all ${noun.toLowerCase()} to prevent a systemic overload cascade.`,
-                `Manually recalibrate the data streams without using contextual awareness.`,
-                `Wait for external verification before taking any action in the ${ctx} environment.`
-            ].sort(() => 0.5 - Math.random());
-
-            for (let i = 0; i < 4; i++) {
-                const letter = String.fromCharCode(65 + i); // A, B, C, D
-                if (i === correctPos) {
-                    options.push({ id: letter, text: `Synthesize nonlinear metrics and adapt ${noun.toLowerCase()} protocols dynamically.`, correct: true });
-                } else {
-                    options.push({ id: letter, text: wrongTexts.pop(), correct: false });
-                }
+        async function generateProceduralNode(worldId) {
+            const loadingOverlay = document.getElementById('ai-loading-overlay');
+            if (loadingOverlay) {
+                loadingOverlay.classList.remove('hidden');
+                loadingOverlay.classList.add('flex');
+            }
+            if (window.gsap) {
+                warpTween = gsap.to(window, { warpSpeed: 30, duration: 1.5, ease: "power2.in" });
+                document.body.classList.add('warp-shake');
             }
 
+            try {
+                const exploredTitles = allTopicsList
+                    .filter(t => t.worldId === worldId && exploredNodes.has(t.topic.id))
+                    .map(t => t.topic.title);
+
+                const token = localStorage.getItem('token');
+                const res = await fetch('/api/futureverse/generate-node', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ worldId, level: fvProgress.level, exploredTitles })
+                });
+
+                if (!res.ok) throw new Error('Failed to generate node');
+                
+                const data = await res.json();
+                if (data && data.node) {
+                    if (loadingOverlay) {
+                        loadingOverlay.classList.remove('flex');
+                        loadingOverlay.classList.add('hidden');
+                    }
+                    if (window.gsap && warpTween) {
+                        gsap.to(window, { warpSpeed: 1, duration: 0.5, ease: "power2.out" });
+                        document.body.classList.remove('warp-shake');
+                    }
+                    return data.node;
+                }
+            } catch (err) {
+                console.error(err);
+            }
+
+            if (loadingOverlay) {
+                loadingOverlay.classList.remove('flex');
+                loadingOverlay.classList.add('hidden');
+            }
+            
+            if (window.gsap && warpTween) {
+                gsap.to(window, { warpSpeed: 1, duration: 0.5, ease: "power2.out" });
+                document.body.classList.remove('warp-shake');
+            }
+            
             return {
-                id: id,
-                title: title,
-                content: content,
+                id: `${worldId}-proc-fallback-${Date.now()}`,
+                title: `Encrypted Sector ${worldId}`,
+                content: `<h3>[CORRUPTED DATA]</h3><p>The neural link was interrupted, but fragments of knowledge remain.</p>`,
                 challenge: {
                     type: "scenario",
-                    question: `What is the most viable strategy when encountering ${title}?`,
-                    options: options,
-                    explanation: `In advanced ${pre.toLowerCase()} ${noun.toLowerCase()} scenarios, synthesizing cross-domain insights and adapting protocols dynamically is always superior to static or reactive approaches. Mastery requires real-time contextual awareness.`
+                    question: `How do you proceed through the corrupted sector?`,
+                    options: [
+                        { id: "A", text: "Wait for a patch", correct: false },
+                        { id: "B", text: "Run manual synthesis diagnostics", correct: true },
+                        { id: "C", text: "Ignore the data", correct: false },
+                        { id: "D", text: "Restart the node", correct: false }
+                    ],
+                    explanation: `In uncertain environments, manual diagnostics reveal hidden paths.`
                 }
             };
         }
@@ -746,6 +817,10 @@
                 feedbackText.className = 'text-sm font-bold mb-2 text-emerald-400';
                 feedbackText.textContent = 'SYSTEM: Answer Validated.';
                 
+                if (activePlanet) {
+                    spawnParticleBurst(activePlanet.position, 0x10b981); // Emerald green burst
+                }
+                
                 // Adaptive Engine: Increase difficulty, add XP
                 fvProgress.stats.correct++;
                 fvProgress.stats.consecutiveCorrect++;
@@ -847,7 +922,7 @@
             setTimeout(() => modal.classList.remove('opacity-0'), 10);
         }
 
-        function warpToRandomTopic() {
+        async function warpToRandomTopic() {
             let unreadTopics = [];
             let targetWorldId = null;
             let isProcedural = false;
@@ -861,7 +936,7 @@
                 if (unreadTopics.length === 0) {
                     // World exhausted -> Generate procedural phase
                     isProcedural = true;
-                    chosenTopic = generateProceduralNode(targetWorldId);
+                    chosenTopic = await generateProceduralNode(targetWorldId);
                 }
             } else {
                 // If in universe view, pick from anywhere
@@ -871,7 +946,7 @@
                     isProcedural = true;
                     const wKeys = Object.keys(universeData);
                     targetWorldId = wKeys[Math.floor(Math.random() * wKeys.length)];
-                    chosenTopic = generateProceduralNode(targetWorldId);
+                    chosenTopic = await generateProceduralNode(targetWorldId);
                 } else {
                     const random = unreadTopics[Math.floor(Math.random() * unreadTopics.length)];
                     targetWorldId = random.worldId;
@@ -914,6 +989,9 @@
         let isNavigating = false;
         let activePlanet = null;
         let labelContainers = [];
+        let warpSpeed = 1;
+        let warpTween = null;
+        let particleBursts = [];
 
         function init3D() {
             scene = new THREE.Scene();
@@ -1113,6 +1191,29 @@
             }
         }
 
+        function spawnParticleBurst(position, colorHex) {
+            const burstCount = 150;
+            const burstGeo = new THREE.BufferGeometry();
+            const burstPos = new Float32Array(burstCount * 3);
+            const burstVel = new Float32Array(burstCount * 3);
+            
+            for (let i = 0; i < burstCount * 3; i+=3) {
+                burstPos[i] = position.x;
+                burstPos[i+1] = position.y;
+                burstPos[i+2] = position.z;
+                
+                burstVel[i] = (Math.random() - 0.5) * 2;
+                burstVel[i+1] = (Math.random() - 0.5) * 2;
+                burstVel[i+2] = (Math.random() - 0.5) * 2;
+            }
+            burstGeo.setAttribute('position', new THREE.BufferAttribute(burstPos, 3));
+            const burstMat = new THREE.PointsMaterial({ size: 1.5, color: colorHex, transparent: true, opacity: 1, blending: THREE.AdditiveBlending });
+            const burstMesh = new THREE.Points(burstGeo, burstMat);
+            burstMesh.userData = { life: 1.0, velocities: burstVel };
+            scene.add(burstMesh);
+            particleBursts.push(burstMesh);
+        }
+
         function enterWorld(planet, callback) {
             isNavigating = true;
             activePlanet = planet;
@@ -1227,7 +1328,7 @@
         }
 
         // --- DOM UI LOGIC ---
-        function showWorldPanel(data) {
+        async function showWorldPanel(data) {
             const panel = document.getElementById('world-panel');
             document.getElementById('world-title').textContent = data.name;
             document.getElementById('world-title').style.color = data.hex;
@@ -1238,7 +1339,7 @@
             
             // Endless Content Generation
             if (worldDecoded >= data.topics.length) {
-                const newTopic = generateProceduralNode(data.id || Object.keys(universeData).find(k => universeData[k] === data));
+                const newTopic = await generateProceduralNode(data.id || Object.keys(universeData).find(k => universeData[k] === data));
                 data.topics.push(newTopic);
                 allTopicsList.push({ worldId: data.id, topic: newTopic });
             }
@@ -1282,7 +1383,16 @@
             const modal = document.getElementById('topic-modal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
-            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+            
+            // Holographic glitch trigger
+            modal.querySelector('.glass-panel').classList.add('glitch-anim', 'glitch-active');
+            
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                setTimeout(() => {
+                    modal.querySelector('.glass-panel').classList.remove('glitch-active');
+                }, 400);
+            }, 10);
             
             // Refresh world panel behind it
             showWorldPanel(worldData);
@@ -1321,9 +1431,15 @@
             if (controls && !activePlanet && !isNavigating) controls.update();
 
             if(!activePlanet) {
-                scene.rotation.y -= 0.0003;
-                particlesMesh.rotation.y -= 0.0001;
-                particlesMesh.rotation.x += 0.00005;
+                scene.rotation.y -= 0.0003 * warpSpeed;
+                particlesMesh.rotation.y -= 0.0001 * (warpSpeed > 1 ? warpSpeed * 5 : 1);
+                particlesMesh.rotation.x += 0.00005 * warpSpeed;
+                
+                if (warpSpeed > 1) {
+                    particlesMesh.scale.z = warpSpeed;
+                } else {
+                    particlesMesh.scale.z = 1;
+                }
             }
 
             planets.forEach(planet => {
@@ -1345,6 +1461,26 @@
                 sat.position.z = data.parent.position.z + Math.sin(data.angle) * data.distance;
                 sat.position.y = data.parent.position.y + Math.sin(data.angle * 2) * 1.5; // slight bobbing
             });
+
+            // Animate Bursts
+            for (let i = particleBursts.length - 1; i >= 0; i--) {
+                let burst = particleBursts[i];
+                burst.userData.life -= 0.02;
+                if (burst.userData.life <= 0) {
+                    scene.remove(burst);
+                    particleBursts.splice(i, 1);
+                    continue;
+                }
+                const positions = burst.geometry.attributes.position.array;
+                const velocities = burst.userData.velocities;
+                for (let j = 0; j < positions.length; j += 3) {
+                    positions[j] += velocities[j];
+                    positions[j+1] += velocities[j+1];
+                    positions[j+2] += velocities[j+2];
+                }
+                burst.geometry.attributes.position.needsUpdate = true;
+                burst.material.opacity = burst.userData.life;
+            }
 
             if(!activePlanet && !isNavigating) {
                 labelContainers.forEach(l => {

@@ -11,5 +11,6 @@ router.use(authenticate);
 
 router.get('/progress', futureverseController.getProgress);
 router.post('/progress', futureverseController.saveProgress);
+router.post('/generate-node', futureverseController.generateNode);
 
 module.exports = router;
