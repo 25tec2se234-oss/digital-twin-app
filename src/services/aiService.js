@@ -26,11 +26,13 @@ function resolveProvider() {
   const openaiKey = env.OPENAI_API_KEY || process.env.OPENAI_API_KEY;
   const geminiKey = env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
   const groqKey = env.GROQ_API_KEY || process.env.GROQ_API_KEY;
+  const openrouterKey = env.OPENROUTER_API_KEY || process.env.OPENROUTER_API_KEY;
 
   const hasAnthropic = !isPlaceholderKey(anthropicKey);
   const hasOpenAI = !isPlaceholderKey(openaiKey);
   const hasGemini = !isPlaceholderKey(geminiKey);
   const hasGroq = !isPlaceholderKey(groqKey);
+  const hasOpenRouter = !isPlaceholderKey(openrouterKey);
 
   if (env.AI_PROVIDER === 'anthropic') {
     return hasAnthropic ? { provider: 'anthropic', key: anthropicKey } : { error: 'AI_PROVIDER is anthropic but ANTHROPIC_API_KEY is missing or placeholder.' };
@@ -44,9 +46,13 @@ function resolveProvider() {
   if (env.AI_PROVIDER === 'groq') {
     return hasGroq ? { provider: 'groq', key: groqKey } : { error: 'AI_PROVIDER is groq but GROQ_API_KEY is missing or placeholder.' };
   }
+  if (env.AI_PROVIDER === 'openrouter') {
+    return hasOpenRouter ? { provider: 'openrouter', key: openrouterKey } : { error: 'AI_PROVIDER is openrouter but OPENROUTER_API_KEY is missing.' };
+  }
 
   if (hasGemini) return { provider: 'gemini', key: geminiKey };
   if (hasGroq) return { provider: 'groq', key: groqKey };
+  if (hasOpenRouter) return { provider: 'openrouter', key: openrouterKey };
   if (hasOpenAI) return { provider: 'openai', key: openaiKey };
   if (hasAnthropic) return { provider: 'anthropic', key: anthropicKey };
 
@@ -345,6 +351,20 @@ Seek out mentors, peer groups, or verified online documentation that provides pr
           messages: messages
         })
       });
+    } else if (provider === 'openrouter') {
+      upstream = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + apiKey
+        },
+        signal: controller.signal,
+        body: JSON.stringify({
+          model: env.OPENROUTER_MODEL || 'google/gemma-2-9b-it:free',
+          max_tokens: maxTokens,
+          messages: toOpenAIMessages(system, messages)
+        })
+      });
     } else {
       upstream = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
@@ -386,7 +406,7 @@ Seek out mentors, peer groups, or verified online documentation that provides pr
       };
     }
 
-    if (provider === 'openai' || provider === 'groq') {
+    if (provider === 'openai' || provider === 'groq' || provider === 'openrouter') {
       return {
         status: 200,
         data: {
