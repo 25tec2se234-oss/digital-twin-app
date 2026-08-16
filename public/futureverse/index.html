@@ -85,6 +85,43 @@
             box-shadow: 0 0 25px rgba(167, 139, 250, 0.6);
             transform: scale(1.05);
         }
+    
+        /* Futureverse 2.0 CSS */
+        .hud-panel {
+            background: rgba(10, 15, 30, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .challenge-option {
+            transition: all 0.2s ease;
+        }
+        .challenge-option:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+        .challenge-option.selected {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: rgba(139, 92, 246, 0.8);
+        }
+        .challenge-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.8);
+        }
+        .challenge-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.8);
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -102,6 +139,41 @@
     <!-- Planet Labels injected here by JS -->
     <div id="labels-container" class="ui-layer"></div>
 
+    
+    <!-- First-Time User Guide -->
+    <div id="guide-modal" class="hidden absolute inset-0 z-[200] bg-black/90 backdrop-blur-md items-center justify-center p-4 pointer-events-auto opacity-0 transition-opacity duration-300">
+        <div class="glass-panel max-w-lg w-full rounded-3xl p-8 border border-white/20 shadow-2xl relative text-center">
+            <h2 class="text-3xl font-display font-bold text-white mb-6 uppercase tracking-widest">How To Explore</h2>
+            
+            <div class="space-y-6 text-left text-slate-300">
+                <div class="flex gap-4">
+                    <div class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold shrink-0">1</div>
+                    <div><strong class="text-white">MOVE:</strong> Look around the universe (Drag / Touch).</div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold shrink-0">2</div>
+                    <div><strong class="text-white">DISCOVER:</strong> Every world contains deep knowledge. Click a glowing planet to enter.</div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold shrink-0">3</div>
+                    <div><strong class="text-white">INTERACT:</strong> Decode knowledge nodes inside each world.</div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold shrink-0">4</div>
+                    <div><strong class="text-white">CHALLENGE:</strong> Complete adaptive challenges to increase your Mastery and Level.</div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="w-8 h-8 rounded-full bg-pink-500/20 text-pink-400 flex items-center justify-center font-bold shrink-0">5</div>
+                    <div><strong class="text-white">EVOLVE:</strong> The universe adapts to how you learn. No final endpoint.</div>
+                </div>
+            </div>
+            
+            <div class="mt-8 flex flex-col gap-3">
+                <button onclick="dismissGuide()" class="px-8 py-3 rounded-full bg-white text-black font-bold tracking-widest uppercase hover:scale-105 transition">Start Exploring</button>
+            </div>
+        </div>
+    </div>
+
     <!-- UI Layer -->
     <div class="ui-layer flex flex-col justify-between p-6 md:p-10">
         
@@ -112,7 +184,23 @@
                 <span class="font-display font-bold tracking-widest uppercase text-sm">Futureverse</span>
             </div>
             
+            
             <div class="flex gap-4 items-center">
+                <div class="hidden md:flex gap-3">
+                    <div class="flex flex-col items-end">
+                        <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Level <span id="hud-level" class="text-white">1</span></span>
+                        <div class="w-24 h-1.5 bg-white/10 rounded-full mt-1 overflow-hidden">
+                            <div id="hud-xp-bar" class="h-full bg-purple-500 w-0 transition-all duration-500"></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-end">
+                        <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Mastery</span>
+                        <span id="hud-mastery" class="text-sm font-mono text-emerald-400">0</span>
+                    </div>
+                </div>
+                
+                <button onclick="showGuide()" class="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-white transition bg-white/5 px-3 py-1.5 rounded-full border border-white/10" aria-label="How to Explore">?</button>
+
                 <button id="warp-drive-btn" class="hidden md:flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-purple-300 px-4 py-2 rounded-full pointer-events-auto" onclick="warpToRandomTopic()">
                     ⚡ Warp Drive
                 </button>
@@ -169,6 +257,31 @@
                     <div class="prose prose-invert max-w-none font-sans text-slate-300 leading-relaxed text-lg" id="topic-content">
                         <!-- Content injected here -->
                     </div>
+                
+                <div id="challenge-section" class="hidden border-t border-white/10 bg-black/60 p-6 md:p-12">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-display font-bold text-white uppercase tracking-widest flex items-center gap-2">
+                            <span class="text-purple-400">⚡</span> Mastery Challenge
+                        </h3>
+                        <span id="challenge-diff-badge" class="text-xs px-2 py-1 bg-white/10 rounded text-slate-300 font-mono">Difficulty: 1.0x</span>
+                    </div>
+                    
+                    <p id="challenge-question" class="text-lg text-slate-200 mb-6 font-medium">Question goes here?</p>
+                    
+                    <div id="challenge-options" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <!-- Options injected here -->
+                    </div>
+                    
+                    <div id="challenge-feedback" class="hidden mb-6 p-4 rounded-xl border">
+                        <p id="feedback-text" class="text-sm font-medium mb-2"></p>
+                        <p id="feedback-explanation" class="text-slate-400 text-sm"></p>
+                    </div>
+                    
+                    <button id="submit-challenge-btn" class="px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-full uppercase tracking-widest text-sm transition opacity-50 cursor-not-allowed">
+                        Submit Answer
+                    </button>
+                </div>
+
                 </div>
                 <div class="border-t border-white/10 bg-black/40 p-6 flex justify-between items-center">
                     <button class="text-slate-400 hover:text-white text-sm font-bold uppercase tracking-widest transition flex items-center gap-2" onclick="closeTopicAndReturnToWorld()">
@@ -219,130 +332,2271 @@
     <!-- CONTENT DATABASE -->
     <script>
         const universeData = {
-            "ai": {
-                name: "AI & Automation", color: 0x8b5cf6, hex: "#8b5cf6",
-                desc: "The architecture of intelligence. Explore the algorithms redefining logic, generation, and automation across every industry.",
-                radius: 12, distance: 45, speed: 0.002,
-                topics: [
-                    { id: "ai-1", title: "Generative AI Fundamentals", content: "<h3>Beyond the Chatbot</h3><p>Generative AI represents a shift from analytical processing to synthetic creation. By mapping the statistical probability of tokens in a high-dimensional vector space, LLMs construct coherent text, code, and reasoning pathways.</p><div class='bg-white/5 border border-white/10 p-5 rounded-xl my-6'><h4 class='text-white font-bold mb-2'>Student Application</h4><p class='text-sm text-slate-300 m-0'>Don't use it to write essays. Use it to generate Socratic counter-arguments to your thesis to stress-test your logic before writing.</p></div>" },
-                    { id: "ai-2", title: "Autonomous Agents", content: "<h3>The Digital Workforce</h3><p>An AI agent is an LLM wrapped in a control loop given access to tools. Instead of waiting for prompts, agents break down a goal, plan steps, and execute them autonomously. We are transitioning from 'AI as an Oracle' to 'AI as an Employee'.</p>" },
-                    { id: "ai-3", title: "RAG (Retrieval-Augmented Generation)", content: "<h3>The Cure for Hallucinations</h3><p>LLMs don't know private data. RAG solves this by converting documents into vector embeddings. When you ask a question, it retrieves the most relevant data and forces the AI to answer using ONLY that context.</p>" },
-                    { id: "ai-4", title: "Algorithmic Ethics & Bias", content: "<h3>The Math of Morality</h3><p>Models are mirrors reflecting historical data. If a company uses biased hiring data, the AI mathematically scales that bias. AI Alignment ensures outputs align with human values and safety constraints.</p>" },
-                    { id: "ai-5", title: "Model Fine-Tuning (LoRA/PEFT)", content: "<h3>Teaching Old Models New Tricks</h3><p>Fine-tuning adjusts a pre-trained model's weights using a custom dataset. Using parameter-efficient fine-tuning (PEFT) like LoRA, developers can train massive models on cheap consumer GPUs to speak in specific brand voices or output strict JSON.</p>" },
-                    { id: "ai-6", title: "Computer Vision & Multimodality", content: "<h3>When Machines See</h3><p>Multimodal models like GPT-4V or Gemini don't just read text; they process pixels. This unlocks massive potential in medical imaging, autonomous driving, and real-time environment analysis via smartphone cameras.</p>" },
-                    { id: "ai-7", title: "Synthetic Data Generation", content: "<h3>Creating the Training Grounds</h3><p>The world is running out of high-quality human data. Synthetic data generation uses AI to create mathematically realistic but fake datasets, allowing companies to train models without violating privacy laws (like GDPR or HIPAA).</p>" },
-                    { id: "ai-8", title: "Edge AI", content: "<h3>Intelligence on the Fringe</h3><p>Instead of sending data to the cloud, Edge AI runs models directly on your phone, IoT device, or car. This guarantees zero-latency inference and total privacy, crucial for autonomous vehicles and real-time translation.</p>" }
-                ]
+    "ai": {
+        "name": "AI & Automation",
+        "color": 9133302,
+        "hex": "#8b5cf6",
+        "desc": "The architecture of intelligence. Explore the algorithms redefining logic, generation, and automation across every industry.",
+        "radius": 12,
+        "distance": 45,
+        "speed": 0.002,
+        "topics": [
+            {
+                "id": "ai-1",
+                "title": "Generative AI Fundamentals",
+                "content": "<h3>Beyond the Chatbot</h3><p>Generative AI represents a shift from analytical processing to synthetic creation. By mapping the statistical probability of tokens in a high-dimensional vector space, LLMs construct coherent text, code, and reasoning pathways.</p><div class='bg-white/5 border border-white/10 p-5 rounded-xl my-6'><h4 class='text-white font-bold mb-2'>Student Application</h4><p class='text-sm text-slate-300 m-0'>Don't use it to write essays. Use it to generate Socratic counter-arguments to your thesis to stress-test your logic before writing.</p></div>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"Generative AI Fundamentals\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
             },
-            "human": {
-                name: "Human Psychology", color: 0x10b981, hex: "#10b981",
-                desc: "The un-automatable core. Explore the psychological and cognitive skills machines cannot replicate.",
-                radius: 10.5, distance: 80, speed: 0.0015,
-                topics: [
-                    { id: "hs-1", title: "Cognitive Empathy", content: "<h3>The Foundation of Trust</h3><p>Cognitive empathy is the ability to consciously understand another person's perspective. It is the strategic ability to map emotional context. Real business runs on human trust and shared vulnerability—something an algorithm physically cannot possess.</p>" },
-                    { id: "hs-2", title: "Complex Negotiation", content: "<h3>Expanding the Pie</h3><p>Basic negotiation is haggling over price. Complex negotiation is uncovering the hidden, unstated desires of the other party (fear of failure, ego) and restructuring the deal so both sides win. This requires reading micro-expressions and improvising under pressure.</p>" },
-                    { id: "hs-3", title: "Systems Thinking", content: "<h3>Seeing the Forest</h3><p>Systems thinkers don't just solve immediate problems; they look for the feedback loops and root causes that created the problem. Instead of repeatedly fixing a bug, you redesign the architecture so the bug is mathematically impossible.</p>" },
-                    { id: "hs-4", title: "Crisis Management", content: "<h3>Decisions Under Darkness</h3><p>AI requires structured data to make predictions. In a true crisis, data is chaotic or absent. Human leaders must exercise judgment and take decisive action in the dark, managing the emotional panic of their teams.</p>" },
-                    { id: "hs-5", title: "First Principles Reasoning", content: "<h3>Boiling it Down</h3><p>AI relies entirely on analogies (training data). Innovation requires First Principles reasoning—ignoring conventional wisdom and boiling a problem down to fundamental physical or logical truths, then building up from there.</p>" },
-                    { id: "hs-6", title: "High-Stakes Storytelling", content: "<h3>The Engineering of Belief</h3><p>You can have the best product in the world, but if you cannot tell a compelling story, no one will buy it. Storytelling is the API for the human brain. AI can write a memo; it cannot inspire a team to work over the weekend.</p>" },
-                    { id: "hs-7", title: "Behavioral Economics", content: "<h3>Irrational Markets</h3><p>Humans do not act rationally. They are driven by loss aversion, sunk cost fallacies, and social proof. Understanding these biases allows you to design better products and anticipate market movements better than any linear predictive model.</p>" },
-                    { id: "hs-8", title: "Cross-Cultural Communication", content: "<h3>The Global Village</h3><p>The future of work is completely distributed. Navigating low-context (direct) vs high-context (indirect) cultures is critical. Misunderstandings across timezones kill projects faster than bad code.</p>" }
-                ]
+            {
+                "id": "ai-2",
+                "title": "Autonomous Agents",
+                "content": "<h3>The Digital Workforce</h3><p>An AI agent is an LLM wrapped in a control loop given access to tools. Instead of waiting for prompts, agents break down a goal, plan steps, and execute them autonomously. We are transitioning from 'AI as an Oracle' to 'AI as an Employee'.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"Autonomous Agents\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
             },
-            "education": {
-                name: "Future Education", color: 0x3b82f6, hex: "#3b82f6",
-                desc: "The evolution of learning. How digital twins, adaptive logic, and AI tutors are rebuilding the classroom.",
-                radius: 11.4, distance: 115, speed: 0.0011,
-                topics: [
-                    { id: "ed-1", title: "Adaptive Learning Systems", content: "<h3>The End of the Bell Curve</h3><p>Traditional classrooms force 30 students to learn at the exact same pace. Adaptive systems track a student's cognitive model in real-time. If you fail calculus, it routes you back to the specific algebra concept you missed instantly.</p>" },
-                    { id: "ed-2", title: "The Digital Twin of a Student", content: "<h3>Your Cognitive Blueprint</h3><p>A digital twin in education is a secure data model representing your skills, learning speed, strengths, and weaknesses. It travels with you, helping AI tutors perfectly calibrate their instruction to your exact brain.</p>" },
-                    { id: "ed-3", title: "Cryptographic Credentials", content: "<h3>Beyond the Degree</h3><p>The future of credentials is cryptographic verification of actual projects built, code committed, and problems solved, immutably recorded on a ledger. Employers will verify what you *did*, not where you *sat*.</p>" },
-                    { id: "ed-4", title: "Hyper-Personalized AI Tutors", content: "<h3>The Aristotle Model</h3><p>Imagine an AI tutor that knows your interests. If you love basketball, it teaches you physics using projectile motion formulas of a 3-point shot. It is infinitely patient, available 24/7, and speaks your language.</p>" },
-                    { id: "ed-5", title: "Project-Based Reality", content: "<h3>Learning by Building</h3><p>The era of rote memorization is dead. Because AI can recall any fact instantly, the only valuable education is project-based learning: designing a product, testing it in the market, and learning the theory *while* building.</p>" },
-                    { id: "ed-6", title: "Neuro-feedback in Learning", content: "<h3>Closing the Loop</h3><p>Future learning environments will use non-invasive EEG headsets to measure cognitive load and focus. If the system detects you are zoning out or frustrated, it dynamically alters the difficulty or format of the lesson.</p>" }
-                ]
+            {
+                "id": "ai-3",
+                "title": "RAG (Retrieval-Augmented Generation)",
+                "content": "<h3>The Cure for Hallucinations</h3><p>LLMs don't know private data. RAG solves this by converting documents into vector embeddings. When you ask a question, it retrieves the most relevant data and forces the AI to answer using ONLY that context.</p>",
+                "challenge": {
+                    "type": "application",
+                    "question": "Based on \"RAG (Retrieval-Augmented Generation)\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
             },
-            "career": {
-                name: "The New Economy", color: 0xf59e0b, hex: "#f59e0b",
-                desc: "The future of work. Discover hybrid roles, skill-based hiring, and how to build an un-automatable portfolio.",
-                radius: 12.6, distance: 150, speed: 0.0018,
-                topics: [
-                    { id: "cw-1", title: "The Portfolio Career", content: "<h3>The End of the Ladder</h3><p>Working for one company for 40 years is over. A portfolio career means maintaining multiple streams of income and identity: consulting, building a SaaS, and creating content. This creates extreme resilience against AI disruption.</p>" },
-                    { id: "cw-2", title: "Hybrid AI Roles", content: "<h3>The Domain Expert + AI</h3><p>The highest paid jobs won't be pure programmers. They will be hybrid roles. The 'AI-Augmented Lawyer' or 'AI-Augmented Doctor'. AI will not replace domain experts. Domain experts who use AI will replace those who don't.</p>" },
-                    { id: "cw-3", title: "Proof of Work", content: "<h3>The New Resume</h3><p>When everyone can use AI to write a perfect cover letter, resumes lose all value. Employers will only look at 'Proof of Work'—live code deployments, published research, video teardowns, and actual revenue generated.</p>" },
-                    { id: "cw-4", title: "Skill-Based Hiring", content: "<h3>Bypassing the Gatekeepers</h3><p>Major corporations are dropping degree requirements. They are implementing blind, skill-based assessments. If you can pass the technical rigorous assessment or build the required architecture, you get the job, regardless of your background.</p>" },
-                    { id: "cw-5", title: "The Fractional Executive", content: "<h3>C-Suite on Demand</h3><p>As companies become leaner (using AI to replace middle management), they will hire 'fractional' CMOs or CTOs—highly experienced professionals who work for 4 different companies simultaneously, providing strategic oversight without full-time bloat.</p>" },
-                    { id: "cw-6", title: "Continuous Upskilling", content: "<h3>The Red Queen Hypothesis</h3><p>The half-life of a learned technical skill is dropping from 5 years to 18 months. The most valuable career skill is meta-learning: the ability to rapidly unlearn outdated frameworks and assimilate new paradigms in weeks.</p>" },
-                    { id: "cw-7", title: "Remote-First & Async", content: "<h3>Death of the Office</h3><p>The best talent refuses to commute. Mastering asynchronous communication (writing clear briefs, recording Loom videos, leaving perfect documentation) is a mandatory career skill for the globalized workforce.</p>" }
-                ]
+            {
+                "id": "ai-4",
+                "title": "Algorithmic Ethics & Bias",
+                "content": "<h3>The Math of Morality</h3><p>Models are mirrors reflecting historical data. If a company uses biased hiring data, the AI mathematically scales that bias. AI Alignment ensures outputs align with human values and safety constraints.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"Algorithmic Ethics & Bias\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
             },
-            "creator": {
-                name: "Creator & Builder", color: 0xec4899, hex: "#ec4899",
-                desc: "The age of the sovereign builder. Leverage technology to build digital empires from a dorm room.",
-                radius: 9.6, distance: 185, speed: 0.0022,
-                topics: [
-                    { id: "cr-1", title: "The Sovereign Individual", content: "<h3>A Company of One</h3><p>Historically, building a tech company required millions in VC funding. Today, one student with an internet connection can prompt an AI to write the code, generate the assets, and optimize the ad spend. The bottleneck is taste and execution.</p>" },
-                    { id: "cr-2", title: "Audience as Leverage", content: "<h3>Distribution is King</h3><p>You can build the greatest software in the world, but if no one knows it exists, it fails. Building a highly engaged audience through writing, video, or open-source contribution is the ultimate career leverage.</p>" },
-                    { id: "cr-3", title: "No-Code / Low-Code", content: "<h3>Democratizing Software</h3><p>Platforms like Bubble, Webflow, and Make allow non-technical founders to build complex applications visually. When combined with AI coding assistants, the barrier to launching a software product has effectively dropped to zero.</p>" },
-                    { id: "cr-4", title: "The Subscription Economy", content: "<h3>Recurring Revenue</h3><p>Transitioning from selling time (freelancing) to selling access (newsletters, SaaS, communities). Building MRR (Monthly Recurring Revenue) is the mathematical foundation of financial independence for digital creators.</p>" },
-                    { id: "cr-5", title: "Content Engineering", content: "<h3>Algorithmic Empathy</h3><p>Understanding how recommendation algorithms (TikTok, YouTube, X) distribute content. It's not just making 'good videos'; it's engineering high-retention hooks, optimizing CTR (Click-Through Rate), and structuring narrative arcs.</p>" },
-                    { id: "cr-6", title: "Digital Product Design", content: "<h3>Selling Zero-Marginal Cost Assets</h3><p>Unlike physical goods, a digital product (a course, a template, a script) costs $0 to duplicate. Creators who master packaging their knowledge into high-value digital products create scalable wealth vehicles.</p>" }
-                ]
+            {
+                "id": "ai-5",
+                "title": "Model Fine-Tuning (LoRA/PEFT)",
+                "content": "<h3>Teaching Old Models New Tricks</h3><p>Fine-tuning adjusts a pre-trained model's weights using a custom dataset. Using parameter-efficient fine-tuning (PEFT) like LoRA, developers can train massive models on cheap consumer GPUs to speak in specific brand voices or output strict JSON.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"Model Fine-Tuning (LoRA/PEFT)\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
             },
-            "future": {
-                name: "Future Hardware", color: 0x0ea5e9, hex: "#0ea5e9",
-                desc: "The physical bleeding edge. Explore how hardware innovations will reshape our reality.",
-                radius: 13.5, distance: 220, speed: 0.001,
-                topics: [
-                    { id: "ft-1", title: "Spatial Computing", content: "<h3>The Death of the Screen</h3><p>Spatial computing maps digital interfaces directly into the physical world. Instead of opening an anatomy app on a laptop, a medical student dissects a holographic heart floating in their living room.</p>" },
-                    { id: "ft-2", title: "Advanced Robotics & Humanoids", content: "<h3>The Automation of Labor</h3><p>While AI automates cognitive work, general-purpose humanoid robots (like Tesla Optimus or Figure 01) powered by multimodal AI are preparing to automate physical labor, fundamentally restructuring global supply chains.</p>" },
-                    { id: "ft-3", title: "3D Printing & Additive Manufacturing", content: "<h3>Instant Infrastructure</h3><p>From printing rocket engines in 24 hours to printing biological tissue. Distributed manufacturing means we will email physical objects (blueprints) and print them locally, destroying traditional shipping logistics.</p>" },
-                    { id: "ft-4", title: "Solid-State Batteries", content: "<h3>The Energy Density Leap</h3><p>The bottleneck for drones, robots, and EVs is energy density. Solid-state batteries promise to double the range, eliminate fire risks, and charge in minutes, unlocking electric aviation and untethered robotics.</p>" },
-                    { id: "ft-5", title: "Smart Dust & Micro-Sensors", content: "<h3>The Omnipresent Network</h3><p>Sensors the size of a grain of sand, distributed across agricultural fields or integrated into concrete, forming massive mesh networks that monitor the physical health of the planet in absolute real-time.</p>" },
-                    { id: "ft-6", title: "Neuromorphic Computing", content: "<h3>Silicon Brains</h3><p>Current chips process data sequentially. Neuromorphic chips mimic the human brain's neural structure, processing information in parallel while consuming a fraction of the power, unlocking true mobile AI.</p>" },
-                    { id: "ft-7", title: "Exoskeletons", content: "<h3>Human Augmentation</h3><p>Robotic suits that multiply human strength and endurance. Initially developed for military and medical rehabilitation, they will soon become standard in construction, warehouse logistics, and eldercare.</p>" }
-                ]
+            {
+                "id": "ai-6",
+                "title": "Computer Vision & Multimodality",
+                "content": "<h3>When Machines See</h3><p>Multimodal models like GPT-4V or Gemini don't just read text; they process pixels. This unlocks massive potential in medical imaging, autonomous driving, and real-time environment analysis via smartphone cameras.</p>",
+                "challenge": {
+                    "type": "application",
+                    "question": "Based on \"Computer Vision & Multimodality\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
             },
-            "cyber": {
-                name: "Cyber & Web3", color: 0xf43f5e, hex: "#f43f5e",
-                desc: "The battleground of truth. Cryptography, decentralized ledgers, and zero-trust security.",
-                radius: 11.1, distance: 255, speed: 0.0014,
-                topics: [
-                    { id: "cy-1", title: "Zero-Trust Architecture", content: "<h3>Verify Everything</h3><p>The old security model (a strong perimeter with a soft inside) is dead. Zero Trust assumes the network is already breached. Every single request between servers must be cryptographically authenticated, every time.</p>" },
-                    { id: "cy-2", title: "Quantum Cryptography", content: "<h3>The Q-Day Threat</h3><p>When quantum computers become powerful enough, they will instantly shatter modern RSA encryption. The race is on right now to implement Post-Quantum Cryptography (PQC) before state-actors harvest encrypted data today to decrypt tomorrow.</p>" },
-                    { id: "cy-3", title: "Decentralized Finance (DeFi)", content: "<h3>Code as Law</h3><p>Replacing traditional banking infrastructure (brokers, clearinghouses) with automated smart contracts on a blockchain. It allows for peer-to-peer lending and trading with zero intermediaries and 100% transparency.</p>" },
-                    { id: "cy-4", title: "Zero-Knowledge Proofs (ZKPs)", content: "<h3>Privacy by Math</h3><p>A cryptographic breakthrough that allows you to prove you know a secret without revealing the secret itself. Example: Proving you are over 18 to a website without giving them your actual birthdate or ID.</p>" },
-                    { id: "cy-5", title: "AI-Powered Cyber Warfare", content: "<h3>Machine vs Machine</h3><p>Hackers are using AI to generate polymorphic malware that changes its code to evade detection. In response, AI defense systems autonomously patch vulnerabilities in milliseconds. It is a supersonic game of chess.</p>" },
-                    { id: "cy-6", title: "Digital Identity & Deepfakes", content: "<h3>The Crisis of Reality</h3><p>When AI can clone your voice and face perfectly, how do you prove who you are online? Cryptographic signatures embedded in cameras and decentralized identity protocols will become mandatory for digital trust.</p>" }
-                ]
+            {
+                "id": "ai-7",
+                "title": "Synthetic Data Generation",
+                "content": "<h3>Creating the Training Grounds</h3><p>The world is running out of high-quality human data. Synthetic data generation uses AI to create mathematically realistic but fake datasets, allowing companies to train models without violating privacy laws (like GDPR or HIPAA).</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"Synthetic Data Generation\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
             },
-            "biotech": {
-                name: "BioTech & The Mind", color: 0x22c55e, hex: "#22c55e",
-                desc: "Hacking the biological code. Neural interfaces, genomic editing, and radical longevity.",
-                radius: 10.2, distance: 290, speed: 0.0009,
-                topics: [
-                    { id: "bio-1", title: "Brain-Computer Interfaces (BCI)", content: "<h3>The Final Frontier</h3><p>Connecting the human cortex directly to silicon. Early applications are restoring movement to paralyzed individuals. Future applications involve high-bandwidth thought-to-text communication, fundamentally altering what it means to be human.</p>" },
-                    { id: "bio-2", title: "CRISPR & Gene Editing", content: "<h3>Debugging DNA</h3><p>CRISPR acts as a molecular scissors, allowing scientists to cut out defective genetic code and paste in healthy sequences. We are moving from treating genetic diseases to outright curing them at the source code level.</p>" },
-                    { id: "bio-3", title: "Synthetic Biology", content: "<h3>Designing Life</h3><p>Instead of relying on nature, engineers are designing custom organisms from scratch to solve problems—like bacteria engineered to consume ocean plastic or produce sustainable biofuels.</p>" },
-                    { id: "bio-4", title: "AI in Drug Discovery", content: "<h3>Folding the Unknown</h3><p>Systems like AlphaFold have predicted the 3D structures of hundreds of millions of proteins. This allows AI to simulate how potential drugs will interact with diseases in a computer, cutting years and billions of dollars off pharmaceutical research.</p>" },
-                    { id: "bio-5", title: "Radical Longevity", content: "<h3>Solving Aging</h3><p>Aging is increasingly viewed not as an inevitability, but as a disease of cellular decay. Through senolytics, epigenetic reprogramming, and telomere extension, science is actively working to push the human healthspan past 120 years.</p>" },
-                    { id: "bio-6", title: "Digital Phenotyping", content: "<h3>Quantified Mental Health</h3><p>Using data from your smartphone (typing speed, scroll patterns, vocal tone) to detect the early onset of depression, anxiety, or Alzheimer's before you even realize you have symptoms.</p>" }
-                ]
-            },
-            "space": {
-                name: "Space & Physics", color: 0xc084fc, hex: "#c084fc",
-                desc: "The multi-planetary future. Orbital mechanics, fusion power, and cosmic expansion.",
-                radius: 14.4, distance: 325, speed: 0.0007,
-                topics: [
-                    { id: "sp-1", title: "Reusable Rockets", content: "<h3>The Economics of Orbit</h3><p>For 50 years, rockets were thrown away after one use. Reusability (like SpaceX's Falcon 9 and Starship) has dropped the cost of launching mass to orbit by 90%, opening space to commercial enterprise.</p>" },
-                    { id: "sp-2", title: "Orbital Manufacturing", content: "<h3>Zero-G Factories</h3><p>Certain materials, like flawless fiber optic cables (ZBLAN) or perfect protein crystals for pharmaceuticals, can only be manufactured in the microgravity of space. Factories are moving to Low Earth Orbit.</p>" },
-                    { id: "sp-3", title: "Nuclear Fusion", content: "<h3>Star Power on Earth</h3><p>Fusing atoms together releases nearly infinite clean energy with zero radioactive waste. Recent breakthroughs in magnetic confinement (Tokamaks) and laser ignition mean commercial fusion could power the grid by 2040.</p>" },
-                    { id: "sp-4", title: "Asteroid Mining", content: "<h3>The Trillion Dollar Rock</h3><p>A single metallic asteroid can contain more platinum and rare earth metals than have ever been mined in human history. The technology to capture, mine, and return these resources is currently in active development.</p>" },
-                    { id: "sp-5", title: "Megaconstellations", content: "<h3>The Orbital Internet</h3><p>Deploying tens of thousands of small satellites in Low Earth Orbit (like Starlink) to blanket the entire planet in high-speed, low-latency broadband, connecting the most remote regions on Earth.</p>" },
-                    { id: "sp-6", title: "Quantum Supremacy", content: "<h3>Breaking Classical Limits</h3><p>Quantum computers use qubits existing in superposition. They don't just calculate faster; they solve problems classical computers never could, simulating complex molecules to cure diseases and create new materials.</p>" }
-                ]
+            {
+                "id": "ai-8",
+                "title": "Edge AI",
+                "content": "<h3>Intelligence on the Fringe</h3><p>Instead of sending data to the cloud, Edge AI runs models directly on your phone, IoT device, or car. This guarantees zero-latency inference and total privacy, crucial for autonomous vehicles and real-time translation.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"Edge AI\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
             }
+        ]
+    },
+    "human": {
+        "name": "Human Psychology",
+        "color": 1096065,
+        "hex": "#10b981",
+        "desc": "The un-automatable core. Explore the psychological and cognitive skills machines cannot replicate.",
+        "radius": 10.5,
+        "distance": 80,
+        "speed": 0.0015,
+        "topics": [
+            {
+                "id": "hs-1",
+                "title": "Cognitive Empathy",
+                "content": "<h3>The Foundation of Trust</h3><p>Cognitive empathy is the ability to consciously understand another person's perspective. It is the strategic ability to map emotional context. Real business runs on human trust and shared vulnerability—something an algorithm physically cannot possess.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"Cognitive Empathy\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "hs-2",
+                "title": "Complex Negotiation",
+                "content": "<h3>Expanding the Pie</h3><p>Basic negotiation is haggling over price. Complex negotiation is uncovering the hidden, unstated desires of the other party (fear of failure, ego) and restructuring the deal so both sides win. This requires reading micro-expressions and improvising under pressure.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"Complex Negotiation\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "hs-3",
+                "title": "Systems Thinking",
+                "content": "<h3>Seeing the Forest</h3><p>Systems thinkers don't just solve immediate problems; they look for the feedback loops and root causes that created the problem. Instead of repeatedly fixing a bug, you redesign the architecture so the bug is mathematically impossible.</p>",
+                "challenge": {
+                    "type": "application",
+                    "question": "Based on \"Systems Thinking\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "hs-4",
+                "title": "Crisis Management",
+                "content": "<h3>Decisions Under Darkness</h3><p>AI requires structured data to make predictions. In a true crisis, data is chaotic or absent. Human leaders must exercise judgment and take decisive action in the dark, managing the emotional panic of their teams.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"Crisis Management\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "hs-5",
+                "title": "First Principles Reasoning",
+                "content": "<h3>Boiling it Down</h3><p>AI relies entirely on analogies (training data). Innovation requires First Principles reasoning—ignoring conventional wisdom and boiling a problem down to fundamental physical or logical truths, then building up from there.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"First Principles Reasoning\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "hs-6",
+                "title": "High-Stakes Storytelling",
+                "content": "<h3>The Engineering of Belief</h3><p>You can have the best product in the world, but if you cannot tell a compelling story, no one will buy it. Storytelling is the API for the human brain. AI can write a memo; it cannot inspire a team to work over the weekend.</p>",
+                "challenge": {
+                    "type": "application",
+                    "question": "Based on \"High-Stakes Storytelling\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "hs-7",
+                "title": "Behavioral Economics",
+                "content": "<h3>Irrational Markets</h3><p>Humans do not act rationally. They are driven by loss aversion, sunk cost fallacies, and social proof. Understanding these biases allows you to design better products and anticipate market movements better than any linear predictive model.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"Behavioral Economics\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "hs-8",
+                "title": "Cross-Cultural Communication",
+                "content": "<h3>The Global Village</h3><p>The future of work is completely distributed. Navigating low-context (direct) vs high-context (indirect) cultures is critical. Misunderstandings across timezones kill projects faster than bad code.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"Cross-Cultural Communication\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            }
+        ]
+    },
+    "education": {
+        "name": "Future Education",
+        "color": 3900150,
+        "hex": "#3b82f6",
+        "desc": "The evolution of learning. How digital twins, adaptive logic, and AI tutors are rebuilding the classroom.",
+        "radius": 11.4,
+        "distance": 115,
+        "speed": 0.0011,
+        "topics": [
+            {
+                "id": "ed-1",
+                "title": "Adaptive Learning Systems",
+                "content": "<h3>The End of the Bell Curve</h3><p>Traditional classrooms force 30 students to learn at the exact same pace. Adaptive systems track a student's cognitive model in real-time. If you fail calculus, it routes you back to the specific algebra concept you missed instantly.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"Adaptive Learning Systems\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "ed-2",
+                "title": "The Digital Twin of a Student",
+                "content": "<h3>Your Cognitive Blueprint</h3><p>A digital twin in education is a secure data model representing your skills, learning speed, strengths, and weaknesses. It travels with you, helping AI tutors perfectly calibrate their instruction to your exact brain.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"The Digital Twin of a Student\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "ed-3",
+                "title": "Cryptographic Credentials",
+                "content": "<h3>Beyond the Degree</h3><p>The future of credentials is cryptographic verification of actual projects built, code committed, and problems solved, immutably recorded on a ledger. Employers will verify what you *did*, not where you *sat*.</p>",
+                "challenge": {
+                    "type": "application",
+                    "question": "Based on \"Cryptographic Credentials\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "ed-4",
+                "title": "Hyper-Personalized AI Tutors",
+                "content": "<h3>The Aristotle Model</h3><p>Imagine an AI tutor that knows your interests. If you love basketball, it teaches you physics using projectile motion formulas of a 3-point shot. It is infinitely patient, available 24/7, and speaks your language.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"Hyper-Personalized AI Tutors\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "ed-5",
+                "title": "Project-Based Reality",
+                "content": "<h3>Learning by Building</h3><p>The era of rote memorization is dead. Because AI can recall any fact instantly, the only valuable education is project-based learning: designing a product, testing it in the market, and learning the theory *while* building.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"Project-Based Reality\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "ed-6",
+                "title": "Neuro-feedback in Learning",
+                "content": "<h3>Closing the Loop</h3><p>Future learning environments will use non-invasive EEG headsets to measure cognitive load and focus. If the system detects you are zoning out or frustrated, it dynamically alters the difficulty or format of the lesson.</p>",
+                "challenge": {
+                    "type": "application",
+                    "question": "Based on \"Neuro-feedback in Learning\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            }
+        ]
+    },
+    "career": {
+        "name": "The New Economy",
+        "color": 16096779,
+        "hex": "#f59e0b",
+        "desc": "The future of work. Discover hybrid roles, skill-based hiring, and how to build an un-automatable portfolio.",
+        "radius": 12.6,
+        "distance": 150,
+        "speed": 0.0018,
+        "topics": [
+            {
+                "id": "cw-1",
+                "title": "The Portfolio Career",
+                "content": "<h3>The End of the Ladder</h3><p>Working for one company for 40 years is over. A portfolio career means maintaining multiple streams of income and identity: consulting, building a SaaS, and creating content. This creates extreme resilience against AI disruption.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"The Portfolio Career\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "cw-2",
+                "title": "Hybrid AI Roles",
+                "content": "<h3>The Domain Expert + AI</h3><p>The highest paid jobs won't be pure programmers. They will be hybrid roles. The 'AI-Augmented Lawyer' or 'AI-Augmented Doctor'. AI will not replace domain experts. Domain experts who use AI will replace those who don't.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"Hybrid AI Roles\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "cw-3",
+                "title": "Proof of Work",
+                "content": "<h3>The New Resume</h3><p>When everyone can use AI to write a perfect cover letter, resumes lose all value. Employers will only look at 'Proof of Work'—live code deployments, published research, video teardowns, and actual revenue generated.</p>",
+                "challenge": {
+                    "type": "application",
+                    "question": "Based on \"Proof of Work\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "cw-4",
+                "title": "Skill-Based Hiring",
+                "content": "<h3>Bypassing the Gatekeepers</h3><p>Major corporations are dropping degree requirements. They are implementing blind, skill-based assessments. If you can pass the technical rigorous assessment or build the required architecture, you get the job, regardless of your background.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"Skill-Based Hiring\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "cw-5",
+                "title": "The Fractional Executive",
+                "content": "<h3>C-Suite on Demand</h3><p>As companies become leaner (using AI to replace middle management), they will hire 'fractional' CMOs or CTOs—highly experienced professionals who work for 4 different companies simultaneously, providing strategic oversight without full-time bloat.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"The Fractional Executive\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "cw-6",
+                "title": "Continuous Upskilling",
+                "content": "<h3>The Red Queen Hypothesis</h3><p>The half-life of a learned technical skill is dropping from 5 years to 18 months. The most valuable career skill is meta-learning: the ability to rapidly unlearn outdated frameworks and assimilate new paradigms in weeks.</p>",
+                "challenge": {
+                    "type": "application",
+                    "question": "Based on \"Continuous Upskilling\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "cw-7",
+                "title": "Remote-First & Async",
+                "content": "<h3>Death of the Office</h3><p>The best talent refuses to commute. Mastering asynchronous communication (writing clear briefs, recording Loom videos, leaving perfect documentation) is a mandatory career skill for the globalized workforce.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"Remote-First & Async\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            }
+        ]
+    },
+    "creator": {
+        "name": "Creator & Builder",
+        "color": 15485081,
+        "hex": "#ec4899",
+        "desc": "The age of the sovereign builder. Leverage technology to build digital empires from a dorm room.",
+        "radius": 9.6,
+        "distance": 185,
+        "speed": 0.0022,
+        "topics": [
+            {
+                "id": "cr-1",
+                "title": "The Sovereign Individual",
+                "content": "<h3>A Company of One</h3><p>Historically, building a tech company required millions in VC funding. Today, one student with an internet connection can prompt an AI to write the code, generate the assets, and optimize the ad spend. The bottleneck is taste and execution.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"The Sovereign Individual\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "cr-2",
+                "title": "Audience as Leverage",
+                "content": "<h3>Distribution is King</h3><p>You can build the greatest software in the world, but if no one knows it exists, it fails. Building a highly engaged audience through writing, video, or open-source contribution is the ultimate career leverage.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"Audience as Leverage\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "cr-3",
+                "title": "No-Code / Low-Code",
+                "content": "<h3>Democratizing Software</h3><p>Platforms like Bubble, Webflow, and Make allow non-technical founders to build complex applications visually. When combined with AI coding assistants, the barrier to launching a software product has effectively dropped to zero.</p>",
+                "challenge": {
+                    "type": "application",
+                    "question": "Based on \"No-Code / Low-Code\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "cr-4",
+                "title": "The Subscription Economy",
+                "content": "<h3>Recurring Revenue</h3><p>Transitioning from selling time (freelancing) to selling access (newsletters, SaaS, communities). Building MRR (Monthly Recurring Revenue) is the mathematical foundation of financial independence for digital creators.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"The Subscription Economy\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "cr-5",
+                "title": "Content Engineering",
+                "content": "<h3>Algorithmic Empathy</h3><p>Understanding how recommendation algorithms (TikTok, YouTube, X) distribute content. It's not just making 'good videos'; it's engineering high-retention hooks, optimizing CTR (Click-Through Rate), and structuring narrative arcs.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"Content Engineering\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "cr-6",
+                "title": "Digital Product Design",
+                "content": "<h3>Selling Zero-Marginal Cost Assets</h3><p>Unlike physical goods, a digital product (a course, a template, a script) costs $0 to duplicate. Creators who master packaging their knowledge into high-value digital products create scalable wealth vehicles.</p>",
+                "challenge": {
+                    "type": "application",
+                    "question": "Based on \"Digital Product Design\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            }
+        ]
+    },
+    "future": {
+        "name": "Future Hardware",
+        "color": 959977,
+        "hex": "#0ea5e9",
+        "desc": "The physical bleeding edge. Explore how hardware innovations will reshape our reality.",
+        "radius": 13.5,
+        "distance": 220,
+        "speed": 0.001,
+        "topics": [
+            {
+                "id": "ft-1",
+                "title": "Spatial Computing",
+                "content": "<h3>The Death of the Screen</h3><p>Spatial computing maps digital interfaces directly into the physical world. Instead of opening an anatomy app on a laptop, a medical student dissects a holographic heart floating in their living room.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"Spatial Computing\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "ft-2",
+                "title": "Advanced Robotics & Humanoids",
+                "content": "<h3>The Automation of Labor</h3><p>While AI automates cognitive work, general-purpose humanoid robots (like Tesla Optimus or Figure 01) powered by multimodal AI are preparing to automate physical labor, fundamentally restructuring global supply chains.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"Advanced Robotics & Humanoids\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "ft-3",
+                "title": "3D Printing & Additive Manufacturing",
+                "content": "<h3>Instant Infrastructure</h3><p>From printing rocket engines in 24 hours to printing biological tissue. Distributed manufacturing means we will email physical objects (blueprints) and print them locally, destroying traditional shipping logistics.</p>",
+                "challenge": {
+                    "type": "application",
+                    "question": "Based on \"3D Printing & Additive Manufacturing\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "ft-4",
+                "title": "Solid-State Batteries",
+                "content": "<h3>The Energy Density Leap</h3><p>The bottleneck for drones, robots, and EVs is energy density. Solid-state batteries promise to double the range, eliminate fire risks, and charge in minutes, unlocking electric aviation and untethered robotics.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"Solid-State Batteries\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "ft-5",
+                "title": "Smart Dust & Micro-Sensors",
+                "content": "<h3>The Omnipresent Network</h3><p>Sensors the size of a grain of sand, distributed across agricultural fields or integrated into concrete, forming massive mesh networks that monitor the physical health of the planet in absolute real-time.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"Smart Dust & Micro-Sensors\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "ft-6",
+                "title": "Neuromorphic Computing",
+                "content": "<h3>Silicon Brains</h3><p>Current chips process data sequentially. Neuromorphic chips mimic the human brain's neural structure, processing information in parallel while consuming a fraction of the power, unlocking true mobile AI.</p>",
+                "challenge": {
+                    "type": "application",
+                    "question": "Based on \"Neuromorphic Computing\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "ft-7",
+                "title": "Exoskeletons",
+                "content": "<h3>Human Augmentation</h3><p>Robotic suits that multiply human strength and endurance. Initially developed for military and medical rehabilitation, they will soon become standard in construction, warehouse logistics, and eldercare.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"Exoskeletons\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            }
+        ]
+    },
+    "cyber": {
+        "name": "Cyber & Web3",
+        "color": 16007006,
+        "hex": "#f43f5e",
+        "desc": "The battleground of truth. Cryptography, decentralized ledgers, and zero-trust security.",
+        "radius": 11.1,
+        "distance": 255,
+        "speed": 0.0014,
+        "topics": [
+            {
+                "id": "cy-1",
+                "title": "Zero-Trust Architecture",
+                "content": "<h3>Verify Everything</h3><p>The old security model (a strong perimeter with a soft inside) is dead. Zero Trust assumes the network is already breached. Every single request between servers must be cryptographically authenticated, every time.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"Zero-Trust Architecture\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "cy-2",
+                "title": "Quantum Cryptography",
+                "content": "<h3>The Q-Day Threat</h3><p>When quantum computers become powerful enough, they will instantly shatter modern RSA encryption. The race is on right now to implement Post-Quantum Cryptography (PQC) before state-actors harvest encrypted data today to decrypt tomorrow.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"Quantum Cryptography\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "cy-3",
+                "title": "Decentralized Finance (DeFi)",
+                "content": "<h3>Code as Law</h3><p>Replacing traditional banking infrastructure (brokers, clearinghouses) with automated smart contracts on a blockchain. It allows for peer-to-peer lending and trading with zero intermediaries and 100% transparency.</p>",
+                "challenge": {
+                    "type": "application",
+                    "question": "Based on \"Decentralized Finance (DeFi)\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "cy-4",
+                "title": "Zero-Knowledge Proofs (ZKPs)",
+                "content": "<h3>Privacy by Math</h3><p>A cryptographic breakthrough that allows you to prove you know a secret without revealing the secret itself. Example: Proving you are over 18 to a website without giving them your actual birthdate or ID.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"Zero-Knowledge Proofs (ZKPs)\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "cy-5",
+                "title": "AI-Powered Cyber Warfare",
+                "content": "<h3>Machine vs Machine</h3><p>Hackers are using AI to generate polymorphic malware that changes its code to evade detection. In response, AI defense systems autonomously patch vulnerabilities in milliseconds. It is a supersonic game of chess.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"AI-Powered Cyber Warfare\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "cy-6",
+                "title": "Digital Identity & Deepfakes",
+                "content": "<h3>The Crisis of Reality</h3><p>When AI can clone your voice and face perfectly, how do you prove who you are online? Cryptographic signatures embedded in cameras and decentralized identity protocols will become mandatory for digital trust.</p>",
+                "challenge": {
+                    "type": "application",
+                    "question": "Based on \"Digital Identity & Deepfakes\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            }
+        ]
+    },
+    "biotech": {
+        "name": "BioTech & The Mind",
+        "color": 2278750,
+        "hex": "#22c55e",
+        "desc": "Hacking the biological code. Neural interfaces, genomic editing, and radical longevity.",
+        "radius": 10.2,
+        "distance": 290,
+        "speed": 0.0009,
+        "topics": [
+            {
+                "id": "bio-1",
+                "title": "Brain-Computer Interfaces (BCI)",
+                "content": "<h3>The Final Frontier</h3><p>Connecting the human cortex directly to silicon. Early applications are restoring movement to paralyzed individuals. Future applications involve high-bandwidth thought-to-text communication, fundamentally altering what it means to be human.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"Brain-Computer Interfaces (BCI)\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "bio-2",
+                "title": "CRISPR & Gene Editing",
+                "content": "<h3>Debugging DNA</h3><p>CRISPR acts as a molecular scissors, allowing scientists to cut out defective genetic code and paste in healthy sequences. We are moving from treating genetic diseases to outright curing them at the source code level.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"CRISPR & Gene Editing\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "bio-3",
+                "title": "Synthetic Biology",
+                "content": "<h3>Designing Life</h3><p>Instead of relying on nature, engineers are designing custom organisms from scratch to solve problems—like bacteria engineered to consume ocean plastic or produce sustainable biofuels.</p>",
+                "challenge": {
+                    "type": "application",
+                    "question": "Based on \"Synthetic Biology\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "bio-4",
+                "title": "AI in Drug Discovery",
+                "content": "<h3>Folding the Unknown</h3><p>Systems like AlphaFold have predicted the 3D structures of hundreds of millions of proteins. This allows AI to simulate how potential drugs will interact with diseases in a computer, cutting years and billions of dollars off pharmaceutical research.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"AI in Drug Discovery\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "bio-5",
+                "title": "Radical Longevity",
+                "content": "<h3>Solving Aging</h3><p>Aging is increasingly viewed not as an inevitability, but as a disease of cellular decay. Through senolytics, epigenetic reprogramming, and telomere extension, science is actively working to push the human healthspan past 120 years.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"Radical Longevity\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "bio-6",
+                "title": "Digital Phenotyping",
+                "content": "<h3>Quantified Mental Health</h3><p>Using data from your smartphone (typing speed, scroll patterns, vocal tone) to detect the early onset of depression, anxiety, or Alzheimer's before you even realize you have symptoms.</p>",
+                "challenge": {
+                    "type": "application",
+                    "question": "Based on \"Digital Phenotyping\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            }
+        ]
+    },
+    "space": {
+        "name": "Space & Physics",
+        "color": 12616956,
+        "hex": "#c084fc",
+        "desc": "The multi-planetary future. Orbital mechanics, fusion power, and cosmic expansion.",
+        "radius": 14.4,
+        "distance": 325,
+        "speed": 0.0007,
+        "topics": [
+            {
+                "id": "sp-1",
+                "title": "Reusable Rockets",
+                "content": "<h3>The Economics of Orbit</h3><p>For 50 years, rockets were thrown away after one use. Reusability (like SpaceX's Falcon 9 and Starship) has dropped the cost of launching mass to orbit by 90%, opening space to commercial enterprise.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"Reusable Rockets\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "sp-2",
+                "title": "Orbital Manufacturing",
+                "content": "<h3>Zero-G Factories</h3><p>Certain materials, like flawless fiber optic cables (ZBLAN) or perfect protein crystals for pharmaceuticals, can only be manufactured in the microgravity of space. Factories are moving to Low Earth Orbit.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"Orbital Manufacturing\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "sp-3",
+                "title": "Nuclear Fusion",
+                "content": "<h3>Star Power on Earth</h3><p>Fusing atoms together releases nearly infinite clean energy with zero radioactive waste. Recent breakthroughs in magnetic confinement (Tokamaks) and laser ignition mean commercial fusion could power the grid by 2040.</p>",
+                "challenge": {
+                    "type": "application",
+                    "question": "Based on \"Nuclear Fusion\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "sp-4",
+                "title": "Asteroid Mining",
+                "content": "<h3>The Trillion Dollar Rock</h3><p>A single metallic asteroid can contain more platinum and rare earth metals than have ever been mined in human history. The technology to capture, mine, and return these resources is currently in active development.</p>",
+                "challenge": {
+                    "type": "scenario",
+                    "question": "Based on \"Asteroid Mining\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "sp-5",
+                "title": "Megaconstellations",
+                "content": "<h3>The Orbital Internet</h3><p>Deploying tens of thousands of small satellites in Low Earth Orbit (like Starlink) to blanket the entire planet in high-speed, low-latency broadband, connecting the most remote regions on Earth.</p>",
+                "challenge": {
+                    "type": "multiple-choice",
+                    "question": "Based on \"Megaconstellations\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            },
+            {
+                "id": "sp-6",
+                "title": "Quantum Supremacy",
+                "content": "<h3>Breaking Classical Limits</h3><p>Quantum computers use qubits existing in superposition. They don't just calculate faster; they solve problems classical computers never could, simulating complex molecules to cure diseases and create new materials.</p>",
+                "challenge": {
+                    "type": "application",
+                    "question": "Based on \"Quantum Supremacy\", which approach demonstrates the most advanced application of this concept?",
+                    "options": [
+                        {
+                            "id": "A",
+                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "correct": false
+                        },
+                        {
+                            "id": "B",
+                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "correct": true
+                        },
+                        {
+                            "id": "C",
+                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "correct": false
+                        },
+                        {
+                            "id": "D",
+                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "correct": false
+                        }
+                    ],
+                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                }
+            }
+        ]
+    }
+};
+
+        
+        // --- FUTUREVERSE 2.0 PROGRESSION ENGINE ---
+        let fvProgress = {
+            level: 1,
+            xp: 0,
+            mastery: 0,
+            exploredNodes: [],
+            exploredWorlds: [],
+            completedChallenges: {},
+            stats: {
+                correct: 0,
+                incorrect: 0,
+                consecutiveCorrect: 0
+            },
+            difficultyMultiplier: 1.0,
+            hasSeenGuide: false
         };
+        
+        let currentUser = null;
+        
+        function initProgression() {
+            // 1. Check Auth
+            try {
+                const storedUser = localStorage.getItem('dt_user');
+                if (storedUser) {
+                    currentUser = JSON.parse(storedUser);
+                }
+            } catch(e) {}
+            
+            // 2. Load Progress
+            try {
+                const storedProgress = localStorage.getItem('dtv_fv_progress');
+                if (storedProgress) {
+                    const parsed = JSON.parse(storedProgress);
+                    fvProgress = { ...fvProgress, ...parsed };
+                    
+                    // Restore Sets
+                    fvProgress.exploredNodes.forEach(n => exploredNodes.add(n));
+                    fvProgress.exploredWorlds.forEach(w => exploredWorlds.add(w));
+                }
+            } catch(e) {}
+            
+            // 3. Greeting
+            const overlayTitle = document.querySelector('#entry-overlay h1');
+            const overlayDesc = document.querySelector('#entry-overlay p');
+            
+            if (currentUser && currentUser.name) {
+                const firstName = currentUser.name.split(' ')[0];
+                overlayDesc.innerHTML = `Welcome back, ${firstName}.<br>Your universe has evolved.`;
+            } else {
+                overlayDesc.innerHTML = `Welcome, Explorer.<br><a href="/login.html" class="text-purple-400 hover:underline">Sign in to save your journey</a>`;
+            }
+            
+            updateHUD();
+            
+            // 4. Guide
+            if (!fvProgress.hasSeenGuide) {
+                setTimeout(showGuide, 1000);
+            }
+        }
+        
+        function saveProgress() {
+            fvProgress.exploredNodes = Array.from(exploredNodes);
+            fvProgress.exploredWorlds = Array.from(exploredWorlds);
+            localStorage.setItem('dtv_fv_progress', JSON.stringify(fvProgress));
+            updateHUD();
+        }
+        
+        function updateHUD() {
+            // XP to next level formula: 100 * level
+            const xpForNext = 100 * fvProgress.level;
+            const xpPercent = Math.min(100, (fvProgress.xp / xpForNext) * 100);
+            
+            document.getElementById('hud-level').textContent = fvProgress.level;
+            document.getElementById('hud-xp-bar').style.width = xpPercent + '%';
+            document.getElementById('hud-mastery').textContent = Math.round(fvProgress.mastery);
+        }
+        
+        function showGuide() {
+            const modal = document.getElementById('guide-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+        }
+        
+        function dismissGuide() {
+            fvProgress.hasSeenGuide = true;
+            saveProgress();
+            
+            const modal = document.getElementById('guide-modal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+        
+        // --- CHALLENGE ENGINE ---
+        let currentActiveChallenge = null;
+        let selectedOptionId = null;
+        
+        function renderChallenge(topic) {
+            const section = document.getElementById('challenge-section');
+            const challenge = topic.challenge;
+            
+            if (!challenge) {
+                section.classList.add('hidden');
+                return;
+            }
+            
+            if (fvProgress.completedChallenges[topic.id]) {
+                // Already completed
+                section.classList.add('hidden');
+                return;
+            }
+            
+            currentActiveChallenge = { topic, challenge };
+            selectedOptionId = null;
+            
+            section.classList.remove('hidden');
+            document.getElementById('challenge-question').textContent = challenge.question;
+            document.getElementById('challenge-diff-badge').textContent = `Difficulty: ${fvProgress.difficultyMultiplier.toFixed(1)}x`;
+            
+            const optionsContainer = document.getElementById('challenge-options');
+            optionsContainer.innerHTML = '';
+            
+            challenge.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'challenge-option w-full text-left p-4 rounded-xl border border-white/10 bg-white/5 text-slate-300 text-sm font-medium';
+                btn.innerHTML = `<strong class="text-white mr-2">${opt.id}.</strong> ${opt.text}`;
+                btn.onclick = () => selectOption(opt.id, btn);
+                optionsContainer.appendChild(btn);
+            });
+            
+            document.getElementById('challenge-feedback').classList.add('hidden');
+            const submitBtn = document.getElementById('submit-challenge-btn');
+            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            submitBtn.disabled = true;
+            submitBtn.onclick = submitChallenge;
+        }
+        
+        function selectOption(id, btnElement) {
+            selectedOptionId = id;
+            document.querySelectorAll('.challenge-option').forEach(b => b.classList.remove('selected'));
+            btnElement.classList.add('selected');
+            
+            const submitBtn = document.getElementById('submit-challenge-btn');
+            submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            submitBtn.disabled = false;
+        }
+        
+        function submitChallenge() {
+            if (!selectedOptionId || !currentActiveChallenge) return;
+            
+            const challenge = currentActiveChallenge.challenge;
+            const selectedOpt = challenge.options.find(o => o.id === selectedOptionId);
+            const isCorrect = selectedOpt.correct;
+            
+            const feedbackBox = document.getElementById('challenge-feedback');
+            const feedbackText = document.getElementById('feedback-text');
+            const feedbackExplanation = document.getElementById('feedback-explanation');
+            
+            feedbackBox.classList.remove('hidden', 'bg-emerald-500/20', 'border-emerald-500/50', 'bg-red-500/20', 'border-red-500/50');
+            
+            // Highlight correct/incorrect buttons
+            document.querySelectorAll('.challenge-option').forEach(btn => {
+                const btnId = btn.innerHTML.match(/<strong.*?>([A-Z])./)[1];
+                const opt = challenge.options.find(o => o.id === btnId);
+                btn.disabled = true;
+                if (opt.correct) btn.classList.add('correct');
+                else if (btnId === selectedOptionId) btn.classList.add('incorrect');
+            });
+            
+            document.getElementById('submit-challenge-btn').classList.add('hidden');
+            
+            if (isCorrect) {
+                feedbackBox.classList.add('bg-emerald-500/20', 'border-emerald-500/50');
+                feedbackText.className = 'text-sm font-bold mb-2 text-emerald-400';
+                feedbackText.textContent = 'SYSTEM: Answer Validated.';
+                
+                // Adaptive Engine: Increase difficulty, add XP
+                fvProgress.stats.correct++;
+                fvProgress.stats.consecutiveCorrect++;
+                
+                let xpGain = Math.round(20 * fvProgress.difficultyMultiplier);
+                
+                // 1.75x difficulty escalation behavior implemented intelligently
+                if (fvProgress.stats.consecutiveCorrect >= 2) {
+                    fvProgress.difficultyMultiplier = Math.min(5.0, fvProgress.difficultyMultiplier * 1.75);
+                    fvProgress.mastery += 2.5;
+                } else {
+                    fvProgress.difficultyMultiplier = Math.min(5.0, fvProgress.difficultyMultiplier + 0.1);
+                    fvProgress.mastery += 1.0;
+                }
+                
+                fvProgress.xp += xpGain;
+                fvProgress.completedChallenges[currentActiveChallenge.topic.id] = true;
+                
+                // Level Up Check
+                const xpForNext = 100 * fvProgress.level;
+                if (fvProgress.xp >= xpForNext) {
+                    fvProgress.level++;
+                    fvProgress.xp -= xpForNext;
+                    showLevelUpNotification();
+                }
+                
+            } else {
+                feedbackBox.classList.add('bg-red-500/20', 'border-red-500/50');
+                feedbackText.className = 'text-sm font-bold mb-2 text-red-400';
+                feedbackText.textContent = 'SYSTEM: Validation Failed.';
+                
+                // Adaptive Engine: Decrease difficulty
+                fvProgress.stats.incorrect++;
+                fvProgress.stats.consecutiveCorrect = 0;
+                fvProgress.difficultyMultiplier = Math.max(1.0, fvProgress.difficultyMultiplier * 0.8);
+                fvProgress.mastery = Math.max(0, fvProgress.mastery - 0.5);
+                
+                // Add retry button
+                const submitBtn = document.getElementById('submit-challenge-btn');
+                submitBtn.classList.remove('hidden');
+                submitBtn.textContent = 'Retry Challenge';
+                submitBtn.onclick = () => renderChallenge(currentActiveChallenge.topic); // Reset
+            }
+            
+            feedbackExplanation.textContent = challenge.explanation;
+            saveProgress();
+        }
+        
+        function showLevelUpNotification() {
+            // Simple visual feedback for level up
+            const flash = document.createElement('div');
+            flash.className = 'fixed inset-0 z-[300] pointer-events-none flex items-center justify-center';
+            flash.innerHTML = `
+                <div class="absolute inset-0 bg-white/20"></div>
+                <h1 class="text-6xl md:text-8xl font-display font-bold text-white drop-shadow-[0_0_30px_rgba(255,255,255,1)] animate-bounce relative z-10">LEVEL UP</h1>
+            `;
+            document.body.appendChild(flash);
+            
+            setTimeout(() => {
+                flash.style.transition = 'opacity 1s';
+                flash.style.opacity = '0';
+                setTimeout(() => flash.remove(), 1000);
+            }, 1500);
+        }
 
         // --- TRACKING STATE ---
         let exploredNodes = new Set();
@@ -777,6 +3031,7 @@
             document.getElementById('topic-meta').style.color = worldData.hex;
             document.getElementById('topic-title').textContent = topic.title;
             document.getElementById('topic-content').innerHTML = topic.content;
+            renderChallenge(topic);
             
             const modal = document.getElementById('topic-modal');
             modal.classList.remove('hidden');
@@ -800,6 +3055,7 @@
         document.getElementById('back-to-universe-btn').onclick = returnToUniverse;
 
         document.getElementById('enter-btn').onclick = () => {
+            initProgression();
             const overlay = document.getElementById('entry-overlay');
             overlay.classList.add('fade-out');
             setTimeout(() => {
@@ -874,5 +3130,287 @@
             document.getElementById('loading-text').textContent = "Error: Required libraries failed to load.";
         }
     </script>
+
+    <!-- SEMANTIC HTML FOR SEO (Screen-reader & Crawler Accessible) -->
+    <div class="sr-only">
+        <h1>DTV Futureverse: The Infinite Knowledge Universe</h1>
+        <p>Step beyond the screen. Explore the Futureverse, a massive 3D interactive knowledge universe featuring insights on AI, Human Skills, Future Careers, BioTech, Web3, and Emerging Tech.</p>
+        <h2>AI & Automation</h2>
+        <p>The architecture of intelligence. Explore the algorithms redefining logic, generation, and automation across every industry.</p>
+        <ul>
+            <li>
+                <h3>Generative AI Fundamentals</h3>
+                <div><h3>Beyond the Chatbot</h3><p>Generative AI represents a shift from analytical processing to synthetic creation. By mapping the statistical probability of tokens in a high-dimensional vector space, LLMs construct coherent text, code, and reasoning pathways.</p><div class='bg-white/5 border border-white/10 p-5 rounded-xl my-6'><h4 class='text-white font-bold mb-2'>Student Application</h4><p class='text-sm text-slate-300 m-0'>Don't use it to write essays. Use it to generate Socratic counter-arguments to your thesis to stress-test your logic before writing.</p></div></div>
+            </li>
+            <li>
+                <h3>Autonomous Agents</h3>
+                <div><h3>The Digital Workforce</h3><p>An AI agent is an LLM wrapped in a control loop given access to tools. Instead of waiting for prompts, agents break down a goal, plan steps, and execute them autonomously. We are transitioning from 'AI as an Oracle' to 'AI as an Employee'.</p></div>
+            </li>
+            <li>
+                <h3>RAG (Retrieval-Augmented Generation)</h3>
+                <div><h3>The Cure for Hallucinations</h3><p>LLMs don't know private data. RAG solves this by converting documents into vector embeddings. When you ask a question, it retrieves the most relevant data and forces the AI to answer using ONLY that context.</p></div>
+            </li>
+            <li>
+                <h3>Algorithmic Ethics & Bias</h3>
+                <div><h3>The Math of Morality</h3><p>Models are mirrors reflecting historical data. If a company uses biased hiring data, the AI mathematically scales that bias. AI Alignment ensures outputs align with human values and safety constraints.</p></div>
+            </li>
+            <li>
+                <h3>Model Fine-Tuning (LoRA/PEFT)</h3>
+                <div><h3>Teaching Old Models New Tricks</h3><p>Fine-tuning adjusts a pre-trained model's weights using a custom dataset. Using parameter-efficient fine-tuning (PEFT) like LoRA, developers can train massive models on cheap consumer GPUs to speak in specific brand voices or output strict JSON.</p></div>
+            </li>
+            <li>
+                <h3>Computer Vision & Multimodality</h3>
+                <div><h3>When Machines See</h3><p>Multimodal models like GPT-4V or Gemini don't just read text; they process pixels. This unlocks massive potential in medical imaging, autonomous driving, and real-time environment analysis via smartphone cameras.</p></div>
+            </li>
+            <li>
+                <h3>Synthetic Data Generation</h3>
+                <div><h3>Creating the Training Grounds</h3><p>The world is running out of high-quality human data. Synthetic data generation uses AI to create mathematically realistic but fake datasets, allowing companies to train models without violating privacy laws (like GDPR or HIPAA).</p></div>
+            </li>
+            <li>
+                <h3>Edge AI</h3>
+                <div><h3>Intelligence on the Fringe</h3><p>Instead of sending data to the cloud, Edge AI runs models directly on your phone, IoT device, or car. This guarantees zero-latency inference and total privacy, crucial for autonomous vehicles and real-time translation.</p></div>
+            </li>
+        </ul>
+        <h2>Human Psychology</h2>
+        <p>The un-automatable core. Explore the psychological and cognitive skills machines cannot replicate.</p>
+        <ul>
+            <li>
+                <h3>Cognitive Empathy</h3>
+                <div><h3>The Foundation of Trust</h3><p>Cognitive empathy is the ability to consciously understand another person's perspective. It is the strategic ability to map emotional context. Real business runs on human trust and shared vulnerability—something an algorithm physically cannot possess.</p></div>
+            </li>
+            <li>
+                <h3>Complex Negotiation</h3>
+                <div><h3>Expanding the Pie</h3><p>Basic negotiation is haggling over price. Complex negotiation is uncovering the hidden, unstated desires of the other party (fear of failure, ego) and restructuring the deal so both sides win. This requires reading micro-expressions and improvising under pressure.</p></div>
+            </li>
+            <li>
+                <h3>Systems Thinking</h3>
+                <div><h3>Seeing the Forest</h3><p>Systems thinkers don't just solve immediate problems; they look for the feedback loops and root causes that created the problem. Instead of repeatedly fixing a bug, you redesign the architecture so the bug is mathematically impossible.</p></div>
+            </li>
+            <li>
+                <h3>Crisis Management</h3>
+                <div><h3>Decisions Under Darkness</h3><p>AI requires structured data to make predictions. In a true crisis, data is chaotic or absent. Human leaders must exercise judgment and take decisive action in the dark, managing the emotional panic of their teams.</p></div>
+            </li>
+            <li>
+                <h3>First Principles Reasoning</h3>
+                <div><h3>Boiling it Down</h3><p>AI relies entirely on analogies (training data). Innovation requires First Principles reasoning—ignoring conventional wisdom and boiling a problem down to fundamental physical or logical truths, then building up from there.</p></div>
+            </li>
+            <li>
+                <h3>High-Stakes Storytelling</h3>
+                <div><h3>The Engineering of Belief</h3><p>You can have the best product in the world, but if you cannot tell a compelling story, no one will buy it. Storytelling is the API for the human brain. AI can write a memo; it cannot inspire a team to work over the weekend.</p></div>
+            </li>
+            <li>
+                <h3>Behavioral Economics</h3>
+                <div><h3>Irrational Markets</h3><p>Humans do not act rationally. They are driven by loss aversion, sunk cost fallacies, and social proof. Understanding these biases allows you to design better products and anticipate market movements better than any linear predictive model.</p></div>
+            </li>
+            <li>
+                <h3>Cross-Cultural Communication</h3>
+                <div><h3>The Global Village</h3><p>The future of work is completely distributed. Navigating low-context (direct) vs high-context (indirect) cultures is critical. Misunderstandings across timezones kill projects faster than bad code.</p></div>
+            </li>
+        </ul>
+        <h2>Future Education</h2>
+        <p>The evolution of learning. How digital twins, adaptive logic, and AI tutors are rebuilding the classroom.</p>
+        <ul>
+            <li>
+                <h3>Adaptive Learning Systems</h3>
+                <div><h3>The End of the Bell Curve</h3><p>Traditional classrooms force 30 students to learn at the exact same pace. Adaptive systems track a student's cognitive model in real-time. If you fail calculus, it routes you back to the specific algebra concept you missed instantly.</p></div>
+            </li>
+            <li>
+                <h3>The Digital Twin of a Student</h3>
+                <div><h3>Your Cognitive Blueprint</h3><p>A digital twin in education is a secure data model representing your skills, learning speed, strengths, and weaknesses. It travels with you, helping AI tutors perfectly calibrate their instruction to your exact brain.</p></div>
+            </li>
+            <li>
+                <h3>Cryptographic Credentials</h3>
+                <div><h3>Beyond the Degree</h3><p>The future of credentials is cryptographic verification of actual projects built, code committed, and problems solved, immutably recorded on a ledger. Employers will verify what you *did*, not where you *sat*.</p></div>
+            </li>
+            <li>
+                <h3>Hyper-Personalized AI Tutors</h3>
+                <div><h3>The Aristotle Model</h3><p>Imagine an AI tutor that knows your interests. If you love basketball, it teaches you physics using projectile motion formulas of a 3-point shot. It is infinitely patient, available 24/7, and speaks your language.</p></div>
+            </li>
+            <li>
+                <h3>Project-Based Reality</h3>
+                <div><h3>Learning by Building</h3><p>The era of rote memorization is dead. Because AI can recall any fact instantly, the only valuable education is project-based learning: designing a product, testing it in the market, and learning the theory *while* building.</p></div>
+            </li>
+            <li>
+                <h3>Neuro-feedback in Learning</h3>
+                <div><h3>Closing the Loop</h3><p>Future learning environments will use non-invasive EEG headsets to measure cognitive load and focus. If the system detects you are zoning out or frustrated, it dynamically alters the difficulty or format of the lesson.</p></div>
+            </li>
+        </ul>
+        <h2>The New Economy</h2>
+        <p>The future of work. Discover hybrid roles, skill-based hiring, and how to build an un-automatable portfolio.</p>
+        <ul>
+            <li>
+                <h3>The Portfolio Career</h3>
+                <div><h3>The End of the Ladder</h3><p>Working for one company for 40 years is over. A portfolio career means maintaining multiple streams of income and identity: consulting, building a SaaS, and creating content. This creates extreme resilience against AI disruption.</p></div>
+            </li>
+            <li>
+                <h3>Hybrid AI Roles</h3>
+                <div><h3>The Domain Expert + AI</h3><p>The highest paid jobs won't be pure programmers. They will be hybrid roles. The 'AI-Augmented Lawyer' or 'AI-Augmented Doctor'. AI will not replace domain experts. Domain experts who use AI will replace those who don't.</p></div>
+            </li>
+            <li>
+                <h3>Proof of Work</h3>
+                <div><h3>The New Resume</h3><p>When everyone can use AI to write a perfect cover letter, resumes lose all value. Employers will only look at 'Proof of Work'—live code deployments, published research, video teardowns, and actual revenue generated.</p></div>
+            </li>
+            <li>
+                <h3>Skill-Based Hiring</h3>
+                <div><h3>Bypassing the Gatekeepers</h3><p>Major corporations are dropping degree requirements. They are implementing blind, skill-based assessments. If you can pass the technical rigorous assessment or build the required architecture, you get the job, regardless of your background.</p></div>
+            </li>
+            <li>
+                <h3>The Fractional Executive</h3>
+                <div><h3>C-Suite on Demand</h3><p>As companies become leaner (using AI to replace middle management), they will hire 'fractional' CMOs or CTOs—highly experienced professionals who work for 4 different companies simultaneously, providing strategic oversight without full-time bloat.</p></div>
+            </li>
+            <li>
+                <h3>Continuous Upskilling</h3>
+                <div><h3>The Red Queen Hypothesis</h3><p>The half-life of a learned technical skill is dropping from 5 years to 18 months. The most valuable career skill is meta-learning: the ability to rapidly unlearn outdated frameworks and assimilate new paradigms in weeks.</p></div>
+            </li>
+            <li>
+                <h3>Remote-First & Async</h3>
+                <div><h3>Death of the Office</h3><p>The best talent refuses to commute. Mastering asynchronous communication (writing clear briefs, recording Loom videos, leaving perfect documentation) is a mandatory career skill for the globalized workforce.</p></div>
+            </li>
+        </ul>
+        <h2>Creator & Builder</h2>
+        <p>The age of the sovereign builder. Leverage technology to build digital empires from a dorm room.</p>
+        <ul>
+            <li>
+                <h3>The Sovereign Individual</h3>
+                <div><h3>A Company of One</h3><p>Historically, building a tech company required millions in VC funding. Today, one student with an internet connection can prompt an AI to write the code, generate the assets, and optimize the ad spend. The bottleneck is taste and execution.</p></div>
+            </li>
+            <li>
+                <h3>Audience as Leverage</h3>
+                <div><h3>Distribution is King</h3><p>You can build the greatest software in the world, but if no one knows it exists, it fails. Building a highly engaged audience through writing, video, or open-source contribution is the ultimate career leverage.</p></div>
+            </li>
+            <li>
+                <h3>No-Code / Low-Code</h3>
+                <div><h3>Democratizing Software</h3><p>Platforms like Bubble, Webflow, and Make allow non-technical founders to build complex applications visually. When combined with AI coding assistants, the barrier to launching a software product has effectively dropped to zero.</p></div>
+            </li>
+            <li>
+                <h3>The Subscription Economy</h3>
+                <div><h3>Recurring Revenue</h3><p>Transitioning from selling time (freelancing) to selling access (newsletters, SaaS, communities). Building MRR (Monthly Recurring Revenue) is the mathematical foundation of financial independence for digital creators.</p></div>
+            </li>
+            <li>
+                <h3>Content Engineering</h3>
+                <div><h3>Algorithmic Empathy</h3><p>Understanding how recommendation algorithms (TikTok, YouTube, X) distribute content. It's not just making 'good videos'; it's engineering high-retention hooks, optimizing CTR (Click-Through Rate), and structuring narrative arcs.</p></div>
+            </li>
+            <li>
+                <h3>Digital Product Design</h3>
+                <div><h3>Selling Zero-Marginal Cost Assets</h3><p>Unlike physical goods, a digital product (a course, a template, a script) costs $0 to duplicate. Creators who master packaging their knowledge into high-value digital products create scalable wealth vehicles.</p></div>
+            </li>
+        </ul>
+        <h2>Future Hardware</h2>
+        <p>The physical bleeding edge. Explore how hardware innovations will reshape our reality.</p>
+        <ul>
+            <li>
+                <h3>Spatial Computing</h3>
+                <div><h3>The Death of the Screen</h3><p>Spatial computing maps digital interfaces directly into the physical world. Instead of opening an anatomy app on a laptop, a medical student dissects a holographic heart floating in their living room.</p></div>
+            </li>
+            <li>
+                <h3>Advanced Robotics & Humanoids</h3>
+                <div><h3>The Automation of Labor</h3><p>While AI automates cognitive work, general-purpose humanoid robots (like Tesla Optimus or Figure 01) powered by multimodal AI are preparing to automate physical labor, fundamentally restructuring global supply chains.</p></div>
+            </li>
+            <li>
+                <h3>3D Printing & Additive Manufacturing</h3>
+                <div><h3>Instant Infrastructure</h3><p>From printing rocket engines in 24 hours to printing biological tissue. Distributed manufacturing means we will email physical objects (blueprints) and print them locally, destroying traditional shipping logistics.</p></div>
+            </li>
+            <li>
+                <h3>Solid-State Batteries</h3>
+                <div><h3>The Energy Density Leap</h3><p>The bottleneck for drones, robots, and EVs is energy density. Solid-state batteries promise to double the range, eliminate fire risks, and charge in minutes, unlocking electric aviation and untethered robotics.</p></div>
+            </li>
+            <li>
+                <h3>Smart Dust & Micro-Sensors</h3>
+                <div><h3>The Omnipresent Network</h3><p>Sensors the size of a grain of sand, distributed across agricultural fields or integrated into concrete, forming massive mesh networks that monitor the physical health of the planet in absolute real-time.</p></div>
+            </li>
+            <li>
+                <h3>Neuromorphic Computing</h3>
+                <div><h3>Silicon Brains</h3><p>Current chips process data sequentially. Neuromorphic chips mimic the human brain's neural structure, processing information in parallel while consuming a fraction of the power, unlocking true mobile AI.</p></div>
+            </li>
+            <li>
+                <h3>Exoskeletons</h3>
+                <div><h3>Human Augmentation</h3><p>Robotic suits that multiply human strength and endurance. Initially developed for military and medical rehabilitation, they will soon become standard in construction, warehouse logistics, and eldercare.</p></div>
+            </li>
+        </ul>
+        <h2>Cyber & Web3</h2>
+        <p>The battleground of truth. Cryptography, decentralized ledgers, and zero-trust security.</p>
+        <ul>
+            <li>
+                <h3>Zero-Trust Architecture</h3>
+                <div><h3>Verify Everything</h3><p>The old security model (a strong perimeter with a soft inside) is dead. Zero Trust assumes the network is already breached. Every single request between servers must be cryptographically authenticated, every time.</p></div>
+            </li>
+            <li>
+                <h3>Quantum Cryptography</h3>
+                <div><h3>The Q-Day Threat</h3><p>When quantum computers become powerful enough, they will instantly shatter modern RSA encryption. The race is on right now to implement Post-Quantum Cryptography (PQC) before state-actors harvest encrypted data today to decrypt tomorrow.</p></div>
+            </li>
+            <li>
+                <h3>Decentralized Finance (DeFi)</h3>
+                <div><h3>Code as Law</h3><p>Replacing traditional banking infrastructure (brokers, clearinghouses) with automated smart contracts on a blockchain. It allows for peer-to-peer lending and trading with zero intermediaries and 100% transparency.</p></div>
+            </li>
+            <li>
+                <h3>Zero-Knowledge Proofs (ZKPs)</h3>
+                <div><h3>Privacy by Math</h3><p>A cryptographic breakthrough that allows you to prove you know a secret without revealing the secret itself. Example: Proving you are over 18 to a website without giving them your actual birthdate or ID.</p></div>
+            </li>
+            <li>
+                <h3>AI-Powered Cyber Warfare</h3>
+                <div><h3>Machine vs Machine</h3><p>Hackers are using AI to generate polymorphic malware that changes its code to evade detection. In response, AI defense systems autonomously patch vulnerabilities in milliseconds. It is a supersonic game of chess.</p></div>
+            </li>
+            <li>
+                <h3>Digital Identity & Deepfakes</h3>
+                <div><h3>The Crisis of Reality</h3><p>When AI can clone your voice and face perfectly, how do you prove who you are online? Cryptographic signatures embedded in cameras and decentralized identity protocols will become mandatory for digital trust.</p></div>
+            </li>
+        </ul>
+        <h2>BioTech & The Mind</h2>
+        <p>Hacking the biological code. Neural interfaces, genomic editing, and radical longevity.</p>
+        <ul>
+            <li>
+                <h3>Brain-Computer Interfaces (BCI)</h3>
+                <div><h3>The Final Frontier</h3><p>Connecting the human cortex directly to silicon. Early applications are restoring movement to paralyzed individuals. Future applications involve high-bandwidth thought-to-text communication, fundamentally altering what it means to be human.</p></div>
+            </li>
+            <li>
+                <h3>CRISPR & Gene Editing</h3>
+                <div><h3>Debugging DNA</h3><p>CRISPR acts as a molecular scissors, allowing scientists to cut out defective genetic code and paste in healthy sequences. We are moving from treating genetic diseases to outright curing them at the source code level.</p></div>
+            </li>
+            <li>
+                <h3>Synthetic Biology</h3>
+                <div><h3>Designing Life</h3><p>Instead of relying on nature, engineers are designing custom organisms from scratch to solve problems—like bacteria engineered to consume ocean plastic or produce sustainable biofuels.</p></div>
+            </li>
+            <li>
+                <h3>AI in Drug Discovery</h3>
+                <div><h3>Folding the Unknown</h3><p>Systems like AlphaFold have predicted the 3D structures of hundreds of millions of proteins. This allows AI to simulate how potential drugs will interact with diseases in a computer, cutting years and billions of dollars off pharmaceutical research.</p></div>
+            </li>
+            <li>
+                <h3>Radical Longevity</h3>
+                <div><h3>Solving Aging</h3><p>Aging is increasingly viewed not as an inevitability, but as a disease of cellular decay. Through senolytics, epigenetic reprogramming, and telomere extension, science is actively working to push the human healthspan past 120 years.</p></div>
+            </li>
+            <li>
+                <h3>Digital Phenotyping</h3>
+                <div><h3>Quantified Mental Health</h3><p>Using data from your smartphone (typing speed, scroll patterns, vocal tone) to detect the early onset of depression, anxiety, or Alzheimer's before you even realize you have symptoms.</p></div>
+            </li>
+        </ul>
+        <h2>Space & Physics</h2>
+        <p>The multi-planetary future. Orbital mechanics, fusion power, and cosmic expansion.</p>
+        <ul>
+            <li>
+                <h3>Reusable Rockets</h3>
+                <div><h3>The Economics of Orbit</h3><p>For 50 years, rockets were thrown away after one use. Reusability (like SpaceX's Falcon 9 and Starship) has dropped the cost of launching mass to orbit by 90%, opening space to commercial enterprise.</p></div>
+            </li>
+            <li>
+                <h3>Orbital Manufacturing</h3>
+                <div><h3>Zero-G Factories</h3><p>Certain materials, like flawless fiber optic cables (ZBLAN) or perfect protein crystals for pharmaceuticals, can only be manufactured in the microgravity of space. Factories are moving to Low Earth Orbit.</p></div>
+            </li>
+            <li>
+                <h3>Nuclear Fusion</h3>
+                <div><h3>Star Power on Earth</h3><p>Fusing atoms together releases nearly infinite clean energy with zero radioactive waste. Recent breakthroughs in magnetic confinement (Tokamaks) and laser ignition mean commercial fusion could power the grid by 2040.</p></div>
+            </li>
+            <li>
+                <h3>Asteroid Mining</h3>
+                <div><h3>The Trillion Dollar Rock</h3><p>A single metallic asteroid can contain more platinum and rare earth metals than have ever been mined in human history. The technology to capture, mine, and return these resources is currently in active development.</p></div>
+            </li>
+            <li>
+                <h3>Megaconstellations</h3>
+                <div><h3>The Orbital Internet</h3><p>Deploying tens of thousands of small satellites in Low Earth Orbit (like Starlink) to blanket the entire planet in high-speed, low-latency broadband, connecting the most remote regions on Earth.</p></div>
+            </li>
+            <li>
+                <h3>Quantum Supremacy</h3>
+                <div><h3>Breaking Classical Limits</h3><p>Quantum computers use qubits existing in superposition. They don't just calculate faster; they solve problems classical computers never could, simulating complex molecules to cure diseases and create new materials.</p></div>
+            </li>
+        </ul>
+    </div>
 </body>
 </html>
