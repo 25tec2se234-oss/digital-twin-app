@@ -614,7 +614,7 @@
                     .filter(t => t.worldId === worldId && exploredNodes.has(t.topic.id))
                     .map(t => t.topic.title);
 
-                const token = localStorage.getItem('token');
+                const token = localStorage.getItem('dt_token') || localStorage.getItem('token');
                 const res = await fetch('/api/futureverse/generate-node', {
                     method: 'POST',
                     headers: {
