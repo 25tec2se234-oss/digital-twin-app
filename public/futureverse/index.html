@@ -184,7 +184,7 @@
                 <span class="font-display font-bold tracking-widest uppercase text-sm">Futureverse</span>
             </div>
             
-            
+            <!-- Desktop HUD Stats -->
             <div class="flex gap-4 items-center">
                 <div class="hidden md:flex gap-3">
                     <div class="flex flex-col items-end">
@@ -197,6 +197,17 @@
                         <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Mastery</span>
                         <span id="hud-mastery" class="text-sm font-mono text-emerald-400">0</span>
                     </div>
+                    <div class="flex flex-col items-end ml-4">
+                        <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Profile Power</span>
+                        <span id="hud-power" class="text-sm font-mono text-amber-400">0%</span>
+                    </div>
+                </div>
+                
+                <!-- Mobile Compact Stats -->
+                <div class="flex md:hidden items-center gap-2 bg-white/5 border border-white/10 rounded-full px-3 py-1">
+                    <span class="text-[10px] font-mono text-purple-400">Lv.<span id="hud-level-mobile">1</span></span>
+                    <span class="text-white/30">|</span>
+                    <span class="text-[10px] font-mono text-amber-400"><span id="hud-power-mobile">0</span>%</span>
                 </div>
                 
                 <button onclick="showGuide()" class="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-white transition bg-white/5 px-3 py-1.5 rounded-full border border-white/10" aria-label="How to Explore">?</button>
@@ -347,30 +358,30 @@
                 "content": "<h3>Beyond the Chatbot</h3><p>Generative AI represents a shift from analytical processing to synthetic creation. By mapping the statistical probability of tokens in a high-dimensional vector space, LLMs construct coherent text, code, and reasoning pathways.</p><div class='bg-white/5 border border-white/10 p-5 rounded-xl my-6'><h4 class='text-white font-bold mb-2'>Student Application</h4><p class='text-sm text-slate-300 m-0'>Don't use it to write essays. Use it to generate Socratic counter-arguments to your thesis to stress-test your logic before writing.</p></div>",
                 "challenge": {
                     "type": "scenario",
-                    "question": "Based on \"Generative AI Fundamentals\", which approach demonstrates the most advanced application of this concept?",
+                    "question": "What is the CORE mechanism that allows a Generative AI to produce coherent text?"Generative AI Fundamentals\", which approach demonstrates the most advanced application of this concept?",
                     "options": [
                         {
                             "id": "A",
-                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "text": "It copies text from a database it was trained on.",
                             "correct": false
                         },
                         {
                             "id": "B",
-                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "text": "It predicts the statistically most likely next token in a high-dimensional vector space.",
                             "correct": true
                         },
                         {
                             "id": "C",
-                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "text": "It uses hard-coded grammar rules to assemble grammatically correct sentences.",
                             "correct": false
                         },
                         {
                             "id": "D",
-                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "text": "It generates images and converts them to text for output.",
                             "correct": false
                         }
-                    ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    ]
+                    , "explanation": "Generative AI works by predicting the next token based on statistical probability distributions in a high-dimensional vector space — not by copying or using rigid grammar rules."
                 }
             },
             {
@@ -379,30 +390,30 @@
                 "content": "<h3>The Digital Workforce</h3><p>An AI agent is an LLM wrapped in a control loop given access to tools. Instead of waiting for prompts, agents break down a goal, plan steps, and execute them autonomously. We are transitioning from 'AI as an Oracle' to 'AI as an Employee'.</p>",
                 "challenge": {
                     "type": "multiple-choice",
-                    "question": "Based on \"Autonomous Agents\", which approach demonstrates the most advanced application of this concept?",
+                    "question": "How does an Autonomous AI Agent fundamentally differ from a standard chatbot?"Autonomous Agents\", which approach demonstrates the most advanced application of this concept?",
                     "options": [
                         {
                             "id": "A",
-                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "text": "It can speak faster and handle more users simultaneously.",
                             "correct": false
                         },
                         {
                             "id": "B",
-                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
-                            "correct": true
+                            "text": "It runs on specialized hardware unavailable to regular users.",
+                            "correct": false
                         },
                         {
                             "id": "C",
-                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
-                            "correct": false
+                            "text": "It is wrapped in a control loop that allows it to plan, execute tool actions, and iterate toward a goal without constant human prompting.",
+                            "correct": true
                         },
                         {
                             "id": "D",
-                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "text": "It has a larger parameter count than standard language models.",
                             "correct": false
                         }
-                    ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    ]
+                    , "explanation": "The key distinction is the control loop — agents don't just respond, they autonomously break down goals, select tools, execute actions, and self-correct until the task is complete."
                 }
             },
             {
@@ -411,30 +422,30 @@
                 "content": "<h3>The Cure for Hallucinations</h3><p>LLMs don't know private data. RAG solves this by converting documents into vector embeddings. When you ask a question, it retrieves the most relevant data and forces the AI to answer using ONLY that context.</p>",
                 "challenge": {
                     "type": "application",
-                    "question": "Based on \"RAG (Retrieval-Augmented Generation)\", which approach demonstrates the most advanced application of this concept?",
+                    "question": "What problem does RAG (Retrieval-Augmented Generation) primarily solve?"RAG (Retrieval-Augmented Generation)\", which approach demonstrates the most advanced application of this concept?",
                     "options": [
                         {
                             "id": "A",
-                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "text": "It makes AI models run faster on slower hardware.",
                             "correct": false
                         },
                         {
                             "id": "B",
-                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "text": "It prevents AI models from generating false or outdated information by grounding them in retrieved real-world documents.",
                             "correct": true
                         },
                         {
                             "id": "C",
-                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "text": "It allows AI to generate images alongside text.",
                             "correct": false
                         },
                         {
                             "id": "D",
-                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "text": "It reduces the cost of training large language models from scratch.",
                             "correct": false
                         }
-                    ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    ]
+                    , "explanation": "RAG grounds the AI's output by first retrieving the most relevant documents from a knowledge base and forcing the model to answer ONLY using that context — directly combating hallucinations."
                 }
             },
             {
@@ -443,30 +454,30 @@
                 "content": "<h3>The Math of Morality</h3><p>Models are mirrors reflecting historical data. If a company uses biased hiring data, the AI mathematically scales that bias. AI Alignment ensures outputs align with human values and safety constraints.</p>",
                 "challenge": {
                     "type": "scenario",
-                    "question": "Based on \"Algorithmic Ethics & Bias\", which approach demonstrates the most advanced application of this concept?",
+                    "question": "A hiring algorithm trained on historical resumes consistently ranks women lower. This is BEST classified as:"Algorithmic Ethics & Bias\", which approach demonstrates the most advanced application of this concept?",
                     "options": [
                         {
                             "id": "A",
-                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "text": "A software bug that can be fixed with a simple patch.",
                             "correct": false
                         },
                         {
                             "id": "B",
-                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
-                            "correct": true
+                            "text": "Intentional design by the algorithm's creators.",
+                            "correct": false
                         },
                         {
                             "id": "C",
-                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
-                            "correct": false
+                            "text": "Algorithmic bias — a systemic error arising from biased training data perpetuating historical discrimination.",
+                            "correct": true
                         },
                         {
                             "id": "D",
-                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "text": "Expected AI behavior that reflects objective statistical truth.",
                             "correct": false
                         }
-                    ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    ]
+                    , "explanation": "This is algorithmic bias. When AI is trained on historically biased human decisions, it learns to replicate and scale that bias — making ethical data curation a non-negotiable requirement."
                 }
             },
             {
@@ -475,30 +486,30 @@
                 "content": "<h3>Teaching Old Models New Tricks</h3><p>Fine-tuning adjusts a pre-trained model's weights using a custom dataset. Using parameter-efficient fine-tuning (PEFT) like LoRA, developers can train massive models on cheap consumer GPUs to speak in specific brand voices or output strict JSON.</p>",
                 "challenge": {
                     "type": "multiple-choice",
-                    "question": "Based on \"Model Fine-Tuning (LoRA/PEFT)\", which approach demonstrates the most advanced application of this concept?",
+                    "question": "What makes LoRA/PEFT techniques advantageous over full model fine-tuning?"Model Fine-Tuning (LoRA/PEFT)\", which approach demonstrates the most advanced application of this concept?",
                     "options": [
                         {
                             "id": "A",
-                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "text": "They permanently store new information inside the original model weights.",
                             "correct": false
                         },
                         {
                             "id": "B",
-                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
-                            "correct": true
+                            "text": "They add new layers on top of the model that require more compute than training from scratch.",
+                            "correct": false
                         },
                         {
                             "id": "C",
-                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
-                            "correct": false
+                            "text": "They inject small trainable matrices into the model, allowing domain adaptation with a fraction of the compute and memory cost.",
+                            "correct": true
                         },
                         {
                             "id": "D",
-                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "text": "They require access to proprietary cloud infrastructure from the AI provider.",
                             "correct": false
                         }
-                    ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    ]
+                    , "explanation": "LoRA (Low-Rank Adaptation) freezes original model weights and inserts small trainable matrices — achieving near-full fine-tuning quality at a fraction of the computational cost."
                 }
             },
             {
@@ -507,30 +518,30 @@
                 "content": "<h3>When Machines See</h3><p>Multimodal models like GPT-4V or Gemini don't just read text; they process pixels. This unlocks massive potential in medical imaging, autonomous driving, and real-time environment analysis via smartphone cameras.</p>",
                 "challenge": {
                     "type": "application",
-                    "question": "Based on \"Computer Vision & Multimodality\", which approach demonstrates the most advanced application of this concept?",
+                    "question": "What does a multimodal AI model enable that a text-only model cannot?"Computer Vision & Multimodality\", which approach demonstrates the most advanced application of this concept?",
                     "options": [
                         {
                             "id": "A",
-                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "text": "Faster processing of large documents due to hardware acceleration.",
                             "correct": false
                         },
                         {
                             "id": "B",
-                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "text": "Understanding and reasoning across multiple input types simultaneously — such as image, audio, and text together.",
                             "correct": true
                         },
                         {
                             "id": "C",
-                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "text": "Generating more grammatically correct text responses.",
                             "correct": false
                         },
                         {
                             "id": "D",
-                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "text": "Operating without an internet connection on mobile devices.",
                             "correct": false
                         }
-                    ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    ]
+                    , "explanation": "Multimodality allows the model to understand context from images, video, audio, and text simultaneously — enabling applications like visual question answering and medical image analysis."
                 }
             },
             {
@@ -539,30 +550,30 @@
                 "content": "<h3>Creating the Training Grounds</h3><p>The world is running out of high-quality human data. Synthetic data generation uses AI to create mathematically realistic but fake datasets, allowing companies to train models without violating privacy laws (like GDPR or HIPAA).</p>",
                 "challenge": {
                     "type": "scenario",
-                    "question": "Based on \"Synthetic Data Generation\", which approach demonstrates the most advanced application of this concept?",
+                    "question": "When is synthetic data generation MOST critical in an AI project?"Synthetic Data Generation\", which approach demonstrates the most advanced application of this concept?",
                     "options": [
                         {
                             "id": "A",
-                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "text": "When the team wants to replace their entire dataset with cheaper, computer-generated alternatives.",
                             "correct": false
                         },
                         {
                             "id": "B",
-                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "text": "When real-world data for rare or sensitive scenarios (e.g., medical edge cases, fraud) is too limited or legally restricted to collect.",
                             "correct": true
                         },
                         {
                             "id": "C",
-                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "text": "When the model performs too well and needs harder examples to learn from.",
                             "correct": false
                         },
                         {
                             "id": "D",
-                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "text": "When the project budget exceeds the allowable spend on data storage.",
                             "correct": false
                         }
-                    ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    ]
+                    , "explanation": "Synthetic data is most powerful for rare-event training (fraud, medical anomalies) and privacy-protected domains where real data collection is legally or ethically impossible."
                 }
             },
             {
@@ -571,30 +582,30 @@
                 "content": "<h3>Intelligence on the Fringe</h3><p>Instead of sending data to the cloud, Edge AI runs models directly on your phone, IoT device, or car. This guarantees zero-latency inference and total privacy, crucial for autonomous vehicles and real-time translation.</p>",
                 "challenge": {
                     "type": "multiple-choice",
-                    "question": "Based on \"Edge AI\", which approach demonstrates the most advanced application of this concept?",
+                    "question": "What is the PRIMARY advantage of deploying AI models at the 'edge' (on device) versus in the cloud?"Edge AI\", which approach demonstrates the most advanced application of this concept?",
                     "options": [
                         {
                             "id": "A",
-                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "text": "Edge models are always more accurate than cloud-based ones.",
                             "correct": false
                         },
                         {
                             "id": "B",
-                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
-                            "correct": true
+                            "text": "Edge deployment eliminates the need for model training entirely.",
+                            "correct": false
                         },
                         {
                             "id": "C",
-                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
-                            "correct": false
+                            "text": "It enables real-time inference with reduced latency, offline capability, and enhanced privacy since data never leaves the device.",
+                            "correct": true
                         },
                         {
                             "id": "D",
-                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "text": "It allows unlimited model size since device storage is cheaper than cloud.",
                             "correct": false
                         }
-                    ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    ]
+                    , "explanation": "Edge AI's key advantages are ultra-low latency (no network round-trip), offline operation, and privacy (data stays on-device) — critical for healthcare wearables, autonomous vehicles, and industrial systems."
                 }
             }
         ]
@@ -614,30 +625,30 @@
                 "content": "<h3>The Foundation of Trust</h3><p>Cognitive empathy is the ability to consciously understand another person's perspective. It is the strategic ability to map emotional context. Real business runs on human trust and shared vulnerability—something an algorithm physically cannot possess.</p>",
                 "challenge": {
                     "type": "scenario",
-                    "question": "Based on \"Cognitive Empathy\", which approach demonstrates the most advanced application of this concept?",
+                    "question": "How does COGNITIVE EMPATHY differ from emotional empathy in a professional context?"Cognitive Empathy\", which approach demonstrates the most advanced application of this concept?",
                     "options": [
                         {
                             "id": "A",
-                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "text": "Cognitive empathy means feeling the same emotions as the other person.",
                             "correct": false
                         },
                         {
                             "id": "B",
-                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "text": "It is the intellectual ability to understand another's perspective and reasoning without necessarily sharing their emotional state.",
                             "correct": true
                         },
                         {
                             "id": "C",
-                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "text": "It requires physical presence and cannot work in remote or async settings.",
                             "correct": false
                         },
                         {
                             "id": "D",
-                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "text": "Cognitive empathy is less valuable than emotional empathy in negotiations.",
                             "correct": false
                         }
-                    ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    ]
+                    , "explanation": "Cognitive empathy is a learnable, analytical skill — understanding HOW someone thinks and what drives their decisions — making it far more applicable and controllable in professional contexts than raw emotional mirroring."
                 }
             },
             {
@@ -646,30 +657,30 @@
                 "content": "<h3>Expanding the Pie</h3><p>Basic negotiation is haggling over price. Complex negotiation is uncovering the hidden, unstated desires of the other party (fear of failure, ego) and restructuring the deal so both sides win. This requires reading micro-expressions and improvising under pressure.</p>",
                 "challenge": {
                     "type": "multiple-choice",
-                    "question": "Based on \"Complex Negotiation\", which approach demonstrates the most advanced application of this concept?",
+                    "question": "In complex negotiation, what is the concept of 'ZOPA' and why is it critical?"Complex Negotiation\", which approach demonstrates the most advanced application of this concept?",
                     "options": [
                         {
                             "id": "A",
-                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "text": "ZOPA is the final offer one party makes before walking away from the table.",
                             "correct": false
                         },
                         {
                             "id": "B",
-                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "text": "ZOPA (Zone of Possible Agreement) is the range where both parties' reservation points overlap — the only space where a deal can exist.",
                             "correct": true
                         },
                         {
                             "id": "C",
-                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "text": "ZOPA refers to the list of non-negotiable demands in a complex deal.",
                             "correct": false
                         },
                         {
                             "id": "D",
-                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "text": "ZOPA is a manipulation tactic to anchor the first offer extremely high.",
                             "correct": false
                         }
-                    ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    ]
+                    , "explanation": "Identifying the ZOPA is foundational to any negotiation. If there's no overlap between what each party will accept at minimum, no deal is possible — and skilled negotiators work to expand the ZOPA, not just fight within it."
                 }
             },
             {
@@ -678,30 +689,30 @@
                 "content": "<h3>Seeing the Forest</h3><p>Systems thinkers don't just solve immediate problems; they look for the feedback loops and root causes that created the problem. Instead of repeatedly fixing a bug, you redesign the architecture so the bug is mathematically impossible.</p>",
                 "challenge": {
                     "type": "application",
-                    "question": "Based on \"Systems Thinking\", which approach demonstrates the most advanced application of this concept?",
+                    "question": "Which behavior BEST demonstrates Systems Thinking when diagnosing a problem?"Systems Thinking\", which approach demonstrates the most advanced application of this concept?",
                     "options": [
                         {
                             "id": "A",
-                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "text": "Immediately implementing the most obvious fix to stop the problem from worsening.",
                             "correct": false
                         },
                         {
                             "id": "B",
-                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "text": "Mapping feedback loops and second-order effects across the entire system before intervening.",
                             "correct": true
                         },
                         {
                             "id": "C",
-                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "text": "Delegating the problem to the team member most directly affected by it.",
                             "correct": false
                         },
                         {
                             "id": "D",
-                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "text": "Focusing efforts exclusively on the part of the system that is most visibly broken.",
                             "correct": false
                         }
-                    ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    ]
+                    , "explanation": "Systems Thinkers resist the urge to treat symptoms. They model the entire system — identifying feedback loops and leverage points — because a well-intentioned fix in one area can cause cascading failures elsewhere."
                 }
             },
             {
@@ -710,30 +721,30 @@
                 "content": "<h3>Decisions Under Darkness</h3><p>AI requires structured data to make predictions. In a true crisis, data is chaotic or absent. Human leaders must exercise judgment and take decisive action in the dark, managing the emotional panic of their teams.</p>",
                 "challenge": {
                     "type": "scenario",
-                    "question": "Based on \"Crisis Management\", which approach demonstrates the most advanced application of this concept?",
+                    "question": "In a high-stakes crisis, the FIRST priority of effective crisis management is:"Crisis Management\", which approach demonstrates the most advanced application of this concept?",
                     "options": [
                         {
                             "id": "A",
-                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "text": "Immediately communicating to the public to manage reputation before full facts are known.",
                             "correct": false
                         },
                         {
                             "id": "B",
-                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "text": "Stabilizing the immediate situation to stop the escalation, then gathering facts before committing to a full response strategy.",
                             "correct": true
                         },
                         {
                             "id": "C",
-                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "text": "Identifying and publicly naming the person responsible for the crisis.",
                             "correct": false
                         },
                         {
                             "id": "D",
-                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "text": "Waiting until all information is available before taking any action to avoid making the situation worse.",
                             "correct": false
                         }
-                    ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    ]
+                    , "explanation": "Effective crisis management is two-phase: first, contain the bleeding (immediate stabilization), then diagnose and respond strategically. Both acting without data AND waiting too long are catastrophic errors."
                 }
             },
             {
@@ -742,30 +753,30 @@
                 "content": "<h3>Boiling it Down</h3><p>AI relies entirely on analogies (training data). Innovation requires First Principles reasoning—ignoring conventional wisdom and boiling a problem down to fundamental physical or logical truths, then building up from there.</p>",
                 "challenge": {
                     "type": "multiple-choice",
-                    "question": "Based on \"First Principles Reasoning\", which approach demonstrates the most advanced application of this concept?",
+                    "question": "First Principles Reasoning differs from analogical thinking primarily because:"First Principles Reasoning\", which approach demonstrates the most advanced application of this concept?",
                     "options": [
                         {
                             "id": "A",
-                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "text": "First Principles Reasoning is faster and requires less mental effort.",
                             "correct": false
                         },
                         {
                             "id": "B",
-                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
+                            "text": "It breaks a problem down to its fundamental truths and rebuilds solutions from scratch, rather than adapting existing models.",
                             "correct": true
                         },
                         {
                             "id": "C",
-                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
+                            "text": "Analogical thinking is only useful in creative fields while First Principles applies to engineering.",
                             "correct": false
                         },
                         {
                             "id": "D",
-                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "text": "First Principles is a management philosophy, not a problem-solving technique.",
                             "correct": false
                         }
-                    ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    ]
+                    , "explanation": "First Principles strips away assumption and convention. Instead of asking 'how has this been done before?', it asks 'what is fundamentally true here?' — enabling breakthrough innovation where analogical thinking only produces incremental improvements."
                 }
             },
             {
@@ -774,30 +785,30 @@
                 "content": "<h3>The Engineering of Belief</h3><p>You can have the best product in the world, but if you cannot tell a compelling story, no one will buy it. Storytelling is the API for the human brain. AI can write a memo; it cannot inspire a team to work over the weekend.</p>",
                 "challenge": {
                     "type": "application",
-                    "question": "Based on \"High-Stakes Storytelling\", which approach demonstrates the most advanced application of this concept?",
+                    "question": "What makes a story 'high-stakes' in a professional or leadership context?"High-Stakes Storytelling\", which approach demonstrates the most advanced application of this concept?",
                     "options": [
                         {
                             "id": "A",
-                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "text": "It involves dramatic events and extreme emotional language to provoke a strong reaction.",
                             "correct": false
                         },
                         {
                             "id": "B",
-                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
-                            "correct": true
+                            "text": "It features a clear protagonist overcoming a trivial but relatable obstacle.",
+                            "correct": false
                         },
                         {
                             "id": "C",
-                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
-                            "correct": false
+                            "text": "The outcome of the story directly changes what the audience believes, decides, or does — making it a tool for influence and alignment.",
+                            "correct": true
                         },
                         {
                             "id": "D",
-                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "text": "It is told by a senior leader and carries authority due to their position.",
                             "correct": false
                         }
-                    ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    ]
+                    , "explanation": "High-stakes storytelling is defined by its function, not its drama. A truly high-stakes story shifts perspectives, galvanizes action, or builds trust — and can be a quiet, personal anecdote that fundamentally changes a decision."
                 }
             },
             {
@@ -806,30 +817,30 @@
                 "content": "<h3>Irrational Markets</h3><p>Humans do not act rationally. They are driven by loss aversion, sunk cost fallacies, and social proof. Understanding these biases allows you to design better products and anticipate market movements better than any linear predictive model.</p>",
                 "challenge": {
                     "type": "scenario",
-                    "question": "Based on \"Behavioral Economics\", which approach demonstrates the most advanced application of this concept?",
+                    "question": "A restaurant adds a 'most expensive' decoy item to its menu. This exploits which principle?"Behavioral Economics\", which approach demonstrates the most advanced application of this concept?",
                     "options": [
                         {
                             "id": "A",
-                            "text": "Implementing it as a standalone static process with manual oversight.",
+                            "text": "Loss Aversion — people fear losing money more than they enjoy gaining value.",
                             "correct": false
                         },
                         {
                             "id": "B",
-                            "text": "Integrating it deeply into a continuous feedback loop that adapts dynamically to real-time data.",
-                            "correct": true
+                            "text": "Social Proof — people order what they see others ordering.",
+                            "correct": false
                         },
                         {
                             "id": "C",
-                            "text": "Ignoring edge cases to focus on theoretical modeling without practical deployment.",
-                            "correct": false
+                            "text": "The Decoy Effect / Anchoring — the high-priced item makes mid-tier options seem reasonably priced by comparison.",
+                            "correct": true
                         },
                         {
                             "id": "D",
-                            "text": "Replacing all human involvement entirely, regardless of ethical or systemic constraints.",
+                            "text": "The Scarcity Principle — rare items are perceived as more valuable.",
                             "correct": false
                         }
-                    ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    ]
+                    , "explanation": "This is the Decoy Effect combined with price anchoring. By setting a high anchor, the restaurant makes the second-most-expensive option feel like exceptional value — reliably shifting customers toward it."
                 }
             },
             {
@@ -861,7 +872,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Mastering this concept requires moving beyond memorization into genuine comprehension — understanding the WHY behind the HOW, which alone enables adaptive application in novel situations."
                 }
             }
         ]
@@ -904,7 +915,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The most effective practitioners in this domain succeed not by knowing more, but by developing superior mental models that allow faster, more accurate pattern recognition under pressure."
                 }
             },
             {
@@ -936,7 +947,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Theoretical knowledge without deliberate practice creates an illusion of competence. Real mastery is demonstrated by performance under novel conditions, not test conditions."
                 }
             },
             {
@@ -968,7 +979,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The key insight here is that systems are interconnected. Optimizing one dimension in isolation often creates unforeseen tradeoffs elsewhere — understanding this is what separates experts from novices."
                 }
             },
             {
@@ -1000,7 +1011,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Excellence in this area demands continuous iteration: apply, observe, adjust. The feedback loop is not a nice-to-have; it is the mechanism through which understanding actually deepens."
                 }
             },
             {
@@ -1032,7 +1043,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The counterintuitive truth is that speed of learning often comes from slowing down to identify and explicitly correct specific weak spots — not from repeating what you already know."
                 }
             },
             {
@@ -1064,7 +1075,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Context determines the right approach. Rigid application of a single framework will fail in complex environments; the highest skill is knowing which tool to apply and when to adapt."
                 }
             }
         ]
@@ -1107,7 +1118,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The professionals who excel here share a common trait: intellectual humility. They actively seek disconfirming evidence, remain open to updating their mental models, and never mistake fluency for mastery."
                 }
             },
             {
@@ -1139,7 +1150,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Second-order thinking is the differentiator. Anyone can see first-order consequences; the exceptional practitioner maps the consequences of consequences before committing to any action."
                 }
             },
             {
@@ -1171,7 +1182,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Mastering this concept requires moving beyond memorization into genuine comprehension — understanding the WHY behind the HOW, which alone enables adaptive application in novel situations."
                 }
             },
             {
@@ -1203,7 +1214,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The most effective practitioners in this domain succeed not by knowing more, but by developing superior mental models that allow faster, more accurate pattern recognition under pressure."
                 }
             },
             {
@@ -1235,7 +1246,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Theoretical knowledge without deliberate practice creates an illusion of competence. Real mastery is demonstrated by performance under novel conditions, not test conditions."
                 }
             },
             {
@@ -1267,7 +1278,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The key insight here is that systems are interconnected. Optimizing one dimension in isolation often creates unforeseen tradeoffs elsewhere — understanding this is what separates experts from novices."
                 }
             },
             {
@@ -1299,7 +1310,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Excellence in this area demands continuous iteration: apply, observe, adjust. The feedback loop is not a nice-to-have; it is the mechanism through which understanding actually deepens."
                 }
             }
         ]
@@ -1342,7 +1353,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The counterintuitive truth is that speed of learning often comes from slowing down to identify and explicitly correct specific weak spots — not from repeating what you already know."
                 }
             },
             {
@@ -1374,7 +1385,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Context determines the right approach. Rigid application of a single framework will fail in complex environments; the highest skill is knowing which tool to apply and when to adapt."
                 }
             },
             {
@@ -1406,7 +1417,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The professionals who excel here share a common trait: intellectual humility. They actively seek disconfirming evidence, remain open to updating their mental models, and never mistake fluency for mastery."
                 }
             },
             {
@@ -1438,7 +1449,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Second-order thinking is the differentiator. Anyone can see first-order consequences; the exceptional practitioner maps the consequences of consequences before committing to any action."
                 }
             },
             {
@@ -1470,7 +1481,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Mastering this concept requires moving beyond memorization into genuine comprehension — understanding the WHY behind the HOW, which alone enables adaptive application in novel situations."
                 }
             },
             {
@@ -1502,7 +1513,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The most effective practitioners in this domain succeed not by knowing more, but by developing superior mental models that allow faster, more accurate pattern recognition under pressure."
                 }
             }
         ]
@@ -1545,7 +1556,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Theoretical knowledge without deliberate practice creates an illusion of competence. Real mastery is demonstrated by performance under novel conditions, not test conditions."
                 }
             },
             {
@@ -1577,7 +1588,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The key insight here is that systems are interconnected. Optimizing one dimension in isolation often creates unforeseen tradeoffs elsewhere — understanding this is what separates experts from novices."
                 }
             },
             {
@@ -1609,7 +1620,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Excellence in this area demands continuous iteration: apply, observe, adjust. The feedback loop is not a nice-to-have; it is the mechanism through which understanding actually deepens."
                 }
             },
             {
@@ -1641,7 +1652,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The counterintuitive truth is that speed of learning often comes from slowing down to identify and explicitly correct specific weak spots — not from repeating what you already know."
                 }
             },
             {
@@ -1673,7 +1684,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Context determines the right approach. Rigid application of a single framework will fail in complex environments; the highest skill is knowing which tool to apply and when to adapt."
                 }
             },
             {
@@ -1705,7 +1716,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The professionals who excel here share a common trait: intellectual humility. They actively seek disconfirming evidence, remain open to updating their mental models, and never mistake fluency for mastery."
                 }
             },
             {
@@ -1737,7 +1748,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Second-order thinking is the differentiator. Anyone can see first-order consequences; the exceptional practitioner maps the consequences of consequences before committing to any action."
                 }
             }
         ]
@@ -1780,7 +1791,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Mastering this concept requires moving beyond memorization into genuine comprehension — understanding the WHY behind the HOW, which alone enables adaptive application in novel situations."
                 }
             },
             {
@@ -1812,7 +1823,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The most effective practitioners in this domain succeed not by knowing more, but by developing superior mental models that allow faster, more accurate pattern recognition under pressure."
                 }
             },
             {
@@ -1844,7 +1855,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Theoretical knowledge without deliberate practice creates an illusion of competence. Real mastery is demonstrated by performance under novel conditions, not test conditions."
                 }
             },
             {
@@ -1876,7 +1887,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The key insight here is that systems are interconnected. Optimizing one dimension in isolation often creates unforeseen tradeoffs elsewhere — understanding this is what separates experts from novices."
                 }
             },
             {
@@ -1908,7 +1919,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Excellence in this area demands continuous iteration: apply, observe, adjust. The feedback loop is not a nice-to-have; it is the mechanism through which understanding actually deepens."
                 }
             },
             {
@@ -1940,7 +1951,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The counterintuitive truth is that speed of learning often comes from slowing down to identify and explicitly correct specific weak spots — not from repeating what you already know."
                 }
             }
         ]
@@ -1983,7 +1994,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Context determines the right approach. Rigid application of a single framework will fail in complex environments; the highest skill is knowing which tool to apply and when to adapt."
                 }
             },
             {
@@ -2015,7 +2026,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The professionals who excel here share a common trait: intellectual humility. They actively seek disconfirming evidence, remain open to updating their mental models, and never mistake fluency for mastery."
                 }
             },
             {
@@ -2047,7 +2058,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Second-order thinking is the differentiator. Anyone can see first-order consequences; the exceptional practitioner maps the consequences of consequences before committing to any action."
                 }
             },
             {
@@ -2079,7 +2090,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Mastering this concept requires moving beyond memorization into genuine comprehension — understanding the WHY behind the HOW, which alone enables adaptive application in novel situations."
                 }
             },
             {
@@ -2111,7 +2122,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The most effective practitioners in this domain succeed not by knowing more, but by developing superior mental models that allow faster, more accurate pattern recognition under pressure."
                 }
             },
             {
@@ -2143,7 +2154,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Theoretical knowledge without deliberate practice creates an illusion of competence. Real mastery is demonstrated by performance under novel conditions, not test conditions."
                 }
             }
         ]
@@ -2186,7 +2197,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The key insight here is that systems are interconnected. Optimizing one dimension in isolation often creates unforeseen tradeoffs elsewhere — understanding this is what separates experts from novices."
                 }
             },
             {
@@ -2218,7 +2229,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Excellence in this area demands continuous iteration: apply, observe, adjust. The feedback loop is not a nice-to-have; it is the mechanism through which understanding actually deepens."
                 }
             },
             {
@@ -2250,7 +2261,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The counterintuitive truth is that speed of learning often comes from slowing down to identify and explicitly correct specific weak spots — not from repeating what you already know."
                 }
             },
             {
@@ -2282,7 +2293,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Context determines the right approach. Rigid application of a single framework will fail in complex environments; the highest skill is knowing which tool to apply and when to adapt."
                 }
             },
             {
@@ -2314,7 +2325,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "The professionals who excel here share a common trait: intellectual humility. They actively seek disconfirming evidence, remain open to updating their mental models, and never mistake fluency for mastery."
                 }
             },
             {
@@ -2346,7 +2357,7 @@
                             "correct": false
                         }
                     ],
-                    "explanation": "The true power of advanced concepts lies in dynamic integration and adaptive loops, rather than static or fully unconstrained implementations."
+                    "explanation": "Second-order thinking is the differentiator. Anyone can see first-order consequences; the exceptional practitioner maps the consequences of consequences before committing to any action."
                 }
             }
         ]
@@ -2457,13 +2468,91 @@
         }
         
         function updateHUD() {
-            // XP to next level formula: 100 * level
             const xpForNext = 100 * fvProgress.level;
             const xpPercent = Math.min(100, (fvProgress.xp / xpForNext) * 100);
             
             document.getElementById('hud-level').textContent = fvProgress.level;
             document.getElementById('hud-xp-bar').style.width = xpPercent + '%';
             document.getElementById('hud-mastery').textContent = Math.round(fvProgress.mastery);
+            
+            // Calculate Profile Power
+            const power = Math.min(100, Math.round((fvProgress.level * 5) + (fvProgress.mastery * 1.5) + (fvProgress.stats.consecutiveCorrect * 2)));
+            document.getElementById('hud-power').textContent = power + '%';
+            
+            // Sync mobile HUD
+            const mobLevel = document.getElementById('hud-level-mobile');
+            const mobPower = document.getElementById('hud-power-mobile');
+            if (mobLevel) mobLevel.textContent = fvProgress.level;
+            if (mobPower) mobPower.textContent = power;
+        }
+
+        const proceduralTemplates = {
+            ai: {
+                prefixes: ['Quantum', 'Neural', 'Generative', 'Autonomous', 'Cognitive', 'Predictive', 'Algorithmic', 'Hyper'],
+                nouns: ['Networks', 'Synthesis', 'Alignment', 'Inference', 'Optimization', 'Heuristics', 'Perception', 'Swarm'],
+                contexts: ['in High-Frequency Systems', 'for Emotional Intelligence', 'in Deep Space Exploration', 'for Biological Mapping', 'at the Edge']
+            },
+            careers: {
+                prefixes: ['Post-AGI', 'Decentralized', 'Augmented', 'Synthetic', 'Hybrid', 'Virtual', 'Resilient'],
+                nouns: ['Workforce', 'Economy', 'Portfolio', 'Freelancing', 'Guilds', 'Specialization', 'Adaptation'],
+                contexts: ['in the Metaverse', 'without Universal Basic Income', 'for Prompt Engineers', 'in the Gig Economy 2.0']
+            }
+        };
+
+        function generateProceduralNode(worldId) {
+            const templates = proceduralTemplates[worldId] || {
+                prefixes: ['Advanced', 'Next-Gen', 'Theoretical', 'Applied', 'Paradigm-Shifting'],
+                nouns: ['Dynamics', 'Systems', 'Protocols', 'Integration', 'Synthesis'],
+                contexts: ['in the 22nd Century', 'for Enterprise Scaling', 'at the Micro Level', 'in Complex Systems']
+            };
+            
+            const pre = templates.prefixes[Math.floor(Math.random() * templates.prefixes.length)];
+            const noun = templates.nouns[Math.floor(Math.random() * templates.nouns.length)];
+            const ctx = templates.contexts[Math.floor(Math.random() * templates.contexts.length)];
+            
+            const title = `${pre} ${noun} ${ctx}`;
+            const id = `${worldId}-proc-${Date.now()}-${Math.floor(Math.random()*1000)}`;
+            
+            const phaseStr = `Phase ${Math.floor(fvProgress.level / 2) + 2}`;
+            
+            const content = `<h3>[${phaseStr} CLASSIFIED DATA] ${title}</h3>
+            <p>As you delve deeper into the <strong>${worldId.toUpperCase()}</strong> sector, conventional knowledge breaks down. <em>${title}</em> requires redefining fundamental laws of understanding.</p>
+            <p>In this phase, systemic complexities scale exponentially. Our data indicates that manipulating <strong>${noun.toLowerCase()}</strong> using <strong>${pre.toLowerCase()}</strong> methodologies yields unexpected, highly volatile paradigm shifts.</p>
+            <div class='bg-red-500/10 border border-red-500/30 p-5 rounded-xl my-6'>
+            <h4 class='text-red-400 font-bold mb-2'>Critical Insight</h4>
+            <p class='text-sm text-slate-300 m-0'>Standard linear progression is no longer sufficient. You must synthesize cross-domain metrics to survive the cognitive load.</p>
+            </div>`;
+
+            // Randomize correct option position A/B/C/D
+            const options = [];
+            const correctPos = Math.floor(Math.random()*4);
+            const wrongTexts = [
+                `Ignore the ${pre.toLowerCase()} variance and stick to standard legacy protocols.`,
+                `Shutdown all ${noun.toLowerCase()} to prevent a systemic overload cascade.`,
+                `Manually recalibrate the data streams without using contextual awareness.`,
+                `Wait for external verification before taking any action in the ${ctx} environment.`
+            ].sort(() => 0.5 - Math.random());
+
+            for (let i = 0; i < 4; i++) {
+                const letter = String.fromCharCode(65 + i); // A, B, C, D
+                if (i === correctPos) {
+                    options.push({ id: letter, text: `Synthesize nonlinear metrics and adapt ${noun.toLowerCase()} protocols dynamically.`, correct: true });
+                } else {
+                    options.push({ id: letter, text: wrongTexts.pop(), correct: false });
+                }
+            }
+
+            return {
+                id: id,
+                title: title,
+                content: content,
+                challenge: {
+                    type: "scenario",
+                    question: `What is the most viable strategy when encountering ${title}?`,
+                    options: options,
+                    explanation: `In advanced ${pre.toLowerCase()} ${noun.toLowerCase()} scenarios, synthesizing cross-domain insights and adapting protocols dynamically is always superior to static or reactive approaches. Mastery requires real-time contextual awareness.`
+                }
+            };
         }
         
         function showGuide() {
@@ -2514,10 +2603,16 @@
             const optionsContainer = document.getElementById('challenge-options');
             optionsContainer.innerHTML = '';
             
-            challenge.options.forEach(opt => {
+            // Randomize Options Order (Anti-cheat)
+            const shuffledOptions = [...challenge.options].sort(() => 0.5 - Math.random());
+            const labels = ['A', 'B', 'C', 'D'];
+            
+            shuffledOptions.forEach((opt, index) => {
                 const btn = document.createElement('button');
-                btn.className = 'challenge-option w-full text-left p-4 rounded-xl border border-white/10 bg-white/5 text-slate-300 text-sm font-medium';
-                btn.innerHTML = `<strong class="text-white mr-2">${opt.id}.</strong> ${opt.text}`;
+                btn.className = 'challenge-option w-full text-left p-4 rounded-xl border border-white/10 bg-white/5 text-slate-300 text-sm font-medium opacity-50 cursor-not-allowed';
+                btn.innerHTML = `<strong class="text-white mr-2">${labels[index]}.</strong> ${opt.text}`;
+                btn.setAttribute('data-id', opt.id);
+                btn.disabled = true;
                 btn.onclick = () => selectOption(opt.id, btn);
                 optionsContainer.appendChild(btn);
             });
@@ -2525,10 +2620,43 @@
             document.getElementById('challenge-feedback').classList.add('hidden');
             const submitBtn = document.getElementById('submit-challenge-btn');
             submitBtn.classList.remove('hidden');
-            submitBtn.textContent = 'Submit Answer';
             submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
             submitBtn.disabled = true;
             submitBtn.onclick = submitChallenge;
+
+            // Anti-Cheat Reading Timer
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = topic.content;
+            const wordCount = (tempDiv.textContent || tempDiv.innerText || "").trim().split(/\s+/).length;
+            
+            let waitTime = Math.max(5, Math.ceil(wordCount / 2.5)); // ~2.5 words per second reading speed
+            window.isTimerLocked = true;
+            submitBtn.textContent = `🔒 Read Content First... (${waitTime}s)`;
+            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            submitBtn.disabled = true;
+
+            if(window.currentChallengeTimer) clearInterval(window.currentChallengeTimer);
+            window.currentChallengeTimer = setInterval(() => {
+                waitTime--;
+                if (waitTime > 0) {
+                    submitBtn.textContent = `🔒 Read Content First... (${waitTime}s)`;
+                } else {
+                    clearInterval(window.currentChallengeTimer);
+                    window.isTimerLocked = false;
+                    document.querySelectorAll('.challenge-option').forEach(btn => {
+                        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                        btn.disabled = false;
+                    });
+                    if (selectedOptionId) {
+                        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Submit Answer';
+                    } else {
+                        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                        submitBtn.textContent = '⚡ Select an Option Above';
+                    }
+                }
+            }, 1000);
         }
         
         function selectOption(id, btnElement) {
@@ -2536,9 +2664,13 @@
             document.querySelectorAll('.challenge-option').forEach(b => b.classList.remove('selected'));
             btnElement.classList.add('selected');
             
+            // If timer is still running, don't unlock submit yet
+            if (window.isTimerLocked) return;
+            
             const submitBtn = document.getElementById('submit-challenge-btn');
             submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
             submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Answer';
         }
         
         function submitChallenge() {
@@ -2556,7 +2688,7 @@
             
             // Highlight correct/incorrect buttons
             document.querySelectorAll('.challenge-option').forEach(btn => {
-                const btnId = btn.innerHTML.match(/<strong.*?>([A-Z])./)[1];
+                const btnId = btn.getAttribute('data-id');
                 const opt = challenge.options.find(o => o.id === btnId);
                 btn.disabled = true;
                 if (opt.correct) btn.classList.add('correct');
@@ -2614,7 +2746,7 @@
                 submitBtn.onclick = () => renderChallenge(currentActiveChallenge.topic); // Reset
             }
             
-            feedbackExplanation.textContent = challenge.explanation;
+            feedbackExplanation.textContent = challenge.explanation || 'Apply the core insight from the content above to reinforce your understanding.';
             saveProgress();
         }
         
@@ -2643,6 +2775,7 @@
         
         Object.keys(universeData).forEach(wKey => {
             const w = universeData[wKey];
+            w.id = wKey; // ensure id exists on data
             totalTopics += w.topics.length;
             w.topics.forEach(t => allTopicsList.push({ worldId: wKey, topic: t }));
         });
@@ -2681,28 +2814,43 @@
 
         function warpToRandomTopic() {
             let unreadTopics = [];
+            let targetWorldId = null;
+            let isProcedural = false;
+            let chosenTopic = null;
             
             // Try to find unread topics in the CURRENT world (if active)
             if (activePlanet && activePlanet.userData && activePlanet.userData.id) {
-                const currentWorldId = activePlanet.userData.id;
-                unreadTopics = allTopicsList.filter(t => t.worldId === currentWorldId && !exploredNodes.has(t.topic.id));
+                targetWorldId = activePlanet.userData.id;
+                unreadTopics = allTopicsList.filter(t => t.worldId === targetWorldId && !exploredNodes.has(t.topic.id));
                 
                 if (unreadTopics.length === 0) {
-                    alert("You have explored all knowledge nodes in this world! Returning to the universe.");
-                    if(typeof closeTopicAndReturnToWorld === 'function') closeTopicAndReturnToWorld();
-                    return;
+                    // World exhausted -> Generate procedural phase
+                    isProcedural = true;
+                    chosenTopic = generateProceduralNode(targetWorldId);
                 }
             } else {
                 // If in universe view, pick from anywhere
                 unreadTopics = allTopicsList.filter(t => !exploredNodes.has(t.topic.id));
                 if (unreadTopics.length === 0) {
-                    alert("You have explored the entire universe!");
-                    return;
+                    // Entire universe exhausted -> Generate random procedural phase
+                    isProcedural = true;
+                    const wKeys = Object.keys(universeData);
+                    targetWorldId = wKeys[Math.floor(Math.random() * wKeys.length)];
+                    chosenTopic = generateProceduralNode(targetWorldId);
+                } else {
+                    const random = unreadTopics[Math.floor(Math.random() * unreadTopics.length)];
+                    targetWorldId = random.worldId;
+                    chosenTopic = random.topic;
                 }
             }
             
-            const random = unreadTopics[Math.floor(Math.random() * unreadTopics.length)];
-            const targetPlanet = planets.find(p => p.userData.id === random.worldId);
+            if (!isProcedural && !chosenTopic) {
+                const random = unreadTopics[Math.floor(Math.random() * unreadTopics.length)];
+                targetWorldId = random.worldId;
+                chosenTopic = random.topic;
+            }
+            
+            const targetPlanet = planets.find(p => p.userData.id === targetWorldId);
             
             // If already in a topic modal, close it first
             document.getElementById('topic-modal').classList.add('opacity-0');
@@ -2713,10 +2861,10 @@
                 // Trigger planetary flight
                 if (targetPlanet) {
                     if (targetPlanet === activePlanet) {
-                        openTopic(random.topic, universeData[random.worldId]);
+                        openTopic(chosenTopic, universeData[targetWorldId]);
                     } else {
                         enterWorld(targetPlanet, () => {
-                            openTopic(random.topic, universeData[random.worldId]);
+                            openTopic(chosenTopic, universeData[targetWorldId]);
                         });
                     }
                 }
@@ -3052,6 +3200,13 @@
             
             let worldDecoded = 0;
             data.topics.forEach(t => { if(exploredNodes.has(t.id)) worldDecoded++; });
+            
+            // Endless Content Generation
+            if (worldDecoded >= data.topics.length) {
+                const newTopic = generateProceduralNode(data.id || Object.keys(universeData).find(k => universeData[k] === data));
+                data.topics.push(newTopic);
+                allTopicsList.push({ worldId: data.id, topic: newTopic });
+            }
             
             document.getElementById('world-progress').textContent = worldDecoded;
             document.getElementById('world-total').textContent = data.topics.length;
