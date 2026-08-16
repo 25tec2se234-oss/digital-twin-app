@@ -502,7 +502,9 @@
                     });
                     if (res.ok) {
                         const parsed = await res.json();
-                        fvProgress = { ...fvProgress, ...parsed };
+                        if (parsed.progress) {
+                            fvProgress = { ...fvProgress, ...parsed.progress };
+                        }
                         loadedFromBackend = true;
                     }
                 }
