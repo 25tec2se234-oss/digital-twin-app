@@ -191,11 +191,12 @@ Do NOT wrap the JSON in Markdown (like \`\`\`json). Return ONLY raw JSON.`;
         let generatedNode;
         try {
             let aiText = result.data.content[0].text;
-            // Clean up any markdown blocks if the AI still included them
-            if (aiText.startsWith('\`\`\`')) {
-                aiText = aiText.replace(/\`\`\`json/g, '').replace(/\`\`\`/g, '').trim();
+            const match = aiText.match(/\{[\s\S]*\}/);
+            if (!match) {
+                logger.error('No JSON object found in AI response:', aiText);
+                throw new Error("No JSON object found");
             }
-            generatedNode = JSON.parse(aiText);
+            generatedNode = JSON.parse(match[0]);
             
             // Add required properties
             generatedNode.id = `${worldId}-proc-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
