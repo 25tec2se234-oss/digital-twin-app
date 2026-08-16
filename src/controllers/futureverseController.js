@@ -97,3 +97,51 @@ exports.saveProgress = async (req, res, next) => {
         next(new ApiError(500, 'Failed to save futureverse progress.'));
     }
 };
+
+// Public leaderboard — no auth required
+exports.getLeaderboard = async (req, res, next) => {
+    try {
+        const result = await pool.query(`
+            SELECT 
+                u.name,
+                fp.level,
+                fp.mastery,
+                fp.stats,
+                fp.explored_worlds,
+                fp.explored_nodes,
+                (fp.level * 5 + fp.mastery * 1.5) AS profile_power,
+                fp.updated_at
+            FROM futureverse_progress fp
+            JOIN users u ON u.id = fp.user_id
+            WHERE fp.level > 0
+            ORDER BY (fp.level * 5 + fp.mastery * 1.5) DESC
+            LIMIT 20
+        `);
+
+        const leaderboard = result.rows.map((row, index) => {
+            const nameParts = (row.name || 'Explorer').trim().split(' ');
+            const firstName = nameParts[0];
+            const lastName = nameParts[1] || '';
+            const displayName = lastName
+                ? `${firstName} ${lastName.charAt(0)}.`
+                : firstName;
+
+            return {
+                rank: index + 1,
+                name: displayName,
+                level: row.level,
+                mastery: Math.round(parseFloat(row.mastery)),
+                profilePower: Math.min(100, Math.round(parseFloat(row.profile_power))),
+                worldsExplored: Array.isArray(row.explored_worlds) ? row.explored_worlds.length : 0,
+                nodesDecoded: Array.isArray(row.explored_nodes) ? row.explored_nodes.length : 0,
+                correctAnswers: (row.stats && row.stats.correct) || 0,
+                lastActive: row.updated_at
+            };
+        });
+
+        res.json({ leaderboard });
+    } catch (error) {
+        logger.error('Error fetching futureverse leaderboard', error);
+        next(new ApiError(500, 'Failed to fetch leaderboard.'));
+    }
+};
