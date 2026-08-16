@@ -2677,9 +2677,13 @@
                 
                 // Trigger planetary flight
                 if (targetPlanet) {
-                    enterWorld(targetPlanet, () => {
+                    if (targetPlanet === activePlanet) {
                         openTopic(random.topic, universeData[random.worldId]);
-                    });
+                    } else {
+                        enterWorld(targetPlanet, () => {
+                            openTopic(random.topic, universeData[random.worldId]);
+                        });
+                    }
                 }
             }, 300);
         }
