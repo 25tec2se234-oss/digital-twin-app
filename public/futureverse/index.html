@@ -2645,10 +2645,25 @@
         }
 
         function warpToRandomTopic() {
-            const unreadTopics = allTopicsList.filter(t => !exploredNodes.has(t.topic.id));
-            if (unreadTopics.length === 0) {
-                alert("You have explored the entire universe!");
-                return;
+            let unreadTopics = [];
+            
+            // Try to find unread topics in the CURRENT world (if active)
+            if (activePlanet && activePlanet.userData && activePlanet.userData.id) {
+                const currentWorldId = activePlanet.userData.id;
+                unreadTopics = allTopicsList.filter(t => t.worldId === currentWorldId && !exploredNodes.has(t.topic.id));
+                
+                if (unreadTopics.length === 0) {
+                    alert("You have explored all knowledge nodes in this world! Returning to the universe.");
+                    if(typeof closeTopicAndReturnToWorld === 'function') closeTopicAndReturnToWorld();
+                    return;
+                }
+            } else {
+                // If in universe view, pick from anywhere
+                unreadTopics = allTopicsList.filter(t => !exploredNodes.has(t.topic.id));
+                if (unreadTopics.length === 0) {
+                    alert("You have explored the entire universe!");
+                    return;
+                }
             }
             
             const random = unreadTopics[Math.floor(Math.random() * unreadTopics.length)];
