@@ -2489,6 +2489,8 @@
             
             document.getElementById('challenge-feedback').classList.add('hidden');
             const submitBtn = document.getElementById('submit-challenge-btn');
+            submitBtn.classList.remove('hidden');
+            submitBtn.textContent = 'Submit Answer';
             submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
             submitBtn.disabled = true;
             submitBtn.onclick = submitChallenge;
