@@ -2373,7 +2373,7 @@
         
         let currentUser = null;
         
-        function initProgression() {
+        async function initProgression() {
             // 1. Check Auth
             try {
                 const storedUser = localStorage.getItem('dt_user');
@@ -2383,17 +2383,34 @@
             } catch(e) {}
             
             // 2. Load Progress
+            let loadedFromBackend = false;
             try {
-                const storedProgress = localStorage.getItem('dtv_fv_progress');
-                if (storedProgress) {
-                    const parsed = JSON.parse(storedProgress);
-                    fvProgress = { ...fvProgress, ...parsed };
-                    
-                    // Restore Sets
-                    fvProgress.exploredNodes.forEach(n => exploredNodes.add(n));
-                    fvProgress.exploredWorlds.forEach(w => exploredWorlds.add(w));
+                const token = localStorage.getItem('dt_token');
+                if (token) {
+                    const res = await fetch('/api/futureverse/progress', {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (res.ok) {
+                        const parsed = await res.json();
+                        fvProgress = { ...fvProgress, ...parsed };
+                        loadedFromBackend = true;
+                    }
                 }
-            } catch(e) {}
+            } catch(e) { console.warn('Backend load failed', e); }
+            
+            if (!loadedFromBackend) {
+                try {
+                    const storedProgress = localStorage.getItem('dtv_fv_progress');
+                    if (storedProgress) {
+                        const parsed = JSON.parse(storedProgress);
+                        fvProgress = { ...fvProgress, ...parsed };
+                    }
+                } catch(e) {}
+            }
+
+            // Restore Sets
+            if(fvProgress.exploredNodes) fvProgress.exploredNodes.forEach(n => exploredNodes.add(n));
+            if(fvProgress.exploredWorlds) fvProgress.exploredWorlds.forEach(w => exploredWorlds.add(w));
             
             // 3. Greeting
             const overlayTitle = document.querySelector('#entry-overlay h1');
@@ -2417,7 +2434,25 @@
         function saveProgress() {
             fvProgress.exploredNodes = Array.from(exploredNodes);
             fvProgress.exploredWorlds = Array.from(exploredWorlds);
+            
+            // Local fallback
             localStorage.setItem('dtv_fv_progress', JSON.stringify(fvProgress));
+            
+            // Backend sync
+            try {
+                const token = localStorage.getItem('dt_token');
+                if (token) {
+                    fetch('/api/futureverse/progress', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(fvProgress)
+                    }).catch(e => console.warn('Background sync failed', e));
+                }
+            } catch(e) {}
+            
             updateHUD();
         }
         

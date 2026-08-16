@@ -123,6 +123,7 @@ app.use('/api', aiRoutes);
 app.use('/api/v1/parent', parentRoutes);
 app.use('/api/v1', routes);
 app.use('/api/offer-letters', require('./routes/offerLetterRoutes'));
+app.use('/api/futureverse', require('./routes/futureverseRoutes'));
 
 // Simple admin dashboard to browse DB
 app.use('/dashboard', dashboardRoutes);
