@@ -3307,7 +3307,13 @@ function renderCareers(filter) {
             var div = document.createElement('div');
             div.className = 'msg typing';
             div.id = 'typing-ind';
-            div.innerHTML = DOMPurify.sanitize('<div class="typing-dots" style="display:flex; align-items:center;"><span class="dot"></span><span class="dot"></span><span class="dot"></span> <span class="decrypt-text" style="margin-left:12px; font-size:0.75rem; color:var(--cyan); letter-spacing:2px; font-family:monospace; white-space:nowrap;">DECRYPTING_</span></div>', { ADD_ATTR: ['style'] });
+            div.innerHTML = DOMPurify.sanitize('<div class="dtv-thinking-nodes" style="display:flex; align-items:center; gap:6px;">' +
+'<div class="dtv-path-node" style="position:relative; animation-delay:0s;"></div>' +
+'<div class="dtv-path-node" style="position:relative; animation-delay:0.2s;"></div>' +
+'<div class="dtv-path-node" style="position:relative; animation-delay:0.4s;"></div>' +
+'<div class="dtv-path-node" style="position:relative; animation-delay:0.6s;"></div>' +
+'<div class="dtv-path-node" style="position:relative; animation-delay:0.8s;"></div>' +
+'<span class="decrypt-text" style="margin-left:12px; font-size:0.75rem; color:var(--dtv-orange-500); letter-spacing:2px; font-family:monospace; white-space:nowrap;">SYNTHESIZING...</span></div>', { ADD_ATTR: ['style'] });
             msgs.appendChild(div);
             msgs.scrollTop = msgs.scrollHeight;
             
