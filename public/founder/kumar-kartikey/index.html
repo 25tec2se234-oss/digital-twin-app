@@ -375,10 +375,12 @@
 <link rel="stylesheet" href="/css/premium-theme.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container" data-tilt data-tilt-max="2" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1" style="transform-style: preserve-3d;">
         
-        <div class="hero-section">
-            <img src="/img/kumar-kartikey.png" alt="Kumar Kartikey, Founder of Digital Twin Verse" class="profile-photo">
+        <!-- Schema.org injected correctly -->
+        
+        <div class="hero-section" style="transform: translateZ(30px);">
+            <img src="/img/kumar-kartikey.png" alt="Kumar Kartikey, Founder of Digital Twin Verse" class="profile-photo" data-tilt data-tilt-max="15" data-tilt-scale="1.05" data-tilt-glare data-tilt-max-glare="0.3">
             
             <h1>Kumar Kartikey</h1>
             <div class="title">Founder & CEO, Digital Twin Verse</div>
@@ -463,5 +465,17 @@
             <a href="/">← Return to Digital Twin Verse Home</a>
         </div>
     </div>
+    
+    <!-- 3D Vanilla Tilt Script -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <script>
+        // Ensure VanillaTilt initializes correctly on mobile/desktop
+        VanillaTilt.init(document.querySelectorAll(".profile-photo"), {
+            max: 15,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.3,
+        });
+    </script>
 </body>
 </html>

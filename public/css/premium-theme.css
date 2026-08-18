@@ -378,6 +378,64 @@ body[class*="theme-"] .tool-btn {
     color: #FFFFFF !important;
 }
 
+/* ========================================================================
+   SPECIFIC COMPONENT BUG FIXES (Dashboard, Explorer, Hover States)
+======================================================================== */
+
+/* Dashboard & Explorer Fixes */
+body[class*="theme-"] #student-dashboard, 
+body[class*="theme-"] .dash-box, 
+body[class*="theme-"] .dash-card,
+body[class*="theme-"] .career-card, 
+body[class*="theme-"] .sp-card {
+    background: #FFFFFF !important;
+    color: var(--dtv-text-primary) !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-md) !important;
+}
+
+/* Ensure text inside these cards is black */
+body[class*="theme-"] .dash-card *, 
+body[class*="theme-"] .dash-box *, 
+body[class*="theme-"] .career-card *, 
+body[class*="theme-"] .sp-card * {
+    color: var(--dtv-text-primary) !important;
+}
+
+/* Fix Comprehensive Learning Ecosystem hover state */
+body[class*="theme-"] .feat-card:hover, 
+body[class*="theme-"] .ecosystem-card:hover,
+body[class*="theme-"] .dash-card:hover,
+body[class*="theme-"] .career-card:hover {
+    background: #FFFFFF !important; /* Force it to stay white, not black */
+    transform: translateY(-5px) !important;
+    box-shadow: var(--dtv-shadow-lg) !important;
+}
+
+/* Top Nav Dropdown */
+body[class*="theme-"] .dropdown-menu, 
+body[class*="theme-"] .nav-dropdown .dropdown-menu {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-lg) !important;
+}
+body[class*="theme-"] .dropdown-menu a, 
+body[class*="theme-"] .nav-dropdown .dropdown-menu a {
+    color: var(--dtv-text-secondary) !important;
+}
+body[class*="theme-"] .dropdown-menu a:hover, 
+body[class*="theme-"] .nav-dropdown .dropdown-menu a:hover {
+    color: var(--dtv-orange-600) !important;
+    background: rgba(249, 115, 22, 0.05) !important;
+}
+
+/* Ensure the Founder Link is perfectly readable */
+body[class*="theme-"] .dtv-badge a {
+    color: var(--dtv-orange-600) !important;
+    text-shadow: none !important;
+}
+
 /* Ensure 3D Vanta Canvas works perfectly in the Hero Section */
 #hero {
     position: relative !important;
