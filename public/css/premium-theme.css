@@ -1,3 +1,30 @@
+
+/* ========================================================================
+   ULTIMATE LIGHT THEME OVERRIDE
+   Forces all legacy themes to use light mode variables
+======================================================================== */
+:root, 
+html[data-theme], 
+html[data-theme="midnight"], 
+html[data-theme="dark"], 
+html[data-theme="light"], 
+html[data-theme="twilight"], 
+html[data-theme="ocean"] {
+  --bg: #FAFAFA !important;
+  --bg2: #FFFFFF !important;
+  --card: #FFFFFF !important;
+  --wh: #09090b !important;
+  --wh2: #52525b !important;
+  --mu: #52525b !important;
+  --border: rgba(15, 23, 42, 0.08) !important;
+  
+  --dtv-bg-base: #FAFAFA !important;
+  --dtv-bg-raised: #FFFFFF !important;
+  --dtv-bg-overlay: rgba(255, 255, 255, 0.85) !important;
+  --dtv-text-primary: #09090b !important;
+  --dtv-text-secondary: #52525b !important;
+}
+
 /* ========================================================================
    DIGITAL TWIN VERSE - ULTIMATE SaaS LIGHT THEME
    The absolute highest standard of UI/UX, crafted for an elite SaaS experience.
