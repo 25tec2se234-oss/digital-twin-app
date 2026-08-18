@@ -194,6 +194,10 @@ p, span, small, label {
     border-bottom: 1px solid var(--dtv-border-default) !important;
     box-shadow: 0 1px 3px rgba(0,0,0,0.02) !important;
 }
+/* Hide legacy theme switcher globally */
+#theme-switcher, .theme-switcher-menu {
+    display: none !important;
+}
 .logo-modern h1, .logo-modern em, .nav-logo {
     color: var(--dtv-text-primary) !important;
     font-weight: 800 !important;
