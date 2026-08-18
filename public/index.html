@@ -83,6 +83,7 @@
     <link rel="preload" href="/dist/main.7ded0a51.css?v=d142e9838830ff29" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/dist/main.7ded0a51.css?v=d142e9838830ff29">
+    <link rel="stylesheet" href="/css/premium-theme.css">
 
     <!-- JSON-LD Structured Data Schema -->
     
@@ -456,76 +457,73 @@
 
     <div class="noise-overlay"></div>
     <!-- NAV -->
-    <nav id="nav" class="nav-modern">
-        <div class="logo-modern" onclick="goHome()">
-            <img src="/img/dtv-logo.jpg" alt="DTV" fetchpriority="high" width="38" height="38">
-            <div class="logo-text-modern">
-                <h1>Digital<em>Twin Verse</em> <span style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">- AI-Powered Career Guidance &amp; Personalized Learning for Your Future</span></h1>
-                <div class="logo-sub">by DTV Family</div>
+    <nav id="nav" class="nav-premium">
+        <a href="/" class="logo-container" onclick="goHome(); return false;">
+            <img src="/img/dtv-logo.jpg" alt="DTV Logo" fetchpriority="high" width="40" height="40">
+            <div class="logo-text">
+                Digital<em>Twin Verse</em>
+            </div>
+        </a>
+        
+        <div class="nav-premium-links">
+            <a href="/genesis" style="color: var(--dtv-orange-400); font-weight: 600;">Genesis™</a>
+            <a href="#student-dashboard" onclick="requirePremiumFrontend(openDashboardShortcut)">Dashboard</a>
+            <a href="#ai-section" onclick="requirePremiumFrontend(function(){location.hash='#ai-section';})">AI Advisor</a>
+            <a href="/parent">Parent Portal</a>
+            <a href="/leaderboard.html">Leaderboard</a>
+            
+            <div class="nav-dropdown" style="position: relative; display: inline-block; cursor: pointer;">
+                <span class="dropdown-toggle" style="color: var(--dtv-text-300); font-weight: 500; display: flex; align-items: center; gap: 4px;">
+                    More <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </span>
+                <div class="dropdown-menu" style="display: none; position: absolute; top: 100%; left: 0; background: var(--dtv-bg-2); border: 1px solid var(--dtv-border-medium); border-radius: var(--rad-md); padding: 8px; min-width: 180px; box-shadow: var(--shadow-lg); z-index: 100;">
+                    <a href="#how" style="display: block; padding: 8px 12px; color: var(--dtv-text-200); text-decoration: none;">How It Works</a>
+                    <a href="#dashboard" onclick="requirePremiumFrontend(function(){location.hash='#dashboard';})" style="display: block; padding: 8px 12px; color: var(--dtv-text-200); text-decoration: none;">Career Explorer</a>
+                    <a href="/wheel" onclick="event.preventDefault(); requirePremiumFrontend(function(){window.location.href='/wheel';});" style="display: block; padding: 8px 12px; color: var(--dtv-text-200); text-decoration: none;">Daily Spin Wheel</a>
+                    <a href="#rev" style="display: block; padding: 8px 12px; color: var(--dtv-text-200); text-decoration: none;">Reviews</a>
+                    <a href="/blog" style="display: block; padding: 8px 12px; color: var(--dtv-text-200); text-decoration: none;">Blog & Resources</a>
+                </div>
             </div>
         </div>
-        
-        <div class="nav-right-container">
-            <div class="nav-links-modern">
-                <a href="/genesis" class="nav-link" style="color: #38bdf8; font-weight: 700;">Genesis™</a>
-                <a href="#student-dashboard" onclick="requirePremiumFrontend(openDashboardShortcut)" class="nav-link">Dashboard</a>
-                <a href="#ai-section" onclick="requirePremiumFrontend(function(){location.hash='#ai-section';})" class="nav-link">AI Advisor</a>
-                <a href="/parent" class="nav-link">Parent Portal</a>
-                <a href="/leaderboard.html" class="nav-link">Leaderboard</a>
-                
-                <div class="nav-dropdown">
-                    <span class="nav-link dropdown-toggle">More <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:-2px; margin-left: 2px;"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-                    <div class="dropdown-menu">
-                        <a href="#how">How It Works</a>
-                        <a href="#dashboard" onclick="requirePremiumFrontend(function(){location.hash='#dashboard';})">Career Explorer</a>
-                        <a href="/wheel" onclick="event.preventDefault(); requirePremiumFrontend(function(){window.location.href='/wheel';});">Daily Spin Wheel</a>
-                        <a href="#rev">Reviews</a>
-                        <a href="/blog">Blog &amp; Resources</a>
-                    </div>
-                </div>
+
+        <div class="nav-premium-actions">
+            <!-- Theme Switcher -->
+            <button onclick="toggleThemeDropdown()" style="background: transparent; border: none; color: var(--dtv-text-300); cursor: pointer; padding: 8px; border-radius: var(--rad-sm);">
+                <i class="ph-fill dtv-icon ph-palette" style="font-size: 1.2rem;"></i>
+            </button>
+            <div id="theme-dropdown" style="display: none; position: absolute; top: 70px; right: 280px; background: var(--dtv-bg-2); border: 1px solid var(--dtv-border-medium); border-radius: var(--rad-md); padding: 8px; box-shadow: var(--shadow-lg); z-index: 100;">
+                <button onclick="setTheme('midnight')" style="display: block; width: 100%; text-align: left; padding: 8px 12px; background: none; border: none; color: white; cursor: pointer;">Midnight Dark</button>
+                <button onclick="setTheme('light')" style="display: block; width: 100%; text-align: left; padding: 8px 12px; background: none; border: none; color: white; cursor: pointer;">Light Professional</button>
             </div>
 
-            <div class="nav-divider"></div>
+            <!-- Analyzer -->
+            <button type="button" onclick="openAnalyzer()" class="btn-premium btn-premium-secondary" style="padding: 8px 16px;">
+                <i class="ph-fill dtv-icon ph-brain"></i> Analyzer
+            </button>
 
-            <div class="nav-actions-modern">
-                <!-- Theme -->
-                <div class="theme-switcher-menu" id="theme-switcher">
-                    <button class="account-btn theme-btn-modern" onclick="toggleThemeDropdown()" title="Theme"><i class="ph-fill dtv-icon ph-palette"></i></button>
-                    <div class="account-panel" id="theme-dropdown" style="right: 0; left: auto; top: 120%;">
-                        <button class="acc-item" onclick="setTheme('midnight')">Midnight Dark</button>
-                        <button class="acc-item" onclick="setTheme('light')">Light Professional</button>
-                        <button class="acc-item" onclick="setTheme('navy')">Deep Navy</button>
-                        <button class="acc-item" onclick="setTheme('slate')">Slate Graphite</button>
-                        <button class="acc-item" onclick="setTheme('forest')">Forest Emerald</button>
-                        <button class="acc-item" onclick="setTheme('crimson')">Sunset Crimson</button>
-                        <button class="acc-item" onclick="setTheme('magenta')">Cyber Magenta</button>
-                    </div>
-                </div>
-
-                <!-- Analyzer -->
-                <button type="button" onclick="openAnalyzer()" class="dtv-btn dtv-btn-secondary"><i class="ph-fill dtv-icon ph-brain"></i> Analyzer</button>
-
-                <!-- Go Premium -->
-                <button type="button" onclick="openPricingPage(); return false;" class="dtv-btn dtv-btn-primary"><i class="ph-fill dtv-icon ph-diamond"></i> Premium</button>
+            <!-- Premium -->
+            <button type="button" onclick="openPricingPage(); return false;" class="btn-premium btn-premium-primary" style="padding: 8px 16px;">
+                <i class="ph-fill dtv-icon ph-diamond"></i> Premium
+            </button>
 
             <!-- Account -->
-            <div class="account-menu" id="nav-account-wrap">
-                <button class="account-btn" id="nav-account-btn" onclick="toggleAccountMenu(event)">
-                    <span class="account-avatar" id="nav-account-avatar">DT</span>
-                    <span id="nav-account-label" class="hide-mobile">Account</span>
+            <div class="account-menu" id="nav-account-wrap" style="position: relative;">
+                <button id="nav-account-btn" onclick="toggleAccountMenu(event)" style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--dtv-border-medium); padding: 4px 12px 4px 4px; border-radius: var(--rad-pill); cursor: pointer; color: white;">
+                    <span id="nav-account-avatar" style="width: 32px; height: 32px; border-radius: 50%; background: var(--dtv-orange-500); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.85rem;">DT</span>
+                    <span id="nav-account-label" style="font-weight: 500; font-size: 0.9rem;">Account</span>
                 </button>
-                <div class="account-panel" id="nav-account-panel">
-                    <div class="acc-item" id="nav-account-link-code" style="display:none; cursor:default; color:#a78bfa; justify-content:space-between;"><span>Parent Code:</span> <strong id="ui-link-code">-</strong></div>
-                    <button class="acc-item" id="nav-account-signin" onclick="openLoginGate(); hideAccountMenu()">Sign In</button>
-                    <button class="acc-item" id="nav-account-signup" onclick="openLoginGate(); hideAccountMenu()">Create Account</button>
-                    <button class="acc-item" id="nav-account-admindb" onclick="openAdminDashboard(); hideAccountMenu()" style="display:none; color:#f5a94e;">Developer DB</button>
-                    <button class="acc-item logout" id="nav-account-logout" onclick="if (doLogout()) hideAccountMenu()">Log Out</button>
+                <div id="nav-account-panel" style="display: none; position: absolute; top: 110%; right: 0; background: var(--dtv-bg-2); border: 1px solid var(--dtv-border-medium); border-radius: var(--rad-md); padding: 8px; min-width: 180px; box-shadow: var(--shadow-lg); z-index: 100;">
+                    <div id="nav-account-link-code" style="display:none; padding: 8px 12px; color:#a78bfa; font-size: 0.85rem;">Parent Code: <strong id="ui-link-code">-</strong></div>
+                    <button id="nav-account-signin" onclick="openLoginGate(); hideAccountMenu()" style="display: block; width: 100%; text-align: left; padding: 8px 12px; background: none; border: none; color: white; cursor: pointer;">Sign In</button>
+                    <button id="nav-account-signup" onclick="openLoginGate(); hideAccountMenu()" style="display: block; width: 100%; text-align: left; padding: 8px 12px; background: none; border: none; color: white; cursor: pointer;">Create Account</button>
+                    <button id="nav-account-logout" onclick="if (doLogout()) hideAccountMenu()" style="display: block; width: 100%; text-align: left; padding: 8px 12px; background: none; border: none; color: #f87171; cursor: pointer;">Log Out</button>
                 </div>
             </div>
+            
+            <div class="hbg" id="hbg" onclick="togMenu()" style="display: none; margin-left: 8px; cursor: pointer;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </div>
         </div>
-        </div>
-
-        <div class="hbg" id="hbg" onclick="togMenu()"><span></span><span></span><span></span></div>
     </nav>
     <div class="mob" id="mob">
         <a href="/genesis" style="color: #38bdf8; font-weight: 700; font-size: 1.15rem;" onclick="togMenu()">✨ Genesis™ Onboarding</a>
@@ -787,44 +785,86 @@
     <div id="page-main" class="page active">
 
         <!-- HERO -->
-        <section id="hero" class="sec">
-    <!-- DTV PATHWAY HERO BACKGROUND -->
-    <div class="dtv-pathway-container">
-        <div class="dtv-path-node" style="top: 20%; left: 15%; animation-delay: 0s;"></div>
-        <div class="dtv-path-node" style="top: 35%; left: 30%; animation-delay: 1.2s;"></div>
-        <div class="dtv-path-node" style="top: 15%; left: 70%; animation-delay: 2.4s;"></div>
-        <div class="dtv-path-node" style="top: 50%; left: 80%; animation-delay: 0.8s;"></div>
-        <div class="dtv-path-node" style="top: 75%; left: 25%; animation-delay: 3s;"></div>
-        <div class="dtv-path-node" style="top: 60%; left: 55%; animation-delay: 1.5s;"></div>
-        <div class="dtv-path-node" style="top: 85%; left: 70%; animation-delay: 0.5s;"></div>
-        
-        <!-- Connecting lines -->
-        <div class="dtv-path-line" style="top: 20%; left: 15%; width: 250px; transform: rotate(35deg);"></div>
-        <div class="dtv-path-line" style="top: 35%; left: 30%; width: 450px; transform: rotate(-15deg);"></div>
-        <div class="dtv-path-line" style="top: 15%; left: 70%; width: 200px; transform: rotate(70deg);"></div>
-        <div class="dtv-path-line" style="top: 75%; left: 25%; width: 400px; transform: rotate(-25deg);"></div>
-        <div class="dtv-path-line" style="top: 60%; left: 55%; width: 300px; transform: rotate(30deg);"></div>
-    </div>
-
-            <div class="blobs">
-                <div class="b" style="width:650px;height:650px;top:-180px;left:-200px;background:rgba(42,125,225,.16);animation-delay:0s;">
+        <section id="hero" class="hero-premium">
+            <div class="hero-premium-content">
+                <div class="hero-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    AI Career Intelligence Platform
                 </div>
-                <div class="b" style="width:550px;height:550px;bottom:-120px;right:-160px;background:rgba(232,140,42,.13);animation-delay:5s;">
+                <h1 class="hero-premium-title">
+                    <span>Don't Guess Your Future.</span><br>
+                    <em>Simulate It.</em>
+                </h1>
+                <p class="hero-premium-subtitle">
+                    Digital Twin Verse creates a dynamic AI-powered model of your skills, goals, and opportunities to reveal the best career paths for you.
+                </p>
+                <div class="hero-premium-actions">
+                    <a href="/genesis" class="btn-premium btn-premium-primary">
+                        Build Your Digital Twin
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                    <button type="button" onclick="openAnalyzer()" class="btn-premium btn-premium-secondary">
+                        <i class="ph-fill dtv-icon ph-brain"></i> Analyze My Profile
+                    </button>
                 </div>
-            </div>
-            <div class="hero-shell">
-                <div class="hero-copy rv">
-                    <div class="dtv-badge"><span class="bdot"></span><span style="text-align: left;">India's First AI Career Simulation Platform <span style="opacity:0.4; margin:0 4px;">|</span> <span style="white-space: nowrap;">Founded by <a href="/founder/kumar-kartikey/" style="color: #38bdf8; text-decoration: none; font-weight: 600;">Kumar Kartikey</a></span></span></div>
-                    <h2 class="hero-h fluid-text">Don't Guess Your Future<br><span class="serif amb">Simulate It.</span></h2>
-                    <p class="hero-sub">Digital Twin Verse uses a multi-agent AI system to model your skills, interests,
-                        and goals — mapping real-world career paths so you decide with confidence, not guesswork.</p>
-                    <div class="hero-btns">
-
-                        <a href="#ai-section" class="btn btn-out">Talk to Career AI</a>
-                        <button type="button" onclick="openAnalyzer()" class="btn btn-out" style="border-color:rgba(167,139,250,.4);color:var(--purple,#a78bfa); cursor:pointer;"><i class="ph-fill dtv-icon ph-brain"></i>
-                            Analyze My Profile</button>
+                
+                <!-- Digital Twin Visualizer Component (WOW Factor) -->
+                <div class="dtv-visualizer-wrapper" style="margin-top: var(--sp-3xl); position: relative; height: 320px; width: 100%; max-width: 850px; margin-left: auto; margin-right: auto; perspective: 1200px;">
+                    <!-- LEFT: Profile -->
+                    <div class="dtv-v-card" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%) rotateY(15deg); width: 240px; background: rgba(17,24,39,0.85); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 20px; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 2;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+                            <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(249,115,22,0.2); display: flex; align-items: center; justify-content: center; color: var(--dtv-orange-400);">
+                                <i class="ph-fill dtv-icon ph-user"></i>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.75rem; color: var(--dtv-text-400); text-transform: uppercase; letter-spacing: 1px;">Current State</div>
+                                <div style="font-weight: 600; color: white; font-size: 0.9rem;">Student Profile</div>
+                            </div>
+                        </div>
+                        <div style="display:flex; flex-direction: column; gap: 12px;">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 4px; color: var(--dtv-text-300);"><span>Python</span><span>Intermediate</span></div>
+                                <div style="height: 4px; width: 100%; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;"><div style="height: 100%; width: 60%; background: var(--dtv-info);"></div></div>
+                            </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 4px; color: var(--dtv-text-300);"><span>Data Analysis</span><span>Beginner</span></div>
+                                <div style="height: 4px; width: 100%; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;"><div style="height: 100%; width: 30%; background: var(--dtv-orange-500);"></div></div>
+                            </div>
+                        </div>
                     </div>
-
+                    
+                    <!-- CENTER: AI -->
+                    <div class="dtv-v-center" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle, rgba(249,115,22,0.15) 0%, rgba(249,115,22,0) 70%); border: 1px solid rgba(249,115,22,0.4); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(249,115,22,0.2); z-index: 3;">
+                        <i class="ph-fill dtv-icon ph-brain" style="font-size: 3.5rem; color: var(--dtv-orange-500); filter: drop-shadow(0 0 10px rgba(249,115,22,0.5));"></i>
+                        <span style="font-size: 0.7rem; font-weight: 600; color: var(--dtv-orange-300); margin-top: 8px; letter-spacing: 1px;">AI ENGINE</span>
+                    </div>
+                    
+                    <!-- RIGHT: Simulation Match -->
+                    <div class="dtv-v-card" style="position: absolute; right: 0; top: 10%; transform: rotateY(-15deg); width: 240px; background: rgba(17,24,39,0.9); border: 1px solid rgba(249,115,22,0.4); border-radius: 16px; padding: 20px; backdrop-filter: blur(12px); box-shadow: 0 15px 40px rgba(249,115,22,0.15); z-index: 2;">
+                        <div style="font-size: 0.75rem; color: var(--dtv-orange-400); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: flex; justify-content: space-between;">
+                            <span>Top Simulation</span>
+                            <span style="background: rgba(249,115,22,0.2); padding: 2px 6px; border-radius: 4px; font-weight: 700;">94% MATCH</span>
+                        </div>
+                        <div style="font-weight: 700; color: white; font-size: 1.1rem; margin-bottom: 8px;">AI Product Manager</div>
+                        <div style="font-size: 0.8rem; color: var(--dtv-text-300); line-height: 1.4;">Strong synergy with Python skills and leadership interests. Needs MLOps basics.</div>
+                    </div>
+                    
+                    <!-- RIGHT: Alt Path -->
+                    <div class="dtv-v-card" style="position: absolute; right: 0; bottom: 5%; transform: rotateY(-15deg); width: 240px; background: rgba(17,24,39,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 20px; backdrop-filter: blur(12px); z-index: 1;">
+                        <div style="font-size: 0.75rem; color: var(--dtv-text-400); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: flex; justify-content: space-between;">
+                            <span>Alternative Path</span>
+                            <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; font-weight: 600;">82% MATCH</span>
+                        </div>
+                        <div style="font-weight: 600; color: var(--dtv-text-200); font-size: 1rem; margin-bottom: 4px;">Data Scientist</div>
+                        <div style="font-size: 0.8rem; color: var(--dtv-text-400); line-height: 1.4;">Solid data foundation but requires advanced statistics.</div>
+                    </div>
+                    
+                    <!-- SVG Connections -->
+                    <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;">
+                        <path d="M 230 160 C 290 160, 310 160, 355 160" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-dasharray="4 4" />
+                        <path d="M 495 160 C 520 160, 540 100, 610 100" fill="none" stroke="rgba(249,115,22,0.6)" stroke-width="3" />
+                        <path d="M 495 160 C 520 160, 540 240, 610 240" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2" />
+                    </svg>
                 </div>
             </div>
         </section>
@@ -896,85 +936,89 @@
         </section>
 
         <!-- PROBLEM -->
-        <section id="prob" class="sec surf">
-            <div class="wrap grid2">
-                <div class="rv">
-                    <p class="lbl">The Problem</p>
-                    <h2 class="ttl">Career Planning is Broken.<br><span class="serif">Here's why it matters.</span></h2>
-                    <p class="desc">Millions of students make costly, life-altering career decisions every year with
-                        zero personalised guidance. The consequences compound over decades.</p>
-                </div>
-                <div class="pcg rv d1">
-                    <a href="/problem/years-wasted" class="pc" style="text-decoration:none; color:inherit;">
-                        <div class="pc-ic">⏳</div>
-                        <h4>Years Wasted</h4>
-                        <p>2–4 years in the wrong course before realising the mismatch — too late to pivot easily.</p>
-                        <span class="pc-hint">Read full dedicated breakdown &amp; news →</span>
-                    </a>
-                    <a href="/problem/mounting-stress" class="pc" style="text-decoration:none; color:inherit;">
-                        <div class="pc-ic"><i class="ph-fill dtv-icon ph-smiley-sad"></i></div>
-                        <h4>Mounting Stress</h4>
-                        <p>Family pressure, peer comparison, and zero clarity create a widespread career-anxiety crisis.</p>
-                        <span class="pc-hint">Read full dedicated breakdown &amp; news →</span>
-                    </a>
-                    <a href="/problem/no-personalisation" class="pc" style="text-decoration:none; color:inherit;">
-                        <div class="pc-ic"><i class="ph-fill dtv-icon ph-target"></i></div>
-                        <h4>No Personalisation</h4>
-                        <p>Generic counsellors give generic advice. Your unique profile, strengths and potential are ignored.</p>
-                        <span class="pc-hint">Read full dedicated breakdown &amp; news →</span>
-                    </a>
-                    <a href="/problem/missed-earnings" class="pc" style="text-decoration:none; color:inherit;">
-                        <div class="pc-ic"><i class="ph-fill dtv-icon ph-currency-inr"></i></div>
-                        <h4>Missed Earnings</h4>
-                        <p>Wrong decisions at the right age directly reduce lifetime earnings and career satisfaction.</p>
-                        <span class="pc-hint">Read full dedicated breakdown &amp; news →</span>
-                    </a>
-                </div>
+        <section id="prob" class="sec-premium" style="background: var(--dtv-bg-0);">
+            <div class="sec-premium-header">
+                <span class="sec-premium-label">The Problem</span>
+                <h2 class="sec-premium-title">Career Planning is Broken.<br><span style="color: var(--dtv-text-400);">Here's why it matters.</span></h2>
+                <p class="sec-premium-desc">Millions of students make costly, life-altering career decisions every year with zero personalised guidance. The consequences compound over decades.</p>
+            </div>
+            
+            <div class="problem-grid-premium">
+                <a href="/problem/years-wasted" class="problem-card-premium">
+                    <div class="problem-icon-premium"><i class="ph-fill dtv-icon ph-hourglass-high"></i></div>
+                    <h4>Years Wasted</h4>
+                    <p>2–4 years in the wrong course before realising the mismatch — too late to pivot easily.</p>
+                </a>
+                <a href="/problem/mounting-stress" class="problem-card-premium">
+                    <div class="problem-icon-premium"><i class="ph-fill dtv-icon ph-smiley-sad"></i></div>
+                    <h4>Mounting Stress</h4>
+                    <p>Family pressure, peer comparison, and zero clarity create a widespread career-anxiety crisis.</p>
+                </a>
+                <a href="/problem/no-personalisation" class="problem-card-premium">
+                    <div class="problem-icon-premium"><i class="ph-fill dtv-icon ph-target"></i></div>
+                    <h4>No Personalisation</h4>
+                    <p>Generic counsellors give generic advice. Your unique profile, strengths and potential are ignored.</p>
+                </a>
+                <a href="/problem/missed-earnings" class="problem-card-premium">
+                    <div class="problem-icon-premium"><i class="ph-fill dtv-icon ph-currency-inr"></i></div>
+                    <h4>Missed Earnings</h4>
+                    <p>Wrong decisions at the right age directly reduce lifetime earnings and career satisfaction.</p>
+                </a>
             </div>
         </section>
 
         <!-- HOW IT WORKS -->
-        <section id="how" class="sec" style="text-align:center;">
-            <div class="blobs">
-                <div class="b" style="width:600px;height:600px;top:10%;left:-10%;background:rgba(42,125,225,.07);">
-                </div>
-                <div class="b" style="width:500px;height:500px;bottom:-10%;right:-5%;background:rgba(232,140,42,.07);animation-delay:3s;">
-                </div>
+        <section id="how" class="sec-premium" style="background: var(--dtv-bg-1);">
+            <div class="sec-premium-header">
+                <span class="sec-premium-label">How It Works</span>
+                <h2 class="sec-premium-title">From Uncertainty to Clarity<br><span style="color: var(--dtv-orange-500);">in 5 Simple Steps</span></h2>
+                <p class="sec-premium-desc">Predict. Explore. Decide. — Your future, simulated before you live it.</p>
             </div>
-            <div class="wrap glass-panel" style="position:relative;z-index:1;padding:4rem 2rem;border-radius:24px;box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
-                <div class="rv">
-                    <p class="lbl" style="justify-content:center;">How It Works</p>
-                    <h2 class="ttl">From Uncertainty to Clarity<br>in 5 Simple Steps</h2>
-                    <p class="desc" style="text-align:center;margin:0 auto;">Predict. Explore. Decide. — Your future,
-                        simulated before you live it.</p>
+            
+            <div class="journey-container-premium">
+                <div class="journey-step-premium">
+                    <div class="journey-number-premium">01</div>
+                    <div class="journey-content-premium">
+                        <h3>Input Skills, Interests & Goals</h3>
+                        <p>Tell us where you are and what you care about. Our system maps your unique starting point.</p>
+                    </div>
+                    <div class="journey-visual-premium"><i class="ph-fill dtv-icon ph-user-focus"></i></div>
                 </div>
-                <div class="steps">
-                    <div class="sconn"></div>
-                    <div class="step rv d1">
-                        <div class="sr" style="background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); border-top: 1px solid rgba(255,255,255,0.25); box-shadow: inset 0 1px 1px rgba(255,255,255,0.15), 0 10px 20px rgba(0,0,0,0.5);">
-                            01</div>
-                        <div class="sl">Input Skills, Interests &amp; Goals</div>
+                
+                <div class="journey-step-premium">
+                    <div class="journey-number-premium">02</div>
+                    <div class="journey-content-premium">
+                        <h3>AI Agents Analyse Your Profile</h3>
+                        <p>Our multi-agent architecture evaluates your strengths against 10,000+ real-world career trajectories.</p>
                     </div>
-                    <div class="step rv d2">
-                        <div class="sr" style="background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); border-top: 1px solid rgba(255,255,255,0.25); box-shadow: inset 0 1px 1px rgba(255,255,255,0.15), 0 10px 20px rgba(0,0,0,0.5);">
-                            02</div>
-                        <div class="sl">AI Agents Analyse Your Profile</div>
+                    <div class="journey-visual-premium"><i class="ph-fill dtv-icon ph-cpu"></i></div>
+                </div>
+                
+                <div class="journey-step-premium">
+                    <div class="journey-number-premium">03</div>
+                    <div class="journey-content-premium">
+                        <h3>View Simulated Career Paths</h3>
+                        <p>See exactly what it takes to succeed in different roles, complete with earning potential and required skills.</p>
                     </div>
-                    <div class="step rv d3">
-                        <div class="sr" style="background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); border-top: 1px solid rgba(255,255,255,0.25); box-shadow: inset 0 1px 1px rgba(255,255,255,0.15), 0 10px 20px rgba(0,0,0,0.5);">
-                            03</div>
-                        <div class="sl">View Simulated Career Paths</div>
+                    <div class="journey-visual-premium"><i class="ph-fill dtv-icon ph-git-branch"></i></div>
+                </div>
+                
+                <div class="journey-step-premium">
+                    <div class="journey-number-premium">04</div>
+                    <div class="journey-content-premium">
+                        <h3>Get Personalised Predictions</h3>
+                        <p>Identify skill gaps and receive a tailored, week-by-week roadmap to reach your dream role.</p>
                     </div>
-                    <div class="step rv d1">
-                        <div class="sr" style="background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); border-top: 1px solid rgba(255,255,255,0.25); box-shadow: inset 0 1px 1px rgba(255,255,255,0.15), 0 10px 20px rgba(0,0,0,0.5);">
-                            04</div>
-                        <div class="sl">Get Personalised Predictions</div>
+                    <div class="journey-visual-premium"><i class="ph-fill dtv-icon ph-chart-line-up"></i></div>
+                </div>
+                
+                <div class="journey-step-premium">
+                    <div class="journey-number-premium">05</div>
+                    <div class="journey-content-premium">
+                        <h3>Make an Informed Decision</h3>
+                        <p>Stop guessing. Start executing your plan with confidence and the right market intelligence.</p>
                     </div>
-                    <div class="step rv d2">
-                        <div class="sr" style="background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); border-top: 1px solid rgba(255,255,255,0.25); box-shadow: inset 0 1px 1px rgba(255,255,255,0.15), 0 10px 20px rgba(0,0,0,0.5);">
-                            05</div>
-                        <div class="sl">Make an Informed Decision</div>
-                    </div>
+                    <div class="journey-visual-premium"><i class="ph-fill dtv-icon ph-check-circle"></i></div>
                 </div>
             </div>
         </section>
