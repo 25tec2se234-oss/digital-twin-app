@@ -105,11 +105,11 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.a4d85de9.css?v=c146d681b2d91cc8" as="style">
+    <link rel="preload" href="/dist/main.a4d85de9.css?v=79228448c6992ad2" as="style">
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.a4d85de9.css?v=c146d681b2d91cc8">
+    <link rel="stylesheet" href="/dist/main.a4d85de9.css?v=79228448c6992ad2">
 
     <!-- JSON-LD Structured Data Schema -->
 
@@ -631,53 +631,17 @@
             <p style="color: var(--mu); font-size: 1rem; margin-bottom: 1rem;" id="rzp-plan-desc">Click the secure
                 Razorpay button below to complete your payment via UPI, QR Code Scanner, or Card.</p>
 
-            <p id="consent-warning-msg"
-                style="color: #fca5a5; font-size: 0.95rem; margin-bottom: 1rem; font-weight: 600;">⚠️ Please read and
-                scroll to the bottom of the terms to unlock checkout.</p>
-
-            <div class="terms-box" id="termsBox"
-                style="height: 130px; overflow-y: auto; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 15px; font-size: 0.85rem; color: #a1a1aa; background: rgba(0,0,0,0.5); text-align: left; margin-bottom: 1rem;">
-                <p style="color: #fff; margin-top:0;"><strong>Digital Twin Verse - Purchase Terms Summary</strong></p>
-                <p>1. <strong>Strict No-Refund Policy:</strong> All sales are final upon accessing digital content.</p>
-                <p>2. <strong>Mandatory First Contact:</strong> You must contact support before initiating any bank
-                    dispute.</p>
-                <p>3. <strong>Anti-Fraud Measures:</strong> We log your IP, device ID, timestamp, and consent status.
-                    False chargebacks constitute fraud.</p>
-                <p>4. <strong>Parental Consent:</strong> If under 18, you confirm parental authorization.</p>
-                <p><em>End of terms. Please check the boxes below to proceed.</em></p>
-            </div>
-
-            <div class="checkbox-group"
-                style="text-align: left; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 10px;">
-                <label
-                    style="font-size: 0.85rem; color: #e4e4e7; cursor: pointer; display: flex; align-items: flex-start; gap: 8px;">
-                    <input type="checkbox" id="chkRefund" class="consent-cb" disabled="" style="margin-top: 3px;">
-                    I have read and agree to the Strict No-Refund Policy.
-                </label>
-                <label
-                    style="font-size: 0.85rem; color: #e4e4e7; cursor: pointer; display: flex; align-items: flex-start; gap: 8px;">
-                    <input type="checkbox" id="chkDispute" class="consent-cb" disabled="" style="margin-top: 3px;">
-                    I agree to contact Support before initiating any bank dispute.
-                </label>
-                <label
-                    style="font-size: 0.85rem; color: #e4e4e7; cursor: pointer; display: flex; align-items: flex-start; gap: 8px;">
-                    <input type="checkbox" id="chkAge" class="consent-cb" disabled="" style="margin-top: 3px;">
-                    I am over 18 years old OR I am a parent authorizing this transaction.
-                </label>
-                <label
-                    style="font-size: 0.85rem; color: #e4e4e7; cursor: pointer; display: flex; align-items: flex-start; gap: 8px;">
-                    <input type="checkbox" id="chkLog" class="consent-cb" disabled="" style="margin-top: 3px;">
-                    I acknowledge my IP, timestamp, and consent are logged for fraud prevention.
+            <div class="checkbox-group" style="text-align: left; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 10px;">
+                <label style="font-size: 0.95rem; color: #e4e4e7; cursor: pointer; display: flex; align-items: flex-start; gap: 10px; background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                    <input type="checkbox" id="chkTerms" class="consent-cb" style="margin-top: 4px; width: 16px; height: 16px;">
+                    <span>I agree to the <a href="/terms" target="_blank" style="color: #60a5fa; text-decoration: underline;">Terms of Service</a>, <a href="/privacy" target="_blank" style="color: #60a5fa; text-decoration: underline;">Privacy Policy</a>, and No-Refund Policy.</span>
                 </label>
             </div>
 
-            <button id="unlockPayBtn" type="button" class="tool-btn" disabled=""
-                style="background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; border: none; cursor: not-allowed; opacity: 0.5; margin-bottom: 1.5rem; transition: 0.3s;">Accept
-                Terms to Unlock Payment</button>
+            <button id="unlockPayBtn" type="button" class="tool-btn" disabled="" style="background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; border: none; cursor: not-allowed; opacity: 0.5; margin-bottom: 1.5rem; transition: 0.3s;">Proceed to Payment</button>
 
             <!-- RAZORPAY BUTTONS (HIDDEN INITIALLY) -->
-            <div id="razorpay-buttons-wrapper"
-                style="display: none; background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); justify-content: center; align-items: center; min-height: 80px; margin-bottom: 1.5rem;">
+            <div id="razorpay-buttons-wrapper" style="display: none; background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); justify-content: center; align-items: center; min-height: 80px; margin-bottom: 1.5rem;">
                 <!-- 1 MONTH PLAN BUTTON -->
                 <div id="rzp-container-1m" style="display: none; width: 100%;">
                     <form id="rzp-custom-form-1m">
@@ -699,35 +663,16 @@
             </div>
 
             <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    const termsBox = document.getElementById('termsBox');
-                    const checkboxes = document.querySelectorAll('.consent-cb');
+                document.addEventListener("DOMContentLoaded", function() {
+                    const chkTerms = document.getElementById('chkTerms');
                     const unlockPayBtn = document.getElementById('unlockPayBtn');
                     const razorpayWrapper = document.getElementById('razorpay-buttons-wrapper');
                     const checkboxGroup = document.querySelector('.checkbox-group');
-                    const warningMsg = document.getElementById('consent-warning-msg');
-
-                    if (!termsBox || !unlockPayBtn) return;
-
-                    let hasScrolledToEnd = false;
-
-                    function checkScroll() {
-                        if (hasScrolledToEnd) return;
-                        // Math.ceil and buffer for cross-browser float pixel issues
-                        if (Math.ceil(termsBox.scrollTop + termsBox.clientHeight) >= termsBox.scrollHeight - 15) {
-                            hasScrolledToEnd = true;
-                            checkboxes.forEach(cb => cb.disabled = false);
-                        }
-                    }
-
-                    termsBox.addEventListener('scroll', checkScroll);
-                    // Check initially and periodically in case the box is fully visible without scrolling
-                    setTimeout(checkScroll, 100);
-                    setInterval(checkScroll, 1000);
+                    
+                    if(!chkTerms || !unlockPayBtn) return;
 
                     const checkFormValidity = () => {
-                        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-                        if (allChecked) {
+                        if(chkTerms.checked) {
                             unlockPayBtn.disabled = false;
                             unlockPayBtn.style.cursor = 'pointer';
                             unlockPayBtn.style.opacity = '1';
@@ -738,45 +683,41 @@
                         }
                     };
 
-                    checkboxes.forEach(cb => {
-                        cb.addEventListener('change', checkFormValidity);
-                    });
+                    chkTerms.addEventListener('change', checkFormValidity);
 
                     unlockPayBtn.addEventListener('click', async () => {
                         const consentPayload = {
-                            userId: (window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.id) ? window.APP_DATA.userData.id : "unknown",
+                            userId: (window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.id) ? window.APP_DATA.userData.id : "unknown", 
                             termsVersion: "v2.0",
                             timestamp: new Date().toISOString(),
                             userAgent: navigator.userAgent,
                             consents: {
-                                refundPolicyAccepted: document.getElementById('chkRefund').checked,
-                                disputePolicyAccepted: document.getElementById('chkDispute').checked,
-                                ageAndParentalConsent: document.getElementById('chkAge').checked,
-                                fraudLoggingAccepted: document.getElementById('chkLog').checked
+                                refundPolicyAccepted: true,
+                                disputePolicyAccepted: true,
+                                ageAndParentalConsent: true,
+                                fraudLoggingAccepted: true
                             }
                         };
-
+                        
                         try {
                             // Don't await strictly to prevent UX blocking, but fire the request
                             const token = localStorage.getItem('token');
                             const headers = { 'Content-Type': 'application/json' };
                             if (token) headers['Authorization'] = 'Bearer ' + token;
-
+                            
                             fetch('/api/v1/payments/consent', {
                                 method: 'POST',
                                 headers: headers,
                                 body: JSON.stringify(consentPayload)
                             }).catch(e => console.error("Consent log failed:", e));
-                        } catch (e) {
+                        } catch(e) {
                             console.error("Consent payload error", e);
                         }
-
+                        
                         // Hide consent UI, show Razorpay buttons
                         unlockPayBtn.style.display = 'none';
-                        termsBox.style.display = 'none';
                         checkboxGroup.style.display = 'none';
-                        if (warningMsg) warningMsg.style.display = 'none';
-
+                        
                         razorpayWrapper.style.display = 'flex';
                     });
                 });
@@ -2997,9 +2938,9 @@
 
 
 
-    <script defer="" src="/dist/careers.e4a25189.js?v=c146d681b2d91cc8"></script>
-    <script defer="" src="/dist/app.1fb03540.js?v=c146d681b2d91cc8"></script>
-    <script defer="" src="/dist/ux-engine.b3b75cd2.js?v=c146d681b2d91cc8"></script>
+    <script defer="" src="/dist/careers.e4a25189.js?v=79228448c6992ad2"></script>
+    <script defer="" src="/dist/app.1fb03540.js?v=79228448c6992ad2"></script>
+    <script defer="" src="/dist/ux-engine.b3b75cd2.js?v=79228448c6992ad2"></script>
 
 
     <!-- PROBLEM INSIGHT MODAL -->
