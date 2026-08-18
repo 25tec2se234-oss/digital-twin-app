@@ -53,7 +53,7 @@
 /* ========================================================================
    GLOBAL LIGHT THEME & BACKGROUNDS (FORCED)
 ======================================================================== */
-body, html, body[class*="theme-"] {
+body, html, html {
     background-color: var(--dtv-bg-base) !important;
     color: var(--dtv-text-primary) !important;
     font-family: var(--font-body);
@@ -218,7 +218,7 @@ p, span, small, label {
 
 /* Cards (Features, Dashboard, Steps) */
 .feat-card, .dash-card, .glass-panel, .info-card, .step-card, .career-card, .tool-card,
-body[class*="theme-"] .feat-card, body[class*="theme-"] .dash-card, body[class*="theme-"] .glass-panel {
+html .feat-card, html .dash-card, html .glass-panel {
     background: #FFFFFF !important;
     border: 1px solid var(--dtv-border-default) !important;
     box-shadow: var(--dtv-shadow-md) !important;
@@ -291,7 +291,7 @@ body[class*="theme-"] .feat-card, body[class*="theme-"] .dash-card, body[class*=
 }
 
 /* Interactive Elements */
-.streak-bar, .progress-fill, .mini-bar span, body[class*="theme-"] .streak-bar {
+.streak-bar, .progress-fill, .mini-bar span, html .streak-bar {
     background: var(--dtv-orange-500) !important;
 }
 .seg-btn {
@@ -335,46 +335,46 @@ body[class*="theme-"] .feat-card, body[class*="theme-"] .dash-card, body[class*=
 /* ========================================================================
    READABILITY BUG FIXES (FORCING DARK TEXT ON LIGHT BACKGROUNDS)
 ======================================================================== */
-body[class*="theme-"] .mob, body[class*="theme-"] .mob a, body[class*="theme-"] .mob .btn-reset,
-body[class*="theme-"] .mob-signin, body[class*="theme-"] .mob-signup {
+html .mob, html .mob a, html .mob .btn-reset,
+html .mob-signin, html .mob-signup {
     color: var(--dtv-text-primary) !important;
     background-color: transparent !important;
 }
-body[class*="theme-"] .mob {
+html .mob {
     background-color: #FFFFFF !important;
 }
-body[class*="theme-"] .chat-panel, body[class*="theme-"] .cp-name, body[class*="theme-"] .cp-st, 
-body[class*="theme-"] .cp-msgs, body[class*="theme-"] .ai-msg, body[class*="theme-"] .agent-chip {
+html .chat-panel, html .cp-name, html .cp-st, 
+html .cp-msgs, html .ai-msg, html .agent-chip {
     color: var(--dtv-text-primary) !important;
 }
-body[class*="theme-"] .chat-panel {
+html .chat-panel {
     background: #FFFFFF !important; 
     border: 1px solid var(--dtv-border-default) !important;
     box-shadow: var(--dtv-shadow-xl) !important;
 }
-body[class*="theme-"] .ai-msg {
+html .ai-msg {
     background: var(--dtv-bg-base) !important; 
     color: var(--dtv-text-primary) !important;
     border: 1px solid var(--dtv-border-default) !important;
 }
-body[class*="theme-"] .us-msg {
+html .us-msg {
     background: linear-gradient(135deg, var(--dtv-orange-500), var(--dtv-orange-600)) !important; 
     color: #FFFFFF !important;
 }
-body[class*="theme-"] #rzp-payment-modal .mod-wrap, body[class*="theme-"] #proof-upload-form label, 
-body[class*="theme-"] .checkbox-group span, body[class*="theme-"] #rzp-payment-modal p {
+html #rzp-payment-modal .mod-wrap, html #proof-upload-form label, 
+html .checkbox-group span, html #rzp-payment-modal p {
     color: var(--dtv-text-primary) !important;
 }
-body[class*="theme-"] #rzp-payment-modal .mod-wrap {
+html #rzp-payment-modal .mod-wrap {
     background: #FFFFFF !important;
 }
-body[class*="theme-"] .toast {
+html .toast {
     background: #FFFFFF !important;
     color: var(--dtv-text-primary) !important;
     border: 1px solid var(--dtv-border-default) !important;
     box-shadow: var(--dtv-shadow-lg) !important;
 }
-body[class*="theme-"] .tool-btn {
+html .tool-btn {
     color: #FFFFFF !important;
 }
 
@@ -383,11 +383,11 @@ body[class*="theme-"] .tool-btn {
 ======================================================================== */
 
 /* Dashboard & Explorer Fixes */
-body[class*="theme-"] #student-dashboard, 
-body[class*="theme-"] .dash-box, 
-body[class*="theme-"] .dash-card,
-body[class*="theme-"] .career-card, 
-body[class*="theme-"] .sp-card {
+html #student-dashboard, 
+html .dash-box, 
+html .dash-card,
+html .career-card, 
+html .sp-card {
     background: #FFFFFF !important;
     color: var(--dtv-text-primary) !important;
     border: 1px solid var(--dtv-border-default) !important;
@@ -395,43 +395,43 @@ body[class*="theme-"] .sp-card {
 }
 
 /* Ensure text inside these cards is black */
-body[class*="theme-"] .dash-card *, 
-body[class*="theme-"] .dash-box *, 
-body[class*="theme-"] .career-card *, 
-body[class*="theme-"] .sp-card * {
+html .dash-card *, 
+html .dash-box *, 
+html .career-card *, 
+html .sp-card * {
     color: var(--dtv-text-primary) !important;
 }
 
 /* Fix Comprehensive Learning Ecosystem hover state */
-body[class*="theme-"] .feat-card:hover, 
-body[class*="theme-"] .ecosystem-card:hover,
-body[class*="theme-"] .dash-card:hover,
-body[class*="theme-"] .career-card:hover {
+html .feat-card:hover, 
+html .ecosystem-card:hover,
+html .dash-card:hover,
+html .career-card:hover {
     background: #FFFFFF !important; /* Force it to stay white, not black */
     transform: translateY(-5px) !important;
     box-shadow: var(--dtv-shadow-lg) !important;
 }
 
 /* Top Nav Dropdown */
-body[class*="theme-"] .dropdown-menu, 
-body[class*="theme-"] .nav-dropdown .dropdown-menu {
+html .dropdown-menu, 
+html .nav-dropdown .dropdown-menu {
     background: rgba(255, 255, 255, 0.95) !important;
     backdrop-filter: blur(20px) !important;
     border: 1px solid var(--dtv-border-default) !important;
     box-shadow: var(--dtv-shadow-lg) !important;
 }
-body[class*="theme-"] .dropdown-menu a, 
-body[class*="theme-"] .nav-dropdown .dropdown-menu a {
+html .dropdown-menu a, 
+html .nav-dropdown .dropdown-menu a {
     color: var(--dtv-text-secondary) !important;
 }
-body[class*="theme-"] .dropdown-menu a:hover, 
-body[class*="theme-"] .nav-dropdown .dropdown-menu a:hover {
+html .dropdown-menu a:hover, 
+html .nav-dropdown .dropdown-menu a:hover {
     color: var(--dtv-orange-600) !important;
     background: rgba(249, 115, 22, 0.05) !important;
 }
 
 /* Ensure the Founder Link is perfectly readable */
-body[class*="theme-"] .dtv-badge a {
+html .dtv-badge a {
     color: var(--dtv-orange-600) !important;
     text-shadow: none !important;
 }
@@ -444,4 +444,12 @@ body[class*="theme-"] .dtv-badge a {
 #hero > .hero-shell, #hero > .blobs, #hero > div {
     position: relative;
     z-index: 2; /* Put text above the 3D canvas */
+}
+
+/* Fix Preloader Flash */
+.preloader {
+    background-color: var(--dtv-bg-base) !important;
+}
+.loader {
+    border-color: var(--dtv-orange-300) transparent var(--dtv-orange-500) transparent !important;
 }
