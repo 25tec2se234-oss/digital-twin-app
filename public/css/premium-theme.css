@@ -9,7 +9,7 @@
   /* Surfaces - Clean Whites and Off-whites */
   --dtv-bg-base: #FFFFFF;
   --dtv-bg-raised: #F8FAFC;
-  --dtv-bg-overlay: #F1F5F9;
+  --dtv-bg-overlay: rgba(255, 255, 255, 0.9);
   
   /* Borders - Soft and subtle */
   --dtv-border-subtle: rgba(15, 23, 42, 0.05);
@@ -36,12 +36,20 @@
   /* Typography */
   --font-display: 'Outfit', sans-serif;
   --font-body: 'Inter', sans-serif;
+
+  /* Legacy overrides */
+  --bg: #FFFFFF;
+  --bg2: #F8FAFC;
+  --card: #FFFFFF;
+  --wh: #0F172A;
+  --mu: #334155;
 }
 
 /* ========================================================================
    GLOBAL LIGHT THEME ADJUSTMENTS
 ======================================================================== */
-body {
+body, html {
+    background: var(--dtv-bg-base) !important;
     background-color: var(--dtv-bg-base) !important;
     color: var(--dtv-text-primary) !important;
     font-family: var(--font-body);
@@ -57,15 +65,76 @@ p, span, small, label {
     color: inherit;
 }
 
-/* Overrides for specific Dark elements in main.css */
-.nav-modern {
-    background: rgba(255, 255, 255, 0.85) !important;
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--dtv-border-default) !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+/* Modal and Overlays */
+.student-onboard-ov, .modal-overlay, .auth-shell {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
 }
 
-.logo-modern span {
+.student-onboard-box, .modal-content {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1) !important;
+    color: var(--dtv-text-primary) !important;
+}
+
+.student-onboard-box h3 {
+    color: var(--dtv-text-primary) !important;
+}
+
+.student-onboard-box p, .so-note {
+    color: var(--dtv-text-secondary) !important;
+}
+
+.so-btn {
+    background: #F8FAFC !important;
+    color: var(--dtv-text-primary) !important;
+    border: 1px solid var(--dtv-border-default) !important;
+}
+.so-btn:hover {
+    background: rgba(249, 115, 22, 0.05) !important;
+    border-color: var(--dtv-orange-500) !important;
+    color: var(--dtv-orange-600) !important;
+}
+
+/* Blobs and Background Gradients */
+.blobs .b {
+    background: rgba(249, 115, 22, 0.04) !important; /* Extremely subtle orange instead of messy dark blue/purple */
+}
+
+/* Hero overrides */
+.hero-sec, .sec, .main-wrap {
+    background: #FFFFFF !important;
+}
+.hero-h, .hero-sub, .dtv-badge {
+    color: var(--dtv-text-primary) !important;
+}
+.dtv-badge {
+    background: rgba(249, 115, 22, 0.08) !important;
+    border: 1px solid rgba(249, 115, 22, 0.2) !important;
+    color: var(--dtv-orange-600) !important;
+}
+.dtv-badge span {
+    color: var(--dtv-orange-600) !important;
+}
+.dtv-path-line {
+    background: rgba(15, 23, 42, 0.05) !important; /* Faint gray instead of glowing white */
+}
+.dtv-path-node {
+    background: var(--dtv-orange-500) !important;
+    box-shadow: 0 0 10px rgba(249, 115, 22, 0.3) !important;
+}
+
+/* Nav overrides */
+.nav-modern, .navbar {
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(20px) !important;
+    border-bottom: 1px solid var(--dtv-border-default) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+}
+
+.logo-modern span, .nav-logo {
     color: var(--dtv-text-primary) !important;
 }
 
@@ -78,28 +147,27 @@ p, span, small, label {
     background: rgba(249, 115, 22, 0.05) !important;
 }
 
-/* Hero overrides */
-.hero-sec {
-    background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%) !important;
-    color: var(--dtv-text-primary);
-}
-.hero-sec::before {
-    display: none !important; /* Hide old dark gradients */
-}
-
 /* Auth Cards / Glass Panels */
-.auth-card, .feat-card, .dash-card, .glass-panel, .info-card, .step-card, .career-card {
+.auth-card, .feat-card, .dash-card, .glass-panel, .info-card, .step-card, .career-card, .tool-card {
     background: #FFFFFF !important;
     border: 1px solid var(--dtv-border-default) !important;
     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04) !important;
     color: var(--dtv-text-primary) !important;
 }
 
-.feat-card h3, .dash-card h3, .info-card h3 {
+.feat-card h3, .dash-card h3, .info-card h3, .tool-card h3 {
     color: var(--dtv-text-primary) !important;
 }
-.feat-card p, .dash-card p, .info-card p {
+.feat-card p, .dash-card p, .info-card p, .tool-card p, .tool-desc {
     color: var(--dtv-text-secondary) !important;
+}
+
+/* Remove weird 3D inset shadows from inline styles */
+.auth-card, .feat-card, .dash-card, .glass-panel, .info-card, .step-card, .mc, .sp-card, .career-card, .faq-item {
+    border-top: 1px solid var(--dtv-border-default) !important;
+    border-bottom: 1px solid var(--dtv-border-default) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }
 
 /* Inputs and Forms */
@@ -118,31 +186,32 @@ p, span, small, label {
 }
 
 /* Buttons */
-.btn-primary, .btn-brand {
+.btn-primary, .btn-brand, .tool-btn {
     background: var(--dtv-orange-500) !important;
     color: #FFFFFF !important;
     border: none !important;
     box-shadow: 0 4px 14px rgba(249, 115, 22, 0.3) !important;
+    text-shadow: none !important;
 }
-.btn-primary:hover, .btn-brand:hover {
+.btn-primary:hover, .btn-brand:hover, .tool-btn:hover {
     background: var(--dtv-orange-600) !important;
-    transform: translateY(-2px);
+    transform: translateY(-2px) !important;
     box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4) !important;
 }
 
-.btn-secondary {
+.btn-secondary, .btn-out {
     background: #F1F5F9 !important;
     color: var(--dtv-text-primary) !important;
     border: 1px solid var(--dtv-border-default) !important;
 }
-.btn-secondary:hover {
+.btn-secondary:hover, .btn-out:hover {
     background: #E2E8F0 !important;
     color: var(--dtv-orange-600) !important;
     border-color: var(--dtv-orange-300) !important;
 }
 
 /* Progress / Streaks */
-.streak-bar, .progress-fill {
+.streak-bar, .progress-fill, .mini-bar span {
     background: var(--dtv-orange-500) !important;
 }
 .seg-btn {
@@ -154,15 +223,16 @@ p, span, small, label {
 }
 
 /* Footer overrides */
-.footer-modern {
+.footer-modern, .footer, footer {
     background: #F8FAFC !important;
     border-top: 1px solid var(--dtv-border-default) !important;
-}
-
-.footer-link, .footer-legal-link {
     color: var(--dtv-text-secondary) !important;
 }
-.footer-link:hover, .footer-legal-link:hover {
+
+.footer-link, .footer-legal-link, .foot-link {
+    color: var(--dtv-text-secondary) !important;
+}
+.footer-link:hover, .footer-legal-link:hover, .foot-link:hover {
     color: var(--dtv-orange-600) !important;
 }
 
