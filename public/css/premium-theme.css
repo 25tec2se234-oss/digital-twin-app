@@ -51,9 +51,9 @@
 }
 
 /* ========================================================================
-   GLOBAL LIGHT THEME & BACKGROUNDS
+   GLOBAL LIGHT THEME & BACKGROUNDS (FORCED)
 ======================================================================== */
-body, html {
+body, html, body[class*="theme-"] {
     background-color: var(--dtv-bg-base) !important;
     color: var(--dtv-text-primary) !important;
     font-family: var(--font-body);
@@ -213,7 +213,8 @@ p, span, small, label {
 }
 
 /* Cards (Features, Dashboard, Steps) */
-.feat-card, .dash-card, .glass-panel, .info-card, .step-card, .career-card, .tool-card {
+.feat-card, .dash-card, .glass-panel, .info-card, .step-card, .career-card, .tool-card,
+body[class*="theme-"] .feat-card, body[class*="theme-"] .dash-card, body[class*="theme-"] .glass-panel {
     background: #FFFFFF !important;
     border: 1px solid var(--dtv-border-default) !important;
     box-shadow: var(--dtv-shadow-md) !important;
@@ -286,7 +287,7 @@ p, span, small, label {
 }
 
 /* Interactive Elements */
-.streak-bar, .progress-fill, .mini-bar span {
+.streak-bar, .progress-fill, .mini-bar span, body[class*="theme-"] .streak-bar {
     background: var(--dtv-orange-500) !important;
 }
 .seg-btn {
