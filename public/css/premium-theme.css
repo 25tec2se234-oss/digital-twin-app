@@ -480,3 +480,17 @@ html .dtv-badge a {
 .loader {
     border-color: var(--dtv-orange-300) transparent var(--dtv-orange-500) transparent !important;
 }
+
+/* ========================================================================
+   FIXING HARDCODED BLACK SECTIONS (.surf, .surf2)
+======================================================================== */
+html .surf, html .surf2, html section[class*="surf"] {
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
+    backdrop-filter: none !important;
+}
+/* Ensure the body actually stays white regardless of anything else */
+body {
+    background: #FAFAFA !important;
+    background-color: #FAFAFA !important;
+}
