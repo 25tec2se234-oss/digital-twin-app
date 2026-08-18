@@ -4542,11 +4542,13 @@ function renderCareers(filter) {
             })
             .then(res => {
                 if (res.status === 401) {
-                    APP_DATA.userData.token = null;
+                    if (APP_DATA && APP_DATA.userData) {
+                        APP_DATA.userData.token = null;
+                    }
                     localStorage.removeItem('dt_user');
                     sessionStorage.removeItem('dt_appdata_v3');
                     if(typeof setLoggedIn === 'function') setLoggedIn(false);
-                    if(typeof showToast === 'function') showToast('❌', 'Session expired. Please sign in again.');
+                    if(typeof showToast === 'function') showToast('❌', 'Please sign in to continue.');
                     setTimeout(() => window.location.href = '/login.html', 1500);
                     throw new Error('Unauthorized');
                 }
@@ -4580,19 +4582,21 @@ function renderCareers(filter) {
                         verifyNativePayment(response.razorpay_payment_id, response.razorpay_order_id, response.razorpay_signature);
                     },
                     "prefill": {
-                        "name": APP_DATA.userData.name || "",
-                        "email": APP_DATA.userData.email || "",
-                        "contact": APP_DATA.userData.phone || ""
+                        "name": APP_DATA.userData ? APP_DATA.userData.name : "",
+                        "email": APP_DATA.userData ? APP_DATA.userData.email : "",
+                        "contact": APP_DATA.userData ? APP_DATA.userData.phone : ""
                     },
                     "theme": { "color": "#2a7de1" }
                 };
                 var rzp1 = new Razorpay(options);
                 rzp1.on('payment.failed', function (response){
-                    showToast('⚠️', 'Payment failed. ' + response.error.description);
+                    if(typeof showToast === 'function') showToast('⚠️', 'Payment failed. ' + response.error.description);
                 });
                 rzp1.open();
             })
             .catch(err => {
+                if (err.message === 'Unauthorized') return; // Do not fallback, wait for login redirect
+                
                 btnElem.disabled = false;
                 btnElem.innerHTML = originalText;
                 window.location.href = 'https://pages.razorpay.com/' + fallbackLinkId + '/view';
