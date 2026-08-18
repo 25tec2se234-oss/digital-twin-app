@@ -790,24 +790,7 @@
 
         <!-- HERO -->
         <section id="hero" class="sec">
-    <!-- DTV PATHWAY HERO BACKGROUND -->
-    <div class="dtv-pathway-container">
-        <div class="dtv-path-node" style="top: 20%; left: 15%; animation-delay: 0s;"></div>
-        <div class="dtv-path-node" style="top: 35%; left: 30%; animation-delay: 1.2s;"></div>
-        <div class="dtv-path-node" style="top: 15%; left: 70%; animation-delay: 2.4s;"></div>
-        <div class="dtv-path-node" style="top: 50%; left: 80%; animation-delay: 0.8s;"></div>
-        <div class="dtv-path-node" style="top: 75%; left: 25%; animation-delay: 3s;"></div>
-        <div class="dtv-path-node" style="top: 60%; left: 55%; animation-delay: 1.5s;"></div>
-        <div class="dtv-path-node" style="top: 85%; left: 70%; animation-delay: 0.5s;"></div>
-        
-        <!-- Connecting lines -->
-        <div class="dtv-path-line" style="top: 20%; left: 15%; width: 250px; transform: rotate(35deg);"></div>
-        <div class="dtv-path-line" style="top: 35%; left: 30%; width: 450px; transform: rotate(-15deg);"></div>
-        <div class="dtv-path-line" style="top: 15%; left: 70%; width: 200px; transform: rotate(70deg);"></div>
-        <div class="dtv-path-line" style="top: 75%; left: 25%; width: 400px; transform: rotate(-25deg);"></div>
-        <div class="dtv-path-line" style="top: 60%; left: 55%; width: 300px; transform: rotate(30deg);"></div>
-    </div>
-
+    <!-- 3D Vanta JS Network will be initialized here -->
             <div class="blobs">
                 <div class="b" style="width:650px;height:650px;top:-180px;left:-200px;background:rgba(42,125,225,.16);animation-delay:0s;">
                 </div>
@@ -2744,4 +2727,31 @@
                 <li><a href="#ai-section">Best AI Career Counselor India</a></li>
                 <li><a href="#why-dtv">AI Career Guidance System for Schools</a></li>
             </ul>
-        </nav></body></html>
+        </nav>
+        
+        <!-- 3D Interactive SaaS Neural Network -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                if (typeof VANTA !== 'undefined') {
+                    VANTA.NET({
+                        el: "#hero",
+                        mouseControls: true,
+                        touchControls: true,
+                        gyroControls: false,
+                        minHeight: 200.00,
+                        minWidth: 200.00,
+                        scale: 1.00,
+                        scaleMobile: 1.00,
+                        color: 0xF97316,
+                        backgroundColor: 0xFFFFFF,
+                        points: 12.00,
+                        maxDistance: 22.00,
+                        spacing: 20.00,
+                        showDots: true
+                    });
+                }
+            });
+        </script>
+</body></html>
