@@ -137,7 +137,7 @@ p, span, small, label {
     -webkit-backdrop-filter: blur(12px) !important;
 }
 
-.student-onboard-box, .modal-content, .mod-wrap, .auth-card {
+.modal-content, .mod-wrap, .auth-card {
     background: rgba(255, 255, 255, 0.95) !important;
     border: 1px solid var(--dtv-border-default) !important;
     box-shadow: var(--dtv-shadow-xl) !important;
@@ -821,4 +821,10 @@ html .blog-card-title, html .story-title, html .blog-card h3 {
 
 html .blog-sidebar {
     background: #FAFAFA !important;
+}
+/* Soft Orange styling for Welcome Box */
+.student-onboard-box {
+    background: #FFF7ED !important;
+    border: 1px solid #FFEDD5 !important;
+    box-shadow: 0 20px 40px rgba(249, 115, 22, 0.08) !important;
 }
