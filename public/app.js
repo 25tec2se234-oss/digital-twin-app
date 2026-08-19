@@ -4510,103 +4510,17 @@ function renderCareers(filter) {
                 targetBtnId = 'pl_T6LP8q96flBl9y';
             }
 
-            // Render a native Subscribe button that triggers the Razorpay popup directly
+            // Render the Razorpay Payment Button directly to ensure modal overlay on the website
             var formElem = document.getElementById(targetFormId);
             if (formElem) {
                 formElem.innerHTML = ''; // clear previous elements
                 
-                var nativeBtn = document.createElement('button');
-                nativeBtn.type = 'button';
-                nativeBtn.innerHTML = '⚡ Subscribe Now <span style="font-size:0.8rem;opacity:0.8;display:block;">Secured by Razorpay</span>';
-                nativeBtn.style.cssText = 'width: 100%; background: linear-gradient(135deg, #2a7de1, #1e40af); color: #fff; border: none; padding: 1.2rem; border-radius: 12px; font-size: 1.2rem; font-weight: 700; cursor: pointer; box-shadow: 0 10px 25px rgba(42, 125, 225, 0.4); transition: transform 0.2s;';
-                nativeBtn.onmouseover = function() { this.style.transform = 'scale(1.02)'; };
-                nativeBtn.onmouseout = function() { this.style.transform = 'scale(1)'; };
-                
-                nativeBtn.onclick = function(e) {
-                    e.preventDefault();
-                    initiateNativeCheckout(planId, nativeBtn, targetBtnId);
-                };
-                
-                formElem.appendChild(nativeBtn);
+                var script = document.createElement('script');
+                script.src = 'https://checkout.razorpay.com/v1/payment-button.js';
+                script.setAttribute('data-payment_button_id', targetBtnId);
+                script.async = true;
+                formElem.appendChild(script);
             }
-        }
-
-        function initiateNativeCheckout(planId, btnElem, fallbackLinkId) {
-            btnElem.disabled = true;
-            var originalText = btnElem.innerHTML;
-            btnElem.innerHTML = '<span class="loading-spinner" style="display:inline-block;width:20px;height:20px;border:3px solid rgba(255,255,255,0.3);border-radius:50%;border-top-color:#fff;animation:spin 1s ease-in-out infinite;"></span> Processing...';
-            
-            var headers = { 'Content-Type': 'application/json' };
-            if (APP_DATA && APP_DATA.userData && APP_DATA.userData.token) {
-                headers['Authorization'] = 'Bearer ' + APP_DATA.userData.token;
-            }
-
-            fetch('/api/v1/payment/create', {
-                method: 'POST',
-                headers: headers,
-                body: JSON.stringify({ plan: planId })
-            })
-            .then(res => {
-                if (res.status === 401) {
-                    if (APP_DATA && APP_DATA.userData) {
-                        APP_DATA.userData.token = null;
-                    }
-                    localStorage.removeItem('dt_user');
-                    sessionStorage.removeItem('dt_appdata_v3');
-                    if(typeof setLoggedIn === 'function') setLoggedIn(false);
-                    if(typeof showToast === 'function') showToast('❌', 'Please sign in to continue.');
-                    setTimeout(() => window.location.href = '/login.html', 1500);
-                    throw new Error('Unauthorized');
-                }
-                return res.json();
-            })
-            .then(data => {
-                btnElem.disabled = false;
-                btnElem.innerHTML = originalText;
-                
-                if (!data.success || !data.order_id) {
-                    // Fallback to Razorpay Hosted Payment Page if backend keys are missing/invalid
-                    var formContainer = btnElem.parentNode;
-                    btnElem.style.display = 'none';
-                    formContainer.innerHTML = `
-                        <p style="color:#fca5a5;font-size:0.95rem;margin-bottom:15px;font-weight:600;">Standard checkout unavailable (check backend keys). Secure fallback activated.</p>
-                        <a href="https://pages.razorpay.com/${fallbackLinkId}/view" target="_blank" style="display:block; width: 100%; text-decoration:none; background: linear-gradient(135deg, #10b981, #059669); color: #fff; border: none; padding: 1.2rem; border-radius: 12px; font-size: 1.2rem; font-weight: 700; cursor: pointer; box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4); text-align:center;">
-                            Proceed to Razorpay
-                        </a>
-                    `;
-                    return;
-                }
-
-                var options = {
-                    "key": data.key_id,
-                    "amount": data.amount,
-                    "currency": data.currency,
-                    "name": "Digital Twin Verse",
-                    "description": "Premium Subscription",
-                    "order_id": data.order_id,
-                    "handler": function (response) {
-                        verifyNativePayment(response.razorpay_payment_id, response.razorpay_order_id, response.razorpay_signature);
-                    },
-                    "prefill": {
-                        "name": APP_DATA.userData ? APP_DATA.userData.name : "",
-                        "email": APP_DATA.userData ? APP_DATA.userData.email : "",
-                        "contact": APP_DATA.userData ? APP_DATA.userData.phone : ""
-                    },
-                    "theme": { "color": "#2a7de1" }
-                };
-                var rzp1 = new Razorpay(options);
-                rzp1.on('payment.failed', function (response){
-                    if(typeof showToast === 'function') showToast('⚠️', 'Payment failed. ' + response.error.description);
-                });
-                rzp1.open();
-            })
-            .catch(err => {
-                if (err.message === 'Unauthorized') return; // Do not fallback, wait for login redirect
-                
-                btnElem.disabled = false;
-                btnElem.innerHTML = originalText;
-                window.location.href = 'https://pages.razorpay.com/' + fallbackLinkId + '/view';
-            });
         }
 
         function verifyNativePayment(payment_id, order_id, signature) {
