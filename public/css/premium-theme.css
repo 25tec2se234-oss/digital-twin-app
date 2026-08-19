@@ -770,3 +770,50 @@ html .wa-redirect-box button[onclick="closePricingPage()"] {
 html .wa-redirect-box button[onclick="closePricingPage()"]:hover {
     background: rgba(15, 23, 42, 0.1) !important;
 }
+
+/* ========================================================================
+   BLOG & RESOURCES LIGHT THEME FIX
+======================================================================== */
+/* Blog Page Background and Text */
+html body.blog-page, html .blog-container, html .blog-layout, html .blog-hero {
+    background: #FAFAFA !important;
+}
+
+html .blog-content {
+    color: #3f3f46 !important;
+}
+
+html .blog-content h1, html .blog-content h2, html .blog-content h3, html .blog-content h4, html .blog-content h5, html .blog-content h6 {
+    color: #09090b !important;
+}
+
+html .blog-content strong, html .blog-content b {
+    color: #09090b !important;
+}
+
+html .blog-meta {
+    color: #71717a !important;
+}
+
+html .blog-card, html .story-card {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(15, 23, 42, 0.08) !important;
+    color: #3f3f46 !important;
+}
+
+html .blog-card:hover, html .story-card:hover {
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05) !important;
+    border-color: rgba(15, 23, 42, 0.15) !important;
+}
+
+html .blog-card-content, html .story-card-content {
+    color: #52525b !important;
+}
+
+html .blog-card-title, html .story-title, html .blog-card h3 {
+    color: #09090b !important;
+}
+
+html .blog-sidebar {
+    background: #FAFAFA !important;
+}
