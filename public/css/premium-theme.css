@@ -673,3 +673,51 @@ html .feedback-box input, html .feedback-box textarea {
     border: 1px solid var(--dtv-border-strong) !important;
     color: var(--dtv-text-primary) !important;
 }
+
+/* ========================================================================
+   REACT AUTH APP LIGHT THEME FORCES (login.html, signup.html)
+======================================================================== */
+/* Force main container */
+html #root > div.bg-\[\#101415\] {
+    background-color: #FAFAFA !important;
+    background-image: none !important;
+    color: #1a202c !important;
+}
+
+/* Override black shader canvas */
+html #shader-canvas {
+    background-color: transparent !important;
+    opacity: 0.15 !important;
+}
+
+/* Force text colors from white to dark */
+html #root .text-white {
+    color: #1a202c !important;
+}
+html #root .text-\[\#cbc3d7\] {
+    color: #52525b !important;
+}
+
+/* Login/Signup Glass Card */
+html #login-card, html .glass-card {
+    background-color: #FFFFFF !important;
+    border-color: rgba(15, 23, 42, 0.08) !important;
+    box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.03) !important;
+}
+
+/* Inputs inside React app */
+html #root input.bg-black\/60 {
+    background-color: #FFFFFF !important;
+    color: #1a202c !important;
+    border-color: rgba(15, 23, 42, 0.15) !important;
+}
+html #root input.bg-black\/60::placeholder {
+    color: #94a3b8 !important;
+}
+
+/* Informational Text Box */
+html #root p.bg-black\/40 {
+    background-color: rgba(15, 23, 42, 0.04) !important;
+    border-color: rgba(15, 23, 42, 0.08) !important;
+    color: #52525b !important;
+}
