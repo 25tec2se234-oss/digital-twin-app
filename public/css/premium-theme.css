@@ -468,7 +468,7 @@ html .dtv-badge a {
     position: relative !important;
     background: transparent !important;
 }
-#hero > .hero-shell, #hero > .blobs, #hero > div {
+#hero > .hero-shell, #hero > .blobs {
     position: relative;
     z-index: 2; /* Put text above the 3D canvas */
 }
