@@ -67,7 +67,7 @@
         /* ═══ PREMIUM UI OVERRIDES ════════════════════ */
         :root {
             --bdr-hover: rgba(255, 255, 255, 0.15);
-            --card-glow: 0 16px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            --card-glow: 0 16px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(15, 23, 42, 0.05);
         }
 
         .auth-card,
@@ -86,12 +86,12 @@
             transform: translateZ(0);
             /* 3D Glass Borders & Bevels */
             border: 1px solid var(--bdr) !important;
-            border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-top: 1px solid rgba(15, 23, 42, 0.1) !important;
             border-bottom: 1px solid rgba(0, 0, 0, 0.2) !important;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease !important;
             /* 3D Thickness & Shadows */
             box-shadow:
-                inset 0 1px 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 1px rgba(15, 23, 42, 0.1),
                 inset 0 -4px 10px rgba(0, 0, 0, 0.1),
                 0 12px 30px var(--card),
                 0 4px 8px rgba(0, 0, 0, 0.1) !important;
@@ -150,7 +150,7 @@
             border-top-color: var(--glow2) !important;
             /* Enhance 3D shadow on hover */
             box-shadow:
-                inset 0 1px 2px rgba(255, 255, 255, 0.1),
+                inset 0 1px 2px rgba(15, 23, 42, 0.1),
                 inset 0 -1px 0 rgba(0, 0, 0, 0.2),
                 0 15px 30px var(--card),
                 0 10px 20px var(--glow1) !important;
@@ -170,7 +170,7 @@
         }
 
         .btn-out:hover {
-            background: rgba(255, 255, 255, 0.08) !important;
+            background: rgba(15, 23, 42, 0.05) !important;
         }
 
         /* 3D Tilt Wrapper */
@@ -325,7 +325,7 @@
         .splash-loader {
             width: 240px;
             height: 3px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(15, 23, 42, 0.05);
             border-radius: 3px;
             overflow: hidden;
             position: relative;
@@ -393,26 +393,26 @@
 
 <style>
 .blog-header { text-align: center; margin-bottom: 2rem; }
-.blog-meta { display: flex; justify-content: center; gap: 1rem; color: #a1a1aa; font-size: 0.9rem; margin-bottom: 2rem; }
-.blog-content { line-height: 1.8; font-size: 1.1rem; color: #e4e4e7; }
-.blog-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; color: #fff; }
+.blog-meta { display: flex; justify-content: center; gap: 1rem; color:#52525b; font-size: 0.9rem; margin-bottom: 2rem; }
+.blog-content { line-height: 1.8; font-size: 1.1rem; color:#3f3f46; }
+.blog-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; color:#09090b; }
 .blog-content p { margin-bottom: 1.5rem; }
 .blog-image { width: 100%; border-radius: 12px; margin-bottom: 2rem; object-fit: cover; max-height: 500px; }
-.breadcrumb { padding: 1rem 0; margin-bottom: 1rem; color: #a1a1aa; font-size: 0.9rem; }
+.breadcrumb { padding: 1rem 0; margin-bottom: 1rem; color:#52525b; font-size: 0.9rem; }
 .breadcrumb a { color: #3b82f6; text-decoration: none; }
-.toc { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid rgba(255,255,255,0.1); }
+.toc { background: rgba(15, 23, 42, 0.05); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid rgba(15, 23, 42, 0.1); }
 .toc ul { list-style: none; padding-left: 0; }
 .toc li { margin-bottom: 0.5rem; }
 .toc a { color: #93c5fd; text-decoration: none; }
 .faq-section { margin-top: 4rem; }
-.faq-item { background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
+.faq-item { background: rgba(15, 23, 42, 0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
 .faq-item h3 { margin-bottom: 0.5rem; font-size: 1.1rem; }
 .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-.blog-card { background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s ease; }
+.blog-card { background: rgba(15, 23, 42, 0.05); border-radius: 12px; overflow: hidden; border: 1px solid rgba(15, 23, 42, 0.1); transition: transform 0.3s ease; }
 .blog-card:hover { transform: translateY(-5px); }
 .blog-card img { width: 100%; height: 200px; object-fit: cover; }
 .blog-card-content { padding: 1.5rem; }
-.blog-card-title { font-size: 1.25rem; margin-bottom: 0.5rem; color: #fff; }
+.blog-card-title { font-size: 1.25rem; margin-bottom: 0.5rem; color:#09090b; }
 </style>
 
     <script defer="defer" src="/dist/app.d511f803.js?v=d142e9838830ff29"></script>
@@ -507,16 +507,16 @@
         <button type="button" onclick="requireAuth(function(){openPricingPage(); togMenu();}); return false;" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: #e88c2a; width: 100%; text-align: left; font-size: 1.1rem; font-weight: 700;">💎 Go Premium</button>
         <button type="button" onclick="openAnalyzer(); togMenu();" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: var(--wh, #fff); width: 100%; text-align: left; font-size: 1.1rem; font-weight: 600;">🧠
             Achievement Analyzer</button>
-        <div style="padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 0.5rem;">
+        <div style="padding: 1rem 1.5rem; border-top: 1px solid rgba(15, 23, 42, 0.1); margin-top: 0.5rem;">
             <p style="color: var(--mu); font-size: 0.9rem; margin-bottom: 0.5rem;">Select Theme</p>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                <button onclick="setTheme('midnight'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: var(--wh);">Midnight</button>
+                <button onclick="setTheme('midnight'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: var(--wh);">Midnight</button>
                 <button onclick="setTheme('light'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: #fff; border-radius: 6px; font-size: 0.9rem; color: #000;">Light</button>
-                <button onclick="setTheme('navy'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #60a5fa;">Navy</button>
-                <button onclick="setTheme('slate'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: var(--mu);">Slate</button>
-                <button onclick="setTheme('forest'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #4ade80;">Forest</button>
-                <button onclick="setTheme('crimson'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #f87171;">Crimson</button>
-                <button onclick="setTheme('magenta'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #f472b6;">Magenta</button>
+                <button onclick="setTheme('navy'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #60a5fa;">Navy</button>
+                <button onclick="setTheme('slate'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: var(--mu);">Slate</button>
+                <button onclick="setTheme('forest'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #4ade80;">Forest</button>
+                <button onclick="setTheme('crimson'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #f87171;">Crimson</button>
+                <button onclick="setTheme('magenta'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #f472b6;">Magenta</button>
             </div>
         </div>
 
@@ -538,51 +538,51 @@
             .blog-layout { flex-direction: column; }
             .blog-sidebar { width: 100%; position: static; }
         }
-        .social-share { display: flex; gap: 1rem; margin-top: 3rem; padding: 1.5rem 0; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; align-items: center; }
-        .social-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 8px; background: rgba(255,255,255,0.05); color: #fff; cursor: pointer; transition: 0.2s; border: 1px solid rgba(255,255,255,0.1); font-family: inherit; text-decoration: none; font-size: 0.95rem; font-weight: 500; }
-        .social-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+        .social-share { display: flex; gap: 1rem; margin-top: 3rem; padding: 1.5rem 0; border-top: 1px solid rgba(15, 23, 42, 0.1); border-bottom: 1px solid rgba(15, 23, 42, 0.1); flex-wrap: wrap; align-items: center; }
+        .social-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 8px; background: rgba(15, 23, 42, 0.05); color:#09090b; cursor: pointer; transition: 0.2s; border: 1px solid rgba(15, 23, 42, 0.1); font-family: inherit; text-decoration: none; font-size: 0.95rem; font-weight: 500; }
+        .social-btn:hover { background: rgba(15, 23, 42, 0.1); border-color: rgba(15, 23, 42, 0.1); transform: translateY(-2px); }
         
         .nav-articles { display: flex; justify-content: space-between; gap: 1.5rem; margin: 3rem 0; flex-wrap: wrap; }
 
 
         .nav-art-label { color: #a78bfa; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8rem; font-weight: 700; }
-        .nav-art-title { color: #fff; font-size: 1.15rem; font-weight: 600; line-height: 1.4; }
+        .nav-art-title { color:#09090b; font-size: 1.15rem; font-weight: 600; line-height: 1.4; }
         
         .newsletter-cta { background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(59,130,246,0.08)); border: 1px solid rgba(167,139,250,0.3); padding: 2rem; border-radius: 16px; text-align: center; margin-top: 0; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
-        .nl-input { width: 100%; padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.4); color: #fff; margin-bottom: 1.2rem; font-family: inherit; font-size: 1rem; outline: none; transition: 0.3s; }
+        .nl-input { width: 100%; padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid rgba(15, 23, 42, 0.1); background: rgba(15, 23, 42, 0.04); color:#09090b; margin-bottom: 1.2rem; font-family: inherit; font-size: 1rem; outline: none; transition: 0.3s; }
         .nl-input:focus { border-color: #a78bfa; box-shadow: 0 0 0 3px rgba(167,139,250,0.2); }
-        .nl-btn { width: 100%; padding: 1rem; background: linear-gradient(135deg, #a78bfa, #3b82f6); color: #fff; font-weight: 700; font-size: 1.05rem; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .nl-btn { width: 100%; padding: 1rem; background: linear-gradient(135deg, #a78bfa, #3b82f6); color:#09090b; font-weight: 700; font-size: 1.05rem; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
         .nl-btn:hover { box-shadow: 0 8px 20px rgba(167,139,250,0.4); transform: translateY(-2px); }
         
-        .blog-content { font-size: 1.15rem; line-height: 1.8; color: #cbd5e1; }
-        .blog-content h2 { font-size: 2.2rem; color: #fff; margin: 3rem 0 1.5rem; font-weight: 700; }
-        .blog-content h3 { font-size: 1.6rem; color: #fff; margin: 2.5rem 0 1.2rem; font-weight: 600; }
+        .blog-content { font-size: 1.15rem; line-height: 1.8; color:#3f3f46; }
+        .blog-content h2 { font-size: 2.2rem; color:#09090b; margin: 3rem 0 1.5rem; font-weight: 700; }
+        .blog-content h3 { font-size: 1.6rem; color:#09090b; margin: 2.5rem 0 1.2rem; font-weight: 600; }
         .blog-content p { margin-bottom: 1.5rem; }
         .blog-content ul, .blog-content ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
         .blog-content li { margin-bottom: 0.8rem; }
         .blog-content a { color: #a78bfa; text-decoration: none; }
         .blog-content a:hover { text-decoration: underline; }
-        .blog-content strong { color: #fff; }
+        .blog-content strong { color:#09090b; }
         
-        .author-box { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); width: 100%; }
+        .author-box { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; padding-top: 2rem; border-top: 1px solid rgba(15, 23, 42, 0.1); width: 100%; }
 
-        .rel-blog-card { display: flex; flex-direction: column; text-decoration: none; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); height: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        .rel-blog-card { display: flex; flex-direction: column; text-decoration: none; background: rgba(15, 23, 42, 0.05); border: 1px solid rgba(15, 23, 42, 0.05); border-radius: 16px; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); height: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
         .rel-blog-card:hover { transform: translateY(-10px); border-color: rgba(167,139,250,0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(167,139,250,0.15); }
         .rel-img-wrapper { overflow: hidden; height: 220px; }
         .rel-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; display: block; }
         .rel-blog-card:hover .rel-img-wrapper img { transform: scale(1.08); }
         .rel-blog-content { padding: 1.8rem; display: flex; flex-direction: column; flex: 1; }
         .rel-meta { color: #a78bfa; font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; }
-        .rel-title { color: #fff; font-size: 1.3rem; margin-bottom: 0.8rem; line-height: 1.4; font-weight: 600; transition: color 0.3s; }
+        .rel-title { color:#09090b; font-size: 1.3rem; margin-bottom: 0.8rem; line-height: 1.4; font-weight: 600; transition: color 0.3s; }
         .rel-blog-card:hover .rel-title { color: #a78bfa; }
-        .rel-desc { color: #94a3b8; font-size: 0.95rem; margin: 0; line-height: 1.6; }
+        .rel-desc { color:#52525b; font-size: 0.95rem; margin: 0; line-height: 1.6; }
         
-        .faq-item { background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1.8rem; transition: transform 0.3s, box-shadow 0.3s; }
+        .faq-item { background: linear-gradient(145deg, rgba(15, 23, 42, 0.05), rgba(255,255,255,0.01)); border: 1px solid rgba(15, 23, 42, 0.05); border-radius: 16px; padding: 1.8rem; transition: transform 0.3s, box-shadow 0.3s; }
         .faq-item:hover { transform: translateY(-3px); border-color: rgba(167,139,250,0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         
-        .nav-art-btn { flex: 1; min-width: 250px; padding: 2rem; background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; text-decoration: none; transition: all 0.4s ease; position: relative; overflow: hidden; }
+        .nav-art-btn { flex: 1; min-width: 250px; padding: 2rem; background: linear-gradient(135deg, rgba(15, 23, 42, 0.05), rgba(255,255,255,0.01)); border: 1px solid rgba(15, 23, 42, 0.1); border-radius: 16px; text-decoration: none; transition: all 0.4s ease; position: relative; overflow: hidden; }
         .nav-art-btn::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(167,139,250,0.1), rgba(59,130,246,0.1)); opacity: 0; transition: opacity 0.4s ease; }
-        .nav-art-btn:hover { border-color: rgba(167,139,250,0.4); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+        .nav-art-btn:hover { border-color: rgba(167,139,250,0.4); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(15, 23, 42, 0.04); }
         .nav-art-btn:hover::before { opacity: 1; }
         .nav-art-label, .nav-art-title { position: relative; z-index: 1; }
 
@@ -598,26 +598,26 @@
                 <span>&larr;</span> Back to all blogs
             </a>
             
-            <div class="breadcrumb" style="margin-bottom: 1.5rem; font-size: 0.95rem; color: #a1a1aa;">
+            <div class="breadcrumb" style="margin-bottom: 1.5rem; font-size: 0.95rem; color:#52525b;">
                 <a href="/" style="color: #a78bfa; text-decoration: none;">Home</a> &rsaquo; 
                 <a href="/blog" style="color: #a78bfa; text-decoration: none;">Blog</a> &rsaquo; 
-                <span style="color: #fff;">How to Choose the Right Career After 12th (Science, Commerce & Arts) – Complete Guide 2026</span>
+                <span style="color:#09090b;">How to Choose the Right Career After 12th (Science, Commerce & Arts) – Complete Guide 2026</span>
             </div>
             
-            <h1 style="color: #fff; font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.2; font-weight: 800; letter-spacing: -1px; text-transform: capitalize;">How to Choose the Right Career After 12th (Science, Commerce & Arts) – Complete Guide 2026</h1>
+            <h1 style="color:#09090b; font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.2; font-weight: 800; letter-spacing: -1px; text-transform: capitalize;">How to Choose the Right Career After 12th (Science, Commerce & Arts) – Complete Guide 2026</h1>
             
             <div class="author-box">
-                <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #a78bfa, #3b82f6); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 800; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #a78bfa, #3b82f6); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 800; color:#09090b; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
                     DTVET
                 </div>
                 <div style="text-align: left;">
-                    <div style="font-weight: 700; font-size: 1.1rem; color: #fff; margin-bottom: 0.2rem;">Digital Twin Verse Editorial Team</div>
-                    <div style="color: #94a3b8; font-size: 0.9rem;">Published: 2026-07-20 &bull; 12 min read</div>
+                    <div style="font-weight: 700; font-size: 1.1rem; color:#09090b; margin-bottom: 0.2rem;">Digital Twin Verse Editorial Team</div>
+                    <div style="color:#52525b; font-size: 0.9rem;">Published: 2026-07-20 &bull; 12 min read</div>
                 </div>
             </div>
         </div>
         
-        <div style="max-width: 1000px; margin: 0 auto 4rem; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05);">
+        <div style="max-width: 1000px; margin: 0 auto 4rem; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid rgba(15, 23, 42, 0.05);">
             <img class="blog-image" src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&fm=webp&q=80" alt="How to Choose the Right Career After 12th (Science, Commerce & Arts) – Complete Guide 2026" fetchpriority="high" style="width: 100%; max-height: 550px; object-fit: cover; display: block;">
         </div>
         
@@ -828,41 +828,41 @@
         <p>The <strong>best career after 12th</strong> is not the one that pays the most or the one your neighbors suggest; it is the one that perfectly aligns with your aptitude, passion, and future market demand. Take your time, research extensively, and do not hesitate to use modern tools like AI to map out your future.</p>
         <p>Your journey has just begun. Make it a masterpiece!</p>
     
-                    <div class="faq-section" style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.1);"><h2 style="color: #fff; font-size: 2.2rem; margin-bottom: 2.5rem; font-weight: 700;">Frequently Asked Questions</h2><div style="display: flex; flex-direction: column; gap: 1.5rem;"><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">What is the best career after 12th Science?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">The best career after 12th Science depends on whether you have PCM or PCB. Top options include Artificial Intelligence, Data Science, Medicine, Biotechnology, and Aerospace Engineering.</p>
+                    <div class="faq-section" style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid rgba(15, 23, 42, 0.1);"><h2 style="color:#09090b; font-size: 2.2rem; margin-bottom: 2.5rem; font-weight: 700;">Frequently Asked Questions</h2><div style="display: flex; flex-direction: column; gap: 1.5rem;"><div class="faq-item">
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">What is the best career after 12th Science?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">The best career after 12th Science depends on whether you have PCM or PCB. Top options include Artificial Intelligence, Data Science, Medicine, Biotechnology, and Aerospace Engineering.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">How do I choose the best career after 12th Commerce?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Top choices for Commerce students include Chartered Accountancy (CA), Investment Banking, Business Analytics, and Digital Marketing. Use AI career guidance platforms to match your aptitude with these fields.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">How do I choose the best career after 12th Commerce?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Top choices for Commerce students include Chartered Accountancy (CA), Investment Banking, Business Analytics, and Digital Marketing. Use AI career guidance platforms to match your aptitude with these fields.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">What are the most high-paying arts stream careers?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">High-paying arts careers include Corporate Law, UX/UI Design, Mass Communication, and Public Relations.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">What are the most high-paying arts stream careers?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">High-paying arts careers include Corporate Law, UX/UI Design, Mass Communication, and Public Relations.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can AI help me choose a career after 12th?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes! Platforms like Digital Twin Verse offer AI career guidance that analyzes your behavioral traits, academic performance, and interests.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can AI help me choose a career after 12th?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes! Platforms like Digital Twin Verse offer AI career guidance that analyzes your behavioral traits, academic performance, and interests.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Should I follow my passion or focus on salary?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">The ideal career lies at the intersection of your passion, your skills, market demand, and financial rewards (the Ikigai framework).</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Should I follow my passion or focus on salary?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">The ideal career lies at the intersection of your passion, your skills, market demand, and financial rewards (the Ikigai framework).</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">What if I chose the wrong stream in 11th and 12th?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">It is completely fine. Many degrees like BBA, BCA, Design, and Law accept students from any stream.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">What if I chose the wrong stream in 11th and 12th?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">It is completely fine. Many degrees like BBA, BCA, Design, and Law accept students from any stream.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Is B.Tech still worth it in 2026?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes, especially if you specialize in future-proof technologies like AI, Machine Learning, Cybersecurity, or Robotics.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Is B.Tech still worth it in 2026?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes, especially if you specialize in future-proof technologies like AI, Machine Learning, Cybersecurity, or Robotics.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">How important is career counseling?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Extremely important. Nearly 44% of students end up in mismatched careers. Proper career guidance after 12th prevents wasted time and money.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">How important is career counseling?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Extremely important. Nearly 44% of students end up in mismatched careers. Proper career guidance after 12th prevents wasted time and money.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can Commerce students go into IT?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes, Commerce students can pursue a BCA or B.Sc in IT, or enter the tech field via roles like Business Analyst.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can Commerce students go into IT?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes, Commerce students can pursue a BCA or B.Sc in IT, or enter the tech field via roles like Business Analyst.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">What is the best way to get started with Digital Twin Verse?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Simply sign up on the platform, take the initial AI assessment, and unlock your digital twin to simulate different career trajectories.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">What is the best way to get started with Digital Twin Verse?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Simply sign up on the platform, take the initial AI assessment, and unlock your digital twin to simulate different career trajectories.</p>
             </div></div></div>
                 </div>
                 
                 <div class="social-share">
-                    <span style="color: #fff; font-weight: 600; margin-right: 1rem;">Share this article:</span>
+                    <span style="color:#09090b; font-weight: 600; margin-right: 1rem;">Share this article:</span>
                     <a href="https://twitter.com/intent/tweet?text=How%20to%20Choose%20the%20Right%20Career%20After%2012th%20(Science%2C%20Commerce%20%26%20Arts)%20%E2%80%93%20Complete%20Guide%202026&url=https%3A%2F%2Fdigitaltwinvrs.com%2Fblog%2Fhow-to-choose-right-career-after-12th-complete-guide" target="_blank" class="social-btn">
                         X (Twitter)
                     </a>
@@ -885,7 +885,7 @@
                     </a>
                 </div>
                 
-                <div class="related-section" style="margin-top: 5rem; padding-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1);"><h2 style="color: #fff; margin-bottom: 3rem; font-size: 2.2rem; font-weight: 700; text-align: center;">Related Articles</h2><div class="related-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2.5rem;">
+                <div class="related-section" style="margin-top: 5rem; padding-top: 4rem; border-top: 1px solid rgba(15, 23, 42, 0.1);"><h2 style="color:#09090b; margin-bottom: 3rem; font-size: 2.2rem; font-weight: 700; text-align: center;">Related Articles</h2><div class="related-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2.5rem;">
                 <a href="/blog/50-best-free-ai-tools-for-students-2026" class="rel-blog-card">
                     <div class="rel-img-wrapper">
                         <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2070&auto=format&fit=crop" alt="50+ Best Free AI Tools Every Student Should Use in 2026" loading="lazy" decoding="async">
@@ -1059,12 +1059,12 @@
             </div>
             
             <div class="blog-sidebar">
-                <div class="toc-container" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;"><h3 style="color: #fff; margin-bottom: 1rem; font-size: 1.2rem; font-weight: 600;">Table of Contents</h3><ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem;"><li><a href="#importance" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">The Importance of Career Guidance After 12th</a></li><li><a href="#science-careers" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">Best Career Options After 12th Science Stream</a></li><li><a href="#commerce-careers" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">Best Career Options After 12th Commerce Stream</a></li><li><a href="#arts-careers" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">Best Career Options After 12th Arts / Humanities Stream</a></li><li><a href="#ai-guidance" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">How AI Career Guidance is Changing the Game</a></li><li><a href="#conclusion" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">Conclusion</a></li></ul></div>
+                <div class="toc-container" style="background: rgba(15, 23, 42, 0.05); border: 1px solid rgba(15, 23, 42, 0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;"><h3 style="color:#09090b; margin-bottom: 1rem; font-size: 1.2rem; font-weight: 600;">Table of Contents</h3><ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem;"><li><a href="#importance" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">The Importance of Career Guidance After 12th</a></li><li><a href="#science-careers" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">Best Career Options After 12th Science Stream</a></li><li><a href="#commerce-careers" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">Best Career Options After 12th Commerce Stream</a></li><li><a href="#arts-careers" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">Best Career Options After 12th Arts / Humanities Stream</a></li><li><a href="#ai-guidance" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">How AI Career Guidance is Changing the Game</a></li><li><a href="#conclusion" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">Conclusion</a></li></ul></div>
                 
                 <div class="newsletter-cta">
                     <div style="font-size: 2.5rem; margin-bottom: 1rem;">🚀</div>
-                    <h3 style="color: #fff; margin-bottom: 0.8rem; font-size: 1.5rem; font-weight: 700;">Get Career Insights</h3>
-                    <p style="color: #a1a1aa; font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.5;">Join 10,000+ students receiving weekly AI career guidance, study tips, and exclusive DTV updates.</p>
+                    <h3 style="color:#09090b; margin-bottom: 0.8rem; font-size: 1.5rem; font-weight: 700;">Get Career Insights</h3>
+                    <p style="color:#52525b; font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.5;">Join 10,000+ students receiving weekly AI career guidance, study tips, and exclusive DTV updates.</p>
                     <form onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
                         <input type="email" class="nl-input" placeholder="Your email address" required>
                         <button type="submit" class="nl-btn">Subscribe Now</button>

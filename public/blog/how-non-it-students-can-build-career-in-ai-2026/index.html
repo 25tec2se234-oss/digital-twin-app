@@ -67,7 +67,7 @@
         /* ═══ PREMIUM UI OVERRIDES ════════════════════ */
         :root {
             --bdr-hover: rgba(255, 255, 255, 0.15);
-            --card-glow: 0 16px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            --card-glow: 0 16px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(15, 23, 42, 0.05);
         }
 
         .auth-card,
@@ -86,12 +86,12 @@
             transform: translateZ(0);
             /* 3D Glass Borders & Bevels */
             border: 1px solid var(--bdr) !important;
-            border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-top: 1px solid rgba(15, 23, 42, 0.1) !important;
             border-bottom: 1px solid rgba(0, 0, 0, 0.2) !important;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease !important;
             /* 3D Thickness & Shadows */
             box-shadow:
-                inset 0 1px 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 1px rgba(15, 23, 42, 0.1),
                 inset 0 -4px 10px rgba(0, 0, 0, 0.1),
                 0 12px 30px var(--card),
                 0 4px 8px rgba(0, 0, 0, 0.1) !important;
@@ -150,7 +150,7 @@
             border-top-color: var(--glow2) !important;
             /* Enhance 3D shadow on hover */
             box-shadow:
-                inset 0 1px 2px rgba(255, 255, 255, 0.1),
+                inset 0 1px 2px rgba(15, 23, 42, 0.1),
                 inset 0 -1px 0 rgba(0, 0, 0, 0.2),
                 0 15px 30px var(--card),
                 0 10px 20px var(--glow1) !important;
@@ -170,7 +170,7 @@
         }
 
         .btn-out:hover {
-            background: rgba(255, 255, 255, 0.08) !important;
+            background: rgba(15, 23, 42, 0.05) !important;
         }
 
         /* 3D Tilt Wrapper */
@@ -325,7 +325,7 @@
         .splash-loader {
             width: 240px;
             height: 3px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(15, 23, 42, 0.05);
             border-radius: 3px;
             overflow: hidden;
             position: relative;
@@ -393,26 +393,26 @@
 
 <style>
 .blog-header { text-align: center; margin-bottom: 2rem; }
-.blog-meta { display: flex; justify-content: center; gap: 1rem; color: #a1a1aa; font-size: 0.9rem; margin-bottom: 2rem; }
-.blog-content { line-height: 1.8; font-size: 1.1rem; color: #e4e4e7; }
-.blog-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; color: #fff; }
+.blog-meta { display: flex; justify-content: center; gap: 1rem; color:#52525b; font-size: 0.9rem; margin-bottom: 2rem; }
+.blog-content { line-height: 1.8; font-size: 1.1rem; color:#3f3f46; }
+.blog-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; color:#09090b; }
 .blog-content p { margin-bottom: 1.5rem; }
 .blog-image { width: 100%; border-radius: 12px; margin-bottom: 2rem; object-fit: cover; max-height: 500px; }
-.breadcrumb { padding: 1rem 0; margin-bottom: 1rem; color: #a1a1aa; font-size: 0.9rem; }
+.breadcrumb { padding: 1rem 0; margin-bottom: 1rem; color:#52525b; font-size: 0.9rem; }
 .breadcrumb a { color: #3b82f6; text-decoration: none; }
-.toc { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid rgba(255,255,255,0.1); }
+.toc { background: rgba(15, 23, 42, 0.05); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid rgba(15, 23, 42, 0.1); }
 .toc ul { list-style: none; padding-left: 0; }
 .toc li { margin-bottom: 0.5rem; }
 .toc a { color: #93c5fd; text-decoration: none; }
 .faq-section { margin-top: 4rem; }
-.faq-item { background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
+.faq-item { background: rgba(15, 23, 42, 0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
 .faq-item h3 { margin-bottom: 0.5rem; font-size: 1.1rem; }
 .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-.blog-card { background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s ease; }
+.blog-card { background: rgba(15, 23, 42, 0.05); border-radius: 12px; overflow: hidden; border: 1px solid rgba(15, 23, 42, 0.1); transition: transform 0.3s ease; }
 .blog-card:hover { transform: translateY(-5px); }
 .blog-card img { width: 100%; height: 200px; object-fit: cover; }
 .blog-card-content { padding: 1.5rem; }
-.blog-card-title { font-size: 1.25rem; margin-bottom: 0.5rem; color: #fff; }
+.blog-card-title { font-size: 1.25rem; margin-bottom: 0.5rem; color:#09090b; }
 </style>
 
     <script defer="defer" src="/dist/app.d511f803.js?v=d142e9838830ff29"></script>
@@ -507,16 +507,16 @@
         <button type="button" onclick="requireAuth(function(){openPricingPage(); togMenu();}); return false;" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: #e88c2a; width: 100%; text-align: left; font-size: 1.1rem; font-weight: 700;">💎 Go Premium</button>
         <button type="button" onclick="openAnalyzer(); togMenu();" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: var(--wh, #fff); width: 100%; text-align: left; font-size: 1.1rem; font-weight: 600;">🧠
             Achievement Analyzer</button>
-        <div style="padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 0.5rem;">
+        <div style="padding: 1rem 1.5rem; border-top: 1px solid rgba(15, 23, 42, 0.1); margin-top: 0.5rem;">
             <p style="color: var(--mu); font-size: 0.9rem; margin-bottom: 0.5rem;">Select Theme</p>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                <button onclick="setTheme('midnight'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: var(--wh);">Midnight</button>
+                <button onclick="setTheme('midnight'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: var(--wh);">Midnight</button>
                 <button onclick="setTheme('light'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: #fff; border-radius: 6px; font-size: 0.9rem; color: #000;">Light</button>
-                <button onclick="setTheme('navy'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #60a5fa;">Navy</button>
-                <button onclick="setTheme('slate'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: var(--mu);">Slate</button>
-                <button onclick="setTheme('forest'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #4ade80;">Forest</button>
-                <button onclick="setTheme('crimson'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #f87171;">Crimson</button>
-                <button onclick="setTheme('magenta'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #f472b6;">Magenta</button>
+                <button onclick="setTheme('navy'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #60a5fa;">Navy</button>
+                <button onclick="setTheme('slate'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: var(--mu);">Slate</button>
+                <button onclick="setTheme('forest'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #4ade80;">Forest</button>
+                <button onclick="setTheme('crimson'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #f87171;">Crimson</button>
+                <button onclick="setTheme('magenta'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #f472b6;">Magenta</button>
             </div>
         </div>
 
@@ -538,51 +538,51 @@
             .blog-layout { flex-direction: column; }
             .blog-sidebar { width: 100%; position: static; }
         }
-        .social-share { display: flex; gap: 1rem; margin-top: 3rem; padding: 1.5rem 0; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; align-items: center; }
-        .social-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 8px; background: rgba(255,255,255,0.05); color: #fff; cursor: pointer; transition: 0.2s; border: 1px solid rgba(255,255,255,0.1); font-family: inherit; text-decoration: none; font-size: 0.95rem; font-weight: 500; }
-        .social-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+        .social-share { display: flex; gap: 1rem; margin-top: 3rem; padding: 1.5rem 0; border-top: 1px solid rgba(15, 23, 42, 0.1); border-bottom: 1px solid rgba(15, 23, 42, 0.1); flex-wrap: wrap; align-items: center; }
+        .social-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 8px; background: rgba(15, 23, 42, 0.05); color:#09090b; cursor: pointer; transition: 0.2s; border: 1px solid rgba(15, 23, 42, 0.1); font-family: inherit; text-decoration: none; font-size: 0.95rem; font-weight: 500; }
+        .social-btn:hover { background: rgba(15, 23, 42, 0.1); border-color: rgba(15, 23, 42, 0.1); transform: translateY(-2px); }
         
         .nav-articles { display: flex; justify-content: space-between; gap: 1.5rem; margin: 3rem 0; flex-wrap: wrap; }
 
 
         .nav-art-label { color: #a78bfa; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8rem; font-weight: 700; }
-        .nav-art-title { color: #fff; font-size: 1.15rem; font-weight: 600; line-height: 1.4; }
+        .nav-art-title { color:#09090b; font-size: 1.15rem; font-weight: 600; line-height: 1.4; }
         
         .newsletter-cta { background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(59,130,246,0.08)); border: 1px solid rgba(167,139,250,0.3); padding: 2rem; border-radius: 16px; text-align: center; margin-top: 0; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
-        .nl-input { width: 100%; padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.4); color: #fff; margin-bottom: 1.2rem; font-family: inherit; font-size: 1rem; outline: none; transition: 0.3s; }
+        .nl-input { width: 100%; padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid rgba(15, 23, 42, 0.1); background: rgba(15, 23, 42, 0.04); color:#09090b; margin-bottom: 1.2rem; font-family: inherit; font-size: 1rem; outline: none; transition: 0.3s; }
         .nl-input:focus { border-color: #a78bfa; box-shadow: 0 0 0 3px rgba(167,139,250,0.2); }
-        .nl-btn { width: 100%; padding: 1rem; background: linear-gradient(135deg, #a78bfa, #3b82f6); color: #fff; font-weight: 700; font-size: 1.05rem; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .nl-btn { width: 100%; padding: 1rem; background: linear-gradient(135deg, #a78bfa, #3b82f6); color:#09090b; font-weight: 700; font-size: 1.05rem; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
         .nl-btn:hover { box-shadow: 0 8px 20px rgba(167,139,250,0.4); transform: translateY(-2px); }
         
-        .blog-content { font-size: 1.15rem; line-height: 1.8; color: #cbd5e1; }
-        .blog-content h2 { font-size: 2.2rem; color: #fff; margin: 3rem 0 1.5rem; font-weight: 700; }
-        .blog-content h3 { font-size: 1.6rem; color: #fff; margin: 2.5rem 0 1.2rem; font-weight: 600; }
+        .blog-content { font-size: 1.15rem; line-height: 1.8; color:#3f3f46; }
+        .blog-content h2 { font-size: 2.2rem; color:#09090b; margin: 3rem 0 1.5rem; font-weight: 700; }
+        .blog-content h3 { font-size: 1.6rem; color:#09090b; margin: 2.5rem 0 1.2rem; font-weight: 600; }
         .blog-content p { margin-bottom: 1.5rem; }
         .blog-content ul, .blog-content ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
         .blog-content li { margin-bottom: 0.8rem; }
         .blog-content a { color: #a78bfa; text-decoration: none; }
         .blog-content a:hover { text-decoration: underline; }
-        .blog-content strong { color: #fff; }
+        .blog-content strong { color:#09090b; }
         
-        .author-box { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); width: 100%; }
+        .author-box { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; padding-top: 2rem; border-top: 1px solid rgba(15, 23, 42, 0.1); width: 100%; }
 
-        .rel-blog-card { display: flex; flex-direction: column; text-decoration: none; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); height: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        .rel-blog-card { display: flex; flex-direction: column; text-decoration: none; background: rgba(15, 23, 42, 0.05); border: 1px solid rgba(15, 23, 42, 0.05); border-radius: 16px; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); height: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
         .rel-blog-card:hover { transform: translateY(-10px); border-color: rgba(167,139,250,0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(167,139,250,0.15); }
         .rel-img-wrapper { overflow: hidden; height: 220px; }
         .rel-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; display: block; }
         .rel-blog-card:hover .rel-img-wrapper img { transform: scale(1.08); }
         .rel-blog-content { padding: 1.8rem; display: flex; flex-direction: column; flex: 1; }
         .rel-meta { color: #a78bfa; font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; }
-        .rel-title { color: #fff; font-size: 1.3rem; margin-bottom: 0.8rem; line-height: 1.4; font-weight: 600; transition: color 0.3s; }
+        .rel-title { color:#09090b; font-size: 1.3rem; margin-bottom: 0.8rem; line-height: 1.4; font-weight: 600; transition: color 0.3s; }
         .rel-blog-card:hover .rel-title { color: #a78bfa; }
-        .rel-desc { color: #94a3b8; font-size: 0.95rem; margin: 0; line-height: 1.6; }
+        .rel-desc { color:#52525b; font-size: 0.95rem; margin: 0; line-height: 1.6; }
         
-        .faq-item { background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1.8rem; transition: transform 0.3s, box-shadow 0.3s; }
+        .faq-item { background: linear-gradient(145deg, rgba(15, 23, 42, 0.05), rgba(255,255,255,0.01)); border: 1px solid rgba(15, 23, 42, 0.05); border-radius: 16px; padding: 1.8rem; transition: transform 0.3s, box-shadow 0.3s; }
         .faq-item:hover { transform: translateY(-3px); border-color: rgba(167,139,250,0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         
-        .nav-art-btn { flex: 1; min-width: 250px; padding: 2rem; background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; text-decoration: none; transition: all 0.4s ease; position: relative; overflow: hidden; }
+        .nav-art-btn { flex: 1; min-width: 250px; padding: 2rem; background: linear-gradient(135deg, rgba(15, 23, 42, 0.05), rgba(255,255,255,0.01)); border: 1px solid rgba(15, 23, 42, 0.1); border-radius: 16px; text-decoration: none; transition: all 0.4s ease; position: relative; overflow: hidden; }
         .nav-art-btn::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(167,139,250,0.1), rgba(59,130,246,0.1)); opacity: 0; transition: opacity 0.4s ease; }
-        .nav-art-btn:hover { border-color: rgba(167,139,250,0.4); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+        .nav-art-btn:hover { border-color: rgba(167,139,250,0.4); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(15, 23, 42, 0.04); }
         .nav-art-btn:hover::before { opacity: 1; }
         .nav-art-label, .nav-art-title { position: relative; z-index: 1; }
 
@@ -598,26 +598,26 @@
                 <span>&larr;</span> Back to all blogs
             </a>
             
-            <div class="breadcrumb" style="margin-bottom: 1.5rem; font-size: 0.95rem; color: #a1a1aa;">
+            <div class="breadcrumb" style="margin-bottom: 1.5rem; font-size: 0.95rem; color:#52525b;">
                 <a href="/" style="color: #a78bfa; text-decoration: none;">Home</a> &rsaquo; 
                 <a href="/blog" style="color: #a78bfa; text-decoration: none;">Blog</a> &rsaquo; 
-                <span style="color: #fff;">How Non-IT Students Can Build a Career in AI (2026 Guide for Commerce, Arts & BBA)</span>
+                <span style="color:#09090b;">How Non-IT Students Can Build a Career in AI (2026 Guide for Commerce, Arts & BBA)</span>
             </div>
             
-            <h1 style="color: #fff; font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.2; font-weight: 800; letter-spacing: -1px; text-transform: capitalize;">How Non-IT Students Can Build a Career in AI (2026 Guide for Commerce, Arts & BBA)</h1>
+            <h1 style="color:#09090b; font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.2; font-weight: 800; letter-spacing: -1px; text-transform: capitalize;">How Non-IT Students Can Build a Career in AI (2026 Guide for Commerce, Arts & BBA)</h1>
             
             <div class="author-box">
-                <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #a78bfa, #3b82f6); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 800; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #a78bfa, #3b82f6); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 800; color:#09090b; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
                     DTVET
                 </div>
                 <div style="text-align: left;">
-                    <div style="font-weight: 700; font-size: 1.1rem; color: #fff; margin-bottom: 0.2rem;">Digital Twin Verse Editorial Team</div>
-                    <div style="color: #94a3b8; font-size: 0.9rem;">Published: 2026-08-10 &bull; 15 min read</div>
+                    <div style="font-weight: 700; font-size: 1.1rem; color:#09090b; margin-bottom: 0.2rem;">Digital Twin Verse Editorial Team</div>
+                    <div style="color:#52525b; font-size: 0.9rem;">Published: 2026-08-10 &bull; 15 min read</div>
                 </div>
             </div>
         </div>
         
-        <div style="max-width: 1000px; margin: 0 auto 4rem; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05);">
+        <div style="max-width: 1000px; margin: 0 auto 4rem; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid rgba(15, 23, 42, 0.05);">
             <img class="blog-image" src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=2069&auto=format&fit=crop" alt="How Non-IT Students Can Build a Career in AI (2026 Guide for Commerce, Arts & BBA)" fetchpriority="high" style="width: 100%; max-height: 550px; object-fit: cover; display: block;">
         </div>
         
@@ -626,7 +626,7 @@
                 <div class="blog-content" id="article-content">
                     
     <div style="background: rgba(167, 139, 250, 0.08); border-left: 4px solid #a78bfa; padding: 1.8rem; margin-bottom: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
-        <h3 style="color: #fff; margin-top: 0; margin-bottom: 0.6rem; font-size: 1.25rem; font-weight: 700;">Executive Summary: AI Careers for Non-IT Students in 2026</h3>
+        <h3 style="color:#09090b; margin-top: 0; margin-bottom: 0.6rem; font-size: 1.25rem; font-weight: 700;">Executive Summary: AI Careers for Non-IT Students in 2026</h3>
         <p style="margin-bottom: 0; color: #e2e8f0; font-size: 1.05rem; line-height: 1.7;">
             The artificial intelligence boom is no longer restricted to software engineers and data scientists. In 2026, companies are desperately seeking professionals with domain expertise in finance, marketing, human resources, and humanities to guide, manage, and implement AI tools. For <strong>Commerce, Arts, and BBA students</strong>, the barrier to entry has shifted from writing complex code to mastering AI applications, prompt engineering, and AI ethics. By leveraging your existing degree and layering on specific AI competencies, you can secure high-paying AI roles such as AI Product Manager, AI Marketing Strategist, or AI Compliance Analyst without writing a single line of code.
         </p>
@@ -638,7 +638,7 @@
 
     <p>In this comprehensive guide, we will break down exactly how you can build a thriving, high-paying career in Artificial Intelligence without a B.Tech degree, focusing on the specialized roles where non-technical backgrounds are actually preferred.</p>
 
-    <h2 id="why-companies-need-non-it-students-in-ai" style="color: #fff; margin-top: 3rem; margin-bottom: 1.5rem; font-size: 1.8rem; font-weight: 700;">Why Companies Need Non-IT Students in AI</h2>
+    <h2 id="why-companies-need-non-it-students-in-ai" style="color:#09090b; margin-top: 3rem; margin-bottom: 1.5rem; font-size: 1.8rem; font-weight: 700;">Why Companies Need Non-IT Students in AI</h2>
     
     <p>To understand why your non-IT background is valuable, you must understand how AI is built and sold in 2026. An AI engineer can build a predictive financial model, but they rarely understand the intricacies of corporate tax law, human psychology, or brand positioning. Companies are realizing that deploying raw AI without domain expertise leads to spectacular failures.</p>
 
@@ -648,51 +648,51 @@
         <li><strong>BBA & Management Students:</strong> You understand strategy, operations, and product lifecycles. AI tools must be packaged into usable products that solve real business problems, requiring strong product management skills.</li>
     </ul>
 
-    <h2 id="top-5-high-paying-ai-careers-for-non-it-graduates" style="color: #fff; margin-top: 3rem; margin-bottom: 1.5rem; font-size: 1.8rem; font-weight: 700;">Top 5 High-Paying AI Careers for Non-IT Graduates (2026)</h2>
+    <h2 id="top-5-high-paying-ai-careers-for-non-it-graduates" style="color:#09090b; margin-top: 3rem; margin-bottom: 1.5rem; font-size: 1.8rem; font-weight: 700;">Top 5 High-Paying AI Careers for Non-IT Graduates (2026)</h2>
 
-    <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem;">
-        <h3 style="color: #fff; margin-top: 0; font-size: 1.4rem; font-weight: 700;">1. AI Product Manager</h3>
-        <p style="color: #cbd5e1; line-height: 1.6;"><strong>Ideal For:</strong> BBA, B.Com, and Management students.</p>
-        <p style="color: #cbd5e1; line-height: 1.6;">An AI Product Manager acts as the bridge between the technical engineering team and the business stakeholders. You don't need to write the code; you need to dictate <em>what</em> the code should achieve. You will gather user requirements, define the AI product's features, and ensure the final software solves the actual business problem.</p>
-        <p style="color: #cbd5e1; line-height: 1.6;"><strong>How to transition:</strong> Focus on learning the capabilities and limitations of AI. You don't need to know how a neural network is coded, but you must know the difference between generative AI and predictive analytics. For a detailed pathway, read our guide on <a href="/blog/how-to-become-an-ai-product-manager-india-2026" style="color: #a78bfa; text-decoration: underline;">How to Become an AI Product Manager</a>.</p>
+    <div style="background: rgba(15, 23, 42, 0.05); border: 1px solid rgba(15, 23, 42, 0.1); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem;">
+        <h3 style="color:#09090b; margin-top: 0; font-size: 1.4rem; font-weight: 700;">1. AI Product Manager</h3>
+        <p style="color:#3f3f46; line-height: 1.6;"><strong>Ideal For:</strong> BBA, B.Com, and Management students.</p>
+        <p style="color:#3f3f46; line-height: 1.6;">An AI Product Manager acts as the bridge between the technical engineering team and the business stakeholders. You don't need to write the code; you need to dictate <em>what</em> the code should achieve. You will gather user requirements, define the AI product's features, and ensure the final software solves the actual business problem.</p>
+        <p style="color:#3f3f46; line-height: 1.6;"><strong>How to transition:</strong> Focus on learning the capabilities and limitations of AI. You don't need to know how a neural network is coded, but you must know the difference between generative AI and predictive analytics. For a detailed pathway, read our guide on <a href="/blog/how-to-become-an-ai-product-manager-india-2026" style="color: #a78bfa; text-decoration: underline;">How to Become an AI Product Manager</a>.</p>
     </div>
 
-    <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem;">
-        <h3 style="color: #fff; margin-top: 0; font-size: 1.4rem; font-weight: 700;">2. Prompt Engineer / AI Interaction Designer</h3>
-        <p style="color: #cbd5e1; line-height: 1.6;"><strong>Ideal For:</strong> BA English, Journalism, and Humanities students.</p>
-        <p style="color: #cbd5e1; line-height: 1.6;">Prompt Engineering is the art of communicating with Large Language Models (LLMs) to get the best possible output. This role requires exceptional command over language, logic, and nuance—skills perfectly aligned with Arts and Humanities degrees. You will design the system prompts that dictate how an AI customer service bot speaks to angry customers, or how an AI tutor explains concepts to children.</p>
-        <p style="color: #cbd5e1; line-height: 1.6;"><strong>How to transition:</strong> Start practicing daily with tools like ChatGPT, Claude, and Gemini. Learn advanced prompting techniques like Chain-of-Thought (CoT) and Few-Shot prompting.</p>
+    <div style="background: rgba(15, 23, 42, 0.05); border: 1px solid rgba(15, 23, 42, 0.1); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem;">
+        <h3 style="color:#09090b; margin-top: 0; font-size: 1.4rem; font-weight: 700;">2. Prompt Engineer / AI Interaction Designer</h3>
+        <p style="color:#3f3f46; line-height: 1.6;"><strong>Ideal For:</strong> BA English, Journalism, and Humanities students.</p>
+        <p style="color:#3f3f46; line-height: 1.6;">Prompt Engineering is the art of communicating with Large Language Models (LLMs) to get the best possible output. This role requires exceptional command over language, logic, and nuance—skills perfectly aligned with Arts and Humanities degrees. You will design the system prompts that dictate how an AI customer service bot speaks to angry customers, or how an AI tutor explains concepts to children.</p>
+        <p style="color:#3f3f46; line-height: 1.6;"><strong>How to transition:</strong> Start practicing daily with tools like ChatGPT, Claude, and Gemini. Learn advanced prompting techniques like Chain-of-Thought (CoT) and Few-Shot prompting.</p>
     </div>
 
-    <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem;">
-        <h3 style="color: #fff; margin-top: 0; font-size: 1.4rem; font-weight: 700;">3. AI Ethics & Compliance Officer</h3>
-        <p style="color: #cbd5e1; line-height: 1.6;"><strong>Ideal For:</strong> Law, Sociology, and Philosophy students.</p>
-        <p style="color: #cbd5e1; line-height: 1.6;">As AI systems make decisions about loan approvals, hiring, and healthcare, the risk of algorithmic bias is massive. Governments worldwide have introduced strict AI regulations in 2026. AI Ethics Officers audit AI systems to ensure they do not discriminate against minorities, violate privacy laws, or breach copyright.</p>
-        <p style="color: #cbd5e1; line-height: 1.6;"><strong>How to transition:</strong> Study global AI regulations like the EU AI Act. Learn how data privacy laws intersect with machine learning training datasets.</p>
+    <div style="background: rgba(15, 23, 42, 0.05); border: 1px solid rgba(15, 23, 42, 0.1); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem;">
+        <h3 style="color:#09090b; margin-top: 0; font-size: 1.4rem; font-weight: 700;">3. AI Ethics & Compliance Officer</h3>
+        <p style="color:#3f3f46; line-height: 1.6;"><strong>Ideal For:</strong> Law, Sociology, and Philosophy students.</p>
+        <p style="color:#3f3f46; line-height: 1.6;">As AI systems make decisions about loan approvals, hiring, and healthcare, the risk of algorithmic bias is massive. Governments worldwide have introduced strict AI regulations in 2026. AI Ethics Officers audit AI systems to ensure they do not discriminate against minorities, violate privacy laws, or breach copyright.</p>
+        <p style="color:#3f3f46; line-height: 1.6;"><strong>How to transition:</strong> Study global AI regulations like the EU AI Act. Learn how data privacy laws intersect with machine learning training datasets.</p>
     </div>
 
-    <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem;">
-        <h3 style="color: #fff; margin-top: 0; font-size: 1.4rem; font-weight: 700;">4. AI Financial Analyst / FinTech Strategist</h3>
-        <p style="color: #cbd5e1; line-height: 1.6;"><strong>Ideal For:</strong> B.Com, Finance, and Economics students.</p>
-        <p style="color: #cbd5e1; line-height: 1.6;">Financial institutions use AI for algorithmic trading, fraud detection, and credit scoring. However, these models require financial experts to define the parameters and interpret the outputs. An AI Financial Analyst uses AI tools to process massive datasets, generate financial forecasts, and identify market anomalies faster than traditional analysts.</p>
-        <p style="color: #cbd5e1; line-height: 1.6;"><strong>How to transition:</strong> Master AI-powered data visualization and analysis tools. Learn how to use AI for financial modeling without needing to write Python scripts manually.</p>
+    <div style="background: rgba(15, 23, 42, 0.05); border: 1px solid rgba(15, 23, 42, 0.1); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem;">
+        <h3 style="color:#09090b; margin-top: 0; font-size: 1.4rem; font-weight: 700;">4. AI Financial Analyst / FinTech Strategist</h3>
+        <p style="color:#3f3f46; line-height: 1.6;"><strong>Ideal For:</strong> B.Com, Finance, and Economics students.</p>
+        <p style="color:#3f3f46; line-height: 1.6;">Financial institutions use AI for algorithmic trading, fraud detection, and credit scoring. However, these models require financial experts to define the parameters and interpret the outputs. An AI Financial Analyst uses AI tools to process massive datasets, generate financial forecasts, and identify market anomalies faster than traditional analysts.</p>
+        <p style="color:#3f3f46; line-height: 1.6;"><strong>How to transition:</strong> Master AI-powered data visualization and analysis tools. Learn how to use AI for financial modeling without needing to write Python scripts manually.</p>
     </div>
 
-    <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem;">
-        <h3 style="color: #fff; margin-top: 0; font-size: 1.4rem; font-weight: 700;">5. AI Marketing & Content Strategist</h3>
-        <p style="color: #cbd5e1; line-height: 1.6;"><strong>Ideal For:</strong> Mass Media, Marketing, and BBA students.</p>
-        <p style="color: #cbd5e1; line-height: 1.6;">Marketing has been entirely revolutionized by generative AI. Modern marketing teams require strategists who can orchestrate AI tools to generate high-quality copy, create personalized ad campaigns at scale, and analyze consumer sentiment. The focus is on strategy, not manual execution.</p>
-        <p style="color: #cbd5e1; line-height: 1.6;"><strong>How to transition:</strong> Build a portfolio demonstrating your ability to use AI tools to generate full-scale marketing campaigns. Read our <a href="/blog/top-ai-skills-students-should-learn-2026" style="color: #a78bfa; text-decoration: underline;">guide on essential AI skills</a> to understand which tools dominate the industry.</p>
+    <div style="background: rgba(15, 23, 42, 0.05); border: 1px solid rgba(15, 23, 42, 0.1); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem;">
+        <h3 style="color:#09090b; margin-top: 0; font-size: 1.4rem; font-weight: 700;">5. AI Marketing & Content Strategist</h3>
+        <p style="color:#3f3f46; line-height: 1.6;"><strong>Ideal For:</strong> Mass Media, Marketing, and BBA students.</p>
+        <p style="color:#3f3f46; line-height: 1.6;">Marketing has been entirely revolutionized by generative AI. Modern marketing teams require strategists who can orchestrate AI tools to generate high-quality copy, create personalized ad campaigns at scale, and analyze consumer sentiment. The focus is on strategy, not manual execution.</p>
+        <p style="color:#3f3f46; line-height: 1.6;"><strong>How to transition:</strong> Build a portfolio demonstrating your ability to use AI tools to generate full-scale marketing campaigns. Read our <a href="/blog/top-ai-skills-students-should-learn-2026" style="color: #a78bfa; text-decoration: underline;">guide on essential AI skills</a> to understand which tools dominate the industry.</p>
     </div>
 
-    <h2 id="step-by-step-roadmap-how-to-pivot-into-ai" style="color: #fff; margin-top: 3rem; margin-bottom: 1.5rem; font-size: 1.8rem; font-weight: 700;">Step-by-Step Roadmap: How to Pivot into AI Today</h2>
+    <h2 id="step-by-step-roadmap-how-to-pivot-into-ai" style="color:#09090b; margin-top: 3rem; margin-bottom: 1.5rem; font-size: 1.8rem; font-weight: 700;">Step-by-Step Roadmap: How to Pivot into AI Today</h2>
 
     <p>Transitioning into an AI career as a non-technical student requires a strategic approach. Follow this three-step roadmap:</p>
 
-    <h3 style="color: #fff; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.4rem; font-weight: 600;">Step 1: Become an AI Power User (No Code Required)</h3>
+    <h3 style="color:#09090b; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.4rem; font-weight: 600;">Step 1: Become an AI Power User (No Code Required)</h3>
     <p>Before you can manage or direct AI, you must know how to use it daily. Replace your traditional workflows with AI tools. Use Perplexity for research, Claude 3.5 for analyzing case studies, and Gamma for creating presentations. Your goal is to understand the boundaries of what AI can and cannot do.</p>
 
-    <h3 style="color: #fff; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.4rem; font-weight: 600;">Step 2: Learn AI Literacy and Terminology</h3>
+    <h3 style="color:#09090b; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.4rem; font-weight: 600;">Step 2: Learn AI Literacy and Terminology</h3>
     <p>You must learn to speak the language of engineering teams. While you don't need to code a neural network, you must understand terms like:</p>
     <ul>
         <li><strong>Machine Learning (ML) vs. Deep Learning</strong></li>
@@ -702,34 +702,34 @@
     </ul>
     <p>By understanding these concepts, you earn the respect of technical teams and can collaborate effectively. Taking free certification courses is a great way to formalize this knowledge.</p>
 
-    <h3 style="color: #fff; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.4rem; font-weight: 600;">Step 3: Leverage Your Domain Expertise</h3>
+    <h3 style="color:#09090b; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.4rem; font-weight: 600;">Step 3: Leverage Your Domain Expertise</h3>
     <p>Never try to compete with an AI engineer on coding. Instead, combine your unique degree with AI capabilities. If you are an Arts student, pitch yourself as someone who can inject human empathy into cold AI chatbots. If you are a Commerce student, pitch yourself as someone who ensures AI financial models align with corporate strategy.</p>
 
     <p>Your degree is your unique advantage—AI is simply the amplifier.</p>
 
-    <h2 style="color: #fff; margin-top: 3rem; margin-bottom: 1.5rem; font-size: 1.8rem; font-weight: 700;">Conclusion: The Future Belongs to the Adaptable</h2>
+    <h2 style="color:#09090b; margin-top: 3rem; margin-bottom: 1.5rem; font-size: 1.8rem; font-weight: 700;">Conclusion: The Future Belongs to the Adaptable</h2>
     
     <p>The narrative that "AI will replace non-technical jobs" is fundamentally flawed. AI will replace professionals who refuse to adapt, regardless of their degree. In 2026, the most successful individuals are those who combine deep human intuition, creativity, and business strategy with the immense processing power of artificial intelligence.</p>
 
     <p>As a Commerce, Arts, or BBA student, you are uniquely positioned to guide this technology safely and profitably into the real world. Start exploring AI tools today, build your domain expertise, and position yourself at the forefront of the AI revolution.</p>
   
-                    <div class="faq-section" style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.1);"><h2 style="color: #fff; font-size: 2.2rem; margin-bottom: 2.5rem; font-weight: 700;">Frequently Asked Questions</h2><div style="display: flex; flex-direction: column; gap: 1.5rem;"><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Do I need to learn Python or coding to get a job in AI?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">No. While coding is required for AI Engineering and Data Science, there is a massive demand for non-coding roles like AI Product Management, Prompt Engineering, AI Ethics, and AI Marketing Strategy.</p>
+                    <div class="faq-section" style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid rgba(15, 23, 42, 0.1);"><h2 style="color:#09090b; font-size: 2.2rem; margin-bottom: 2.5rem; font-weight: 700;">Frequently Asked Questions</h2><div style="display: flex; flex-direction: column; gap: 1.5rem;"><div class="faq-item">
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Do I need to learn Python or coding to get a job in AI?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">No. While coding is required for AI Engineering and Data Science, there is a massive demand for non-coding roles like AI Product Management, Prompt Engineering, AI Ethics, and AI Marketing Strategy.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Which degree is best for Prompt Engineering?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Arts and Humanities degrees (like English, Journalism, or Psychology) are excellent for Prompt Engineering because the role requires strong linguistic skills, logical reasoning, and an understanding of human-computer interaction nuances.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Which degree is best for Prompt Engineering?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Arts and Humanities degrees (like English, Journalism, or Psychology) are excellent for Prompt Engineering because the role requires strong linguistic skills, logical reasoning, and an understanding of human-computer interaction nuances.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can a Commerce student become an AI Product Manager?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes. Commerce and BBA students excel in AI Product Management because they understand business strategy, user requirements, and market fit. You simply need to supplement your business degree with foundational knowledge of how AI systems operate.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can a Commerce student become an AI Product Manager?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes. Commerce and BBA students excel in AI Product Management because they understand business strategy, user requirements, and market fit. You simply need to supplement your business degree with foundational knowledge of how AI systems operate.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Are non-IT AI jobs paid as well as engineering roles?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes. Specialized non-IT roles, particularly AI Product Managers and AI Ethics Officers, often command salaries comparable to or even higher than junior engineering roles due to the strategic nature of their responsibilities.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Are non-IT AI jobs paid as well as engineering roles?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes. Specialized non-IT roles, particularly AI Product Managers and AI Ethics Officers, often command salaries comparable to or even higher than junior engineering roles due to the strategic nature of their responsibilities.</p>
             </div></div></div>
                 </div>
                 
                 <div class="social-share">
-                    <span style="color: #fff; font-weight: 600; margin-right: 1rem;">Share this article:</span>
+                    <span style="color:#09090b; font-weight: 600; margin-right: 1rem;">Share this article:</span>
                     <a href="https://twitter.com/intent/tweet?text=How%20Non-IT%20Students%20Can%20Build%20a%20Career%20in%20AI%20(2026%20Guide%20for%20Commerce%2C%20Arts%20%26%20BBA)&url=https%3A%2F%2Fdigitaltwinvrs.com%2Fblog%2Fhow-non-it-students-can-build-career-in-ai-2026" target="_blank" class="social-btn">
                         X (Twitter)
                     </a>
@@ -752,7 +752,7 @@
                     </a>
                 </div>
                 
-                <div class="related-section" style="margin-top: 5rem; padding-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1);"><h2 style="color: #fff; margin-bottom: 3rem; font-size: 2.2rem; font-weight: 700; text-align: center;">Related Articles</h2><div class="related-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2.5rem;">
+                <div class="related-section" style="margin-top: 5rem; padding-top: 4rem; border-top: 1px solid rgba(15, 23, 42, 0.1);"><h2 style="color:#09090b; margin-bottom: 3rem; font-size: 2.2rem; font-weight: 700; text-align: center;">Related Articles</h2><div class="related-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2.5rem;">
                 <a href="/blog/top-ai-skills-students-should-learn-2026" class="rel-blog-card">
                     <div class="rel-img-wrapper">
                         <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2070&auto=format&fit=crop" alt="Top AI Skills Students Should Learn in 2026 (Complete Guide)" loading="lazy" decoding="async">
@@ -796,12 +796,12 @@
             </div>
             
             <div class="blog-sidebar">
-                <div class="toc-container" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;"><h3 style="color: #fff; margin-bottom: 1rem; font-size: 1.2rem; font-weight: 600;">Table of Contents</h3><ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem;"><li><a href="#why-companies-need-non-it-students-in-ai" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">Why Companies Need Non-IT Students in AI</a></li><li><a href="#top-5-high-paying-ai-careers-for-non-it-graduates" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">Top 5 High-Paying AI Careers for Non-IT Graduates (2026)</a></li><li><a href="#step-by-step-roadmap-how-to-pivot-into-ai" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">Step-by-Step Roadmap: How to Pivot into AI Today</a></li></ul></div>
+                <div class="toc-container" style="background: rgba(15, 23, 42, 0.05); border: 1px solid rgba(15, 23, 42, 0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;"><h3 style="color:#09090b; margin-bottom: 1rem; font-size: 1.2rem; font-weight: 600;">Table of Contents</h3><ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem;"><li><a href="#why-companies-need-non-it-students-in-ai" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">Why Companies Need Non-IT Students in AI</a></li><li><a href="#top-5-high-paying-ai-careers-for-non-it-graduates" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">Top 5 High-Paying AI Careers for Non-IT Graduates (2026)</a></li><li><a href="#step-by-step-roadmap-how-to-pivot-into-ai" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">Step-by-Step Roadmap: How to Pivot into AI Today</a></li></ul></div>
                 
                 <div class="newsletter-cta">
                     <div style="font-size: 2.5rem; margin-bottom: 1rem;">🚀</div>
-                    <h3 style="color: #fff; margin-bottom: 0.8rem; font-size: 1.5rem; font-weight: 700;">Get Career Insights</h3>
-                    <p style="color: #a1a1aa; font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.5;">Join 10,000+ students receiving weekly AI career guidance, study tips, and exclusive DTV updates.</p>
+                    <h3 style="color:#09090b; margin-bottom: 0.8rem; font-size: 1.5rem; font-weight: 700;">Get Career Insights</h3>
+                    <p style="color:#52525b; font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.5;">Join 10,000+ students receiving weekly AI career guidance, study tips, and exclusive DTV updates.</p>
                     <form onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
                         <input type="email" class="nl-input" placeholder="Your email address" required>
                         <button type="submit" class="nl-btn">Subscribe Now</button>

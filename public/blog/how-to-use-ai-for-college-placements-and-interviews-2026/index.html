@@ -67,7 +67,7 @@
         /* ═══ PREMIUM UI OVERRIDES ════════════════════ */
         :root {
             --bdr-hover: rgba(255, 255, 255, 0.15);
-            --card-glow: 0 16px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            --card-glow: 0 16px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(15, 23, 42, 0.05);
         }
 
         .auth-card,
@@ -86,12 +86,12 @@
             transform: translateZ(0);
             /* 3D Glass Borders & Bevels */
             border: 1px solid var(--bdr) !important;
-            border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-top: 1px solid rgba(15, 23, 42, 0.1) !important;
             border-bottom: 1px solid rgba(0, 0, 0, 0.2) !important;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease !important;
             /* 3D Thickness & Shadows */
             box-shadow:
-                inset 0 1px 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 1px rgba(15, 23, 42, 0.1),
                 inset 0 -4px 10px rgba(0, 0, 0, 0.1),
                 0 12px 30px var(--card),
                 0 4px 8px rgba(0, 0, 0, 0.1) !important;
@@ -150,7 +150,7 @@
             border-top-color: var(--glow2) !important;
             /* Enhance 3D shadow on hover */
             box-shadow:
-                inset 0 1px 2px rgba(255, 255, 255, 0.1),
+                inset 0 1px 2px rgba(15, 23, 42, 0.1),
                 inset 0 -1px 0 rgba(0, 0, 0, 0.2),
                 0 15px 30px var(--card),
                 0 10px 20px var(--glow1) !important;
@@ -170,7 +170,7 @@
         }
 
         .btn-out:hover {
-            background: rgba(255, 255, 255, 0.08) !important;
+            background: rgba(15, 23, 42, 0.05) !important;
         }
 
         /* 3D Tilt Wrapper */
@@ -325,7 +325,7 @@
         .splash-loader {
             width: 240px;
             height: 3px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(15, 23, 42, 0.05);
             border-radius: 3px;
             overflow: hidden;
             position: relative;
@@ -393,26 +393,26 @@
 
 <style>
 .blog-header { text-align: center; margin-bottom: 2rem; }
-.blog-meta { display: flex; justify-content: center; gap: 1rem; color: #a1a1aa; font-size: 0.9rem; margin-bottom: 2rem; }
-.blog-content { line-height: 1.8; font-size: 1.1rem; color: #e4e4e7; }
-.blog-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; color: #fff; }
+.blog-meta { display: flex; justify-content: center; gap: 1rem; color:#52525b; font-size: 0.9rem; margin-bottom: 2rem; }
+.blog-content { line-height: 1.8; font-size: 1.1rem; color:#3f3f46; }
+.blog-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; color:#09090b; }
 .blog-content p { margin-bottom: 1.5rem; }
 .blog-image { width: 100%; border-radius: 12px; margin-bottom: 2rem; object-fit: cover; max-height: 500px; }
-.breadcrumb { padding: 1rem 0; margin-bottom: 1rem; color: #a1a1aa; font-size: 0.9rem; }
+.breadcrumb { padding: 1rem 0; margin-bottom: 1rem; color:#52525b; font-size: 0.9rem; }
 .breadcrumb a { color: #3b82f6; text-decoration: none; }
-.toc { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid rgba(255,255,255,0.1); }
+.toc { background: rgba(15, 23, 42, 0.05); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid rgba(15, 23, 42, 0.1); }
 .toc ul { list-style: none; padding-left: 0; }
 .toc li { margin-bottom: 0.5rem; }
 .toc a { color: #93c5fd; text-decoration: none; }
 .faq-section { margin-top: 4rem; }
-.faq-item { background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
+.faq-item { background: rgba(15, 23, 42, 0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
 .faq-item h3 { margin-bottom: 0.5rem; font-size: 1.1rem; }
 .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-.blog-card { background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s ease; }
+.blog-card { background: rgba(15, 23, 42, 0.05); border-radius: 12px; overflow: hidden; border: 1px solid rgba(15, 23, 42, 0.1); transition: transform 0.3s ease; }
 .blog-card:hover { transform: translateY(-5px); }
 .blog-card img { width: 100%; height: 200px; object-fit: cover; }
 .blog-card-content { padding: 1.5rem; }
-.blog-card-title { font-size: 1.25rem; margin-bottom: 0.5rem; color: #fff; }
+.blog-card-title { font-size: 1.25rem; margin-bottom: 0.5rem; color:#09090b; }
 </style>
 
     <script defer="defer" src="/dist/app.d511f803.js?v=d142e9838830ff29"></script>
@@ -507,16 +507,16 @@
         <button type="button" onclick="requireAuth(function(){openPricingPage(); togMenu();}); return false;" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: #e88c2a; width: 100%; text-align: left; font-size: 1.1rem; font-weight: 700;">💎 Go Premium</button>
         <button type="button" onclick="openAnalyzer(); togMenu();" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: var(--wh, #fff); width: 100%; text-align: left; font-size: 1.1rem; font-weight: 600;">🧠
             Achievement Analyzer</button>
-        <div style="padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 0.5rem;">
+        <div style="padding: 1rem 1.5rem; border-top: 1px solid rgba(15, 23, 42, 0.1); margin-top: 0.5rem;">
             <p style="color: var(--mu); font-size: 0.9rem; margin-bottom: 0.5rem;">Select Theme</p>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                <button onclick="setTheme('midnight'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: var(--wh);">Midnight</button>
+                <button onclick="setTheme('midnight'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: var(--wh);">Midnight</button>
                 <button onclick="setTheme('light'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: #fff; border-radius: 6px; font-size: 0.9rem; color: #000;">Light</button>
-                <button onclick="setTheme('navy'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #60a5fa;">Navy</button>
-                <button onclick="setTheme('slate'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: var(--mu);">Slate</button>
-                <button onclick="setTheme('forest'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #4ade80;">Forest</button>
-                <button onclick="setTheme('crimson'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #f87171;">Crimson</button>
-                <button onclick="setTheme('magenta'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #f472b6;">Magenta</button>
+                <button onclick="setTheme('navy'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #60a5fa;">Navy</button>
+                <button onclick="setTheme('slate'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: var(--mu);">Slate</button>
+                <button onclick="setTheme('forest'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #4ade80;">Forest</button>
+                <button onclick="setTheme('crimson'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #f87171;">Crimson</button>
+                <button onclick="setTheme('magenta'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #f472b6;">Magenta</button>
             </div>
         </div>
 
@@ -538,51 +538,51 @@
             .blog-layout { flex-direction: column; }
             .blog-sidebar { width: 100%; position: static; }
         }
-        .social-share { display: flex; gap: 1rem; margin-top: 3rem; padding: 1.5rem 0; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; align-items: center; }
-        .social-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 8px; background: rgba(255,255,255,0.05); color: #fff; cursor: pointer; transition: 0.2s; border: 1px solid rgba(255,255,255,0.1); font-family: inherit; text-decoration: none; font-size: 0.95rem; font-weight: 500; }
-        .social-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+        .social-share { display: flex; gap: 1rem; margin-top: 3rem; padding: 1.5rem 0; border-top: 1px solid rgba(15, 23, 42, 0.1); border-bottom: 1px solid rgba(15, 23, 42, 0.1); flex-wrap: wrap; align-items: center; }
+        .social-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 8px; background: rgba(15, 23, 42, 0.05); color:#09090b; cursor: pointer; transition: 0.2s; border: 1px solid rgba(15, 23, 42, 0.1); font-family: inherit; text-decoration: none; font-size: 0.95rem; font-weight: 500; }
+        .social-btn:hover { background: rgba(15, 23, 42, 0.1); border-color: rgba(15, 23, 42, 0.1); transform: translateY(-2px); }
         
         .nav-articles { display: flex; justify-content: space-between; gap: 1.5rem; margin: 3rem 0; flex-wrap: wrap; }
 
 
         .nav-art-label { color: #a78bfa; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8rem; font-weight: 700; }
-        .nav-art-title { color: #fff; font-size: 1.15rem; font-weight: 600; line-height: 1.4; }
+        .nav-art-title { color:#09090b; font-size: 1.15rem; font-weight: 600; line-height: 1.4; }
         
         .newsletter-cta { background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(59,130,246,0.08)); border: 1px solid rgba(167,139,250,0.3); padding: 2rem; border-radius: 16px; text-align: center; margin-top: 0; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
-        .nl-input { width: 100%; padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.4); color: #fff; margin-bottom: 1.2rem; font-family: inherit; font-size: 1rem; outline: none; transition: 0.3s; }
+        .nl-input { width: 100%; padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid rgba(15, 23, 42, 0.1); background: rgba(15, 23, 42, 0.04); color:#09090b; margin-bottom: 1.2rem; font-family: inherit; font-size: 1rem; outline: none; transition: 0.3s; }
         .nl-input:focus { border-color: #a78bfa; box-shadow: 0 0 0 3px rgba(167,139,250,0.2); }
-        .nl-btn { width: 100%; padding: 1rem; background: linear-gradient(135deg, #a78bfa, #3b82f6); color: #fff; font-weight: 700; font-size: 1.05rem; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .nl-btn { width: 100%; padding: 1rem; background: linear-gradient(135deg, #a78bfa, #3b82f6); color:#09090b; font-weight: 700; font-size: 1.05rem; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
         .nl-btn:hover { box-shadow: 0 8px 20px rgba(167,139,250,0.4); transform: translateY(-2px); }
         
-        .blog-content { font-size: 1.15rem; line-height: 1.8; color: #cbd5e1; }
-        .blog-content h2 { font-size: 2.2rem; color: #fff; margin: 3rem 0 1.5rem; font-weight: 700; }
-        .blog-content h3 { font-size: 1.6rem; color: #fff; margin: 2.5rem 0 1.2rem; font-weight: 600; }
+        .blog-content { font-size: 1.15rem; line-height: 1.8; color:#3f3f46; }
+        .blog-content h2 { font-size: 2.2rem; color:#09090b; margin: 3rem 0 1.5rem; font-weight: 700; }
+        .blog-content h3 { font-size: 1.6rem; color:#09090b; margin: 2.5rem 0 1.2rem; font-weight: 600; }
         .blog-content p { margin-bottom: 1.5rem; }
         .blog-content ul, .blog-content ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
         .blog-content li { margin-bottom: 0.8rem; }
         .blog-content a { color: #a78bfa; text-decoration: none; }
         .blog-content a:hover { text-decoration: underline; }
-        .blog-content strong { color: #fff; }
+        .blog-content strong { color:#09090b; }
         
-        .author-box { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); width: 100%; }
+        .author-box { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; padding-top: 2rem; border-top: 1px solid rgba(15, 23, 42, 0.1); width: 100%; }
 
-        .rel-blog-card { display: flex; flex-direction: column; text-decoration: none; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); height: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        .rel-blog-card { display: flex; flex-direction: column; text-decoration: none; background: rgba(15, 23, 42, 0.05); border: 1px solid rgba(15, 23, 42, 0.05); border-radius: 16px; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); height: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
         .rel-blog-card:hover { transform: translateY(-10px); border-color: rgba(167,139,250,0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(167,139,250,0.15); }
         .rel-img-wrapper { overflow: hidden; height: 220px; }
         .rel-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; display: block; }
         .rel-blog-card:hover .rel-img-wrapper img { transform: scale(1.08); }
         .rel-blog-content { padding: 1.8rem; display: flex; flex-direction: column; flex: 1; }
         .rel-meta { color: #a78bfa; font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; }
-        .rel-title { color: #fff; font-size: 1.3rem; margin-bottom: 0.8rem; line-height: 1.4; font-weight: 600; transition: color 0.3s; }
+        .rel-title { color:#09090b; font-size: 1.3rem; margin-bottom: 0.8rem; line-height: 1.4; font-weight: 600; transition: color 0.3s; }
         .rel-blog-card:hover .rel-title { color: #a78bfa; }
-        .rel-desc { color: #94a3b8; font-size: 0.95rem; margin: 0; line-height: 1.6; }
+        .rel-desc { color:#52525b; font-size: 0.95rem; margin: 0; line-height: 1.6; }
         
-        .faq-item { background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1.8rem; transition: transform 0.3s, box-shadow 0.3s; }
+        .faq-item { background: linear-gradient(145deg, rgba(15, 23, 42, 0.05), rgba(255,255,255,0.01)); border: 1px solid rgba(15, 23, 42, 0.05); border-radius: 16px; padding: 1.8rem; transition: transform 0.3s, box-shadow 0.3s; }
         .faq-item:hover { transform: translateY(-3px); border-color: rgba(167,139,250,0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         
-        .nav-art-btn { flex: 1; min-width: 250px; padding: 2rem; background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; text-decoration: none; transition: all 0.4s ease; position: relative; overflow: hidden; }
+        .nav-art-btn { flex: 1; min-width: 250px; padding: 2rem; background: linear-gradient(135deg, rgba(15, 23, 42, 0.05), rgba(255,255,255,0.01)); border: 1px solid rgba(15, 23, 42, 0.1); border-radius: 16px; text-decoration: none; transition: all 0.4s ease; position: relative; overflow: hidden; }
         .nav-art-btn::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(167,139,250,0.1), rgba(59,130,246,0.1)); opacity: 0; transition: opacity 0.4s ease; }
-        .nav-art-btn:hover { border-color: rgba(167,139,250,0.4); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+        .nav-art-btn:hover { border-color: rgba(167,139,250,0.4); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(15, 23, 42, 0.04); }
         .nav-art-btn:hover::before { opacity: 1; }
         .nav-art-label, .nav-art-title { position: relative; z-index: 1; }
 
@@ -598,26 +598,26 @@
                 <span>&larr;</span> Back to all blogs
             </a>
             
-            <div class="breadcrumb" style="margin-bottom: 1.5rem; font-size: 0.95rem; color: #a1a1aa;">
+            <div class="breadcrumb" style="margin-bottom: 1.5rem; font-size: 0.95rem; color:#52525b;">
                 <a href="/" style="color: #a78bfa; text-decoration: none;">Home</a> &rsaquo; 
                 <a href="/blog" style="color: #a78bfa; text-decoration: none;">Blog</a> &rsaquo; 
-                <span style="color: #fff;">How to Use AI to Crack College Placements and Job Interviews in 2026</span>
+                <span style="color:#09090b;">How to Use AI to Crack College Placements and Job Interviews in 2026</span>
             </div>
             
-            <h1 style="color: #fff; font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.2; font-weight: 800; letter-spacing: -1px; text-transform: capitalize;">How to Use AI to Crack College Placements and Job Interviews in 2026</h1>
+            <h1 style="color:#09090b; font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.2; font-weight: 800; letter-spacing: -1px; text-transform: capitalize;">How to Use AI to Crack College Placements and Job Interviews in 2026</h1>
             
             <div class="author-box">
-                <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #a78bfa, #3b82f6); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 800; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #a78bfa, #3b82f6); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 800; color:#09090b; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
                     DCE
                 </div>
                 <div style="text-align: left;">
-                    <div style="font-weight: 700; font-size: 1.1rem; color: #fff; margin-bottom: 0.2rem;">DTV Career Experts</div>
-                    <div style="color: #94a3b8; font-size: 0.9rem;">Published: 2026-08-11 &bull; 12 min read</div>
+                    <div style="font-weight: 700; font-size: 1.1rem; color:#09090b; margin-bottom: 0.2rem;">DTV Career Experts</div>
+                    <div style="color:#52525b; font-size: 0.9rem;">Published: 2026-08-11 &bull; 12 min read</div>
                 </div>
             </div>
         </div>
         
-        <div style="max-width: 1000px; margin: 0 auto 4rem; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05);">
+        <div style="max-width: 1000px; margin: 0 auto 4rem; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid rgba(15, 23, 42, 0.05);">
             <img class="blog-image" src="/img/placements_ai_cover.png" alt="How to Use AI to Crack College Placements and Job Interviews in 2026" fetchpriority="high" style="width: 100%; max-height: 550px; object-fit: cover; display: block;">
         </div>
         
@@ -627,7 +627,7 @@
                     
     <!-- AI Overview Box -->
     <div style="background: rgba(167, 139, 250, 0.08); border-left: 4px solid #a78bfa; padding: 1.8rem; margin-bottom: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
-        <h3 style="color: #fff; margin-top: 0; margin-bottom: 0.6rem; font-size: 1.25rem; font-weight: 700;">AI Overview: Placements in 2026</h3>
+        <h3 style="color:#09090b; margin-top: 0; margin-bottom: 0.6rem; font-size: 1.25rem; font-weight: 700;">AI Overview: Placements in 2026</h3>
         <p style="margin-bottom: 0; color: #e2e8f0; font-size: 1.05rem; line-height: 1.7;">
             In 2026, over <strong>85% of Fortune 500 companies</strong> use AI-driven Applicant Tracking Systems (ATS) and automated initial screening rounds. To level the playing field, students must use Generative AI tools to optimize their resumes, practice realistic mock interviews, write personalized cold emails, and research companies deeply. This comprehensive guide breaks down exactly how to leverage AI tools ethically to land your dream job offer out of college.
         </p>
@@ -640,8 +640,8 @@
     <h2 id="section-1">1. Beating the ATS (Applicant Tracking System)</h2>
     <p>An ATS is a software application that enables the electronic handling of recruitment needs. It parses your resume and ranks it based on keywords matching the job description. If you score below a certain threshold (usually 75-80%), your resume is instantly rejected.</p>
     
-    <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem;">
-        <h4 style="color: #fff; font-size: 1.2rem; margin-top: 0;">🔥 The AI Strategy: Keyword Matching</h4>
+    <div style="background: rgba(15, 23, 42, 0.05); border: 1px solid rgba(15, 23, 42, 0.1); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem;">
+        <h4 style="color:#09090b; font-size: 1.2rem; margin-top: 0;">🔥 The AI Strategy: Keyword Matching</h4>
         <p>Instead of manually guessing which keywords the recruiter wants, use AI to compare your resume against the job description.</p>
         <p><strong>Recommended Tools:</strong> Jobscan, ResumeWorded, or ChatGPT-4o.</p>
         <p><strong>The ChatGPT Prompt:</strong><br>
@@ -656,8 +656,8 @@
     
     <p>AI is incredible at structuring emails, but you must avoid making them sound like a robot wrote them. The key is to provide the AI with specific constraints.</p>
 
-    <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem;">
-        <h4 style="color: #fff; font-size: 1.2rem; margin-top: 0;">🔥 The AI Strategy: The Perfect Cold Outreach</h4>
+    <div style="background: rgba(15, 23, 42, 0.05); border: 1px solid rgba(15, 23, 42, 0.1); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem;">
+        <h4 style="color:#09090b; font-size: 1.2rem; margin-top: 0;">🔥 The AI Strategy: The Perfect Cold Outreach</h4>
         <p><strong>The ChatGPT/Claude Prompt:</strong><br>
         <code style="background: rgba(0,0,0,0.5); padding: 1rem; border-radius: 8px; display: block; color: #a78bfa; margin-top: 0.5rem; font-style: italic;">
         "I want to send a LinkedIn connection request and a short follow-up message to [Name], who is a [Target Role] at [Company]. I am a final-year student at [Your College] who just completed a major project using [Key Technology] which is highly relevant to [Company]'s recent product launch. Write a 300-character connection note, and a short 4-sentence follow-up message asking for a 10-minute informational chat. The tone must be professional, humble, and concise. Do NOT use words like 'delve', 'testament', or 'embark'."
@@ -676,8 +676,8 @@
     <h2 id="section-4">4. Deep Company Research for the Final Round</h2>
     <p>When the interviewer asks, <em>"Do you have any questions for us?"</em> or <em>"Why do you want to work here?"</em>, you need a highly specific answer. "I like your culture" will get you rejected. You need to show that you understand their current market challenges.</p>
 
-    <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem;">
-        <h4 style="color: #fff; font-size: 1.2rem; margin-top: 0;">🔥 The AI Strategy: Executive Briefing</h4>
+    <div style="background: rgba(15, 23, 42, 0.05); border: 1px solid rgba(15, 23, 42, 0.1); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem;">
+        <h4 style="color:#09090b; font-size: 1.2rem; margin-top: 0;">🔥 The AI Strategy: Executive Briefing</h4>
         <p>Use a tool with live web access, like <strong>Perplexity AI</strong>.</p>
         <p><strong>The Prompt:</strong><br>
         <code style="background: rgba(0,0,0,0.5); padding: 1rem; border-radius: 8px; display: block; color: #a78bfa; margin-top: 0.5rem; font-style: italic;">
@@ -690,71 +690,71 @@
     <p>While AI is an incredibly powerful tool for preparation, it cannot replace your genuine enthusiasm, your soft skills, and your core technical knowledge. Use AI to get your foot in the door and to practice, but let your human personality shine during the actual interview.</p>
     <p>To ensure your technical skills are actually up to par with industry standards, sign up for <strong>Digital Twin Verse</strong>. Our platform simulates real-world industry environments, allowing you to build the exact <a href="/blog/top-ai-skills-students-should-learn-2026" style="color: #38bdf8; text-decoration: underline;">future-ready skills</a> that recruiters are desperately looking for in 2026.</p>
     
-                    <div class="faq-section" style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.1);"><h2 style="color: #fff; font-size: 2.2rem; margin-bottom: 2.5rem; font-weight: 700;">Frequently Asked Questions</h2><div style="display: flex; flex-direction: column; gap: 1.5rem;"><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Will recruiters reject me if they know I used AI to write my resume?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">If you copy-paste generic ChatGPT outputs, yes, because it looks lazy. However, using AI to brainstorm, check grammar, and align your existing real experience with the job description keywords is completely acceptable and expected in 2026.</p>
+                    <div class="faq-section" style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid rgba(15, 23, 42, 0.1);"><h2 style="color:#09090b; font-size: 2.2rem; margin-bottom: 2.5rem; font-weight: 700;">Frequently Asked Questions</h2><div style="display: flex; flex-direction: column; gap: 1.5rem;"><div class="faq-item">
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Will recruiters reject me if they know I used AI to write my resume?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">If you copy-paste generic ChatGPT outputs, yes, because it looks lazy. However, using AI to brainstorm, check grammar, and align your existing real experience with the job description keywords is completely acceptable and expected in 2026.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Which is the best free AI tool for mock interviews?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">The official ChatGPT mobile app's Advanced Voice Mode is currently the best free tool for behavioral mock interviews, as it can process vocal tone and have a real-time, low-latency conversation with you.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Which is the best free AI tool for mock interviews?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">The official ChatGPT mobile app's Advanced Voice Mode is currently the best free tool for behavioral mock interviews, as it can process vocal tone and have a real-time, low-latency conversation with you.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can AI help me pass technical coding rounds?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes, but you must use it as a tutor, not a cheat sheet. Use tools like Claude or ChatGPT to explain complex algorithms step-by-step, or ask them to generate new practice problems tailored to the companies you are interviewing for.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can AI help me pass technical coding rounds?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes, but you must use it as a tutor, not a cheat sheet. Use tools like Claude or ChatGPT to explain complex algorithms step-by-step, or ask them to generate new practice problems tailored to the companies you are interviewing for.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Which AI tools are best for checking ATS compatibility?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Tools like Jobscan, ResumeWorded, and Teal are specifically built to check your resume against a job description. ChatGPT can also do this if you provide it with the right prompt.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Which AI tools are best for checking ATS compatibility?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Tools like Jobscan, ResumeWorded, and Teal are specifically built to check your resume against a job description. ChatGPT can also do this if you provide it with the right prompt.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Is it cheating to use ChatGPT for cover letters?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">It is not cheating to use AI for structure and grammar, but submitting a 100% AI-generated cover letter without personalizing it is a bad idea. Recruiters can easily spot generic AI text. Always edit it to reflect your true voice.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Is it cheating to use ChatGPT for cover letters?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">It is not cheating to use AI for structure and grammar, but submitting a 100% AI-generated cover letter without personalizing it is a bad idea. Recruiters can easily spot generic AI text. Always edit it to reflect your true voice.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can AI help me find hidden job opportunities?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes, tools like Perplexity AI or ChatGPT with web access can scrape recent news articles to find companies that recently secured funding or announced expansions, indicating they will likely be hiring soon.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can AI help me find hidden job opportunities?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes, tools like Perplexity AI or ChatGPT with web access can scrape recent news articles to find companies that recently secured funding or announced expansions, indicating they will likely be hiring soon.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">How do I practice behavioral interviews with AI?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">You can use ChatGPT's Voice Mode or Google Gemini's voice features. Tell the AI to act as a strict hiring manager, ask you behavioral questions one by one, and grade your responses using the STAR format.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">How do I practice behavioral interviews with AI?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">You can use ChatGPT's Voice Mode or Google Gemini's voice features. Tell the AI to act as a strict hiring manager, ask you behavioral questions one by one, and grade your responses using the STAR format.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Will companies use AI to interview me?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes, in 2026, many companies use AI video interview platforms (like HireVue or Pymetrics) for the first round. These systems analyze your facial expressions, tone of voice, and keyword usage.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Will companies use AI to interview me?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes, in 2026, many companies use AI video interview platforms (like HireVue or Pymetrics) for the first round. These systems analyze your facial expressions, tone of voice, and keyword usage.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">How can I avoid sounding like a robot when using AI?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Give the AI strict constraints in your prompt. Tell it: 'Use an enthusiastic but professional tone. Do not use words like delve, testament, or pivotal. Write at an 8th-grade reading level.'</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">How can I avoid sounding like a robot when using AI?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Give the AI strict constraints in your prompt. Tell it: 'Use an enthusiastic but professional tone. Do not use words like delve, testament, or pivotal. Write at an 8th-grade reading level.'</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">What is the STAR method and can AI teach it to me?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">STAR stands for Situation, Task, Action, Result. It's the standard way to answer behavioral questions. You can ask AI to take your raw experience and rewrite it into a perfect STAR format bullet point.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">What is the STAR method and can AI teach it to me?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">STAR stands for Situation, Task, Action, Result. It's the standard way to answer behavioral questions. You can ask AI to take your raw experience and rewrite it into a perfect STAR format bullet point.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can AI help me negotiate my salary?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Absolutely. You can use AI to roleplay salary negotiation conversations. You can also ask AI to aggregate average salary data for your specific role, location, and experience level to give you a baseline.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can AI help me negotiate my salary?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Absolutely. You can use AI to roleplay salary negotiation conversations. You can also ask AI to aggregate average salary data for your specific role, location, and experience level to give you a baseline.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Are there AI tools for coding interview prep?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes, AI coding assistants like GitHub Copilot, Cursor, and Codeium are great. You can also paste a LeetCode problem into ChatGPT and ask it to explain the optimal approach and time complexity before you write the code.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Are there AI tools for coding interview prep?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes, AI coding assistants like GitHub Copilot, Cursor, and Codeium are great. You can also paste a LeetCode problem into ChatGPT and ask it to explain the optimal approach and time complexity before you write the code.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can I use AI to send automated cold emails?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">While technically possible, mass-sending automated AI emails often leads to being marked as spam. It is much more effective to use AI to draft highly personalized, targeted emails to a few key decision-makers.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can I use AI to send automated cold emails?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">While technically possible, mass-sending automated AI emails often leads to being marked as spam. It is much more effective to use AI to draft highly personalized, targeted emails to a few key decision-makers.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">How do I use AI to research a company before an interview?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Use Perplexity AI to search for the company's recent earnings calls, major challenges, new product launches, and biggest competitors. This gives you deep insights that you can bring up during the interview.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">How do I use AI to research a company before an interview?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Use Perplexity AI to search for the company's recent earnings calls, major challenges, new product launches, and biggest competitors. This gives you deep insights that you can bring up during the interview.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Will recruiters penalize me for AI-generated resume bullet points?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Recruiters penalize vagueness and lies. If an AI helps you write a highly specific, metrics-driven bullet point about a project you actually did, recruiters will love it. If the bullet point is fluffy and fake, you will be rejected.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Will recruiters penalize me for AI-generated resume bullet points?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Recruiters penalize vagueness and lies. If an AI helps you write a highly specific, metrics-driven bullet point about a project you actually did, recruiters will love it. If the bullet point is fluffy and fake, you will be rejected.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can AI help me build a portfolio website?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes! Tools like v0 by Vercel, Bolt.new, or Gamma can generate a fully functional, beautiful portfolio website in minutes just from a text description.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can AI help me build a portfolio website?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes! Tools like v0 by Vercel, Bolt.new, or Gamma can generate a fully functional, beautiful portfolio website in minutes just from a text description.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">How do I optimize my LinkedIn profile with AI?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Copy your current LinkedIn headline and summary into an AI. Ask it to rewrite them to be more engaging, SEO-optimized for recruiters, and focused on your target job title.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">How do I optimize my LinkedIn profile with AI?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Copy your current LinkedIn headline and summary into an AI. Ask it to rewrite them to be more engaging, SEO-optimized for recruiters, and focused on your target job title.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Is it safe to upload my resume to free AI tools?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Be cautious with personal data. Remove your home address, phone number, and personal email before uploading your resume to free, public AI models, as they may use your data for training.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Is it safe to upload my resume to free AI tools?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Be cautious with personal data. Remove your home address, phone number, and personal email before uploading your resume to free, public AI models, as they may use your data for training.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">What should I do if an AI mock interviewer gives me bad advice?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">AI can hallucinate. Always cross-reference technical advice with official documentation or trusted human mentors. Use AI for practice and structure, not as an absolute source of truth.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">What should I do if an AI mock interviewer gives me bad advice?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">AI can hallucinate. Always cross-reference technical advice with official documentation or trusted human mentors. Use AI for practice and structure, not as an absolute source of truth.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can AI help me decide which job offer to accept?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes, you can input the details of multiple job offers (salary, benefits, commute time, company size, growth potential) into an AI and ask it to create a weighted comparison matrix to help you decide.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can AI help me decide which job offer to accept?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes, you can input the details of multiple job offers (salary, benefits, commute time, company size, growth potential) into an AI and ask it to create a weighted comparison matrix to help you decide.</p>
             </div></div></div>
                 </div>
                 
                 <div class="social-share">
-                    <span style="color: #fff; font-weight: 600; margin-right: 1rem;">Share this article:</span>
+                    <span style="color:#09090b; font-weight: 600; margin-right: 1rem;">Share this article:</span>
                     <a href="https://twitter.com/intent/tweet?text=How%20to%20Use%20AI%20to%20Crack%20College%20Placements%20and%20Job%20Interviews%20in%202026&url=https%3A%2F%2Fdigitaltwinvrs.com%2Fblog%2Fhow-to-use-ai-for-college-placements-and-interviews-2026" target="_blank" class="social-btn">
                         X (Twitter)
                     </a>
@@ -777,7 +777,7 @@
                     </a>
                 </div>
                 
-                <div class="related-section" style="margin-top: 5rem; padding-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1);"><h2 style="color: #fff; margin-bottom: 3rem; font-size: 2.2rem; font-weight: 700; text-align: center;">Related Articles</h2><div class="related-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2.5rem;">
+                <div class="related-section" style="margin-top: 5rem; padding-top: 4rem; border-top: 1px solid rgba(15, 23, 42, 0.1);"><h2 style="color:#09090b; margin-bottom: 3rem; font-size: 2.2rem; font-weight: 700; text-align: center;">Related Articles</h2><div class="related-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2.5rem;">
                 <a href="/blog/how-non-it-students-can-build-career-in-ai-2026" class="rel-blog-card">
                     <div class="rel-img-wrapper">
                         <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=2069&auto=format&fit=crop" alt="How Non-IT Students Can Build a Career in AI (2026 Guide for Commerce, Arts & BBA)" loading="lazy" decoding="async">
@@ -821,12 +821,12 @@
             </div>
             
             <div class="blog-sidebar">
-                <div class="toc-container" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;"><h3 style="color: #fff; margin-bottom: 1rem; font-size: 1.2rem; font-weight: 600;">Table of Contents</h3><ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem;"><li><a href="#section-1" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">1. Beating the ATS (Applicant Tracking System)</a></li><li><a href="#section-2" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">2. Writing Cold Emails That Get Replies</a></li><li><a href="#section-3" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">3. Conducting Hyper-Realistic Mock Interviews</a></li><li><a href="#section-4" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">4. Deep Company Research for the Final Round</a></li><li><a href="#section-5" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">Conclusion: The Human Element</a></li></ul></div>
+                <div class="toc-container" style="background: rgba(15, 23, 42, 0.05); border: 1px solid rgba(15, 23, 42, 0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;"><h3 style="color:#09090b; margin-bottom: 1rem; font-size: 1.2rem; font-weight: 600;">Table of Contents</h3><ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem;"><li><a href="#section-1" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">1. Beating the ATS (Applicant Tracking System)</a></li><li><a href="#section-2" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">2. Writing Cold Emails That Get Replies</a></li><li><a href="#section-3" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">3. Conducting Hyper-Realistic Mock Interviews</a></li><li><a href="#section-4" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">4. Deep Company Research for the Final Round</a></li><li><a href="#section-5" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">Conclusion: The Human Element</a></li></ul></div>
                 
                 <div class="newsletter-cta">
                     <div style="font-size: 2.5rem; margin-bottom: 1rem;">🚀</div>
-                    <h3 style="color: #fff; margin-bottom: 0.8rem; font-size: 1.5rem; font-weight: 700;">Get Career Insights</h3>
-                    <p style="color: #a1a1aa; font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.5;">Join 10,000+ students receiving weekly AI career guidance, study tips, and exclusive DTV updates.</p>
+                    <h3 style="color:#09090b; margin-bottom: 0.8rem; font-size: 1.5rem; font-weight: 700;">Get Career Insights</h3>
+                    <p style="color:#52525b; font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.5;">Join 10,000+ students receiving weekly AI career guidance, study tips, and exclusive DTV updates.</p>
                     <form onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
                         <input type="email" class="nl-input" placeholder="Your email address" required>
                         <button type="submit" class="nl-btn">Subscribe Now</button>

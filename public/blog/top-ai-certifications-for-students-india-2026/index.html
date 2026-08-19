@@ -67,7 +67,7 @@
         /* ═══ PREMIUM UI OVERRIDES ════════════════════ */
         :root {
             --bdr-hover: rgba(255, 255, 255, 0.15);
-            --card-glow: 0 16px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            --card-glow: 0 16px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(15, 23, 42, 0.05);
         }
 
         .auth-card,
@@ -86,12 +86,12 @@
             transform: translateZ(0);
             /* 3D Glass Borders & Bevels */
             border: 1px solid var(--bdr) !important;
-            border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-top: 1px solid rgba(15, 23, 42, 0.1) !important;
             border-bottom: 1px solid rgba(0, 0, 0, 0.2) !important;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease !important;
             /* 3D Thickness & Shadows */
             box-shadow:
-                inset 0 1px 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 1px rgba(15, 23, 42, 0.1),
                 inset 0 -4px 10px rgba(0, 0, 0, 0.1),
                 0 12px 30px var(--card),
                 0 4px 8px rgba(0, 0, 0, 0.1) !important;
@@ -150,7 +150,7 @@
             border-top-color: var(--glow2) !important;
             /* Enhance 3D shadow on hover */
             box-shadow:
-                inset 0 1px 2px rgba(255, 255, 255, 0.1),
+                inset 0 1px 2px rgba(15, 23, 42, 0.1),
                 inset 0 -1px 0 rgba(0, 0, 0, 0.2),
                 0 15px 30px var(--card),
                 0 10px 20px var(--glow1) !important;
@@ -170,7 +170,7 @@
         }
 
         .btn-out:hover {
-            background: rgba(255, 255, 255, 0.08) !important;
+            background: rgba(15, 23, 42, 0.05) !important;
         }
 
         /* 3D Tilt Wrapper */
@@ -325,7 +325,7 @@
         .splash-loader {
             width: 240px;
             height: 3px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(15, 23, 42, 0.05);
             border-radius: 3px;
             overflow: hidden;
             position: relative;
@@ -393,26 +393,26 @@
 
 <style>
 .blog-header { text-align: center; margin-bottom: 2rem; }
-.blog-meta { display: flex; justify-content: center; gap: 1rem; color: #a1a1aa; font-size: 0.9rem; margin-bottom: 2rem; }
-.blog-content { line-height: 1.8; font-size: 1.1rem; color: #e4e4e7; }
-.blog-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; color: #fff; }
+.blog-meta { display: flex; justify-content: center; gap: 1rem; color:#52525b; font-size: 0.9rem; margin-bottom: 2rem; }
+.blog-content { line-height: 1.8; font-size: 1.1rem; color:#3f3f46; }
+.blog-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; color:#09090b; }
 .blog-content p { margin-bottom: 1.5rem; }
 .blog-image { width: 100%; border-radius: 12px; margin-bottom: 2rem; object-fit: cover; max-height: 500px; }
-.breadcrumb { padding: 1rem 0; margin-bottom: 1rem; color: #a1a1aa; font-size: 0.9rem; }
+.breadcrumb { padding: 1rem 0; margin-bottom: 1rem; color:#52525b; font-size: 0.9rem; }
 .breadcrumb a { color: #3b82f6; text-decoration: none; }
-.toc { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid rgba(255,255,255,0.1); }
+.toc { background: rgba(15, 23, 42, 0.05); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid rgba(15, 23, 42, 0.1); }
 .toc ul { list-style: none; padding-left: 0; }
 .toc li { margin-bottom: 0.5rem; }
 .toc a { color: #93c5fd; text-decoration: none; }
 .faq-section { margin-top: 4rem; }
-.faq-item { background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
+.faq-item { background: rgba(15, 23, 42, 0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
 .faq-item h3 { margin-bottom: 0.5rem; font-size: 1.1rem; }
 .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-.blog-card { background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s ease; }
+.blog-card { background: rgba(15, 23, 42, 0.05); border-radius: 12px; overflow: hidden; border: 1px solid rgba(15, 23, 42, 0.1); transition: transform 0.3s ease; }
 .blog-card:hover { transform: translateY(-5px); }
 .blog-card img { width: 100%; height: 200px; object-fit: cover; }
 .blog-card-content { padding: 1.5rem; }
-.blog-card-title { font-size: 1.25rem; margin-bottom: 0.5rem; color: #fff; }
+.blog-card-title { font-size: 1.25rem; margin-bottom: 0.5rem; color:#09090b; }
 </style>
 
     <script defer="defer" src="/dist/app.d511f803.js?v=d142e9838830ff29"></script>
@@ -507,16 +507,16 @@
         <button type="button" onclick="requireAuth(function(){openPricingPage(); togMenu();}); return false;" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: #e88c2a; width: 100%; text-align: left; font-size: 1.1rem; font-weight: 700;">💎 Go Premium</button>
         <button type="button" onclick="openAnalyzer(); togMenu();" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: var(--wh, #fff); width: 100%; text-align: left; font-size: 1.1rem; font-weight: 600;">🧠
             Achievement Analyzer</button>
-        <div style="padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 0.5rem;">
+        <div style="padding: 1rem 1.5rem; border-top: 1px solid rgba(15, 23, 42, 0.1); margin-top: 0.5rem;">
             <p style="color: var(--mu); font-size: 0.9rem; margin-bottom: 0.5rem;">Select Theme</p>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                <button onclick="setTheme('midnight'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: var(--wh);">Midnight</button>
+                <button onclick="setTheme('midnight'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: var(--wh);">Midnight</button>
                 <button onclick="setTheme('light'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: #fff; border-radius: 6px; font-size: 0.9rem; color: #000;">Light</button>
-                <button onclick="setTheme('navy'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #60a5fa;">Navy</button>
-                <button onclick="setTheme('slate'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: var(--mu);">Slate</button>
-                <button onclick="setTheme('forest'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #4ade80;">Forest</button>
-                <button onclick="setTheme('crimson'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #f87171;">Crimson</button>
-                <button onclick="setTheme('magenta'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #f472b6;">Magenta</button>
+                <button onclick="setTheme('navy'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #60a5fa;">Navy</button>
+                <button onclick="setTheme('slate'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: var(--mu);">Slate</button>
+                <button onclick="setTheme('forest'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #4ade80;">Forest</button>
+                <button onclick="setTheme('crimson'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #f87171;">Crimson</button>
+                <button onclick="setTheme('magenta'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #f472b6;">Magenta</button>
             </div>
         </div>
 
@@ -538,51 +538,51 @@
             .blog-layout { flex-direction: column; }
             .blog-sidebar { width: 100%; position: static; }
         }
-        .social-share { display: flex; gap: 1rem; margin-top: 3rem; padding: 1.5rem 0; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; align-items: center; }
-        .social-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 8px; background: rgba(255,255,255,0.05); color: #fff; cursor: pointer; transition: 0.2s; border: 1px solid rgba(255,255,255,0.1); font-family: inherit; text-decoration: none; font-size: 0.95rem; font-weight: 500; }
-        .social-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+        .social-share { display: flex; gap: 1rem; margin-top: 3rem; padding: 1.5rem 0; border-top: 1px solid rgba(15, 23, 42, 0.1); border-bottom: 1px solid rgba(15, 23, 42, 0.1); flex-wrap: wrap; align-items: center; }
+        .social-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 8px; background: rgba(15, 23, 42, 0.05); color:#09090b; cursor: pointer; transition: 0.2s; border: 1px solid rgba(15, 23, 42, 0.1); font-family: inherit; text-decoration: none; font-size: 0.95rem; font-weight: 500; }
+        .social-btn:hover { background: rgba(15, 23, 42, 0.1); border-color: rgba(15, 23, 42, 0.1); transform: translateY(-2px); }
         
         .nav-articles { display: flex; justify-content: space-between; gap: 1.5rem; margin: 3rem 0; flex-wrap: wrap; }
 
 
         .nav-art-label { color: #a78bfa; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8rem; font-weight: 700; }
-        .nav-art-title { color: #fff; font-size: 1.15rem; font-weight: 600; line-height: 1.4; }
+        .nav-art-title { color:#09090b; font-size: 1.15rem; font-weight: 600; line-height: 1.4; }
         
         .newsletter-cta { background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(59,130,246,0.08)); border: 1px solid rgba(167,139,250,0.3); padding: 2rem; border-radius: 16px; text-align: center; margin-top: 0; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
-        .nl-input { width: 100%; padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.4); color: #fff; margin-bottom: 1.2rem; font-family: inherit; font-size: 1rem; outline: none; transition: 0.3s; }
+        .nl-input { width: 100%; padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid rgba(15, 23, 42, 0.1); background: rgba(15, 23, 42, 0.04); color:#09090b; margin-bottom: 1.2rem; font-family: inherit; font-size: 1rem; outline: none; transition: 0.3s; }
         .nl-input:focus { border-color: #a78bfa; box-shadow: 0 0 0 3px rgba(167,139,250,0.2); }
-        .nl-btn { width: 100%; padding: 1rem; background: linear-gradient(135deg, #a78bfa, #3b82f6); color: #fff; font-weight: 700; font-size: 1.05rem; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .nl-btn { width: 100%; padding: 1rem; background: linear-gradient(135deg, #a78bfa, #3b82f6); color:#09090b; font-weight: 700; font-size: 1.05rem; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
         .nl-btn:hover { box-shadow: 0 8px 20px rgba(167,139,250,0.4); transform: translateY(-2px); }
         
-        .blog-content { font-size: 1.15rem; line-height: 1.8; color: #cbd5e1; }
-        .blog-content h2 { font-size: 2.2rem; color: #fff; margin: 3rem 0 1.5rem; font-weight: 700; }
-        .blog-content h3 { font-size: 1.6rem; color: #fff; margin: 2.5rem 0 1.2rem; font-weight: 600; }
+        .blog-content { font-size: 1.15rem; line-height: 1.8; color:#3f3f46; }
+        .blog-content h2 { font-size: 2.2rem; color:#09090b; margin: 3rem 0 1.5rem; font-weight: 700; }
+        .blog-content h3 { font-size: 1.6rem; color:#09090b; margin: 2.5rem 0 1.2rem; font-weight: 600; }
         .blog-content p { margin-bottom: 1.5rem; }
         .blog-content ul, .blog-content ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
         .blog-content li { margin-bottom: 0.8rem; }
         .blog-content a { color: #a78bfa; text-decoration: none; }
         .blog-content a:hover { text-decoration: underline; }
-        .blog-content strong { color: #fff; }
+        .blog-content strong { color:#09090b; }
         
-        .author-box { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); width: 100%; }
+        .author-box { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; padding-top: 2rem; border-top: 1px solid rgba(15, 23, 42, 0.1); width: 100%; }
 
-        .rel-blog-card { display: flex; flex-direction: column; text-decoration: none; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); height: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        .rel-blog-card { display: flex; flex-direction: column; text-decoration: none; background: rgba(15, 23, 42, 0.05); border: 1px solid rgba(15, 23, 42, 0.05); border-radius: 16px; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); height: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
         .rel-blog-card:hover { transform: translateY(-10px); border-color: rgba(167,139,250,0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(167,139,250,0.15); }
         .rel-img-wrapper { overflow: hidden; height: 220px; }
         .rel-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; display: block; }
         .rel-blog-card:hover .rel-img-wrapper img { transform: scale(1.08); }
         .rel-blog-content { padding: 1.8rem; display: flex; flex-direction: column; flex: 1; }
         .rel-meta { color: #a78bfa; font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; }
-        .rel-title { color: #fff; font-size: 1.3rem; margin-bottom: 0.8rem; line-height: 1.4; font-weight: 600; transition: color 0.3s; }
+        .rel-title { color:#09090b; font-size: 1.3rem; margin-bottom: 0.8rem; line-height: 1.4; font-weight: 600; transition: color 0.3s; }
         .rel-blog-card:hover .rel-title { color: #a78bfa; }
-        .rel-desc { color: #94a3b8; font-size: 0.95rem; margin: 0; line-height: 1.6; }
+        .rel-desc { color:#52525b; font-size: 0.95rem; margin: 0; line-height: 1.6; }
         
-        .faq-item { background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1.8rem; transition: transform 0.3s, box-shadow 0.3s; }
+        .faq-item { background: linear-gradient(145deg, rgba(15, 23, 42, 0.05), rgba(255,255,255,0.01)); border: 1px solid rgba(15, 23, 42, 0.05); border-radius: 16px; padding: 1.8rem; transition: transform 0.3s, box-shadow 0.3s; }
         .faq-item:hover { transform: translateY(-3px); border-color: rgba(167,139,250,0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         
-        .nav-art-btn { flex: 1; min-width: 250px; padding: 2rem; background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; text-decoration: none; transition: all 0.4s ease; position: relative; overflow: hidden; }
+        .nav-art-btn { flex: 1; min-width: 250px; padding: 2rem; background: linear-gradient(135deg, rgba(15, 23, 42, 0.05), rgba(255,255,255,0.01)); border: 1px solid rgba(15, 23, 42, 0.1); border-radius: 16px; text-decoration: none; transition: all 0.4s ease; position: relative; overflow: hidden; }
         .nav-art-btn::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(167,139,250,0.1), rgba(59,130,246,0.1)); opacity: 0; transition: opacity 0.4s ease; }
-        .nav-art-btn:hover { border-color: rgba(167,139,250,0.4); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+        .nav-art-btn:hover { border-color: rgba(167,139,250,0.4); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(15, 23, 42, 0.04); }
         .nav-art-btn:hover::before { opacity: 1; }
         .nav-art-label, .nav-art-title { position: relative; z-index: 1; }
 
@@ -598,26 +598,26 @@
                 <span>&larr;</span> Back to all blogs
             </a>
             
-            <div class="breadcrumb" style="margin-bottom: 1.5rem; font-size: 0.95rem; color: #a1a1aa;">
+            <div class="breadcrumb" style="margin-bottom: 1.5rem; font-size: 0.95rem; color:#52525b;">
                 <a href="/" style="color: #a78bfa; text-decoration: none;">Home</a> &rsaquo; 
                 <a href="/blog" style="color: #a78bfa; text-decoration: none;">Blog</a> &rsaquo; 
-                <span style="color: #fff;">Top AI Certifications for Students in India (2026): Which Ones Are Actually Worth It?</span>
+                <span style="color:#09090b;">Top AI Certifications for Students in India (2026): Which Ones Are Actually Worth It?</span>
             </div>
             
-            <h1 style="color: #fff; font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.2; font-weight: 800; letter-spacing: -1px; text-transform: capitalize;">Top AI Certifications for Students in India (2026): Which Ones Are Actually Worth It?</h1>
+            <h1 style="color:#09090b; font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.2; font-weight: 800; letter-spacing: -1px; text-transform: capitalize;">Top AI Certifications for Students in India (2026): Which Ones Are Actually Worth It?</h1>
             
             <div class="author-box">
-                <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #a78bfa, #3b82f6); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 800; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #a78bfa, #3b82f6); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 800; color:#09090b; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
                     DTVET
                 </div>
                 <div style="text-align: left;">
-                    <div style="font-weight: 700; font-size: 1.1rem; color: #fff; margin-bottom: 0.2rem;">Digital Twin Verse Editorial Team</div>
-                    <div style="color: #94a3b8; font-size: 0.9rem;">Published: 2026-08-01 &bull; 16 min read</div>
+                    <div style="font-weight: 700; font-size: 1.1rem; color:#09090b; margin-bottom: 0.2rem;">Digital Twin Verse Editorial Team</div>
+                    <div style="color:#52525b; font-size: 0.9rem;">Published: 2026-08-01 &bull; 16 min read</div>
                 </div>
             </div>
         </div>
         
-        <div style="max-width: 1000px; margin: 0 auto 4rem; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05);">
+        <div style="max-width: 1000px; margin: 0 auto 4rem; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid rgba(15, 23, 42, 0.05);">
             <img class="blog-image" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop" alt="Top AI Certifications for Students in India (2026): Which Ones Are Actually Worth It?" fetchpriority="high" style="width: 100%; max-height: 550px; object-fit: cover; display: block;">
         </div>
         
@@ -626,7 +626,7 @@
                 <div class="blog-content" id="article-content">
                     
     <div style="background: rgba(167, 139, 250, 0.08); border-left: 4px solid #a78bfa; padding: 1.5rem; margin-bottom: 2.5rem; border-radius: 8px;">
-        <h3 style="color: #fff; margin-top: 0; margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 700;">AI Overview: Top AI Certifications for Students in India (2026)</h3>
+        <h3 style="color:#09090b; margin-top: 0; margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 700;">AI Overview: Top AI Certifications for Students in India (2026)</h3>
         <p style="margin-bottom: 0; color: #e2e8f0; font-size: 1.05rem; line-height: 1.6;">
             The top AI certifications for students in India in 2026 depend on your academic background, current skill level, and target career path. For beginners, top choices include <strong>Google AI Essentials (Coursera)</strong>, <strong>DeepLearning.AI's AI for Everyone (Andrew Ng)</strong>, and <strong>Microsoft Azure AI Fundamentals (AI-900)</strong>. For intermediate builders, <strong>DeepLearning.AI's Generative AI with LLMs</strong> and <strong>IBM AI Engineering Professional Certificate</strong> provide hands-on training with Python, PyTorch, RAG, and fine-tuning. For advanced engineering aspirants, <strong>AWS Certified Machine Learning – Specialty (MLS-C01)</strong>, <strong>Google Cloud Professional ML Engineer</strong>, and <strong>Microsoft Azure Data Scientist Associate (DP-100)</strong> carry maximum weight with recruiters. Certifications provide the highest return on investment when paired with a public GitHub/Notion portfolio of 3-4 deployed real-world projects.
         </p>
@@ -645,9 +645,9 @@
     <h2 id="why-ai-certifications-matter">1. Why AI Certifications Matter for Indian Students in 2026</h2>
     <p>In India's hyper-competitive graduate job market, where a single job posting at a top product company or GCC (Global Capability Center) can receive tens of thousands of student applications, recruiters rely on automated Applicant Tracking Systems (ATS) and fast screening heuristics. Here is why earning the right AI certification matters in 2026:</p>
 
-    <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 1.8rem; margin: 2rem 0;">
-        <h3 style="color: #fff; margin-top: 0; font-size: 1.3rem; font-weight: 700;">Featured Snippet: Key Benefits of Recognized AI Certifications for Students</h3>
-        <ul style="margin-bottom: 0; color: #cbd5e1; line-height: 1.7;">
+    <div style="background: rgba(15, 23, 42, 0.05); border: 1px solid rgba(15, 23, 42, 0.1); border-radius: 12px; padding: 1.8rem; margin: 2rem 0;">
+        <h3 style="color:#09090b; margin-top: 0; font-size: 1.3rem; font-weight: 700;">Featured Snippet: Key Benefits of Recognized AI Certifications for Students</h3>
+        <ul style="margin-bottom: 0; color:#3f3f46; line-height: 1.7;">
             <li><strong>Bypassing Corporate ATS Filters:</strong> Cloud provider certifications (AWS, Microsoft Azure, Google Cloud) contain standardized digital metadata badges (Credly) recognized directly by corporate HR software like Workday, Taleo, and Greenhouse.</li>
             <li><strong>Bridging the Academic Skill Gap:</strong> Validating practical knowledge in production-grade tools—such as PyTorch, LangChain, vector databases (Pinecone, Chroma), Docker, and model evaluation frameworks—that are rarely taught in standard university syllabi.</li>
             <li><strong>Leveling the Playing Field for Non-Tier-1 Colleges:</strong> Providing students from tier-2 and tier-3 engineering colleges or non-CS backgrounds with a globally recognized benchmark to prove their technical equivalence to graduates from premier institutes.</li>
@@ -749,8 +749,8 @@
     <h2 id="advanced-certifications">4. Best Advanced & Specialized AI Certifications (For Engineers & Researchers)</h2>
     <p>These advanced, industry-certified examinations test high-level production deployment, MLOps, distributed model training, and enterprise cloud architecture. They carry immense weight with senior engineering managers and recruiters at tier-1 tech firms:</p>
 
-    <table border="1" cellpadding="10" style="width:100%; border-collapse: collapse; margin-bottom: 2rem; border-color: rgba(255,255,255,0.1); color: #cbd5e1;">
-        <tr style="background-color:#1e293b; color:white;">
+    <table border="1" cellpadding="10" style="width:100%; border-collapse: collapse; margin-bottom: 2rem; border-color: rgba(15, 23, 42, 0.1); color:#3f3f46;">
+        <tr style="background-color:#f1f5f9; color:#09090b;">
             <th>Certification Name</th>
             <th>Issuing Provider</th>
             <th>Exam Fee (Approx.)</th>
@@ -793,8 +793,8 @@
     <h2 id="semester-roadmap">5. 4-Year College Certification Roadmap (Semester-by-Semester Plan)</h2>
     <p>To maximize your career readiness by graduation, spread your certifications and portfolio projects logically across your degree program:</p>
 
-    <table border="1" cellpadding="10" style="width:100%; border-collapse: collapse; margin-bottom: 2rem; border-color: rgba(255,255,255,0.1); color: #cbd5e1;">
-        <tr style="background-color:#1e293b; color:white;">
+    <table border="1" cellpadding="10" style="width:100%; border-collapse: collapse; margin-bottom: 2rem; border-color: rgba(15, 23, 42, 0.1); color:#3f3f46;">
+        <tr style="background-color:#f1f5f9; color:#09090b;">
             <th>Academic Year</th>
             <th>Primary Objective</th>
             <th>Recommended Certification</th>
@@ -829,37 +829,37 @@
     <h2 id="portfolio-projects">6. Top 5 Portfolio Projects to Pair with AI Certifications</h2>
     <p>To transform your certification into a job-winning asset, complete and publish these five high-impact projects on GitHub and Notion:</p>
 
-    <div style="background: rgba(255, 255, 255, 0.02); border-left: 4px solid #3b82f6; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px;">
-        <h4 style="color: #fff; margin-top: 0; font-size: 1.2rem; font-weight: 700;">Project 1: Document RAG Q&A Assistant with Citations</h4>
-        <p style="color: #cbd5e1; margin-bottom: 0.8rem; line-height: 1.6;">
+    <div style="background: rgba(15, 23, 42, 0.05); border-left: 4px solid #3b82f6; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px;">
+        <h4 style="color:#09090b; margin-top: 0; font-size: 1.2rem; font-weight: 700;">Project 1: Document RAG Q&A Assistant with Citations</h4>
+        <p style="color:#3f3f46; margin-bottom: 0.8rem; line-height: 1.6;">
             Build an end-to-end RAG system using LangChain, LlamaIndex, OpenAI/Llama 3, and Pinecone vector database that ingests complex PDF documents (e.g., college textbooks or financial reports) and provides precise answers with source page citations.
         </p>
     </div>
 
-    <div style="background: rgba(255, 255, 255, 0.02); border-left: 4px solid #10b981; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px;">
-        <h4 style="color: #fff; margin-top: 0; font-size: 1.2rem; font-weight: 700;">Project 2: Fine-Tuned Domain Model for Indian E-Commerce</h4>
-        <p style="color: #cbd5e1; margin-bottom: 0.8rem; line-height: 1.6;">
+    <div style="background: rgba(15, 23, 42, 0.05); border-left: 4px solid #10b981; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px;">
+        <h4 style="color:#09090b; margin-top: 0; font-size: 1.2rem; font-weight: 700;">Project 2: Fine-Tuned Domain Model for Indian E-Commerce</h4>
+        <p style="color:#3f3f46; margin-bottom: 0.8rem; line-height: 1.6;">
             Fine-tune an open-source model (Llama 3 8B or Mistral 7B) using QLoRA parameter-efficient fine-tuning on an Indian customer reviews dataset to perform fine-grained sentiment analysis and product categorization.
         </p>
     </div>
 
-    <div style="background: rgba(255, 255, 255, 0.02); border-left: 4px solid #f59e0b; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px;">
-        <h4 style="color: #fff; margin-top: 0; font-size: 1.2rem; font-weight: 700;">Project 3: AI Product Requirement Document & Evaluation Matrix</h4>
-        <p style="color: #cbd5e1; margin-bottom: 0.8rem; line-height: 1.6;">
+    <div style="background: rgba(15, 23, 42, 0.05); border-left: 4px solid #f59e0b; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px;">
+        <h4 style="color:#09090b; margin-top: 0; font-size: 1.2rem; font-weight: 700;">Project 3: AI Product Requirement Document & Evaluation Matrix</h4>
+        <p style="color:#3f3f46; margin-bottom: 0.8rem; line-height: 1.6;">
             Write a detailed Product Requirement Document (PRD) for an AI feature in an existing app (e.g., Zomato recommendation assistant), complete with a 50-prompt golden evaluation dataset, latency budget, and unit cost analysis.
         </p>
     </div>
 
-    <div style="background: rgba(255, 255, 255, 0.02); border-left: 4px solid #ec4899; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px;">
-        <h4 style="color: #fff; margin-top: 0; font-size: 1.2rem; font-weight: 700;">Project 4: Real-Time Computer Vision Defect Detector</h4>
-        <p style="color: #cbd5e1; margin-bottom: 0.8rem; line-height: 1.6;">
+    <div style="background: rgba(15, 23, 42, 0.05); border-left: 4px solid #ec4899; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px;">
+        <h4 style="color:#09090b; margin-top: 0; font-size: 1.2rem; font-weight: 700;">Project 4: Real-Time Computer Vision Defect Detector</h4>
+        <p style="color:#3f3f46; margin-bottom: 0.8rem; line-height: 1.6;">
             Train a YOLOv8 or OpenCV object detection model to identify manufacturing or PCB board defects in real time, served via a FastAPI REST endpoint and packaged inside a Docker container.
         </p>
     </div>
 
-    <div style="background: rgba(255, 255, 255, 0.02); border-left: 4px solid #a78bfa; padding: 1.5rem; margin-bottom: 2rem; border-radius: 8px;">
-        <h4 style="color: #fff; margin-top: 0; font-size: 1.2rem; font-weight: 700;">Project 5: Automated Multi-Agent Workflow Spec</h4>
-        <p style="color: #cbd5e1; margin-bottom: 0.8rem; line-height: 1.6;">
+    <div style="background: rgba(15, 23, 42, 0.05); border-left: 4px solid #a78bfa; padding: 1.5rem; margin-bottom: 2rem; border-radius: 8px;">
+        <h4 style="color:#09090b; margin-top: 0; font-size: 1.2rem; font-weight: 700;">Project 5: Automated Multi-Agent Workflow Spec</h4>
+        <p style="color:#3f3f46; margin-bottom: 0.8rem; line-height: 1.6;">
             Design an autonomous multi-agent workflow using CrewAI or LangGraph that automates news summarization, stock data fetching, and automated email newsletter generation.
         </p>
     </div>
@@ -867,8 +867,8 @@
     <h2 id="free-vs-paid">7. Free vs. Paid AI Certifications: Cost-Benefit Analysis for Indian Students</h2>
     <p>A major dilemma faced by Indian college students is whether to invest money in paid vendor certifications or rely entirely on free learning resources. Here is a clear cost-benefit breakdown:</p>
 
-    <table border="1" cellpadding="10" style="width:100%; border-collapse: collapse; margin-bottom: 2rem; border-color: rgba(255,255,255,0.1); color: #cbd5e1;">
-        <tr style="background-color:#1e293b; color:white;">
+    <table border="1" cellpadding="10" style="width:100%; border-collapse: collapse; margin-bottom: 2rem; border-color: rgba(15, 23, 42, 0.1); color:#3f3f46;">
+        <tr style="background-color:#f1f5f9; color:#09090b;">
             <th>Evaluation Metric</th>
             <th>Free Courses & Audit Options</th>
             <th>Paid Industry Vendor Certifications</th>
@@ -907,15 +907,15 @@
     <p>Simply listing course titles at the bottom of your resume will not impress recruiters. Here is how to format your verified certifications and accompanying portfolio projects on your resume for maximum impact with corporate ATS screeners and engineering managers:</p>
 
     <h3>Recommended Resume Section Layout:</h3>
-    <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+    <div style="background: rgba(15, 23, 42, 0.04); border: 1px solid rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
         <p style="color: #a78bfa; font-family: monospace; font-weight: 700; margin-top: 0;">TECHNICAL CERTIFICATIONS & VERIFIED BADGES</p>
-        <ul style="color: #cbd5e1; font-family: monospace; font-size: 0.95rem; line-height: 1.6; margin-bottom: 0;">
+        <ul style="color:#3f3f46; font-family: monospace; font-size: 0.95rem; line-height: 1.6; margin-bottom: 0;">
             <li><strong>AWS Certified AI Practitioner (AIF-C01)</strong> — Amazon Web Services (Credly ID: #984210) | Date: July 2026</li>
             <li><strong>Generative AI with Large Language Models</strong> — DeepLearning.AI & AWS (Coursera Verified) | Date: May 2026</li>
             <li><strong>Microsoft Certified: Azure AI Fundamentals (AI-900)</strong> — Microsoft (Credly Verified) | Date: January 2026</li>
         </ul>
         <p style="color: #a78bfa; font-family: monospace; font-weight: 700; margin-top: 1.5rem;">FEATURED AI PROJECTS (Linked to Live Demos & Code)</p>
-        <ul style="color: #cbd5e1; font-family: monospace; font-size: 0.95rem; line-height: 1.6; margin-bottom: 0;">
+        <ul style="color:#3f3f46; font-family: monospace; font-size: 0.95rem; line-height: 1.6; margin-bottom: 0;">
             <li><strong>Enterprise Document RAG Assistant:</strong> Built LangChain + Pinecone RAG system querying 500+ PDF pages with source citations; reduced hallucination rate to under 3% across 100 eval benchmark queries. (github.com/yourhandle/rag-assistant)</li>
         </ul>
     </div>
@@ -923,9 +923,9 @@
     <h2 id="career-goals-fit">9. Which Certification Fits Your Specific Career Goal?</h2>
     <p>Rather than collecting random certificates, match your certification roadmap directly to your targeted career trajectory:</p>
 
-    <div style="background: rgba(255, 255, 255, 0.02); border-left: 4px solid #3b82f6; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px;">
-        <h4 style="color: #fff; margin-top: 0; font-size: 1.2rem; font-weight: 700;">Path A: Aspiring AI Engineer / ML Engineer</h4>
-        <p style="color: #cbd5e1; margin-bottom: 0.5rem; line-height: 1.6;">
+    <div style="background: rgba(15, 23, 42, 0.05); border-left: 4px solid #3b82f6; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px;">
+        <h4 style="color:#09090b; margin-top: 0; font-size: 1.2rem; font-weight: 700;">Path A: Aspiring AI Engineer / ML Engineer</h4>
+        <p style="color:#3f3f46; margin-bottom: 0.5rem; line-height: 1.6;">
             <strong>Target Competency:</strong> Model building, PyTorch, fine-tuning, RAG pipelines, and cloud MLOps deployment.
         </p>
         <p style="color: #a78bfa; margin-bottom: 0; font-weight: 600;">
@@ -933,9 +933,9 @@
         </p>
     </div>
 
-    <div style="background: rgba(255, 255, 255, 0.02); border-left: 4px solid #10b981; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px;">
-        <h4 style="color: #fff; margin-top: 0; font-size: 1.2rem; font-weight: 700;">Path B: Aspiring AI Product Manager / Business Leader</h4>
-        <p style="color: #cbd5e1; margin-bottom: 0.5rem; line-height: 1.6;">
+    <div style="background: rgba(15, 23, 42, 0.05); border-left: 4px solid #10b981; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px;">
+        <h4 style="color:#09090b; margin-top: 0; font-size: 1.2rem; font-weight: 700;">Path B: Aspiring AI Product Manager / Business Leader</h4>
+        <p style="color:#3f3f46; margin-bottom: 0.5rem; line-height: 1.6;">
             <strong>Target Competency:</strong> AI PRD writing, model evaluation, token unit economics, and AI user experience.
         </p>
         <p style="color: #a78bfa; margin-bottom: 0; font-weight: 600;">
@@ -943,9 +943,9 @@
         </p>
     </div>
 
-    <div style="background: rgba(255, 255, 255, 0.02); border-left: 4px solid #f59e0b; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px;">
-        <h4 style="color: #fff; margin-top: 0; font-size: 1.2rem; font-weight: 700;">Path C: Aspiring Data Scientist / Data Analyst</h4>
-        <p style="color: #cbd5e1; margin-bottom: 0.5rem; line-height: 1.6;">
+    <div style="background: rgba(15, 23, 42, 0.05); border-left: 4px solid #f59e0b; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px;">
+        <h4 style="color:#09090b; margin-top: 0; font-size: 1.2rem; font-weight: 700;">Path C: Aspiring Data Scientist / Data Analyst</h4>
+        <p style="color:#3f3f46; margin-bottom: 0.5rem; line-height: 1.6;">
             <strong>Target Competency:</strong> SQL querying, statistical modeling, Python data wrangling, dashboarding, predictive analytics.
         </p>
         <p style="color: #a78bfa; margin-bottom: 0; font-weight: 600;">
@@ -953,9 +953,9 @@
         </p>
     </div>
 
-    <div style="background: rgba(255, 255, 255, 0.02); border-left: 4px solid #ec4899; padding: 1.5rem; margin-bottom: 2rem; border-radius: 8px;">
-        <h4 style="color: #fff; margin-top: 0; font-size: 1.2rem; font-weight: 700;">Path D: Cloud, DevOps & AI Infrastructure Specialist</h4>
-        <p style="color: #cbd5e1; margin-bottom: 0.5rem; line-height: 1.6;">
+    <div style="background: rgba(15, 23, 42, 0.05); border-left: 4px solid #ec4899; padding: 1.5rem; margin-bottom: 2rem; border-radius: 8px;">
+        <h4 style="color:#09090b; margin-top: 0; font-size: 1.2rem; font-weight: 700;">Path D: Cloud, DevOps & AI Infrastructure Specialist</h4>
+        <p style="color:#3f3f46; margin-bottom: 0.5rem; line-height: 1.6;">
             <strong>Target Competency:</strong> Docker containerization, Kubernetes orchestration, GPU server provisioning, inference optimization.
         </p>
         <p style="color: #a78bfa; margin-bottom: 0; font-weight: 600;">
@@ -985,8 +985,8 @@
     <p>Digital Twin Verse transforms how Indian students plan their technical education and career journey through advanced AI guidance tools:</p>
 
     <div style="background: rgba(167, 139, 250, 0.05); border: 1px solid rgba(167, 139, 250, 0.2); border-radius: 16px; padding: 2rem; margin: 2rem 0;">
-        <h3 style="color: #fff; margin-top: 0; font-size: 1.4rem; font-weight: 700;">Empowering Your AI Journey with Digital Twin Verse</h3>
-        <ul style="color: #cbd5e1; line-height: 1.8; margin-bottom: 0;">
+        <h3 style="color:#09090b; margin-top: 0; font-size: 1.4rem; font-weight: 700;">Empowering Your AI Journey with Digital Twin Verse</h3>
+        <ul style="color:#3f3f46; line-height: 1.8; margin-bottom: 0;">
             <li><strong>Cognitive Profiling & Digital Twin Mapping:</strong> Our platform builds a virtual replica of your skills, cognitive traits, and logical reasoning—analyzing whether your strengths fit AI Engineering, Data Analytics, Cloud Ops, or AI Product Leadership.</li>
             <li><strong>Personalized Certification & Learning Blueprint:</strong> Receive custom certification recommendations tailored to your exact college year, budget, and targeted job role, preventing certificate hoarding.</li>
             <li><strong>Virtual Product Sandboxes:</strong> Practice building real-world projects to complement your certifications—testing prompt engineering, RAG pipelines, and model evaluation before applying to jobs.</li>
@@ -1008,48 +1008,48 @@
     <p>Identify your targeted career path, leverage free financial aid options on Coursera and Microsoft Learn, build real projects, and let Digital Twin Verse guide your journey to long-term career success.</p>
 
     <div style="background: linear-gradient(135deg, rgba(167,139,250,0.15), rgba(59,130,246,0.15)); border: 1px solid rgba(167,139,250,0.4); border-radius: 16px; padding: 2.5rem; margin-top: 3.5rem; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.3);">
-        <h3 style="color: #fff; margin-top: 0; font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem;">Unsure Which AI Certification Fits Your Goals?</h3>
+        <h3 style="color:#09090b; margin-top: 0; font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem;">Unsure Which AI Certification Fits Your Goals?</h3>
         <p style="margin-bottom: 1.8rem; color: #e2e8f0; font-size: 1.15rem; max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.6;">
             Create your Digital Twin today on Digital Twin Verse, evaluate your cognitive logic style, and unlock your customized 2026 AI learning & certification roadmap.
         </p>
-        <a href="/login.html" style="display: inline-block; background: linear-gradient(135deg, #a78bfa, #3b82f6); color: #fff; padding: 0.9rem 2.2rem; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 1.1rem; box-shadow: 0 8px 20px rgba(167,139,250,0.4); transition: all 0.3s ease;">Create Your Digital Twin Now &rarr;</a>
+        <a href="/login.html" style="display: inline-block; background: linear-gradient(135deg, #a78bfa, #3b82f6); color:#09090b; padding: 0.9rem 2.2rem; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 1.1rem; box-shadow: 0 8px 20px rgba(167,139,250,0.4); transition: all 0.3s ease;">Create Your Digital Twin Now &rarr;</a>
     </div>
 
-                    <div class="faq-section" style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.1);"><h2 style="color: #fff; font-size: 2.2rem; margin-bottom: 2.5rem; font-weight: 700;">Frequently Asked Questions</h2><div style="display: flex; flex-direction: column; gap: 1.5rem;"><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Which AI certification is best for beginners in India?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">For absolute beginners, top choices include Google AI Essentials (Coursera), DeepLearning.AI's AI for Everyone (Andrew Ng), and Microsoft Azure AI Fundamentals (AI-900). They introduce foundational AI, machine learning, and cloud concepts without requiring prior coding experience.</p>
+                    <div class="faq-section" style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid rgba(15, 23, 42, 0.1);"><h2 style="color:#09090b; font-size: 2.2rem; margin-bottom: 2.5rem; font-weight: 700;">Frequently Asked Questions</h2><div style="display: flex; flex-direction: column; gap: 1.5rem;"><div class="faq-item">
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Which AI certification is best for beginners in India?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">For absolute beginners, top choices include Google AI Essentials (Coursera), DeepLearning.AI's AI for Everyone (Andrew Ng), and Microsoft Azure AI Fundamentals (AI-900). They introduce foundational AI, machine learning, and cloud concepts without requiring prior coding experience.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Are AI certifications worth it for college students in India?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes, AI certifications are worth it if they come from globally recognized vendors (AWS, Microsoft, Google, DeepLearning.AI) and are combined with 3-4 public portfolio projects on GitHub. Certifications help pass corporate ATS filters and demonstrate self-driven learning to recruiters.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Are AI certifications worth it for college students in India?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes, AI certifications are worth it if they come from globally recognized vendors (AWS, Microsoft, Google, DeepLearning.AI) and are combined with 3-4 public portfolio projects on GitHub. Certifications help pass corporate ATS filters and demonstrate self-driven learning to recruiters.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can I get AI certifications for free?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes! Students in India can apply for 100% Coursera Financial Aid to access DeepLearning.AI and IBM courses for free. Additionally, Microsoft frequently offers 100% free exam vouchers for Azure certifications through Microsoft Learn Student Ambassador programs and skills challenges.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Can I get AI certifications for free?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Yes! Students in India can apply for 100% Coursera Financial Aid to access DeepLearning.AI and IBM courses for free. Additionally, Microsoft frequently offers 100% free exam vouchers for Azure certifications through Microsoft Learn Student Ambassador programs and skills challenges.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Does Google offer a free AI certification?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Google offers free learning paths on Google Cloud Skills Boost and Coursera course audits. While verified certificate badges require a fee or Coursera subscription, financial aid is available to cover the entire cost for eligible students.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Does Google offer a free AI certification?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Google offers free learning paths on Google Cloud Skills Boost and Coursera course audits. While verified certificate badges require a fee or Coursera subscription, financial aid is available to cover the entire cost for eligible students.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">What is the difference between AWS Certified AI Practitioner and AWS Machine Learning Specialty?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">AWS Certified AI Practitioner (AIF-C01) is an entry-level certification covering foundational AI concepts and GenAI services. AWS Certified Machine Learning – Specialty (MLS-C01) is an advanced technical examination focusing on deep model architecture, MLOps, and SageMaker deployment.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">What is the difference between AWS Certified AI Practitioner and AWS Machine Learning Specialty?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">AWS Certified AI Practitioner (AIF-C01) is an entry-level certification covering foundational AI concepts and GenAI services. AWS Certified Machine Learning – Specialty (MLS-C01) is an advanced technical examination focusing on deep model architecture, MLOps, and SageMaker deployment.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Do non-computer science students need coding to learn AI?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">No, non-CS students can start with foundational courses like 'AI for Everyone' or 'AI Product Management' that require no coding. However, if you wish to build AI software, learning Python and SQL is essential.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Do non-computer science students need coding to learn AI?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">No, non-CS students can start with foundational courses like 'AI for Everyone' or 'AI Product Management' that require no coding. However, if you wish to build AI software, learning Python and SQL is essential.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">How long does it take to complete an AI certification?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Beginner certifications take 1 to 2 weeks (10–15 hours). Intermediate specializations take 1 to 3 months, while advanced cloud certifications typically require 2 to 3 months of dedicated study and hands-on practice.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">How long does it take to complete an AI certification?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Beginner certifications take 1 to 2 weeks (10–15 hours). Intermediate specializations take 1 to 3 months, while advanced cloud certifications typically require 2 to 3 months of dedicated study and hands-on practice.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Will an AI certification guarantee a job in India?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">No single certification guarantees a job. Employers in tech hubs like Bengaluru, Gurgaon, and Hyderabad hire based on practical skills. A certification validates your knowledge, but your GitHub projects and interview performance secure the offer.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Will an AI certification guarantee a job in India?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">No single certification guarantees a job. Employers in tech hubs like Bengaluru, Gurgaon, and Hyderabad hire based on practical skills. A certification validates your knowledge, but your GitHub projects and interview performance secure the offer.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Which AI certifications are best for AI Product Managers?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Aspiring AI Product Managers should look at Duke University's AI Product Management Specialization, DeepLearning.AI's Generative AI for Product Managers, and AWS Certified AI Practitioner.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Which AI certifications are best for AI Product Managers?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Aspiring AI Product Managers should look at Duke University's AI Product Management Specialization, DeepLearning.AI's Generative AI for Product Managers, and AWS Certified AI Practitioner.</p>
             </div><div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">How does Digital Twin Verse help students choose the right AI certification?</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">Digital Twin Verse uses cognitive profiling to build your 'Digital Twin'—evaluating your analytical strengths and generating a personalized, step-by-step certification and portfolio roadmap tailored for the Indian job market.</p>
+                <h3 style="color:#09090b; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">How does Digital Twin Verse help students choose the right AI certification?</h3>
+                <p style="color:#52525b; line-height: 1.7; margin: 0; font-size: 1.05rem;">Digital Twin Verse uses cognitive profiling to build your 'Digital Twin'—evaluating your analytical strengths and generating a personalized, step-by-step certification and portfolio roadmap tailored for the Indian job market.</p>
             </div></div></div>
                 </div>
                 
                 <div class="social-share">
-                    <span style="color: #fff; font-weight: 600; margin-right: 1rem;">Share this article:</span>
+                    <span style="color:#09090b; font-weight: 600; margin-right: 1rem;">Share this article:</span>
                     <a href="https://twitter.com/intent/tweet?text=Top%20AI%20Certifications%20for%20Students%20in%20India%20(2026)%3A%20Which%20Ones%20Are%20Actually%20Worth%20It%3F&url=https%3A%2F%2Fdigitaltwinvrs.com%2Fblog%2Ftop-ai-certifications-for-students-india-2026" target="_blank" class="social-btn">
                         X (Twitter)
                     </a>
@@ -1072,7 +1072,7 @@
                     </a>
                 </div>
                 
-                <div class="related-section" style="margin-top: 5rem; padding-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1);"><h2 style="color: #fff; margin-bottom: 3rem; font-size: 2.2rem; font-weight: 700; text-align: center;">Related Articles</h2><div class="related-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2.5rem;">
+                <div class="related-section" style="margin-top: 5rem; padding-top: 4rem; border-top: 1px solid rgba(15, 23, 42, 0.1);"><h2 style="color:#09090b; margin-bottom: 3rem; font-size: 2.2rem; font-weight: 700; text-align: center;">Related Articles</h2><div class="related-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2.5rem;">
                 <a href="/blog/50-best-free-ai-tools-for-students-2026" class="rel-blog-card">
                     <div class="rel-img-wrapper">
                         <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2070&auto=format&fit=crop" alt="50+ Best Free AI Tools Every Student Should Use in 2026" loading="lazy" decoding="async">
@@ -1156,12 +1156,12 @@
             </div>
             
             <div class="blog-sidebar">
-                <div class="toc-container" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;"><h3 style="color: #fff; margin-bottom: 1rem; font-size: 1.2rem; font-weight: 600;">Table of Contents</h3><ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem;"><li><a href="#why-ai-certifications-matter" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">1. Why AI Certifications Matter</a></li><li><a href="#beginner-certifications" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">2. Best Beginner AI Certifications</a></li><li><a href="#intermediate-certifications" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">3. Best Intermediate Certifications</a></li><li><a href="#advanced-certifications" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">4. Best Advanced Certifications</a></li><li><a href="#semester-roadmap" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">5. 4-Year College Certification Plan</a></li><li><a href="#portfolio-projects" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">6. Top 5 Portfolio Projects to Pair</a></li><li><a href="#free-vs-paid" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">7. Free vs. Paid Cost-Benefit Analysis</a></li><li><a href="#resume-formatting" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">8. Resume Formatting Guide</a></li><li><a href="#career-goals-fit" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">9. Matching Certifications to Goals</a></li><li><a href="#common-mistakes" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">10. Common Mistakes Students Make</a></li><li><a href="#how-dtv-helps" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">11. How Digital Twin Verse Helps</a></li><li><a href="#conclusion" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">12. Conclusion & Action Plan</a></li></ul></div>
+                <div class="toc-container" style="background: rgba(15, 23, 42, 0.05); border: 1px solid rgba(15, 23, 42, 0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;"><h3 style="color:#09090b; margin-bottom: 1rem; font-size: 1.2rem; font-weight: 600;">Table of Contents</h3><ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem;"><li><a href="#why-ai-certifications-matter" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">1. Why AI Certifications Matter</a></li><li><a href="#beginner-certifications" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">2. Best Beginner AI Certifications</a></li><li><a href="#intermediate-certifications" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">3. Best Intermediate Certifications</a></li><li><a href="#advanced-certifications" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">4. Best Advanced Certifications</a></li><li><a href="#semester-roadmap" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">5. 4-Year College Certification Plan</a></li><li><a href="#portfolio-projects" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">6. Top 5 Portfolio Projects to Pair</a></li><li><a href="#free-vs-paid" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">7. Free vs. Paid Cost-Benefit Analysis</a></li><li><a href="#resume-formatting" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">8. Resume Formatting Guide</a></li><li><a href="#career-goals-fit" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">9. Matching Certifications to Goals</a></li><li><a href="#common-mistakes" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">10. Common Mistakes Students Make</a></li><li><a href="#how-dtv-helps" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">11. How Digital Twin Verse Helps</a></li><li><a href="#conclusion" style="color:#52525b; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">12. Conclusion & Action Plan</a></li></ul></div>
                 
                 <div class="newsletter-cta">
                     <div style="font-size: 2.5rem; margin-bottom: 1rem;">🚀</div>
-                    <h3 style="color: #fff; margin-bottom: 0.8rem; font-size: 1.5rem; font-weight: 700;">Get Career Insights</h3>
-                    <p style="color: #a1a1aa; font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.5;">Join 10,000+ students receiving weekly AI career guidance, study tips, and exclusive DTV updates.</p>
+                    <h3 style="color:#09090b; margin-bottom: 0.8rem; font-size: 1.5rem; font-weight: 700;">Get Career Insights</h3>
+                    <p style="color:#52525b; font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.5;">Join 10,000+ students receiving weekly AI career guidance, study tips, and exclusive DTV updates.</p>
                     <form onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
                         <input type="email" class="nl-input" placeholder="Your email address" required>
                         <button type="submit" class="nl-btn">Subscribe Now</button>
