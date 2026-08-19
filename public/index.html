@@ -90,8 +90,40 @@
     
 
     <!-- JSON-LD Structured Data Schema -->
-    
-
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://digitaltwinvrs.com/#organization",
+          "name": "Digital Twin Verse",
+          "url": "https://digitaltwinvrs.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://digitaltwinvrs.com/img/dtv-logo.jpg",
+            "width": 512,
+            "height": 512
+          },
+          "founder": {
+            "@type": "Person",
+            "name": "Kumar Kartikey",
+            "url": "https://digitaltwinvrs.com/founder/kumar-kartikey"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://digitaltwinvrs.com/#website",
+          "url": "https://digitaltwinvrs.com/",
+          "name": "Digital Twin Verse",
+          "description": "AI-Powered Student Learning & Career Platform",
+          "publisher": {
+            "@id": "https://digitaltwinvrs.com/#organization"
+          }
+        }
+      ]
+    }
+    </script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <style>
         /* ═══ PREMIUM UI OVERRIDES ════════════════════ */

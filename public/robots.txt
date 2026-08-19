@@ -2,5 +2,11 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /login.html
+Disallow: /dashboard/
+Disallow: /parent/
+Disallow: /student/
+Disallow: /school/
+Disallow: /admin/
+Disallow: /payment/
 
 Sitemap: https://digitaltwinvrs.com/sitemap.xml
