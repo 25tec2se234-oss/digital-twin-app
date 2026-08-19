@@ -57,29 +57,29 @@ let indexTemplate = fs.readFileSync(path.join(templatesDir, 'blog.html'), 'utf-8
 
 let gridHtml = `
 <style>
-    .cat-btn { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 0.6rem 1.2rem; border-radius: 24px; cursor: pointer; transition: all 0.3s ease; font-family: inherit; font-size: 0.95rem; }
-    .cat-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); transform: translateY(-2px); }
-    .cat-btn.active { background: linear-gradient(135deg, #a78bfa, #3b82f6); color: #fff; border-color: transparent; font-weight: 600; box-shadow: 0 4px 12px rgba(167,139,250,0.3); }
+    .cat-btn { background: rgba(15,23,42,0.05); color: var(--dtv-text-primary); border: 1px solid rgba(15,23,42,0.1); padding: 0.6rem 1.2rem; border-radius: 24px; cursor: pointer; transition: all 0.3s ease; font-family: inherit; font-size: 0.95rem; }
+    .cat-btn:hover { background: rgba(15,23,42,0.1); border-color: rgba(15,23,42,0.3); transform: translateY(-2px); }
+    .cat-btn.active { background: linear-gradient(135deg, #a78bfa, #3b82f6); color: var(--dtv-text-primary); border-color: transparent; font-weight: 600; box-shadow: 0 4px 12px rgba(167,139,250,0.3); }
     
-    .blog-search-input { width: 100%; padding: 1.2rem 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.4); color: #fff; font-size: 1.1rem; outline: none; transition: border-color 0.3s; font-family: inherit; }
+    .blog-search-input { width: 100%; padding: 1.2rem 1.5rem; border-radius: 12px; border: 1px solid rgba(15,23,42,0.15); background: rgba(15,23,42,0.04); color: var(--dtv-text-primary); font-size: 1.1rem; outline: none; transition: border-color 0.3s; font-family: inherit; }
     .blog-search-input:focus { border-color: #a78bfa; box-shadow: 0 0 0 3px rgba(167,139,250,0.2); }
     
-    .featured-blog-card { display: flex; flex-direction: row; gap: 2.5rem; align-items: center; background: rgba(255,255,255,0.03); padding: 2rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); text-decoration: none; transition: transform 0.3s, border-color 0.3s; }
-    .featured-blog-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+    .featured-blog-card { display: flex; flex-direction: row; gap: 2.5rem; align-items: center; background: rgba(15,23,42,0.03); padding: 2rem; border-radius: 16px; border: 1px solid rgba(15,23,42,0.1); text-decoration: none; transition: transform 0.3s, border-color 0.3s; }
+    .featured-blog-card:hover { transform: translateY(-5px); border-color: rgba(15,23,42,0.2); }
     .featured-img-container { width: 50%; border-radius: 12px; overflow: hidden; }
     .featured-img-container img { width: 100%; height: 100%; object-fit: cover; max-height: 400px; display: block; transition: transform 0.5s; }
     .featured-blog-card:hover .featured-img-container img { transform: scale(1.05); }
     
     .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 2rem; }
-    .blog-card { display: flex; flex-direction: column; background: rgba(255,255,255,0.03); border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s ease, border-color 0.3s; text-decoration: none; color: inherit; height: 100%; }
-    .blog-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .blog-card { display: flex; flex-direction: column; background: rgba(15,23,42,0.03); border-radius: 16px; overflow: hidden; border: 1px solid rgba(15,23,42,0.1); transition: transform 0.3s ease, border-color 0.3s; text-decoration: none; color: inherit; height: 100%; }
+    .blog-card:hover { transform: translateY(-8px); border-color: rgba(15,23,42,0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     .blog-card img { width: 100%; height: 220px; object-fit: cover; transition: transform 0.5s; }
     .blog-card:hover img { transform: scale(1.05); }
     .blog-card-content { padding: 1.8rem; display: flex; flex-direction: column; flex: 1; }
     
     .flagship-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 1.8rem; }
     .flagship-card { border-radius: 20px; padding: 2.2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: transform 0.3s, border-color 0.3s; }
-    .flagship-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.4) !important; }
+    .flagship-card:hover { transform: translateY(-5px); border-color: rgba(15,23,42,0.4) !important; }
     
     @media (max-width: 900px) {
         .featured-blog-card { flex-direction: column; padding: 1.5rem; gap: 1.5rem; }
@@ -108,7 +108,7 @@ if (blogs.length > 0) {
     
     gridHtml += `
     <div style="margin-bottom: 3.5rem;">
-        <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem; color: #fff; font-weight: 700; display: flex; align-items: center; gap: 0.6rem;">
+        <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem; color: var(--dtv-text-primary); font-weight: 700; display: flex; align-items: center; gap: 0.6rem;">
             <span>🔥</span> Flagship Career & AI Resource Hubs
         </h3>
         <div class="flagship-grid">
@@ -116,11 +116,11 @@ if (blogs.length > 0) {
             <div class="flagship-card" style="background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(59, 130, 246, 0.12)); border: 1px solid rgba(167, 139, 250, 0.35);">
                 <div>
                     <span style="background: rgba(167,139,250,0.22); color: #c084fc; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🚀 FLAGSHIP CAREER ROADMAP</span>
-                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: #fff; font-weight: 800; line-height: 1.3;">Ultimate AI Career Roadmap (2026–2035)</h2>
-                    <p style="color: #cbd5e1; margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Master Artificial Intelligence, ML, Deep Learning & GenAI. Explore 12 AI career paths, step-by-step timeline, salary dashboard & top hiring companies.</p>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: var(--dtv-text-primary); font-weight: 800; line-height: 1.3;">Ultimate AI Career Roadmap (2026–2035)</h2>
+                    <p style="color: var(--dtv-text-secondary); margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Master Artificial Intelligence, ML, Deep Learning & GenAI. Explore 12 AI career paths, step-by-step timeline, salary dashboard & top hiring companies.</p>
                 </div>
                 <div>
-                    <a href="/ai-career-roadmap" style="background: linear-gradient(135deg, #a78bfa, #3b82f6); color: #fff; font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
+                    <a href="/ai-career-roadmap" style="background: linear-gradient(135deg, #a78bfa, #3b82f6); color: var(--dtv-text-primary); font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
                         Explore AI Master Roadmap &rarr;
                     </a>
                 </div>
@@ -130,8 +130,8 @@ if (blogs.length > 0) {
             <div class="flagship-card" style="background: linear-gradient(135deg, rgba(0, 240, 255, 0.12), rgba(167, 139, 250, 0.12)); border: 1px solid rgba(0, 240, 255, 0.35);">
                 <div>
                     <span style="background: rgba(0,240,255,0.2); color: #00f0ff; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">⚡ 50+ FREE AI TOOLS DIRECTORY</span>
-                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: #fff; font-weight: 800; line-height: 1.3;">50+ Best Free AI Tools Every Student Should Use in 2026</h2>
-                    <p style="color: #cbd5e1; margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Compare 53 top free AI tools for research, coding, presentation slide decks, math solving, vector design & video editing with live filters & bookmarks.</p>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: var(--dtv-text-primary); font-weight: 800; line-height: 1.3;">50+ Best Free AI Tools Every Student Should Use in 2026</h2>
+                    <p style="color: var(--dtv-text-secondary); margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Compare 53 top free AI tools for research, coding, presentation slide decks, math solving, vector design & video editing with live filters & bookmarks.</p>
                 </div>
                 <div>
                     <a href="/ai-tools-for-students" style="background: linear-gradient(135deg, #00f0ff, #3b82f6); color: #0b0f19; font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
@@ -144,11 +144,11 @@ if (blogs.length > 0) {
             <div class="flagship-card" style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(167, 139, 250, 0.12)); border: 1px solid rgba(236, 72, 153, 0.35);">
                 <div>
                     <span style="background: rgba(236,72,153,0.2); color: #f472b6; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🧠 FLAGSHIP INTERACTIVE</span>
-                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: #fff; font-weight: 800; line-height: 1.3;">AI Reality Lab</h2>
-                    <p style="color: #cbd5e1; margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Understand what AI can actually do for you — and where human judgment still fundamentally matters. Test your AI thinking profile.</p>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: var(--dtv-text-primary); font-weight: 800; line-height: 1.3;">AI Reality Lab</h2>
+                    <p style="color: var(--dtv-text-secondary); margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Understand what AI can actually do for you — and where human judgment still fundamentally matters. Test your AI thinking profile.</p>
                 </div>
                 <div>
-                    <a href="/ai-reality-lab" style="background: linear-gradient(135deg, #ec4899, #8b5cf6); color: #fff; font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
+                    <a href="/ai-reality-lab" style="background: linear-gradient(135deg, #ec4899, #8b5cf6); color: var(--dtv-text-primary); font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
                         Enter AI Reality Lab &rarr;
                     </a>
                 </div>
@@ -158,11 +158,11 @@ if (blogs.length > 0) {
             <div class="flagship-card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(59, 130, 246, 0.12)); border: 1px solid rgba(16, 185, 129, 0.35);">
                 <div>
                     <span style="background: rgba(16,185,129,0.2); color: #34d399; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🗺️ FLAGSHIP EXPLORER</span>
-                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: #fff; font-weight: 800; line-height: 1.3;">Student Skill Intelligence Hub</h2>
-                    <p style="color: #cbd5e1; margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Explore the skills worth building and discover what each skill can unlock. Generate your Personal Skill Map for the AI era.</p>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: var(--dtv-text-primary); font-weight: 800; line-height: 1.3;">Student Skill Intelligence Hub</h2>
+                    <p style="color: var(--dtv-text-secondary); margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Explore the skills worth building and discover what each skill can unlock. Generate your Personal Skill Map for the AI era.</p>
                 </div>
                 <div>
-                    <a href="/skill-intelligence-hub" style="background: linear-gradient(135deg, #10b981, #3b82f6); color: #fff; font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
+                    <a href="/skill-intelligence-hub" style="background: linear-gradient(135deg, #10b981, #3b82f6); color: var(--dtv-text-primary); font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
                         Explore Skill Intelligence &rarr;
                     </a>
                 </div>
@@ -172,11 +172,11 @@ if (blogs.length > 0) {
             <div class="flagship-card" style="background: linear-gradient(135deg, rgba(248, 113, 113, 0.12), rgba(251, 191, 36, 0.12)); border: 1px solid rgba(248, 113, 113, 0.35);">
                 <div>
                     <span style="background: rgba(248,113,113,0.2); color: #f87171; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🪐 3D KNOWLEDGE UNIVERSE</span>
-                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: #fff; font-weight: 800; line-height: 1.3;">DTV Futureverse</h2>
-                    <p style="color: #cbd5e1; margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Step beyond the screen. Explore the future in our immersive 3D interactive knowledge universe. Discover AI, Human Skills, and Emerging Tech.</p>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: var(--dtv-text-primary); font-weight: 800; line-height: 1.3;">DTV Futureverse</h2>
+                    <p style="color: var(--dtv-text-secondary); margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Step beyond the screen. Explore the future in our immersive 3D interactive knowledge universe. Discover AI, Human Skills, and Emerging Tech.</p>
                 </div>
                 <div>
-                    <a href="/futureverse" style="background: linear-gradient(135deg, #ef4444, #f59e0b); color: #fff; font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
+                    <a href="/futureverse" style="background: linear-gradient(135deg, #ef4444, #f59e0b); color: var(--dtv-text-primary); font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
                         Enter the Universe &rarr;
                     </a>
                 </div>
@@ -185,22 +185,22 @@ if (blogs.length > 0) {
     </div>
 
     <div id="featured-section" class="featured-blog" style="margin-bottom: 5rem;">
-        <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem; color: #fff; font-weight: 600;">Featured Article</h3>
+        <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem; color: var(--dtv-text-primary); font-weight: 600;">Featured Article</h3>
         <a href="/blog/${featured.slug}" class="featured-blog-card">
             <div class="featured-img-container">
                 <img src="${featured.featuredImage}" alt="${featured.title}" loading="lazy" decoding="async">
             </div>
             <div class="featured-blog-content" style="width: 50%;">
                 <div style="background: rgba(167,139,250,0.15); color: #a78bfa; padding: 0.4rem 1.2rem; border-radius: 20px; font-size: 0.85rem; font-weight: 700; display: inline-block; margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 1px;">Featured</div>
-                <div style="margin-bottom: 1rem; font-size: 0.95rem; color: #a1a1aa;">${featured.publishedDate} &bull; ${featured.readingTime}</div>
-                <h2 style="font-size: 2.2rem; margin-bottom: 1.2rem; line-height: 1.3; color: #fff; font-weight: 700;">${featured.title}</h2>
-                <p style="color: #94a3b8; font-size: 1.1rem; line-height: 1.6; margin-bottom: 0;">${featured.metaDescription}</p>
+                <div style="margin-bottom: 1rem; font-size: 0.95rem; color: var(--dtv-text-secondary);">${featured.publishedDate} &bull; ${featured.readingTime}</div>
+                <h2 style="font-size: 2.2rem; margin-bottom: 1.2rem; line-height: 1.3; color: var(--dtv-text-primary); font-weight: 700;">${featured.title}</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 1.1rem; line-height: 1.6; margin-bottom: 0;">${featured.metaDescription}</p>
                 <div style="color: #a78bfa; margin-top: 1.8rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; font-size: 1.05rem;">Read Full Article <span>&rarr;</span></div>
             </div>
         </a>
     </div>
     
-    <h3 id="latest-heading" style="margin-bottom: 2rem; font-size: 1.8rem; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">Latest Articles</h3>
+    <h3 id="latest-heading" style="margin-bottom: 2rem; font-size: 1.8rem; color: var(--dtv-text-primary); border-bottom: 1px solid rgba(15,23,42,0.1); padding-bottom: 1rem;">Latest Articles</h3>
     <div class="related-grid" id="blog-grid-container">`;
     
     rest.forEach(b => {
@@ -209,9 +209,9 @@ if (blogs.length > 0) {
         <a href="/blog/${b.slug}" class="blog-card blog-item" data-category="${cat}" data-title="${b.title.toLowerCase()}">
             <div style="overflow: hidden;"><img src="${b.featuredImage}" alt="${b.title}" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color: #a1a1aa; margin-bottom: 0.8rem;">${b.publishedDate} &bull; ${b.readingTime}</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: #fff; line-height: 1.4; font-weight: 600;">${b.title}</h2>
-                <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">${b.metaDescription}</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">${b.publishedDate} &bull; ${b.readingTime}</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">${b.title}</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">${b.metaDescription}</p>
             </div>
         </a>`;
     });
@@ -219,10 +219,10 @@ if (blogs.length > 0) {
 }
 
 gridHtml += `
-<div id="no-results" style="display: none; text-align: center; padding: 4rem 2rem; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); margin-top: 2rem;">
+<div id="no-results" style="display: none; text-align: center; padding: 4rem 2rem; background: rgba(15,23,42,0.02); border-radius: 16px; border: 1px solid rgba(15,23,42,0.05); margin-top: 2rem;">
     <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
-    <h3 style="color: #fff; font-size: 1.5rem; margin-bottom: 0.5rem;">No articles found</h3>
-    <p style="color: #a1a1aa; font-size: 1.1rem;">Try adjusting your search or selecting a different category.</p>
+    <h3 style="color: var(--dtv-text-primary); font-size: 1.5rem; margin-bottom: 0.5rem;">No articles found</h3>
+    <p style="color: var(--dtv-text-secondary); font-size: 1.1rem;">Try adjusting your search or selecting a different category.</p>
 </div>
 
 <script>
@@ -302,20 +302,20 @@ blogs.forEach(blog => {
     let template = postTemplateRaw;
     let tocHtml = '';
     if (blog.toc && blog.toc.length > 0) {
-        tocHtml = '<div class="toc-container" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;"><h3 style="color: #fff; margin-bottom: 1rem; font-size: 1.2rem; font-weight: 600;">Table of Contents</h3><ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem;">';
+        tocHtml = '<div class="toc-container" style="background: rgba(15,23,42,0.02); border: 1px solid rgba(15,23,42,0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;"><h3 style="color: var(--dtv-text-primary); margin-bottom: 1rem; font-size: 1.2rem; font-weight: 600;">Table of Contents</h3><ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem;">';
         blog.toc.forEach(item => {
-            tocHtml += `<li><a href="#${item.id}" style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">${item.title}</a></li>`;
+            tocHtml += `<li><a href="#${item.id}" style="color: var(--dtv-text-secondary); text-decoration: none; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#a1a1aa'">${item.title}</a></li>`;
         });
         tocHtml += '</ul></div>';
     }
 
     let faqHtml = '';
     if (blog.faq && blog.faq.length > 0) {
-        faqHtml = '<div class="faq-section" style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.1);"><h2 style="color: #fff; font-size: 2.2rem; margin-bottom: 2.5rem; font-weight: 700;">Frequently Asked Questions</h2><div style="display: flex; flex-direction: column; gap: 1.5rem;">';
+        faqHtml = '<div class="faq-section" style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid rgba(15,23,42,0.1);"><h2 style="color: var(--dtv-text-primary); font-size: 2.2rem; margin-bottom: 2.5rem; font-weight: 700;">Frequently Asked Questions</h2><div style="display: flex; flex-direction: column; gap: 1.5rem;">';
         blog.faq.forEach(item => {
             faqHtml += `<div class="faq-item">
-                <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">${item.question}</h3>
-                <p style="color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.05rem;">${item.answer}</p>
+                <h3 style="color: var(--dtv-text-primary); font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">${item.question}</h3>
+                <p style="color: var(--dtv-text-tertiary); line-height: 1.7; margin: 0; font-size: 1.05rem;">${item.answer}</p>
             </div>`;
         });
         faqHtml += '</div></div>';
@@ -325,7 +325,7 @@ blogs.forEach(blog => {
     if (blog.relatedArticles && blog.relatedArticles.length > 0) {
         const relatedBlogs = blogs.filter(b => blog.relatedArticles.includes(b.slug));
         if (relatedBlogs.length > 0) {
-            relatedHtml = '<div class="related-section" style="margin-top: 5rem; padding-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1);"><h2 style="color: #fff; margin-bottom: 3rem; font-size: 2.2rem; font-weight: 700; text-align: center;">Related Articles</h2><div class="related-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2.5rem;">';
+            relatedHtml = '<div class="related-section" style="margin-top: 5rem; padding-top: 4rem; border-top: 1px solid rgba(15,23,42,0.1);"><h2 style="color: var(--dtv-text-primary); margin-bottom: 3rem; font-size: 2.2rem; font-weight: 700; text-align: center;">Related Articles</h2><div class="related-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2.5rem;">';
             relatedBlogs.forEach(b => {
                 relatedHtml += `
                 <a href="/blog/${b.slug}" class="rel-blog-card">
@@ -378,51 +378,51 @@ blogs.forEach(blog => {
             .blog-layout { flex-direction: column; }
             .blog-sidebar { width: 100%; position: static; }
         }
-        .social-share { display: flex; gap: 1rem; margin-top: 3rem; padding: 1.5rem 0; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; align-items: center; }
-        .social-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 8px; background: rgba(255,255,255,0.05); color: #fff; cursor: pointer; transition: 0.2s; border: 1px solid rgba(255,255,255,0.1); font-family: inherit; text-decoration: none; font-size: 0.95rem; font-weight: 500; }
-        .social-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+        .social-share { display: flex; gap: 1rem; margin-top: 3rem; padding: 1.5rem 0; border-top: 1px solid rgba(15,23,42,0.1); border-bottom: 1px solid rgba(15,23,42,0.1); flex-wrap: wrap; align-items: center; }
+        .social-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 8px; background: rgba(15,23,42,0.05); color: var(--dtv-text-primary); cursor: pointer; transition: 0.2s; border: 1px solid rgba(15,23,42,0.1); font-family: inherit; text-decoration: none; font-size: 0.95rem; font-weight: 500; }
+        .social-btn:hover { background: rgba(15,23,42,0.1); border-color: rgba(15,23,42,0.2); transform: translateY(-2px); }
         
         .nav-articles { display: flex; justify-content: space-between; gap: 1.5rem; margin: 3rem 0; flex-wrap: wrap; }
 
 
         .nav-art-label { color: #a78bfa; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8rem; font-weight: 700; }
-        .nav-art-title { color: #fff; font-size: 1.15rem; font-weight: 600; line-height: 1.4; }
+        .nav-art-title { color: var(--dtv-text-primary); font-size: 1.15rem; font-weight: 600; line-height: 1.4; }
         
         .newsletter-cta { background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(59,130,246,0.08)); border: 1px solid rgba(167,139,250,0.3); padding: 2rem; border-radius: 16px; text-align: center; margin-top: 0; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
-        .nl-input { width: 100%; padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.4); color: #fff; margin-bottom: 1.2rem; font-family: inherit; font-size: 1rem; outline: none; transition: 0.3s; }
+        .nl-input { width: 100%; padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid rgba(15,23,42,0.2); background: rgba(15,23,42,0.04); color: var(--dtv-text-primary); margin-bottom: 1.2rem; font-family: inherit; font-size: 1rem; outline: none; transition: 0.3s; }
         .nl-input:focus { border-color: #a78bfa; box-shadow: 0 0 0 3px rgba(167,139,250,0.2); }
-        .nl-btn { width: 100%; padding: 1rem; background: linear-gradient(135deg, #a78bfa, #3b82f6); color: #fff; font-weight: 700; font-size: 1.05rem; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .nl-btn { width: 100%; padding: 1rem; background: linear-gradient(135deg, #a78bfa, #3b82f6); color: var(--dtv-text-primary); font-weight: 700; font-size: 1.05rem; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
         .nl-btn:hover { box-shadow: 0 8px 20px rgba(167,139,250,0.4); transform: translateY(-2px); }
         
-        .blog-content { font-size: 1.15rem; line-height: 1.8; color: #cbd5e1; }
-        .blog-content h2 { font-size: 2.2rem; color: #fff; margin: 3rem 0 1.5rem; font-weight: 700; }
-        .blog-content h3 { font-size: 1.6rem; color: #fff; margin: 2.5rem 0 1.2rem; font-weight: 600; }
+        .blog-content { font-size: 1.15rem; line-height: 1.8; color: var(--dtv-text-secondary); }
+        .blog-content h2 { font-size: 2.2rem; color: var(--dtv-text-primary); margin: 3rem 0 1.5rem; font-weight: 700; }
+        .blog-content h3 { font-size: 1.6rem; color: var(--dtv-text-primary); margin: 2.5rem 0 1.2rem; font-weight: 600; }
         .blog-content p { margin-bottom: 1.5rem; }
         .blog-content ul, .blog-content ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
         .blog-content li { margin-bottom: 0.8rem; }
         .blog-content a { color: #a78bfa; text-decoration: none; }
         .blog-content a:hover { text-decoration: underline; }
-        .blog-content strong { color: #fff; }
+        .blog-content strong { color: var(--dtv-text-primary); }
         
-        .author-box { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); width: 100%; }
+        .author-box { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; padding-top: 2rem; border-top: 1px solid rgba(15,23,42,0.1); width: 100%; }
 
-        .rel-blog-card { display: flex; flex-direction: column; text-decoration: none; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); height: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        .rel-blog-card { display: flex; flex-direction: column; text-decoration: none; background: rgba(15,23,42,0.03); border: 1px solid rgba(15,23,42,0.08); border-radius: 16px; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); height: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
         .rel-blog-card:hover { transform: translateY(-10px); border-color: rgba(167,139,250,0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(167,139,250,0.15); }
         .rel-img-wrapper { overflow: hidden; height: 220px; }
         .rel-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; display: block; }
         .rel-blog-card:hover .rel-img-wrapper img { transform: scale(1.08); }
         .rel-blog-content { padding: 1.8rem; display: flex; flex-direction: column; flex: 1; }
         .rel-meta { color: #a78bfa; font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; }
-        .rel-title { color: #fff; font-size: 1.3rem; margin-bottom: 0.8rem; line-height: 1.4; font-weight: 600; transition: color 0.3s; }
+        .rel-title { color: var(--dtv-text-primary); font-size: 1.3rem; margin-bottom: 0.8rem; line-height: 1.4; font-weight: 600; transition: color 0.3s; }
         .rel-blog-card:hover .rel-title { color: #a78bfa; }
-        .rel-desc { color: #94a3b8; font-size: 0.95rem; margin: 0; line-height: 1.6; }
+        .rel-desc { color: var(--dtv-text-tertiary); font-size: 0.95rem; margin: 0; line-height: 1.6; }
         
-        .faq-item { background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1.8rem; transition: transform 0.3s, box-shadow 0.3s; }
+        .faq-item { background: linear-gradient(145deg, rgba(15,23,42,0.03), rgba(15,23,42,0.01)); border: 1px solid rgba(15,23,42,0.08); border-radius: 16px; padding: 1.8rem; transition: transform 0.3s, box-shadow 0.3s; }
         .faq-item:hover { transform: translateY(-3px); border-color: rgba(167,139,250,0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         
-        .nav-art-btn { flex: 1; min-width: 250px; padding: 2rem; background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; text-decoration: none; transition: all 0.4s ease; position: relative; overflow: hidden; }
+        .nav-art-btn { flex: 1; min-width: 250px; padding: 2rem; background: linear-gradient(135deg, rgba(15,23,42,0.02), rgba(15,23,42,0.01)); border: 1px solid rgba(15,23,42,0.1); border-radius: 16px; text-decoration: none; transition: all 0.4s ease; position: relative; overflow: hidden; }
         .nav-art-btn::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(167,139,250,0.1), rgba(59,130,246,0.1)); opacity: 0; transition: opacity 0.4s ease; }
-        .nav-art-btn:hover { border-color: rgba(167,139,250,0.4); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+        .nav-art-btn:hover { border-color: rgba(167,139,250,0.4); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(15,23,42,0.04); }
         .nav-art-btn:hover::before { opacity: 1; }
         .nav-art-label, .nav-art-title { position: relative; z-index: 1; }
 
@@ -438,26 +438,26 @@ blogs.forEach(blog => {
                 <span>&larr;</span> Back to all blogs
             </a>
             
-            <div class="breadcrumb" style="margin-bottom: 1.5rem; font-size: 0.95rem; color: #a1a1aa;">
+            <div class="breadcrumb" style="margin-bottom: 1.5rem; font-size: 0.95rem; color: var(--dtv-text-secondary);">
                 <a href="/" style="color: #a78bfa; text-decoration: none;">Home</a> &rsaquo; 
                 <a href="/blog" style="color: #a78bfa; text-decoration: none;">Blog</a> &rsaquo; 
-                <span style="color: #fff;">${blog.title}</span>
+                <span style="color: var(--dtv-text-primary);">${blog.title}</span>
             </div>
             
-            <h1 style="color: #fff; font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.2; font-weight: 800; letter-spacing: -1px; text-transform: capitalize;">${blog.h1 || blog.title}</h1>
+            <h1 style="color: var(--dtv-text-primary); font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.2; font-weight: 800; letter-spacing: -1px; text-transform: capitalize;">${blog.h1 || blog.title}</h1>
             
             <div class="author-box">
-                <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #a78bfa, #3b82f6); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 800; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #a78bfa, #3b82f6); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 800; color: var(--dtv-text-primary); box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
                     ${blog.author.split(' ').map(n=>n[0]).join('')}
                 </div>
                 <div style="text-align: left;">
-                    <div style="font-weight: 700; font-size: 1.1rem; color: #fff; margin-bottom: 0.2rem;">${blog.author}</div>
-                    <div style="color: #94a3b8; font-size: 0.9rem;">Published: ${blog.publishedDate} &bull; ${blog.readingTime}</div>
+                    <div style="font-weight: 700; font-size: 1.1rem; color: var(--dtv-text-primary); margin-bottom: 0.2rem;">${blog.author}</div>
+                    <div style="color: var(--dtv-text-tertiary); font-size: 0.9rem;">Published: ${blog.publishedDate} &bull; ${blog.readingTime}</div>
                 </div>
             </div>
         </div>
         
-        <div style="max-width: 1000px; margin: 0 auto 4rem; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05);">
+        <div style="max-width: 1000px; margin: 0 auto 4rem; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid rgba(15,23,42,0.05);">
             <img class="blog-image" src="${blog.featuredImage}" alt="${blog.title}" fetchpriority="high" style="width: 100%; max-height: 550px; object-fit: cover; display: block;">
         </div>
         
@@ -469,7 +469,7 @@ blogs.forEach(blog => {
                 </div>
                 
                 <div class="social-share">
-                    <span style="color: #fff; font-weight: 600; margin-right: 1rem;">Share this article:</span>
+                    <span style="color: var(--dtv-text-primary); font-weight: 600; margin-right: 1rem;">Share this article:</span>
                     <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(blog.title)}&url=${encodeURIComponent('https://digitaltwinvrs.com/blog/'+blog.slug)}" target="_blank" class="social-btn">
                         X (Twitter)
                     </a>
@@ -500,13 +500,13 @@ blogs.forEach(blog => {
                 
                 <div class="newsletter-cta">
                     <div style="font-size: 2.5rem; margin-bottom: 1rem;">🚀</div>
-                    <h3 style="color: #fff; margin-bottom: 0.8rem; font-size: 1.5rem; font-weight: 700;">Get Career Insights</h3>
-                    <p style="color: #a1a1aa; font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.5;">Join 10,000+ students receiving weekly AI career guidance, study tips, and exclusive DTV updates.</p>
+                    <h3 style="color: var(--dtv-text-primary); margin-bottom: 0.8rem; font-size: 1.5rem; font-weight: 700;">Get Career Insights</h3>
+                    <p style="color: var(--dtv-text-secondary); font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.5;">Join 10,000+ students receiving weekly AI career guidance, study tips, and exclusive DTV updates.</p>
                     <form onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
                         <input type="email" class="nl-input" placeholder="Your email address" required>
                         <button type="submit" class="nl-btn">Subscribe Now</button>
                     </form>
-                    <div style="font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-top: 1rem;">We respect your privacy. No spam.</div>
+                    <div style="font-size: 0.8rem; color: rgba(15,23,42,0.4); margin-top: 1rem;">We respect your privacy. No spam.</div>
                 </div>
             </div>
         </div>

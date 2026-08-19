@@ -20,7 +20,7 @@
     
     <meta name="keywords" content="AI career advisor, edtech India, career explorer, student learning platform, parent portal, digital twin verse, DTV Family, achievement analyzer">
     
-    <meta name="theme-color" content="#FAFAFA">
+    <meta name="theme-color" content="#0b0f19">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="author" content="DTV Family">
     <meta name="publisher" content="DTV Family">
@@ -67,7 +67,7 @@
         /* ═══ PREMIUM UI OVERRIDES ════════════════════ */
         :root {
             --bdr-hover: rgba(255, 255, 255, 0.15);
-            --card-glow: 0 16px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(15, 23, 42, 0.05);
+            --card-glow: 0 16px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
 
         .auth-card,
@@ -86,12 +86,12 @@
             transform: translateZ(0);
             /* 3D Glass Borders & Bevels */
             border: 1px solid var(--bdr) !important;
-            border-top: 1px solid rgba(15, 23, 42, 0.1) !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
             border-bottom: 1px solid rgba(0, 0, 0, 0.2) !important;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease !important;
             /* 3D Thickness & Shadows */
             box-shadow:
-                inset 0 1px 1px rgba(15, 23, 42, 0.1),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1),
                 inset 0 -4px 10px rgba(0, 0, 0, 0.1),
                 0 12px 30px var(--card),
                 0 4px 8px rgba(0, 0, 0, 0.1) !important;
@@ -150,7 +150,7 @@
             border-top-color: var(--glow2) !important;
             /* Enhance 3D shadow on hover */
             box-shadow:
-                inset 0 1px 2px rgba(15, 23, 42, 0.1),
+                inset 0 1px 2px rgba(255, 255, 255, 0.1),
                 inset 0 -1px 0 rgba(0, 0, 0, 0.2),
                 0 15px 30px var(--card),
                 0 10px 20px var(--glow1) !important;
@@ -170,7 +170,7 @@
         }
 
         .btn-out:hover {
-            background: rgba(15, 23, 42, 0.05) !important;
+            background: rgba(255, 255, 255, 0.08) !important;
         }
 
         /* 3D Tilt Wrapper */
@@ -325,7 +325,7 @@
         .splash-loader {
             width: 240px;
             height: 3px;
-            background: rgba(15, 23, 42, 0.05);
+            background: rgba(255, 255, 255, 0.08);
             border-radius: 3px;
             overflow: hidden;
             position: relative;
@@ -373,8 +373,7 @@
         }
     </style>
 <link rel="preload" as="image" href="/favicon.png">
-<title>Digital Twin Verse | blog.html</title><meta name="description" content="Digital Twin Verse blog.html page."><link rel="canonical" href="https://digitaltwinvrs.com/blog.html"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Digital Twin Verse | blog.html","url":"https://digitaltwinvrs.com/blog.html"}</script>    
-<link rel="stylesheet" href="/css/premium-theme.css">
+<title>Digital Twin Verse | blog.html</title><meta name="description" content="Digital Twin Verse blog.html page."><link rel="canonical" href="https://digitaltwinvrs.com/blog.html"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Digital Twin Verse | blog.html","url":"https://digitaltwinvrs.com/blog.html"}</script><link rel="stylesheet" href="/css/premium-theme.css">
 </head><body>
     <title>Career Guidance Blog | Digital Twin Verse</title>
     <meta name="description" content="Read our latest articles on AI career guidance, educational tips, and more.">
@@ -383,12 +382,12 @@
 <style>
 /* Same styles for grid */
 .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-.blog-card { background: rgba(15, 23, 42, 0.05); border-radius: 12px; overflow: hidden; border: 1px solid rgba(15, 23, 42, 0.1); transition: transform 0.3s ease; display: block; text-decoration: none; color: inherit; }
+.blog-card { background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s ease; display: block; text-decoration: none; color: inherit; }
 .blog-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.3); }
 .blog-card img { width: 100%; height: 200px; object-fit: cover; }
 .blog-card-content { padding: 1.5rem; }
-.blog-card-title { font-size: 1.25rem; margin-bottom: 0.5rem; color:#09090b; }
-.blog-card-meta { font-size: 0.85rem; color:#52525b; margin-bottom: 1rem; }
+.blog-card-title { font-size: 1.25rem; margin-bottom: 0.5rem; color: #fff; }
+.blog-card-meta { font-size: 0.85rem; color: #a1a1aa; margin-bottom: 1rem; }
 </style>
 
     <script defer="defer" src="/dist/app.d511f803.js?v=31e75ec51ec48cb2"></script>
@@ -483,16 +482,16 @@
         <button type="button" onclick="requireAuth(function(){openPricingPage(); togMenu();}); return false;" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: #e88c2a; width: 100%; text-align: left; font-size: 1.1rem; font-weight: 700;">💎 Go Premium</button>
         <button type="button" onclick="openAnalyzer(); togMenu();" class="btn-reset" style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: var(--wh, #fff); width: 100%; text-align: left; font-size: 1.1rem; font-weight: 600;">🧠
             Achievement Analyzer</button>
-        <div style="padding: 1rem 1.5rem; border-top: 1px solid rgba(15, 23, 42, 0.1); margin-top: 0.5rem;">
+        <div style="padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 0.5rem;">
             <p style="color: var(--mu); font-size: 0.9rem; margin-bottom: 0.5rem;">Select Theme</p>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                <button onclick="setTheme('midnight'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: var(--wh);">Midnight</button>
+                <button onclick="setTheme('midnight'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: var(--wh);">Midnight</button>
                 <button onclick="setTheme('light'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: #fff; border-radius: 6px; font-size: 0.9rem; color: #000;">Light</button>
-                <button onclick="setTheme('navy'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #60a5fa;">Navy</button>
-                <button onclick="setTheme('slate'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: var(--mu);">Slate</button>
-                <button onclick="setTheme('forest'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #4ade80;">Forest</button>
-                <button onclick="setTheme('crimson'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #f87171;">Crimson</button>
-                <button onclick="setTheme('magenta'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.1); border-radius: 6px; font-size: 0.9rem; color: #f472b6;">Magenta</button>
+                <button onclick="setTheme('navy'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #60a5fa;">Navy</button>
+                <button onclick="setTheme('slate'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: var(--mu);">Slate</button>
+                <button onclick="setTheme('forest'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #4ade80;">Forest</button>
+                <button onclick="setTheme('crimson'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #f87171;">Crimson</button>
+                <button onclick="setTheme('magenta'); togMenu()" class="btn-reset" style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.9rem; color: #f472b6;">Magenta</button>
             </div>
         </div>
 
@@ -504,29 +503,29 @@
         <h1 style="text-align: center; margin-bottom: 3rem;">Career Guidance Blog</h1>
         
 <style>
-    .cat-btn { background: rgba(15, 23, 42, 0.05); color:#09090b; border: 1px solid rgba(15, 23, 42, 0.1); padding: 0.6rem 1.2rem; border-radius: 24px; cursor: pointer; transition: all 0.3s ease; font-family: inherit; font-size: 0.95rem; }
-    .cat-btn:hover { background: rgba(15, 23, 42, 0.1); border-color: rgba(255,255,255,0.3); transform: translateY(-2px); }
-    .cat-btn.active { background: linear-gradient(135deg, #a78bfa, #3b82f6); color:#09090b; border-color: transparent; font-weight: 600; box-shadow: 0 4px 12px rgba(167,139,250,0.3); }
+    .cat-btn { background: rgba(15,23,42,0.05); color: var(--dtv-text-primary); border: 1px solid rgba(15,23,42,0.1); padding: 0.6rem 1.2rem; border-radius: 24px; cursor: pointer; transition: all 0.3s ease; font-family: inherit; font-size: 0.95rem; }
+    .cat-btn:hover { background: rgba(15,23,42,0.1); border-color: rgba(15,23,42,0.3); transform: translateY(-2px); }
+    .cat-btn.active { background: linear-gradient(135deg, #a78bfa, #3b82f6); color: var(--dtv-text-primary); border-color: transparent; font-weight: 600; box-shadow: 0 4px 12px rgba(167,139,250,0.3); }
     
-    .blog-search-input { width: 100%; padding: 1.2rem 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); background: rgba(15, 23, 42, 0.04); color:#09090b; font-size: 1.1rem; outline: none; transition: border-color 0.3s; font-family: inherit; }
+    .blog-search-input { width: 100%; padding: 1.2rem 1.5rem; border-radius: 12px; border: 1px solid rgba(15,23,42,0.15); background: rgba(15,23,42,0.04); color: var(--dtv-text-primary); font-size: 1.1rem; outline: none; transition: border-color 0.3s; font-family: inherit; }
     .blog-search-input:focus { border-color: #a78bfa; box-shadow: 0 0 0 3px rgba(167,139,250,0.2); }
     
-    .featured-blog-card { display: flex; flex-direction: row; gap: 2.5rem; align-items: center; background: rgba(15, 23, 42, 0.05); padding: 2rem; border-radius: 16px; border: 1px solid rgba(15, 23, 42, 0.1); text-decoration: none; transition: transform 0.3s, border-color 0.3s; }
-    .featured-blog-card:hover { transform: translateY(-5px); border-color: rgba(15, 23, 42, 0.1); }
+    .featured-blog-card { display: flex; flex-direction: row; gap: 2.5rem; align-items: center; background: rgba(15,23,42,0.03); padding: 2rem; border-radius: 16px; border: 1px solid rgba(15,23,42,0.1); text-decoration: none; transition: transform 0.3s, border-color 0.3s; }
+    .featured-blog-card:hover { transform: translateY(-5px); border-color: rgba(15,23,42,0.2); }
     .featured-img-container { width: 50%; border-radius: 12px; overflow: hidden; }
     .featured-img-container img { width: 100%; height: 100%; object-fit: cover; max-height: 400px; display: block; transition: transform 0.5s; }
     .featured-blog-card:hover .featured-img-container img { transform: scale(1.05); }
     
     .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 2rem; }
-    .blog-card { display: flex; flex-direction: column; background: rgba(15, 23, 42, 0.05); border-radius: 16px; overflow: hidden; border: 1px solid rgba(15, 23, 42, 0.1); transition: transform 0.3s ease, border-color 0.3s; text-decoration: none; color: inherit; height: 100%; }
-    .blog-card:hover { transform: translateY(-8px); border-color: rgba(15, 23, 42, 0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .blog-card { display: flex; flex-direction: column; background: rgba(15,23,42,0.03); border-radius: 16px; overflow: hidden; border: 1px solid rgba(15,23,42,0.1); transition: transform 0.3s ease, border-color 0.3s; text-decoration: none; color: inherit; height: 100%; }
+    .blog-card:hover { transform: translateY(-8px); border-color: rgba(15,23,42,0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     .blog-card img { width: 100%; height: 220px; object-fit: cover; transition: transform 0.5s; }
     .blog-card:hover img { transform: scale(1.05); }
     .blog-card-content { padding: 1.8rem; display: flex; flex-direction: column; flex: 1; }
     
     .flagship-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 1.8rem; }
     .flagship-card { border-radius: 20px; padding: 2.2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: transform 0.3s, border-color 0.3s; }
-    .flagship-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.4) !important; }
+    .flagship-card:hover { transform: translateY(-5px); border-color: rgba(15,23,42,0.4) !important; }
     
     @media (max-width: 900px) {
         .featured-blog-card { flex-direction: column; padding: 1.5rem; gap: 1.5rem; }
@@ -548,7 +547,7 @@
 </div>
 
     <div style="margin-bottom: 3.5rem;">
-        <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem; color:#09090b; font-weight: 700; display: flex; align-items: center; gap: 0.6rem;">
+        <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem; color: var(--dtv-text-primary); font-weight: 700; display: flex; align-items: center; gap: 0.6rem;">
             <span>🔥</span> Flagship Career & AI Resource Hubs
         </h3>
         <div class="flagship-grid">
@@ -556,11 +555,11 @@
             <div class="flagship-card" style="background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(59, 130, 246, 0.12)); border: 1px solid rgba(167, 139, 250, 0.35);">
                 <div>
                     <span style="background: rgba(167,139,250,0.22); color: #c084fc; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🚀 FLAGSHIP CAREER ROADMAP</span>
-                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color:#09090b; font-weight: 800; line-height: 1.3;">Ultimate AI Career Roadmap (2026–2035)</h2>
-                    <p style="color:#3f3f46; margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Master Artificial Intelligence, ML, Deep Learning & GenAI. Explore 12 AI career paths, step-by-step timeline, salary dashboard & top hiring companies.</p>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: var(--dtv-text-primary); font-weight: 800; line-height: 1.3;">Ultimate AI Career Roadmap (2026–2035)</h2>
+                    <p style="color: var(--dtv-text-secondary); margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Master Artificial Intelligence, ML, Deep Learning & GenAI. Explore 12 AI career paths, step-by-step timeline, salary dashboard & top hiring companies.</p>
                 </div>
                 <div>
-                    <a href="/ai-career-roadmap" style="background: linear-gradient(135deg, #a78bfa, #3b82f6); color:#09090b; font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
+                    <a href="/ai-career-roadmap" style="background: linear-gradient(135deg, #a78bfa, #3b82f6); color: var(--dtv-text-primary); font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
                         Explore AI Master Roadmap &rarr;
                     </a>
                 </div>
@@ -570,11 +569,11 @@
             <div class="flagship-card" style="background: linear-gradient(135deg, rgba(0, 240, 255, 0.12), rgba(167, 139, 250, 0.12)); border: 1px solid rgba(0, 240, 255, 0.35);">
                 <div>
                     <span style="background: rgba(0,240,255,0.2); color: #00f0ff; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">⚡ 50+ FREE AI TOOLS DIRECTORY</span>
-                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color:#09090b; font-weight: 800; line-height: 1.3;">50+ Best Free AI Tools Every Student Should Use in 2026</h2>
-                    <p style="color:#3f3f46; margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Compare 53 top free AI tools for research, coding, presentation slide decks, math solving, vector design & video editing with live filters & bookmarks.</p>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: var(--dtv-text-primary); font-weight: 800; line-height: 1.3;">50+ Best Free AI Tools Every Student Should Use in 2026</h2>
+                    <p style="color: var(--dtv-text-secondary); margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Compare 53 top free AI tools for research, coding, presentation slide decks, math solving, vector design & video editing with live filters & bookmarks.</p>
                 </div>
                 <div>
-                    <a href="/ai-tools-for-students" style="background: linear-gradient(135deg, #00f0ff, #3b82f6); color: #FAFAFA; font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
+                    <a href="/ai-tools-for-students" style="background: linear-gradient(135deg, #00f0ff, #3b82f6); color: #0b0f19; font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
                         Explore 50+ AI Tools Directory &rarr;
                     </a>
                 </div>
@@ -584,11 +583,11 @@
             <div class="flagship-card" style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(167, 139, 250, 0.12)); border: 1px solid rgba(236, 72, 153, 0.35);">
                 <div>
                     <span style="background: rgba(236,72,153,0.2); color: #f472b6; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🧠 FLAGSHIP INTERACTIVE</span>
-                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color:#09090b; font-weight: 800; line-height: 1.3;">AI Reality Lab</h2>
-                    <p style="color:#3f3f46; margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Understand what AI can actually do for you — and where human judgment still fundamentally matters. Test your AI thinking profile.</p>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: var(--dtv-text-primary); font-weight: 800; line-height: 1.3;">AI Reality Lab</h2>
+                    <p style="color: var(--dtv-text-secondary); margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Understand what AI can actually do for you — and where human judgment still fundamentally matters. Test your AI thinking profile.</p>
                 </div>
                 <div>
-                    <a href="/ai-reality-lab" style="background: linear-gradient(135deg, #ec4899, #8b5cf6); color:#09090b; font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
+                    <a href="/ai-reality-lab" style="background: linear-gradient(135deg, #ec4899, #8b5cf6); color: var(--dtv-text-primary); font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
                         Enter AI Reality Lab &rarr;
                     </a>
                 </div>
@@ -598,11 +597,11 @@
             <div class="flagship-card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(59, 130, 246, 0.12)); border: 1px solid rgba(16, 185, 129, 0.35);">
                 <div>
                     <span style="background: rgba(16,185,129,0.2); color: #34d399; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🗺️ FLAGSHIP EXPLORER</span>
-                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color:#09090b; font-weight: 800; line-height: 1.3;">Student Skill Intelligence Hub</h2>
-                    <p style="color:#3f3f46; margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Explore the skills worth building and discover what each skill can unlock. Generate your Personal Skill Map for the AI era.</p>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: var(--dtv-text-primary); font-weight: 800; line-height: 1.3;">Student Skill Intelligence Hub</h2>
+                    <p style="color: var(--dtv-text-secondary); margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Explore the skills worth building and discover what each skill can unlock. Generate your Personal Skill Map for the AI era.</p>
                 </div>
                 <div>
-                    <a href="/skill-intelligence-hub" style="background: linear-gradient(135deg, #10b981, #3b82f6); color:#09090b; font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
+                    <a href="/skill-intelligence-hub" style="background: linear-gradient(135deg, #10b981, #3b82f6); color: var(--dtv-text-primary); font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
                         Explore Skill Intelligence &rarr;
                     </a>
                 </div>
@@ -612,11 +611,11 @@
             <div class="flagship-card" style="background: linear-gradient(135deg, rgba(248, 113, 113, 0.12), rgba(251, 191, 36, 0.12)); border: 1px solid rgba(248, 113, 113, 0.35);">
                 <div>
                     <span style="background: rgba(248,113,113,0.2); color: #f87171; padding: 0.38rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🪐 3D KNOWLEDGE UNIVERSE</span>
-                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color:#09090b; font-weight: 800; line-height: 1.3;">DTV Futureverse</h2>
-                    <p style="color:#3f3f46; margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Step beyond the screen. Explore the future in our immersive 3D interactive knowledge universe. Discover AI, Human Skills, and Emerging Tech.</p>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; margin: 1rem 0 0.6rem; color: var(--dtv-text-primary); font-weight: 800; line-height: 1.3;">DTV Futureverse</h2>
+                    <p style="color: var(--dtv-text-secondary); margin: 0 0 1.5rem; font-size: 1rem; line-height: 1.6;">Step beyond the screen. Explore the future in our immersive 3D interactive knowledge universe. Discover AI, Human Skills, and Emerging Tech.</p>
                 </div>
                 <div>
-                    <a href="/futureverse" style="background: linear-gradient(135deg, #ef4444, #f59e0b); color:#09090b; font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
+                    <a href="/futureverse" style="background: linear-gradient(135deg, #ef4444, #f59e0b); color: var(--dtv-text-primary); font-weight: 800; padding: 0.85rem 1.6rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem;">
                         Enter the Universe &rarr;
                     </a>
                 </div>
@@ -625,219 +624,219 @@
     </div>
 
     <div id="featured-section" class="featured-blog" style="margin-bottom: 5rem;">
-        <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem; color:#09090b; font-weight: 600;">Featured Article</h3>
+        <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem; color: var(--dtv-text-primary); font-weight: 600;">Featured Article</h3>
         <a href="/blog/ai-resilient-careers-2026-jobs-artificial-intelligence-cannot-replace" class="featured-blog-card">
             <div class="featured-img-container">
                 <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=2070&auto=format&fit=crop" alt="AI-Resilient Careers: 20 Jobs Artificial Intelligence Cannot Replace in 2026" loading="lazy" decoding="async">
             </div>
             <div class="featured-blog-content" style="width: 50%;">
                 <div style="background: rgba(167,139,250,0.15); color: #a78bfa; padding: 0.4rem 1.2rem; border-radius: 20px; font-size: 0.85rem; font-weight: 700; display: inline-block; margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 1px;">Featured</div>
-                <div style="margin-bottom: 1rem; font-size: 0.95rem; color:#52525b;">2026-08-18 &bull; 18 min read</div>
-                <h2 style="font-size: 2.2rem; margin-bottom: 1.2rem; line-height: 1.3; color:#09090b; font-weight: 700;">AI-Resilient Careers: 20 Jobs Artificial Intelligence Cannot Replace in 2026</h2>
-                <p style="color:#52525b; font-size: 1.1rem; line-height: 1.6; margin-bottom: 0;">Discover the 20 future-proof careers safe from AI automation by 2030. Learn why empathy, complex dexterity, and strategic thinking are the ultimate AI-resilient skills.</p>
+                <div style="margin-bottom: 1rem; font-size: 0.95rem; color: var(--dtv-text-secondary);">2026-08-18 &bull; 18 min read</div>
+                <h2 style="font-size: 2.2rem; margin-bottom: 1.2rem; line-height: 1.3; color: var(--dtv-text-primary); font-weight: 700;">AI-Resilient Careers: 20 Jobs Artificial Intelligence Cannot Replace in 2026</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 1.1rem; line-height: 1.6; margin-bottom: 0;">Discover the 20 future-proof careers safe from AI automation by 2030. Learn why empathy, complex dexterity, and strategic thinking are the ultimate AI-resilient skills.</p>
                 <div style="color: #a78bfa; margin-top: 1.8rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; font-size: 1.05rem;">Read Full Article <span>&rarr;</span></div>
             </div>
         </a>
     </div>
     
-    <h3 id="latest-heading" style="margin-bottom: 2rem; font-size: 1.8rem; color:#09090b; border-bottom: 1px solid rgba(15, 23, 42, 0.1); padding-bottom: 1rem;">Latest Articles</h3>
+    <h3 id="latest-heading" style="margin-bottom: 2rem; font-size: 1.8rem; color: var(--dtv-text-primary); border-bottom: 1px solid rgba(15,23,42,0.1); padding-bottom: 1rem;">Latest Articles</h3>
     <div class="related-grid" id="blog-grid-container">
         <a href="/blog/future-ready-skills-for-students-ai-era-2026" class="blog-card blog-item" data-category="Skill Development" data-title="future-ready skills: building a future-proof skill stack for students in the ai era (2026)">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1488229297570-58520851e868?q=80&w=2069&auto=format&fit=crop" alt="Future-Ready Skills: Building a Future-Proof Skill Stack for Students in the AI Era (2026)" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-08-14 &bull; 16 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">Future-Ready Skills: Building a Future-Proof Skill Stack for Students in the AI Era (2026)</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Master the 2026 economy. Learn how to build a future-proof skill stack combining domain expertise, AI fluency, and irreplaceable soft skills to secure your career.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-08-14 &bull; 16 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">Future-Ready Skills: Building a Future-Proof Skill Stack for Students in the AI Era (2026)</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Master the 2026 economy. Learn how to build a future-proof skill stack combining domain expertise, AI fluency, and irreplaceable soft skills to secure your career.</p>
             </div>
         </a>
         <a href="/blog/emerging-technology-in-education-digital-twins-ai-2026" class="blog-card blog-item" data-category="AI Guidance" data-title="emerging technology in education: how digital twins, ai, and vr are transforming learning in 2026">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&fm=webp&q=80" alt="Emerging Technology in Education: How Digital Twins, AI, and VR Are Transforming Learning in 2026" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-08-13 &bull; 25 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">Emerging Technology in Education: How Digital Twins, AI, and VR Are Transforming Learning in 2026</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">A comprehensive guide on how emerging technologies like Artificial Intelligence, Digital Twins, and Immersive VR are fundamentally rewiring student learning, personalized education, and career preparation.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-08-13 &bull; 25 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">Emerging Technology in Education: How Digital Twins, AI, and VR Are Transforming Learning in 2026</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">A comprehensive guide on how emerging technologies like Artificial Intelligence, Digital Twins, and Immersive VR are fundamentally rewiring student learning, personalized education, and career preparation.</p>
             </div>
         </a>
         <a href="/blog/personalized-learning-through-ai-for-students" class="blog-card blog-item" data-category="Student Success" data-title="the ultimate guide to personalized learning through ai for students">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&fm=webp&q=80" alt="The Ultimate Guide to Personalized Learning Through AI for Students" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-08-12 &bull; 15 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">The Ultimate Guide to Personalized Learning Through AI for Students</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover how AI-powered personalized learning helps students build custom curriculums, overcome knowledge gaps, and accelerate academic and career success in 2026.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-08-12 &bull; 15 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">The Ultimate Guide to Personalized Learning Through AI for Students</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover how AI-powered personalized learning helps students build custom curriculums, overcome knowledge gaps, and accelerate academic and career success in 2026.</p>
             </div>
         </a>
         <a href="/blog/how-to-use-ai-for-college-placements-and-interviews-2026" class="blog-card blog-item" data-category="Career Advice" data-title="how to use ai to crack college placements and job interviews in 2026">
             <div style="overflow: hidden;"><img src="/img/placements_ai_cover.png" alt="How to Use AI to Crack College Placements and Job Interviews in 2026" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-08-11 &bull; 12 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">How to Use AI to Crack College Placements and Job Interviews in 2026</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Learn how to use AI for college placements in 2026. Discover the best AI tools and ChatGPT prompts to pass ATS, write cover letters, and crack job interviews.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-08-11 &bull; 12 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">How to Use AI to Crack College Placements and Job Interviews in 2026</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Learn how to use AI for college placements in 2026. Discover the best AI tools and ChatGPT prompts to pass ATS, write cover letters, and crack job interviews.</p>
             </div>
         </a>
         <a href="/blog/how-non-it-students-can-build-career-in-ai-2026" class="blog-card blog-item" data-category="Career Planning" data-title="how non-it students can build a career in ai (2026 guide for commerce, arts & bba)">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=2069&auto=format&fit=crop" alt="How Non-IT Students Can Build a Career in AI (2026 Guide for Commerce, Arts & BBA)" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-08-10 &bull; 15 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">How Non-IT Students Can Build a Career in AI (2026 Guide for Commerce, Arts & BBA)</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">A complete 2026 guide for Commerce, Arts, and BBA students to build a high-paying career in AI without coding. Explore roles like AI Product Manager, Prompt Engineer, and AI Ethics Analyst.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-08-10 &bull; 15 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">How Non-IT Students Can Build a Career in AI (2026 Guide for Commerce, Arts & BBA)</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">A complete 2026 guide for Commerce, Arts, and BBA students to build a high-paying career in AI without coding. Explore roles like AI Product Manager, Prompt Engineer, and AI Ethics Analyst.</p>
             </div>
         </a>
         <a href="/blog/50-best-free-ai-tools-for-students-2026" class="blog-card blog-item" data-category="AI Guidance" data-title="50+ best free ai tools every student should use in 2026">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2070&auto=format&fit=crop" alt="50+ Best Free AI Tools Every Student Should Use in 2026" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-08-02 &bull; 28 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">50+ Best Free AI Tools Every Student Should Use in 2026</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover the 50+ best free AI tools for students in 2026. Complete guide covering ChatGPT, Claude, Gemini, NotebookLM, Perplexity, Cursor, Gamma, ElevenLabs, and DTV.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-08-02 &bull; 28 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">50+ Best Free AI Tools Every Student Should Use in 2026</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover the 50+ best free AI tools for students in 2026. Complete guide covering ChatGPT, Claude, Gemini, NotebookLM, Perplexity, Cursor, Gamma, ElevenLabs, and DTV.</p>
             </div>
         </a>
         <a href="/blog/top-ai-skills-students-should-learn-2026" class="blog-card blog-item" data-category="Career Guidance" data-title="top ai skills students should learn in 2026 (complete guide)">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2070&auto=format&fit=crop" alt="Top AI Skills Students Should Learn in 2026 (Complete Guide)" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-08-02 &bull; 18 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">Top AI Skills Students Should Learn in 2026 (Complete Guide)</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover the top AI skills for students in 2026. Complete roadmap covering technical skills, soft skills, resources, projects, certifications, and DTV.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-08-02 &bull; 18 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">Top AI Skills Students Should Learn in 2026 (Complete Guide)</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover the top AI skills for students in 2026. Complete roadmap covering technical skills, soft skills, resources, projects, certifications, and DTV.</p>
             </div>
         </a>
         <a href="/blog/data-scientist-roadmap-india-2026" class="blog-card blog-item" data-category="Career Guidance" data-title="how to become a data scientist in india (complete roadmap 2026)">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" alt="How to Become a Data Scientist in India (Complete Roadmap 2026)" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-08-02 &bull; 25 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">How to Become a Data Scientist in India (Complete Roadmap 2026)</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Master how to become a Data Scientist in India with our complete 2026 roadmap. Discover essential Python, SQL & ML skills, salary trends, certifications, projects, and DTV guidance.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-08-02 &bull; 25 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">How to Become a Data Scientist in India (Complete Roadmap 2026)</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Master how to become a Data Scientist in India with our complete 2026 roadmap. Discover essential Python, SQL & ML skills, salary trends, certifications, projects, and DTV guidance.</p>
             </div>
         </a>
         <a href="/blog/top-ai-certifications-for-students-india-2026" class="blog-card blog-item" data-category="Career Guidance" data-title="top ai certifications for students in india (2026): which ones are actually worth it?">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop" alt="Top AI Certifications for Students in India (2026): Which Ones Are Actually Worth It?" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-08-01 &bull; 16 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">Top AI Certifications for Students in India (2026): Which Ones Are Actually Worth It?</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover the best AI certifications for students in India in 2026. Compare Google, Microsoft, AWS, Coursera, free vs paid courses, salary impact & DTV roadmap.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-08-01 &bull; 16 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">Top AI Certifications for Students in India (2026): Which Ones Are Actually Worth It?</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover the best AI certifications for students in India in 2026. Compare Google, Microsoft, AWS, Coursera, free vs paid courses, salary impact & DTV roadmap.</p>
             </div>
         </a>
         <a href="/blog/how-to-become-an-ai-product-manager-india-2026" class="blog-card blog-item" data-category="Career Guidance" data-title="how to become an ai product manager in india (complete career guide 2026)">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070&auto=format&fit=crop" alt="How to Become an AI Product Manager in India (Complete Career Guide 2026)" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-08-01 &bull; 18 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">How to Become an AI Product Manager in India (Complete Career Guide 2026)</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover how to become an AI Product Manager in India in 2026. Complete career guide with 12-month roadmap, skills, salary data, certifications, portfolio projects, and DTV.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-08-01 &bull; 18 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">How to Become an AI Product Manager in India (Complete Career Guide 2026)</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover how to become an AI Product Manager in India in 2026. Complete career guide with 12-month roadmap, skills, salary data, certifications, portfolio projects, and DTV.</p>
             </div>
         </a>
         <a href="/blog/ai-engineer-vs-data-analyst-better-2026" class="blog-card blog-item" data-category="Career Comparison" data-title="ai engineer vs data analyst: which career is better in 2026?">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=2070&auto=format&fit=crop" alt="AI Engineer vs Data Analyst: Which Career is Better in 2026?" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-07-29 &bull; 14 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">AI Engineer vs Data Analyst: Which Career is Better in 2026?</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">AI Engineer vs Data Analyst: Compare scope, skills, daily work, Indian salaries, and learning roadmaps for 2026. Discover which data career fits you.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-07-29 &bull; 14 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">AI Engineer vs Data Analyst: Which Career is Better in 2026?</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">AI Engineer vs Data Analyst: Compare scope, skills, daily work, Indian salaries, and learning roadmaps for 2026. Discover which data career fits you.</p>
             </div>
         </a>
         <a href="/blog/ai-engineer-vs-software-engineer-scope-2026" class="blog-card blog-item" data-category="Career Comparison" data-title="ai engineer vs software engineer: which career has more scope in 2026?">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=2070&auto=format&fit=crop" alt="AI Engineer vs Software Engineer: Which Career Has More Scope in 2026?" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-07-29 &bull; 15 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">AI Engineer vs Software Engineer: Which Career Has More Scope in 2026?</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">AI Engineer vs Software Engineer: Compare scope, skills, day-to-day work, job demand, and salaries in India for 2026. Discover which engineering career fits you.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-07-29 &bull; 15 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">AI Engineer vs Software Engineer: Which Career Has More Scope in 2026?</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">AI Engineer vs Software Engineer: Compare scope, skills, day-to-day work, job demand, and salaries in India for 2026. Discover which engineering career fits you.</p>
             </div>
         </a>
         <a href="/blog/how-to-become-devops-engineer-roadmap-2026" class="blog-card blog-item" data-category="DevOps" data-title="how to become a devops engineer in india (complete roadmap 2026)">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=2070&auto=format&fit=crop" alt="How to Become a DevOps Engineer in India (Complete Roadmap 2026)" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-07-29 &bull; 18 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">How to Become a DevOps Engineer in India (Complete Roadmap 2026)</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover the complete 2026 roadmap to become a DevOps Engineer in India. Learn key skills (Linux, Docker, Kubernetes, CI/CD), projects, certifications, and salaries.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-07-29 &bull; 18 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">How to Become a DevOps Engineer in India (Complete Roadmap 2026)</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover the complete 2026 roadmap to become a DevOps Engineer in India. Learn key skills (Linux, Docker, Kubernetes, CI/CD), projects, certifications, and salaries.</p>
             </div>
         </a>
         <a href="/blog/how-to-choose-right-college-after-12th-india-2026" class="blog-card blog-item" data-category="College Admission" data-title="how to choose the right college after 12th in india (complete guide 2026)">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop" alt="How to Choose the Right College After 12th in India (Complete Guide 2026)" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-07-28 &bull; 18 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">How to Choose the Right College After 12th in India (Complete Guide 2026)</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover how to choose the right college after 12th in India. Read our 2026 guide on placement audits, college checklists, fee ROI, and AI guidance.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-07-28 &bull; 18 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">How to Choose the Right College After 12th in India (Complete Guide 2026)</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover how to choose the right college after 12th in India. Read our 2026 guide on placement audits, college checklists, fee ROI, and AI guidance.</p>
             </div>
         </a>
         <a href="/blog/how-parents-can-help-child-choose-right-career-2026" class="blog-card blog-item" data-category="Career Planning" data-title="how parents can help their child choose the right career in 2026">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=2070&auto=format&fit=crop" alt="How Parents Can Help Their Child Choose the Right Career in 2026" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-07-28 &bull; 18 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">How Parents Can Help Their Child Choose the Right Career in 2026</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover how parents can help their child choose the right career in 2026. Explore common mistakes, future-proof careers, and AI career guidance tools.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-07-28 &bull; 18 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">How Parents Can Help Their Child Choose the Right Career in 2026</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover how parents can help their child choose the right career in 2026. Explore common mistakes, future-proof careers, and AI career guidance tools.</p>
             </div>
         </a>
         <a href="/blog/how-to-become-cybersecurity-engineer-roadmap-2026" class="blog-card blog-item" data-category="Career Planning" data-title="how to become a cybersecurity engineer in india (complete roadmap 2026)">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=2070&auto=format&fit=crop" alt="How to Become a Cybersecurity Engineer in India (Complete Roadmap 2026)" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-07-28 &bull; 18 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">How to Become a Cybersecurity Engineer in India (Complete Roadmap 2026)</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover the complete 2026 roadmap to become a Cybersecurity Engineer in India. Learn key skills (Linux, Networking, Python), projects, certifications, and salary expectations.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-07-28 &bull; 18 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">How to Become a Cybersecurity Engineer in India (Complete Roadmap 2026)</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover the complete 2026 roadmap to become a Cybersecurity Engineer in India. Learn key skills (Linux, Networking, Python), projects, certifications, and salary expectations.</p>
             </div>
         </a>
         <a href="/blog/how-to-become-cloud-engineer-roadmap-2026" class="blog-card blog-item" data-category="Career Planning" data-title="how to become a cloud engineer in india (complete roadmap 2026)">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=2070&auto=format&fit=crop" alt="How to Become a Cloud Engineer in India (Complete Roadmap 2026)" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-07-28 &bull; 18 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">How to Become a Cloud Engineer in India (Complete Roadmap 2026)</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover the complete 2026 roadmap to become a Cloud Engineer in India. Learn key skills (AWS, Azure, GCP), projects, certifications, and salary expectations.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-07-28 &bull; 18 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">How to Become a Cloud Engineer in India (Complete Roadmap 2026)</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover the complete 2026 roadmap to become a Cloud Engineer in India. Learn key skills (AWS, Azure, GCP), projects, certifications, and salary expectations.</p>
             </div>
         </a>
         <a href="/blog/artificial-intelligence-vs-machine-learning-career-2026" class="blog-card blog-item" data-category="Career Planning" data-title="artificial intelligence vs machine learning: which career is better in 2026?">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&w=800&fm=webp&q=80" alt="Artificial Intelligence vs Machine Learning: Which Career is Better in 2026?" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-07-24 &bull; 25 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">Artificial Intelligence vs Machine Learning: Which Career is Better in 2026?</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">AI vs ML career comparison for 2026. Discover the differences between an AI Engineer vs ML Engineer, future job prospects, and the AI salary in India.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-07-24 &bull; 25 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">Artificial Intelligence vs Machine Learning: Which Career is Better in 2026?</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">AI vs ML career comparison for 2026. Discover the differences between an AI Engineer vs ML Engineer, future job prospects, and the AI salary in India.</p>
             </div>
         </a>
         <a href="/blog/career-after-btech-ai-and-ml" class="blog-card blog-item" data-category="Career Planning" data-title="best career options after b.tech in ai & machine learning (complete guide 2026)">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&fm=webp&q=80" alt="Best Career Options After B.Tech in AI & Machine Learning (Complete Guide 2026)" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-07-22 &bull; 18 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">Best Career Options After B.Tech in AI & Machine Learning (Complete Guide 2026)</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Explore the best career options after B.Tech in AI and ML. Discover machine learning jobs, the AI engineer career path, AI salary in India, and the ultimate AI career roadmap for 2026.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-07-22 &bull; 18 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">Best Career Options After B.Tech in AI & Machine Learning (Complete Guide 2026)</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Explore the best career options after B.Tech in AI and ML. Discover machine learning jobs, the AI engineer career path, AI salary in India, and the ultimate AI career roadmap for 2026.</p>
             </div>
         </a>
         <a href="/blog/top-10-career-options-after-graduation-india" class="blog-card blog-item" data-category="Career Planning" data-title="top 10 career options after graduation in india (2026 guide)">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&fm=webp&q=80" alt="Top 10 Career Options After Graduation in India (2026 Guide)" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-07-21 &bull; 15 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">Top 10 Career Options After Graduation in India (2026 Guide)</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover the top 10 best career options after graduation in India. Explore the highest paying careers in India, AI careers, and smart career planning.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-07-21 &bull; 15 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">Top 10 Career Options After Graduation in India (2026 Guide)</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover the top 10 best career options after graduation in India. Explore the highest paying careers in India, AI careers, and smart career planning.</p>
             </div>
         </a>
         <a href="/blog/how-to-choose-right-career-after-12th-complete-guide" class="blog-card blog-item" data-category="Career Planning" data-title="how to choose the right career after 12th (science, commerce & arts) – complete guide 2026">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&fm=webp&q=80" alt="How to Choose the Right Career After 12th (Science, Commerce & Arts) – Complete Guide 2026" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-07-20 &bull; 12 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">How to Choose the Right Career After 12th (Science, Commerce & Arts) – Complete Guide 2026</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover the best career after 12th in science, commerce, and arts. Complete career guidance after 12th using AI to unlock high-paying jobs in 2026.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-07-20 &bull; 12 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">How to Choose the Right Career After 12th (Science, Commerce & Arts) – Complete Guide 2026</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover the best career after 12th in science, commerce, and arts. Complete career guidance after 12th using AI to unlock high-paying jobs in 2026.</p>
             </div>
         </a>
         <a href="/blog/ai-career-guidance-students-complete-guide-2026" class="blog-card blog-item" data-category="Career Planning" data-title="ai career guidance for students: complete guide 2026">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&fm=webp&q=80" alt="AI Career Guidance for Students: Complete Guide 2026" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-07-19 &bull; 12 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">AI Career Guidance for Students: Complete Guide 2026</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover how AI career guidance is revolutionizing student success in 2026. Explore career simulations, avoid common mistakes, and build your Digital Twin.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-07-19 &bull; 12 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">AI Career Guidance for Students: Complete Guide 2026</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover how AI career guidance is revolutionizing student success in 2026. Explore career simulations, avoid common mistakes, and build your Digital Twin.</p>
             </div>
         </a>
         <a href="/blog/best-career-options-after-10th-india-2026" class="blog-card blog-item" data-category="Career Planning" data-title="best career options after 10th in india (complete guide)">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&fm=webp&q=80" alt="Best Career Options After 10th in India (Complete Guide)" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-07-19 &bull; 15 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">Best Career Options After 10th in India (Complete Guide)</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Explore the best career options after 10th in India. Discover science, commerce, and arts streams, diploma courses, and AI career guidance for 2026.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-07-19 &bull; 15 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">Best Career Options After 10th in India (Complete Guide)</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Explore the best career options after 10th in India. Discover science, commerce, and arts streams, diploma courses, and AI career guidance for 2026.</p>
             </div>
         </a>
         <a href="/blog/future-of-ai-career-guidance" class="blog-card blog-item" data-category="Career Planning" data-title="the future of ai in career guidance for students">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=800&fm=webp&q=80" alt="The Future of AI in Career Guidance for Students" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color:#52525b; margin-bottom: 0.8rem;">2026-07-15 &bull; 5 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color:#09090b; line-height: 1.4; font-weight: 600;">The Future of AI in Career Guidance for Students</h2>
-                <p style="color:#52525b; font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Learn how Artificial Intelligence is revolutionizing career counseling and helping students discover their true potential with data-driven insights.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-07-15 &bull; 5 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">The Future of AI in Career Guidance for Students</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Learn how Artificial Intelligence is revolutionizing career counseling and helping students discover their true potential with data-driven insights.</p>
             </div>
         </a></div>
-<div id="no-results" style="display: none; text-align: center; padding: 4rem 2rem; background: rgba(15, 23, 42, 0.05); border-radius: 16px; border: 1px solid rgba(15, 23, 42, 0.05); margin-top: 2rem;">
+<div id="no-results" style="display: none; text-align: center; padding: 4rem 2rem; background: rgba(15,23,42,0.02); border-radius: 16px; border: 1px solid rgba(15,23,42,0.05); margin-top: 2rem;">
     <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
-    <h3 style="color:#09090b; font-size: 1.5rem; margin-bottom: 0.5rem;">No articles found</h3>
-    <p style="color:#52525b; font-size: 1.1rem;">Try adjusting your search or selecting a different category.</p>
+    <h3 style="color: var(--dtv-text-primary); font-size: 1.5rem; margin-bottom: 0.5rem;">No articles found</h3>
+    <p style="color: var(--dtv-text-secondary); font-size: 1.1rem;">Try adjusting your search or selecting a different category.</p>
 </div>
 
 <script>

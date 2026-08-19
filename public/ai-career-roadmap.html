@@ -163,7 +163,7 @@
             --rose: #f43f5e;
             --card-bg: rgba(18, 24, 38, 0.85);
             --card-border: rgba(255, 255, 255, 0.08);
-            --glow: 0 16px 40px rgba(0, 0, 0, 0.4);
+            --glow: 0 16px 40px rgba(15, 23, 42, 0.04);
         }
 
         [data-theme="light"] {
@@ -243,7 +243,7 @@
             padding: 0;
         }
         .nav-links a {
-            color: #94a3b8;
+            color: var(--dtv-text-tertiary);
             text-decoration: none;
             font-weight: 600;
             font-size: 0.95rem;
@@ -289,7 +289,7 @@
             max-width: 850px;
             margin: 0 auto 2.5rem;
             font-size: 1.2rem;
-            color: #94a3b8;
+            color: var(--dtv-text-tertiary);
             line-height: 1.8;
         }
         .hero-cta-row {
@@ -316,9 +316,9 @@
             transform: translateY(-2px);
         }
         .cta-btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #fff;
+            background: rgba(15, 23, 42, 0.05);
+            border: 1px solid rgba(15, 23, 42, 0.15);
+            color: var(--dtv-text-primary);
             text-decoration: none;
             padding: 0.9rem 1.8rem;
             border-radius: 12px;
@@ -331,7 +331,7 @@
             transition: background 0.2s;
         }
         .cta-btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.1);
         }
 
         /* Timeline Section */
@@ -342,7 +342,7 @@
             font-family: 'Space Grotesk', sans-serif;
             font-size: 2.2rem;
             font-weight: 800;
-            color: #fff;
+            color: var(--dtv-text-primary);
             text-align: center;
             margin-bottom: 3rem;
         }
@@ -386,7 +386,7 @@
         .timeline-card h3 {
             margin: 0 0 0.8rem;
             font-size: 1.35rem;
-            color: #fff;
+            color: var(--dtv-text-primary);
         }
 
         /* Career Roles Grid */
@@ -426,12 +426,12 @@
             align-items: center;
             justify-content: center;
             font-size: 1.6rem;
-            color: #fff;
+            color: var(--dtv-text-primary);
         }
         .role-title {
             font-size: 1.3rem;
             font-weight: 800;
-            color: #fff;
+            color: var(--dtv-text-primary);
             margin: 0;
         }
         .salary-badge {
@@ -461,9 +461,9 @@
             flex-wrap: wrap;
         }
         .sal-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #cbd5e1;
+            background: rgba(15, 23, 42, 0.05);
+            border: 1px solid rgba(15, 23, 42, 0.1);
+            color: var(--dtv-text-secondary);
             padding: 0.6rem 1.2rem;
             border-radius: 10px;
             font-weight: 700;
@@ -479,7 +479,7 @@
         .faq-section {
             margin: 5rem 0;
             background: rgba(18, 24, 38, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(15, 23, 42, 0.1);
             border-radius: 20px;
             padding: 3rem 2rem;
         }
@@ -490,7 +490,7 @@
         .faq-question {
             font-size: 1.1rem;
             font-weight: 700;
-            color: #fff;
+            color: var(--dtv-text-primary);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
@@ -500,7 +500,7 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease, padding 0.3s ease;
-            color: #cbd5e1;
+            color: var(--dtv-text-secondary);
             font-size: 1rem;
             line-height: 1.7;
         }
@@ -514,7 +514,7 @@
             background: rgba(10, 13, 20, 0.95);
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             padding: 4rem 0 2rem;
-            color: #94a3b8;
+            color: var(--dtv-text-tertiary);
             font-size: 0.95rem;
         }
         .footer-grid {
@@ -524,7 +524,7 @@
             margin-bottom: 3rem;
         }
         .footer-col h4 {
-            color: #fff;
+            color: var(--dtv-text-primary);
             margin-top: 0;
             font-size: 1.1rem;
             font-weight: 700;
@@ -538,7 +538,7 @@
             margin-bottom: 0.6rem;
         }
         .footer-col ul a {
-            color: #94a3b8;
+            color: var(--dtv-text-tertiary);
             text-decoration: none;
             transition: color 0.2s;
         }
@@ -572,7 +572,7 @@
             left: 50%;
             transform: translateX(-50%);
             background: #1e293b;
-            color: #fff;
+            color: var(--dtv-text-primary);
             border: 1px solid #00f0ff;
             padding: 0.8rem 1.6rem;
             border-radius: 9999px;
@@ -676,12 +676,12 @@
         </section>
 
         <!-- Technical Skills Matrix Section -->
-        <section style="background: rgba(18, 24, 38, 0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 3rem; margin: 4rem 0;">
+        <section style="background: rgba(18, 24, 38, 0.6); border: 1px solid rgba(15, 23, 42, 0.1); border-radius: 20px; padding: 3rem; margin: 4rem 0;">
             <h2 class="sec-title" style="margin-top:0;">Complete Technical Skills Matrix</h2>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem;">
                 <div style="background: rgba(10,15,25,0.6); padding: 1.5rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
                     <h4 style="color:#00f0ff; margin-top:0; font-size: 1.15rem;">1. Programming & Mathematics</h4>
-                    <ul style="color:#cbd5e1; padding-left:1.2rem; margin:0;">
+                    <ul style="color: var(--dtv-text-secondary); padding-left:1.2rem; margin:0;">
                         <li>Python (Mastery)</li>
                         <li>SQL & Relational DBs</li>
                         <li>Linear Algebra & Matrices</li>
@@ -691,7 +691,7 @@
                 </div>
                 <div style="background: rgba(10,15,25,0.6); padding: 1.5rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
                     <h4 style="color:#a78bfa; margin-top:0; font-size: 1.15rem;">2. Core ML & Deep Learning</h4>
-                    <ul style="color:#cbd5e1; padding-left:1.2rem; margin:0;">
+                    <ul style="color: var(--dtv-text-secondary); padding-left:1.2rem; margin:0;">
                         <li>Scikit-Learn & XGBoost</li>
                         <li>PyTorch & TensorFlow</li>
                         <li>Convolutional Neural Nets (CNNs)</li>
@@ -701,7 +701,7 @@
                 </div>
                 <div style="background: rgba(10,15,25,0.6); padding: 1.5rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
                     <h4 style="color:#34d399; margin-top:0; font-size: 1.15rem;">3. Generative AI & LLMs</h4>
-                    <ul style="color:#cbd5e1; padding-left:1.2rem; margin:0;">
+                    <ul style="color: var(--dtv-text-secondary); padding-left:1.2rem; margin:0;">
                         <li>RAG (Retrieval-Augmented Gen)</li>
                         <li>LangChain & LlamaIndex</li>
                         <li>Vector DBs (Chroma/Pinecone)</li>
@@ -711,7 +711,7 @@
                 </div>
                 <div style="background: rgba(10,15,25,0.6); padding: 1.5rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
                     <h4 style="color:#fbbf24; margin-top:0; font-size: 1.15rem;">4. MLOps & Cloud Deployment</h4>
-                    <ul style="color:#cbd5e1; padding-left:1.2rem; margin:0;">
+                    <ul style="color: var(--dtv-text-secondary); padding-left:1.2rem; margin:0;">
                         <li>Docker & Kubernetes</li>
                         <li>Git & GitHub CI/CD</li>
                         <li>FastAPI & REST Web Services</li>
@@ -725,7 +725,7 @@
         <!-- Interactive AI Salary Dashboard -->
         <section class="salary-dashboard" id="salary">
             <h2 class="sec-title" style="margin-top:0;">Interactive AI Salary Dashboard</h2>
-            <p style="text-align:center; color:#94a3b8; margin-bottom:2rem;">Select region and experience level to compare average AI compensation packages.</p>
+            <p style="text-align:center; color: var(--dtv-text-tertiary); margin-bottom:2rem;">Select region and experience level to compare average AI compensation packages.</p>
             <div class="salary-controls">
                 <button class="sal-btn active" data-region="india" onclick="setRegion('india', this)">🇮🇳 India (INR CTC)</button>
                 <button class="sal-btn" data-region="usa" onclick="setRegion('usa', this)">🇺🇸 USA (USD Base)</button>
@@ -740,35 +740,35 @@
         <section style="margin: 4rem 0;">
             <h2 class="sec-title">Top Companies Hiring AI Engineers in 2026</h2>
             <div style="display:flex; flex-wrap:wrap; gap: 1.2rem; justify-content:center;">
-                <span style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color:#fff;">Google / DeepMind</span>
-                <span style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color:#fff;">Microsoft AI</span>
-                <span style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color:#fff;">OpenAI</span>
-                <span style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color:#fff;">Anthropic</span>
-                <span style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color:#fff;">NVIDIA</span>
-                <span style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color:#fff;">Meta AI</span>
-                <span style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color:#fff;">Amazon AWS</span>
-                <span style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color:#fff;">Apple AI</span>
-                <span style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color:#fff;">TCS / Infosys AI Labs</span>
-                <span style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color:#fff;">Accenture / IBM</span>
+                <span style="background:rgba(15, 23, 42, 0.05); border:1px solid rgba(15, 23, 42, 0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color: var(--dtv-text-primary);">Google / DeepMind</span>
+                <span style="background:rgba(15, 23, 42, 0.05); border:1px solid rgba(15, 23, 42, 0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color: var(--dtv-text-primary);">Microsoft AI</span>
+                <span style="background:rgba(15, 23, 42, 0.05); border:1px solid rgba(15, 23, 42, 0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color: var(--dtv-text-primary);">OpenAI</span>
+                <span style="background:rgba(15, 23, 42, 0.05); border:1px solid rgba(15, 23, 42, 0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color: var(--dtv-text-primary);">Anthropic</span>
+                <span style="background:rgba(15, 23, 42, 0.05); border:1px solid rgba(15, 23, 42, 0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color: var(--dtv-text-primary);">NVIDIA</span>
+                <span style="background:rgba(15, 23, 42, 0.05); border:1px solid rgba(15, 23, 42, 0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color: var(--dtv-text-primary);">Meta AI</span>
+                <span style="background:rgba(15, 23, 42, 0.05); border:1px solid rgba(15, 23, 42, 0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color: var(--dtv-text-primary);">Amazon AWS</span>
+                <span style="background:rgba(15, 23, 42, 0.05); border:1px solid rgba(15, 23, 42, 0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color: var(--dtv-text-primary);">Apple AI</span>
+                <span style="background:rgba(15, 23, 42, 0.05); border:1px solid rgba(15, 23, 42, 0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color: var(--dtv-text-primary);">TCS / Infosys AI Labs</span>
+                <span style="background:rgba(15, 23, 42, 0.05); border:1px solid rgba(15, 23, 42, 0.1); padding:0.8rem 1.6rem; border-radius:12px; font-weight:700; color: var(--dtv-text-primary);">Accenture / IBM</span>
             </div>
         </section>
 
         <!-- Digital Twin Verse Integration Showcase -->
         <section style="background: linear-gradient(135deg, rgba(0, 240, 255, 0.12), rgba(167, 139, 250, 0.15)); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 20px; padding: 3rem; margin: 4rem 0;">
-            <h2 style="font-family:'Space Grotesk',sans-serif; font-size: 2rem; color:#fff; margin-top:0;">How Digital Twin Verse Accelerates Your AI Career</h2>
-            <p style="color:#cbd5e1; font-size: 1.1rem; line-height: 1.8;">Digital Twin Verse builds an active virtual replica of your cognitive strengths, programming capabilities, and interest markers to guide your journey:</p>
+            <h2 style="font-family:'Space Grotesk',sans-serif; font-size: 2rem; color: var(--dtv-text-primary); margin-top:0;">How Digital Twin Verse Accelerates Your AI Career</h2>
+            <p style="color: var(--dtv-text-secondary); font-size: 1.1rem; line-height: 1.8;">Digital Twin Verse builds an active virtual replica of your cognitive strengths, programming capabilities, and interest markers to guide your journey:</p>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
                 <div style="background: rgba(10,15,25,0.7); padding: 1.5rem; border-radius: 14px;">
                     <h4 style="color:#00f0ff; margin-top:0;">🤖 AI Cognitive Profiling</h4>
-                    <p style="color:#94a3b8; margin:0; font-size:0.95rem;">Evaluates your logical reasoning and matches you to the ideal AI specialization role.</p>
+                    <p style="color: var(--dtv-text-tertiary); margin:0; font-size:0.95rem;">Evaluates your logical reasoning and matches you to the ideal AI specialization role.</p>
                 </div>
                 <div style="background: rgba(10,15,25,0.7); padding: 1.5rem; border-radius: 14px;">
                     <h4 style="color:#a78bfa; margin-top:0;">⚡ Skill Gap Analyzer</h4>
-                    <p style="color:#94a3b8; margin:0; font-size:0.95rem;">Identifies exactly what libraries, PyTorch concepts, or projects you are missing.</p>
+                    <p style="color: var(--dtv-text-tertiary); margin:0; font-size:0.95rem;">Identifies exactly what libraries, PyTorch concepts, or projects you are missing.</p>
                 </div>
                 <div style="background: rgba(10,15,25,0.7); padding: 1.5rem; border-radius: 14px;">
                     <h4 style="color:#34d399; margin-top:0;">💼 Placement Simulation</h4>
-                    <p style="color:#94a3b8; margin:0; font-size:0.95rem;">Simulates live AI technical interview rounds, coding challenges, and system design questions.</p>
+                    <p style="color: var(--dtv-text-tertiary); margin:0; font-size:0.95rem;">Simulates live AI technical interview rounds, coding challenges, and system design questions.</p>
                 </div>
             </div>
             <div style="text-align:center; margin-top: 2.5rem;">
@@ -905,7 +905,7 @@
                             <h3 class="role-title">${r.name}</h3>
                         </div>
                         <span class="salary-badge">💰 ${r.salary}</span>
-                        <p style="color:#cbd5e1; font-size:0.95rem; margin-bottom:1.2rem;">${r.desc}</p>
+                        <p style="color: var(--dtv-text-secondary); font-size:0.95rem; margin-bottom:1.2rem;">${r.desc}</p>
                         <div style="background:rgba(10,15,25,0.6); padding:0.8rem 1rem; border-radius:10px; font-size:0.88rem; margin-bottom:1.2rem;">
                             <strong>Core Skills:</strong> ${r.skills.join(', ')}
                         </div>
@@ -929,7 +929,7 @@
             const data = salaryData[region] || salaryData['india'];
             display.innerHTML = data.map(item => `
                 <div style="background:rgba(10,15,25,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:1.5rem; text-align:center;">
-                    <span style="color:#94a3b8; font-size:0.88rem; display:block; margin-bottom:0.5rem;">${item.role}</span>
+                    <span style="color: var(--dtv-text-tertiary); font-size:0.88rem; display:block; margin-bottom:0.5rem;">${item.role}</span>
                     <strong style="color:#34d399; font-size:1.4rem; font-family:'Space Grotesk',sans-serif;">${item.val}</strong>
                 </div>
             `).join('');
