@@ -12,8 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #0b0f19;
-            color: #e2e8f0;
+            background-color: #FAFAFA;
+            color: #09090b;
             font-family: 'Plus Jakarta Sans', sans-serif;
             margin: 0;
             padding: 0;
@@ -23,9 +23,9 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(11, 15, 25, 0.85);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
             padding: 1rem 2rem;
             display: flex;
             align-items: center;
@@ -36,7 +36,7 @@
             align-items: center;
             gap: 0.8rem;
             text-decoration: none;
-            color: #fff;
+            color: #09090b;
             font-weight: 800;
             font-size: 1.1rem;
         }
@@ -56,7 +56,7 @@
         }
         .prob-back-btn:hover {
             background: rgba(167, 139, 250, 0.25);
-            color: #fff;
+            color: #09090b;
             transform: translateX(-3px);
         }
         .prob-container {
@@ -80,7 +80,7 @@
         .prob-title {
             font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 800;
-            color: #fff;
+            color: #09090b;
             line-height: 1.25;
             margin-bottom: 1.2rem;
         }
@@ -92,9 +92,9 @@
         }
         .prob-lead {
             font-size: 1.15rem;
-            color: #cbd5e1;
+            color: #52525b;
             line-height: 1.7;
-            background: rgba(255, 255, 255, 0.03);
+            background: #FFFFFF;
             border-left: 4px solid #a78bfa;
             padding: 1.2rem 1.5rem;
             border-radius: 0 12px 12px 0;
@@ -107,8 +107,8 @@
             margin-bottom: 3rem;
         }
         .stat-box {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #FFFFFF;
+            border: 1px solid rgba(15, 23, 42, 0.08);
             border-radius: 16px;
             padding: 1.5rem;
             text-align: center;
@@ -122,17 +122,17 @@
         .stat-label {
             font-size: 0.9rem;
             font-weight: 700;
-            color: #fff;
+            color: #09090b;
             margin-bottom: 0.4rem;
         }
         .stat-sub {
             font-size: 0.8rem;
-            color: #94a3b8;
+            color: #71717a;
         }
         .prob-section-title {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #fff;
+            color: #09090b;
             margin-top: 3rem;
             margin-bottom: 1.2rem;
             display: flex;
@@ -140,20 +140,20 @@
             gap: 0.6rem;
         }
         .prob-content-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: #FFFFFF;
+            border: 1px solid rgba(15, 23, 42, 0.06);
             border-radius: 16px;
             padding: 1.5rem 1.8rem;
             margin-bottom: 1.2rem;
         }
         .prob-content-card h3 {
             font-size: 1.1rem;
-            color: #f1f5f9;
+            color: #18181b;
             margin-top: 0;
             margin-bottom: 0.6rem;
         }
         .prob-content-card p {
-            color: #94a3b8;
+            color: #71717a;
             margin: 0;
             line-height: 1.7;
         }
@@ -177,13 +177,13 @@
         .news-title {
             font-size: 1rem;
             font-weight: 700;
-            color: #fff;
+            color: #09090b;
             margin-bottom: 0.5rem;
             line-height: 1.4;
         }
         .news-text {
             font-size: 0.85rem;
-            color: #cbd5e1;
+            color: #52525b;
             margin: 0;
             line-height: 1.6;
         }
@@ -196,13 +196,13 @@
         }
         .solution-box h2 {
             font-size: 1.5rem;
-            color: #fff;
+            color: #09090b;
             margin-top: 0;
             margin-bottom: 1rem;
         }
         .solution-box ul {
             padding-left: 1.2rem;
-            color: #cbd5e1;
+            color: #52525b;
             line-height: 1.8;
             margin-bottom: 1.8rem;
         }
@@ -213,7 +213,7 @@
         }
         .btn-primary-dtv {
             background: linear-gradient(135deg, #7c3aed, #a78bfa);
-            color: #fff;
+            color: #09090b;
             padding: 0.8rem 1.6rem;
             border-radius: 999px;
             font-weight: 700;
@@ -231,9 +231,9 @@
             box-shadow: 0 6px 25px rgba(124, 58, 237, 0.6);
         }
         .btn-secondary-dtv {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
+            background: #FFFFFF;
+            border: 1px solid rgba(15, 23, 42, 0.2);
+            color: #09090b;
             padding: 0.8rem 1.6rem;
             border-radius: 999px;
             font-weight: 600;
@@ -246,14 +246,14 @@
             transition: background 0.3s ease;
         }
         .btn-secondary-dtv:hover {
-            background: rgba(255, 255, 255, 0.18);
+            background: #FAFAFA;
         }
 
         /* LIVE AI MENTOR DRAWER MODAL */
         .ai-drawer-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(5, 10, 20, 0.85);
+            background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(10px);
             z-index: 999999;
             display: none;
@@ -263,7 +263,7 @@
         }
         .ai-drawer-overlay.active { display: flex; }
         .ai-drawer-box {
-            background: linear-gradient(135deg, #0f172a, #0b0f19);
+            background: #FFFFFF;
             border: 1px solid rgba(167, 139, 250, 0.35);
             box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(167, 139, 250, 0.2);
             border-radius: 20px;
@@ -278,8 +278,8 @@
         }
         .ai-drawer-header {
             padding: 1.2rem 1.5rem;
-            background: rgba(255,255,255,0.03);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            background: #FFFFFF;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -287,7 +287,7 @@
         .ai-drawer-title {
             font-size: 1.1rem;
             font-weight: 800;
-            color: #fff;
+            color: #09090b;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -303,12 +303,12 @@
         .ai-drawer-close {
             background: none;
             border: none;
-            color: #94a3b8;
+            color: #71717a;
             font-size: 1.6rem;
             cursor: pointer;
             line-height: 1;
         }
-        .ai-drawer-close:hover { color: #fff; }
+        .ai-drawer-close:hover { color: #09090b; }
         .ai-chat-messages {
             flex: 1;
             padding: 1.2rem 1.5rem;
@@ -327,13 +327,13 @@
         .chat-msg.ai {
             background: rgba(167, 139, 250, 0.12);
             border: 1px solid rgba(167, 139, 250, 0.25);
-            color: #e2e8f0;
+            color: #09090b;
             align-self: flex-start;
             border-bottom-left-radius: 2px;
         }
         .chat-msg.user {
             background: #7c3aed;
-            color: #fff;
+            color: #09090b;
             align-self: flex-end;
             border-bottom-right-radius: 2px;
         }
@@ -348,7 +348,7 @@
         .prompt-pill {
             background: rgba(255,255,255,0.06);
             border: 1px solid rgba(255,255,255,0.12);
-            color: #cbd5e1;
+            color: #52525b;
             font-size: 0.78rem;
             padding: 0.35rem 0.8rem;
             border-radius: 999px;
@@ -358,7 +358,7 @@
         }
         .prompt-pill:hover {
             background: rgba(167, 139, 250, 0.2);
-            color: #fff;
+            color: #09090b;
             border-color: rgba(167, 139, 250, 0.4);
         }
         .ai-drawer-input {
@@ -374,14 +374,14 @@
             border: 1px solid rgba(255,255,255,0.15);
             border-radius: 12px;
             padding: 0.7rem 1rem;
-            color: #fff;
+            color: #09090b;
             font-size: 0.9rem;
             outline: none;
         }
         .ai-drawer-input button {
             background: #7c3aed;
             border: none;
-            color: #fff;
+            color: #09090b;
             font-weight: 700;
             padding: 0.7rem 1.2rem;
             border-radius: 12px;
@@ -394,7 +394,7 @@
         .assessor-modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(5, 10, 20, 0.85);
+            background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(10px);
             z-index: 999999;
             display: none;
@@ -412,7 +412,7 @@
             max-width: 600px;
             padding: 2rem;
             position: relative;
-            color: #fff;
+            color: #09090b;
         }
         .assessor-close {
             position: absolute;
@@ -420,11 +420,11 @@
             right: 1.2rem;
             background: none;
             border: none;
-            color: #94a3b8;
+            color: #71717a;
             font-size: 1.6rem;
             cursor: pointer;
         }
-        .assessor-close:hover { color: #fff; }
+        .assessor-close:hover { color: #09090b; }
         .assessor-field {
             margin-bottom: 1.2rem;
         }
@@ -441,11 +441,11 @@
             border: 1px solid rgba(255,255,255,0.15);
             border-radius: 10px;
             padding: 0.6rem 0.8rem;
-            color: #fff;
+            color: #09090b;
             outline: none;
             font-size: 0.9rem;
         }
-        .assessor-field select option { background: #0f172a; color: #fff; }
+        .assessor-field select option { background: #0f172a; color: #09090b; }
         .assessor-result {
             background: rgba(255,255,255,0.04);
             border: 1px solid rgba(167, 139, 250, 0.25);
@@ -581,8 +581,8 @@
     <div id="assessor-overlay" class="assessor-modal-overlay">
         <div class="assessor-card">
             <button class="assessor-close" onclick="closeStreamAssessor()">&times;</button>
-            <h2 style="margin-top:0; font-size:1.4rem; color:#fff;">🎯 Early Stream Compatibility Assessor</h2>
-            <p style="color:#cbd5e1; font-size:0.85rem; margin-bottom:1rem;">Evaluate whether your target degree stream aligns with your natural problem-solving velocity.</p>
+            <h2 style="margin-top:0; font-size:1.4rem; color: #09090b;">🎯 Early Stream Compatibility Assessor</h2>
+            <p style="color: #52525b; font-size:0.85rem; margin-bottom:1rem;">Evaluate whether your target degree stream aligns with your natural problem-solving velocity.</p>
             
             <div class="assessor-field">
                 <label>Current Education Level</label>
@@ -605,8 +605,8 @@
 
             <div class="assessor-result">
                 <div class="assessor-score" id="assess-score-val">92% Match</div>
-                <div style="font-size:0.88rem; color:#fff; font-weight:700; margin-bottom:0.4rem;" id="assess-title">High Future Growth Alignment</div>
-                <div style="font-size:0.8rem; color:#94a3b8;" id="assess-desc">Your target path aligns strongly with 2026 AI skill demand. Test drive micro-projects on DTV to solidify your portfolio!</div>
+                <div style="font-size:0.88rem; color: #09090b; font-weight:700; margin-bottom:0.4rem;" id="assess-title">High Future Growth Alignment</div>
+                <div style="font-size:0.8rem; color: #71717a;" id="assess-desc">Your target path aligns strongly with 2026 AI skill demand. Test drive micro-projects on DTV to solidify your portfolio!</div>
             </div>
 
             <div style="margin-top:1.5rem; text-align:center;">
