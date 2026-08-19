@@ -237,29 +237,7 @@ app.use('/dist', (req, res, next) => {
   next();
 });
 
-app.get('/sitemap.xml', (req, res, next) => {
-  try {
-    const sitemapPath = path.join(publicDir, 'sitemap.xml');
-    if (!require('fs').existsSync(sitemapPath)) return next();
-    let sitemap = require('fs').readFileSync(sitemapPath, 'utf-8');
-    const blogsPath = path.join(__dirname, 'data', 'blogs.json');
-    if (require('fs').existsSync(blogsPath)) {
-      const blogs = JSON.parse(require('fs').readFileSync(blogsPath, 'utf-8'));
-      let blogEntries = '';
-      blogs.forEach(b => {
-        blogEntries += `\n  <url>\n    <loc>https://digitaltwinvrs.com/blog/${b.slug}</loc>\n    <lastmod>${b.publishedDate}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.8</priority>\n  </url>`;
-      });
-      // Add /blog index too
-      blogEntries += `\n  <url>\n    <loc>https://digitaltwinvrs.com/blog</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.9</priority>\n  </url>`;
-      blogEntries += `\n  <url>\n    <loc>https://digitaltwinvrs.com/career-guidance-after-12th</loc>\n    <lastmod>2026-08-02</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>1.0</priority>\n  </url>`;
-      sitemap = sitemap.replace('</urlset>', blogEntries + '\n</urlset>');
-    }
-    res.set('Content-Type', 'application/xml');
-    res.send(sitemap);
-  } catch (err) {
-    next();
-  }
-});
+
 
 app.use(express.static(publicDir, {
   index: false, // Handle index.html manually for strict caching
