@@ -828,3 +828,140 @@ html .blog-sidebar {
     border: 1px solid #FFEDD5 !important;
     box-shadow: 0 20px 40px rgba(249, 115, 22, 0.08) !important;
 }
+
+/* ========================================================================
+   PROBLEM PAGES LIGHT THEME FIX (/problem/*)
+======================================================================== */
+html body[style*="background-color: #0b0f19"],
+html body:has(.prob-page-header) {
+    background-color: #FAFAFA !important;
+    color: var(--dtv-text-primary) !important;
+}
+html .prob-page-header {
+    background: rgba(255, 255, 255, 0.85) !important;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+html .prob-brand {
+    color: var(--dtv-text-primary) !important;
+}
+html .prob-back-btn {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    color: var(--dtv-text-secondary) !important;
+}
+html .prob-back-btn:hover {
+    background: #FAFAFA !important;
+    color: var(--dtv-text-primary) !important;
+}
+html .prob-title {
+    color: var(--dtv-text-primary) !important;
+}
+html .prob-title span {
+    color: var(--dtv-orange-500) !important;
+}
+html .prob-lead {
+    background: #FFFFFF !important;
+    border-color: var(--dtv-orange-500) !important;
+    color: var(--dtv-text-secondary) !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    border-left: 4px solid var(--dtv-orange-500) !important;
+}
+html .stat-box, html .prob-content-card {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-sm) !important;
+}
+html .stat-num {
+    color: var(--dtv-orange-500) !important;
+}
+html .stat-label, html .prob-section-title, html .prob-content-card h3 {
+    color: var(--dtv-text-primary) !important;
+}
+html .stat-sub, html .prob-content-card p {
+    color: var(--dtv-text-secondary) !important;
+}
+html .news-card {
+    background: rgba(249, 115, 22, 0.04) !important;
+    border: 1px solid rgba(249, 115, 22, 0.15) !important;
+}
+html .news-meta {
+    color: var(--dtv-orange-500) !important;
+}
+html .news-title {
+    color: var(--dtv-text-primary) !important;
+}
+html .news-text {
+    color: var(--dtv-text-secondary) !important;
+}
+html .solution-box {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-sm) !important;
+}
+html .solution-box h2 {
+    color: var(--dtv-text-primary) !important;
+}
+html .solution-box ul {
+    color: var(--dtv-text-secondary) !important;
+}
+html .btn-primary-dtv {
+    background: var(--dtv-orange-500) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3) !important;
+}
+html .btn-primary-dtv:hover {
+    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4) !important;
+}
+html .btn-secondary-dtv {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    color: var(--dtv-text-primary) !important;
+}
+html .btn-secondary-dtv:hover {
+    background: #FAFAFA !important;
+}
+html .ai-drawer-overlay {
+    background: rgba(255, 255, 255, 0.6) !important;
+}
+html .ai-drawer-box {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-xl) !important;
+}
+html .ai-drawer-header {
+    border-bottom: 1px solid var(--dtv-border-default) !important;
+}
+html .ai-drawer-header h3 {
+    color: var(--dtv-text-primary) !important;
+}
+html .ai-drawer-header p {
+    color: var(--dtv-text-secondary) !important;
+}
+html .close-drawer {
+    color: var(--dtv-text-primary) !important;
+}
+html .ai-drawer-body {
+    background: #FAFAFA !important;
+}
+html .ai-drawer-footer {
+    border-top: 1px solid var(--dtv-border-default) !important;
+    background: #FFFFFF !important;
+}
+html .ai-drawer-footer input {
+    background: #FAFAFA !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    color: var(--dtv-text-primary) !important;
+}
+html .ai-drawer-footer button {
+    background: var(--dtv-orange-500) !important;
+    color: #FFFFFF !important;
+}
+html .msg-ai {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    color: var(--dtv-text-primary) !important;
+}
+html .msg-user {
+    background: var(--dtv-orange-500) !important;
+    color: #FFFFFF !important;
+}
