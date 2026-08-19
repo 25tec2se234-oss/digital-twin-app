@@ -81,6 +81,7 @@ html[data-theme="ocean"] {
    GLOBAL LIGHT THEME & BACKGROUNDS (FORCED)
 ======================================================================== */
 body, html, html {
+    background: var(--dtv-bg-base) !important;
     background-color: var(--dtv-bg-base) !important;
     color: var(--dtv-text-primary) !important;
     font-family: var(--font-body);
