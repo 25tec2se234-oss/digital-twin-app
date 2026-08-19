@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="theme-color" content="#0b0f19">
+    <meta name="theme-color" content="#FAFAFA">
 
     <!-- Technical SEO Meta Tags -->
     <title>Genesis™ | Create Your AI-Powered Digital Self — Digital Twin Verse</title>
@@ -99,37 +99,24 @@
     <style>
         /* ═══ GENESIS DESIGN SYSTEM TOKENS ═══ */
         :root {
-            --bg-main: #0b0f19;
-            --bg-card: rgba(17, 24, 39, 0.75);
-            --bg-card-hover: rgba(31, 41, 61, 0.85);
-            --border-glow: rgba(99, 102, 241, 0.25);
-            --border-subtle: rgba(255, 255, 255, 0.08);
-            --text-primary: #f9fafb;
-            --text-secondary: #9ca3af;
+            --bg-main: #fff7ed;
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --bg-card-hover: rgba(255, 237, 213, 0.5);
+            --border-glow: rgba(249, 115, 22, 0.3);
+            --border-subtle: rgba(249, 115, 22, 0.1);
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
             --text-muted: #6b7280;
-            --accent-indigo: #6366f1;
-            --accent-purple: #8b5cf6;
-            --accent-cyan: #38bdf8;
+            --accent-indigo: #f97316; /* Remapped to primary orange */
+            --accent-purple: #ea580c; /* Remapped to secondary orange */
+            --accent-cyan: #fb923c;
             --accent-emerald: #10b981;
-            --accent-amber: #f59e0b;
-            --glow-indigo: 0 0 40px rgba(99, 102, 241, 0.35);
-            --glow-purple: 0 0 50px rgba(139, 92, 246, 0.35);
-            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-serif: 'Instrument Serif', Georgia, serif;
+            --accent-amber: #f97316;
+            --glow-indigo: 0 10px 30px rgba(249, 115, 22, 0.15);
+            --glow-purple: 0 10px 30px rgba(234, 88, 12, 0.15);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-serif: 'Outfit', sans-serif;
             --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        html.light {
-            --bg-main: #f8fafc;
-            --bg-card: rgba(255, 255, 255, 0.85);
-            --bg-card-hover: rgba(241, 245, 249, 0.95);
-            --border-glow: rgba(99, 102, 241, 0.3);
-            --border-subtle: rgba(0, 0, 0, 0.08);
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --text-muted: #64748b;
-            --glow-indigo: 0 10px 30px rgba(99, 102, 241, 0.15);
-            --glow-purple: 0 10px 30px rgba(139, 92, 246, 0.15);
         }
 
         /* RESET & BASE */
@@ -173,7 +160,7 @@
             right: 0;
             z-index: 1000;
             padding: 0.85rem 1.5rem;
-            background: rgba(11, 15, 25, 0.85);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-subtle);
@@ -271,7 +258,7 @@
             top: 60px;
             left: 0;
             right: 0;
-            background: rgba(11, 15, 25, 0.96);
+            background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(24px);
             border-bottom: 1px solid var(--border-subtle);
             padding: 1.25rem 1rem;
@@ -295,7 +282,7 @@
             font-weight: 600;
             padding: 0.75rem 1rem;
             border-radius: 12px;
-            background: rgba(255,255,255,0.03);
+            background: rgba(15, 23, 42, 0.03);
             border: 1px solid var(--border-subtle);
             display: flex;
             align-items: center;
@@ -305,7 +292,7 @@
         /* BUTTONS */
         .btn-primary-glow {
             background: linear-gradient(135deg, var(--accent-indigo), var(--accent-purple));
-            color: #ffffff;
+            color: var(--dtv-text-primary)fff;
             border: none;
             padding: 0.85rem 1.6rem;
             border-radius: 12px;
@@ -431,7 +418,7 @@
             border-radius: 24px;
             padding: 1.75rem;
             backdrop-filter: blur(24px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(15, 23, 42, 0.1);
             position: relative;
             overflow: hidden;
             transform: translateZ(0);
@@ -466,7 +453,7 @@
         .core-orb svg {
             width: 54px;
             height: 54px;
-            color: #ffffff;
+            color: var(--dtv-text-primary)fff;
         }
 
         .twin-telemetry-badge {
@@ -474,7 +461,7 @@
             display: flex;
             align-items: center;
             gap: 1.5rem;
-            background: rgba(0,0,0,0.25);
+            background: rgba(15, 23, 42, 0.05);
             padding: 0.8rem 1.5rem;
             border-radius: 14px;
             border: 1px solid var(--border-subtle);
@@ -542,7 +529,7 @@
         .timeline-card:hover {
             border-color: var(--accent-indigo);
             transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
         }
 
         .timeline-step-num {
@@ -596,7 +583,7 @@
             border-color: var(--accent-purple);
             background: var(--bg-card-hover);
             transform: translateY(-5px);
-            box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.04);
         }
 
         .feature-icon-wrapper {
@@ -709,7 +696,7 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.15);
+            background: rgba(15, 23, 42, 0.15);
             transition: var(--transition-smooth);
         }
 
@@ -725,7 +712,7 @@
         /* TWIN RESULT PASSPORT CARD */
         .twin-result-card {
             display: none;
-            background: rgba(0,0,0,0.3);
+            background: rgba(15, 23, 42, 0.05);
             border: 1px solid var(--accent-emerald);
             border-radius: 20px;
             padding: 1.75rem;
@@ -840,7 +827,7 @@
         }
 
         .option-btn {
-            background: rgba(0,0,0,0.25);
+            background: rgba(15, 23, 42, 0.05);
             border: 1px solid var(--border-subtle);
             border-radius: 14px;
             padding: 1rem 1.25rem;
@@ -866,7 +853,7 @@
             width: 30px;
             height: 30px;
             border-radius: 8px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(15, 23, 42, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -953,7 +940,7 @@
         }
 
         .career-match-item {
-            background: rgba(0,0,0,0.3);
+            background: rgba(15, 23, 42, 0.05);
             border: 1px solid var(--border-subtle);
             border-radius: 14px;
             padding: 1rem 1.2rem;
@@ -1000,7 +987,7 @@
         }
 
         .roadmap-box {
-            background: rgba(0,0,0,0.35);
+            background: rgba(15, 23, 42, 0.08);
             border: 1px solid var(--border-subtle);
             border-radius: 16px;
             padding: 1.25rem;
@@ -1032,7 +1019,7 @@
 
         .skill-progress-bg {
             height: 6px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(15, 23, 42, 0.1);
             border-radius: 9999px;
             overflow: hidden;
         }
@@ -1062,7 +1049,7 @@
             width: 100%;
             text-align: left;
             padding: 0.75rem 1rem;
-            background: rgba(0,0,0,0.3);
+            background: rgba(15, 23, 42, 0.05);
             border: 1px solid var(--border-subtle);
             border-radius: 10px;
             color: var(--text-primary);
@@ -1089,7 +1076,7 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.88);
+            background: rgba(15, 23, 42, 0.5);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             z-index: 2000;
@@ -1154,8 +1141,8 @@
 
         .yt-video-screen {
             position: relative;
-            height: 250px;
-            background: radial-gradient(circle at center, #1f1b2e 0%, #0b0d14 100%);
+            min-height: 250px;
+            background: radial-gradient(circle at center, rgba(31, 27, 46, 0.95) 0%, rgba(11, 13, 20, 0.98) 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1164,6 +1151,27 @@
             padding: 1.5rem;
             cursor: pointer;
             user-select: none;
+            overflow: hidden;
+        }
+
+        .yt-video-screen::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(56, 189, 248, 0.15) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .yt-video-screen.playing::before {
+            animation: gridPulse 3s infinite ease-in-out;
+            opacity: 0.75;
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.04); opacity: 0.8; }
         }
 
         /* DTV Brand Center Play Button Overlay */
@@ -1196,11 +1204,11 @@
         .dtv-play-overlay-icon {
             position: absolute;
             inset: 0;
-            background: rgba(11, 15, 25, 0.55);
+            background: rgba(255, 255, 255, 0.55);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ffffff;
+            color: var(--dtv-text-primary)fff;
             backdrop-filter: blur(2px);
             transition: background 0.3s ease;
         }
@@ -1208,7 +1216,7 @@
         .yt-video-screen:hover .yt-center-play {
             transform: scale(1.12);
             box-shadow: 0 0 50px rgba(56, 189, 248, 0.9);
-            border-color: #ffffff;
+            border-color: var(--dtv-text-primary)fff;
         }
 
         .yt-video-screen:hover .dtv-play-overlay-icon {
@@ -1241,7 +1249,7 @@
         .yt-step-title {
             font-size: 1.25rem;
             font-weight: 800;
-            color: #ffffff;
+            color: var(--dtv-text-primary)fff;
             margin-bottom: 0.3rem;
         }
 
@@ -1255,7 +1263,7 @@
         /* DTV Branded Progress Bar */
         .yt-progress-container {
             height: 8px;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(15, 23, 42, 0.15);
             cursor: pointer;
             position: relative;
             transition: height 0.2s ease;
@@ -1311,7 +1319,7 @@
         .yt-btn {
             background: transparent;
             border: none;
-            color: #ffffff;
+            color: var(--dtv-text-primary)fff;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -1323,7 +1331,7 @@
         }
 
         .yt-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(15, 23, 42, 0.15);
         }
 
         .yt-time-text {
@@ -1342,7 +1350,7 @@
         .yt-dot {
             padding: 0.25rem 0.6rem;
             border-radius: 6px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.1);
             color: rgba(255, 255, 255, 0.7);
             font-size: 0.75rem;
             font-weight: 700;
@@ -1352,7 +1360,7 @@
 
         .yt-dot.active {
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-indigo));
-            color: #ffffff;
+            color: var(--dtv-text-primary)fff;
             box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
         }
 
@@ -1360,7 +1368,7 @@
         .footer {
             border-top: 1px solid var(--border-subtle);
             padding: 4rem 0 2rem 0;
-            background: rgba(11, 15, 25, 0.95);
+            background: rgba(255, 255, 255, 0.95);
         }
 
         html.light .footer {
@@ -1470,6 +1478,10 @@
             .yt-controls-bar { justify-content: center; padding: 0.6rem; }
         }
     </style>
+    
+
+
+    <link rel="stylesheet" href="/css/premium-theme.css">
 </head>
 <body>
 
@@ -1502,11 +1514,11 @@
         </nav>
 
         <div class="nav-actions">
-            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark and light theme">
+            <button id="theme-toggle" type="button" class="theme-toggle-btn" aria-label="Switch to light theme">
                 <svg id="theme-icon-sun" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display: none;"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
                 <svg id="theme-icon-moon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
             </button>
-            <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle mobile menu">
+            <button id="mobile-menu-btn" type="button" class="mobile-menu-btn" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-nav-drawer">
                 <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
             <a href="#genesis-scanner" id="btn-top-begin" class="btn-primary-glow" style="padding: 0.6rem 1.2rem; font-size: 0.9rem; min-height: 40px;">Begin Genesis</a>
@@ -1555,11 +1567,11 @@
                             Genesis creates your AI-powered Digital Self and becomes your lifelong academic and career companion.
                         </p>
                         <div class="hero-cta-group">
-                            <button id="btn-begin-genesis" class="btn-primary-glow" aria-controls="genesis-scanner">
+                            <button id="btn-begin-genesis" type="button" class="btn-primary-glow" aria-controls="genesis-scanner">
                                 <span>Begin Genesis</span>
                                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                             </button>
-                            <button id="btn-watch-demo" class="btn-secondary-glass">
+                            <button id="btn-watch-demo" type="button" class="btn-secondary-glass" aria-haspopup="dialog" aria-expanded="false" aria-controls="demo-modal">
                                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg>
                                 <span>Watch How Genesis Works</span>
                             </button>
@@ -1726,7 +1738,7 @@
                         <div class="step-dot" id="dot-7" title="Genesis Complete"></div>
                     </div>
 
-                    <button id="btn-start-scan" class="btn-primary-glow">
+                    <button id="btn-start-scan" type="button" class="btn-primary-glow">
                         <span>Initialize Genesis Sequence</span>
                         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     </button>
@@ -1753,7 +1765,7 @@
                             </div>
                         </div>
 
-                        <button id="btn-open-assessment" class="btn-primary-glow" style="width: 100%; justify-content: center;">
+                        <button id="btn-open-assessment" type="button" class="btn-primary-glow" style="width: 100%; justify-content: center;">
                             <span>Proceed to Assessment & Skill Radar</span>
                             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         </button>
@@ -1778,19 +1790,19 @@
                             <div class="q-number">Question 1 of 3 — Logic & Architecture</div>
                             <h3 class="q-title">When approaching a complex technical or real-world problem, what is your primary solving method?</h3>
                             <div class="options-list">
-                                <button class="option-btn" data-q="1" data-axis="logic" data-val="95">
+                                <button type="button" class="option-btn" aria-pressed="false" data-q="1" data-axis="logic" data-val="95">
                                     <div class="option-letter">A</div>
                                     <span>Deconstruct into atomic sub-components and evaluate systematically.</span>
                                 </button>
-                                <button class="option-btn" data-q="1" data-axis="creativity" data-val="90">
+                                <button type="button" class="option-btn" aria-pressed="false" data-q="1" data-axis="creativity" data-val="90">
                                     <div class="option-letter">B</div>
                                     <span>Brainstorm lateral alternatives and prototype unconventional angles.</span>
                                 </button>
-                                <button class="option-btn" data-q="1" data-axis="velocity" data-val="88">
+                                <button type="button" class="option-btn" aria-pressed="false" data-q="1" data-axis="velocity" data-val="88">
                                     <div class="option-letter">C</div>
                                     <span>Build a rapid working sample immediately and iterate on live feedback.</span>
                                 </button>
-                                <button class="option-btn" data-q="1" data-axis="grit" data-val="92">
+                                <button type="button" class="option-btn" aria-pressed="false" data-q="1" data-axis="grit" data-val="92">
                                     <div class="option-letter">D</div>
                                     <span>Deeply research existing documentation and industry standards first.</span>
                                 </button>
@@ -1802,19 +1814,19 @@
                             <div class="q-number">Question 2 of 3 — Future Domain Focus</div>
                             <h3 class="q-title">Which emerging 2030 technology domain drives your deepest passion and curiosity?</h3>
                             <div class="options-list">
-                                <button class="option-btn" data-q="2" data-axis="domain" data-val="98">
+                                <button type="button" class="option-btn" aria-pressed="false" data-q="2" data-axis="domain" data-val="98">
                                     <div class="option-letter">A</div>
                                     <span>Artificial Intelligence, Autonomous Agents & Large Language Models.</span>
                                 </button>
-                                <button class="option-btn" data-q="2" data-axis="creativity" data-val="95">
+                                <button type="button" class="option-btn" aria-pressed="false" data-q="2" data-axis="creativity" data-val="95">
                                     <div class="option-letter">B</div>
                                     <span>Spatial Computing, Immersive Design & High-Impact Product Experience.</span>
                                 </button>
-                                <button class="option-btn" data-q="2" data-axis="logic" data-val="94">
+                                <button type="button" class="option-btn" aria-pressed="false" data-q="2" data-axis="logic" data-val="94">
                                     <div class="option-letter">C</div>
                                     <span>Data Intelligence, Quantitative Systems & Distributed Infrastructure.</span>
                                 </button>
-                                <button class="option-btn" data-q="2" data-axis="grit" data-val="91">
+                                <button type="button" class="option-btn" aria-pressed="false" data-q="2" data-axis="grit" data-val="91">
                                     <div class="option-letter">D</div>
                                     <span>Bio-Tech, Climate Engineering & Sustainable Energy Systems.</span>
                                 </button>
@@ -1826,19 +1838,19 @@
                             <div class="q-number">Question 3 of 3 — Learning Style</div>
                             <h3 class="q-title">How do you master difficult concepts and achieve peak retention fastest?</h3>
                             <div class="options-list">
-                                <button class="option-btn" data-q="3" data-axis="velocity" data-val="96">
+                                <button type="button" class="option-btn" aria-pressed="false" data-q="3" data-axis="velocity" data-val="96">
                                     <div class="option-letter">A</div>
                                     <span>Socratic AI Q&A with real-world project simulations.</span>
                                 </button>
-                                <button class="option-btn" data-q="3" data-axis="grit" data-val="94">
+                                <button type="button" class="option-btn" aria-pressed="false" data-q="3" data-axis="grit" data-val="94">
                                     <div class="option-letter">B</div>
                                     <span>Structured mastery trees with spaced repetition challenges.</span>
                                 </button>
-                                <button class="option-btn" data-q="3" data-axis="creativity" data-val="92">
+                                <button type="button" class="option-btn" aria-pressed="false" data-q="3" data-axis="creativity" data-val="92">
                                     <div class="option-letter">C</div>
                                     <span>Collaborative guild team quests and peer problem solving.</span>
                                 </button>
-                                <button class="option-btn" data-q="3" data-axis="logic" data-val="90">
+                                <button type="button" class="option-btn" aria-pressed="false" data-q="3" data-axis="logic" data-val="90">
                                     <div class="option-letter">D</div>
                                     <span>Self-paced experimentation with immediate automated code/essay audits.</span>
                                 </button>
@@ -1857,7 +1869,7 @@
                                 <!-- Dynamic Career Cards Injected Here -->
                             </div>
 
-                            <button id="btn-unlock-roadmap" class="btn-primary-glow" style="width: 100%; justify-content: center;">
+                            <button id="btn-unlock-roadmap" type="button" class="btn-primary-glow" style="width: 100%; justify-content: center;">
                                 <span>Explore Top Matched Career Pathway & AI Quest →</span>
                             </button>
                         </div>
@@ -1868,7 +1880,7 @@
                         <h3 class="radar-title">Live 5-Axis Capability Radar</h3>
                         
                         <div class="radar-canvas-container">
-                            <svg class="radar-svg" viewBox="0 0 320 230">
+                            <svg class="radar-svg" viewBox="0 0 320 230" role="img" aria-label="5-Axis Cognitive Capability Radar Chart showing Logic, Creativity, Velocity, Domain Focus, and Grit scores">
                                 <!-- GRID POLYGONS (Center 160, 125 | r=70) -->
                                 <polygon class="radar-grid-poly" points="160,55 227,103 201,182 119,182 93,103"></polygon>
                                 <polygon class="radar-grid-poly" points="160,76 207,110 189,165 131,165 113,110"></polygon>
@@ -1893,7 +1905,7 @@
                             </svg>
                         </div>
 
-                        <div style="margin-top: 1.5rem; text-align: left; background: rgba(0,0,0,0.25); padding: 1rem; border-radius: 12px; border: 1px solid var(--border-subtle);">
+                        <div style="margin-top: 1.5rem; text-align: left; background: rgba(15, 23, 42, 0.05); padding: 1rem; border-radius: 12px; border: 1px solid var(--border-subtle);">
                             <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Calibration Radar Status</div>
                             <div id="radar-status-val" style="font-weight: 700; color: var(--accent-cyan); font-size: 0.95rem;">Select options to morph your skill profile</div>
                         </div>
@@ -1907,7 +1919,7 @@
     <!-- MODAL WALKTHROUGH PREVIEW & DTV-BRANDED VIDEO PLAYER SYSTEM -->
     <div id="demo-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div class="modal-content">
-            <button id="modal-close" class="modal-close-btn" aria-label="Close modal">
+            <button id="modal-close" type="button" class="modal-close-btn" aria-label="Close modal">
                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
             <h3 id="modal-title" style="font-size: 1.35rem; margin-bottom: 0.35rem; color: var(--text-primary);">Genesis™ Interactive Walkthrough Video</h3>
@@ -1916,22 +1928,22 @@
             <!-- YOUTUBE PLAYER CONTAINER -->
             <div class="yt-player-box">
                 <!-- VIDEO DISPLAY SCREEN -->
-                <div id="yt-video-screen" class="yt-video-screen" title="Click to Play / Pause Video">
-                    <div id="yt-center-play" class="yt-center-play" aria-label="Play Genesis Walkthrough">
+                <div id="yt-video-screen" class="yt-video-screen" tabindex="0" role="button" aria-label="Walkthrough video screen. Press Space to play or pause" title="Click or Press Space to Play / Pause Video">
+                    <button id="yt-center-play" type="button" class="yt-center-play" aria-label="Play Genesis Walkthrough">
                         <img src="/img/dtv-logo.jpg" alt="Digital Twin Verse Logo" class="dtv-center-logo-img">
                         <div class="dtv-play-overlay-icon">
                             <svg id="yt-center-icon" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M8 5v14l11-7z"/>
                             </svg>
                         </div>
-                    </div>
+                    </button>
                     <div id="yt-step-badge" class="yt-step-badge">STEP 1 / 4 — TELEMETRY INGESTION</div>
                     <h4 id="yt-step-title" class="yt-step-title">Ingesting Raw Student Telemetry</h4>
                     <p id="yt-step-desc" class="yt-step-desc">Capturing learning speed, subject preferences, error patterns, and curiosity signals in real time.</p>
                 </div>
 
                 <!-- YOUTUBE SCRUBBABLE PROGRESS BAR -->
-                <div id="yt-progress-container" class="yt-progress-container" title="Click to Seek">
+                <div id="yt-progress-container" class="yt-progress-container" tabindex="0" role="slider" aria-label="Video Seek Scrubber" aria-valuemin="0" aria-valuemax="16" aria-valuenow="0" aria-valuetext="00:00" title="Click or use Left/Right arrows to Seek">
                     <div id="yt-progress-fill" class="yt-progress-fill">
                         <div class="yt-progress-thumb"></div>
                     </div>
@@ -1940,28 +1952,28 @@
                 <!-- YOUTUBE CONTROL TOOLBAR -->
                 <div class="yt-controls-bar">
                     <div class="yt-controls-left">
-                        <button id="yt-play-toggle" class="yt-btn" title="Play / Pause (Space)" aria-label="Play or Pause Video">
+                        <button id="yt-play-toggle" type="button" class="yt-btn" title="Play / Pause (Space)" aria-label="Play or Pause Video">
                             <svg id="yt-play-svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M8 5v14l11-7z"/>
                             </svg>
                         </button>
-                        <button id="yt-prev-btn" class="yt-btn" title="Previous Chapter" aria-label="Previous Chapter">
+                        <button id="yt-prev-btn" type="button" class="yt-btn" title="Previous Chapter" aria-label="Previous Chapter">
                             <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
                         </button>
-                        <button id="yt-next-btn" class="yt-btn" title="Next Chapter" aria-label="Next Chapter">
+                        <button id="yt-next-btn" type="button" class="yt-btn" title="Next Chapter" aria-label="Next Chapter">
                             <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
                         </button>
                         <span id="yt-time-display" class="yt-time-text">00:00 / 00:16</span>
                     </div>
 
                     <div class="yt-chapter-dots" aria-label="Video Chapters">
-                        <span class="yt-dot active" id="yt-dot-1" onclick="seekToWalkthroughStep(0)">1</span>
-                        <span class="yt-dot" id="yt-dot-2" onclick="seekToWalkthroughStep(1)">2</span>
-                        <span class="yt-dot" id="yt-dot-3" onclick="seekToWalkthroughStep(2)">3</span>
-                        <span class="yt-dot" id="yt-dot-4" onclick="seekToWalkthroughStep(3)">4</span>
+                        <button type="button" class="yt-dot active" id="yt-dot-1" aria-label="Go to chapter 1" onclick="seekToWalkthroughStep(0)">1</button>
+                        <button type="button" class="yt-dot" id="yt-dot-2" aria-label="Go to chapter 2" onclick="seekToWalkthroughStep(1)">2</button>
+                        <button type="button" class="yt-dot" id="yt-dot-3" aria-label="Go to chapter 3" onclick="seekToWalkthroughStep(2)">3</button>
+                        <button type="button" class="yt-dot" id="yt-dot-4" aria-label="Go to chapter 4" onclick="seekToWalkthroughStep(3)">4</button>
                     </div>
 
-                    <button id="yt-launch-btn" class="btn-primary-glow" style="padding: 0.4rem 0.9rem; font-size: 0.85rem; min-height: 36px;">
+                    <button id="yt-launch-btn" type="button" class="btn-primary-glow" style="padding: 0.4rem 0.9rem; font-size: 0.85rem; min-height: 36px;">
                         <span>Launch Genesis</span>
                     </button>
                 </div>
@@ -1972,7 +1984,7 @@
     <!-- DEDICATED 2030 CAREER PATHWAY & AI QUEST ROADMAP MODAL -->
     <div id="roadmap-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="roadmap-modal-title">
         <div class="modal-content roadmap-modal-content">
-            <button id="roadmap-modal-close" class="modal-close-btn" aria-label="Close modal">
+            <button id="roadmap-modal-close" type="button" class="modal-close-btn" aria-label="Close modal">
                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
 
@@ -2117,6 +2129,10 @@
     <!-- INTERACTIVE LOGIC & STATE MACHINE -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Accessibility & Focus Management State
+            let lastFocusedElement = null;
+            const mainContent = document.getElementById('main-content');
+
             // Theme Toggle Logic
             const themeBtn = document.getElementById('theme-toggle');
             const sunIcon = document.getElementById('theme-icon-sun');
@@ -2126,24 +2142,28 @@
             const savedTheme = localStorage.getItem('dtv_theme') || 'dark';
             setTheme(savedTheme);
 
-            themeBtn.addEventListener('click', () => {
-                const currentTheme = htmlEl.classList.contains('light') ? 'light' : 'dark';
-                const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                setTheme(nextTheme);
-            });
+            if (themeBtn) {
+                themeBtn.addEventListener('click', () => {
+                    const currentTheme = htmlEl.classList.contains('light') ? 'light' : 'dark';
+                    const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    setTheme(nextTheme);
+                });
+            }
 
             function setTheme(theme) {
                 if (theme === 'light') {
                     htmlEl.classList.remove('dark');
                     htmlEl.classList.add('light');
-                    sunIcon.style.display = 'block';
-                    moonIcon.style.display = 'none';
+                    if (sunIcon) sunIcon.style.display = 'block';
+                    if (moonIcon) moonIcon.style.display = 'none';
+                    if (themeBtn) themeBtn.setAttribute('aria-label', 'Switch to dark theme');
                     localStorage.setItem('dtv_theme', 'light');
                 } else {
                     htmlEl.classList.remove('light');
                     htmlEl.classList.add('dark');
-                    sunIcon.style.display = 'none';
-                    moonIcon.style.display = 'block';
+                    if (sunIcon) sunIcon.style.display = 'none';
+                    if (moonIcon) moonIcon.style.display = 'block';
+                    if (themeBtn) themeBtn.setAttribute('aria-label', 'Switch to light theme');
                     localStorage.setItem('dtv_theme', 'dark');
                 }
             }
@@ -2154,13 +2174,27 @@
 
             if (mobileMenuBtn && mobileNavDrawer) {
                 mobileMenuBtn.addEventListener('click', () => {
-                    mobileNavDrawer.classList.toggle('open');
+                    const isOpen = mobileNavDrawer.classList.toggle('open');
+                    mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
                 });
 
                 mobileNavDrawer.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', () => {
                         mobileNavDrawer.classList.remove('open');
+                        mobileMenuBtn.setAttribute('aria-expanded', 'false');
                     });
+                });
+            }
+
+            // Top Nav CTA smooth scroll & scan trigger
+            const btnTopBegin = document.getElementById('btn-top-begin');
+            if (btnTopBegin) {
+                btnTopBegin.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (scannerSection) scannerSection.scrollIntoView({ behavior: 'smooth' });
+                    if (!isScanning) {
+                        startGenesisScanSequence();
+                    }
                 });
             }
 
@@ -2192,9 +2226,13 @@
                         const data = await res.json();
                         if (data.success && data.twin) {
                             currentDigitalTwinState = data.twin;
-                            document.getElementById('res-twin-id').textContent = data.twin.twinId;
-                            document.getElementById('res-archetype').textContent = data.twin.archetype;
-                            document.getElementById('res-confidence').textContent = `${data.twin.confidence}%`;
+                            const resTwinId = document.getElementById('res-twin-id');
+                            const resArchetype = document.getElementById('res-archetype');
+                            const resConfidence = document.getElementById('res-confidence');
+
+                            if (resTwinId) resTwinId.textContent = data.twin.twinId;
+                            if (resArchetype) resArchetype.textContent = data.twin.archetype;
+                            if (resConfidence) resConfidence.textContent = `${data.twin.confidence}%`;
                             if (data.twin.scores) {
                                 userScores = data.twin.scores;
                                 updateRadarPolygon();
@@ -2212,9 +2250,13 @@
                     try {
                         const parsed = JSON.parse(cached);
                         currentDigitalTwinState = parsed;
-                        document.getElementById('res-twin-id').textContent = parsed.twinId;
-                        document.getElementById('res-archetype').textContent = parsed.archetype;
-                        document.getElementById('res-confidence').textContent = `${parsed.confidence}%`;
+                        const resTwinId = document.getElementById('res-twin-id');
+                        const resArchetype = document.getElementById('res-archetype');
+                        const resConfidence = document.getElementById('res-confidence');
+
+                        if (resTwinId) resTwinId.textContent = parsed.twinId;
+                        if (resArchetype) resArchetype.textContent = parsed.archetype;
+                        if (resConfidence) resConfidence.textContent = `${parsed.confidence}%`;
                         if (parsed.scores) {
                             userScores = parsed.scores;
                             updateRadarPolygon();
@@ -2295,15 +2337,20 @@
                 const chapterIndex = Math.min(Math.floor(currentTime / 4), 3);
                 const chapter = walkthroughChapters[chapterIndex];
 
-                ytStepBadge.textContent = chapter.badge;
-                ytStepTitle.textContent = chapter.title;
-                ytStepDesc.textContent = chapter.desc;
+                if (ytStepBadge) ytStepBadge.textContent = chapter.badge;
+                if (ytStepTitle) ytStepTitle.textContent = chapter.title;
+                if (ytStepDesc) ytStepDesc.textContent = chapter.desc;
 
                 const percent = (currentTime / TOTAL_DURATION) * 100;
-                ytProgressFill.style.width = `${percent}%`;
+                if (ytProgressFill) ytProgressFill.style.width = `${percent}%`;
 
                 const curSec = Math.floor(currentTime).toString().padStart(2, '0');
-                ytTimeDisplay.textContent = `00:${curSec} / 00:16`;
+                if (ytTimeDisplay) ytTimeDisplay.textContent = `00:${curSec} / 00:16`;
+
+                if (ytProgressContainer) {
+                    ytProgressContainer.setAttribute('aria-valuenow', Math.floor(currentTime).toString());
+                    ytProgressContainer.setAttribute('aria-valuetext', `00:${curSec}`);
+                }
 
                 for (let i = 1; i <= 4; i++) {
                     const dot = document.getElementById(`yt-dot-${i}`);
@@ -2316,9 +2363,9 @@
             function playYtVideo() {
                 if (isYtPlaying) return;
                 isYtPlaying = true;
-                ytVideoScreen.classList.add('playing');
-                ytPlaySvg.innerHTML = pauseSvgPath;
-                ytCenterIcon.innerHTML = pauseSvgPath;
+                if (ytVideoScreen) ytVideoScreen.classList.add('playing');
+                if (ytPlaySvg) ytPlaySvg.innerHTML = pauseSvgPath;
+                if (ytCenterIcon) ytCenterIcon.innerHTML = pauseSvgPath;
 
                 ytInterval = setInterval(() => {
                     currentTime += 0.2;
@@ -2331,9 +2378,9 @@
 
             function pauseYtVideo() {
                 isYtPlaying = false;
-                ytVideoScreen.classList.remove('playing');
-                ytPlaySvg.innerHTML = playSvgPath;
-                ytCenterIcon.innerHTML = playSvgPath;
+                if (ytVideoScreen) ytVideoScreen.classList.remove('playing');
+                if (ytPlaySvg) ytPlaySvg.innerHTML = playSvgPath;
+                if (ytCenterIcon) ytCenterIcon.innerHTML = playSvgPath;
 
                 if (ytInterval) {
                     clearInterval(ytInterval);
@@ -2354,67 +2401,121 @@
                 updateYtPlayerUI();
             };
 
-            ytVideoScreen.addEventListener('click', toggleYtPlayPause);
-            ytPlayToggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleYtPlayPause();
-            });
+            if (ytVideoScreen) {
+                ytVideoScreen.addEventListener('click', toggleYtPlayPause);
+                ytVideoScreen.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleYtPlayPause();
+                    }
+                });
+            }
 
-            ytProgressContainer.addEventListener('click', (e) => {
-                const rect = ytProgressContainer.getBoundingClientRect();
-                const clickX = e.clientX - rect.left;
-                const ratio = Math.max(0, Math.min(1, clickX / rect.width));
-                currentTime = ratio * TOTAL_DURATION;
-                updateYtPlayerUI();
-            });
+            if (ytCenterPlay) {
+                ytCenterPlay.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleYtPlayPause();
+                });
+            }
 
-            ytPrevBtn.addEventListener('click', () => {
-                const curChapter = Math.floor(currentTime / 4);
-                const prevChapter = (curChapter - 1 + 4) % 4;
-                currentTime = prevChapter * 4;
-                updateYtPlayerUI();
-            });
+            if (ytPlayToggle) {
+                ytPlayToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleYtPlayPause();
+                });
+            }
 
-            ytNextBtn.addEventListener('click', () => {
-                const curChapter = Math.floor(currentTime / 4);
-                const nextChapter = (curChapter + 1) % 4;
-                currentTime = nextChapter * 4;
-                updateYtPlayerUI();
-            });
+            if (ytProgressContainer) {
+                ytProgressContainer.addEventListener('click', (e) => {
+                    const rect = ytProgressContainer.getBoundingClientRect();
+                    const clickX = e.clientX - rect.left;
+                    const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+                    currentTime = ratio * TOTAL_DURATION;
+                    updateYtPlayerUI();
+                });
 
-            ytLaunchBtn.addEventListener('click', () => {
-                demoModal.classList.remove('open');
-                pauseYtVideo();
-                scannerSection.scrollIntoView({ behavior: 'smooth' });
-                startGenesisScanSequence();
-            });
+                ytProgressContainer.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        currentTime = Math.max(0, currentTime - 2);
+                        updateYtPlayerUI();
+                    } else if (e.key === 'ArrowRight') {
+                        e.preventDefault();
+                        currentTime = Math.min(TOTAL_DURATION, currentTime + 2);
+                        updateYtPlayerUI();
+                    }
+                });
+            }
 
-            watchDemoBtn.addEventListener('click', () => {
-                demoModal.classList.add('open');
+            if (ytPrevBtn) {
+                ytPrevBtn.addEventListener('click', () => {
+                    const curChapter = Math.floor(currentTime / 4);
+                    const prevChapter = (curChapter - 1 + 4) % 4;
+                    currentTime = prevChapter * 4;
+                    updateYtPlayerUI();
+                });
+            }
+
+            if (ytNextBtn) {
+                ytNextBtn.addEventListener('click', () => {
+                    const curChapter = Math.floor(currentTime / 4);
+                    const nextChapter = (curChapter + 1) % 4;
+                    currentTime = nextChapter * 4;
+                    updateYtPlayerUI();
+                });
+            }
+
+            if (ytLaunchBtn) {
+                ytLaunchBtn.addEventListener('click', () => {
+                    closeDemoModal();
+                    if (scannerSection) scannerSection.scrollIntoView({ behavior: 'smooth' });
+                    startGenesisScanSequence();
+                });
+            }
+
+            function openDemoModal() {
+                lastFocusedElement = document.activeElement;
+                if (demoModal) demoModal.classList.add('open');
+                if (watchDemoBtn) watchDemoBtn.setAttribute('aria-expanded', 'true');
+                if (mainContent) mainContent.setAttribute('aria-hidden', 'true');
                 currentTime = 0;
                 updateYtPlayerUI();
                 playYtVideo();
-            });
+                if (modalClose) modalClose.focus();
+            }
 
-            modalClose.addEventListener('click', () => {
-                demoModal.classList.remove('open');
+            function closeDemoModal() {
+                if (demoModal) demoModal.classList.remove('open');
+                if (watchDemoBtn) watchDemoBtn.setAttribute('aria-expanded', 'false');
+                if (mainContent) mainContent.setAttribute('aria-hidden', 'false');
                 pauseYtVideo();
-            });
+                if (lastFocusedElement) lastFocusedElement.focus();
+            }
 
-            demoModal.addEventListener('click', (e) => {
-                if (e.target === demoModal) {
-                    demoModal.classList.remove('open');
-                    pauseYtVideo();
-                }
-            });
+            if (watchDemoBtn) {
+                watchDemoBtn.addEventListener('click', openDemoModal);
+            }
+
+            if (modalClose) {
+                modalClose.addEventListener('click', closeDemoModal);
+            }
+
+            if (demoModal) {
+                demoModal.addEventListener('click', (e) => {
+                    if (e.target === demoModal) {
+                        closeDemoModal();
+                    }
+                });
+            }
 
             // Smooth Scroll to Genesis Scanner
             const beginGenesisBtn = document.getElementById('btn-begin-genesis');
-
-            beginGenesisBtn.addEventListener('click', () => {
-                scannerSection.scrollIntoView({ behavior: 'smooth' });
-                startGenesisScanSequence();
-            });
+            if (beginGenesisBtn) {
+                beginGenesisBtn.addEventListener('click', () => {
+                    if (scannerSection) scannerSection.scrollIntoView({ behavior: 'smooth' });
+                    startGenesisScanSequence();
+                });
+            }
 
             // Genesis Real-Time State Machine Scanner Logic
             const startScanBtn = document.getElementById('btn-start-scan');
@@ -2423,17 +2524,19 @@
             const scanStatusText = document.getElementById('scan-status-text');
             const twinResultCard = document.getElementById('twin-result-card');
 
-            startScanBtn.addEventListener('click', () => {
-                startGenesisScanSequence();
-            });
+            if (startScanBtn) {
+                startScanBtn.addEventListener('click', () => {
+                    startGenesisScanSequence();
+                });
+            }
 
             let isScanning = false;
 
             function startGenesisScanSequence() {
                 if (isScanning) return;
                 isScanning = true;
-                startScanBtn.style.display = 'none';
-                twinResultCard.classList.remove('show');
+                if (startScanBtn) startScanBtn.style.display = 'none';
+                if (twinResultCard) twinResultCard.classList.remove('show');
 
                 const scanPhases = [
                     { percent: 14, status: "Initialization Animation...", dot: 1 },
@@ -2462,19 +2565,23 @@
             }
 
             function updateProgress(percent, statusText, dotIndex) {
-                const offset = 440 - (440 * (percent / 100));
-                scanRingBar.style.strokeDashoffset = offset;
-                scanPercentText.textContent = `${percent}%`;
-                scanStatusText.textContent = statusText;
+                if (scanRingBar) {
+                    const offset = 440 - (440 * (percent / 100));
+                    scanRingBar.style.strokeDashoffset = offset;
+                }
+                if (scanPercentText) scanPercentText.textContent = `${percent}%`;
+                if (scanStatusText) scanStatusText.textContent = statusText;
 
                 for (let i = 1; i <= 7; i++) {
                     const dot = document.getElementById(`dot-${i}`);
-                    if (i < dotIndex) {
-                        dot.className = 'step-dot complete';
-                    } else if (i === dotIndex) {
-                        dot.className = 'step-dot active';
-                    } else {
-                        dot.className = 'step-dot';
+                    if (dot) {
+                        if (i < dotIndex) {
+                            dot.className = 'step-dot complete';
+                        } else if (i === dotIndex) {
+                            dot.className = 'step-dot active';
+                        } else {
+                            dot.className = 'step-dot';
+                        }
                     }
                 }
             }
@@ -2489,13 +2596,17 @@
                 }
 
                 if (persistentTwin) {
-                    document.getElementById('res-twin-id').textContent = persistentTwin.twinId;
-                    document.getElementById('res-archetype').textContent = persistentTwin.archetype;
-                    document.getElementById('res-confidence').textContent = `${persistentTwin.confidence}%`;
+                    const resTwinId = document.getElementById('res-twin-id');
+                    const resArchetype = document.getElementById('res-archetype');
+                    const resConfidence = document.getElementById('res-confidence');
+
+                    if (resTwinId) resTwinId.textContent = persistentTwin.twinId;
+                    if (resArchetype) resArchetype.textContent = persistentTwin.archetype;
+                    if (resConfidence) resConfidence.textContent = `${persistentTwin.confidence}%`;
                 }
 
-                scanStatusText.textContent = "Your Digital Self has been successfully created.";
-                twinResultCard.classList.add('show');
+                if (scanStatusText) scanStatusText.textContent = "Your Digital Self has been successfully created.";
+                if (twinResultCard) twinResultCard.classList.add('show');
             }
 
             // DYNAMIC 5-CAREER MATCHING MATRIX & SIMULATOR ENGINE
@@ -2634,7 +2745,7 @@
                 if (!listContainer) return;
 
                 listContainer.innerHTML = FUTURE_CAREER_PROFILES.map((career, idx) => `
-                    <div class="career-match-item" onclick="selectCareerAndOpenModal(${idx})">
+                    <div class="career-match-item" tabindex="0" role="button" aria-label="View career trajectory for ${career.title}" onclick="selectCareerAndOpenModal(${idx})" onkeydown="if(event.key==='Enter'||event.key===' ') { event.preventDefault(); selectCareerAndOpenModal(${idx}); }">
                         <div>
                             <div class="match-title">${career.title}</div>
                             <div style="font-size: 0.8rem; color: var(--text-muted);">${career.tagline}</div>
@@ -2645,50 +2756,75 @@
             }
 
             window.selectCareerAndOpenModal = function(careerIdx) {
+                lastFocusedElement = document.activeElement;
                 activeSelectedCareer = FUTURE_CAREER_PROFILES[careerIdx];
                 openCareerRoadmapModal(activeSelectedCareer);
             };
 
             function openCareerRoadmapModal(career) {
-                const currentTwinId = document.getElementById('res-twin-id').textContent;
-                const currentArchetype = document.getElementById('res-archetype').textContent;
+                const currentTwinId = document.getElementById('res-twin-id') ? document.getElementById('res-twin-id').textContent : 'DTV-GEN-8942-X';
+                const currentArchetype = document.getElementById('res-archetype') ? document.getElementById('res-archetype').textContent : 'The Creative Architect';
 
-                document.getElementById('rm-match-badge').textContent = career.badgeText;
-                document.getElementById('rm-career-title').textContent = career.title;
-                document.getElementById('rm-career-desc').textContent = career.desc;
-                document.getElementById('rm-salary-global').innerHTML = `${career.salaryGlobal} <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">(${career.salaryIndia})</span>`;
-                document.getElementById('rm-demand-growth').textContent = career.demandGrowth;
+                const rmMatchBadge = document.getElementById('rm-match-badge');
+                const rmCareerTitle = document.getElementById('rm-career-title');
+                const rmCareerDesc = document.getElementById('rm-career-desc');
+                const rmSalaryGlobal = document.getElementById('rm-salary-global');
+                const rmDemandGrowth = document.getElementById('rm-demand-growth');
+                const rmTwinId = document.getElementById('rm-twin-id');
+                const rmArchetype = document.getElementById('rm-archetype');
 
-                document.getElementById('rm-twin-id').textContent = currentTwinId;
-                document.getElementById('rm-archetype').textContent = currentArchetype;
+                if (rmMatchBadge) rmMatchBadge.textContent = career.badgeText;
+                if (rmCareerTitle) rmCareerTitle.textContent = career.title;
+                if (rmCareerDesc) rmCareerDesc.textContent = career.desc;
+                if (rmSalaryGlobal) rmSalaryGlobal.innerHTML = `${career.salaryGlobal} <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">(${career.salaryIndia})</span>`;
+                if (rmDemandGrowth) rmDemandGrowth.textContent = career.demandGrowth;
+
+                if (rmTwinId) rmTwinId.textContent = currentTwinId;
+                if (rmArchetype) rmArchetype.textContent = currentArchetype;
 
                 // Render Skills
                 const skillsContainer = document.getElementById('rm-skills-container');
-                skillsContainer.innerHTML = career.skills.map(s => `
-                    <div class="skill-item-bar">
-                        <div class="skill-lbl-flex">
-                            <span>${s.name}</span>
-                            <span style="color: var(--accent-cyan);">${s.pct}% Ready</span>
+                if (skillsContainer) {
+                    skillsContainer.innerHTML = career.skills.map(s => `
+                        <div class="skill-item-bar">
+                            <div class="skill-lbl-flex">
+                                <span>${s.name}</span>
+                                <span style="color: var(--accent-cyan);">${s.pct}% Ready</span>
+                            </div>
+                            <div class="skill-progress-bg">
+                                <div class="skill-progress-fill" style="width: ${s.pct}%;"></div>
+                            </div>
                         </div>
-                        <div class="skill-progress-bg">
-                            <div class="skill-progress-fill" style="width: ${s.pct}%;"></div>
-                        </div>
-                    </div>
-                `).join('');
+                    `).join('');
+                }
 
                 // Render Quest
-                document.getElementById('quest-q-title').textContent = career.quest.title;
+                const questQTitle = document.getElementById('quest-q-title');
+                if (questQTitle) questQTitle.textContent = career.quest.title;
                 const optionsContainer = document.getElementById('quest-options-container');
-                optionsContainer.innerHTML = career.quest.options.map(opt => `
-                    <button class="quest-option-btn" onclick="answerActiveQuestOption(this, ${opt.correct})">
-                        ${opt.text}
-                    </button>
-                `).join('');
+                if (optionsContainer) {
+                    optionsContainer.innerHTML = career.quest.options.map(opt => `
+                        <button type="button" class="quest-option-btn" tabindex="0" onclick="answerActiveQuestOption(this, ${opt.correct})">
+                            ${opt.text}
+                        </button>
+                    `).join('');
+                }
 
                 const feedbackEl = document.getElementById('quest-feedback');
-                feedbackEl.style.display = 'none';
+                if (feedbackEl) feedbackEl.style.display = 'none';
 
-                document.getElementById('roadmap-modal').classList.add('open');
+                if (mainContent) mainContent.setAttribute('aria-hidden', 'true');
+                const roadmapModal = document.getElementById('roadmap-modal');
+                if (roadmapModal) roadmapModal.classList.add('open');
+                const roadmapCloseBtn = document.getElementById('roadmap-modal-close');
+                if (roadmapCloseBtn) roadmapCloseBtn.focus();
+            }
+
+            function closeRoadmapModal() {
+                const roadmapModal = document.getElementById('roadmap-modal');
+                if (roadmapModal) roadmapModal.classList.remove('open');
+                if (mainContent) mainContent.setAttribute('aria-hidden', 'false');
+                if (lastFocusedElement) lastFocusedElement.focus();
             }
 
             window.answerActiveQuestOption = function(btnEl, isCorrect) {
@@ -2701,14 +2837,18 @@
 
                 if (isCorrect) {
                     btnEl.classList.add('correct');
-                    feedbackEl.style.color = 'var(--accent-emerald)';
-                    feedbackEl.textContent = activeSelectedCareer.quest.correctMsg;
+                    if (feedbackEl) {
+                        feedbackEl.style.color = 'var(--accent-emerald)';
+                        feedbackEl.textContent = activeSelectedCareer.quest.correctMsg;
+                    }
                 } else {
                     btnEl.style.borderColor = 'var(--accent-amber)';
-                    feedbackEl.style.color = 'var(--accent-amber)';
-                    feedbackEl.textContent = activeSelectedCareer.quest.wrongMsg;
+                    if (feedbackEl) {
+                        feedbackEl.style.color = 'var(--accent-amber)';
+                        feedbackEl.textContent = activeSelectedCareer.quest.wrongMsg;
+                    }
                 }
-                feedbackEl.style.display = 'block';
+                if (feedbackEl) feedbackEl.style.display = 'block';
             };
 
             // Initial render of careers
@@ -2725,22 +2865,45 @@
             const roadmapModal = document.getElementById('roadmap-modal');
             const roadmapModalClose = document.getElementById('roadmap-modal-close');
 
-            btnProceedAssessment.addEventListener('click', () => {
-                assessmentSection.classList.add('show');
-                assessmentSection.scrollIntoView({ behavior: 'smooth' });
-            });
+            if (btnProceedAssessment) {
+                btnProceedAssessment.addEventListener('click', () => {
+                    if (assessmentSection) {
+                        assessmentSection.classList.add('show');
+                        assessmentSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            }
 
-            btnUnlockRoadmap.addEventListener('click', () => {
-                openCareerRoadmapModal(FUTURE_CAREER_PROFILES[0]);
-            });
+            if (btnUnlockRoadmap) {
+                btnUnlockRoadmap.addEventListener('click', () => {
+                    lastFocusedElement = btnUnlockRoadmap;
+                    openCareerRoadmapModal(FUTURE_CAREER_PROFILES[0]);
+                });
+            }
 
-            roadmapModalClose.addEventListener('click', () => {
-                roadmapModal.classList.remove('open');
-            });
+            if (roadmapModalClose) {
+                roadmapModalClose.addEventListener('click', closeRoadmapModal);
+            }
 
-            roadmapModal.addEventListener('click', (e) => {
-                if (e.target === roadmapModal) {
-                    roadmapModal.classList.remove('open');
+            if (roadmapModal) {
+                roadmapModal.addEventListener('click', (e) => {
+                    if (e.target === roadmapModal) {
+                        closeRoadmapModal();
+                    }
+                });
+            }
+
+            // Global Keyboard Navigation Listener (Escape key to close modals, Arrow keys for scrubber)
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (demoModal && demoModal.classList.contains('open')) {
+                        closeDemoModal();
+                    } else if (roadmapModal && roadmapModal.classList.contains('open')) {
+                        closeRoadmapModal();
+                    } else if (mobileNavDrawer && mobileNavDrawer.classList.contains('open')) {
+                        mobileNavDrawer.classList.remove('open');
+                        if (mobileMenuBtn) mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                    }
                 }
             });
 
@@ -2751,8 +2914,15 @@
                     const val = parseInt(this.getAttribute('data-val'));
 
                     const currentCard = document.getElementById(`q-card-${qNum}`);
-                    currentCard.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+                    if (!currentCard || currentCard.getAttribute('data-busy') === 'true') return;
+                    currentCard.setAttribute('data-busy', 'true');
+
+                    currentCard.querySelectorAll('.option-btn').forEach(b => {
+                        b.classList.remove('selected');
+                        b.setAttribute('aria-pressed', 'false');
+                    });
                     this.classList.add('selected');
+                    this.setAttribute('aria-pressed', 'true');
 
                     if (axis && val) {
                         userScores[axis] = val;
@@ -2761,16 +2931,22 @@
 
                     setTimeout(() => {
                         currentCard.classList.remove('active');
+                        currentCard.removeAttribute('data-busy');
                         if (qNum < 3) {
                             const nextCard = document.getElementById(`q-card-${qNum + 1}`);
                             if (nextCard) nextCard.classList.add('active');
                         } else {
-                            document.getElementById('assessment-summary').classList.add('show');
-                            radarStatusVal.textContent = "Twin Calibration Complete! Saved to Profile & Backend DB.";
+                            const summaryEl = document.getElementById('assessment-summary');
+                            if (summaryEl) summaryEl.classList.add('show');
+                            if (radarStatusVal) radarStatusVal.textContent = "Twin Calibration Complete! Saved to Profile & Backend DB.";
                             
-                            const twinId = document.getElementById('res-twin-id').textContent;
-                            const archetype = document.getElementById('res-archetype').textContent;
-                            const confidence = document.getElementById('res-confidence').textContent.replace('%', '');
+                            const resTwinIdEl = document.getElementById('res-twin-id');
+                            const resArchetypeEl = document.getElementById('res-archetype');
+                            const resConfidenceEl = document.getElementById('res-confidence');
+
+                            const twinId = resTwinIdEl ? resTwinIdEl.textContent : 'DTV-GEN-8942-X';
+                            const archetype = resArchetypeEl ? resArchetypeEl.textContent : 'The Creative Architect';
+                            const confidence = resConfidenceEl ? resConfidenceEl.textContent.replace('%', '') : '94.8';
 
                             renderTopCareerMatches();
                             saveCalibrationToBackend(userScores, archetype, confidence, twinId);
@@ -2809,8 +2985,12 @@
                 const p4 = getAxisCoord(160, 125, userScores.domain, 70, 3);
                 const p5 = getAxisCoord(160, 125, userScores.grit, 70, 4);
 
-                radarDataPoly.setAttribute('points', `${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y} ${p4.x},${p4.y} ${p5.x},${p5.y}`);
-                radarStatusVal.textContent = `Morphing Radar: LOG ${userScores.logic}% | CRE ${userScores.creativity}% | VEL ${userScores.velocity}%`;
+                if (radarDataPoly) {
+                    radarDataPoly.setAttribute('points', `${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y} ${p4.x},${p4.y} ${p5.x},${p5.y}`);
+                }
+                if (radarStatusVal) {
+                    radarStatusVal.textContent = `Morphing Radar: LOG ${userScores.logic}% | CRE ${userScores.creativity}% | VEL ${userScores.velocity}%`;
+                }
             }
 
             function getAxisCoord(cx, cy, scorePercent, maxRadius, axisIndex) {

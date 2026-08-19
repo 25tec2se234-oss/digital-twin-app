@@ -99,27 +99,6 @@
     <style>
         /* ═══ GENESIS DESIGN SYSTEM TOKENS ═══ */
         :root {
-            --bg-main: #030712;
-            --bg-card: rgba(17, 24, 39, 0.75);
-            --bg-card-hover: rgba(31, 41, 61, 0.85);
-            --border-glow: rgba(249, 115, 22, 0.25);
-            --border-subtle: rgba(255, 255, 255, 0.08);
-            --text-primary: #ffffff;
-            --text-secondary: #f3f4f6;
-            --text-muted: #9ca3af;
-            --accent-indigo: #f97316; /* Remapped to primary orange */
-            --accent-purple: #ea580c; /* Remapped to secondary orange */
-            --accent-cyan: #fb923c;
-            --accent-emerald: #10b981;
-            --accent-amber: #f97316;
-            --glow-indigo: 0 0 40px rgba(249, 115, 22, 0.35);
-            --glow-purple: 0 0 50px rgba(234, 88, 12, 0.35);
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-serif: 'Outfit', sans-serif;
-            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        html.light {
             --bg-main: #fff7ed;
             --bg-card: rgba(255, 255, 255, 0.95);
             --bg-card-hover: rgba(255, 237, 213, 0.5);
@@ -128,8 +107,16 @@
             --text-primary: #111827;
             --text-secondary: #4b5563;
             --text-muted: #6b7280;
+            --accent-indigo: #f97316; /* Remapped to primary orange */
+            --accent-purple: #ea580c; /* Remapped to secondary orange */
+            --accent-cyan: #fb923c;
+            --accent-emerald: #10b981;
+            --accent-amber: #f97316;
             --glow-indigo: 0 10px 30px rgba(249, 115, 22, 0.15);
             --glow-purple: 0 10px 30px rgba(234, 88, 12, 0.15);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-serif: 'Outfit', sans-serif;
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         /* RESET & BASE */
@@ -173,7 +160,7 @@
             right: 0;
             z-index: 1000;
             padding: 0.85rem 1.5rem;
-            background: rgba(11, 15, 25, 0.85);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-subtle);
@@ -271,7 +258,7 @@
             top: 60px;
             left: 0;
             right: 0;
-            background: rgba(11, 15, 25, 0.96);
+            background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(24px);
             border-bottom: 1px solid var(--border-subtle);
             padding: 1.25rem 1rem;
@@ -295,7 +282,7 @@
             font-weight: 600;
             padding: 0.75rem 1rem;
             border-radius: 12px;
-            background: rgba(255,255,255,0.03);
+            background: rgba(15, 23, 42, 0.03);
             border: 1px solid var(--border-subtle);
             display: flex;
             align-items: center;
@@ -305,7 +292,7 @@
         /* BUTTONS */
         .btn-primary-glow {
             background: linear-gradient(135deg, var(--accent-indigo), var(--accent-purple));
-            color: #ffffff;
+            color: var(--dtv-text-primary)fff;
             border: none;
             padding: 0.85rem 1.6rem;
             border-radius: 12px;
@@ -431,7 +418,7 @@
             border-radius: 24px;
             padding: 1.75rem;
             backdrop-filter: blur(24px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(15, 23, 42, 0.1);
             position: relative;
             overflow: hidden;
             transform: translateZ(0);
@@ -466,7 +453,7 @@
         .core-orb svg {
             width: 54px;
             height: 54px;
-            color: #ffffff;
+            color: var(--dtv-text-primary)fff;
         }
 
         .twin-telemetry-badge {
@@ -474,7 +461,7 @@
             display: flex;
             align-items: center;
             gap: 1.5rem;
-            background: rgba(0,0,0,0.25);
+            background: rgba(15, 23, 42, 0.05);
             padding: 0.8rem 1.5rem;
             border-radius: 14px;
             border: 1px solid var(--border-subtle);
@@ -542,7 +529,7 @@
         .timeline-card:hover {
             border-color: var(--accent-indigo);
             transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
         }
 
         .timeline-step-num {
@@ -596,7 +583,7 @@
             border-color: var(--accent-purple);
             background: var(--bg-card-hover);
             transform: translateY(-5px);
-            box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.04);
         }
 
         .feature-icon-wrapper {
@@ -709,7 +696,7 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.15);
+            background: rgba(15, 23, 42, 0.15);
             transition: var(--transition-smooth);
         }
 
@@ -725,7 +712,7 @@
         /* TWIN RESULT PASSPORT CARD */
         .twin-result-card {
             display: none;
-            background: rgba(0,0,0,0.3);
+            background: rgba(15, 23, 42, 0.05);
             border: 1px solid var(--accent-emerald);
             border-radius: 20px;
             padding: 1.75rem;
@@ -840,7 +827,7 @@
         }
 
         .option-btn {
-            background: rgba(0,0,0,0.25);
+            background: rgba(15, 23, 42, 0.05);
             border: 1px solid var(--border-subtle);
             border-radius: 14px;
             padding: 1rem 1.25rem;
@@ -866,7 +853,7 @@
             width: 30px;
             height: 30px;
             border-radius: 8px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(15, 23, 42, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -953,7 +940,7 @@
         }
 
         .career-match-item {
-            background: rgba(0,0,0,0.3);
+            background: rgba(15, 23, 42, 0.05);
             border: 1px solid var(--border-subtle);
             border-radius: 14px;
             padding: 1rem 1.2rem;
@@ -1000,7 +987,7 @@
         }
 
         .roadmap-box {
-            background: rgba(0,0,0,0.35);
+            background: rgba(15, 23, 42, 0.08);
             border: 1px solid var(--border-subtle);
             border-radius: 16px;
             padding: 1.25rem;
@@ -1032,7 +1019,7 @@
 
         .skill-progress-bg {
             height: 6px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(15, 23, 42, 0.1);
             border-radius: 9999px;
             overflow: hidden;
         }
@@ -1062,7 +1049,7 @@
             width: 100%;
             text-align: left;
             padding: 0.75rem 1rem;
-            background: rgba(0,0,0,0.3);
+            background: rgba(15, 23, 42, 0.05);
             border: 1px solid var(--border-subtle);
             border-radius: 10px;
             color: var(--text-primary);
@@ -1089,7 +1076,7 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.88);
+            background: rgba(15, 23, 42, 0.5);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             z-index: 2000;
@@ -1217,11 +1204,11 @@
         .dtv-play-overlay-icon {
             position: absolute;
             inset: 0;
-            background: rgba(11, 15, 25, 0.55);
+            background: rgba(255, 255, 255, 0.55);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ffffff;
+            color: var(--dtv-text-primary)fff;
             backdrop-filter: blur(2px);
             transition: background 0.3s ease;
         }
@@ -1229,7 +1216,7 @@
         .yt-video-screen:hover .yt-center-play {
             transform: scale(1.12);
             box-shadow: 0 0 50px rgba(56, 189, 248, 0.9);
-            border-color: #ffffff;
+            border-color: var(--dtv-text-primary)fff;
         }
 
         .yt-video-screen:hover .dtv-play-overlay-icon {
@@ -1262,7 +1249,7 @@
         .yt-step-title {
             font-size: 1.25rem;
             font-weight: 800;
-            color: #ffffff;
+            color: var(--dtv-text-primary)fff;
             margin-bottom: 0.3rem;
         }
 
@@ -1276,7 +1263,7 @@
         /* DTV Branded Progress Bar */
         .yt-progress-container {
             height: 8px;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(15, 23, 42, 0.15);
             cursor: pointer;
             position: relative;
             transition: height 0.2s ease;
@@ -1332,7 +1319,7 @@
         .yt-btn {
             background: transparent;
             border: none;
-            color: #ffffff;
+            color: var(--dtv-text-primary)fff;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -1344,7 +1331,7 @@
         }
 
         .yt-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(15, 23, 42, 0.15);
         }
 
         .yt-time-text {
@@ -1363,7 +1350,7 @@
         .yt-dot {
             padding: 0.25rem 0.6rem;
             border-radius: 6px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.1);
             color: rgba(255, 255, 255, 0.7);
             font-size: 0.75rem;
             font-weight: 700;
@@ -1373,7 +1360,7 @@
 
         .yt-dot.active {
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-indigo));
-            color: #ffffff;
+            color: var(--dtv-text-primary)fff;
             box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
         }
 
@@ -1381,7 +1368,7 @@
         .footer {
             border-top: 1px solid var(--border-subtle);
             padding: 4rem 0 2rem 0;
-            background: rgba(11, 15, 25, 0.95);
+            background: rgba(255, 255, 255, 0.95);
         }
 
         html.light .footer {
@@ -1492,7 +1479,9 @@
         }
     </style>
     
-<link rel="stylesheet" href="/css/premium-theme.css">
+
+
+    <link rel="stylesheet" href="/css/premium-theme.css">
 </head>
 <body>
 
@@ -1916,7 +1905,7 @@
                             </svg>
                         </div>
 
-                        <div style="margin-top: 1.5rem; text-align: left; background: rgba(0,0,0,0.25); padding: 1rem; border-radius: 12px; border: 1px solid var(--border-subtle);">
+                        <div style="margin-top: 1.5rem; text-align: left; background: rgba(15, 23, 42, 0.05); padding: 1rem; border-radius: 12px; border: 1px solid var(--border-subtle);">
                             <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Calibration Radar Status</div>
                             <div id="radar-status-val" style="font-weight: 700; color: var(--accent-cyan); font-size: 0.95rem;">Select options to morph your skill profile</div>
                         </div>
