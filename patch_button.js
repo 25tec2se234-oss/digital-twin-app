@@ -2,10 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 const files = [
-    'c:/Users/Kumar Kartikey/.vscode DTwin/public/assets/index-hiuy2iTq.js',
-    'c:/Users/Kumar Kartikey/.vscode DTwin/deploy-digital-twin/public/assets/index-hiuy2iTq.js',
-    'c:/Users/Kumar Kartikey/.vscode DTwin/public/assets/index-DBKbgKa1.js',
-    'c:/Users/Kumar Kartikey/.vscode DTwin/deploy-digital-twin/public/assets/index-DBKbgKa1.js'
+    'c:/Users/Kumar Kartikey/.vscode DTwin/public/assets/index-C-QCogKD.js',
+    'c:/Users/Kumar Kartikey/.vscode DTwin/deploy-digital-twin/public/assets/index-C-QCogKD.js'
 ];
 
 files.forEach(filePath => {
@@ -32,7 +30,7 @@ files.forEach(filePath => {
     
     content = content.replace(rememberMeRegex, (match, p1, p2, p3) => {
         const createEl = match.match(/([a-z]\.jsxs?)\("button",\{id:"signin-submit-btn"/)[1];
-        return className:"flex justify-between items-center pt-2 w-full",children:[.jsxs("div",{className:"flex items-center gap-3",children:[]}),("button",{type:"button",onClick:()=>window.parent.location.href="/index.html",className:"flex items-center gap-1.5 text-xs font-semibold text-[#cbc3d7]/60 hover:text-[#d4af37] transition-colors cursor-pointer group",children:[("span",{className:"group-hover:-translate-x-1 transition-transform",children:"?"})," Back to Home"]})]},;
+        return `className:"flex justify-between items-center pt-2 w-full",children:[${createEl}("div",{className:"flex items-center gap-3",children:[${p2}]}),${createEl}("button",{type:"button",onClick:()=>window.parent.location.href="/index.html",className:"flex items-center gap-1.5 text-xs font-semibold text-[#cbc3d7]/60 hover:text-[#d4af37] transition-colors cursor-pointer group",children:[${createEl}("span",{className:"group-hover:-translate-x-1 transition-transform",children:"?"})," Back to Home"]})]},${p3}`;
     });
     
     fs.writeFileSync(filePath, content, 'utf8');
