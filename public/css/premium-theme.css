@@ -441,7 +441,8 @@ html .career-card:hover {
 
 /* Top Nav Dropdown */
 html .dropdown-menu, 
-html .nav-dropdown .dropdown-menu {
+html .nav-dropdown .dropdown-menu,
+html .account-panel {
     background: rgba(255, 255, 255, 0.95) !important;
     backdrop-filter: blur(20px) !important;
     border: 1px solid var(--dtv-border-default) !important;
@@ -451,8 +452,12 @@ html .dropdown-menu a,
 html .nav-dropdown .dropdown-menu a {
     color: var(--dtv-text-secondary) !important;
 }
+html .account-panel .acc-item {
+    color: var(--dtv-text-secondary);
+}
 html .dropdown-menu a:hover, 
-html .nav-dropdown .dropdown-menu a:hover {
+html .nav-dropdown .dropdown-menu a:hover,
+html .account-panel .acc-item:hover {
     color: var(--dtv-orange-600) !important;
     background: rgba(249, 115, 22, 0.05) !important;
 }
