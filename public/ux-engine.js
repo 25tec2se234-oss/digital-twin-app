@@ -329,42 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// Footer scroll space guard to prevent empty space below footer
-window.addEventListener('load', () => {
-    const footer = document.querySelector('footer');
-    if (!footer) return;
-    
-    const cleanup = () => {
-        const footerBottom = footer.getBoundingClientRect().bottom + window.scrollY;
-        document.querySelectorAll('body *').forEach(el => {
-            if (footer.contains(el) || el === footer || el.tagName === 'SCRIPT' || el.tagName === 'STYLE' || el.id === 'page-main' || el.closest('.page') || el.closest('.toast') || el.closest('.mod') || el.closest('.ov') || el.closest('.wa-redirect-ov')) return;
-            
-            const style = getComputedStyle(el);
-            if (style.display !== 'none' && style.position !== 'fixed') {
-                const rect = el.getBoundingClientRect();
-                const elBottom = rect.bottom + window.scrollY;
-                
-                // If it's rendering below the footer, hide it to prevent scroll stretch
-                if (elBottom > footerBottom + 50) {
-                    el.style.display = 'none';
-                    el.style.opacity = '0';
-                    el.style.pointerEvents = 'none';
-                }
-            }
-        });
-    };
 
-    // Run aggressively for 3 seconds after load to catch any lazy-loaded injected elements without visual delay
-    let frames = 0;
-    const runAggressive = () => {
-        cleanup();
-        frames++;
-        if (frames < 180) requestAnimationFrame(runAggressive);
-    };
-    runAggressive();
-    
-    window.addEventListener('resize', cleanup);
-});
 
 // --- 11. Native Anchor Smooth Scrolling ---
 (function initSmoothScrolling() {

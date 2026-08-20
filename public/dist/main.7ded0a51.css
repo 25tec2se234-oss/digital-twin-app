@@ -991,7 +991,7 @@
         .mob {
             display: none;
             position: fixed;
-            top: 58px;
+            top: 64px;
             left: 0;
             right: 0;
             z-index: 9998;
@@ -1002,8 +1002,8 @@
             flex-direction: column;
             padding: 1.3rem 5% 8rem 5% !important;
             gap: 1rem;
-            max-height: calc(100vh - 58px);
-            max-height: calc(100dvh - 58px);
+            max-height: calc(100vh - 64px);
+            max-height: calc(100dvh - 64px);
             overflow-y: scroll !important;
             overflow-x: hidden !important;
             -webkit-overflow-scrolling: touch !important;
@@ -1249,6 +1249,11 @@
             flex-direction: column;
             gap: 5px;
             cursor: pointer;
+            min-width: 44px;
+            min-height: 44px;
+            padding: 11px;
+            align-items: center;
+            justify-content: center;
         }
 
         .hbg span {
@@ -6431,7 +6436,7 @@ footer {
 @media (max-width: 680px) {
     html, body {
         overflow-x: hidden !important;
-        width: 100vw !important;
+        width: 100% !important;
         position: relative;
     }
     

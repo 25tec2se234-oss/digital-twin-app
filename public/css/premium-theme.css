@@ -969,3 +969,83 @@ html .msg-user {
     background: var(--dtv-orange-500) !important;
     color: #FFFFFF !important;
 }
+
+/* ========================================================================
+   MOBILE PERFORMANCE OVERRIDES
+======================================================================== */
+@media (max-width: 768px) {
+  * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  .auth-card, .feat-card, .dash-card, .glass-panel, .info-card, .step-card {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+  }
+}
+
+/* ========================================================================
+   GLOBAL CARD TEXT CONTRAST FIX
+======================================================================== */
+.feat-card p, .feat-card span,
+.dash-card p, .dash-card span,
+.glass-panel p, .glass-panel span,
+.info-card p, .info-card span,
+.step-card p, .step-card span,
+.mc p, .mc span,
+.sp-card p, .sp-card span,
+.career-card p, .career-card span,
+.faq-item p, .faq-item span,
+.pc p, .pc span,
+.fc p, .fc span,
+.rvc p, .rvc span,
+.story-card p, .story-card span {
+    color: var(--dtv-text-secondary) !important;
+}
+
+.feat-card h2, .feat-card h3, .feat-card h4,
+.dash-card h2, .dash-card h3, .dash-card h4,
+.glass-panel h2, .glass-panel h3, .glass-panel h4,
+.info-card h2, .info-card h3, .info-card h4,
+.step-card h2, .step-card h3, .step-card h4,
+.mc h2, .mc h3, .mc h4,
+.sp-card h2, .sp-card h3, .sp-card h4,
+.career-card h2, .career-card h3, .career-card h4,
+.faq-item h2, .faq-item h3, .faq-item h4,
+.pc h2, .pc h3, .pc h4,
+.fc h2, .fc h3, .fc h4,
+.rvc h2, .rvc h3, .rvc h4,
+.story-card h2, .story-card h3, .story-card h4 {
+    color: var(--dtv-text-primary) !important;
+}
+
+/* ========================================================================
+   MODAL & CHAT OVERFLOW FIXES
+======================================================================== */
+.ov {
+  align-items: flex-start !important;
+  padding: 2rem 1rem !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+.mod-wrap, .mod {
+  margin: auto !important;
+  max-height: none !important;
+}
+@media (max-width: 450px) {
+  .mod-wrap, .mod {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 12px !important;
+  }
+}
+
+/* ========================================================================
+   ACCESSIBILITY & FOCUS VISIBILITY
+======================================================================== */
+:focus-visible {
+  outline: 2px solid var(--dtv-orange-500) !important;
+  outline-offset: 2px !important;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: var(--dtv-orange-500) !important;
+}
