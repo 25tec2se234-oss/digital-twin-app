@@ -875,6 +875,40 @@
         </div>
 
         <!-- VISUAL STORIES -->
+        <style>
+        /* Fix for Student Journeys Card Contrast */
+        .story-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem 1.5rem 1.5rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0) 100%) !important;
+            color: #ffffff !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            z-index: 2;
+        }
+        .story-title {
+            color: #ffffff !important;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8) !important;
+            margin-bottom: 0.5rem;
+        }
+        .story-copy {
+            color: rgba(255,255,255,0.9) !important;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8) !important;
+            margin-bottom: 0;
+        }
+        .story-tag {
+            background: rgba(255,255,255,0.15) !important;
+            color: #ffffff !important;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.3) !important;
+            align-self: flex-start;
+            margin-bottom: 1rem;
+        }
+        </style>
         <section id="stories" class="sec">
             <div class="wrap">
                 <div class="rv center-head">
