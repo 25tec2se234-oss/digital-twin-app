@@ -55,5 +55,7 @@ const aiSchema = Joi.object({
  */
 router.post('/ai/messages', authenticate, requirePremium, aiLimiter, validate(aiSchema), aiController.sendMessages);
 router.post('/messages', authenticate, requirePremium, aiLimiter, validate(aiSchema), aiController.sendMessages);
+// Public unauthenticated route for Achievement Analyzer
+router.post('/public-analyzer', aiLimiter, validate(aiSchema), aiController.sendMessages);
 
 module.exports = router;
