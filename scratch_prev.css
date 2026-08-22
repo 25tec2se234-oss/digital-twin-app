@@ -1,0 +1,971 @@
+﻿/* ========================================================================
+   ULTIMATE LIGHT THEME OVERRIDE
+   Forces all legacy themes to use light mode variables
+======================================================================== */
+:root, 
+html[data-theme], 
+html[data-theme="midnight"], 
+html[data-theme="dark"], 
+html[data-theme="light"], 
+html[data-theme="twilight"], 
+html[data-theme="ocean"] {
+  --bg: #FAFAFA !important;
+  --bg2: #FFFFFF !important;
+  --card: #FFFFFF !important;
+  --wh: #09090b !important;
+  --wh2: #52525b !important;
+  --mu: #52525b !important;
+  --border: rgba(15, 23, 42, 0.08) !important;
+  
+  --body-bg: #FAFAFA !important;
+  --body-after-bg: #FFFFFF !important;
+  --nav-bg: rgba(255, 255, 255, 0.95) !important;
+
+  --dtv-bg-base: #FAFAFA !important;
+  --dtv-bg-raised: #FFFFFF !important;
+  --dtv-bg-overlay: rgba(255, 255, 255, 0.85) !important;
+  --dtv-text-primary: #09090b !important;
+  --dtv-text-secondary: #52525b !important;
+}
+
+/* ========================================================================
+   DIGITAL TWIN VERSE - ULTIMATE SaaS LIGHT THEME
+   The absolute highest standard of UI/UX, crafted for an elite SaaS experience.
+======================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  /* Surfaces - Pure Whites and Subtle Grays */
+  --dtv-bg-base: #FAFAFA; /* Off-white for less eye-strain */
+  --dtv-bg-raised: #FFFFFF;
+  --dtv-bg-overlay: rgba(255, 255, 255, 0.85);
+  
+  /* Borders - Ultra-thin, barely visible separating lines */
+  --dtv-border-subtle: rgba(15, 23, 42, 0.04);
+  --dtv-border-default: rgba(15, 23, 42, 0.08);
+  --dtv-border-strong: rgba(15, 23, 42, 0.15);
+
+  /* Typography - Masterfully tuned contrast */
+  --dtv-text-primary: #09090b; /* Almost black */
+  --dtv-text-secondary: #52525b; /* Soft gray for descriptions */
+  --dtv-text-tertiary: #a1a1aa;
+
+  /* Brand Orange - Vibrant, confident, converting */
+  --dtv-orange-300: #FDBA74;
+  --dtv-orange-400: #FB923C;
+  --dtv-orange-500: #F97316;
+  --dtv-orange-600: #EA580C;
+  --dtv-orange-glow: rgba(249, 115, 22, 0.2);
+
+  /* Shadows - Layered, diffused, butter-smooth */
+  --dtv-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.03);
+  --dtv-shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.03), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
+  --dtv-shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.03), 0 4px 6px -4px rgba(15, 23, 42, 0.03);
+  --dtv-shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.03), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
+  
+  /* Glowing Orange Shadow for primary actions */
+  --dtv-shadow-glow-orange: 0 0 0 1px rgba(249, 115, 22, 0.15), 0 8px 16px rgba(249, 115, 22, 0.15);
+
+  /* Fonts */
+  --font-display: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Legacy variable overrides mapping */
+  --bg: #FAFAFA;
+  --bg2: #FFFFFF;
+  --card: #FFFFFF;
+  --wh: #09090b;
+  --wh2: #52525b;
+  --mu: #52525b;
+}
+
+/* ========================================================================
+   GLOBAL LIGHT THEME & BACKGROUNDS (FORCED)
+======================================================================== */
+body, html, html {
+    background: var(--dtv-bg-base) !important;
+    background-color: var(--dtv-bg-base) !important;
+    color: var(--dtv-text-primary) !important;
+    font-family: var(--font-body);
+    /* Elite SaaS faint grid background */
+    background-image: linear-gradient(var(--dtv-border-subtle) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--dtv-border-subtle) 1px, transparent 1px) !important;
+    background-size: 40px 40px !important;
+    background-attachment: fixed !important;
+}
+
+/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+   THE SPLASH SCREEN FIX (Root Level Preloader Override)
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+#splash-screen {
+    background: #FFFFFF !important;
+}
+.splash-logo {
+    color: var(--dtv-text-primary) !important;
+}
+.splash-text em {
+    color: var(--dtv-orange-500) !important;
+}
+.splash-loader {
+    background: rgba(15, 23, 42, 0.05) !important;
+}
+.splash-loader-bar {
+    background: var(--dtv-orange-500) !important;
+    box-shadow: 0 0 15px rgba(249, 115, 22, 0.4) !important;
+}
+.splash-logo-mark {
+    background: linear-gradient(135deg, var(--dtv-orange-400), var(--dtv-orange-600)) !important;
+    box-shadow: 0 0 30px rgba(249, 115, 22, 0.3) !important;
+    color: #FFFFFF !important;
+}
+
+/* ========================================================================
+   TYPOGRAPHY
+======================================================================== */
+h1, h2, h3, h4, h5, h6, .display-text, .hero-h {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--dtv-text-primary) !important;
+}
+
+p, span, small, label {
+    color: inherit;
+}
+
+/* Modal and Overlays (True Frosted Glass) */
+.student-onboard-ov, .modal-overlay, .auth-shell, .wa-redirect-ov {
+    background: rgba(255, 255, 255, 0.6) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.modal-content, .mod-wrap, .auth-card {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-xl) !important;
+    border-radius: 20px !important;
+    color: var(--dtv-text-primary) !important;
+    backdrop-filter: blur(20px) !important;
+}
+
+.student-onboard-box h3, .mod-wrap h2, .mod-wrap h3 {
+    color: var(--dtv-text-primary) !important;
+    font-weight: 700;
+}
+
+.student-onboard-box p, .so-note, .mod-wrap p, .auth-card p {
+    color: var(--dtv-text-secondary) !important;
+}
+
+/* Modal Buttons */
+.so-btn {
+    background: #FFFFFF !important;
+    color: var(--dtv-text-primary) !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-sm) !important;
+    transition: all 0.2s ease !important;
+    font-weight: 600 !important;
+}
+.so-btn:hover {
+    background: #FAFAFA !important;
+    border-color: var(--dtv-orange-400) !important;
+    color: var(--dtv-orange-600) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: var(--dtv-shadow-md) !important;
+}
+
+/* Remove dark blobs entirely to keep it clean */
+.blobs .b {
+    display: none !important;
+}
+
+/* Hero Section Refinements */
+.hero-sec, .sec, .main-wrap, .hero-shell {
+    background: transparent !important;
+}
+.hero-sub {
+    color: var(--dtv-text-secondary) !important;
+    font-size: 1.15rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+.dtv-badge {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    color: var(--dtv-orange-600) !important;
+    box-shadow: var(--dtv-shadow-sm) !important;
+    border-radius: 99px !important;
+}
+.dtv-badge span {
+    color: var(--dtv-text-primary) !important;
+}
+.dtv-badge .bdot {
+    background: var(--dtv-orange-500) !important;
+    box-shadow: 0 0 8px var(--dtv-orange-500) !important;
+}
+
+/* Pathway Nodes in Hero */
+.dtv-path-line {
+    background: var(--dtv-border-default) !important;
+}
+.dtv-path-node {
+    background: var(--dtv-orange-500) !important;
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15) !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+/* Navigation - Floating White Glass */
+.nav-modern, .navbar {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-bottom: 1px solid var(--dtv-border-default) !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02) !important;
+}
+/* Hide legacy theme switcher globally */
+#theme-switcher, .theme-switcher-menu {
+    display: none !important;
+}
+.logo-modern h1, .logo-modern em, .nav-logo {
+    color: var(--dtv-text-primary) !important;
+    font-weight: 800 !important;
+}
+.logo-sub {
+    color: var(--dtv-text-tertiary) !important;
+}
+.nav-link {
+    color: var(--dtv-text-secondary) !important;
+    font-weight: 500;
+    transition: color 0.2s ease, background 0.2s ease;
+    border-radius: 8px;
+}
+.nav-link:hover, .nav-link.active {
+    color: var(--dtv-text-primary) !important;
+    background: rgba(15, 23, 42, 0.04) !important;
+}
+
+/* Cards (Features, Dashboard, Steps) */
+.feat-card, .dash-card, .glass-panel, .info-card, .step-card, .career-card, .tool-card,
+html .feat-card, html .dash-card, html .glass-panel {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-md) !important;
+    border-radius: 16px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.feat-card:hover, .dash-card:hover, .tool-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: var(--dtv-shadow-lg) !important;
+    border-color: var(--dtv-border-strong) !important;
+}
+.feat-card h3, .dash-card h3, .info-card h3, .tool-card h3 {
+    color: var(--dtv-text-primary) !important;
+}
+.feat-card p, .dash-card p, .info-card p, .tool-card p, .tool-desc {
+    color: var(--dtv-text-secondary) !important;
+}
+/* Override weird original 3D bevels */
+.feat-card, .dash-card, .glass-panel, .info-card, .step-card, .mc, .sp-card, .career-card, .faq-item {
+    border-top: 1px solid var(--dtv-border-default) !important;
+    border-bottom: 1px solid var(--dtv-border-default) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Inputs */
+.fi, .ci, input, textarea, select {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    color: var(--dtv-text-primary) !important;
+    border-radius: 10px !important;
+    box-shadow: var(--dtv-shadow-sm) !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+.fi:focus, .ci:focus, input:focus, textarea:focus, select:focus {
+    border-color: var(--dtv-orange-500) !important;
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1) !important;
+    outline: none !important;
+}
+
+/* Buttons */
+.btn-primary, .btn-brand, .tool-btn, .hero-btns .btn-out:first-child {
+    background: linear-gradient(135deg, var(--dtv-orange-500), var(--dtv-orange-600)) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    box-shadow: var(--dtv-shadow-glow-orange) !important;
+    font-weight: 600 !important;
+    text-shadow: none !important;
+    border-radius: 10px !important;
+    transition: all 0.2s ease !important;
+}
+.btn-primary:hover, .btn-brand:hover, .tool-btn:hover, .hero-btns .btn-out:first-child:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 20px rgba(249, 115, 22, 0.2) !important;
+    background: linear-gradient(135deg, var(--dtv-orange-400), var(--dtv-orange-500)) !important;
+}
+
+.btn-secondary, .btn-out {
+    background: #FFFFFF !important;
+    color: var(--dtv-text-primary) !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-sm) !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+}
+.btn-secondary:hover, .btn-out:hover {
+    background: #F4F4F5 !important;
+    color: var(--dtv-text-primary) !important;
+}
+
+/* Interactive Elements */
+.streak-bar, .progress-fill, .mini-bar span, html .streak-bar {
+    background: var(--dtv-orange-500) !important;
+}
+.seg-btn {
+    color: var(--dtv-text-secondary) !important;
+}
+.seg-btn.active {
+    background: var(--dtv-orange-500) !important;
+    color: #FFFFFF !important;
+    box-shadow: var(--dtv-shadow-sm) !important;
+}
+
+/* Icons */
+.dtv-icon {
+    color: var(--dtv-orange-500) !important;
+}
+
+/* Footer */
+.footer-modern, .footer, footer {
+    background: #FFFFFF !important;
+    border-top: 1px solid var(--dtv-border-default) !important;
+    color: var(--dtv-text-secondary) !important;
+}
+.footer-link, .footer-legal-link, .foot-link {
+    color: var(--dtv-text-secondary) !important;
+}
+.footer-link:hover, .footer-legal-link:hover, .foot-link:hover {
+    color: var(--dtv-text-primary) !important;
+}
+
+/* Universal Text Highlights */
+.text-brand, .text-glow, .amb, .serif {
+    color: var(--dtv-orange-600) !important;
+    text-shadow: none !important;
+}
+
+/* Remove 3D Card Hover Rotations which look weird in light theme */
+.feat-card:hover, .dash-card:hover {
+    transform: translateY(-5px) scale(1.02) !important;
+}
+
+/* ========================================================================
+   READABILITY BUG FIXES (FORCING DARK TEXT ON LIGHT BACKGROUNDS)
+======================================================================== */
+html .mob, html .mob a, html .mob .btn-reset,
+html .mob-signin, html .mob-signup {
+    color: var(--dtv-text-primary) !important;
+    background-color: transparent !important;
+}
+html .mob {
+    background-color: #FFFFFF !important;
+}
+html .chat-panel, html .cp-name, html .cp-st, 
+html .cp-msgs, html .ai-msg, html .agent-chip {
+    color: var(--dtv-text-primary) !important;
+}
+html .chat-panel {
+    background: #FFFFFF !important; 
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-xl) !important;
+}
+html .ai-msg {
+    background: var(--dtv-bg-base) !important; 
+    color: var(--dtv-text-primary) !important;
+    border: 1px solid var(--dtv-border-default) !important;
+}
+html .us-msg {
+    background: linear-gradient(135deg, var(--dtv-orange-500), var(--dtv-orange-600)) !important; 
+    color: #FFFFFF !important;
+}
+html #rzp-payment-modal .mod-wrap, html #proof-upload-form label, 
+html .checkbox-group span, html #rzp-payment-modal p {
+    color: var(--dtv-text-primary) !important;
+}
+html #rzp-payment-modal .mod-wrap {
+    background: #FFFFFF !important;
+}
+html .toast {
+    background: #FFFFFF !important;
+    color: var(--dtv-text-primary) !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-lg) !important;
+}
+html .tool-btn {
+    color: #FFFFFF !important;
+}
+
+/* ========================================================================
+   SPECIFIC COMPONENT BUG FIXES (Dashboard, Explorer, Hover States)
+======================================================================== */
+
+/* Dashboard & Explorer Fixes */
+html #student-dashboard, 
+html .dash-box, 
+html .dash-card,
+html .career-card, 
+html .sp-card {
+    background: #FFFFFF !important;
+    color: var(--dtv-text-primary) !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-md) !important;
+}
+
+/* Ensure text inside these cards is black */
+html .dash-card *, 
+html .dash-box *, 
+html .career-card *, 
+html .sp-card * {
+    color: var(--dtv-text-primary) !important;
+}
+
+/* Fix Comprehensive Learning Ecosystem hover state */
+html .feat-card:hover, 
+html .ecosystem-card:hover,
+html .dash-card:hover,
+html .career-card:hover {
+    background: #FFFFFF !important; /* Force it to stay white, not black */
+    transform: translateY(-5px) !important;
+    box-shadow: var(--dtv-shadow-lg) !important;
+}
+
+/* Top Nav Dropdown */
+html .dropdown-menu, 
+html .nav-dropdown .dropdown-menu,
+html .account-panel {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-lg) !important;
+}
+html .dropdown-menu a, 
+html .nav-dropdown .dropdown-menu a {
+    color: var(--dtv-text-secondary) !important;
+}
+html .account-panel .acc-item {
+    color: var(--dtv-text-secondary);
+}
+html .dropdown-menu a:hover, 
+html .nav-dropdown .dropdown-menu a:hover,
+html .account-panel .acc-item:hover {
+    color: var(--dtv-orange-600) !important;
+    background: rgba(249, 115, 22, 0.05) !important;
+}
+
+/* Ensure the Founder Link is perfectly readable */
+html .dtv-badge a {
+    color: var(--dtv-orange-600) !important;
+    text-shadow: none !important;
+}
+
+/* Ensure 3D Vanta Canvas works perfectly in the Hero Section */
+#hero {
+    position: relative !important;
+    background: transparent !important;
+}
+#hero > .hero-shell, #hero > .blobs {
+    position: relative;
+    z-index: 2; /* Put text above the 3D canvas */
+}
+
+/* Fix Preloader Flash */
+.preloader {
+    background-color: var(--dtv-bg-base) !important;
+}
+.loader {
+    border-color: var(--dtv-orange-300) transparent var(--dtv-orange-500) transparent !important;
+}
+
+/* ========================================================================
+   FIXING HARDCODED BLACK SECTIONS (.surf, .surf2)
+======================================================================== */
+html .surf, html .surf2, html section[class*="surf"] {
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
+    backdrop-filter: none !important;
+}
+/* Ensure the body actually stays white regardless of anything else */
+body {
+    background: #FAFAFA !important;
+    background-color: #FAFAFA !important;
+}
+
+
+/* ========================================================================
+   ADDITIONAL LIGHT THEME FIXES FOR SPECIFIC SECTIONS (DASHBOARD, EXPLORER)
+======================================================================== */
+/* AI Section */
+html .ai-preview, html .dtv-agent-node {
+    background: #FFFFFF !important;
+    border-color: var(--dtv-border-default) !important;
+    color: var(--dtv-text-primary) !important;
+}
+
+/* Analyzer Card (Upload Your Achievements) */
+html #analyzer-promo, html #ai-section {
+    background: #FFFFFF !important;
+}
+html .analyzer-card {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-md) !important;
+}
+html .analyzer-card * {
+    color: var(--dtv-text-primary) !important;
+}
+html .analyzer-card strong {
+    color: var(--dtv-orange-600) !important; /* Emphasize metrics */
+}
+html .glass-tag {
+    color: var(--dtv-text-primary) !important;
+    background: rgba(15, 23, 42, 0.05) !important;
+    border-color: var(--dtv-border-default) !important;
+}
+
+/* Dashboard Controls (Search & Filters) */
+html .search-input, html #filter-salary, html #filter-remote {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-strong) !important;
+    color: var(--dtv-text-primary) !important;
+}
+html .search-input::placeholder {
+    color: var(--dtv-text-secondary) !important;
+}
+html .dash-controls, html .career-explorer-head {
+    background: transparent !important;
+}
+
+/* Dashboard Shell & Panels */
+html .dashboard-shell, html .dashboard-panel {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    color: var(--dtv-text-primary) !important;
+}
+html .dashboard-shell::before {
+    display: none !important;
+}
+html .dash-toggle {
+    background: var(--dtv-orange-500) !important;
+    color: #FFFFFF !important;
+    border-color: var(--dtv-orange-600) !important;
+}
+html .dash-toggle-text, html .dash-toggle-icon {
+    color: #FFFFFF !important;
+}
+html .dash-toggle:hover {
+    background: var(--dtv-orange-600) !important;
+}
+html .student-switch, html .seg-group {
+    background: #FFFFFF !important;
+}
+
+/* Fix text in specific elements */
+html .dash-hint, html .dash-ov-l {
+    color: var(--dtv-text-secondary) !important;
+}
+html .dash-ov-n {
+    color: var(--dtv-text-primary) !important;
+}
+html .dash-overall {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+}
+html .dash-ov-bar label span {
+    color: var(--dtv-text-primary) !important;
+}
+html .ov-bar-track {
+    background: rgba(15, 23, 42, 0.1) !important;
+}
+
+/* Inline Styles Overrides just in case */
+html [style*="background: rgba(255,255,255,0.03)"],
+html [style*="background: rgba(255, 255, 255, 0.03)"] {
+    background: #FFFFFF !important;
+    border-color: var(--dtv-border-default) !important;
+    color: var(--dtv-text-primary) !important;
+}
+html [style*="background:var(--surf2,#101f35)"] {
+    background: #FFFFFF !important;
+}
+
+
+/* ========================================================================
+   ADDITIONAL LIGHT THEME FIXES: JOURNEY, BLOGS, WHY DTV, REVIEWS
+======================================================================== */
+/* Force all sections to have a white background, removing any dark gradients */
+html section#road, 
+html section#latest-blogs, 
+html section#why-dtv, 
+html section#rev,
+html section#mkt,
+html section#stories,
+html section#prob,
+html section#how,
+html section#features {
+    background: #FAFAFA !important;
+    background-color: #FAFAFA !important;
+    background-image: none !important;
+}
+
+/* Ensure text inside these sections is dark */
+html section#road *, 
+html section#latest-blogs *, 
+html section#why-dtv *, 
+html section#rev * {
+    color: var(--dtv-text-primary);
+}
+/* Ensure labels and descriptions stay muted */
+html section#road .lbl, html section#road .desc,
+html section#latest-blogs .lbl, html section#latest-blogs .desc,
+html section#why-dtv .lbl, html section#why-dtv .desc,
+html section#rev .lbl, html section#rev .desc {
+    color: var(--dtv-text-secondary) !important;
+}
+
+/* Phase Cards in "From Concept to Global Impact" */
+html .road-grid, html .road-card {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    color: var(--dtv-text-primary) !important;
+}
+html .road-card.active, html .road-card[style*="background"] {
+    background: rgba(249, 115, 22, 0.05) !important;
+    border: 1px solid var(--dtv-orange-500) !important;
+}
+
+/* Feature/Why DTV Cards */
+html .ecosystem-card, html .feat-card, html .sp-card {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-md) !important;
+}
+
+/* Review Cards / Testimonials */
+html .mc, html .testimonial-card, html .review-card {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-sm) !important;
+}
+html .mc *, html .testimonial-card *, html .review-card * {
+    color: var(--dtv-text-primary) !important;
+}
+html .mc span, html .testimonial-card span, html .review-card p {
+    color: var(--dtv-text-secondary) !important;
+}
+
+/* Share Your Experience Form */
+html .share-box, html .review-form-box, html .feedback-box {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+}
+html .share-box *, html .review-form-box *, html .feedback-box * {
+    color: var(--dtv-text-primary) !important;
+}
+html .share-box input, html .share-box textarea,
+html .review-form-box input, html .review-form-box textarea,
+html .feedback-box input, html .feedback-box textarea {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-strong) !important;
+    color: var(--dtv-text-primary) !important;
+}
+
+/* ========================================================================
+   REACT AUTH APP LIGHT THEME FORCES (login.html, signup.html)
+======================================================================== */
+/* Force main container */
+html #root > div.bg-\[\#101415\] {
+    background-color: #FAFAFA !important;
+    background-image: none !important;
+    color: #1a202c !important;
+}
+
+/* Override black shader canvas */
+html #shader-canvas {
+    background-color: transparent !important;
+    opacity: 0.15 !important;
+}
+
+/* Force text colors from white to dark */
+html #root .text-white {
+    color: #1a202c !important;
+}
+html #root .text-\[\#cbc3d7\] {
+    color: #52525b !important;
+}
+
+/* Login/Signup Glass Card */
+html #login-card, html .glass-card {
+    background-color: #FFFFFF !important;
+    border-color: rgba(15, 23, 42, 0.08) !important;
+    box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.03) !important;
+}
+
+/* Inputs inside React app */
+html #root input.bg-black\/60 {
+    background-color: #FFFFFF !important;
+    color: #1a202c !important;
+    border-color: rgba(15, 23, 42, 0.15) !important;
+}
+html #root input.bg-black\/60::placeholder {
+    color: #94a3b8 !important;
+}
+
+/* Informational Text Box */
+html #root p.bg-black\/40 {
+    background-color: rgba(15, 23, 42, 0.04) !important;
+    border-color: rgba(15, 23, 42, 0.08) !important;
+    color: #52525b !important;
+}
+
+/* ========================================================================
+   PREMIUM PRICING MODAL LIGHT THEME FIX
+======================================================================== */
+html .wa-redirect-box {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(15, 23, 42, 0.08) !important;
+    box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.01) !important;
+}
+
+html .wa-redirect-box h2, html .wa-redirect-box h3 {
+    color: #09090b !important;
+}
+
+html .wa-redirect-box p, html .wa-redirect-box .desc {
+    color: #52525b !important;
+}
+
+html .pricing-card {
+    background: #FAFAFA !important;
+    border: 1px solid rgba(15, 23, 42, 0.08) !important;
+    color: #09090b !important;
+}
+
+html .pricing-card:hover {
+    background: #FFFFFF !important;
+    border-color: var(--dtv-orange-500) !important;
+    box-shadow: 0 10px 25px rgba(249, 115, 22, 0.15) !important;
+}
+
+/* Ensure the pricing amounts are dark */
+html .pricing-card div, html .pricing-card li, html .pricing-card span {
+    color: #09090b !important;
+}
+
+/* Except the Starter/Value badges and /mo text which should be lighter */
+html .pricing-card div[style*="font-size: 0.75rem"], html .pricing-card span[style*="font-size: 1rem"] {
+    color: #52525b !important;
+    background: rgba(15, 23, 42, 0.05) !important; /* For the badge */
+}
+
+/* Close Button on Modal */
+html .wa-redirect-box button[onclick="closePricingPage()"] {
+    background: rgba(15, 23, 42, 0.05) !important;
+    color: #09090b !important;
+}
+html .wa-redirect-box button[onclick="closePricingPage()"]:hover {
+    background: rgba(15, 23, 42, 0.1) !important;
+}
+
+/* ========================================================================
+   BLOG & RESOURCES LIGHT THEME FIX
+======================================================================== */
+/* Blog Page Background and Text */
+html body.blog-page, html .blog-container, html .blog-layout, html .blog-hero {
+    background: #FAFAFA !important;
+}
+
+html .blog-content {
+    color: #3f3f46 !important;
+}
+
+html .blog-content h1, html .blog-content h2, html .blog-content h3, html .blog-content h4, html .blog-content h5, html .blog-content h6 {
+    color: #09090b !important;
+}
+
+html .blog-content strong, html .blog-content b {
+    color: #09090b !important;
+}
+
+html .blog-meta {
+    color: #71717a !important;
+}
+
+html .blog-card, html .story-card {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(15, 23, 42, 0.08) !important;
+    color: #3f3f46 !important;
+}
+
+html .blog-card:hover, html .story-card:hover {
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05) !important;
+    border-color: rgba(15, 23, 42, 0.15) !important;
+}
+
+html .blog-card-content, html .story-card-content {
+    color: #52525b !important;
+}
+
+html .blog-card-title, html .story-title, html .blog-card h3 {
+    color: #09090b !important;
+}
+
+html .blog-sidebar {
+    background: #FAFAFA !important;
+}
+/* Soft Orange styling for Welcome Box */
+.student-onboard-box {
+    background: #FFF7ED !important;
+    border: 1px solid #FFEDD5 !important;
+    box-shadow: 0 20px 40px rgba(249, 115, 22, 0.08) !important;
+}
+
+/* ========================================================================
+   PROBLEM PAGES LIGHT THEME FIX (/problem/*)
+======================================================================== */
+html body[style*="background-color: #0b0f19"],
+html body:has(.prob-page-header) {
+    background-color: #FAFAFA !important;
+    color: var(--dtv-text-primary) !important;
+}
+html .prob-page-header {
+    background: rgba(255, 255, 255, 0.85) !important;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+html .prob-brand {
+    color: var(--dtv-text-primary) !important;
+}
+html .prob-back-btn {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    color: var(--dtv-text-secondary) !important;
+}
+html .prob-back-btn:hover {
+    background: #FAFAFA !important;
+    color: var(--dtv-text-primary) !important;
+}
+html .prob-title {
+    color: var(--dtv-text-primary) !important;
+}
+html .prob-title span {
+    color: var(--dtv-orange-500) !important;
+}
+html .prob-lead {
+    background: #FFFFFF !important;
+    border-color: var(--dtv-orange-500) !important;
+    color: var(--dtv-text-secondary) !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    border-left: 4px solid var(--dtv-orange-500) !important;
+}
+html .stat-box, html .prob-content-card {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-sm) !important;
+}
+html .stat-num {
+    color: var(--dtv-orange-500) !important;
+}
+html .stat-label, html .prob-section-title, html .prob-content-card h3 {
+    color: var(--dtv-text-primary) !important;
+}
+html .stat-sub, html .prob-content-card p {
+    color: var(--dtv-text-secondary) !important;
+}
+html .news-card {
+    background: rgba(249, 115, 22, 0.04) !important;
+    border: 1px solid rgba(249, 115, 22, 0.15) !important;
+}
+html .news-meta {
+    color: var(--dtv-orange-500) !important;
+}
+html .news-title {
+    color: var(--dtv-text-primary) !important;
+}
+html .news-text {
+    color: var(--dtv-text-secondary) !important;
+}
+html .solution-box {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-sm) !important;
+}
+html .solution-box h2 {
+    color: var(--dtv-text-primary) !important;
+}
+html .solution-box ul {
+    color: var(--dtv-text-secondary) !important;
+}
+html .btn-primary-dtv {
+    background: var(--dtv-orange-500) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3) !important;
+}
+html .btn-primary-dtv:hover {
+    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4) !important;
+}
+html .btn-secondary-dtv {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    color: var(--dtv-text-primary) !important;
+}
+html .btn-secondary-dtv:hover {
+    background: #FAFAFA !important;
+}
+html .ai-drawer-overlay {
+    background: rgba(255, 255, 255, 0.6) !important;
+}
+html .ai-drawer-box {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    box-shadow: var(--dtv-shadow-xl) !important;
+}
+html .ai-drawer-header {
+    border-bottom: 1px solid var(--dtv-border-default) !important;
+}
+html .ai-drawer-header h3 {
+    color: var(--dtv-text-primary) !important;
+}
+html .ai-drawer-header p {
+    color: var(--dtv-text-secondary) !important;
+}
+html .close-drawer {
+    color: var(--dtv-text-primary) !important;
+}
+html .ai-drawer-body {
+    background: #FAFAFA !important;
+}
+html .ai-drawer-footer {
+    border-top: 1px solid var(--dtv-border-default) !important;
+    background: #FFFFFF !important;
+}
+html .ai-drawer-footer input {
+    background: #FAFAFA !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    color: var(--dtv-text-primary) !important;
+}
+html .ai-drawer-footer button {
+    background: var(--dtv-orange-500) !important;
+    color: #FFFFFF !important;
+}
+html .msg-ai {
+    background: #FFFFFF !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    color: var(--dtv-text-primary) !important;
+}
+html .msg-user {
+    background: var(--dtv-orange-500) !important;
+    color: #FFFFFF !important;
+}
