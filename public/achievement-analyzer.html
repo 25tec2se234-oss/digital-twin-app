@@ -71,11 +71,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:cen
 .nav-back:hover{color:var(--wh);border-color:rgba(0,0,0,.2);}
 
 /* ═══ TOAST ════════════════════════════════════════════════════ */
-.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(120%);
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(200%);opacity:0;pointer-events:none;
   z-index:1000;background:var(--surf2);border:1px solid rgba(167,139,250,.3);
   border-radius:12px;padding:.85rem 1.5rem;font-size:.84rem;white-space:nowrap;
   display:flex;align-items:center;gap:.65rem;
-  transition:transform .4s cubic-bezier(.34,1.56,.64,1);box-shadow:0 8px 28px rgba(0,0,0,.5);}
+  transition:all .4s cubic-bezier(.34,1.56,.64,1);box-shadow:0 8px 28px rgba(0,0,0,.5);}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1;pointer-events:auto;}
 
 /* ═══ RESTORE BANNER ═══════════════════════════════════════════ */
