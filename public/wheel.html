@@ -1,44 +1,877 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Daily Spin Wheel | Digital Twin Verse</title>
-    <script type="module" crossorigin="" src="/assets/index-D_T_2p3d.js"></script>
-    <link rel="stylesheet" crossorigin="" href="/assets/index-yPQrBFW_.css">
-    <meta name="description" content="Spin the Premium Cinematic Wheel to win career rewards, mentorship credits, and streak savers on Digital Twin Verse.">
-    <link rel="canonical" href="https://digitaltwinvrs.com/wheel">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://digitaltwinvrs.com/wheel">
-    <meta property="og:title" content="Daily Spin Wheel | Digital Twin Verse">
-    <meta property="og:description" content="Spin the Premium Cinematic Wheel to win career rewards, mentorship credits, and streak savers on Digital Twin Verse.">
-    <meta property="og:image" content="https://digitaltwinvrs.com/img/dtv-logo.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://digitaltwinvrs.com/wheel">
-    <meta name="twitter:title" content="Daily Spin Wheel | Digital Twin Verse">
-    <meta name="twitter:description" content="Spin the Premium Cinematic Wheel to win career rewards, mentorship credits, and streak savers on Digital Twin Verse.">
-    <meta name="twitter:image" content="https://digitaltwinvrs.com/img/dtv-logo.jpg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Daily Spin Wheel | Digital Twin Verse</title>
+  <meta name="description" content="Spin the Premium Cinematic Wheel to win career rewards, mentorship credits, and streak savers on Digital Twin Verse.">
+  <link rel="canonical" href="https://digitaltwinvrs.com/wheel">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://digitaltwinvrs.com/wheel">
+  <meta property="og:title" content="Daily Spin Wheel | Digital Twin Verse">
+  <meta property="og:description" content="Spin the Premium Cinematic Wheel to win career rewards, mentorship credits, and streak savers on Digital Twin Verse.">
+  <meta property="og:image" content="https://digitaltwinvrs.com/img/dtv-logo.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #d4af37;
+      --gold2: #f6e6a4;
+      --navy: #07090d;
+      --card-bg: rgba(13,18,30,0.92);
+      --border: rgba(212,175,55,0.25);
+    }
+
+    html, body {
+      min-height: 100vh;
+      background: #07090d;
+      font-family: 'Outfit', sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* ── Stage Background ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(120% 90% at 18% 8%, rgba(18,35,77,0.55) 0%, transparent 55%),
+        radial-gradient(110% 90% at 85% 92%, rgba(24,18,52,0.5) 0%, transparent 58%),
+        radial-gradient(70% 55% at 50% 52%, rgba(11,27,58,0.42) 0%, transparent 70%),
+        #07090d;
+    }
+
+    /* ── God Rays ── */
+    #god-rays {
+      position: fixed; left: 50%; top: 50%;
+      width: 150vmin; height: 150vmin;
+      transform: translate(-50%, -50%);
+      z-index: 0; pointer-events: none;
+      background: repeating-conic-gradient(from 0deg at 50% 50%, rgba(212,175,55,0.05) 0deg 1.4deg, transparent 1.4deg 22deg);
+      -webkit-mask-image: radial-gradient(closest-side, rgba(0,0,0,0.9) 8%, transparent 68%);
+      mask-image: radial-gradient(closest-side, rgba(0,0,0,0.9) 8%, transparent 68%);
+      filter: blur(6px);
+      animation: rays-turn 90s linear infinite;
+    }
+    @keyframes rays-turn { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+    /* ── Vignette ── */
+    #vignette {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none;
+      background: radial-gradient(85% 85% at 50% 50%, transparent 52%, rgba(0,0,0,0.55) 100%);
+    }
+
+    /* ── Main Layout ── */
+    #page {
+      position: relative; z-index: 2;
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 2rem 1rem 4rem;
+      gap: 0;
+    }
+
+    /* ── Back Pill ── */
+    #back-pill {
+      position: fixed; top: 1.25rem; left: 1.25rem; z-index: 50;
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .5rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(212,175,55,0.3);
+      background: rgba(11,14,20,0.7);
+      backdrop-filter: blur(12px);
+      font-size: .7rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .25em;
+      color: #c9a53d; text-decoration: none;
+      transition: background .2s, border-color .2s;
+    }
+    #back-pill:hover { background: rgba(212,175,55,0.15); border-color: rgba(246,230,164,0.6); }
+
+    /* ── Status Pill ── */
+    #status-pill {
+      position: fixed; top: 1.25rem; right: 1.25rem; z-index: 50;
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .5rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(212,175,55,0.35);
+      background: rgba(11,14,20,0.85);
+      backdrop-filter: blur(12px);
+      font-size: .7rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .2em;
+      color: #f6e6a4;
+    }
+    .pill-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #4ade80;
+      animation: pulse-dot 1.4s ease-in-out infinite;
+    }
+    .pill-dot.locked { background: #f59e0b; animation: none; }
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+
+    /* ── Wheel Wrapper ── */
+    #wheel-root {
+      position: relative;
+      display: flex; flex-direction: column; align-items: center;
+      margin-top: 1rem;
+    }
+
+    /* ── SVG Wheel ── */
+    #wheel-svg-wrap {
+      position: relative;
+      width: clamp(280px, 88vw, 560px);
+      aspect-ratio: 1/1;
+      cursor: pointer;
+      filter: drop-shadow(0 0 40px rgba(212,175,55,0.15));
+      transition: filter .3s;
+    }
+    #wheel-svg-wrap:hover { filter: drop-shadow(0 0 60px rgba(212,175,55,0.3)); }
+    #wheel-disc {
+      transition: transform .05s linear;
+      transform-origin: 360px 360px;
+    }
+
+    /* Hub glow animation */
+    @keyframes hub-breathe {
+      0%,100% { opacity:.7; r:108; }
+      50% { opacity:1; r:114; }
+    }
+    .hub-glow-anim { animation: hub-breathe 2.4s ease-in-out infinite; }
+
+    /* Charging pulse on the wheel */
+    @keyframes charge-pulse {
+      0%,100% { opacity:0.18; }
+      50% { opacity:0.55; }
+    }
+    .charging #wheel-svg-wrap { filter: drop-shadow(0 0 80px rgba(212,175,55,0.55)); }
+
+    /* ── Needle ── */
+    #needle-wrap {
+      position: absolute;
+      top: -18px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+    #needle-svg { overflow: visible; }
+    @keyframes needle-kick {
+      0% { transform: rotate(0deg); }
+      30% { transform: rotate(-14deg); }
+      70% { transform: rotate(8deg); }
+      100% { transform: rotate(0deg); }
+    }
+    .needle-kick { animation: needle-kick 220ms cubic-bezier(.17,.67,.42,1.3) both; }
+
+    /* ── Caption ── */
+    #caption {
+      margin-top: 2.25rem;
+      height: 2.5rem;
+      display: flex; align-items: flex-start; justify-content: center;
+      font-size: .72rem; font-weight: 300;
+      text-transform: uppercase; letter-spacing: .5em;
+      color: #6e7fa3;
+      text-align: center;
+    }
+    #caption.locked { color: var(--gold); font-weight: 500; letter-spacing: .35em; }
+    @keyframes caption-in {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    #caption span { animation: caption-in .4s ease both; }
+
+    /* ── Reward Card ── */
+    #reward-card {
+      display: none;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 30;
+      width: clamp(260px, 85vw, 400px);
+      padding: 2rem 1.75rem;
+      border-radius: 24px;
+      background: rgba(8,12,22,0.96);
+      border: 1px solid rgba(212,175,55,0.35);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 0 80px rgba(212,175,55,0.18), 0 30px 60px rgba(0,0,0,0.7);
+      text-align: center;
+      animation: card-appear .5s cubic-bezier(.16,1,.3,1) both;
+    }
+    #reward-card.gold-card { border-color: rgba(246,230,164,0.6); box-shadow: 0 0 120px rgba(246,230,164,0.35), 0 30px 60px rgba(0,0,0,0.8); }
+    @keyframes card-appear {
+      from { opacity:0; transform: translate(-50%,-50%) scale(.88); }
+      to   { opacity:1; transform: translate(-50%,-50%) scale(1); }
+    }
+
+    .reward-icon { font-size: 3rem; margin-bottom: .75rem; }
+    .reward-tier {
+      display: inline-block; padding: .2rem .8rem;
+      border-radius: 9999px; font-size: .65rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .2em;
+      margin-bottom: 1rem;
+    }
+    .reward-tier.rare { background: rgba(246,230,164,0.15); color: #f6e6a4; border: 1px solid rgba(246,230,164,0.4); }
+    .reward-tier.medium { background: rgba(212,175,55,0.12); color: #d4af37; border: 1px solid rgba(212,175,55,0.3); }
+    .reward-tier.common { background: rgba(110,127,163,0.12); color: #8fa6d8; border: 1px solid rgba(110,127,163,0.2); }
+
+    .reward-title { font-size: 1.6rem; font-weight: 800; color: #fff; margin-bottom: .5rem; }
+    .reward-title.gold { background: linear-gradient(135deg,#c9a53d,#f6e6a4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .reward-desc { font-size: .85rem; color: #94a3b8; line-height: 1.6; margin-bottom: 1.25rem; }
+
+    .claim-code-box {
+      background: rgba(212,175,55,0.08); border: 1px dashed rgba(212,175,55,0.4);
+      border-radius: 10px; padding: .75rem 1rem;
+      font-family: monospace; font-size: .95rem; font-weight: 700;
+      color: #f6e6a4; letter-spacing: .15em;
+      margin-bottom: 1rem; word-break: break-all;
+    }
+
+    .spins-remaining {
+      font-size: .72rem; color: #6e7fa3; margin-bottom: 1.25rem;
+    }
+
+    .btn-close {
+      width: 100%; padding: .75rem;
+      border-radius: 12px; border: none; cursor: pointer;
+      background: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.3);
+      color: #d4af37; font-size: .85rem; font-weight: 600;
+      letter-spacing: .08em; transition: background .2s, border-color .2s;
+    }
+    .btn-close:hover { background: rgba(212,175,55,0.2); border-color: rgba(212,175,55,0.5); }
+
+    .btn-spin-again {
+      width: 100%; padding: .75rem;
+      border-radius: 12px; border: none; cursor: pointer;
+      background: linear-gradient(135deg, #c9a53d, #f6e6a4);
+      color: #000; font-size: .85rem; font-weight: 700;
+      letter-spacing: .08em; margin-bottom: .6rem;
+      transition: opacity .2s;
+    }
+    .btn-spin-again:hover { opacity: .88; }
+
+    /* Win Rays overlay */
+    #win-rays {
+      display: none;
+      position: absolute; z-index: 0;
+      top: 50%; left: 50%;
+      width: 200%; height: 200%;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+      background: repeating-conic-gradient(from 8deg at 50% 50%, rgba(212,175,55,0.18) 0deg 2.2deg, transparent 2.2deg 17deg);
+      -webkit-mask-image: radial-gradient(closest-side, rgba(0,0,0,.9) 10%, transparent 72%);
+      mask-image: radial-gradient(closest-side, rgba(0,0,0,.9) 10%, transparent 72%);
+      filter: blur(4px);
+      animation: rays-turn 26s linear infinite, fade-in 1.1s ease both;
+    }
+    @keyframes fade-in { from{opacity:0} to{opacity:1} }
+
+    /* ── Auth Gate ── */
+    #auth-gate {
+      display: none;
+      position: fixed; inset: 0; z-index: 100;
+      background: rgba(7,9,13,.96);
+      align-items: center; justify-content: center;
+    }
+    .auth-card {
+      text-align: center; padding: 2.5rem 2rem;
+      background: rgba(13,18,30,0.95);
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 20px; max-width: 380px; width: 90%;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.7);
+    }
+    .auth-card .lock-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .auth-card h2 { font-size: 1.4rem; font-weight: 800; color: #f6e6a4; margin-bottom: .5rem; }
+    .auth-card p { font-size: .85rem; color: #94a3b8; margin-bottom: 1.5rem; line-height: 1.6; }
+    .auth-btn {
+      display: block; width: 100%; padding: .85rem;
+      border-radius: 9999px; border: none; cursor: pointer;
+      background: linear-gradient(135deg, #c9a53d, #f6e6a4);
+      color: #000; font-size: .85rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .15em;
+      text-decoration: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      #back-pill, #status-pill { font-size: .6rem; padding: .4rem .8rem; }
+      #caption { font-size: .62rem; }
+    }
+  </style>
 </head>
 <body>
-    <h1 style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;">Digital Twin Verse Daily Spin Wheel</h1>
-    <div id="root">
-      <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: #07090d; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; font-family: 'Plus Jakarta Sans', sans-serif; color: #fff;">
-        <img loading="lazy" decoding="async" src="/img/dtv-logo.jpg" alt="Loading DTV..." style="width: 90px; height: 90px; border-radius: 16px; box-shadow: 0 0 30px rgba(212, 175, 55, 0.25); margin-bottom: 20px;">
-        <div style="font-size: 24px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.5px;">Digital<span style="color: #d4af37; font-style: italic; font-weight: 500; margin-left: 2px;">Twin Verse</span></div>
-        <div style="font-size: 14px; color: #94a3b8; margin-bottom: 30px;">Loading Daily Spin Wheel...</div>
-        <div style="width: 150px; height: 4px; background: rgba(255, 255, 255, 0.1); border-radius: 2px; overflow: hidden; position: relative;">
-          <div style="width: 50%; height: 100%; background: #d4af37; border-radius: 2px; position: absolute; left: 0; animation: dtvLoader 1.5s infinite ease-in-out;"></div>
-        </div>
-      </div>
-      <style>
-        @keyframes dtvLoader {
-          0% { left: -50%; }
-          100% { left: 100%; }
-        }
-      </style>
+  <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Digital Twin Verse Daily Spin Wheel</h1>
+
+  <div id="god-rays"></div>
+  <div id="vignette"></div>
+
+  <!-- Back nav -->
+  <a id="back-pill" href="/">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+    Digital Twin Verse
+  </a>
+
+  <!-- Status pill -->
+  <div id="status-pill">
+    <span class="pill-dot" id="pill-dot"></span>
+    <span id="pill-text">Loading...</span>
+  </div>
+
+  <!-- Auth gate -->
+  <div id="auth-gate">
+    <div class="auth-card">
+      <div class="lock-icon">🔒</div>
+      <h2>Sign In Required</h2>
+      <p>Please sign in to access the Daily Spin Wheel and unlock your premium rewards.</p>
+      <a class="auth-btn" href="/login.html?redirect=/wheel">Sign In to Continue</a>
     </div>
+  </div>
+
+  <!-- Main page -->
+  <div id="page">
+    <div id="wheel-root">
+      <!-- Win rays (shown after winning) -->
+      <div id="win-rays"></div>
+
+      <!-- Needle -->
+      <div id="needle-wrap">
+        <svg id="needle-svg" width="30" height="52" viewBox="0 0 30 52">
+          <defs>
+            <linearGradient id="ng" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#F6E6A4"/>
+              <stop offset="100%" stop-color="#8A6A12"/>
+            </linearGradient>
+          </defs>
+          <polygon id="needle-poly" points="15,4 27,48 15,42 3,48" fill="url(#ng)" stroke="rgba(0,0,0,0.4)" stroke-width="1"/>
+          <circle cx="15" cy="44" r="5" fill="#d4af37" stroke="rgba(0,0,0,0.5)" stroke-width="1.5"/>
+        </svg>
+      </div>
+
+      <!-- Wheel SVG -->
+      <div id="wheel-svg-wrap" onclick="handleSpinClick()">
+        <svg id="wheel-svg" viewBox="0 0 720 720" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Segment gradients -->
+            <radialGradient id="gNavyA" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#1a2f6e"/>
+              <stop offset="100%" stop-color="#0d1a45"/>
+            </radialGradient>
+            <radialGradient id="gNavyB" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#1e1448"/>
+              <stop offset="100%" stop-color="#100d30"/>
+            </radialGradient>
+            <radialGradient id="gNavyC" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#182060"/>
+              <stop offset="100%" stop-color="#0c1438"/>
+            </radialGradient>
+            <radialGradient id="gGold" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#6b4e10"/>
+              <stop offset="100%" stop-color="#3a2808"/>
+            </radialGradient>
+            <!-- Rim gradient -->
+            <linearGradient id="rimGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#f6e6a4"/>
+              <stop offset="35%" stop-color="#c9a53d"/>
+              <stop offset="65%" stop-color="#f6e6a4"/>
+              <stop offset="100%" stop-color="#8a6a12"/>
+            </linearGradient>
+            <!-- Hub glow -->
+            <radialGradient id="hubGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="rgba(212,175,55,0.4)"/>
+              <stop offset="100%" stop-color="rgba(212,175,55,0)"/>
+            </radialGradient>
+            <!-- Hub fill -->
+            <radialGradient id="hubFill" cx="35%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#2a2010"/>
+              <stop offset="100%" stop-color="#0c0a06"/>
+            </radialGradient>
+            <filter id="glow-filter" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="6" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <g id="wheel-disc">
+            <!-- Segments rendered by JS -->
+            <g id="segments"></g>
+            <!-- Dividers rendered by JS -->
+            <g id="dividers"></g>
+            <!-- Labels rendered by JS -->
+            <g id="labels"></g>
+
+            <!-- Outer rim -->
+            <circle cx="360" cy="360" r="303" fill="none" stroke="url(#rimGrad)" stroke-width="6" opacity="0.9"/>
+            <circle cx="360" cy="360" r="298" fill="none" stroke="rgba(212,175,55,0.18)" stroke-width="1.5"/>
+
+            <!-- Hub glow halo -->
+            <circle class="hub-glow-anim" cx="360" cy="360" r="110" fill="url(#hubGlow)" opacity="0.7"/>
+            <!-- Hub body -->
+            <circle cx="360" cy="360" r="126" fill="url(#hubFill)"/>
+            <circle cx="360" cy="360" r="126" fill="none" stroke="rgba(212,175,55,0.55)" stroke-width="2"/>
+            <circle cx="360" cy="360" r="118" fill="none" stroke="rgba(212,175,55,0.2)" stroke-width="1"/>
+
+            <!-- Hub logo / spin button -->
+            <g id="hub-btn" style="cursor:pointer" onclick="handleSpinClick()">
+              <circle cx="360" cy="360" r="100" fill="transparent"/>
+              <!-- DTV text in hub -->
+              <text x="360" y="348" text-anchor="middle" font-family="Outfit,sans-serif" font-size="24" font-weight="800" fill="#d4af37" letter-spacing="3">DTV</text>
+              <text x="360" y="372" text-anchor="middle" font-family="Outfit,sans-serif" font-size="10" font-weight="400" fill="rgba(212,175,55,0.6)" letter-spacing="4">DAILY SPIN</text>
+              <text id="hub-label" x="360" y="392" text-anchor="middle" font-family="Outfit,sans-serif" font-size="12" font-weight="700" fill="#f6e6a4" letter-spacing="2">SPIN</text>
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Caption -->
+      <div id="caption"><span id="caption-text">Touch the core &nbsp;·&nbsp; spin the verse</span></div>
+
+      <!-- Reward Card (overlaid on wheel) -->
+      <div id="reward-card">
+        <div class="reward-icon" id="rc-icon">🎯</div>
+        <div class="reward-tier" id="rc-tier-badge">Common</div>
+        <div class="reward-title" id="rc-title">Reward</div>
+        <div class="reward-desc" id="rc-desc"></div>
+        <div class="claim-code-box" id="rc-code" style="display:none"></div>
+        <div class="spins-remaining" id="rc-spins"></div>
+        <button class="btn-spin-again" id="rc-spin-again" style="display:none" onclick="closeRewardCard()">🔄 Spin Again</button>
+        <button class="btn-close" onclick="closeRewardCard()">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // ─── REWARDS CONFIG (matches backend exactly) ───────────────────────────────
+  const REWARDS = [
+    { id:'streak',   title:'STREAK SAVER',        icon:'🔥', weight:6,    label:'Streak Saver',            description:"Your streak is protected. One missed day will no longer undo the momentum you've built — consistency preserved.", tier:'medium', gradients:['#1a2f6e','#0d1a45'] },
+    { id:'tour',     title:'VIRTUAL TOUR',         icon:'🎧', weight:3.9,  label:'Virtual Tour of DTV',     description:"You've unlocked an exclusive Virtual Tour of Digital Twin Verse — an insider's walk through your future simulation.", tier:'medium', gradients:['#1e1448','#100d30'] },
+    { id:'extraspin',title:'EXTRA SPIN',           icon:'⚡', weight:12,   label:'Extra Spin',              description:"Fortune favors persistence! You've earned 1 Extra Spin to use immediately.", tier:'medium', gradients:['#182060','#0c1438'] },
+    { id:'luck',     title:'BETTER LUCK',          icon:'⭐', weight:33,   label:'Better Luck Next Time',   description:"The wheel turned elsewhere this time — but every spin sharpens your path. Return tomorrow for your next turn!", tier:'common', gradients:['#1a2f6e','#0d1a45'] },
+    { id:'mentor1w', title:'1 WEEK MENTORSHIP',    icon:'🎓', weight:0.1,  label:'1 Week Free Mentorship',  description:"JACKPOT! You've unlocked One Week of Free Mentorship with industry experts who will accelerate your career trajectory.", tier:'rare', gradients:['#6b4e10','#3a2808'] },
+    { id:'try',      title:'TRY AGAIN TOMORROW',   icon:'🔄', weight:45,   label:'Try Again Tomorrow',      description:"Not today — but tomorrow's spin is already waiting. Return with fresh momentum to turn the wheel again.", tier:'common', gradients:['#1e1448','#100d30'] },
+  ];
+
+  const SEG_COUNT = REWARDS.length;
+  const SEG_ANGLE = 360 / SEG_COUNT;
+  const CENTER = 360;
+  const OUTER_R = 300;
+  const INNER_R = 136;
+  const NEEDLE_ANGLE = -90; // needle points up = -90deg offset
+
+  // ─── STATE ───────────────────────────────────────────────────────────────────
+  let rotation = 0;
+  let spinning = false;
+  let remainingSpins = 0;
+  let authToken = null;
+
+  // ─── HELPERS ─────────────────────────────────────────────────────────────────
+  function polar(r, deg) {
+    const a = (deg * Math.PI) / 180;
+    return [CENTER + r * Math.cos(a), CENTER + r * Math.sin(a)];
+  }
+
+  function segPath(i) {
+    const start = NEEDLE_ANGLE + i * SEG_ANGLE;
+    const end = start + SEG_ANGLE;
+    const [x0,y0] = polar(OUTER_R, start);
+    const [x1,y1] = polar(OUTER_R, end);
+    return `M ${CENTER} ${CENTER} L ${x0.toFixed(2)} ${y0.toFixed(2)} A ${OUTER_R} ${OUTER_R} 0 0 1 ${x1.toFixed(2)} ${y1.toFixed(2)} Z`;
+  }
+
+  function dividerPath(i) {
+    const angle = NEEDLE_ANGLE + i * SEG_ANGLE;
+    const [x0,y0] = polar(INNER_R, angle);
+    const [x1,y1] = polar(OUTER_R, angle);
+    return `M ${x0.toFixed(2)} ${y0.toFixed(2)} L ${x1.toFixed(2)} ${y1.toFixed(2)}`;
+  }
+
+  function svgEl(tag, attrs, text) {
+    const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+    if (text !== undefined) el.textContent = text;
+    return el;
+  }
+
+  function segmentIndexAtRotation(rot) {
+    const local = (((-rot) % 360) + 360) % 360;
+    return Math.floor(local / SEG_ANGLE) % SEG_COUNT;
+  }
+
+  function pickWeightedIndex() {
+    const total = REWARDS.reduce((s, r) => s + r.weight, 0);
+    let roll = Math.random() * total;
+    for (let i = 0; i < REWARDS.length; i++) {
+      roll -= REWARDS[i].weight;
+      if (roll <= 0) return i;
+    }
+    return 0;
+  }
+
+  function rotationDeltaForIndex(idx, cur) {
+    const center = NEEDLE_ANGLE + idx * SEG_ANGLE + SEG_ANGLE / 2;
+    const targetMod = (((NEEDLE_ANGLE - center) % 360) + 360) % 360;
+    const curMod = ((cur % 360) + 360) % 360;
+    const turns = 5 + Math.floor(Math.random() * 3);
+    return (((targetMod - curMod) % 360) + 360) % 360 + 360 * turns;
+  }
+
+  // Auth
+  function getAuthToken() {
+    try {
+      const u = localStorage.getItem('dt_user');
+      if (u) { const p = JSON.parse(u); if (p && p.token) return p.token; }
+      const s = localStorage.getItem('dtv_student_session');
+      if (s) { const p = JSON.parse(s); if (p && p.token) return p.token; }
+      const a = sessionStorage.getItem('dt_appdata_v3');
+      if (a) { const p = JSON.parse(a); if (p && p.userData && p.userData.token) return p.userData.token; }
+    } catch(e){}
+    return null;
+  }
+
+  function isLoggedIn() {
+    try {
+      const u = localStorage.getItem('dt_user');
+      if (u) { const p = JSON.parse(u); if (p && (p.token || p.loggedIn)) return true; }
+      const s = localStorage.getItem('dtv_student_session');
+      if (s) { const p = JSON.parse(s); if (p && (p.token || p.email)) return true; }
+      const a = sessionStorage.getItem('dt_appdata_v3');
+      if (a) { const p = JSON.parse(a); if (p && p.userData && p.userData.loggedIn) return true; }
+    } catch(e){}
+    return false;
+  }
+
+  // Countdown
+  function getCountdown() {
+    const now = new Date();
+    const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    const diff = Math.max(0, Math.floor((midnight - now) / 1000));
+    const h = String(Math.floor(diff / 3600)).padStart(2,'0');
+    const m = String(Math.floor((diff % 3600) / 60)).padStart(2,'0');
+    const s = String(diff % 60).padStart(2,'0');
+    return `${h}:${m}:${s}`;
+  }
+
+  // ─── BUILD WHEEL ─────────────────────────────────────────────────────────────
+  function buildWheel() {
+    const segsG = document.getElementById('segments');
+    const divsG = document.getElementById('dividers');
+    const lblsG = document.getElementById('labels');
+
+    REWARDS.forEach((r, i) => {
+      // Segment fill
+      const path = svgEl('path', {
+        d: segPath(i),
+        fill: r.id === 'mentor1w' ? '#3a2808' : (i % 2 === 0 ? '#0e1840' : '#0b122e'),
+        stroke: 'rgba(212,175,55,0.08)',
+        'stroke-width': '0.5'
+      });
+      if (r.id === 'mentor1w') {
+        path.setAttribute('fill', '#3a2808');
+      }
+      segsG.appendChild(path);
+
+      // Divider line
+      divsG.appendChild(svgEl('path', {
+        d: dividerPath(i),
+        stroke: 'rgba(212,175,55,0.45)',
+        'stroke-width': '1.2',
+        'stroke-linecap': 'round'
+      }));
+
+      // Label text
+      const midAngle = NEEDLE_ANGLE + i * SEG_ANGLE + SEG_ANGLE / 2;
+      const midRad = (midAngle * Math.PI) / 180;
+      const textR = 220;
+      const tx = CENTER + textR * Math.cos(midRad);
+      const ty = CENTER + textR * Math.sin(midRad);
+      const rotDeg = midAngle + 90;
+
+      const g = svgEl('g', { transform: `translate(${tx.toFixed(1)},${ty.toFixed(1)}) rotate(${rotDeg.toFixed(1)})` });
+
+      // Icon circle bg
+      const iconBg = svgEl('circle', { cx:'0', cy:'-48', r:'20', fill: r.id==='mentor1w' ? 'rgba(246,230,164,0.12)' : 'rgba(212,175,55,0.06)', stroke: r.id==='mentor1w' ? 'rgba(246,230,164,0.35)' : 'rgba(212,175,55,0.18)', 'stroke-width':'1' });
+      g.appendChild(iconBg);
+
+      // Icon emoji
+      const iconText = svgEl('text', { x:'0', y:'-42', 'text-anchor':'middle', 'font-size':'18', 'dominant-baseline':'middle' }, r.icon);
+      g.appendChild(iconText);
+
+      // Title lines
+      const lines = r.title.split(' ');
+      lines.forEach((line, li) => {
+        const yOff = -20 + li * 18;
+        const textEl = svgEl('text', {
+          x:'0', y:`${yOff}`,
+          'text-anchor':'middle',
+          'font-family':"Outfit,sans-serif",
+          'font-size': lines.length > 1 ? '13' : '14',
+          'font-weight':'700',
+          fill: r.id==='mentor1w' ? '#f6e6a4' : '#c7d4f2',
+          'letter-spacing':'1'
+        }, line);
+        g.appendChild(textEl);
+      });
+
+      lblsG.appendChild(g);
+    });
+  }
+
+  // ─── UI UPDATE ───────────────────────────────────────────────────────────────
+  function updateStatusPill() {
+    const dot = document.getElementById('pill-dot');
+    const txt = document.getElementById('pill-text');
+    if (remainingSpins > 0) {
+      dot.className = 'pill-dot';
+      txt.textContent = `⚡ ${remainingSpins} Daily Spin Available`;
+    } else {
+      dot.className = 'pill-dot locked';
+      txt.textContent = `🔒 Next Spin In: ${getCountdown()}`;
+    }
+    const hubLabel = document.getElementById('hub-label');
+    if (hubLabel) {
+      hubLabel.textContent = remainingSpins > 0 ? 'SPIN' : 'LOCKED';
+    }
+    const cap = document.getElementById('caption');
+    const capTxt = document.getElementById('caption-text');
+    if (remainingSpins <= 0) {
+      cap.className = 'locked';
+      capTxt.textContent = '🔒 1 Spin Limit Reached Today · Return Tomorrow';
+    } else {
+      cap.className = '';
+      capTxt.innerHTML = 'Touch the core &nbsp;·&nbsp; spin the verse';
+    }
+  }
+
+  // ─── BACKEND ─────────────────────────────────────────────────────────────────
+  async function fetchWheelState() {
+    try {
+      const headers = {};
+      if (authToken) headers['Authorization'] = `Bearer ${authToken}`;
+      const res = await fetch('/api/v1/wheel/state', { headers });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) {
+          remainingSpins = data.remainingSpins || 0;
+          updateStatusPill();
+        }
+      }
+    } catch(e) {
+      console.warn('[Wheel] Could not fetch state:', e);
+    }
+  }
+
+  async function postSpin() {
+    try {
+      const headers = { 'Content-Type': 'application/json' };
+      if (authToken) headers['Authorization'] = `Bearer ${authToken}`;
+      const res = await fetch('/api/v1/wheel/spin', { method: 'POST', headers });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) {
+          remainingSpins = data.remainingSpins || 0;
+          return data;
+        }
+        if (data.error === 'DailySpinLimitReached') {
+          remainingSpins = 0;
+          return { limitReached: true };
+        }
+      } else {
+        const err = await res.json().catch(() => ({}));
+        if (err.error === 'DailySpinLimitReached') {
+          remainingSpins = 0;
+          return { limitReached: true };
+        }
+      }
+    } catch(e) {
+      console.warn('[Wheel] Spin API error:', e);
+    }
+    return {};
+  }
+
+  // ─── NEEDLE KICK ─────────────────────────────────────────────────────────────
+  function kickNeedle() {
+    const poly = document.getElementById('needle-poly');
+    if (!poly) return;
+    poly.classList.remove('needle-kick');
+    void poly.offsetWidth;
+    poly.classList.add('needle-kick');
+    poly.addEventListener('animationend', () => poly.classList.remove('needle-kick'), { once: true });
+  }
+
+  // ─── SPIN ANIMATION ──────────────────────────────────────────────────────────
+  function easeOutQuint(t) { return 1 - Math.pow(1 - t, 5); }
+
+  function animateSpin(targetIndex, onComplete) {
+    const disc = document.getElementById('wheel-disc');
+    const delta = rotationDeltaForIndex(targetIndex, rotation);
+    const durationMs = 6000 + Math.random() * 1500;
+    const startRotation = rotation;
+    const startTime = performance.now();
+
+    const SEG_ANGLE_RAD = SEG_ANGLE;
+    let prevTickIdx = Math.floor((((-rotation % 360) + 360) % 360) / SEG_ANGLE_RAD);
+
+    function frame(now) {
+      const p = Math.min(1, (now - startTime) / durationMs);
+      const eased = easeOutQuint(p);
+      const rot = startRotation + delta * eased;
+
+      rotation = rot;
+      disc.style.transform = `rotate(${rot}deg)`;
+      disc.style.transformOrigin = '360px 360px';
+
+      // Needle tick on segment change
+      const norm = (((-rot) % 360) + 360) % 360;
+      const tickIdx = Math.floor(norm / SEG_ANGLE_RAD);
+      if (tickIdx !== prevTickIdx) {
+        prevTickIdx = tickIdx;
+        kickNeedle();
+      }
+
+      if (p < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        // Lock to exact target
+        const finalRot = startRotation + delta;
+        rotation = finalRot;
+        disc.style.transform = `rotate(${finalRot}deg)`;
+
+        // Short bounce
+        let b0 = performance.now();
+        const bDur = 500;
+        function bounce(bnow) {
+          const q = Math.min(1, (bnow - b0) / bDur);
+          const overshoot = Math.sin(q * Math.PI * 1.6) * 0.7 * (1 - q);
+          disc.style.transform = `rotate(${finalRot + overshoot}deg)`;
+          if (q < 1) { requestAnimationFrame(bounce); }
+          else {
+            disc.style.transform = `rotate(${finalRot}deg)`;
+            rotation = finalRot;
+            kickNeedle();
+            onComplete();
+          }
+        }
+        requestAnimationFrame(bounce);
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // ─── REWARD CARD ─────────────────────────────────────────────────────────────
+  function showRewardCard(reward, claimCode, spinsLeft) {
+    // Show win rays for non-common
+    if (reward.tier !== 'common') {
+      document.getElementById('win-rays').style.display = 'block';
+    }
+
+    const card = document.getElementById('reward-card');
+    document.getElementById('rc-icon').textContent = reward.icon;
+
+    const tierBadge = document.getElementById('rc-tier-badge');
+    tierBadge.textContent = reward.tier.charAt(0).toUpperCase() + reward.tier.slice(1);
+    tierBadge.className = `reward-tier ${reward.tier}`;
+
+    const titleEl = document.getElementById('rc-title');
+    titleEl.textContent = reward.label;
+    titleEl.className = `reward-title${reward.tier === 'rare' ? ' gold' : ''}`;
+
+    document.getElementById('rc-desc').textContent = reward.description;
+
+    const codeEl = document.getElementById('rc-code');
+    if (claimCode) { codeEl.textContent = claimCode; codeEl.style.display = 'block'; }
+    else { codeEl.style.display = 'none'; }
+
+    document.getElementById('rc-spins').textContent =
+      spinsLeft > 0 ? `🎯 ${spinsLeft} spin remaining` : '🔒 Daily limit reached — return tomorrow';
+
+    const spinAgainBtn = document.getElementById('rc-spin-again');
+    spinAgainBtn.style.display = spinsLeft > 0 ? 'block' : 'none';
+
+    if (reward.tier === 'rare') card.className = 'gold-card';
+    else card.className = '';
+    card.style.display = 'block';
+  }
+
+  function closeRewardCard() {
+    document.getElementById('reward-card').style.display = 'none';
+    document.getElementById('win-rays').style.display = 'none';
+    spinning = false;
+    updateStatusPill();
+    setCaption();
+  }
+
+  function setCaption(text) {
+    const cap = document.getElementById('caption');
+    const capTxt = document.getElementById('caption-text');
+    if (text) { capTxt.textContent = text; }
+    else { updateStatusPill(); }
+  }
+
+  // ─── SPIN CLICK ──────────────────────────────────────────────────────────────
+  async function handleSpinClick() {
+    if (spinning) return;
+
+    if (!isLoggedIn()) {
+      document.getElementById('auth-gate').style.display = 'flex';
+      return;
+    }
+
+    if (remainingSpins <= 0) {
+      // Show locked message
+      const cap = document.getElementById('caption');
+      const capTxt = document.getElementById('caption-text');
+      cap.className = 'locked';
+      capTxt.textContent = `🔒 No spins left · Next in ${getCountdown()}`;
+      return;
+    }
+
+    spinning = true;
+    remainingSpins = Math.max(0, remainingSpins - 1); // Optimistic decrement
+    updateStatusPill();
+    document.getElementById('caption').className = '';
+    document.getElementById('caption-text').textContent = 'Simulating your future...';
+
+    // Call backend (fire-and-forget for result, animation runs immediately)
+    const backendPromise = postSpin();
+
+    // Pick locally (visual spin)
+    const chosenIndex = pickWeightedIndex();
+
+    // Animate
+    animateSpin(chosenIndex, async () => {
+      const confirmedIndex = segmentIndexAtRotation(rotation);
+      const reward = REWARDS[confirmedIndex];
+
+      // Wait for backend result to get authoritative data
+      const backendData = await backendPromise;
+      const claimCode = backendData.claimCode || null;
+      const spinsLeft = typeof backendData.remainingSpins === 'number'
+        ? backendData.remainingSpins
+        : remainingSpins;
+      remainingSpins = spinsLeft;
+
+      // Special: if backend gave extra spin (extraspin reward)
+      if (backendData.rewardId === 'extraspin' || reward.id === 'extraspin') {
+        // Sync state from backend
+        await fetchWheelState();
+      }
+
+      showRewardCard(reward, claimCode, remainingSpins);
+    });
+  }
+
+  // ─── COUNTDOWN TIMER ─────────────────────────────────────────────────────────
+  setInterval(() => {
+    if (remainingSpins <= 0) updateStatusPill();
+  }, 1000);
+
+  // ─── INIT ─────────────────────────────────────────────────────────────────────
+  buildWheel();
+  authToken = getAuthToken();
+
+  if (!isLoggedIn()) {
+    document.getElementById('auth-gate').style.display = 'flex';
+  } else {
+    fetchWheelState();
+  }
+  </script>
 </body>
 </html>
