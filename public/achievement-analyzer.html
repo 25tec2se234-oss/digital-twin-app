@@ -71,7 +71,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:cen
 .nav-back:hover{color:var(--wh);border-color:rgba(0,0,0,.2);}
 
 /* ═══ TOAST ════════════════════════════════════════════════════ */
-.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(200%);opacity:0;pointer-events:none;z-index:1000;background:var(--surf2);border:1px solid rgba(167,139,250,.3);border-radius:12px;padding:.85rem 1.5rem;font-size:.84rem;white-space:nowrap;display:flex;align-items:center;gap:.65rem;transition:all .4s cubic-bezier(.34,1.56,.64,1);box-shadow:0 8px 28px rgba(0,0,0,.5);};border:1px solid rgba(167,139,250,.3);
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(120%);
+  z-index:1000;background:var(--surf2);border:1px solid rgba(167,139,250,.3);
   border-radius:12px;padding:.85rem 1.5rem;font-size:.84rem;white-space:nowrap;
   display:flex;align-items:center;gap:.65rem;
   transition:transform .4s cubic-bezier(.34,1.56,.64,1);box-shadow:0 8px 28px rgba(0,0,0,.5);}
@@ -963,7 +964,14 @@ function buildRoadmapPrompt(careerTitle) {
 
 /* ── RUN AI ANALYSIS ─────────────────────────────────────────── */
 function runAIAnalysis() {
-  
+  if (!CFG.apiKey) {
+    var demo = getDemoAnalysis();
+    STATE.data.analysis = demo;
+    INTEL.save(STATE.data);
+    renderDashboard(demo);
+    showView('view-dashboard');
+    return;
+  }
   fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
@@ -1139,55 +1147,18 @@ function escStr(s) {
 
 /* ── GENERATE ROADMAP ────────────────────────────────────────── */
 function generateRoadmap(careerTitle) {
-    showToast('🚀', 'Building your roadmap for ' + careerTitle + '...');
-    
-    // Add 3D Loading State
+  showToast('🗺️', 'Building your roadmap for ' + careerTitle + '...');
+  if (!CFG.apiKey) {
+    var demo = getDemoRoadmap(careerTitle);
+    STATE.data.roadmap = demo;
+    STATE.data.roadmap.career = careerTitle;
+    INTEL.save(STATE.data);
+    renderRoadmap(demo);
     var rm = document.getElementById('roadmap-section');
-    var targetDiv = document.getElementById('rm-content');
-    if (targetDiv) {
-        targetDiv.innerHTML = '<div style="width:100%;height:300px;display:flex;justify-content:center;align-items:center;flex-direction:column;"><spline-viewer url="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode"></spline-viewer><p style="margin-top:1rem;color:var(--blue);font-weight:600;animation:pulse 1.5s infinite;">Analyzing Data & Structuring Path...</p></div>';
-    }
-    if (rm) {
-      rm.classList.add('open');
-      setTimeout(function() { rm.scrollIntoView({ behavior: 'smooth' }); }, 200);
-    }
-
-    fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        max_tokens: 2000,
-        messages: [{ role: 'user', content: buildRoadmapPrompt(careerTitle) }]
-      })
-    })
-    .then(function(r) { return r.json(); })
-    .then(function(d) {
-      var raw = d.content && d.content[0] ? d.content[0].text : '';
-      try {
-        var clean = raw.replace(/```json/g,'').replace(/```/g,'').trim();
-        var parsed = JSON.parse(clean);
-        STATE.data.roadmap = parsed;
-      } catch(e) {
-        showToast('❌', 'AI returned malformed data. Try again.');
-        return;
-      }
-      STATE.data.roadmap.career = careerTitle;
-      INTEL.save(STATE.data);
-      renderRoadmap(STATE.data.roadmap);
-      
-      // Add success 3D element in header
-      var rmTitle = document.querySelector('#roadmap-section h2');
-      if (rmTitle && !rmTitle.querySelector('spline-viewer')) {
-         rmTitle.innerHTML += '<div style="height:100px;width:100px;position:absolute;top:-20px;right:0;"><spline-viewer url="https://prod.spline.design/qB9BwQ8V7a2s7hXb/scene.splinecode"></spline-viewer></div>';
-         rmTitle.style.position = 'relative';
-      }
-      
-    })
-    .catch(function(e) {
-      showToast('❌', 'Error connecting to AI. Please try again.');
-      if(targetDiv) targetDiv.innerHTML = '<p style="color:var(--red);text-align:center;">Connection failed.</p>';
-    });
-  }, 200);
+    if (rm) rm.classList.add('open');
+    setTimeout(function() {
+      if (rm) rm.scrollIntoView({ behavior: 'smooth' });
+    }, 200);
     return;
   }
   fetch('https://api.anthropic.com/v1/messages', {
@@ -1237,7 +1208,64 @@ function generateRoadmap(careerTitle) {
 }
 
 /* ── DEMO ROADMAP DATA ───────────────────────────────────────── */
-;
+function getDemoRoadmap(career) {
+  return {
+    career: career,
+    totalMonths: 12,
+    phases: [
+      {
+        phase: 1,
+        title: 'Foundation & Core Skills',
+        duration: 'Months 1–3',
+        skills: ['Core language/framework basics', 'Problem-solving fundamentals', 'Git & version control', 'Documentation skills'],
+        resources: ['freeCodeCamp (free)', 'CS50 by Harvard (free)', 'YouTube structured playlists'],
+        milestone: 'Complete 2 small projects and push to GitHub',
+        outcome: 'Job-ready portfolio starter + basic interview readiness'
+      },
+      {
+        phase: 2,
+        title: 'Depth & Specialization',
+        duration: 'Months 4–7',
+        skills: ['Advanced domain concepts', 'Industry tools & frameworks', 'Data/system design basics', 'Collaborative workflows'],
+        resources: ['Coursera specialisations', 'Udemy advanced courses', 'Official documentation'],
+        milestone: 'Build 1 full-stack/domain project with real-world use case',
+        outcome: 'Internship-ready profile + technical confidence'
+      },
+      {
+        phase: 3,
+        title: 'Industry Exposure',
+        duration: 'Months 8–10',
+        skills: ['Internship/project skills', 'Communication & collaboration', 'Problem framing', 'Industry-specific tools'],
+        resources: ['Internshala', 'LinkedIn internships', 'AngelList', 'Company blogs'],
+        milestone: 'Complete an internship or a client project',
+        outcome: 'Real-world experience + professional references'
+      },
+      {
+        phase: 4,
+        title: 'Job Ready & Launch',
+        duration: 'Months 11–12',
+        skills: ['Interview prep (DSA / case studies)', 'Resume & LinkedIn optimization', 'Networking strategy', 'Negotiation basics'],
+        resources: ['LeetCode / InterviewBit', 'LinkedIn Learning', 'Mock interviews (Pramp.com)'],
+        milestone: 'Land first job/offer in ' + career,
+        outcome: career + ' role at target salary'
+      }
+    ],
+    internships: [
+      { role: career + ' Intern', platform: 'Internshala', tip: 'Apply with a 1-page project resume. Mention impact numbers.' },
+      { role: 'Junior ' + career, platform: 'LinkedIn Jobs', tip: 'Connect with hiring managers 1 week before applying.' },
+      { role: 'Freelance Project', platform: 'Upwork / Fiverr', tip: 'Complete 2–3 small gigs to build credibility.' }
+    ],
+    certifications: [
+      'Google Career Certificate (free on Coursera)',
+      'Domain-specific cert from AWS / Microsoft / Google',
+      'LinkedIn Skill Assessments (quick wins)'
+    ],
+    salaryJourney: {
+      year1: '\u20b94–8 LPA (Fresher/Junior)',
+      year3: '\u20b910–20 LPA (Mid-level)',
+      year5: '\u20b920–45 LPA (Senior)'
+    }
+  };
 }
 
 /* ── RENDER ROADMAP ──────────────────────────────────────────── */
@@ -1418,35 +1446,51 @@ function sendChatMsg() {
 
   showChatTyping();
 
-  
-
-  var msgs = STATE.chatHistory.slice(-12);
-    fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        max_tokens: 600,
-        system: buildChatSystemPrompt(),
-        messages: msgs
-      })
-    })
-    .then(function(r) { return r.json(); })
-    .then(function(d) {
+  if (!CFG.apiKey) {
+    setTimeout(function() {
       removeChatTyping();
-      var reply = d.content && d.content[0] ? d.content[0].text : 'Could not get response. Try again.';
+      var reply = getDemoChatReply(text);
       appendChatMsg(reply, 'bot');
       STATE.chatHistory.push({ role: 'assistant', content: reply });
       STATE.data.chatHistory.push({ role: 'assistant', content: reply, ts: new Date().toISOString() });
       INTEL.save(STATE.data);
-    })
-    .catch(function() {
-      removeChatTyping();
-      var reply = "Connection Error. I am currently unable to reach the digital servers.";
-      appendChatMsg(reply, 'bot');
-      STATE.chatHistory.push({ role: 'assistant', content: reply });
-      INTEL.save(STATE.data);
-    });
+    }, 900 + Math.random() * 600);
+    return;
   }
+
+  var msgs = STATE.chatHistory.slice(-12);
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': CFG.apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: CFG.model,
+      max_tokens: 600,
+      system: buildChatSystemPrompt(),
+      messages: msgs
+    })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    removeChatTyping();
+    var reply = d.content && d.content[0] ? d.content[0].text : 'Could not get response. Try again.';
+    appendChatMsg(reply, 'bot');
+    STATE.chatHistory.push({ role: 'assistant', content: reply });
+    STATE.data.chatHistory.push({ role: 'assistant', content: reply, ts: new Date().toISOString() });
+    INTEL.save(STATE.data);
+  })
+  .catch(function() {
+    removeChatTyping();
+    var reply = getDemoChatReply(text);
+    appendChatMsg(reply, 'bot');
+    STATE.chatHistory.push({ role: 'assistant', content: reply });
+    INTEL.save(STATE.data);
+  });
+}
 
 function appendChatMsg(text, from) {
   var box = document.getElementById('chat-msgs');
@@ -1472,6 +1516,27 @@ function showChatTyping() {
 function removeChatTyping() {
   var el = document.getElementById('typing-ind');
   if (el) el.remove();
+}
+
+function getDemoChatReply(text) {
+  var t = text.toLowerCase();
+  var p = STATE.data.profile;
+  var a = STATE.data.analysis;
+  var name = p.name ? p.name + ', ' : '';
+  var topCareer = a && a.careerPaths && a.careerPaths[0] ? a.careerPaths[0].title : 'your target role';
+  var replies = {
+    roadmap: 'Your roadmap for **' + topCareer + '** is already generated! It has 4 phases over 12 months.\n\nThe most important phase right now is Phase 1 — **Foundation**. Before anything else, build one small working project and push it to GitHub. That single step separates candidates who get callbacks from those who don\'t.\n\nHave you set up your GitHub profile yet?',
+    skill: 'Looking at your skills ' + name + 'the gap that matters most right now isn\'t adding more tools — it\'s depth over breadth.\n\nPick the **one skill** that appears in every job description for ' + topCareer + ' and spend 21 focused days on it. Consistency beats intensity every time.\n\nWhich skill feels weakest to you right now?',
+    salary: 'For **' + topCareer + '** in India (2025–26), here\'s the honest picture:\n\n• Fresher/Intern: ₹4–8 LPA\n• 1 year experience: ₹8–15 LPA\n• 3 years: ₹15–30 LPA\n\nThe jump from fresher to mid-level is where most people plateau. The way to skip ahead? One strong project with measurable impact + one good referral.\n\nAre you targeting a specific company tier?',
+    internship: 'For internships in ' + topCareer + ', here\'s what actually works:\n\n1. **Internshala** — highest volume for India, apply to 5–10/day\n2. **LinkedIn** — connect with hiring managers directly before applying\n3. **AngelList** — startups hire fast, less competition\n\nYour resume needs to show **impact**, not just responsibilities. Replace "worked on X" with "built X that achieved Y result."\n\nWant me to suggest how to frame your projects on your resume?',
+    future: 'The next 2 years are genuinely exciting for people in ' + topCareer + '.\n\nAI isn\'t replacing the role — it\'s creating new layers in it. The students who will thrive are those who combine domain expertise with the ability to use AI as a multiplier.\n\nMy honest advice ' + name + ': focus less on "keeping up with trends" and more on getting deeply good at one thing. Deep skill + AI fluency = extremely hard to replace.\n\nWhat\'s the biggest obstacle in your path right now?'
+  };
+  if (t.includes('roadmap') || t.includes('plan') || t.includes('steps')) return replies.roadmap;
+  if (t.includes('skill') || t.includes('learn') || t.includes('gap')) return replies.skill;
+  if (t.includes('salary') || t.includes('pay') || t.includes('package') || t.includes('money')) return replies.salary;
+  if (t.includes('intern') || t.includes('job') || t.includes('apply') || t.includes('hire')) return replies.internship;
+  if (t.includes('future') || t.includes('trend') || t.includes('ai') || t.includes('predict')) return replies.future;
+  return 'That\'s a sharp question, ' + (p.name || 'friend') + '.\n\nBased on your profile and the roadmap we\'ve built, the clearest path forward is: **one concrete action this week** toward ' + topCareer + '.\n\nWhether that\'s a GitHub commit, a certification module, or an internship application — momentum beats perfection every time.\n\nWhat\'s one thing you can do in the next 24 hours?';
 }
 
 /* ── QUICK CHAT PROMPTS ──────────────────────────────────────── */
