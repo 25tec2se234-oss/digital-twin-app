@@ -17,30 +17,28 @@
         }
 
         :root {
-            --bg: #071217;
-            --surf: #0e2128;
-            --surf2: #15303a;
-            --surf3: #1b3e47;
-            --blue: #0f766e;
-            --blue2: #5eead4;
-            --purple: #c2410c;
-            --purple2: #fdba74;
-            --green: #15803d;
-            --green2: #86efac;
-            --amber: #b45309;
-            --amber2: #f59e0b;
+            --bg: #ffffff;
+            --surf: #ffffff;
+            --surf2: #f9fafb;
+            --surf3: #f3f4f6;
+            --blue: #2563eb;
+            --blue2: #3b82f6;
+            --cyan: #06b6d4;
+            --purple: #7c3aed;
+            --purple2: #8b5cf6;
+            --pink: #db2777;
             --red: #dc2626;
-            --cyan: #0ea5a6;
-            --pink: #be123c;
-            --wh: #f4fbfd;
-            --wh2: #d5e9ee;
-            --mu: #8fb1ba;
-            --card: rgba(255, 255, 255, .06);
-            --bdr: rgba(143, 177, 186, .3);
+            --wh: #111827;
+            --wh2: #374151;
+            --mu: #6b7280;
+            --bdr: #e5e7eb;
+            --card: #ffffff;
+            --grad-bg: linear-gradient(135deg, #f0fdfa, #eff6ff, #f3e8ff);
+            --grad-text: linear-gradient(135deg, #2563eb, #7c3aed);
+            --nh: 58px;
+            --sw: 248px;
             --r: 12px;
             --r2: 18px;
-            --sw: 248px;
-            --nh: 58px;
         }
 
         
@@ -155,7 +153,7 @@
             justify-content: center;
             font-size: .72rem;
             font-weight: 900;
-            color: var(--wh);
+            color: #fff;
         }
 
         .nav-em {
@@ -226,7 +224,7 @@
             top: -5px;
             right: -5px;
             background: var(--red);
-            color: var(--wh);
+            color: #fff;
             width: 17px;
             height: 17px;
             border-radius: 50%;
@@ -599,7 +597,7 @@
 
         .tag-add-btn {
             background: var(--blue);
-            color: var(--wh);
+            color: #fff;
             border: none;
             border-radius: 7px;
             padding: .45rem .9rem;
@@ -617,7 +615,7 @@
         .ob-cta {
             width: 100%;
             background: linear-gradient(135deg, var(--blue), var(--purple));
-            color: var(--wh);
+            color: #fff;
             font-family: inherit;
             font-weight: 700;
             font-size: 1rem;
@@ -903,7 +901,7 @@
         .dq-btn.p {
             background: var(--blue);
             border-color: var(--blue);
-            color: var(--wh);
+            color: #fff;
         }
 
         .dq-btn.p:hover {
@@ -1087,7 +1085,7 @@
             justify-content: center;
             font-weight: 800;
             font-size: .82rem;
-            color: var(--wh);
+            color: #fff;
             flex-shrink: 0;
         }
 
@@ -1504,7 +1502,7 @@
 
         .res-btn.p {
             background: linear-gradient(135deg, var(--blue), var(--purple));
-            color: var(--wh);
+            color: #fff;
         }
 
         .res-btn.p:hover {
@@ -1732,7 +1730,7 @@
             border: none;
             border-radius: 8px;
             padding: .62rem .88rem;
-            color: var(--wh);
+            color: #fff;
             cursor: pointer;
             font-size: .92rem;
             transition: all .2s;
@@ -2067,7 +2065,7 @@
 
         .opp-btn {
             background: var(--blue);
-            color: var(--wh);
+            color: #fff;
             border: none;
             border-radius: 7px;
             padding: .48rem 1rem;
@@ -2300,7 +2298,7 @@
 
         .modal-cta {
             background: linear-gradient(135deg, var(--blue), var(--purple));
-            color: var(--wh);
+            color: #fff;
             font-family: inherit;
             font-weight: 700;
             font-size: .9rem;
@@ -2520,7 +2518,7 @@
             justify-content: center;
             font-weight: 800;
             font-size: .82rem;
-            color: var(--wh);
+            color: #fff;
             flex-shrink: 0;
         }
 
@@ -3034,7 +3032,7 @@
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.5/build/spline-viewer.js"></script>
 </head>
 
-<body>
+<body data-theme="light">
 
     <!-- TOAST -->
     <div class="toast" id="toast"><span id="toast-icon">✅</span><span id="toast-msg">Done!</span></div>
@@ -4982,7 +4980,7 @@
         /* ── STATE ──────────────────────────────────────────────────── */
         var DT_STATE = {
             lang: 'en',
-            theme: 'dark',
+            theme: 'light',
             view: 'onboarding',
             profile: null,
             xp: 0,
@@ -6184,49 +6182,71 @@
         }
 
         function sendChatMsg() {
-  var inp = document.getElementById('chat-inp');
-  if(!inp) return;
-  var text = inp.value.trim();
-  if (!text) return;
+            var inp = document.getElementById('chat-input');
+            if (!inp) return;
+            var text = inp.value.trim();
+            if (!text) return;
+            inp.value = '';
+            appendMsg(text, 'user');
+            DT_STATE.chatHistory.push({
+                role: 'user',
+                content: text
+            });
+            DT_STATE.chatCount++;
+            if (DT_STATE.chatCount >= 10) awardBadge('chat_10');
+            showTypingIndicator();
 
-  appendChatMsg(text, 'user');
-  STATE.chatHistory.push({ role: 'user', content: text });
-  STATE.data.chatHistory = STATE.data.chatHistory || [];
-  STATE.data.chatHistory.push({ role: 'user', content: text, ts: new Date().toISOString() });
-  INTEL.save(STATE.data);
-  inp.value = '';
+            if (!DT_CFG.apiKey) {
+                setTimeout(function() {
+                    removeTypingIndicator();
+                    var reply = getDemoMentorReply(text);
+                    appendMsg(reply, 'bot');
+                    DT_STATE.chatHistory.push({
+                        role: 'assistant',
+                        content: reply
+                    });
+                    dtSave();
+                }, 800 + Math.random() * 700);
+                return;
+            }
 
-  showChatTyping();
+            fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': DT_CFG.apiKey,
+                        'anthropic-version': '2023-06-01',
+                        'anthropic-dangerous-direct-browser-access': 'true'
+                    },
+                    body: JSON.stringify({
+                        model: DT_CFG.model,
+                        max_tokens: 600,
+                        system: buildSystemPrompt(),
+                        messages: DT_STATE.chatHistory.slice(-10)
+                    })
+                })
+                .then(function(r) {
+                    return r.json();
+                })
+                .then(function(d) {
+                    removeTypingIndicator();
+                    var reply = d.content && d.content[0] ? d.content[0].text : 'Could not get response. Try again.';
+                    appendMsg(reply, 'bot');
+                    DT_STATE.chatHistory.push({
+                        role: 'assistant',
+                        content: reply
+                    });
+                    dtSave();
+                })
+                .catch(function() {
+                    removeTypingIndicator();
+                    var reply = getDemoMentorReply(text);
+                    appendMsg(reply, 'bot');
+                    dtSave();
+                });
+        }
 
-  var msgs = STATE.chatHistory.slice(-12);
-  fetch('/api/public-analyzer', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        max_tokens: 600,
-        system: "You are an expert AI Career Mentor for Indian students. Be concise, professional, and empathetic.",
-        messages: msgs
-      })
-  })
-  .then(function(r) { return r.json(); })
-  .then(function(d) {
-      removeChatTyping();
-      var reply = d.content && d.content[0] ? d.content[0].text : 'Could not get response. Try again.';
-      appendChatMsg(reply, 'bot');
-      STATE.chatHistory.push({ role: 'assistant', content: reply });
-      STATE.data.chatHistory.push({ role: 'assistant', content: reply, ts: new Date().toISOString() });
-      INTEL.save(STATE.data);
-  })
-  .catch(function() {
-      removeChatTyping();
-      var reply = "Connection Error. I am currently unable to reach the digital servers.";
-      appendChatMsg(reply, 'bot');
-      STATE.chatHistory.push({ role: 'assistant', content: reply });
-      INTEL.save(STATE.data);
-  });
-}
-
-function appendMsg(text, from) {
+        function appendMsg(text, from) {
             var box = document.getElementById('chat-messages');
             if (!box) return;
             var div = document.createElement('div');
@@ -6846,10 +6866,7 @@ function appendMsg(text, from) {
                 renderInterestGrid();
                 renderHabitCatGrid();
 
-                var nav2 = document.getElementById('main-nav');
-                if (nav2) nav2.style.display = 'none';
-                var sidebar2 = document.getElementById('sidebar');
-                if (sidebar2) sidebar2.style.display = 'none';
+                showMainNav();
             }
 
             /* Add XP bar animation delay */
