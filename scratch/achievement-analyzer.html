@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Achievement Analyzer | Digital Twin — Eco-Novators</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ═══ RESET & TOKENS ══════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#ffffff;
+  --surf:#f8fafc;
+  --surf2:#f1f5f9;
+  --blue:#ff9640;
+  --blue2:#f5a94e;
+  --purple:#ff8800;
+  --purple2:#e8650a;
+  --cyan:#0ea5e9;
+  --green:#10b981;
+  --amber:#f59e0b;
+  --red:#ef4444;
+  --wh:#0f172a;
+  --wh2:#334155;
+  --mu:#64748b;
+  --card:#ffffff;
+  --bdr:rgba(0,0,0,0.1);
+  --r:14px;
+  --r2:20px;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--wh);overflow-x:hidden;min-height:100vh;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:var(--purple);border-radius:4px;}
+
+/* Grid dots background */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(circle,rgba(255,185,0,.12) 1px,transparent 1px);
+  background-size:32px 32px;
+}
+
+/* ═══ BLOBS ════════════════════════════════════════════════════ */
+.blob-bg{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0;}
+.blob-bg::before{content:'';position:absolute;width:700px;height:700px;
+  border-radius:50%;background:radial-gradient(circle,rgba(255,185,0,.18),transparent 70%);
+  top:-200px;left:-200px;animation:blobmove 14s ease-in-out infinite;}
+.blob-bg::after{content:'';position:absolute;width:600px;height:600px;
+  border-radius:50%;background:radial-gradient(circle,rgba(255,136,0,.16),transparent 70%);
+  bottom:-150px;right:-150px;animation:blobmove 18s ease-in-out infinite reverse;}
+@keyframes blobmove{0%,100%{transform:translate(0,0);}50%{transform:translate(40px,-40px);}}
+
+/* ═══ VIEWS ════════════════════════════════════════════════════ */
+.view{display:none;position:relative;z-index:1;min-height:100vh;}
+.view.active{display:block;}
+
+/* ═══ NAV ═══════════════════════════════════════════════════════ */
+nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;
+  justify-content:space-between;padding:.9rem 5%;
+  background:rgba(255,255,255,.9);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--bdr);}
+.nav-brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;}
+.nav-mark{width:30px;height:30px;border-radius:8px;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.75rem;color:#fff;}
+.nav-title{font-weight:800;font-size:.95rem;color:var(--wh);}
+.nav-title span{color:var(--purple);}
+.nav-back{background:rgba(0,0,0,.05);border:1px solid var(--bdr);color:var(--mu);
+  padding:.45rem 1.1rem;border-radius:8px;font-size:.8rem;font-weight:500;cursor:pointer;
+  font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;}
+.nav-back:hover{color:var(--wh);border-color:rgba(0,0,0,.2);}
+
+/* ═══ TOAST ════════════════════════════════════════════════════ */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(120%);
+  z-index:1000;background:var(--surf2);border:1px solid rgba(167,139,250,.3);
+  border-radius:12px;padding:.85rem 1.5rem;font-size:.84rem;white-space:nowrap;
+  display:flex;align-items:center;gap:.65rem;
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1);box-shadow:0 8px 28px rgba(0,0,0,.5);}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* ═══ RESTORE BANNER ═══════════════════════════════════════════ */
+.restore-banner{display:none;background:rgba(79,142,247,.08);border:1px solid rgba(79,142,247,.25);
+  border-radius:var(--r);padding:.85rem 1.3rem;margin:6rem 5% 0;
+  align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;
+  font-size:.83rem;color:var(--wh2);position:relative;z-index:1;}
+.restore-banner.show{display:flex;}
+.rb-btns{display:flex;gap:.5rem;}
+.rb-btn{background:var(--blue);color:#fff;border:none;border-radius:6px;
+  padding:.38rem .9rem;font-size:.75rem;font-weight:700;cursor:pointer;
+  font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;}
+.rb-btn:hover{background:var(--blue2);}
+.rb-dismiss{background:none;border:none;color:var(--mu);cursor:pointer;font-size:1rem;padding:.2rem;}
+
+/* ═══ UPLOAD VIEW ══════════════════════════════════════════════ */
+#view-upload{padding:7rem 5% 5rem;}
+.upload-hero{text-align:center;max-width:700px;margin:0 auto 4rem;}
+.upload-hero .eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--purple);margin-bottom:1rem;display:flex;align-items:center;justify-content:center;gap:.4rem;}
+.upload-hero h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:800;letter-spacing:-.03em;
+  line-height:1.08;margin-bottom:1.2rem;}
+.upload-hero h1 .grad{background:linear-gradient(135deg,var(--blue) 20%,var(--purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.upload-hero .sub{font-size:1.05rem;color:var(--mu);line-height:1.75;}
+.upload-grid{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.upload-panel{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r2);padding:1.8rem;}
+.upload-panel.full{grid-column:1/-1;}
+.panel-title{font-weight:700;font-size:.92rem;margin-bottom:1.2rem;color:var(--wh2);
+  display:flex;align-items:center;gap:.5rem;}
+.panel-title .pt-ic{font-size:1.1rem;}
+
+/* Drop zones */
+.drop-zone{border:2px dashed rgba(167,139,250,.3);border-radius:var(--r);padding:2rem 1rem;
+  text-align:center;cursor:pointer;transition:all .3s;background:rgba(167,139,250,.03);}
+.drop-zone:hover,.drop-zone.dragover{border-color:var(--purple);background:rgba(167,139,250,.08);}
+.dz-icon{font-size:2rem;margin-bottom:.6rem;}
+.dz-title{font-weight:600;font-size:.88rem;margin-bottom:.3rem;}
+.dz-sub{font-size:.75rem;color:var(--mu);}
+.dz-input{display:none;}
+.file-list{margin-top:.8rem;display:flex;flex-direction:column;gap:.4rem;}
+.file-chip{display:flex;align-items:center;gap:.5rem;background:rgba(79,142,247,.1);
+  border:1px solid rgba(79,142,247,.2);border-radius:7px;padding:.4rem .8rem;font-size:.78rem;}
+.file-ic{font-size:.9rem;flex-shrink:0;}
+.file-nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--wh2);}
+.file-rm{background:none;border:none;color:var(--mu);cursor:pointer;font-size:.8rem;padding:0 .2rem;}
+.file-rm:hover{color:var(--red);}
+
+/* Form inputs */
+.form-group{display:flex;flex-direction:column;gap:.42rem;margin-bottom:.9rem;}
+.form-group:last-child{margin-bottom:0;}
+.form-group label{font-size:.72rem;font-weight:700;color:var(--mu);letter-spacing:.06em;text-transform:uppercase;}
+.fi{background:rgba(0,0,0,.04);border:1px solid var(--bdr);border-radius:9px;
+  padding:.72rem .95rem;color:var(--wh);font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:.9rem;outline:none;width:100%;transition:border-color .2s,box-shadow .2s;}
+.fi::placeholder{color:var(--mu);}
+.fi:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(167,139,250,.12);}
+.fi.inp-error{border-color:var(--red);box-shadow:0 0 0 3px rgba(248,113,113,.1);}
+.ft{resize:vertical;min-height:80px;}
+
+/* Tag input */
+.tag-input-wrap{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;
+  background:rgba(0,0,0,.04);border:1px solid var(--bdr);border-radius:9px;
+  padding:.5rem .75rem;cursor:text;min-height:44px;transition:border-color .2s;}
+.tag-input-wrap:focus-within{border-color:var(--purple);box-shadow:0 0 0 3px rgba(167,139,250,.12);}
+.tag-input-wrap input{background:none;border:none;outline:none;color:var(--wh);
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;min-width:80px;flex:1;}
+.tag-input-wrap input::placeholder{color:var(--mu);}
+.inp-tag{display:inline-flex;align-items:center;gap:.3rem;background:rgba(167,139,250,.15);
+  border:1px solid rgba(167,139,250,.3);color:var(--purple2);
+  font-size:.74rem;font-weight:600;padding:.22rem .65rem;border-radius:5px;}
+.inp-tag button{background:none;border:none;color:var(--mu);cursor:pointer;font-size:.72rem;
+  padding:0 .1rem;transition:color .2s;}
+.inp-tag button:hover{color:var(--red);}
+.tag-hint{font-size:.7rem;color:var(--mu);margin-top:.28rem;}
+
+/* CTA */
+.upload-cta{max-width:900px;margin:2rem auto 0;text-align:center;}
+.btn-generate{display:inline-flex;align-items:center;gap:.6rem;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;
+  font-size:1.1rem;padding:1.1rem 3rem;border-radius:12px;border:none;cursor:pointer;
+  transition:transform .2s,box-shadow .3s;letter-spacing:-.01em;position:relative;overflow:hidden;}
+.btn-generate::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,0,0,.15),transparent);
+  opacity:0;transition:opacity .2s;}
+.btn-generate:hover{transform:translateY(-2px);box-shadow:0 10px 35px rgba(79,142,247,.5);}
+.btn-generate:hover::before{opacity:1;}
+.btn-generate .gen-ic{font-size:1.3rem;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+
+/* ═══ ANALYZING VIEW ═══════════════════════════════════════════ */
+#view-analyzing{display:none;min-height:100vh;align-items:center;justify-content:center;
+  text-align:center;flex-direction:column;padding:5rem 5%;}
+#view-analyzing.active{display:flex;}
+.analyzing-ic{font-size:5rem;margin-bottom:1.5rem;animation:spinScale 2s ease-in-out infinite;}
+@keyframes spinScale{0%,100%{transform:scale(1) rotate(0deg);}50%{transform:scale(1.1) rotate(10deg);}}
+.analyzing-title{font-weight:800;font-size:clamp(1.6rem,4vw,2.6rem);letter-spacing:-.025em;
+  margin-bottom:.8rem;}
+.analyzing-title .grad{background:linear-gradient(135deg,var(--blue),var(--purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.analyzing-status{font-size:.95rem;color:var(--mu);margin-bottom:2.5rem;min-height:1.5rem;}
+.analyze-bar-wrap{width:min(400px,80vw);height:4px;background:rgba(0,0,0,.07);
+  border-radius:4px;overflow:hidden;margin:0 auto;}
+.analyze-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--blue),var(--purple));
+  border-radius:4px;transition:width .5s ease;}
+.analyzing-steps{display:flex;gap:1.5rem;margin-top:3rem;flex-wrap:wrap;justify-content:center;}
+.an-step{display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:var(--mu);}
+.an-step-dot{width:6px;height:6px;border-radius:50%;background:var(--purple);
+  animation:pulse 1.5s infinite;}
+
+/* ═══ DASHBOARD VIEW ═══════════════════════════════════════════ */
+#view-dashboard{padding:6rem 5% 5rem;}
+.dash-header{max-width:1100px;margin:0 auto 3rem;display:flex;align-items:center;
+  justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.dash-greeting{font-weight:800;font-size:clamp(1.4rem,3.5vw,2.2rem);letter-spacing:-.02em;}
+.dash-actions{display:flex;gap:.7rem;flex-wrap:wrap;}
+.dash-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.3rem;
+  border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;border:none;
+  font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;}
+.db-primary{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;}
+.db-primary:hover{box-shadow:0 5px 18px rgba(79,142,247,.4);transform:translateY(-1px);}
+.db-secondary{background:rgba(0,0,0,.05);border:1px solid var(--bdr);color:var(--wh2);}
+.db-secondary:hover{border-color:rgba(0,0,0,.2);background:rgba(0,0,0,.08);}
+.db-chat{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.25);color:var(--purple2);}
+.db-chat:hover{background:rgba(167,139,250,.2);}
+
+/* Insight cards grid */
+.dash-grid{max-width:1100px;margin:0 auto;display:grid;
+  grid-template-columns:1fr 1fr 1fr;gap:1.2rem;margin-bottom:1.5rem;}
+.ins-card{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r2);
+  padding:1.7rem;position:relative;overflow:hidden;transition:transform .3s,border-color .3s;}
+.ins-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--grad,linear-gradient(90deg,var(--blue),var(--purple)));opacity:.6;}
+.ins-card:hover{transform:translateY(-3px);border-color:rgba(167,139,250,.3);}
+.ins-card.wide{grid-column:span 2;}
+.ins-card.full{grid-column:1/-1;}
+.ic-label{font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--mu);margin-bottom:.8rem;display:flex;align-items:center;gap:.4rem;}
+.ic-label::before{content:'';width:14px;height:2px;background:var(--purple);border-radius:2px;}
+
+/* Confidence ring */
+.conf-wrap{display:flex;align-items:center;gap:1.5rem;}
+.conf-ring-svg{transform:rotate(-90deg);}
+.conf-ring-bg{fill:none;stroke:rgba(0,0,0,.07);stroke-width:5;}
+.conf-ring-fg{fill:none;stroke:url(#conf-grad);stroke-width:5;stroke-linecap:round;
+  transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1);}
+.conf-info h3{font-weight:800;font-size:1.8rem;}
+.conf-info p{font-size:.8rem;color:var(--mu);margin-top:.2rem;line-height:1.5;}
+
+/* Profile strength */
+.ps-row{display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:.6rem;font-size:.8rem;font-weight:600;}
+.ps-track{height:8px;background:rgba(0,0,0,.07);border-radius:5px;overflow:hidden;}
+.ps-fill{height:100%;border-radius:5px;
+  background:linear-gradient(90deg,var(--blue),var(--cyan));
+  width:0%;transition:width 1s ease;}
+
+/* Area chips */
+.area-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.4rem;}
+.area-chip{font-size:.74rem;font-weight:600;padding:.25rem .75rem;border-radius:5px;}
+.area-chip.strong{background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.25);color:#6ee7b7;}
+.area-chip.weak{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.2);color:#fca5a5;}
+.area-chip.potential{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.22);color:#fde68a;}
+
+/* Insight text */
+.insight-txt{font-size:.88rem;color:var(--wh2);line-height:1.72;margin-bottom:.8rem;}
+.next-step-box{display:flex;align-items:flex-start;gap:.7rem;padding:.85rem 1rem;
+  background:rgba(79,142,247,.08);border:1px solid rgba(79,142,247,.2);border-radius:9px;}
+.ns-icon{font-size:1.1rem;flex-shrink:0;}
+.ns-txt{font-size:.84rem;color:var(--blue2);line-height:1.55;}
+
+/* Career path cards */
+.cp-grid{display:flex;flex-direction:column;gap:.85rem;}
+.cp-card{display:flex;align-items:center;gap:1.1rem;padding:1.1rem 1.3rem;
+  background:rgba(0,0,0,.03);border:1px solid var(--bdr);border-radius:var(--r);
+  cursor:pointer;transition:all .3s;position:relative;}
+.cp-card:hover,.cp-card.cp-top{border-color:rgba(167,139,250,.35);background:rgba(167,139,250,.06);}
+.cp-best{position:absolute;top:-9px;right:1rem;background:var(--purple);color:#fff;
+  font-size:.62rem;font-weight:700;padding:.18rem .65rem;border-radius:4px;letter-spacing:.05em;}
+.cp-right{flex:1;}
+.cp-title{font-weight:700;font-size:.92rem;margin-bottom:.2rem;}
+.cp-meta{font-size:.74rem;color:var(--mu);margin-bottom:.3rem;}
+.cp-reason{font-size:.78rem;color:var(--wh2);line-height:1.5;}
+.cp-btn{display:inline-flex;align-items:center;gap:.35rem;background:rgba(79,142,247,.12);
+  border:1px solid rgba(79,142,247,.25);color:var(--blue2);font-size:.72rem;font-weight:700;
+  padding:.3rem .8rem;border-radius:6px;cursor:pointer;border:none;
+  font-family:'Plus Jakarta Sans',sans-serif;margin-top:.6rem;transition:all .2s;}
+.cp-btn:hover{background:rgba(79,142,247,.22);}
+
+/* ═══ ROADMAP SECTION ══════════════════════════════════════════ */
+.roadmap-section{display:none;max-width:1100px;margin:0 auto 3rem;
+  background:var(--card);border:1px solid var(--bdr);border-radius:var(--r2);
+  padding:2.5rem;animation:fadeUp .5s ease both;}
+.roadmap-section.open{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.rm-header{display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;margin-bottom:2.5rem;}
+.rm-title{font-weight:800;font-size:1.3rem;}
+.rm-title span{color:var(--purple);}
+.rm-career-badge{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.25);
+  color:var(--purple2);font-size:.8rem;font-weight:700;padding:.35rem .9rem;border-radius:7px;}
+
+/* Timeline phases */
+.rm-timeline{display:flex;flex-direction:column;gap:1.2rem;}
+.rm-phase{border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;
+  transition:border-color .3s;}
+.rm-phase:hover{border-color:rgba(167,139,250,.3);}
+.rm-phase-head{display:flex;align-items:center;gap:1rem;padding:1rem 1.3rem;
+  background:rgba(167,139,250,.06);cursor:pointer;}
+.rm-phase-num{width:32px;height:32px;border-radius:8px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;}
+.rm-phase-title{font-weight:700;font-size:.9rem;}
+.rm-phase-dur{font-size:.74rem;color:var(--mu);margin-top:.1rem;}
+.rm-phase-body{padding:1.2rem 1.3rem;display:flex;flex-direction:column;gap:.9rem;}
+.rm-section .rm-sec-lbl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--mu);margin-bottom:.5rem;}
+.rm-skills{display:flex;flex-wrap:wrap;gap:.4rem;}
+.rm-skill{background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.18);
+  color:#67e8f9;font-size:.74rem;font-weight:500;padding:.22rem .65rem;border-radius:5px;}
+.rm-res{padding-left:1.2rem;}
+.rm-res li{font-size:.82rem;color:var(--mu);margin-bottom:.3rem;line-height:1.5;}
+.rm-milestone{display:flex;align-items:flex-start;gap:.6rem;padding:.75rem .9rem;
+  background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.2);border-radius:8px;
+  font-size:.82rem;color:#fde68a;}
+.rm-outcome{display:flex;align-items:flex-start;gap:.6rem;padding:.75rem .9rem;
+  background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.18);border-radius:8px;
+  font-size:.82rem;color:#6ee7b7;}
+.rm-ms-ic,.rm-oc-ic{flex-shrink:0;font-size:1rem;}
+
+/* Salary journey */
+.sj-wrap{margin-top:1.5rem;}
+.sj-title{font-weight:700;font-size:.88rem;margin-bottom:1rem;color:var(--wh2);}
+.sj-item{display:flex;align-items:center;gap:1rem;margin-bottom:.8rem;}
+.sj-label{width:60px;font-size:.76rem;font-weight:600;color:var(--mu);flex-shrink:0;text-transform:capitalize;}
+.sj-bar-wrap{flex:1;height:6px;background:rgba(0,0,0,.07);border-radius:4px;overflow:hidden;}
+.sj-bar{height:100%;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:4px;width:0%;transition:width 1s ease;}
+.sj-val{font-size:.78rem;font-weight:600;color:var(--blue2);min-width:150px;text-align:right;}
+
+/* Internship cards */
+.int-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-top:.8rem;}
+.int-card{background:rgba(79,142,247,.06);border:1px solid rgba(79,142,247,.18);
+  border-radius:var(--r);padding:1.1rem;}
+.int-role{font-weight:700;font-size:.86rem;margin-bottom:.25rem;}
+.int-platform{font-size:.72rem;font-weight:700;color:var(--blue2);
+  background:rgba(79,142,247,.15);padding:.18rem .55rem;border-radius:4px;display:inline-block;margin-bottom:.5rem;}
+.int-tip{font-size:.78rem;color:var(--mu);line-height:1.5;}
+
+/* Certs */
+.rm-certs{display:flex;flex-direction:column;gap:.5rem;margin-top:.8rem;}
+.rm-cert{display:flex;align-items:center;gap:.6rem;font-size:.83rem;color:var(--wh2);
+  padding:.55rem .8rem;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.15);border-radius:7px;}
+.rm-cert-ic{font-size:1rem;flex-shrink:0;}
+
+/* Sub-sections in roadmap */
+.rm-subsec{margin-top:2rem;}
+.rm-subsec-title{font-weight:700;font-size:.9rem;margin-bottom:1rem;
+  display:flex;align-items:center;gap:.5rem;color:var(--wh2);}
+.rm-subsec-title::before{content:'';width:16px;height:2px;background:var(--purple);border-radius:2px;}
+
+/* ═══ CHAT VIEW ════════════════════════════════════════════════ */
+#view-chat{padding:6rem 5% 5rem;}
+.chat-layout{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:1.5rem;align-items:start;}
+.chat-sidebar{}
+.chat-sidebar-title{font-weight:700;font-size:.88rem;color:var(--wh2);margin-bottom:1rem;}
+.quick-prompts{display:flex;flex-direction:column;gap:.5rem;}
+.qp{background:var(--card);border:1px solid var(--bdr);border-radius:9px;padding:.75rem 1rem;
+  font-size:.8rem;color:var(--mu);cursor:pointer;transition:all .2s;line-height:1.45;text-align:left;width:100%;}
+.qp:hover{border-color:rgba(167,139,250,.35);color:var(--wh);background:rgba(167,139,250,.07);}
+.chat-profile-card{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);
+  padding:1.2rem;margin-top:1.2rem;}
+.cpc-title{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--mu);margin-bottom:.7rem;}
+.cpc-row{font-size:.8rem;color:var(--wh2);padding:.35rem 0;border-bottom:1px solid var(--bdr);}
+.cpc-row:last-child{border:none;}
+.cpc-label{font-size:.7rem;color:var(--mu);}
+
+/* Chat box */
+.chat-box{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r2);
+  display:flex;flex-direction:column;overflow:hidden;height:600px;}
+.chat-box-header{padding:1rem 1.3rem;background:rgba(167,139,250,.07);
+  border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:.7rem;}
+.chat-av{width:34px;height:34px;border-radius:9px;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+.chat-ai-name{font-weight:700;font-size:.88rem;}
+.chat-ai-status{font-size:.7rem;color:var(--green);display:flex;align-items:center;gap:.3rem;}
+.status-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.3;transform:scale(1.6);}}
+.chat-msgs{flex:1;overflow-y:auto;padding:1.2rem;display:flex;flex-direction:column;gap:.8rem;}
+.chat-msgs::-webkit-scrollbar{width:3px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:3px;}
+.chat-msg{padding:.72rem .95rem;border-radius:10px;font-size:.84rem;line-height:1.6;max-width:88%;word-break:break-word;}
+.chat-msg.bot{background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.18);align-self:flex-start;color:var(--wh2);}
+.chat-msg.user{background:rgba(167,139,250,.13);border:1px solid rgba(167,139,250,.22);align-self:flex-end;color:var(--wh);}
+.chat-msg.chat-typing{display:flex;gap:4px;align-items:center;padding:.8rem 1rem;align-self:flex-start;}
+.chat-msg.chat-typing span{width:7px;height:7px;background:var(--blue2);border-radius:50%;animation:typingDot .9s infinite;}
+.chat-msg.chat-typing span:nth-child(2){animation-delay:.15s;}
+.chat-msg.chat-typing span:nth-child(3){animation-delay:.3s;}
+@keyframes typingDot{0%,80%,100%{transform:scale(.6);opacity:.4;}40%{transform:scale(1);opacity:1;}}
+.chat-input-row{display:flex;gap:.5rem;padding:.9rem 1rem;border-top:1px solid var(--bdr);background:var(--surf2);}
+.chat-inp{flex:1;background:rgba(0,0,0,.04);border:1px solid var(--bdr);border-radius:9px;
+  padding:.68rem .9rem;color:var(--wh);font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;outline:none;}
+.chat-inp:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(167,139,250,.1);}
+.chat-inp::placeholder{color:var(--mu);}
+.chat-send{background:linear-gradient(135deg,var(--blue),var(--purple));border:none;
+  border-radius:9px;padding:.68rem .95rem;color:#fff;cursor:pointer;font-size:1rem;
+  transition:all .2s;flex-shrink:0;}
+.chat-send:hover{box-shadow:0 4px 14px rgba(79,142,247,.4);transform:scale(1.04);}
+
+/* ═══ REVEAL ═══════════════════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+.revealed{opacity:1;transform:translateY(0);}
+
+/* ═══ RESPONSIVE ═══════════════════════════════════════════════ */
+@media(max-width:900px){
+  .dash-grid{grid-template-columns:1fr 1fr;}
+  .ins-card.wide{grid-column:1/-1;}
+  .int-grid{grid-template-columns:1fr 1fr;}
+  .upload-grid{grid-template-columns:1fr;}
+  .chat-layout{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  nav{padding:.85rem 4%;}
+  #view-upload,#view-dashboard,#view-chat{padding:5.5rem 4% 4rem;}
+  .dash-grid{grid-template-columns:1fr;}
+  .ins-card.wide{grid-column:1;}
+  .int-grid{grid-template-columns:1fr;}
+  .chat-box{height:500px;}
+  .analyzing-steps{display:none;}
+  .btn-generate{font-size:.95rem;padding:.9rem 2rem;}
+  .roadmap-section{padding:1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- SVG gradient defs (used by confidence ring) -->
+<svg width="0" height="0" style="position:absolute;"><defs>
+  <linearGradient id="conf-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#4f8ef7"/>
+    <stop offset="100%" stop-color="#a78bfa"/>
+  </linearGradient>
+</defs></svg>
+
+<div class="blob-bg"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="javascript:void(0)" onclick="window.location.reload()">
+    <div class="nav-mark">DT</div>
+    <div class="nav-title">Digital<span>Twin</span> <span style="font-weight:400;color:var(--mu);font-size:.82rem;">/ Analyzer</span></div>
+  </a>
+  <button class="nav-back" onclick="window.history.back()">← Back to Platform</button>
+</nav>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><span id="t-icon">✅</span><span id="t-msg"></span></div>
+
+<!-- RESTORE BANNER -->
+<div class="restore-banner" id="restore-banner">
+  <span>📂 You have a <strong style="color:var(--blue2);">saved analysis</strong> from a previous session. Want to restore it?</span>
+  <div class="rb-btns">
+    <button class="rb-btn" onclick="restoreSession();dismissRestore()">Restore Session</button>
+    <button class="rb-dismiss" onclick="dismissRestore()">✕</button>
+  </div>
+</div>
+
+<!-- ══════════════════ VIEW: UPLOAD ══════════════════════════ -->
+<div class="view active" id="view-upload">
+  <div class="upload-hero reveal">
+    <div class="eyebrow">🧠 AI-Powered Career Intelligence</div>
+    <h1>Analyze Your Achievements.<br>
+    <span class="grad">Generate Your Future.</span></h1>
+    <p class="sub">Upload your resume, certificates, and skills. Our multi-agent AI will analyze your profile, identify your strongest career paths, and build a personalized roadmap.</p>
+  </div>
+
+  <div class="upload-grid">
+    <!-- Name -->
+    <div class="upload-panel reveal">
+      <div class="panel-title"><span class="pt-ic">👤</span>Your Profile</div>
+      <div class="form-group">
+        <label>Full Name *</label>
+        <input class="fi inp-clear-err" id="inp-name" type="text" placeholder="e.g. Arjun Sharma">
+      </div>
+      <div class="form-group">
+        <label>CGPA / Academic Score</label>
+        <input class="fi" id="inp-cgpa" type="text" placeholder="e.g. 8.2 / 10 or 82%">
+      </div>
+      <div class="form-group">
+        <label>Interests</label>
+        <input class="fi" id="inp-interests" type="text" placeholder="e.g. AI, Product Design, FinTech">
+      </div>
+    </div>
+
+    <!-- Goals -->
+    <div class="upload-panel reveal">
+      <div class="panel-title"><span class="pt-ic">🎯</span>Career Goals</div>
+      <div class="form-group">
+        <label>What career do you want? *</label>
+        <textarea class="fi ft inp-clear-err" id="inp-goals" rows="3"
+          placeholder="e.g. I want to become a Data Scientist at a product company within 1 year..."></textarea>
+      </div>
+      <div class="form-group">
+        <div class="tag-hint" style="margin-bottom:.45rem;">💡 Tip: Be specific — the more detail you give, the more accurate your roadmap will be.</div>
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="upload-panel reveal">
+      <div class="panel-title"><span class="pt-ic">⚡</span>Skills</div>
+      <div class="form-group">
+        <label>Technical & Soft Skills *</label>
+        <div class="tag-input-wrap">
+          <div id="skills-tags"></div>
+          <input id="skills-inp" placeholder="Type skill, press Enter…">
+        </div>
+        <div class="tag-hint">Press Enter or comma after each skill</div>
+      </div>
+    </div>
+
+    <!-- Strengths -->
+    <div class="upload-panel reveal">
+      <div class="panel-title"><span class="pt-ic">💪</span>Strengths</div>
+      <div class="form-group">
+        <label>Your Key Strengths</label>
+        <div class="tag-input-wrap">
+          <div id="strengths-tags"></div>
+          <input id="strengths-inp" placeholder="e.g. Problem Solving, press Enter…">
+        </div>
+        <div class="tag-hint">Press Enter or comma after each strength</div>
+      </div>
+    </div>
+
+    <!-- Resume upload -->
+    <div class="upload-panel reveal">
+      <div class="panel-title"><span class="pt-ic">📄</span>Resume / CV</div>
+      <div class="drop-zone" id="drop-resume">
+        <div class="dz-icon">📤</div>
+        <div class="dz-title">Drop your resume here</div>
+        <div class="dz-sub">PDF, DOC, DOCX — or click to browse</div>
+      </div>
+      <input type="file" id="inp-resume" class="dz-input" accept=".pdf,.doc,.docx">
+      <div class="file-list" id="resume-list"></div>
+    </div>
+
+    <!-- Certificate upload -->
+    <div class="upload-panel reveal">
+      <div class="panel-title"><span class="pt-ic">🏆</span>Certificates & Projects</div>
+      <div class="drop-zone" id="drop-certs">
+        <div class="dz-icon">📂</div>
+        <div class="dz-title">Drop certificates here</div>
+        <div class="dz-sub">PDF, PNG, JPG — multiple allowed</div>
+      </div>
+      <input type="file" id="inp-certs" class="dz-input" accept=".pdf,.png,.jpg,.jpeg" multiple>
+      <div class="file-list" id="certs-list"></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="upload-cta reveal">
+    <button class="btn-generate" onclick="startAnalysis()">
+      <span class="gen-ic">🚀</span>
+      Generate My Future
+    </button>
+    <div style="margin-top:.9rem;font-size:.78rem;color:var(--mu);">
+      Your data is saved locally and never shared. Powered by Eco-Novators AI.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ VIEW: ANALYZING ═════════════════════════ -->
+<div class="view" id="view-analyzing">
+  <div class="analyzing-ic">🧠</div>
+  <div class="analyzing-title">Analyzing Your <span class="grad">Digital Twin</span>...</div>
+  <div class="analyzing-status" id="analyze-status">Initializing AI agents...</div>
+  <div class="analyze-bar-wrap">
+    <div class="analyze-bar" id="analyze-bar"></div>
+  </div>
+  <div class="analyzing-steps">
+    <div class="an-step"><span class="an-step-dot"></span>Career Roadmap Agent</div>
+    <div class="an-step"><span class="an-step-dot" style="animation-delay:.3s"></span>Skill Gap Agent</div>
+    <div class="an-step"><span class="an-step-dot" style="animation-delay:.6s"></span>Market Alert Agent</div>
+    <div class="an-step"><span class="an-step-dot" style="animation-delay:.9s"></span>Internship Agent</div>
+  </div>
+</div>
+
+<!-- ══════════════════ VIEW: DASHBOARD ════════════════════════ -->
+<div class="view" id="view-dashboard">
+  <!-- Header -->
+  <div class="dash-header">
+    <div class="dash-greeting" id="dash-name">Welcome back 👋</div>
+    <div class="dash-actions">
+      <button class="dash-btn db-chat" onclick="showView('view-chat')">💬 Chat with AI</button>
+      <button class="dash-btn db-secondary" id="export-btn" onclick="exportPDF()">⬇ Download Report</button>
+      <button class="dash-btn db-secondary" onclick="showView('view-upload')">🔄 Update Profile</button>
+    </div>
+  </div>
+
+  <!-- Insight cards -->
+  <div class="dash-grid">
+    <!-- Confidence score -->
+    <div class="ins-card reveal" style="--grad:linear-gradient(90deg,#4f8ef7,#a78bfa);">
+      <div class="ic-label">AI Confidence Score</div>
+      <div class="conf-wrap">
+        <svg class="conf-ring-svg" width="100" height="100" viewBox="0 0 100 100">
+          <circle class="conf-ring-bg" cx="50" cy="50" r="42"/>
+          <circle class="conf-ring-fg" id="conf-ring" cx="50" cy="50" r="42"/>
+        </svg>
+        <div class="conf-info">
+          <h3 id="conf-score">—</h3>
+          <p>Success probability<br>based on your profile</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile strength -->
+    <div class="ins-card reveal" style="--grad:linear-gradient(90deg,#22d3ee,#4f8ef7);">
+      <div class="ic-label">Profile Strength</div>
+      <div class="ps-row"><span>Completeness</span><span id="ps-txt">—</span></div>
+      <div class="ps-track"><div class="ps-fill" id="ps-bar"></div></div>
+      <div style="margin-top:1.2rem;">
+        <div style="font-size:.75rem;font-weight:600;color:var(--mu);margin-bottom:.5rem;">STRONG AREAS</div>
+        <div class="area-chips" id="strong-areas"></div>
+      </div>
+    </div>
+
+    <!-- Weak / Potential -->
+    <div class="ins-card reveal" style="--grad:linear-gradient(90deg,#f87171,#fbbf24);">
+      <div class="ic-label">Gaps & Hidden Potential</div>
+      <div style="font-size:.74rem;font-weight:600;color:var(--mu);margin-bottom:.4rem;">TO IMPROVE</div>
+      <div class="area-chips" id="weak-areas"></div>
+      <div style="font-size:.74rem;font-weight:600;color:var(--mu);margin:.85rem 0 .4rem;">HIDDEN POTENTIAL</div>
+      <div class="area-chips" id="hidden-potential"></div>
+    </div>
+
+    <!-- Key insight — wide -->
+    <div class="ins-card wide reveal" style="--grad:linear-gradient(90deg,#a78bfa,#22d3ee);">
+      <div class="ic-label">AI Key Insight</div>
+      <div class="insight-txt" id="key-insight"></div>
+      <div class="next-step-box">
+        <div class="ns-icon">⚡</div>
+        <div class="ns-txt" id="next-step"></div>
+      </div>
+    </div>
+
+    <!-- Career paths — full -->
+    <div class="ins-card full reveal" style="--grad:linear-gradient(90deg,#4f8ef7,#34d399);">
+      <div class="ic-label">Best Career Matches</div>
+      <div class="cp-grid" id="career-paths"></div>
+    </div>
+  </div>
+
+  <!-- Roadmap section (shown after clicking Generate Roadmap) -->
+  <div class="roadmap-section" id="roadmap-section">
+    <div class="rm-header">
+      <div>
+        <div class="rm-title">Your Career Roadmap — <span id="roadmap-career"></span></div>
+        <div style="font-size:.8rem;color:var(--mu);margin-top:.3rem;">12-month personalised plan · Save as PDF above</div>
+      </div>
+      <button class="dash-btn db-chat" onclick="showView('view-chat')">💬 Discuss with AI</button>
+    </div>
+
+    <div class="roadmap-timeline" id="roadmap-timeline"></div>
+
+    <!-- Salary journey -->
+    <div class="rm-subsec">
+      <div class="rm-subsec-title">Salary Journey Projection</div>
+      <div id="salary-journey"></div>
+    </div>
+
+    <!-- Internships -->
+    <div class="rm-subsec">
+      <div class="rm-subsec-title">Internship Opportunities</div>
+      <div class="int-grid" id="internship-cards"></div>
+    </div>
+
+    <!-- Certifications -->
+    <div class="rm-subsec">
+      <div class="rm-subsec-title">Recommended Certifications</div>
+      <div id="rm-certs"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ VIEW: CHAT ══════════════════════════════ -->
+<div class="view" id="view-chat">
+  <div class="chat-layout">
+    <!-- Sidebar -->
+    <div class="chat-sidebar reveal">
+      <div class="chat-sidebar-title">Quick Questions</div>
+      <div class="quick-prompts">
+        <button class="qp" onclick="sendQuick('Show me my career roadmap in detail.')">🗺️ Walk me through my roadmap</button>
+        <button class="qp" onclick="sendQuick('What skills should I focus on first?')">⚡ Which skills to learn first?</button>
+        <button class="qp" onclick="sendQuick('What salary can I expect?')">💰 Salary expectations for me</button>
+        <button class="qp" onclick="sendQuick('Where should I apply for internships?')">💼 Best internship platforms</button>
+        <button class="qp" onclick="sendQuick('How do I stand out in interviews for my target role?')">🎤 Interview prep advice</button>
+        <button class="qp" onclick="sendQuick('What is the future of my chosen career in the next 5 years?')">🔮 Future of my career</button>
+        <button class="qp" onclick="sendQuick('How can I improve my profile strength score?')">📊 Improve my profile score</button>
+      </div>
+      <div class="chat-profile-card">
+        <div class="cpc-title">Your Profile Summary</div>
+        <div class="cpc-row"><span class="cpc-label">Name:</span> <span id="cpc-name">—</span></div>
+        <div class="cpc-row"><span class="cpc-label">Score:</span> <span id="cpc-score">—</span></div>
+        <div class="cpc-row"><span class="cpc-label">Best Match:</span> <span id="cpc-career">—</span></div>
+      </div>
+      <div style="margin-top:1rem;">
+        <button class="dash-btn db-secondary" style="width:100%" onclick="showView('view-dashboard')">← Back to Dashboard</button>
+      </div>
+    </div>
+
+    <!-- Chat box -->
+    <div class="chat-box reveal">
+      <div class="chat-box-header">
+        <div class="chat-av">🤖</div>
+        <div>
+          <div class="chat-ai-name">Digital Twin Career AI</div>
+          <div class="chat-ai-status"><span class="status-dot"></span>Online · Knows your profile</div>
+        </div>
+      </div>
+      <div class="chat-msgs" id="chat-msgs">
+        <div class="chat-msg bot">Hey! I've analyzed your profile and I'm ready to help. Ask me anything about your career path, skills to learn, interviews, or where to apply. What's on your mind? 🎯</div>
+      </div>
+      <div class="chat-input-row">
+        <input class="chat-inp" id="chat-inp" placeholder="Ask your career AI mentor…">
+        <button class="chat-send" onclick="sendChatMsg()">➤</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   DIGITAL TWIN — Achievement Analyzer & Career Roadmap Generator
+   All strings use \n escapes. No template literals. No IIFE at top.
+   All DOM listeners inside DOMContentLoaded.
+   ============================================================ */
+
+/* ── CONFIG ─────────────────────────────────────────────────── */
+var CFG = {
+  apiKey: '',
+  model: 'claude-sonnet-4-20250514',
+  WA_LINK: 'https://chat.whatsapp.com/EoeMkImMW9u2NzEn2XTjr9'
+};
+
+/* ── INTELLIGENCE LAYER (localStorage persistence) ──────────── */
+var INTEL = {
+  key: 'dt_analyzer_v1',
+  load: function() {
+    try { return JSON.parse(localStorage.getItem(INTEL.key) || 'null') || INTEL.fresh(); }
+    catch(e) { return INTEL.fresh(); }
+  },
+  fresh: function() {
+    return {
+      profile: { name:'', cgpa:'', skills:[], strengths:[], goals:'', interests:'', resumeText:'', certs:[] },
+      analysis: null,
+      roadmap: null,
+      chatHistory: [],
+      sessions: [],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+  },
+  save: function(data) {
+    try {
+      data.updatedAt = new Date().toISOString();
+      localStorage.setItem(INTEL.key, JSON.stringify(data));
+    } catch(e) {}
+  }
+};
+
+/* ── APP STATE ───────────────────────────────────────────────── */
+var STATE = {
+  data: INTEL.load(),
+  uploadedFiles: [],
+  isAnalyzing: false,
+  chatHistory: [],
+  roadmapGenerated: false,
+  currentView: 'upload'  /* upload | analyzing | dashboard | chat */
+};
+
+/* ── VIEW ROUTER ─────────────────────────────────────────────── */
+function showView(id) {
+  var views = ['view-upload','view-analyzing','view-dashboard','view-chat'];
+  views.forEach(function(v) {
+    var el = document.getElementById(v);
+    if (el) el.classList.toggle('active', v === id);
+  });
+  STATE.currentView = id.replace('view-','');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── FILE UPLOAD ─────────────────────────────────────────────── */
+function initDropZones() {
+  ['drop-resume','drop-certs'].forEach(function(zoneId) {
+    var zone = document.getElementById(zoneId);
+    if (!zone) return;
+    zone.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      zone.classList.add('dragover');
+    });
+    zone.addEventListener('dragleave', function() {
+      zone.classList.remove('dragover');
+    });
+    zone.addEventListener('drop', function(e) {
+      e.preventDefault();
+      zone.classList.remove('dragover');
+      handleFiles(Array.from(e.dataTransfer.files), zoneId);
+    });
+    zone.addEventListener('click', function() {
+      var inp = document.getElementById(zoneId === 'drop-resume' ? 'inp-resume' : 'inp-certs');
+      if (inp) inp.click();
+    });
+  });
+
+  var inpResume = document.getElementById('inp-resume');
+  if (inpResume) inpResume.addEventListener('change', function() {
+    handleFiles(Array.from(this.files), 'drop-resume');
+  });
+  var inpCerts = document.getElementById('inp-certs');
+  if (inpCerts) inpCerts.addEventListener('change', function() {
+    handleFiles(Array.from(this.files), 'drop-certs');
+  });
+}
+
+function handleFiles(files, zoneId) {
+  var isResume = zoneId === 'drop-resume';
+  var listId = isResume ? 'resume-list' : 'certs-list';
+  var list = document.getElementById(listId);
+  files.forEach(function(file) {
+    STATE.uploadedFiles.push({ name: file.name, type: file.type, size: file.size, zone: zoneId });
+    if (isResume) STATE.data.profile.resumeText = '[Uploaded: ' + file.name + ']';
+    else STATE.data.profile.certs.push(file.name);
+    if (list) {
+      var item = document.createElement('div');
+      item.className = 'file-chip';
+      item.innerHTML = '<span class="file-ic">' + (file.type.includes('pdf') ? '📄' : '🖼') + '</span>'
+        + '<span class="file-nm">' + file.name + '</span>'
+        + '<button class="file-rm" onclick="removeFileChip(this)">✕</button>';
+      list.appendChild(item);
+    }
+  });
+  INTEL.save(STATE.data);
+  showToast('📎', files.length + ' file(s) added');
+}
+
+function removeFileChip(btn) {
+  if (btn && btn.parentElement) btn.parentElement.remove();
+}
+
+/* ── TAG INPUTS (skills / strengths) ────────────────────────── */
+function initTagInputs() {
+  ['skills-inp','strengths-inp'].forEach(function(inpId) {
+    var inp = document.getElementById(inpId);
+    if (!inp) return;
+    inp.addEventListener('keydown', function(e) {
+      if ((e.key === 'Enter' || e.key === ',') && this.value.trim()) {
+        e.preventDefault();
+        addTag(this.value.trim(), inpId === 'skills-inp' ? 'skills-tags' : 'strengths-tags', inpId === 'skills-inp' ? 'skill' : 'strength');
+        this.value = '';
+      }
+    });
+  });
+}
+
+function addTag(text, containerId, type) {
+  var container = document.getElementById(containerId);
+  if (!container) return;
+  var tag = document.createElement('span');
+  tag.className = 'inp-tag';
+  tag.innerHTML = text + '<button onclick="this.parentElement.remove();syncTags()" title="Remove">✕</button>';
+  container.appendChild(tag);
+  syncTags();
+}
+
+function syncTags() {
+  var skillEls = document.querySelectorAll('#skills-tags .inp-tag');
+  var strEls = document.querySelectorAll('#strengths-tags .inp-tag');
+  STATE.data.profile.skills = Array.from(skillEls).map(function(t) { return t.textContent.replace('✕','').trim(); });
+  STATE.data.profile.strengths = Array.from(strEls).map(function(t) { return t.textContent.replace('✕','').trim(); });
+  INTEL.save(STATE.data);
+}
+
+/* ── COLLECT FORM DATA ───────────────────────────────────────── */
+function collectProfile() {
+  var cgpaEl = document.getElementById('inp-cgpa');
+  var goalsEl = document.getElementById('inp-goals');
+  var intEl = document.getElementById('inp-interests');
+  var nameEl = document.getElementById('inp-name');
+  if (cgpaEl) STATE.data.profile.cgpa = cgpaEl.value.trim();
+  if (goalsEl) STATE.data.profile.goals = goalsEl.value.trim();
+  if (intEl) STATE.data.profile.interests = intEl.value.trim();
+  if (nameEl) STATE.data.profile.name = nameEl.value.trim();
+  syncTags();
+  INTEL.save(STATE.data);
+}
+
+/* ── VALIDATE BEFORE SUBMIT ──────────────────────────────────── */
+function validateProfile() {
+  var name = document.getElementById('inp-name');
+  var goals = document.getElementById('inp-goals');
+  var skills = STATE.data.profile.skills;
+  var msgs = [];
+  if (!name || !name.value.trim()) msgs.push('Your name');
+  if (!goals || !goals.value.trim()) msgs.push('Career goals');
+  if (!skills.length) msgs.push('At least one skill');
+  if (msgs.length) {
+    showToast('⚠️', 'Please fill: ' + msgs.join(', '));
+    if (name && !name.value.trim()) { name.classList.add('inp-error'); name.focus(); }
+    return false;
+  }
+  return true;
+}
+
+/* ── START ANALYSIS ──────────────────────────────────────────── */
+function startAnalysis() {
+  if (!validateProfile()) return;
+  collectProfile();
+  showView('view-analyzing');
+  STATE.isAnalyzing = true;
+  animateAnalyzing();
+  setTimeout(function() {
+    STATE.isAnalyzing = false;
+    runAIAnalysis();
+  }, 3200);
+}
+
+/* ── ANALYZING ANIMATION ─────────────────────────────────────── */
+function animateAnalyzing() {
+  var steps = [
+    'Scanning your achievements...',
+    'Mapping your skill profile...',
+    'Comparing with industry trends...',
+    'Identifying career opportunities...',
+    'Calculating confidence scores...',
+    'Building your Digital Twin...'
+  ];
+  var el = document.getElementById('analyze-status');
+  var bar = document.getElementById('analyze-bar');
+  var i = 0;
+  var interval = setInterval(function() {
+    if (el) el.textContent = steps[i] || steps[steps.length - 1];
+    if (bar) bar.style.width = ((i + 1) / steps.length * 100) + '%';
+    i++;
+    if (i >= steps.length) clearInterval(interval);
+  }, 500);
+}
+
+/* ── BUILD ANALYSIS PROMPT ───────────────────────────────────── */
+function buildAnalysisPrompt() {
+  var p = STATE.data.profile;
+  var parts = ['You are an expert AI career analyst for the Digital Twin platform. Analyze this student profile and return a structured JSON response.'];
+  parts.push('\nSTUDENT PROFILE:');
+  if (p.name) parts.push('Name: ' + p.name);
+  if (p.cgpa) parts.push('CGPA/Academic: ' + p.cgpa);
+  if (p.skills.length) parts.push('Skills: ' + p.skills.join(', '));
+  if (p.strengths.length) parts.push('Strengths: ' + p.strengths.join(', '));
+  if (p.goals) parts.push('Career Goals: ' + p.goals);
+  if (p.interests) parts.push('Interests: ' + p.interests);
+  if (p.resumeText) parts.push('Resume: ' + p.resumeText);
+  if (p.certs.length) parts.push('Certificates: ' + p.certs.join(', '));
+  parts.push('\nReturn ONLY valid JSON (no markdown, no backticks) with this exact structure:');
+  parts.push('{"name":"string","confidenceScore":number(60-97),"profileStrength":number(0-100),"strongAreas":["area1","area2","area3"],"weakAreas":["gap1","gap2"],"hiddenPotential":["potential1","potential2"],"careerPaths":[{"title":"string","match":number(0-100),"salary":"string","timeline":"string","reason":"string"},{"title":"string","match":number,"salary":"string","timeline":"string","reason":"string"},{"title":"string","match":number,"salary":"string","timeline":"string","reason":"string"}],"keyInsight":"2-3 sentence personalized insight","nextStep":"single most important action"}');
+  return parts.join('\n');
+}
+
+/* ── BUILD ROADMAP PROMPT ────────────────────────────────────── */
+function buildRoadmapPrompt(careerTitle) {
+  var p = STATE.data.profile;
+  var parts = ['You are a career roadmap architect for the Digital Twin platform. Create a detailed roadmap.'];
+  parts.push('Student: ' + (p.name || 'Student'));
+  parts.push('Target Career: ' + careerTitle);
+  parts.push('Current Skills: ' + (p.skills.join(', ') || 'None listed'));
+  parts.push('CGPA: ' + (p.cgpa || 'Not provided'));
+  parts.push('Goals: ' + (p.goals || 'Not provided'));
+  parts.push('\nReturn ONLY valid JSON (no markdown) with this structure:');
+  parts.push('{"career":"string","totalMonths":number,"phases":[{"phase":number,"title":"string","duration":"string","skills":["skill1","skill2"],"resources":["resource1","resource2"],"milestone":"string","outcome":"string"}],"internships":[{"role":"string","platform":"string","tip":"string"}],"certifications":["cert1","cert2"],"salaryJourney":{"year1":"string","year3":"string","year5":"string"}}');
+  return parts.join('\n');
+}
+
+/* ── RUN AI ANALYSIS ─────────────────────────────────────────── */
+function runAIAnalysis() {
+  if (!CFG.apiKey) {
+    var demo = getDemoAnalysis();
+    STATE.data.analysis = demo;
+    INTEL.save(STATE.data);
+    renderDashboard(demo);
+    showView('view-dashboard');
+    return;
+  }
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': CFG.apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: CFG.model,
+      max_tokens: 1500,
+      messages: [{ role: 'user', content: buildAnalysisPrompt() }]
+    })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    var raw = d.content && d.content[0] ? d.content[0].text : '';
+    try {
+      var clean = raw.replace(/```json/g,'').replace(/```/g,'').trim();
+      var parsed = JSON.parse(clean);
+      STATE.data.analysis = parsed;
+    } catch(e) {
+      STATE.data.analysis = getDemoAnalysis();
+    }
+    INTEL.save(STATE.data);
+    renderDashboard(STATE.data.analysis);
+    showView('view-dashboard');
+  })
+  .catch(function() {
+    STATE.data.analysis = getDemoAnalysis();
+    INTEL.save(STATE.data);
+    renderDashboard(STATE.data.analysis);
+    showView('view-dashboard');
+  });
+}
+
+/* ── DEMO ANALYSIS DATA ──────────────────────────────────────── */
+function getDemoAnalysis() {
+  var p = STATE.data.profile;
+  var name = p.name || 'Student';
+  var skills = p.skills;
+  var hasTech = skills.some(function(s) {
+    return ['python','java','javascript','react','ml','ai','data','node','flutter','sql'].some(function(k) {
+      return s.toLowerCase().includes(k);
+    });
+  });
+  var hasDesign = skills.some(function(s) {
+    return ['figma','design','ux','ui','adobe','sketch'].some(function(k) {
+      return s.toLowerCase().includes(k);
+    });
+  });
+  var cgpaNum = parseFloat(p.cgpa) || 7.5;
+  var confScore = Math.min(97, Math.round(60 + (cgpaNum - 5) * 5 + skills.length * 2));
+  var paths = [];
+  if (hasTech) {
+    paths = [
+      { title: 'Software Engineer', match: 92, salary: '₹8–40 LPA', timeline: '6–12 months', reason: 'Your technical skills align strongly with product engineering roles.' },
+      { title: 'AI/ML Engineer', match: 86, salary: '₹12–50 LPA', timeline: '8–14 months', reason: 'Strong foundation for AI with upskilling in deep learning.' },
+      { title: 'Data Scientist', match: 78, salary: '₹8–35 LPA', timeline: '6–10 months', reason: 'Analytical skills and technical background are a solid fit.' }
+    ];
+  } else if (hasDesign) {
+    paths = [
+      { title: 'UI/UX Designer', match: 91, salary: '₹5–25 LPA', timeline: '4–8 months', reason: 'Creative skills and design tools are highly marketable.' },
+      { title: 'Product Manager', match: 82, salary: '₹12–45 LPA', timeline: '1–2 years', reason: 'Design thinking combined with strategic mindset.' },
+      { title: 'Brand Strategist', match: 74, salary: '₹6–20 LPA', timeline: '6–10 months', reason: 'Visual storytelling aligns with marketing & brand roles.' }
+    ];
+  } else {
+    paths = [
+      { title: 'Business Analyst', match: 85, salary: '₹6–22 LPA', timeline: '4–8 months', reason: 'Analytical thinking and communication are strong differentiators.' },
+      { title: 'Product Manager', match: 79, salary: '₹12–45 LPA', timeline: '1–2 years', reason: 'Cross-functional problem-solving is your edge.' },
+      { title: 'Management Consultant', match: 72, salary: '₹8–30 LPA', timeline: '1–2 years', reason: 'Strategic thinking and domain knowledge are valued here.' }
+    ];
+  }
+  return {
+    name: name,
+    confidenceScore: confScore,
+    profileStrength: Math.min(95, 45 + skills.length * 5 + (STATE.uploadedFiles.length * 8)),
+    strongAreas: skills.slice(0,3).concat(['Problem Solving']).slice(0,3),
+    weakAreas: ['Industry Certifications', 'Portfolio Projects'],
+    hiddenPotential: ['Leadership', 'Cross-domain Innovation'],
+    careerPaths: paths,
+    keyInsight: 'Hey ' + name + ', your profile shows a strong foundation with real growth potential. Your combination of ' + (skills.slice(0,2).join(' and ') || 'diverse skills') + ' puts you ahead of 68% of students at your level. With focused upskilling over the next 6 months, you can realistically target roles paying ₹10–25 LPA.',
+    nextStep: 'Build one end-to-end portfolio project that demonstrates your top skill in a real-world context.'
+  };
+}
+
+/* ── RENDER DASHBOARD ────────────────────────────────────────── */
+function renderDashboard(a) {
+  if (!a) return;
+  var el = function(id) { return document.getElementById(id); };
+
+  /* Header */
+  var greet = el('dash-name');
+  if (greet) greet.textContent = 'Hey ' + (a.name || 'there') + ' 👋';
+
+  /* Confidence score ring animation */
+  var ring = el('conf-ring');
+  var ringTxt = el('conf-score');
+  if (ring && ringTxt) {
+    var circ = 2 * Math.PI * 42;
+    var offset = circ - (a.confidenceScore / 100 * circ);
+    ring.style.strokeDasharray = circ;
+    ring.style.strokeDashoffset = circ;
+    ringTxt.textContent = a.confidenceScore + '%';
+    setTimeout(function() { ring.style.strokeDashoffset = offset; }, 300);
+  }
+
+  /* Profile strength bar */
+  var psBar = el('ps-bar');
+  var psTxt = el('ps-txt');
+  if (psBar) setTimeout(function() { psBar.style.width = a.profileStrength + '%'; }, 400);
+  if (psTxt) psTxt.textContent = a.profileStrength + '%';
+
+  /* Strong areas */
+  var saEl = el('strong-areas');
+  if (saEl && a.strongAreas) {
+    saEl.innerHTML = a.strongAreas.map(function(s) {
+      return '<span class="area-chip strong">' + s + '</span>';
+    }).join('');
+  }
+
+  /* Weak areas */
+  var waEl = el('weak-areas');
+  if (waEl && a.weakAreas) {
+    waEl.innerHTML = a.weakAreas.map(function(s) {
+      return '<span class="area-chip weak">' + s + '</span>';
+    }).join('');
+  }
+
+  /* Hidden potential */
+  var hpEl = el('hidden-potential');
+  if (hpEl && a.hiddenPotential) {
+    hpEl.innerHTML = a.hiddenPotential.map(function(s) {
+      return '<span class="area-chip potential">' + s + '</span>';
+    }).join('');
+  }
+
+  /* Key insight */
+  var kiEl = el('key-insight');
+  if (kiEl) kiEl.textContent = a.keyInsight || '';
+
+  /* Next step */
+  var nsEl = el('next-step');
+  if (nsEl) nsEl.textContent = a.nextStep || '';
+
+  /* Career path cards */
+  var cpEl = el('career-paths');
+  if (cpEl && a.careerPaths) {
+    cpEl.innerHTML = a.careerPaths.map(function(cp, i) {
+      var pcirc = 2 * Math.PI * 22;
+      var poff = pcirc - (cp.match / 100 * pcirc);
+      return '<div class="cp-card' + (i === 0 ? ' cp-top' : '') + '" onclick="generateRoadmap(\'' + escStr(cp.title) + '\')">'
+        + (i === 0 ? '<div class="cp-best">Best Match</div>' : '')
+        + '<div class="cp-left">'
+        + '<svg width="54" height="54" viewBox="0 0 54 54"><circle cx="27" cy="27" r="22" fill="none" stroke="rgba(0,0,0,.08)" stroke-width="4"/>'
+        + '<circle cx="27" cy="27" r="22" fill="none" stroke="' + (i===0?'#a78bfa':'#60a5fa') + '" stroke-width="4" stroke-linecap="round"'
+        + ' style="stroke-dasharray:' + pcirc + ';stroke-dashoffset:' + poff + ';transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset 1s ease;"/>'
+        + '<text x="27" y="32" text-anchor="middle" fill="#fff" font-size="11" font-weight="800">' + cp.match + '%</text></svg>'
+        + '</div>'
+        + '<div class="cp-right">'
+        + '<div class="cp-title">' + cp.title + '</div>'
+        + '<div class="cp-meta">' + cp.salary + ' &nbsp;·&nbsp; ' + cp.timeline + '</div>'
+        + '<div class="cp-reason">' + cp.reason + '</div>'
+        + '<button class="cp-btn">Generate Roadmap →</button>'
+        + '</div></div>';
+    }).join('');
+  }
+}
+
+function escStr(s) {
+  return (s || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+}
+
+/* ── GENERATE ROADMAP ────────────────────────────────────────── */
+function generateRoadmap(careerTitle) {
+  showToast('🗺️', 'Building your roadmap for ' + careerTitle + '...');
+  if (!CFG.apiKey) {
+    var demo = getDemoRoadmap(careerTitle);
+    STATE.data.roadmap = demo;
+    STATE.data.roadmap.career = careerTitle;
+    INTEL.save(STATE.data);
+    renderRoadmap(demo);
+    var rm = document.getElementById('roadmap-section');
+    if (rm) rm.classList.add('open');
+    setTimeout(function() {
+      if (rm) rm.scrollIntoView({ behavior: 'smooth' });
+    }, 200);
+    return;
+  }
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': CFG.apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: CFG.model,
+      max_tokens: 2000,
+      messages: [{ role: 'user', content: buildRoadmapPrompt(careerTitle) }]
+    })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    var raw = d.content && d.content[0] ? d.content[0].text : '';
+    try {
+      var clean = raw.replace(/```json/g,'').replace(/```/g,'').trim();
+      var parsed = JSON.parse(clean);
+      STATE.data.roadmap = parsed;
+    } catch(e) {
+      STATE.data.roadmap = getDemoRoadmap(careerTitle);
+    }
+    STATE.data.roadmap.career = careerTitle;
+    INTEL.save(STATE.data);
+    renderRoadmap(STATE.data.roadmap);
+    var rm = document.getElementById('roadmap-section');
+    if (rm) {
+      rm.classList.add('open');
+      setTimeout(function() { rm.scrollIntoView({ behavior: 'smooth' }); }, 200);
+    }
+  })
+  .catch(function() {
+    var demo = getDemoRoadmap(careerTitle);
+    STATE.data.roadmap = demo;
+    INTEL.save(STATE.data);
+    renderRoadmap(demo);
+    var rm = document.getElementById('roadmap-section');
+    if (rm) {
+      rm.classList.add('open');
+      setTimeout(function() { rm.scrollIntoView({ behavior: 'smooth' }); }, 200);
+    }
+  });
+}
+
+/* ── DEMO ROADMAP DATA ───────────────────────────────────────── */
+function getDemoRoadmap(career) {
+  return {
+    career: career,
+    totalMonths: 12,
+    phases: [
+      {
+        phase: 1,
+        title: 'Foundation & Core Skills',
+        duration: 'Months 1–3',
+        skills: ['Core language/framework basics', 'Problem-solving fundamentals', 'Git & version control', 'Documentation skills'],
+        resources: ['freeCodeCamp (free)', 'CS50 by Harvard (free)', 'YouTube structured playlists'],
+        milestone: 'Complete 2 small projects and push to GitHub',
+        outcome: 'Job-ready portfolio starter + basic interview readiness'
+      },
+      {
+        phase: 2,
+        title: 'Depth & Specialization',
+        duration: 'Months 4–7',
+        skills: ['Advanced domain concepts', 'Industry tools & frameworks', 'Data/system design basics', 'Collaborative workflows'],
+        resources: ['Coursera specialisations', 'Udemy advanced courses', 'Official documentation'],
+        milestone: 'Build 1 full-stack/domain project with real-world use case',
+        outcome: 'Internship-ready profile + technical confidence'
+      },
+      {
+        phase: 3,
+        title: 'Industry Exposure',
+        duration: 'Months 8–10',
+        skills: ['Internship/project skills', 'Communication & collaboration', 'Problem framing', 'Industry-specific tools'],
+        resources: ['Internshala', 'LinkedIn internships', 'AngelList', 'Company blogs'],
+        milestone: 'Complete an internship or a client project',
+        outcome: 'Real-world experience + professional references'
+      },
+      {
+        phase: 4,
+        title: 'Job Ready & Launch',
+        duration: 'Months 11–12',
+        skills: ['Interview prep (DSA / case studies)', 'Resume & LinkedIn optimization', 'Networking strategy', 'Negotiation basics'],
+        resources: ['LeetCode / InterviewBit', 'LinkedIn Learning', 'Mock interviews (Pramp.com)'],
+        milestone: 'Land first job/offer in ' + career,
+        outcome: career + ' role at target salary'
+      }
+    ],
+    internships: [
+      { role: career + ' Intern', platform: 'Internshala', tip: 'Apply with a 1-page project resume. Mention impact numbers.' },
+      { role: 'Junior ' + career, platform: 'LinkedIn Jobs', tip: 'Connect with hiring managers 1 week before applying.' },
+      { role: 'Freelance Project', platform: 'Upwork / Fiverr', tip: 'Complete 2–3 small gigs to build credibility.' }
+    ],
+    certifications: [
+      'Google Career Certificate (free on Coursera)',
+      'Domain-specific cert from AWS / Microsoft / Google',
+      'LinkedIn Skill Assessments (quick wins)'
+    ],
+    salaryJourney: {
+      year1: '\u20b94–8 LPA (Fresher/Junior)',
+      year3: '\u20b910–20 LPA (Mid-level)',
+      year5: '\u20b920–45 LPA (Senior)'
+    }
+  };
+}
+
+/* ── RENDER ROADMAP ──────────────────────────────────────────── */
+function renderRoadmap(rm) {
+  if (!rm) return;
+  var el = document.getElementById('roadmap-career');
+  if (el) el.textContent = rm.career || '';
+
+  var timeline = document.getElementById('roadmap-timeline');
+  if (!timeline || !rm.phases) return;
+
+  timeline.innerHTML = rm.phases.map(function(ph) {
+    var skills = ph.skills.map(function(s) { return '<span class="rm-skill">' + s + '</span>'; }).join('');
+    var res = ph.resources.map(function(r) { return '<li>' + r + '</li>'; }).join('');
+    return '<div class="rm-phase">'
+      + '<div class="rm-phase-head">'
+      + '<div class="rm-phase-num">' + ph.phase + '</div>'
+      + '<div class="rm-phase-info">'
+      + '<div class="rm-phase-title">' + ph.title + '</div>'
+      + '<div class="rm-phase-dur">' + ph.duration + '</div>'
+      + '</div></div>'
+      + '<div class="rm-phase-body">'
+      + '<div class="rm-section"><div class="rm-sec-lbl">Skills to Build</div><div class="rm-skills">' + skills + '</div></div>'
+      + '<div class="rm-section"><div class="rm-sec-lbl">Resources</div><ul class="rm-res">' + res + '</ul></div>'
+      + '<div class="rm-milestone"><span class="rm-ms-ic">🎯</span><span>' + ph.milestone + '</span></div>'
+      + '<div class="rm-outcome"><span class="rm-oc-ic">✅</span><span>' + ph.outcome + '</span></div>'
+      + '</div></div>';
+  }).join('');
+
+  /* Salary journey */
+  if (rm.salaryJourney) {
+    var sjEl = document.getElementById('salary-journey');
+    if (sjEl) {
+      sjEl.innerHTML = Object.keys(rm.salaryJourney).map(function(k, i) {
+        var pcts = ['35%','65%','100%'];
+        return '<div class="sj-item">'
+          + '<div class="sj-label">' + k.replace('year','Year ') + '</div>'
+          + '<div class="sj-bar-wrap"><div class="sj-bar" style="width:0%" data-w="' + pcts[i] + '"></div></div>'
+          + '<div class="sj-val">' + rm.salaryJourney[k] + '</div>'
+          + '</div>';
+      }).join('');
+      setTimeout(function() {
+        document.querySelectorAll('.sj-bar').forEach(function(b) {
+          b.style.width = b.getAttribute('data-w');
+        });
+      }, 400);
+    }
+  }
+
+  /* Internship cards */
+  if (rm.internships) {
+    var intEl = document.getElementById('internship-cards');
+    if (intEl) {
+      intEl.innerHTML = rm.internships.map(function(in_) {
+        return '<div class="int-card"><div class="int-role">' + in_.role + '</div>'
+          + '<div class="int-platform">' + in_.platform + '</div>'
+          + '<div class="int-tip">💡 ' + in_.tip + '</div></div>';
+      }).join('');
+    }
+  }
+
+  /* Certs */
+  if (rm.certifications) {
+    var certEl = document.getElementById('rm-certs');
+    if (certEl) {
+      certEl.innerHTML = rm.certifications.map(function(c) {
+        return '<div class="rm-cert"><span class="rm-cert-ic">🏆</span>' + c + '</div>';
+      }).join('');
+    }
+  }
+
+  STATE.roadmapGenerated = true;
+}
+
+/* ── PDF EXPORT ──────────────────────────────────────────────── */
+function exportPDF() {
+  var btn = document.getElementById('export-btn');
+  if (btn) { btn.textContent = 'Generating...'; btn.disabled = true; }
+  var rm = STATE.data.roadmap;
+  var an = STATE.data.analysis;
+  var p = STATE.data.profile;
+  var now = new Date().toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' });
+  var lines = [];
+  lines.push('DIGITAL TWIN — CAREER ROADMAP REPORT');
+  lines.push('Eco-Novators | digitaltwin.niat.tech');
+  lines.push('Generated: ' + now);
+  lines.push('===================================================');
+  lines.push('');
+  if (an) {
+    lines.push('PROFILE ANALYSIS');
+    lines.push('Name: ' + (p.name || 'Not provided'));
+    lines.push('Confidence Score: ' + an.confidenceScore + '%');
+    lines.push('Profile Strength: ' + an.profileStrength + '%');
+    lines.push('Strong Areas: ' + (an.strongAreas || []).join(', '));
+    lines.push('Areas to Improve: ' + (an.weakAreas || []).join(', '));
+    lines.push('Hidden Potential: ' + (an.hiddenPotential || []).join(', '));
+    lines.push('');
+    lines.push('KEY INSIGHT:');
+    lines.push(an.keyInsight || '');
+    lines.push('');
+    lines.push('NEXT STEP: ' + (an.nextStep || ''));
+  }
+  lines.push('');
+  if (rm) {
+    lines.push('===================================================');
+    lines.push('CAREER ROADMAP: ' + (rm.career || ''));
+    lines.push('Total Duration: ' + (rm.totalMonths || 12) + ' months');
+    lines.push('');
+    (rm.phases || []).forEach(function(ph) {
+      lines.push('PHASE ' + ph.phase + ': ' + ph.title + ' (' + ph.duration + ')');
+      lines.push('Skills: ' + ph.skills.join(', '));
+      lines.push('Resources: ' + ph.resources.join(', '));
+      lines.push('Milestone: ' + ph.milestone);
+      lines.push('Outcome: ' + ph.outcome);
+      lines.push('');
+    });
+    if (rm.salaryJourney) {
+      lines.push('SALARY JOURNEY:');
+      Object.keys(rm.salaryJourney).forEach(function(k) {
+        lines.push(k.replace('year','Year ') + ': ' + rm.salaryJourney[k]);
+      });
+    }
+    lines.push('');
+    lines.push('RECOMMENDED CERTIFICATIONS:');
+    (rm.certifications || []).forEach(function(c) { lines.push('• ' + c); });
+  }
+  lines.push('');
+  lines.push('===================================================');
+  lines.push('© 2026 Eco-Novators | kar98kbi@gmail.com | digitaltwin.niat.tech');
+
+  var blob = new Blob([lines.join('\n')], { type: 'text/plain' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'DigitalTwin_Roadmap_' + (p.name || 'Report').replace(/\s+/g,'_') + '.txt';
+  a.click();
+  showToast('✅', 'Report downloaded!');
+  setTimeout(function() {
+    if (btn) { btn.textContent = '⬇ Download Report'; btn.disabled = false; }
+  }, 1500);
+}
+
+/* ── AI CHAT ─────────────────────────────────────────────────── */
+function buildChatSystemPrompt() {
+  var p = STATE.data.profile;
+  var a = STATE.data.analysis;
+  var parts = [
+    'You are a smart career mentor AI for the Digital Twin platform by Eco-Novators.',
+    'You have already analyzed this student\'s profile. Respond like a human mentor — warm, direct, and specific.',
+    'NEVER be robotic. Use the student\'s name when natural. Give concrete advice, not generic tips.',
+    'Keep responses under 250 words. End with a question OR an action step.',
+    '',
+    'STUDENT PROFILE:'
+  ];
+  if (p.name) parts.push('Name: ' + p.name);
+  if (p.skills.length) parts.push('Skills: ' + p.skills.join(', '));
+  if (p.goals) parts.push('Goals: ' + p.goals);
+  if (a) {
+    parts.push('Confidence Score: ' + a.confidenceScore + '%');
+    parts.push('Best Career Match: ' + (a.careerPaths && a.careerPaths[0] ? a.careerPaths[0].title : 'TBD'));
+    parts.push('Key Insight: ' + (a.keyInsight || ''));
+  }
+  if (STATE.data.roadmap) {
+    parts.push('Roadmap generated for: ' + STATE.data.roadmap.career);
+  }
+  return parts.join('\n');
+}
+
+function sendChatMsg() {
+  var inp = document.getElementById('chat-inp');
+  if (!inp) return;
+  var text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+
+  appendChatMsg(text, 'user');
+  STATE.chatHistory.push({ role: 'user', content: text });
+  STATE.data.chatHistory.push({ role: 'user', content: text, ts: new Date().toISOString() });
+
+  showChatTyping();
+
+  if (!CFG.apiKey) {
+    setTimeout(function() {
+      removeChatTyping();
+      var reply = getDemoChatReply(text);
+      appendChatMsg(reply, 'bot');
+      STATE.chatHistory.push({ role: 'assistant', content: reply });
+      STATE.data.chatHistory.push({ role: 'assistant', content: reply, ts: new Date().toISOString() });
+      INTEL.save(STATE.data);
+    }, 900 + Math.random() * 600);
+    return;
+  }
+
+  var msgs = STATE.chatHistory.slice(-12);
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': CFG.apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: CFG.model,
+      max_tokens: 600,
+      system: buildChatSystemPrompt(),
+      messages: msgs
+    })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    removeChatTyping();
+    var reply = d.content && d.content[0] ? d.content[0].text : 'Could not get response. Try again.';
+    appendChatMsg(reply, 'bot');
+    STATE.chatHistory.push({ role: 'assistant', content: reply });
+    STATE.data.chatHistory.push({ role: 'assistant', content: reply, ts: new Date().toISOString() });
+    INTEL.save(STATE.data);
+  })
+  .catch(function() {
+    removeChatTyping();
+    var reply = getDemoChatReply(text);
+    appendChatMsg(reply, 'bot');
+    STATE.chatHistory.push({ role: 'assistant', content: reply });
+    INTEL.save(STATE.data);
+  });
+}
+
+function appendChatMsg(text, from) {
+  var box = document.getElementById('chat-msgs');
+  if (!box) return;
+  var div = document.createElement('div');
+  div.className = 'chat-msg ' + from;
+  div.innerHTML = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+}
+
+function showChatTyping() {
+  var box = document.getElementById('chat-msgs');
+  if (!box) return;
+  var div = document.createElement('div');
+  div.className = 'chat-msg bot chat-typing';
+  div.id = 'typing-ind';
+  div.innerHTML = '<span></span><span></span><span></span>';
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+}
+
+function removeChatTyping() {
+  var el = document.getElementById('typing-ind');
+  if (el) el.remove();
+}
+
+function getDemoChatReply(text) {
+  var t = text.toLowerCase();
+  var p = STATE.data.profile;
+  var a = STATE.data.analysis;
+  var name = p.name ? p.name + ', ' : '';
+  var topCareer = a && a.careerPaths && a.careerPaths[0] ? a.careerPaths[0].title : 'your target role';
+  var replies = {
+    roadmap: 'Your roadmap for **' + topCareer + '** is already generated! It has 4 phases over 12 months.\n\nThe most important phase right now is Phase 1 — **Foundation**. Before anything else, build one small working project and push it to GitHub. That single step separates candidates who get callbacks from those who don\'t.\n\nHave you set up your GitHub profile yet?',
+    skill: 'Looking at your skills ' + name + 'the gap that matters most right now isn\'t adding more tools — it\'s depth over breadth.\n\nPick the **one skill** that appears in every job description for ' + topCareer + ' and spend 21 focused days on it. Consistency beats intensity every time.\n\nWhich skill feels weakest to you right now?',
+    salary: 'For **' + topCareer + '** in India (2025–26), here\'s the honest picture:\n\n• Fresher/Intern: ₹4–8 LPA\n• 1 year experience: ₹8–15 LPA\n• 3 years: ₹15–30 LPA\n\nThe jump from fresher to mid-level is where most people plateau. The way to skip ahead? One strong project with measurable impact + one good referral.\n\nAre you targeting a specific company tier?',
+    internship: 'For internships in ' + topCareer + ', here\'s what actually works:\n\n1. **Internshala** — highest volume for India, apply to 5–10/day\n2. **LinkedIn** — connect with hiring managers directly before applying\n3. **AngelList** — startups hire fast, less competition\n\nYour resume needs to show **impact**, not just responsibilities. Replace "worked on X" with "built X that achieved Y result."\n\nWant me to suggest how to frame your projects on your resume?',
+    future: 'The next 2 years are genuinely exciting for people in ' + topCareer + '.\n\nAI isn\'t replacing the role — it\'s creating new layers in it. The students who will thrive are those who combine domain expertise with the ability to use AI as a multiplier.\n\nMy honest advice ' + name + ': focus less on "keeping up with trends" and more on getting deeply good at one thing. Deep skill + AI fluency = extremely hard to replace.\n\nWhat\'s the biggest obstacle in your path right now?'
+  };
+  if (t.includes('roadmap') || t.includes('plan') || t.includes('steps')) return replies.roadmap;
+  if (t.includes('skill') || t.includes('learn') || t.includes('gap')) return replies.skill;
+  if (t.includes('salary') || t.includes('pay') || t.includes('package') || t.includes('money')) return replies.salary;
+  if (t.includes('intern') || t.includes('job') || t.includes('apply') || t.includes('hire')) return replies.internship;
+  if (t.includes('future') || t.includes('trend') || t.includes('ai') || t.includes('predict')) return replies.future;
+  return 'That\'s a sharp question, ' + (p.name || 'friend') + '.\n\nBased on your profile and the roadmap we\'ve built, the clearest path forward is: **one concrete action this week** toward ' + topCareer + '.\n\nWhether that\'s a GitHub commit, a certification module, or an internship application — momentum beats perfection every time.\n\nWhat\'s one thing you can do in the next 24 hours?';
+}
+
+/* ── QUICK CHAT PROMPTS ──────────────────────────────────────── */
+function sendQuick(text) {
+  var inp = document.getElementById('chat-inp');
+  if (inp) { inp.value = text; sendChatMsg(); }
+}
+
+/* ── RESTORE FROM LOCALSTORAGE ───────────────────────────────── */
+function restoreSession() {
+  var saved = INTEL.load();
+  if (!saved || !saved.analysis) return;
+  STATE.data = saved;
+  STATE.chatHistory = saved.chatHistory
+    ? saved.chatHistory.map(function(m) { return { role: m.role, content: m.content }; })
+    : [];
+  renderDashboard(saved.analysis);
+  if (saved.roadmap) {
+    renderRoadmap(saved.roadmap);
+    var rm = document.getElementById('roadmap-section');
+    if (rm) rm.classList.add('open');
+  }
+  if (saved.chatHistory && saved.chatHistory.length) {
+    saved.chatHistory.slice(-6).forEach(function(m) {
+      appendChatMsg(m.content, m.role === 'user' ? 'user' : 'bot');
+    });
+  }
+  showView('view-dashboard');
+  showToast('📂', 'Previous session restored!');
+}
+
+/* ── TOAST ───────────────────────────────────────────────────── */
+var toastTimer;
+function showToast(icon, msg) {
+  clearTimeout(toastTimer);
+  var ic = document.getElementById('t-icon');
+  var tm = document.getElementById('t-msg');
+  var t = document.getElementById('toast');
+  if (ic) ic.textContent = icon;
+  if (tm) tm.textContent = msg;
+  if (t) t.classList.add('show');
+  toastTimer = setTimeout(function() {
+    if (t) t.classList.remove('show');
+  }, 3500);
+}
+
+/* ── SCROLL REVEAL ───────────────────────────────────────────── */
+function initReveal() {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('revealed'); });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
+}
+
+/* ── INIT ────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', function() {
+  initDropZones();
+  initTagInputs();
+  initReveal();
+
+  /* Restore existing session if available */
+  var saved = INTEL.load();
+  if (saved && saved.analysis) {
+    var banner = document.getElementById('restore-banner');
+    if (banner) banner.classList.add('show');
+  }
+
+  /* Pre-fill name if we have it */
+  if (saved && saved.profile && saved.profile.name) {
+    var nameInp = document.getElementById('inp-name');
+    if (nameInp) nameInp.value = saved.profile.name;
+  }
+
+  /* Enter key in chat */
+  var chatInp = document.getElementById('chat-inp');
+  if (chatInp) chatInp.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChatMsg(); }
+  });
+
+  /* Clear inp-error on typing */
+  document.querySelectorAll('.inp-clear-err').forEach(function(el) {
+    el.addEventListener('input', function() { this.classList.remove('inp-error'); });
+  });
+});
+
+
+/* ── HELPERS called from HTML ────────────────────────────────── */
+function dismissRestore() {
+  var b = document.getElementById('restore-banner');
+  if (b) b.classList.remove('show');
+  localStorage.setItem('dt_dismiss_restore','1');
+}
+
+function updateChatSidebar() {
+  var a = STATE.data.analysis;
+  var p = STATE.data.profile;
+  var nameEl = document.getElementById('cpc-name');
+  var scoreEl = document.getElementById('cpc-score');
+  var careerEl = document.getElementById('cpc-career');
+  if (nameEl) nameEl.textContent = p.name || 'Not set';
+  if (scoreEl) scoreEl.textContent = a ? a.confidenceScore + '%' : 'Pending';
+  if (careerEl) careerEl.textContent = (a && a.careerPaths && a.careerPaths[0]) ? a.careerPaths[0].title : 'Pending analysis';
+}
+
+// Patch showView to update sidebar when entering chat
+var _showViewOrig = showView;
+showView = function(id) {
+  _showViewOrig(id);
+  if (id === 'view-chat') updateChatSidebar();
+};
+
+</script>
+</body>
+</html>
