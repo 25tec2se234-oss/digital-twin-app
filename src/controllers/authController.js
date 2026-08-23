@@ -51,7 +51,28 @@ function getMeta(req) {
   };
 }
 
+const ALLOWED_EMAIL_DOMAINS = [
+  "gmail.com",
+  "yahoo.com",
+  "outlook.com"
+];
+
+function isEmailDomainAllowed(email) {
+  if (!email || typeof email !== 'string') return false;
+  const parts = email.split('@');
+  if (parts.length < 2) return false;
+  const domain = parts.pop().toLowerCase();
+  return ALLOWED_EMAIL_DOMAINS.includes(domain);
+}
+
 const signup = asyncHandler(async function(req, res) {
+  if (!isEmailDomainAllowed(req.body.email)) {
+    return res.status(400).json({
+      success: false,
+      message: "Only Gmail, Yahoo, and Outlook email addresses are allowed."
+    });
+  }
+  
   const user = await authService.signup(req.body);
   emailService.sendWelcomeEmail(user.email, user.name).catch(() => {});
   const tokens = await tokenService.createAuthTokens(user, getMeta(req));
@@ -69,6 +90,13 @@ const signup = asyncHandler(async function(req, res) {
 });
 
 const login = asyncHandler(async function(req, res) {
+  if (!isEmailDomainAllowed(req.body.email)) {
+    return res.status(400).json({
+      success: false,
+      message: "Only Gmail, Yahoo, and Outlook email addresses are allowed."
+    });
+  }
+  
   const user = await authService.login(req.body);
   const tokens = await tokenService.createAuthTokens(user, getMeta(req));
   setRefreshCookie(res, tokens.refreshToken, tokens.refreshExpiresAt);
