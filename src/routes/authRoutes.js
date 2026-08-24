@@ -185,8 +185,8 @@ router.post('/logout', authLimiter, authController.logout);
  */
 router.get('/me', authenticate, authController.me);
 
-router.post('/verify-otp', authenticate, authController.verifyOTP);
-router.post('/resend-otp', authenticate, authController.resendOTP);
+router.post('/verify-otp', authenticate, authLimiter, authController.verifyOTP);
+router.post('/resend-otp', authenticate, authLimiter, authController.resendOTP);
 router.post('/forgot-password', authLimiter, authController.forgotPassword);
 router.post('/reset-password', authLimiter, authController.resetPassword);
 router.get('/smtp-debug', authenticate, authorize('admin'), authController.smtpDebug);
