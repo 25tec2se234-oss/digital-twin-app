@@ -212,13 +212,23 @@ async function forgotPassword(rawEmail) {
     return;
   }
 
+  // Check rate limit (1 minute cooldown)
+  if (user.otpExpiresAt) {
+    const generatedAt = new Date(user.otpExpiresAt).getTime() - 10 * 60 * 1000;
+    const cooldownMs = 60 * 1000; // 1 minute
+    if (Date.now() - generatedAt < cooldownMs) {
+      const waitSecs = Math.ceil((cooldownMs - (Date.now() - generatedAt)) / 1000);
+      throw new ApiError(429, `Please wait ${waitSecs} seconds before requesting a new OTP.`);
+    }
+  }
+
   const otpCode = crypto.randomInt(100000, 999999).toString();
   const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
   await userModel.setOTP(user.id, otpCode, expiresAt);
   
-  // Fire and forget email sending
-  emailService.sendPasswordResetEmail(user.email, otpCode).catch(err => console.error('Reset email err:', err));
+  // Wait for provider acceptance
+  await emailService.sendPasswordResetEmail(user.email, otpCode);
 }
 
 async function resetPassword(email, otpCode, newPassword) {

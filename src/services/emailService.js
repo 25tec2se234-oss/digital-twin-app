@@ -94,10 +94,14 @@ async function sendPasswordResetEmail(toEmail, otpCode) {
             body: JSON.stringify(payload)
         });
         if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Brevo API Error:', response.status, errorText);
             throw new Error(`Email delivery failed: ${response.status}`);
         }
+        console.log(`Password reset email sent successfully to ${toEmail}`);
     } catch (error) {
         console.error('Error sending reset email:', error);
+        throw error; // Throw error to ensure the caller knows it failed
     }
 }
 
