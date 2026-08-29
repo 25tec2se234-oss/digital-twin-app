@@ -29,7 +29,7 @@ const generalLimiter = rateLimit({
 const authLimiter = rateLimit({
   store: getStoreConfig('rate-limit:auth:'),
   windowMs: env.RATE_LIMIT_WINDOW_MS,
-  max: 5, // Strict 5 attempts per window to prevent brute force
+  max: env.AUTH_RATE_LIMIT_MAX, // Configurable limit instead of strict 5
   standardHeaders: true,
   legacyHeaders: false,
   passOnStoreError: true,

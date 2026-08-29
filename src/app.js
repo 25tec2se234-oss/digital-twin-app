@@ -24,8 +24,9 @@ const blogRoutes = require('./routes/blogRoutes');
 const leaderboardRoutes = require('./routes/leaderboardRoutes');
 const app = express();
 
-app.disable('x-powered-by');
 app.set('trust proxy', 1);
+
+app.disable('x-powered-by');
 
 if (env.SENTRY_DSN) {
   Sentry.init({
