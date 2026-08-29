@@ -4784,10 +4784,10 @@ function renderCareers(filter) {
             if (rp) rp.classList.add('active');
         }
 
-        function openLoginGate() {
+        function openLoginGate(view = 'signin') {
             var mob = document.getElementById('mob');
             if (mob) mob.classList.remove('active');
-            window.location.href = '/login.html';
+            window.location.href = `/login.html?view=${view}`;
         }
 
         async function doLogout() {

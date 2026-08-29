@@ -1,21 +1,28 @@
+const nodemailer = require('nodemailer');
 const env = require('../config/env');
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: env.SMTP_USER,
+        pass: env.SMTP_PASS
+    },
+    tls: { rejectUnauthorized: false }
+});
 
 async function sendVerificationEmail(toEmail, otpCode) {
     if (env.NODE_ENV === 'test') return;
-    if (!env.BREVO_API_KEY) {
-        console.warn('⚠️ BREVO_API_KEY not set. Email delivery is disabled. (Check Render environment variables)');
+    if (!env.SMTP_USER || !env.SMTP_PASS) {
+        console.warn('⚠️ SMTP credentials not set. Email delivery is disabled. (Check environment variables)');
         console.log(`\n📧 MOCK EMAIL TO: ${toEmail}\n🔒 OTP CODE: ${otpCode}\n`);
         return;
     }
 
-    const payload = {
-        sender: {
-            name: "Digital Twin",
-            email: "kumarkartikey020@gmail.com" // Must match verified Brevo sender exactly
-        },
-        to: [{ email: toEmail }],
+    const mailOptions = {
+        from: `"Digital Twin" <${env.SMTP_USER}>`,
+        to: toEmail,
         subject: 'Verify your Digital Twin Account',
-        htmlContent: `
+        html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 10px;">
             <h2 style="color: #2a7de1; text-align: center;">Welcome to Digital Twin!</h2>
             <p style="font-size: 16px; color: #333;">Please use the verification code below to activate your account and verify your email address.</p>
@@ -31,23 +38,8 @@ async function sendVerificationEmail(toEmail, otpCode) {
     };
 
     try {
-        const response = await fetch('https://api.brevo.com/v3/smtp/email', {
-            method: 'POST',
-            headers: {
-                'accept': 'application/json',
-                'api-key': env.BREVO_API_KEY,
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
-
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error('Brevo API Error:', response.status, errorText);
-            throw new Error(`Email delivery failed: ${response.status}`);
-        }
-        
-        console.log(`Email OTP sent successfully to ${toEmail} via Brevo`);
+        await transporter.sendMail(mailOptions);
+        console.log(`Email OTP sent successfully to ${toEmail}`);
     } catch (error) {
         console.error('Error sending OTP email:', error);
     }
@@ -55,20 +47,17 @@ async function sendVerificationEmail(toEmail, otpCode) {
 
 async function sendPasswordResetEmail(toEmail, otpCode) {
     if (env.NODE_ENV === 'test') return;
-    if (!env.BREVO_API_KEY) {
-        console.warn('⚠️ BREVO_API_KEY not set.');
+    if (!env.SMTP_USER || !env.SMTP_PASS) {
+        console.warn('⚠️ SMTP credentials not set.');
         console.log(`\n📧 MOCK RESET EMAIL TO: ${toEmail}\n🔒 OTP CODE: ${otpCode}\n`);
         return;
     }
 
-    const payload = {
-        sender: {
-            name: "Digital Twin",
-            email: "kumarkartikey020@gmail.com"
-        },
-        to: [{ email: toEmail }],
+    const mailOptions = {
+        from: `"Digital Twin" <${env.SMTP_USER}>`,
+        to: toEmail,
         subject: 'Reset your Digital Twin Password',
-        htmlContent: `
+        html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 10px;">
             <h2 style="color: #e12a2a; text-align: center;">Password Reset Request</h2>
             <p style="font-size: 16px; color: #333;">We received a request to reset your password. Use the code below to reset it.</p>
@@ -84,40 +73,27 @@ async function sendPasswordResetEmail(toEmail, otpCode) {
     };
 
     try {
-        const response = await fetch('https://api.brevo.com/v3/smtp/email', {
-            method: 'POST',
-            headers: {
-                'accept': 'application/json',
-                'api-key': env.BREVO_API_KEY,
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error('Brevo API Error:', response.status, errorText);
-            throw new Error(`Email delivery failed: ${response.status}`);
-        }
+        await transporter.sendMail(mailOptions);
         console.log(`Password reset email sent successfully to ${toEmail}`);
     } catch (error) {
         console.error('Error sending reset email:', error);
-        throw error; // Throw error to ensure the caller knows it failed
+        throw error;
     }
 }
 
 async function sendWelcomeEmail(toEmail, userName) {
     if (env.NODE_ENV === 'test') return;
-    if (!env.BREVO_API_KEY) {
-        console.warn('⚠️ BREVO_API_KEY not set.');
+    if (!env.SMTP_USER || !env.SMTP_PASS) {
+        console.warn('⚠️ SMTP credentials not set.');
         console.log(`\n📧 MOCK WELCOME EMAIL TO: ${toEmail}\n👋 Hello ${userName || 'Student'}, welcome to Digital Twin Verse! Your 5-day Premium trial has begun.\n`);
         return;
     }
 
-    const payload = {
-        sender: { name: "Digital Twin Verse", email: "kumarkartikey020@gmail.com" },
-        to: [{ email: toEmail }],
+    const mailOptions = {
+        from: `"Digital Twin Verse" <${env.SMTP_USER}>`,
+        to: toEmail,
         subject: 'Welcome to Digital Twin Verse! Your 5-Day Premium Trial has Begun',
-        htmlContent: `
+        html: `
         <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; background: #0b1322; color: #e8f0f8; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
             <div style="text-align: center; padding-bottom: 20px;">
                 <h1 style="color: #ffd700; margin: 0; font-size: 28px;">Digital Twin Verse</h1>
@@ -141,12 +117,7 @@ async function sendWelcomeEmail(toEmail, userName) {
     };
 
     try {
-        const response = await fetch('https://api.brevo.com/v3/smtp/email', {
-            method: 'POST',
-            headers: { 'accept': 'application/json', 'api-key': env.BREVO_API_KEY, 'content-type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        if (!response.ok) throw new Error(`Welcome Email delivery failed: ${response.status}`);
+        await transporter.sendMail(mailOptions);
         console.log(`Welcome email sent successfully to ${toEmail}`);
     } catch (error) {
         console.error('Error sending welcome email:', error);
@@ -155,17 +126,17 @@ async function sendWelcomeEmail(toEmail, userName) {
 
 async function sendPremiumConfirmation(toEmail, userName, planName, amountPaid, expiresAt) {
     if (env.NODE_ENV === 'test') return;
-    if (!env.BREVO_API_KEY) {
-        console.warn('⚠️ BREVO_API_KEY not set.');
+    if (!env.SMTP_USER || !env.SMTP_PASS) {
+        console.warn('⚠️ SMTP credentials not set.');
         console.log(`\n📧 MOCK PREMIUM CONFIRMATION TO: ${toEmail}\n🎉 Thank you ${userName || 'Student'}, your Premium Subscription (${planName}) is confirmed!\n`);
         return;
     }
 
-    const payload = {
-        sender: { name: "Digital Twin Verse", email: "kumarkartikey020@gmail.com" },
-        to: [{ email: toEmail }],
+    const mailOptions = {
+        from: `"Digital Twin Verse" <${env.SMTP_USER}>`,
+        to: toEmail,
         subject: '🎉 Premium Subscription Confirmed! Welcome to Digital Twin Verse VIP',
-        htmlContent: `
+        html: `
         <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; background: #0b1322; color: #e8f0f8; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
             <div style="text-align: center; padding-bottom: 20px;">
                 <h1 style="color: #ffd700; margin: 0; font-size: 28px;">Digital Twin Verse</h1>
@@ -189,12 +160,7 @@ async function sendPremiumConfirmation(toEmail, userName, planName, amountPaid, 
     };
 
     try {
-        const response = await fetch('https://api.brevo.com/v3/smtp/email', {
-            method: 'POST',
-            headers: { 'accept': 'application/json', 'api-key': env.BREVO_API_KEY, 'content-type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        if (!response.ok) throw new Error(`Premium Confirmation delivery failed: ${response.status}`);
+        await transporter.sendMail(mailOptions);
         console.log(`Premium confirmation email sent successfully to ${toEmail}`);
     } catch (error) {
         console.error('Error sending premium confirmation email:', error);
@@ -203,17 +169,17 @@ async function sendPremiumConfirmation(toEmail, userName, planName, amountPaid, 
 
 async function sendParentInvitation(parentEmail, studentName, inviteLink) {
     if (env.NODE_ENV === 'test') return;
-    if (!env.BREVO_API_KEY) {
-        console.warn('⚠️ BREVO_API_KEY not set.');
+    if (!env.SMTP_USER || !env.SMTP_PASS) {
+        console.warn('⚠️ SMTP credentials not set.');
         console.log(`\n📧 MOCK PARENT INVITATION TO: ${parentEmail}\n🔗 Link: ${inviteLink}\n`);
         return;
     }
 
-    const payload = {
-        sender: { name: "Digital Twin Verse", email: "kumarkartikey020@gmail.com" },
-        to: [{ email: parentEmail }],
+    const mailOptions = {
+        from: `"Digital Twin Verse" <${env.SMTP_USER}>`,
+        to: parentEmail,
         subject: `📊 ${studentName} invited you to track their academic journey on Digital Twin Verse`,
-        htmlContent: `
+        html: `
         <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; background: #0b1322; color: #e8f0f8; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
             <div style="text-align: center; padding-bottom: 20px;">
                 <h1 style="color: #ffd700; margin: 0; font-size: 28px;">Digital Twin Verse</h1>
@@ -232,12 +198,7 @@ async function sendParentInvitation(parentEmail, studentName, inviteLink) {
     };
 
     try {
-        const response = await fetch('https://api.brevo.com/v3/smtp/email', {
-            method: 'POST',
-            headers: { 'accept': 'application/json', 'api-key': env.BREVO_API_KEY, 'content-type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        if (!response.ok) throw new Error(`Parent Invitation delivery failed: ${response.status}`);
+        await transporter.sendMail(mailOptions);
         console.log(`Parent invitation email sent successfully to ${parentEmail}`);
     } catch (error) {
         console.error('Error sending parent invitation email:', error);
@@ -246,17 +207,17 @@ async function sendParentInvitation(parentEmail, studentName, inviteLink) {
 
 async function sendDemoEndingSoonEmail(toEmail, userName, expiryDate) {
     if (env.NODE_ENV === 'test') return;
-    if (!env.BREVO_API_KEY) {
-        console.warn('⚠️ BREVO_API_KEY not set.');
+    if (!env.SMTP_USER || !env.SMTP_PASS) {
+        console.warn('⚠️ SMTP credentials not set.');
         console.log(`\n📧 MOCK DEMO ENDING SOON EMAIL TO: ${toEmail}\n⚠️ ${userName}, your demo ends on ${expiryDate}!\n`);
         return;
     }
 
-    const payload = {
-        sender: { name: "Digital Twin Verse", email: "kumarkartikey020@gmail.com" },
-        to: [{ email: toEmail }],
+    const mailOptions = {
+        from: `"Digital Twin Verse" <${env.SMTP_USER}>`,
+        to: toEmail,
         subject: '⚠️ Your Digital Twin Premium Demo is Ending Soon',
-        htmlContent: `
+        html: `
         <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; background: #0b1322; color: #e8f0f8; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
             <div style="text-align: center; padding-bottom: 20px;">
                 <h1 style="color: #ffd700; margin: 0; font-size: 28px;">Digital Twin Verse</h1>
@@ -272,11 +233,7 @@ async function sendDemoEndingSoonEmail(toEmail, userName, expiryDate) {
     };
 
     try {
-        await fetch('https://api.brevo.com/v3/smtp/email', {
-            method: 'POST',
-            headers: { 'accept': 'application/json', 'api-key': env.BREVO_API_KEY, 'content-type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
+        await transporter.sendMail(mailOptions);
     } catch (error) {
         console.error('Error sending demo ending email:', error);
     }
@@ -284,17 +241,17 @@ async function sendDemoEndingSoonEmail(toEmail, userName, expiryDate) {
 
 async function sendSubscriptionExpiredEmail(toEmail, userName) {
     if (env.NODE_ENV === 'test') return;
-    if (!env.BREVO_API_KEY) {
-        console.warn('⚠️ BREVO_API_KEY not set.');
+    if (!env.SMTP_USER || !env.SMTP_PASS) {
+        console.warn('⚠️ SMTP credentials not set.');
         console.log(`\n📧 MOCK EXPIRED EMAIL TO: ${toEmail}\n⚠️ ${userName}, your subscription has expired!\n`);
         return;
     }
 
-    const payload = {
-        sender: { name: "Digital Twin Verse", email: "kumarkartikey020@gmail.com" },
-        to: [{ email: toEmail }],
+    const mailOptions = {
+        from: `"Digital Twin Verse" <${env.SMTP_USER}>`,
+        to: toEmail,
         subject: '🔒 Your Digital Twin Premium Access Has Expired',
-        htmlContent: `
+        html: `
         <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; background: #0b1322; color: #e8f0f8; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
             <div style="text-align: center; padding-bottom: 20px;">
                 <h1 style="color: #ffd700; margin: 0; font-size: 28px;">Digital Twin Verse</h1>
@@ -310,28 +267,24 @@ async function sendSubscriptionExpiredEmail(toEmail, userName) {
     };
 
     try {
-        await fetch('https://api.brevo.com/v3/smtp/email', {
-            method: 'POST',
-            headers: { 'accept': 'application/json', 'api-key': env.BREVO_API_KEY, 'content-type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
+        await transporter.sendMail(mailOptions);
     } catch (error) {
         console.error('Error sending expired email:', error);
     }
 }
 
 async function sendParentTestAlert(toEmail, studentName) {
-    if (!env.BREVO_API_KEY) {
-        console.warn('⚠️ BREVO_API_KEY not set.');
+    if (!env.SMTP_USER || !env.SMTP_PASS) {
+        console.warn('⚠️ SMTP credentials not set.');
         console.log(`\n📧 MOCK TEST ALERT EMAIL TO: ${toEmail}\n`);
         return true;
     }
 
-    const payload = {
-        sender: { name: "Digital Twin Verse", email: "kumarkartikey020@gmail.com" },
-        to: [{ email: toEmail }],
+    const mailOptions = {
+        from: `"Digital Twin Verse" <${env.SMTP_USER}>`,
+        to: toEmail,
         subject: `🚨 Test Alert: AI Academic Trigger for ${studentName}`,
-        htmlContent: `
+        html: `
         <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; background: #0b1322; color: #e8f0f8; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
             <div style="text-align: center; padding-bottom: 20px;">
                 <h1 style="color: #ffd700; margin: 0; font-size: 28px;">Digital Twin Verse</h1>
@@ -347,12 +300,7 @@ async function sendParentTestAlert(toEmail, studentName) {
     };
 
     try {
-        const response = await fetch('https://api.brevo.com/v3/smtp/email', {
-            method: 'POST',
-            headers: { 'accept': 'application/json', 'api-key': env.BREVO_API_KEY, 'content-type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        if (!response.ok) throw new Error(`Test Alert delivery failed: ${response.status}`);
+        await transporter.sendMail(mailOptions);
         return true;
     } catch (error) {
         console.error('Error sending test alert email:', error);

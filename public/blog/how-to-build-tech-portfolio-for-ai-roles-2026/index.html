@@ -503,7 +503,7 @@
                 <div class="account-panel" id="nav-account-panel">
                     <div class="acc-item" id="nav-account-link-code" style="display:none; cursor:default; color:#a78bfa; justify-content:space-between;"><span>Parent Code:</span> <strong id="ui-link-code">-</strong></div>
                     <button class="acc-item" id="nav-account-signin" onclick="openLoginGate(); hideAccountMenu()">Sign In</button>
-                    <button class="acc-item" id="nav-account-signup" onclick="openLoginGate(); hideAccountMenu()">Create Account</button>
+                    <button class="acc-item" id="nav-account-signup" onclick="openLoginGate('signup'); hideAccountMenu()">Create Account</button>
                     <button class="acc-item" id="nav-account-admindb" onclick="openAdminDashboard(); hideAccountMenu()" style="display:none; color:#f5a94e;">Developer DB</button>
                     <button class="acc-item logout" id="nav-account-logout" onclick="if (doLogout()) hideAccountMenu()">Log Out</button>
                 </div>
