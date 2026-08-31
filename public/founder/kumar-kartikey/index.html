@@ -26,25 +26,6 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="author" content="Kumar Kartikey">
     
-    <!-- Structured Data for SEO (Person & Founder) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Kumar Kartikey",
-      "jobTitle": "Founder & CEO",
-      "image": "https://digitaltwinvrs.com/img/kumar-kartikey.png",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Digital Twin Verse",
-        "url": "https://www.digitaltwinverse.net"
-      },
-      "url": "https://www.digitaltwinverse.net/founder/kumar-kartikey/",
-      "sameAs": [
-        "https://www.linkedin.com/in/kumar-kartikey-7b9605282/"
-      ]
-    }
-    </script>
 
     <!-- Web Manifest & OS Meta -->
     <link rel="manifest" href="/manifest.json">
@@ -72,86 +53,94 @@
 
     <!-- Compound Structured Data (Schema.org) for Knowledge Graph -->
     <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://digitaltwinvrs.com"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Founder",
-            "item": "https://digitaltwinvrs.com/founder/kumar-kartikey"
-          }
-        ]
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "@id": "https://digitaltwinvrs.com/founder/kumar-kartikey#person",
-        "name": "Kumar Kartikey",
-        "givenName": "Kumar",
-        "familyName": "Kartikey",
-        "jobTitle": "Founder & CEO",
-        "description": "Kumar Kartikey is the founder of Digital Twin Verse, an AI-powered educational platform providing career simulations for students. He is a visionary entrepreneur in the fields of Artificial Intelligence and EdTech.",
-        "knowsAbout": [
-          "Artificial Intelligence",
-          "Machine Learning",
-          "Educational Technology (EdTech)",
-          "Digital Twins",
-          "Career Counseling",
-          "Predictive Analytics in Education"
-        ],
-        "image": {
-          "@type": "ImageObject",
-          "url": "https://digitaltwinvrs.com/img/kumar-kartikey.png",
-          "caption": "Kumar Kartikey, Founder of Digital Twin Verse"
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://digitaltwinvrs.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Founder",
+              "item": "https://digitaltwinvrs.com/founder/kumar-kartikey"
+            }
+          ]
         },
-        "url": "https://digitaltwinvrs.com/founder/kumar-kartikey",
-        "sameAs": [
-          "https://www.linkedin.com/in/kumar-kartikey-74626b3a5",
-          "https://www.instagram.com/kartikey_rajputana"
-        ],
-        "worksFor": {
+        {
+          "@type": "Person",
+          "@id": "https://digitaltwinvrs.com/founder/kumar-kartikey#person",
+          "name": "Kumar Kartikey",
+          "givenName": "Kumar",
+          "familyName": "Kartikey",
+          "jobTitle": "Founder & CEO",
+          "description": "Kumar Kartikey is the founder of Digital Twin Verse, an AI-powered educational platform providing career simulations for students. He is a visionary entrepreneur in the fields of Artificial Intelligence and EdTech.",
+          "knowsAbout": [
+            "Artificial Intelligence",
+            "Machine Learning",
+            "Educational Technology (EdTech)",
+            "Digital Twins",
+            "Career Counseling",
+            "Predictive Analytics in Education"
+          ],
+          "image": {
+            "@type": "ImageObject",
+            "url": "https://digitaltwinvrs.com/img/kumar-kartikey.png",
+            "caption": "Kumar Kartikey, Founder of Digital Twin Verse"
+          },
+          "url": "https://digitaltwinvrs.com/founder/kumar-kartikey",
+          "sameAs": [
+            "https://www.linkedin.com/in/kumar-kartikey-74626b3a5",
+            "https://www.instagram.com/kartikey_rajputana"
+          ],
+          "worksFor": {
+            "@id": "https://digitaltwinvrs.com/#organization"
+          }
+        },
+        {
           "@type": "Organization",
           "@id": "https://digitaltwinvrs.com/#organization",
           "name": "Digital Twin Verse",
-          "url": "https://digitaltwinvrs.com",
+          "alternateName": "DTV",
+          "url": "https://digitaltwinvrs.com/",
           "logo": "https://digitaltwinvrs.com/img/dtv-logo.jpg",
+          "founder": {
+            "@id": "https://digitaltwinvrs.com/founder/kumar-kartikey#person"
+          },
           "sameAs": [
             "https://www.linkedin.com/in/digital-twin-verse-b87055403"
           ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://digitaltwinvrs.com/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Who is the founder of Digital Twin Verse?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Kumar Kartikey is the founder and CEO of Digital Twin Verse, an AI-driven career guidance and educational platform."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is Kumar Kartikey's vision for education?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Kumar Kartikey aims to democratize elite career guidance by using Artificial Intelligence and Digital Twin technology. He believes students should not have to guess their career paths, but rather use data and simulations to make informed choices."
+              }
+            }
+          ]
         }
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Who is the founder of Digital Twin Verse?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Kumar Kartikey is the founder and CEO of Digital Twin Verse, an AI-driven career guidance and educational platform."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is Kumar Kartikey's vision for education?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Kumar Kartikey aims to democratize elite career guidance by using Artificial Intelligence and Digital Twin technology. He believes students should not have to guess their career paths, but rather use data and simulations to make informed choices."
-            }
-          }
-        ]
-      }
-    ]
+      ]
+    }
     </script>
 
     <style>
