@@ -3,6 +3,7 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Ensure NODE_ENV is set to development during build so Vite and devDependencies install correctly on Railway
+RUN apk add --no-cache python3 make g++
 ENV NODE_ENV=development
 
 COPY package.json package-lock.json* ./
