@@ -10,19 +10,52 @@ const transporter = nodemailer.createTransport({
     tls: { rejectUnauthorized: false }
 });
 
+const canSendEmail = () => env.BREVO_API_KEY || (env.SMTP_USER && env.SMTP_PASS);
+
+async function sendHtmlEmail(toEmail, subject, htmlContent, fromName = 'Digital Twin') {
+    if (env.BREVO_API_KEY) {
+        // Use Brevo REST API
+        const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+            method: 'POST',
+            headers: {
+                'accept': 'application/json',
+                'api-key': env.BREVO_API_KEY,
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                sender: { name: fromName, email: env.SMTP_USER || 'no-reply@digitaltwinvrs.com' },
+                to: [{ email: toEmail }],
+                subject: subject,
+                htmlContent: htmlContent
+            })
+        });
+        
+        if (!response.ok) {
+            const errorData = await response.text();
+            throw new Error(`Brevo API Error: ${response.status} - ${errorData}`);
+        }
+        return await response.json();
+    } else {
+        // Fallback to Nodemailer (Gmail)
+        const mailOptions = {
+            from: `"${fromName}" <${env.SMTP_USER}>`,
+            to: toEmail,
+            subject: subject,
+            html: htmlContent
+        };
+        return await transporter.sendMail(mailOptions);
+    }
+}
+
 async function sendVerificationEmail(toEmail, otpCode) {
     if (env.NODE_ENV === 'test') return;
-    if (!env.SMTP_USER || !env.SMTP_PASS) {
-        console.warn('⚠️ SMTP credentials not set. Email delivery is disabled. (Check environment variables)');
+    if (!canSendEmail()) {
+        console.warn('⚠️ Email credentials not set. Email delivery is disabled. (Check environment variables)');
         console.log(`\n📧 MOCK EMAIL TO: ${toEmail}\n🔒 OTP CODE: ${otpCode}\n`);
         return;
     }
 
-    const mailOptions = {
-        from: `"Digital Twin" <${env.SMTP_USER}>`,
-        to: toEmail,
-        subject: 'Verify your Digital Twin Account',
-        html: `
+    const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 10px;">
             <h2 style="color: #2a7de1; text-align: center;">Welcome to Digital Twin!</h2>
             <p style="font-size: 16px; color: #333;">Please use the verification code below to activate your account and verify your email address.</p>
@@ -34,11 +67,10 @@ async function sendVerificationEmail(toEmail, otpCode) {
             <hr style="border: 0; border-top: 1px solid #eaeaea; margin: 30px 0;" />
             <p style="font-size: 12px; color: #aaa; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin. All rights reserved.</p>
         </div>
-        `
-    };
+    `;
 
     try {
-        await transporter.sendMail(mailOptions);
+        await sendHtmlEmail(toEmail, 'Verify your Digital Twin Account', html);
         console.log(`Email OTP sent successfully to ${toEmail}`);
     } catch (error) {
         console.error('Error sending OTP email:', error);
@@ -47,17 +79,13 @@ async function sendVerificationEmail(toEmail, otpCode) {
 
 async function sendPasswordResetEmail(toEmail, otpCode) {
     if (env.NODE_ENV === 'test') return;
-    if (!env.SMTP_USER || !env.SMTP_PASS) {
-        console.warn('⚠️ SMTP credentials not set.');
+    if (!canSendEmail()) {
+        console.warn('⚠️ Email credentials not set.');
         console.log(`\n📧 MOCK RESET EMAIL TO: ${toEmail}\n🔒 OTP CODE: ${otpCode}\n`);
         return;
     }
 
-    const mailOptions = {
-        from: `"Digital Twin" <${env.SMTP_USER}>`,
-        to: toEmail,
-        subject: 'Reset your Digital Twin Password',
-        html: `
+    const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 10px;">
             <h2 style="color: #e12a2a; text-align: center;">Password Reset Request</h2>
             <p style="font-size: 16px; color: #333;">We received a request to reset your password. Use the code below to reset it.</p>
@@ -69,11 +97,10 @@ async function sendPasswordResetEmail(toEmail, otpCode) {
             <hr style="border: 0; border-top: 1px solid #eaeaea; margin: 30px 0;" />
             <p style="font-size: 12px; color: #aaa; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin. All rights reserved.</p>
         </div>
-        `
-    };
+    `;
 
     try {
-        await transporter.sendMail(mailOptions);
+        await sendHtmlEmail(toEmail, 'Reset your Digital Twin Password', html);
         console.log(`Password reset email sent successfully to ${toEmail}`);
     } catch (error) {
         console.error('Error sending reset email:', error);
@@ -83,17 +110,13 @@ async function sendPasswordResetEmail(toEmail, otpCode) {
 
 async function sendWelcomeEmail(toEmail, userName) {
     if (env.NODE_ENV === 'test') return;
-    if (!env.SMTP_USER || !env.SMTP_PASS) {
-        console.warn('⚠️ SMTP credentials not set.');
+    if (!canSendEmail()) {
+        console.warn('⚠️ Email credentials not set.');
         console.log(`\n📧 MOCK WELCOME EMAIL TO: ${toEmail}\n👋 Hello ${userName || 'Student'}, welcome to Digital Twin Verse! Your 5-day Premium trial has begun.\n`);
         return;
     }
 
-    const mailOptions = {
-        from: `"Digital Twin Verse" <${env.SMTP_USER}>`,
-        to: toEmail,
-        subject: 'Welcome to Digital Twin Verse! Your 5-Day Premium Trial has Begun',
-        html: `
+    const html = `
         <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; background: #0b1322; color: #e8f0f8; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
             <div style="text-align: center; padding-bottom: 20px;">
                 <h1 style="color: #ffd700; margin: 0; font-size: 28px;">Digital Twin Verse</h1>
@@ -113,11 +136,10 @@ async function sendWelcomeEmail(toEmail, userName) {
             <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;" />
             <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by DTV Family. All rights reserved.</p>
         </div>
-        `
-    };
+    `;
 
     try {
-        await transporter.sendMail(mailOptions);
+        await sendHtmlEmail(toEmail, 'Welcome to Digital Twin Verse! Your 5-Day Premium Trial has Begun', html, 'Digital Twin Verse');
         console.log(`Welcome email sent successfully to ${toEmail}`);
     } catch (error) {
         console.error('Error sending welcome email:', error);
@@ -126,17 +148,13 @@ async function sendWelcomeEmail(toEmail, userName) {
 
 async function sendPremiumConfirmation(toEmail, userName, planName, amountPaid, expiresAt) {
     if (env.NODE_ENV === 'test') return;
-    if (!env.SMTP_USER || !env.SMTP_PASS) {
-        console.warn('⚠️ SMTP credentials not set.');
+    if (!canSendEmail()) {
+        console.warn('⚠️ Email credentials not set.');
         console.log(`\n📧 MOCK PREMIUM CONFIRMATION TO: ${toEmail}\n🎉 Thank you ${userName || 'Student'}, your Premium Subscription (${planName}) is confirmed!\n`);
         return;
     }
 
-    const mailOptions = {
-        from: `"Digital Twin Verse" <${env.SMTP_USER}>`,
-        to: toEmail,
-        subject: '🎉 Premium Subscription Confirmed! Welcome to Digital Twin Verse VIP',
-        html: `
+    const html = `
         <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; background: #0b1322; color: #e8f0f8; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
             <div style="text-align: center; padding-bottom: 20px;">
                 <h1 style="color: #ffd700; margin: 0; font-size: 28px;">Digital Twin Verse</h1>
@@ -156,11 +174,10 @@ async function sendPremiumConfirmation(toEmail, userName, planName, amountPaid, 
             <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;" />
             <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by DTV Family. All rights reserved.</p>
         </div>
-        `
-    };
+    `;
 
     try {
-        await transporter.sendMail(mailOptions);
+        await sendHtmlEmail(toEmail, '🎉 Premium Subscription Confirmed! Welcome to Digital Twin Verse VIP', html, 'Digital Twin Verse');
         console.log(`Premium confirmation email sent successfully to ${toEmail}`);
     } catch (error) {
         console.error('Error sending premium confirmation email:', error);
@@ -169,17 +186,13 @@ async function sendPremiumConfirmation(toEmail, userName, planName, amountPaid, 
 
 async function sendParentInvitation(parentEmail, studentName, inviteLink) {
     if (env.NODE_ENV === 'test') return;
-    if (!env.SMTP_USER || !env.SMTP_PASS) {
-        console.warn('⚠️ SMTP credentials not set.');
+    if (!canSendEmail()) {
+        console.warn('⚠️ Email credentials not set.');
         console.log(`\n📧 MOCK PARENT INVITATION TO: ${parentEmail}\n🔗 Link: ${inviteLink}\n`);
         return;
     }
 
-    const mailOptions = {
-        from: `"Digital Twin Verse" <${env.SMTP_USER}>`,
-        to: parentEmail,
-        subject: `📊 ${studentName} invited you to track their academic journey on Digital Twin Verse`,
-        html: `
+    const html = `
         <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; background: #0b1322; color: #e8f0f8; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
             <div style="text-align: center; padding-bottom: 20px;">
                 <h1 style="color: #ffd700; margin: 0; font-size: 28px;">Digital Twin Verse</h1>
@@ -194,11 +207,10 @@ async function sendParentInvitation(parentEmail, studentName, inviteLink) {
             <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;" />
             <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by DTV Family. All rights reserved.</p>
         </div>
-        `
-    };
+    `;
 
     try {
-        await transporter.sendMail(mailOptions);
+        await sendHtmlEmail(parentEmail, `📊 ${studentName} invited you to track their academic journey on Digital Twin Verse`, html, 'Digital Twin Verse');
         console.log(`Parent invitation email sent successfully to ${parentEmail}`);
     } catch (error) {
         console.error('Error sending parent invitation email:', error);
@@ -207,17 +219,13 @@ async function sendParentInvitation(parentEmail, studentName, inviteLink) {
 
 async function sendDemoEndingSoonEmail(toEmail, userName, expiryDate) {
     if (env.NODE_ENV === 'test') return;
-    if (!env.SMTP_USER || !env.SMTP_PASS) {
-        console.warn('⚠️ SMTP credentials not set.');
+    if (!canSendEmail()) {
+        console.warn('⚠️ Email credentials not set.');
         console.log(`\n📧 MOCK DEMO ENDING SOON EMAIL TO: ${toEmail}\n⚠️ ${userName}, your demo ends on ${expiryDate}!\n`);
         return;
     }
 
-    const mailOptions = {
-        from: `"Digital Twin Verse" <${env.SMTP_USER}>`,
-        to: toEmail,
-        subject: '⚠️ Your Digital Twin Premium Demo is Ending Soon',
-        html: `
+    const html = `
         <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; background: #0b1322; color: #e8f0f8; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
             <div style="text-align: center; padding-bottom: 20px;">
                 <h1 style="color: #ffd700; margin: 0; font-size: 28px;">Digital Twin Verse</h1>
@@ -229,11 +237,10 @@ async function sendDemoEndingSoonEmail(toEmail, userName, expiryDate) {
             <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;" />
             <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by DTV Family. All rights reserved.</p>
         </div>
-        `
-    };
+    `;
 
     try {
-        await transporter.sendMail(mailOptions);
+        await sendHtmlEmail(toEmail, '⚠️ Your Digital Twin Premium Demo is Ending Soon', html, 'Digital Twin Verse');
     } catch (error) {
         console.error('Error sending demo ending email:', error);
     }
@@ -241,17 +248,13 @@ async function sendDemoEndingSoonEmail(toEmail, userName, expiryDate) {
 
 async function sendSubscriptionExpiredEmail(toEmail, userName) {
     if (env.NODE_ENV === 'test') return;
-    if (!env.SMTP_USER || !env.SMTP_PASS) {
-        console.warn('⚠️ SMTP credentials not set.');
+    if (!canSendEmail()) {
+        console.warn('⚠️ Email credentials not set.');
         console.log(`\n📧 MOCK EXPIRED EMAIL TO: ${toEmail}\n⚠️ ${userName}, your subscription has expired!\n`);
         return;
     }
 
-    const mailOptions = {
-        from: `"Digital Twin Verse" <${env.SMTP_USER}>`,
-        to: toEmail,
-        subject: '🔒 Your Digital Twin Premium Access Has Expired',
-        html: `
+    const html = `
         <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; background: #0b1322; color: #e8f0f8; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
             <div style="text-align: center; padding-bottom: 20px;">
                 <h1 style="color: #ffd700; margin: 0; font-size: 28px;">Digital Twin Verse</h1>
@@ -263,28 +266,23 @@ async function sendSubscriptionExpiredEmail(toEmail, userName) {
             <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;" />
             <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by DTV Family. All rights reserved.</p>
         </div>
-        `
-    };
+    `;
 
     try {
-        await transporter.sendMail(mailOptions);
+        await sendHtmlEmail(toEmail, '🔒 Your Digital Twin Premium Access Has Expired', html, 'Digital Twin Verse');
     } catch (error) {
         console.error('Error sending expired email:', error);
     }
 }
 
 async function sendParentTestAlert(toEmail, studentName) {
-    if (!env.SMTP_USER || !env.SMTP_PASS) {
-        console.warn('⚠️ SMTP credentials not set.');
+    if (!canSendEmail()) {
+        console.warn('⚠️ Email credentials not set.');
         console.log(`\n📧 MOCK TEST ALERT EMAIL TO: ${toEmail}\n`);
         return true;
     }
 
-    const mailOptions = {
-        from: `"Digital Twin Verse" <${env.SMTP_USER}>`,
-        to: toEmail,
-        subject: `🚨 Test Alert: AI Academic Trigger for ${studentName}`,
-        html: `
+    const html = `
         <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; background: #0b1322; color: #e8f0f8; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
             <div style="text-align: center; padding-bottom: 20px;">
                 <h1 style="color: #ffd700; margin: 0; font-size: 28px;">Digital Twin Verse</h1>
@@ -296,11 +294,10 @@ async function sendParentTestAlert(toEmail, studentName) {
             <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;" />
             <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by DTV Family. All rights reserved.</p>
         </div>
-        `
-    };
+    `;
 
     try {
-        await transporter.sendMail(mailOptions);
+        await sendHtmlEmail(toEmail, `🚨 Test Alert: AI Academic Trigger for ${studentName}`, html, 'Digital Twin Verse');
         return true;
     } catch (error) {
         console.error('Error sending test alert email:', error);
