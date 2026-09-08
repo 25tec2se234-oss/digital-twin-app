@@ -42,7 +42,7 @@ async function requirePremium(req, res, next) {
     success: false,
     error: 'SubscriptionExpired',
     message: 'Your Plan Is Expired Please Upgrade Your Plan To Get The Access',
-    expiredAt: Math.max(trialExpiresAt || 0, subExpiresAt || 0)
+    expiredAt: new Date(Math.max(trialExpiresAt ? trialExpiresAt.getTime() : 0, subExpiresAt ? subExpiresAt.getTime() : 0)).toISOString()
   });
 }
 

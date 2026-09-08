@@ -22,7 +22,36 @@ const parentRoutes = require('./routes/parentRoutes');
 const adminSubscriptionRoutes = require('./routes/adminSubscriptionRoutes');
 const blogRoutes = require('./routes/blogRoutes');
 const leaderboardRoutes = require('./routes/leaderboardRoutes');
+const crypto = require('crypto');
 const app = express();
+
+app.use((req, res, next) => {
+  res.locals.cspNonce = crypto.randomBytes(16).toString('base64');
+  
+  // Intercept res.sendFile to inject nonce into HTML files dynamically
+  const originalSendFile = res.sendFile.bind(res);
+  res.sendFile = function(filePath, options, fn) {
+    if (typeof options === 'function') {
+      fn = options;
+      options = {};
+    }
+    const finalPath = options && options.root ? path.join(options.root, filePath) : filePath;
+    if (finalPath.endsWith('.html')) {
+      require('fs').readFile(finalPath, 'utf8', (err, data) => {
+        if (err) {
+           if (fn) return fn(err);
+           return next(err);
+        }
+        const injected = data.replace(/<script /g, `<script nonce="${res.locals.cspNonce}" `);
+        res.send(injected);
+      });
+    } else {
+      originalSendFile(filePath, options, fn);
+    }
+  };
+  
+  next();
+});
 
 app.set('trust proxy', 1);
 
@@ -50,13 +79,13 @@ app.use(helmet({
       defaultSrc: ["'self'"],
       scriptSrc: [
         "'self'", 
-        "'unsafe-inline'", 
+        (req, res) => `'nonce-${res.locals.cspNonce}'`, 
         "https://www.googletagmanager.com", 
         "https://checkout.razorpay.com", 
         "https://cdnjs.cloudflare.com",
         "https://cdn.tailwindcss.com"
       ],
-      scriptSrcAttr: ["'unsafe-inline'"],
+      scriptSrcAttr: [(req, res) => `'nonce-${res.locals.cspNonce}'`],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdn.tailwindcss.com"],
       fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
       imgSrc: ["'self'", "data:", "blob:", "https://www.google-analytics.com", "https://*.razorpay.com", "https://razorpay.com", "https://images.unsplash.com"],

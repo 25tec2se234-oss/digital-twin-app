@@ -110,7 +110,7 @@ async function verifyPayment(req, res, next) {
       .digest('hex');
 
     const isProduction = env.NODE_ENV === 'production';
-    const isValidMock = !isProduction && env.ALLOW_MOCK_PAYMENTS === 'true' && (razorpay_signature === 'mock_signature' || razorpay_order_id.startsWith('client_order_'));
+    const isValidMock = !isProduction && env.ALLOW_MOCK_PAYMENTS === 'true' && env.MOCK_PAYMENT_SECRET && req.body.mock_secret === env.MOCK_PAYMENT_SECRET && (razorpay_signature === 'mock_signature' || razorpay_order_id.startsWith('client_order_'));
 
     if (expectedSignature === razorpay_signature || isValidMock) {
       // 🛡️ SENIOR DEVELOPER FIREWALL: ATOMIC TRANSACTIONS & ROW LOCKING
@@ -206,7 +206,7 @@ async function verifyPayment(req, res, next) {
 async function verifyPaymentProof(req, res, next) {
   try {
     const name = req.body.name || 'Student';
-    const mobile_number = req.body.mobile_number || '+917520119837';
+    const mobile_number = req.body.mobile_number || '';
     const plan_duration = req.body.plan_duration || '1m';
     const reference_id = req.body.reference_id;
     const file = req.file;
@@ -220,10 +220,7 @@ async function verifyPaymentProof(req, res, next) {
     }
     const cleanRef = reference_id.trim();
 
-    // Ensure orders table columns exist at runtime
-    await db.query("ALTER TABLE orders ADD COLUMN IF NOT EXISTS mobile_number VARCHAR(255);").catch(() => {});
-    await db.query("ALTER TABLE orders ADD COLUMN IF NOT EXISTS proof_file_path TEXT;").catch(() => {});
-    await db.query("ALTER TABLE orders ADD COLUMN IF NOT EXISTS user_name VARCHAR(255);").catch(() => {});
+    // Schema DDL removed from runtime request (moved to migrations)
 
     // STRICT SECURITY CHECK: Ensure this Transaction ID has NEVER been used before!
     const existingOrderRes = await db.query('SELECT id, user_name FROM orders WHERE razorpay_payment_id = $1 LIMIT 1', [cleanRef]);
@@ -269,34 +266,10 @@ async function verifyPaymentProof(req, res, next) {
 
     // ==============================================================================================
 
-    // 1. Identify User ID securely (auto-creating user if DB is empty)
+    // 1. Identify User ID securely
     let userId = req.user ? req.user.id : null;
-    try {
-      if (!userId) {
-        const userRes = await db.query('SELECT id FROM users WHERE name ILIKE $1 OR email ILIKE $1 LIMIT 1', [name ? `%${name}%` : 'impossible_match']);
-        if (userRes.rows.length > 0) {
-          userId = userRes.rows[0].id;
-        } else {
-          const fallbackRes = await db.query("SELECT id FROM users WHERE role = 'student' LIMIT 1");
-          if (fallbackRes.rows.length > 0) {
-            userId = fallbackRes.rows[0].id;
-          } else {
-            const anyUserRes = await db.query("SELECT id FROM users LIMIT 1");
-            if (anyUserRes.rows.length > 0) {
-              userId = anyUserRes.rows[0].id;
-            } else {
-              const newUserRes = await db.query(
-                `INSERT INTO users (email, password_hash, role, name, is_active, email_verified) 
-                 VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
-                [`student_${Date.now()}@digitaltwin.local`, `auto_hash_${Date.now()}`, 'student', name || 'Student', true, true]
-              );
-              userId = newUserRes.rows[0].id;
-            }
-          }
-        }
-      }
-    } catch (userErr) {
-      console.error('User lookup/creation error:', userErr);
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'Authentication is required to verify payment proof.' });
     }
 
     let proofFilePath = '';
@@ -338,8 +311,8 @@ async function verifyPaymentProof(req, res, next) {
     
     // Fetch the current user data to return without giving instant access
     let updatedUser = { 
-      email: 'kumarkartikey020@gmail.com', 
-      name: name || 'Student', 
+      email: req.user ? req.user.email : '', 
+      name: req.user ? req.user.name : (name || 'Student'), 
       subscription_expires_at: null 
     };
 

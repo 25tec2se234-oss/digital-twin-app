@@ -4,6 +4,28 @@ const ApiError = require('../utils/apiError');
 const userModel = require('../models/userModel');
 const { pool } = require('../db');
 
+const SENSITIVE_KEYS = new Set([
+  'password', 'newpassword', 'currentpassword', 'confirmpassword',
+  'otp', 'otpcode', 'verificationcode', 'token', 'refreshtoken', 
+  'accesstoken', 'authorization', 'secret', 'apikey', 'clientsecret',
+  'resettoken'
+]);
+
+function redactSensitiveData(obj) {
+  if (!obj || typeof obj !== 'object') return obj;
+  if (Array.isArray(obj)) return obj.map(redactSensitiveData);
+  
+  const redacted = {};
+  for (const key in obj) {
+    if (SENSITIVE_KEYS.has(key.toLowerCase())) {
+      redacted[key] = '[REDACTED]';
+    } else {
+      redacted[key] = redactSensitiveData(obj[key]);
+    }
+  }
+  return redacted;
+}
+
 async function authenticate(req, _res, next) {
   const header = req.headers.authorization || '';
   if (!header.startsWith('Bearer ')) {
@@ -21,9 +43,16 @@ async function authenticate(req, _res, next) {
 
     // Log audit trail if modifying request
     if (req.method !== 'GET') {
+      let safeBody = '{}';
+      try {
+        const redactedBody = redactSensitiveData(req.body);
+        safeBody = JSON.stringify(redactedBody);
+        if (safeBody.length > 2000) safeBody = safeBody.substring(0, 2000) + '...[TRUNCATED]';
+      } catch (e) {}
+
       pool.query(
         'INSERT INTO audit_logs (user_id, action, target_resource, request_payload, ip_address) VALUES ($1, $2, $3, $4, $5)',
-        [user.id, `${req.method} ${req.baseUrl}${req.path}`, req.originalUrl, JSON.stringify(req.body), req.ip || '127.0.0.1']
+        [user.id, `${req.method} ${req.baseUrl}${req.path}`, req.originalUrl, safeBody, req.ip || '127.0.0.1']
       ).catch(() => {});
     }
 

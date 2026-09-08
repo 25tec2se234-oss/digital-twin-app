@@ -235,7 +235,9 @@ const smtpDebug = asyncHandler(async function(req, res) {
     await transporter.verify();
     res.status(200).json({ success: true, message: 'SMTP connection successful' });
   } catch (err) {
-    res.status(500).json({ success: false, error: err.message, stack: err.stack });
+    const logger = require('../config/logger');
+    logger.error('SMTP debug error:', { message: err.message, stack: err.stack });
+    res.status(500).json({ success: false, error: 'Unable to verify SMTP configuration' });
   }
 });
 

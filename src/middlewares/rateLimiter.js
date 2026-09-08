@@ -4,17 +4,58 @@ const env = require('../config/env');
 const { RedisStore } = require('rate-limit-redis');
 const cacheService = require('../services/cacheService');
 
-// Helper to get store configuration based on Redis availability
+class DynamicStore {
+  constructor(prefix) {
+    this.prefix = prefix;
+    this.memoryStore = undefined;
+    this.redisStore = null;
+  }
+
+  getStore() {
+    if (env.NODE_ENV === 'test') return undefined; // Let express-rate-limit use default memory store internally
+    if (cacheService.isReady()) {
+      if (!this.redisStore) {
+        const client = cacheService.getClient();
+        if (client) {
+          this.redisStore = new RedisStore({
+            sendCommand: (...args) => client.call(...args),
+            prefix: this.prefix
+          });
+        }
+      }
+      if (this.redisStore) return this.redisStore;
+    }
+    return undefined; // fallback to default
+  }
+
+  async increment(key) {
+    const store = this.getStore();
+    if (store) return store.increment(key);
+    
+    // Lazy initialize fallback memory store
+    if (!this.memoryStore) {
+      const { MemoryStore } = require('express-rate-limit');
+      this.memoryStore = new MemoryStore();
+    }
+    return this.memoryStore.increment(key);
+  }
+
+  async decrement(key) {
+    const store = this.getStore();
+    if (store) return store.decrement(key);
+    if (this.memoryStore) return this.memoryStore.decrement(key);
+  }
+
+  async resetKey(key) {
+    const store = this.getStore();
+    if (store) return store.resetKey(key);
+    if (this.memoryStore) return this.memoryStore.resetKey(key);
+  }
+}
+
 function getStoreConfig(prefix) {
-  if (env.NODE_ENV === 'test') return undefined; // Always use memory store in tests
-  // Only use RedisStore when Redis is actually connected and ready
-  if (!cacheService.isReady()) return undefined; // Falls back to memory store
-  const client = cacheService.getClient();
-  if (!client) return undefined;
-  return new RedisStore({
-    sendCommand: (...args) => client.call(...args),
-    prefix: prefix
-  });
+  if (env.NODE_ENV === 'test') return undefined;
+  return new DynamicStore(prefix);
 }
 
 const generalLimiter = rateLimit({

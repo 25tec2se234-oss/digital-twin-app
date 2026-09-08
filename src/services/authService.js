@@ -110,11 +110,9 @@ async function parentLogin(payload) {
   // 1. Check if student code exists
   let student = null;
   try {
-    console.log('parentLogin: finding student by link_code', payload.studentCode);
     student = await userModel.findByLinkCode(payload.studentCode);
-    console.log('parentLogin: found student?', !!student);
   } catch (err) {
-    console.log('parentLogin: findByLinkCode error', err.message);
+    // Ignore error, student remains null
   }
   
   if (!student) {
@@ -122,13 +120,9 @@ async function parentLogin(payload) {
   }
 
   // 2. Find or create Parent
-  console.log('parentLogin: finding parent by email', email);
   let parent = await userModel.findByEmail(email);
-  console.log('parentLogin: found parent?', !!parent);
   if (!parent) {
-    console.log('parentLogin: hashing password');
     const passwordHash = await hashPassword(payload.password);
-    console.log('parentLogin: creating parent');
     parent = await userModel.create({
       email: email,
       passwordHash: passwordHash,
@@ -136,23 +130,17 @@ async function parentLogin(payload) {
       name: 'Parent User',
       emailVerified: true // Auto-verify for demo
     });
-    console.log('parentLogin: parent created');
   } else {
-    console.log('parentLogin: verifying password');
     // Verify password if parent exists
     const matches = await comparePassword(payload.password, parent.passwordHash);
-    console.log('parentLogin: password matched?', matches);
     if (!matches) {
       throw new ApiError(401, 'Invalid email or password.');
     }
   }
 
   // 3. Link them
-  console.log('parentLogin: linking parent and student');
   await userModel.linkParentStudent(parent.id, student.id);
-  console.log('parentLogin: updating last login');
   await userModel.updateLastLogin(parent.id);
-  console.log('parentLogin: done');
 
   return parent;
 }
@@ -185,7 +173,7 @@ async function loginWithGoogle(idToken) {
         email: email,
         name: payload.name || null,
         avatarUrl: payload.picture || null,
-        role: 'user',
+        role: 'student',
         oauthProvider: 'google',
         oauthSubject: subject,
         emailVerified: payload.email_verified || false

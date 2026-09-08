@@ -12,9 +12,9 @@ async function sendBackupEmail(csvString) {
     const payload = {
         sender: {
             name: "Digital Twin Automations",
-            email: "kumarkartikey020@gmail.com"
+            email: env.ADMIN_EMAIL || process.env.ADMIN_EMAIL || "admin@digitaltwin.local"
         },
-        to: [{ email: "kumarkartikey020@gmail.com" }],
+        to: [{ email: env.ADMIN_EMAIL || process.env.ADMIN_EMAIL || "admin@digitaltwin.local" }],
         subject: `Weekly Database Backup - ${new Date().toISOString().split('T')[0]}`,
         htmlContent: `<p>Attached is the weekly database backup of all users.</p>`,
         attachment: [
@@ -60,6 +60,17 @@ function startBackupCron() {
             await sendBackupEmail(csv);
         } catch (error) {
             console.error('❌ Failed to run weekly backup:', error);
+        }
+    });
+
+    // Cleanup old audit logs
+    cron.schedule('0 1 * * *', async () => {
+        try {
+            const { pool } = require('../db');
+            await pool.query("DELETE FROM audit_logs WHERE created_at < NOW() - INTERVAL '90 days'");
+            console.log('✅ Old audit logs cleaned up successfully.');
+        } catch (error) {
+            console.error('❌ Failed to clean old audit logs:', error);
         }
     });
 

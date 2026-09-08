@@ -6,7 +6,7 @@ const isTest = env.NODE_ENV === 'test';
 const connectionString = (isTest && env.TEST_DATABASE_URL && env.TEST_DATABASE_URL !== env.DATABASE_URL) ? env.TEST_DATABASE_URL : env.DATABASE_URL;
 
 const isLocalHost = connectionString.includes('localhost') || connectionString.includes('127.0.0.1');
-const sslConfig = (isLocalHost || env.DB_SSL_OFF) ? false : { rejectUnauthorized: false };
+const sslConfig = (isLocalHost || env.DB_SSL_OFF) ? false : { rejectUnauthorized: true };
 
 const pool = new Pool({
   connectionString: connectionString,
