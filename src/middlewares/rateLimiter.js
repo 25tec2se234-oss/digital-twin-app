@@ -9,6 +9,16 @@ class DynamicStore {
     this.prefix = prefix;
     this.memoryStore = undefined;
     this.redisStore = null;
+    this.options = null;
+  }
+
+  init(options) {
+    this.options = options;
+    const { MemoryStore } = require('express-rate-limit');
+    this.memoryStore = new MemoryStore();
+    if (this.memoryStore.init) {
+      this.memoryStore.init(options);
+    }
   }
 
   getStore() {
@@ -21,6 +31,9 @@ class DynamicStore {
             sendCommand: (...args) => client.call(...args),
             prefix: this.prefix
           });
+          if (this.redisStore.init && this.options) {
+            this.redisStore.init(this.options);
+          }
         }
       }
       if (this.redisStore) return this.redisStore;
@@ -36,6 +49,9 @@ class DynamicStore {
     if (!this.memoryStore) {
       const { MemoryStore } = require('express-rate-limit');
       this.memoryStore = new MemoryStore();
+      if (this.memoryStore.init && this.options) {
+        this.memoryStore.init(this.options);
+      }
     }
     return this.memoryStore.increment(key);
   }

@@ -53,7 +53,7 @@ async function verifyOTP(userId, otpCode) {
   if (!user) throw new ApiError(404, 'User not found.');
   if (user.emailVerified) return user;
 
-  if (!user.otpCode || user.otpCode !== otpCode) {
+  if (!user.otpCode || String(user.otpCode).trim() !== String(otpCode).trim()) {
     throw new ApiError(400, 'Invalid verification code.');
   }
 
