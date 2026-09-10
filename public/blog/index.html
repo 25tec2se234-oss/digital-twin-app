@@ -55,9 +55,9 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.7ded0a51.css?v=31e75ec51ec48cb2" as="style">
+    <link rel="preload" href="/dist/main.6cb4f0f7.css?v=e0244d1bf0c7bd2c" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.7ded0a51.css?v=31e75ec51ec48cb2">
+    <link rel="stylesheet" href="/dist/main.6cb4f0f7.css?v=e0244d1bf0c7bd2c">
 
     <!-- JSON-LD Structured Data Schema -->
     
@@ -194,7 +194,7 @@
         html,
         body {
             width: 100%;
-            max-width: 100%;
+            max-width: 100vw;
             overflow-x: hidden !important;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -390,8 +390,8 @@
 .blog-card-meta { font-size: 0.85rem; color: #a1a1aa; margin-bottom: 1rem; }
 </style>
 
-    <script defer="defer" src="/dist/app.d511f803.js?v=31e75ec51ec48cb2"></script>
-    <script defer="defer" src="/dist/ux-engine.b3b75cd2.js?v=31e75ec51ec48cb2"></script>
+    <script defer="defer" src="/dist/app.ce36bba2.js?v=e0244d1bf0c7bd2c"></script>
+    <script defer="defer" src="/dist/ux-engine.f675feed.js?v=e0244d1bf0c7bd2c"></script>
 
 
 
@@ -454,7 +454,7 @@
                 <div class="account-panel" id="nav-account-panel">
                     <div class="acc-item" id="nav-account-link-code" style="display:none; cursor:default; color:#a78bfa; justify-content:space-between;"><span>Parent Code:</span> <strong id="ui-link-code">-</strong></div>
                     <button class="acc-item" id="nav-account-signin" onclick="openLoginGate(); hideAccountMenu()">Sign In</button>
-                    <button class="acc-item" id="nav-account-signup" onclick="openLoginGate('signup'); hideAccountMenu()">Create Account</button>
+                    <button class="acc-item" id="nav-account-signup" onclick="openLoginGate(); hideAccountMenu()">Create Account</button>
                     <button class="acc-item" id="nav-account-admindb" onclick="openAdminDashboard(); hideAccountMenu()" style="display:none; color:#f5a94e;">Developer DB</button>
                     <button class="acc-item logout" id="nav-account-logout" onclick="if (doLogout()) hideAccountMenu()">Log Out</button>
                 </div>
@@ -625,15 +625,15 @@
 
     <div id="featured-section" class="featured-blog" style="margin-bottom: 5rem;">
         <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem; color: var(--dtv-text-primary); font-weight: 600;">Featured Article</h3>
-        <a href="/blog/ai-resilient-careers-2026-jobs-artificial-intelligence-cannot-replace" class="featured-blog-card">
+        <a href="/blog/student-digital-twin-career-planning-2026" class="featured-blog-card">
             <div class="featured-img-container">
-                <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&amp;w=2070&amp;auto=format&amp;fit=crop" alt="AI-Resilient Careers: 20 Jobs Artificial Intelligence Cannot Replace in 2026" loading="lazy" decoding="async">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&fm=webp&q=80" alt="What is a Student Digital Twin? The Future of Career Planning in 2026" loading="lazy" decoding="async">
             </div>
             <div class="featured-blog-content" style="width: 50%;">
                 <div style="background: rgba(167,139,250,0.15); color: #a78bfa; padding: 0.4rem 1.2rem; border-radius: 20px; font-size: 0.85rem; font-weight: 700; display: inline-block; margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 1px;">Featured</div>
-                <div style="margin-bottom: 1rem; font-size: 0.95rem; color: var(--dtv-text-secondary);">2026-08-18 &bull; 18 min read</div>
-                <h2 style="font-size: 2.2rem; margin-bottom: 1.2rem; line-height: 1.3; color: var(--dtv-text-primary); font-weight: 700;">AI-Resilient Careers: 20 Jobs Artificial Intelligence Cannot Replace in 2026</h2>
-                <p style="color: var(--dtv-text-tertiary); font-size: 1.1rem; line-height: 1.6; margin-bottom: 0;">Discover the 20 future-proof careers safe from AI automation by 2030. Learn why empathy, complex dexterity, and strategic thinking are the ultimate AI-resilient skills.</p>
+                <div style="margin-bottom: 1rem; font-size: 0.95rem; color: var(--dtv-text-secondary);">2026-09-10 &bull; 22 min read</div>
+                <h2 style="font-size: 2.2rem; margin-bottom: 1.2rem; line-height: 1.3; color: var(--dtv-text-primary); font-weight: 700;">What is a Student Digital Twin? The Future of Career Planning in 2026</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 1.1rem; line-height: 1.6; margin-bottom: 0;">Discover what a Student Digital Twin is and how it revolutionizes personalized education, AI skill gap analysis, and career planning for students in 2026 and beyond.</p>
                 <div style="color: #a78bfa; margin-top: 1.8rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; font-size: 1.05rem;">Read Full Article <span>&rarr;</span></div>
             </div>
         </a>
@@ -641,15 +641,14 @@
     
     <h3 id="latest-heading" style="margin-bottom: 2rem; font-size: 1.8rem; color: var(--dtv-text-primary); border-bottom: 1px solid rgba(15,23,42,0.1); padding-bottom: 1rem;">Latest Articles</h3>
     <div class="related-grid" id="blog-grid-container">
-        <a href="/blog/how-to-build-tech-portfolio-for-ai-roles-2026" class="blog-card blog-item" data-category="Career Planning" data-title="the ultimate guide to building a tech portfolio for ai roles in 2026">
-            <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&amp;w=2070&amp;auto=format&amp;fit=crop" alt="The Ultimate Guide to Building a Tech Portfolio for AI Roles in 2026" loading="lazy" decoding="async"></div>
+        <a href="/blog/ai-resilient-careers-2026-jobs-artificial-intelligence-cannot-replace" class="blog-card blog-item" data-category="Career Guidance" data-title="ai-resilient careers: 20 jobs artificial intelligence cannot replace in 2026">
+            <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=2070&auto=format&fit=crop" alt="AI-Resilient Careers: 20 Jobs Artificial Intelligence Cannot Replace in 2026" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">
-                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-08-20 &bull; 20 min read</div>
-                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">The Ultimate Guide to Building a Tech Portfolio for AI Roles in 2026</h2>
-                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover exactly how to build a tech portfolio for AI roles in 2026. Learn what projects to include, how to use GitHub, Kaggle, Hugging Face, and secure your dream AI job.</p>
+                <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-bottom: 0.8rem;">2026-08-18 &bull; 18 min read</div>
+                <h2 style="font-size: 1.35rem; margin-bottom: 0.8rem; color: var(--dtv-text-primary); line-height: 1.4; font-weight: 600;">AI-Resilient Careers: 20 Jobs Artificial Intelligence Cannot Replace in 2026</h2>
+                <p style="color: var(--dtv-text-tertiary); font-size: 0.95rem; line-height: 1.6; margin: 0; flex: 1;">Discover the 20 future-proof careers safe from AI automation by 2030. Learn why empathy, complex dexterity, and strategic thinking are the ultimate AI-resilient skills.</p>
             </div>
         </a>
-
         <a href="/blog/future-ready-skills-for-students-ai-era-2026" class="blog-card blog-item" data-category="Skill Development" data-title="future-ready skills: building a future-proof skill stack for students in the ai era (2026)">
             <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1488229297570-58520851e868?q=80&w=2069&auto=format&fit=crop" alt="Future-Ready Skills: Building a Future-Proof Skill Stack for Students in the AI Era (2026)" loading="lazy" decoding="async"></div>
             <div class="blog-card-content">

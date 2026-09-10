@@ -7185,3 +7185,32 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
+
+/* --- Light Theme Edge Case Overrides --- */
+[data-theme="light"] .genesis-card,
+[data-theme="light"] .feature-card,
+[data-theme="light"] .analyzer-preview-card,
+[data-theme="light"] .preview-subcard {
+    background: #FFFFFF !important;
+    border-color: #E5E7EB !important;
+}
+
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] .section-title,
+[data-theme="light"] .hero-title {
+    text-shadow: none !important;
+}
+
+[data-theme="light"] .rating-stars .star-icon,
+[data-theme="light"] .ph-fill.ph-star,
+[data-theme="light"] .ph-star.dtv-icon {
+    color: #F59E0B !important;
+}
+
+[data-theme="light"] .card-subtitle,
+[data-theme="light"] .testimonial-role,
+[data-theme="light"] .stat-description {
+    color: #4B5563 !important;
+}

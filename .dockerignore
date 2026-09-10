@@ -7,3 +7,12 @@ logs
 uploads
 coverage
 .git
+extensions
+.vscode
+scratch
+deploy-digital-twin
+digital-twin-project
+digital-twin-v2
+my-app
+parent-portal
+k8s

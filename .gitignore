@@ -8,3 +8,14 @@ coverage
 extensions
 my-app
 digital-twin-project
+
+# Deployment and Secrets
+apprunner*.json
+ssm*.json
+deploy-apprunner.ps1
+userdata.sh
+console.json
+console.txt
+deploy-ec2.ps1
+scripts/deploy-aws.sh
+trust-policy*.json
