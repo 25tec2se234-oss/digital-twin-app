@@ -125,15 +125,14 @@ p, span, small, label {
 
 /* Modal and Overlays (True Frosted Glass) */
 .student-onboard-ov, .modal-overlay, .auth-shell, .wa-redirect-ov {
-    background: rgba(255, 255, 255, 0.6) !important;
+    background: var(--dtv-bg-overlay) !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
 }
 
 .modal-content, .mod-wrap, .auth-card {
-    background: rgba(255, 255, 255, 0.95) !important;
+    background: var(--dtv-bg-raised) !important;
     border: 1px solid var(--dtv-border-default) !important;
-    
     border-radius: 20px !important;
     color: var(--dtv-text-primary) !important;
     backdrop-filter: blur(20px) !important;
@@ -165,8 +164,8 @@ p, span, small, label {
     
 }
 
-/* Remove dark blobs entirely to keep it clean */
-.blobs .b {
+/* Remove blobs in LIGHT theme only to keep it clean */
+html[data-theme="light"] .blobs .b {
     display: none !important;
 }
 
@@ -300,13 +299,12 @@ html .feat-card, html .dash-card, html .glass-panel {
     background: var(--dtv-bg-raised) !important;
     color: var(--dtv-text-primary) !important;
     border: 1px solid var(--dtv-border-default) !important;
-    
     border-radius: 10px !important;
     font-weight: 600 !important;
     transition: all 0.2s ease !important;
 }
 .btn-secondary:hover, .btn-out:hover {
-    background: #F4F4F5 !important;
+    background: var(--dtv-bg-overlay) !important;
     color: var(--dtv-text-primary) !important;
 }
 
@@ -436,10 +434,9 @@ html .career-card:hover {
 html .dropdown-menu, 
 html .nav-dropdown .dropdown-menu,
 html .account-panel {
-    background: rgba(255, 255, 255, 0.95) !important;
+    background: var(--dtv-bg-raised) !important;
     backdrop-filter: blur(20px) !important;
     border: 1px solid var(--dtv-border-default) !important;
-    
 }
 html .dropdown-menu a, 
 html .nav-dropdown .dropdown-menu a {
@@ -451,8 +448,8 @@ html .account-panel .acc-item {
 html .dropdown-menu a:hover, 
 html .nav-dropdown .dropdown-menu a:hover,
 html .account-panel .acc-item:hover {
-    color: var(--dtv-orange-600) !important;
-    background: rgba(249, 115, 22, 0.05) !important;
+    color: var(--dtv-orange-400) !important;
+    background: rgba(249, 115, 22, 0.08) !important;
 }
 
 /* Ensure the Founder Link is perfectly readable */
@@ -817,9 +814,12 @@ html .blog-sidebar {
 }
 /* Soft Orange styling for Welcome Box */
 .student-onboard-box {
+    background: var(--dtv-bg-raised) !important;
+    border: 1px solid var(--dtv-border-default) !important;
+}
+html[data-theme="light"] .student-onboard-box {
     background: #FFF7ED !important;
     border: 1px solid #FFEDD5 !important;
-    
 }
 
 /* ========================================================================
@@ -914,7 +914,7 @@ html .btn-secondary-dtv:hover {
     background: var(--dtv-bg-base) !important;
 }
 html .ai-drawer-overlay {
-    background: rgba(255, 255, 255, 0.6) !important;
+    background: var(--dtv-bg-overlay) !important;
 }
 html .ai-drawer-box {
     background: var(--dtv-bg-raised) !important;
@@ -1270,4 +1270,472 @@ input:focus, textarea:focus, select:focus {
     .orbital-item > div {
         animation: none !important;
     }
+}
+
+/* ========================================================================
+   DARK THEME COMPREHENSIVE OVERRIDE
+   Fixes all hardcoded light-mode values so dark themes work properly
+   Uses explicit selectors for maximum browser compatibility
+======================================================================== */
+
+/* --- Overlay Backdrops --- */
+html[data-theme="dark"] .student-onboard-ov,
+html[data-theme="midnight"] .student-onboard-ov,
+html[data-theme="navy"] .student-onboard-ov,
+html[data-theme="slate"] .student-onboard-ov,
+html[data-theme="forest"] .student-onboard-ov,
+html[data-theme="crimson"] .student-onboard-ov,
+html[data-theme="magenta"] .student-onboard-ov,
+html[data-theme="dark"] .modal-overlay,
+html[data-theme="midnight"] .modal-overlay,
+html[data-theme="navy"] .modal-overlay,
+html[data-theme="slate"] .modal-overlay,
+html[data-theme="forest"] .modal-overlay,
+html[data-theme="crimson"] .modal-overlay,
+html[data-theme="magenta"] .modal-overlay,
+html[data-theme="dark"] .auth-shell,
+html[data-theme="midnight"] .auth-shell,
+html[data-theme="navy"] .auth-shell,
+html[data-theme="slate"] .auth-shell,
+html[data-theme="forest"] .auth-shell,
+html[data-theme="crimson"] .auth-shell,
+html[data-theme="magenta"] .auth-shell,
+html[data-theme="dark"] .wa-redirect-ov,
+html[data-theme="midnight"] .wa-redirect-ov,
+html[data-theme="navy"] .wa-redirect-ov,
+html[data-theme="slate"] .wa-redirect-ov,
+html[data-theme="forest"] .wa-redirect-ov,
+html[data-theme="crimson"] .wa-redirect-ov,
+html[data-theme="magenta"] .wa-redirect-ov {
+    background: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* --- Nav Dropdown & Account Panel --- */
+html[data-theme="dark"] .dropdown-menu,
+html[data-theme="midnight"] .dropdown-menu,
+html[data-theme="navy"] .dropdown-menu,
+html[data-theme="slate"] .dropdown-menu,
+html[data-theme="forest"] .dropdown-menu,
+html[data-theme="crimson"] .dropdown-menu,
+html[data-theme="magenta"] .dropdown-menu,
+html[data-theme="dark"] .nav-dropdown .dropdown-menu,
+html[data-theme="midnight"] .nav-dropdown .dropdown-menu,
+html[data-theme="dark"] .account-panel,
+html[data-theme="midnight"] .account-panel,
+html[data-theme="navy"] .account-panel,
+html[data-theme="slate"] .account-panel,
+html[data-theme="forest"] .account-panel,
+html[data-theme="crimson"] .account-panel,
+html[data-theme="magenta"] .account-panel {
+    background: var(--dtv-bg-raised) !important;
+    border-color: var(--dtv-border-default) !important;
+}
+html[data-theme="dark"] .dropdown-menu a,
+html[data-theme="midnight"] .dropdown-menu a,
+html[data-theme="navy"] .dropdown-menu a,
+html[data-theme="slate"] .dropdown-menu a,
+html[data-theme="dark"] .account-panel .acc-item,
+html[data-theme="midnight"] .account-panel .acc-item,
+html[data-theme="navy"] .account-panel .acc-item,
+html[data-theme="slate"] .account-panel .acc-item {
+    color: var(--dtv-text-secondary) !important;
+}
+
+/* --- Hero Section --- */
+html[data-theme="dark"] .hero-h,
+html[data-theme="midnight"] .hero-h,
+html[data-theme="navy"] .hero-h,
+html[data-theme="slate"] .hero-h,
+html[data-theme="forest"] .hero-h,
+html[data-theme="crimson"] .hero-h,
+html[data-theme="magenta"] .hero-h,
+html[data-theme="dark"] .hero-copy h1,
+html[data-theme="midnight"] .hero-copy h1,
+html[data-theme="dark"] .hero-copy h2,
+html[data-theme="midnight"] .hero-copy h2 {
+    color: var(--dtv-text-primary) !important;
+}
+html[data-theme="dark"] .hero-sub,
+html[data-theme="midnight"] .hero-sub,
+html[data-theme="navy"] .hero-sub,
+html[data-theme="slate"] .hero-sub,
+html[data-theme="forest"] .hero-sub,
+html[data-theme="crimson"] .hero-sub,
+html[data-theme="magenta"] .hero-sub {
+    color: var(--dtv-text-secondary) !important;
+}
+html[data-theme="dark"] .dtv-badge,
+html[data-theme="midnight"] .dtv-badge,
+html[data-theme="navy"] .dtv-badge,
+html[data-theme="slate"] .dtv-badge,
+html[data-theme="forest"] .dtv-badge,
+html[data-theme="crimson"] .dtv-badge,
+html[data-theme="magenta"] .dtv-badge {
+    background: var(--dtv-bg-raised) !important;
+    border-color: var(--dtv-border-default) !important;
+}
+html[data-theme="dark"] .dtv-badge span,
+html[data-theme="midnight"] .dtv-badge span,
+html[data-theme="navy"] .dtv-badge span,
+html[data-theme="slate"] .dtv-badge span {
+    color: var(--dtv-text-primary) !important;
+}
+html[data-theme="dark"] .hstats,
+html[data-theme="midnight"] .hstats,
+html[data-theme="navy"] .hstats,
+html[data-theme="slate"] .hstats {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: var(--dtv-border-default) !important;
+}
+html[data-theme="dark"] .hstat-n,
+html[data-theme="midnight"] .hstat-n,
+html[data-theme="navy"] .hstat-n,
+html[data-theme="slate"] .hstat-n {
+    color: var(--dtv-text-primary) !important;
+}
+html[data-theme="dark"] .hstat-l,
+html[data-theme="midnight"] .hstat-l,
+html[data-theme="navy"] .hstat-l,
+html[data-theme="slate"] .hstat-l {
+    color: var(--dtv-text-secondary) !important;
+}
+
+/* --- Ticker --- */
+html[data-theme="dark"] .ticker,
+html[data-theme="midnight"] .ticker,
+html[data-theme="navy"] .ticker,
+html[data-theme="slate"] .ticker {
+    background: var(--dtv-bg-raised) !important;
+    border-color: var(--dtv-border-default) !important;
+}
+html[data-theme="dark"] .ti,
+html[data-theme="midnight"] .ti,
+html[data-theme="navy"] .ti,
+html[data-theme="slate"] .ti {
+    color: var(--dtv-text-secondary) !important;
+}
+
+/* --- Glass tags & chips --- */
+html[data-theme="dark"] .glass-tag,
+html[data-theme="midnight"] .glass-tag,
+html[data-theme="navy"] .glass-tag,
+html[data-theme="slate"] .glass-tag,
+html[data-theme="dark"] .chip,
+html[data-theme="midnight"] .chip,
+html[data-theme="dark"] .tag,
+html[data-theme="midnight"] .tag {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border-color: var(--dtv-border-default) !important;
+    color: var(--dtv-text-secondary) !important;
+}
+
+/* --- Progress Bars --- */
+html[data-theme="dark"] .ov-bar-track,
+html[data-theme="midnight"] .ov-bar-track,
+html[data-theme="navy"] .ov-bar-track,
+html[data-theme="slate"] .ov-bar-track,
+html[data-theme="dark"] .bar-track,
+html[data-theme="midnight"] .bar-track,
+html[data-theme="dark"] .progress-track,
+html[data-theme="midnight"] .progress-track {
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* --- Login page iframe --- */
+html[data-theme="dark"] #page-auth,
+html[data-theme="midnight"] #page-auth,
+html[data-theme="navy"] #page-auth,
+html[data-theme="slate"] #page-auth {
+    background-color: var(--dtv-bg-base) !important;
+}
+
+/* --- Problem page header --- */
+html[data-theme="dark"] .prob-page-header,
+html[data-theme="midnight"] .prob-page-header,
+html[data-theme="navy"] .prob-page-header,
+html[data-theme="slate"] .prob-page-header {
+    background: rgba(0, 0, 0, 0.85) !important;
+    border-bottom-color: var(--dtv-border-default) !important;
+}
+
+/* --- AI Drawer --- */
+html[data-theme="dark"] .ai-drawer-overlay,
+html[data-theme="midnight"] .ai-drawer-overlay,
+html[data-theme="navy"] .ai-drawer-overlay,
+html[data-theme="slate"] .ai-drawer-overlay {
+    background: rgba(0, 0, 0, 0.6) !important;
+}
+html[data-theme="dark"] .ai-drawer-box,
+html[data-theme="midnight"] .ai-drawer-box,
+html[data-theme="navy"] .ai-drawer-box,
+html[data-theme="slate"] .ai-drawer-box {
+    background: var(--dtv-bg-raised) !important;
+    border-color: var(--dtv-border-default) !important;
+}
+
+/* --- Cards (universal dark) --- */
+html[data-theme="dark"] .feat-card,
+html[data-theme="midnight"] .feat-card,
+html[data-theme="navy"] .feat-card,
+html[data-theme="slate"] .feat-card,
+html[data-theme="forest"] .feat-card,
+html[data-theme="crimson"] .feat-card,
+html[data-theme="magenta"] .feat-card,
+html[data-theme="dark"] .dash-card,
+html[data-theme="midnight"] .dash-card,
+html[data-theme="dark"] .glass-panel,
+html[data-theme="midnight"] .glass-panel,
+html[data-theme="dark"] .info-card,
+html[data-theme="midnight"] .info-card,
+html[data-theme="dark"] .step-card,
+html[data-theme="midnight"] .step-card,
+html[data-theme="dark"] .career-card,
+html[data-theme="midnight"] .career-card,
+html[data-theme="dark"] .tool-card,
+html[data-theme="midnight"] .tool-card,
+html[data-theme="dark"] .sp-card,
+html[data-theme="midnight"] .sp-card,
+html[data-theme="dark"] .analyzer-card,
+html[data-theme="midnight"] .analyzer-card,
+html[data-theme="dark"] .road-card,
+html[data-theme="midnight"] .road-card,
+html[data-theme="dark"] .pricing-card,
+html[data-theme="midnight"] .pricing-card {
+    background: var(--dtv-bg-raised) !important;
+    border-color: var(--dtv-border-default) !important;
+    color: var(--dtv-text-primary) !important;
+}
+html[data-theme="dark"] .feat-card h3,
+html[data-theme="midnight"] .feat-card h3,
+html[data-theme="dark"] .dash-card h3,
+html[data-theme="midnight"] .dash-card h3,
+html[data-theme="dark"] .info-card h3,
+html[data-theme="midnight"] .info-card h3,
+html[data-theme="dark"] .tool-card h3,
+html[data-theme="midnight"] .tool-card h3,
+html[data-theme="dark"] .career-card h3,
+html[data-theme="midnight"] .career-card h3 {
+    color: var(--dtv-text-primary) !important;
+}
+html[data-theme="dark"] .feat-card p,
+html[data-theme="midnight"] .feat-card p,
+html[data-theme="dark"] .dash-card p,
+html[data-theme="midnight"] .dash-card p,
+html[data-theme="dark"] .info-card p,
+html[data-theme="midnight"] .info-card p,
+html[data-theme="dark"] .tool-card p,
+html[data-theme="midnight"] .tool-card p,
+html[data-theme="dark"] .career-card p,
+html[data-theme="midnight"] .career-card p {
+    color: var(--dtv-text-secondary) !important;
+}
+
+/* --- Reviews / Testimonials --- */
+html[data-theme="dark"] .mc,
+html[data-theme="midnight"] .mc,
+html[data-theme="navy"] .mc,
+html[data-theme="slate"] .mc,
+html[data-theme="dark"] .testimonial-card,
+html[data-theme="midnight"] .testimonial-card,
+html[data-theme="dark"] .review-card,
+html[data-theme="midnight"] .review-card {
+    background: var(--dtv-bg-raised) !important;
+    border-color: var(--dtv-border-default) !important;
+}
+html[data-theme="dark"] .mc *,
+html[data-theme="midnight"] .mc *,
+html[data-theme="dark"] .testimonial-card *,
+html[data-theme="midnight"] .testimonial-card *,
+html[data-theme="dark"] .review-card *,
+html[data-theme="midnight"] .review-card * {
+    color: var(--dtv-text-primary) !important;
+}
+html[data-theme="dark"] .mc p,
+html[data-theme="midnight"] .mc p,
+html[data-theme="dark"] .testimonial-card p,
+html[data-theme="midnight"] .testimonial-card p,
+html[data-theme="dark"] .review-card p,
+html[data-theme="midnight"] .review-card p {
+    color: var(--dtv-text-secondary) !important;
+}
+
+/* --- FAQ Items --- */
+html[data-theme="dark"] .faq-item,
+html[data-theme="midnight"] .faq-item,
+html[data-theme="navy"] .faq-item,
+html[data-theme="slate"] .faq-item {
+    background: var(--dtv-bg-raised) !important;
+    border-color: var(--dtv-border-default) !important;
+}
+html[data-theme="dark"] .faq-item *,
+html[data-theme="midnight"] .faq-item *,
+html[data-theme="navy"] .faq-item *,
+html[data-theme="slate"] .faq-item * {
+    color: var(--dtv-text-primary) !important;
+}
+html[data-theme="dark"] .faq-item p,
+html[data-theme="midnight"] .faq-item p,
+html[data-theme="dark"] .faq-ans,
+html[data-theme="midnight"] .faq-ans {
+    color: var(--dtv-text-secondary) !important;
+}
+
+/* --- Pricing Cards --- */
+html[data-theme="dark"] .pricing-card div,
+html[data-theme="midnight"] .pricing-card div,
+html[data-theme="dark"] .pricing-card li,
+html[data-theme="midnight"] .pricing-card li,
+html[data-theme="dark"] .pricing-card span,
+html[data-theme="midnight"] .pricing-card span {
+    color: var(--dtv-text-primary) !important;
+}
+html[data-theme="dark"] .pricing-card:hover,
+html[data-theme="midnight"] .pricing-card:hover {
+    border-color: var(--dtv-orange-500) !important;
+}
+
+/* --- Modal Inputs --- */
+html[data-theme="dark"] input,
+html[data-theme="midnight"] input,
+html[data-theme="navy"] input,
+html[data-theme="slate"] input,
+html[data-theme="dark"] textarea,
+html[data-theme="midnight"] textarea,
+html[data-theme="dark"] select,
+html[data-theme="midnight"] select {
+    background: var(--dtv-bg-overlay) !important;
+    color: var(--dtv-text-primary) !important;
+    border-color: var(--dtv-border-default) !important;
+}
+html[data-theme="dark"] input::placeholder,
+html[data-theme="midnight"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder,
+html[data-theme="midnight"] textarea::placeholder {
+    color: var(--dtv-text-tertiary) !important;
+}
+
+/* --- Footer --- */
+html[data-theme="dark"] .footer-modern,
+html[data-theme="midnight"] .footer-modern,
+html[data-theme="navy"] .footer-modern,
+html[data-theme="slate"] .footer-modern,
+html[data-theme="dark"] .footer,
+html[data-theme="midnight"] .footer,
+html[data-theme="dark"] footer,
+html[data-theme="midnight"] footer {
+    background: var(--dtv-bg-raised) !important;
+    border-top-color: var(--dtv-border-default) !important;
+}
+html[data-theme="dark"] .footer-link,
+html[data-theme="midnight"] .footer-link,
+html[data-theme="dark"] .footer-legal-link,
+html[data-theme="midnight"] .footer-legal-link,
+html[data-theme="dark"] .foot-link,
+html[data-theme="midnight"] .foot-link {
+    color: var(--dtv-text-secondary) !important;
+}
+
+/* --- Mobile Nav --- */
+html[data-theme="dark"] .mob,
+html[data-theme="midnight"] .mob,
+html[data-theme="navy"] .mob,
+html[data-theme="slate"] .mob {
+    background: var(--dtv-bg-raised) !important;
+    border-top-color: var(--dtv-border-default) !important;
+}
+html[data-theme="dark"] .mob a,
+html[data-theme="midnight"] .mob a,
+html[data-theme="dark"] .mob button,
+html[data-theme="midnight"] .mob button,
+html[data-theme="dark"] .mob .btn-reset,
+html[data-theme="midnight"] .mob .btn-reset {
+    color: var(--dtv-text-primary) !important;
+}
+
+/* --- Blog Cards --- */
+html[data-theme="dark"] .blog-card,
+html[data-theme="midnight"] .blog-card,
+html[data-theme="navy"] .blog-card,
+html[data-theme="slate"] .blog-card,
+html[data-theme="dark"] .story-card,
+html[data-theme="midnight"] .story-card,
+html[data-theme="navy"] .story-card,
+html[data-theme="slate"] .story-card {
+    background: var(--dtv-bg-raised) !important;
+    border-color: var(--dtv-border-default) !important;
+}
+html[data-theme="dark"] .blog-card-title,
+html[data-theme="midnight"] .blog-card-title,
+html[data-theme="dark"] .blog-card h3,
+html[data-theme="midnight"] .blog-card h3 {
+    color: var(--dtv-text-primary) !important;
+}
+html[data-theme="dark"] .blog-card-content,
+html[data-theme="midnight"] .blog-card-content,
+html[data-theme="dark"] .blog-meta,
+html[data-theme="midnight"] .blog-meta {
+    color: var(--dtv-text-secondary) !important;
+}
+
+/* --- Chat Panel --- */
+html[data-theme="dark"] .chat-panel,
+html[data-theme="midnight"] .chat-panel,
+html[data-theme="navy"] .chat-panel,
+html[data-theme="slate"] .chat-panel {
+    background: var(--dtv-bg-raised) !important;
+    border-color: var(--dtv-border-default) !important;
+}
+html[data-theme="dark"] .cp-name,
+html[data-theme="midnight"] .cp-name,
+html[data-theme="dark"] .cp-st,
+html[data-theme="midnight"] .cp-st,
+html[data-theme="dark"] .ai-msg,
+html[data-theme="midnight"] .ai-msg {
+    color: var(--dtv-text-primary) !important;
+}
+html[data-theme="dark"] .ai-msg,
+html[data-theme="midnight"] .ai-msg {
+    background: var(--dtv-bg-overlay) !important;
+    border-color: var(--dtv-border-default) !important;
+}
+
+/* --- Orbital / Premium Cards --- */
+html[data-theme="dark"] .PremiumCard,
+html[data-theme="midnight"] .PremiumCard,
+html[data-theme="navy"] .PremiumCard,
+html[data-theme="slate"] .PremiumCard {
+    background: var(--dtv-bg-raised) !important;
+    border-color: var(--dtv-border-default) !important;
+    color: var(--dtv-text-primary) !important;
+}
+html[data-theme="dark"] .PremiumCard p,
+html[data-theme="midnight"] .PremiumCard p,
+html[data-theme="navy"] .PremiumCard p,
+html[data-theme="slate"] .PremiumCard p {
+    color: var(--dtv-text-secondary) !important;
+}
+
+/* --- Section backgrounds for dark themes --- */
+html[data-theme="dark"] section#road,
+html[data-theme="midnight"] section#road,
+html[data-theme="navy"] section#road,
+html[data-theme="slate"] section#road,
+html[data-theme="dark"] section#latest-blogs,
+html[data-theme="midnight"] section#latest-blogs,
+html[data-theme="dark"] section#why-dtv,
+html[data-theme="midnight"] section#why-dtv,
+html[data-theme="dark"] section#rev,
+html[data-theme="midnight"] section#rev,
+html[data-theme="dark"] section#mkt,
+html[data-theme="midnight"] section#mkt,
+html[data-theme="dark"] section#stories,
+html[data-theme="midnight"] section#stories,
+html[data-theme="dark"] section#prob,
+html[data-theme="midnight"] section#prob,
+html[data-theme="dark"] section#how,
+html[data-theme="midnight"] section#how,
+html[data-theme="dark"] section#features,
+html[data-theme="midnight"] section#features {
+    background: var(--dtv-bg-base) !important;
+    background-image: none !important;
 }
