@@ -72,16 +72,51 @@ html[data-theme="dark"] {
 /* ========================================================================
    GLOBAL THEME & BACKGROUNDS
 ======================================================================== */
-body, html, html {
-    background: var(--dtv-bg-base) !important;
-    background-color: var(--dtv-bg-base) !important;
+/* Base: font + text color (theme-aware, always applied) */
+body, html {
     color: var(--dtv-text-primary) !important;
     font-family: var(--font-body);
-    /* Elite SaaS faint grid background */
+}
+
+/* Light theme: white body with subtle dot grid */
+html[data-theme="light"] body,
+html[data-theme="light"] {
+    background-color: var(--dtv-bg-base) !important;
     background-image: linear-gradient(var(--dtv-border-subtle) 1px, transparent 1px),
                       linear-gradient(90deg, var(--dtv-border-subtle) 1px, transparent 1px) !important;
     background-size: 40px 40px !important;
     background-attachment: fixed !important;
+}
+
+/* Default (no theme set = dark): dark body */
+html:not([data-theme]) body,
+html:not([data-theme]) {
+    background-color: var(--dtv-bg-base) !important;
+    background-image: none !important;
+}
+
+/* Dark theme: dark body, no grid to avoid invisible grid on dark */
+html[data-theme="dark"] body,
+html[data-theme="dark"] {
+    background-color: #09090b !important;
+    background-image: none !important;
+}
+
+/* Midnight theme */
+html[data-theme="midnight"] body,
+html[data-theme="midnight"] {
+    background-color: var(--dtv-bg-base) !important;
+    background-image: none !important;
+}
+
+/* Navy, Slate, Forest, Crimson, Magenta — all dark variants */
+html[data-theme="navy"] body, html[data-theme="navy"],
+html[data-theme="slate"] body, html[data-theme="slate"],
+html[data-theme="forest"] body, html[data-theme="forest"],
+html[data-theme="crimson"] body, html[data-theme="crimson"],
+html[data-theme="magenta"] body, html[data-theme="magenta"] {
+    background-color: var(--dtv-bg-base) !important;
+    background-image: none !important;
 }
 
 /* ════════════════════════════════════════════════════════════
