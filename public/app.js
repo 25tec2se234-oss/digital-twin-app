@@ -1691,12 +1691,8 @@ function renderCareers(filter) {
         }
 
         function selectStudentType(type) {
-            ensureStudentDefaults();
-            APP_DATA.studentProfile.type = type;
-            APP_DATA.studentProfile.updatedAt = new Date().toISOString();
-            syncData();
             closeStudentOnboard();
-            // REMOVED: openLoginGate() to keep user in Guest Mode
+            setStudentType(type);
         }
 
         function setStudentType(type) {
