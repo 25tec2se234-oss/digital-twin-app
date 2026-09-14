@@ -6367,38 +6367,32 @@ async function renderProgressComparison() {
 window.setTheme = function(themeName) {
     document.documentElement.setAttribute('data-theme', themeName);
     localStorage.setItem('dtv_theme', themeName);
-    
-    // Update theme toggle UI if it exists
-    var themeLabel = document.getElementById('theme-active-label');
-    if (themeLabel) {
-        var labels = {
-            'midnight': 'Midnight Dark',
-            'light': 'Light Professional',
-            'navy': 'Deep Navy',
-            'slate': 'Slate Graphite'
-        };
-        themeLabel.textContent = labels[themeName] || 'Midnight Dark';
-    }
-    
-    var dropdown = document.getElementById('theme-dropdown');
-    if (dropdown) dropdown.classList.remove('show');
+    updateThemeIcon(themeName);
 };
 
-window.toggleThemeDropdown = function() {
-    var dropdown = document.getElementById('theme-dropdown');
-    if (dropdown) {
-        dropdown.classList.toggle('open');
-    }
+window.toggleDarkLight = function() {
+    var currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    var newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    window.setTheme(newTheme);
 };
 
-document.addEventListener('click', function(e) {
-    if (!e.target.closest('#theme-switcher')) {
-        var dropdown = document.getElementById('theme-dropdown');
-        if (dropdown && dropdown.classList.contains('open')) {
-            dropdown.classList.remove('open');
+function updateThemeIcon(theme) {
+    var icon = document.getElementById('theme-icon');
+    if (icon) {
+        if (theme === 'dark') {
+            icon.className = 'ph-fill dtv-icon ph-sun';
+        } else {
+            icon.className = 'ph-fill dtv-icon ph-moon';
         }
     }
+}
+
+// Initial theme load
+document.addEventListener('DOMContentLoaded', function() {
+    var storedTheme = localStorage.getItem('dtv_theme') || 'light';
+    window.setTheme(storedTheme);
 });
+
 
 
 /* Fetch Latest Blogs for Homepage */

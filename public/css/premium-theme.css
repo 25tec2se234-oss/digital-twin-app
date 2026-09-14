@@ -1,69 +1,25 @@
 /* ========================================================================
-   ULTIMATE LIGHT THEME OVERRIDE
-   Forces all legacy themes to use light mode variables
+   DIGITAL TWIN VERSE - THEME VARIABLES (LIGHT & DARK)
 ======================================================================== */
-:root, 
-html[data-theme], 
-html[data-theme="midnight"], 
-html[data-theme="dark"], 
-html[data-theme="light"], 
-html[data-theme="twilight"], 
-html[data-theme="ocean"] {
-  --bg: #FAFAFA !important;
-  --bg2: #FFFFFF !important;
-  --card: #FFFFFF !important;
-  --wh: #09090b !important;
-  --wh2: #52525b !important;
-  --mu: #52525b !important;
-  --border: rgba(15, 23, 42, 0.08) !important;
-  
-  --body-bg: #FAFAFA !important;
-  --body-after-bg: #FFFFFF !important;
-  --nav-bg: rgba(255, 255, 255, 0.95) !important;
-
-  --dtv-bg-base: #FAFAFA !important;
-  --dtv-bg-raised: #FFFFFF !important;
-  --dtv-bg-overlay: rgba(255, 255, 255, 0.85) !important;
-  --dtv-text-primary: #09090b !important;
-  --dtv-text-secondary: #52525b !important;
-}
-
-/* ========================================================================
-   DIGITAL TWIN VERSE - ULTIMATE SaaS LIGHT THEME
-   The absolute highest standard of UI/UX, crafted for an elite SaaS experience.
-======================================================================== */
-
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
 
-:root {
-  /* Surfaces - Pure Whites and Subtle Grays */
-  --dtv-bg-base: #FAFAFA; /* Off-white for less eye-strain */
+:root, html[data-theme="light"] {
+  --dtv-bg-base: #FAFAFA;
   --dtv-bg-raised: #FFFFFF;
   --dtv-bg-overlay: rgba(255, 255, 255, 0.85);
   
-  /* Borders - Ultra-thin, barely visible separating lines */
   --dtv-border-subtle: rgba(15, 23, 42, 0.04);
   --dtv-border-default: rgba(15, 23, 42, 0.08);
   --dtv-border-strong: rgba(15, 23, 42, 0.15);
 
-  /* Typography - Masterfully tuned contrast */
-  --dtv-text-primary: #09090b; /* Almost black */
-  --dtv-text-secondary: #52525b; /* Soft gray for descriptions */
+  --dtv-text-primary: #09090b;
+  --dtv-text-secondary: #52525b;
   --dtv-text-tertiary: #a1a1aa;
 
-  /* Brand Orange - Vibrant, confident, converting */
   --dtv-orange-300: #FDBA74;
   --dtv-orange-400: #FB923C;
   --dtv-orange-500: #F97316;
   --dtv-orange-600: #EA580C;
-  --dtv-orange-glow: rgba(249, 115, 22, 0.2);
-
-  /* Shadows - Layered, diffused, butter-smooth */
-  --dtv-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.03);
-  --dtv-shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.03), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
-  --dtv-shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.03), 0 4px 6px -4px rgba(15, 23, 42, 0.03);
-  --dtv-shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.03), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
-  
   /* Glowing Orange Shadow for primary actions */
   --dtv-shadow-glow-orange: 0 0 0 1px rgba(249, 115, 22, 0.15), 0 8px 16px rgba(249, 115, 22, 0.15);
 
@@ -80,8 +36,41 @@ html[data-theme="ocean"] {
   --mu: #52525b;
 }
 
+html[data-theme="dark"] {
+  --dtv-bg-base: #09090b;
+  --dtv-bg-raised: #18181b;
+  --dtv-bg-overlay: rgba(9, 9, 11, 0.85);
+  
+  --dtv-border-subtle: rgba(255, 255, 255, 0.04);
+  --dtv-border-default: rgba(255, 255, 255, 0.1);
+  --dtv-border-strong: rgba(255, 255, 255, 0.2);
+
+  --dtv-text-primary: #FAFAFA;
+  --dtv-text-secondary: #a1a1aa;
+  --dtv-text-tertiary: #52525b;
+
+  --dtv-orange-300: #F97316;
+  --dtv-orange-400: #EA580C;
+  --dtv-orange-500: #C2410C;
+  --dtv-orange-600: #9A3412;
+  --dtv-orange-glow: rgba(234, 88, 12, 0.15);
+
+  /* Legacy variable overrides mapping */
+  --bg: #09090b;
+  --bg2: #18181b;
+  --card: #18181b;
+  --wh: #FAFAFA;
+  --wh2: #a1a1aa;
+  --mu: #a1a1aa;
+  --border: rgba(255, 255, 255, 0.1);
+  
+  --body-bg: #09090b;
+  --body-after-bg: #18181b;
+  --nav-bg: rgba(9, 9, 11, 0.95);
+}
+
 /* ========================================================================
-   GLOBAL LIGHT THEME & BACKGROUNDS (FORCED)
+   GLOBAL THEME & BACKGROUNDS
 ======================================================================== */
 body, html, html {
     background: var(--dtv-bg-base) !important;
@@ -112,11 +101,11 @@ body, html, html {
 }
 .splash-loader-bar {
     background: var(--dtv-orange-500) !important;
-    box-shadow: 0 0 15px rgba(249, 115, 22, 0.4) !important;
+    
 }
 .splash-logo-mark {
     background: linear-gradient(135deg, var(--dtv-orange-400), var(--dtv-orange-600)) !important;
-    box-shadow: 0 0 30px rgba(249, 115, 22, 0.3) !important;
+    
     color: #FFFFFF !important;
 }
 
@@ -144,7 +133,7 @@ p, span, small, label {
 .modal-content, .mod-wrap, .auth-card {
     background: rgba(255, 255, 255, 0.95) !important;
     border: 1px solid var(--dtv-border-default) !important;
-    box-shadow: var(--dtv-shadow-xl) !important;
+    
     border-radius: 20px !important;
     color: var(--dtv-text-primary) !important;
     backdrop-filter: blur(20px) !important;
@@ -164,7 +153,7 @@ p, span, small, label {
     background: #FFFFFF !important;
     color: var(--dtv-text-primary) !important;
     border: 1px solid var(--dtv-border-default) !important;
-    box-shadow: var(--dtv-shadow-sm) !important;
+    
     transition: all 0.2s ease !important;
     font-weight: 600 !important;
 }
@@ -173,7 +162,7 @@ p, span, small, label {
     border-color: var(--dtv-orange-400) !important;
     color: var(--dtv-orange-600) !important;
     transform: translateY(-1px) !important;
-    box-shadow: var(--dtv-shadow-md) !important;
+    
 }
 
 /* Remove dark blobs entirely to keep it clean */
@@ -196,7 +185,7 @@ p, span, small, label {
     background: #FFFFFF !important;
     border: 1px solid var(--dtv-border-default) !important;
     color: var(--dtv-orange-600) !important;
-    box-shadow: var(--dtv-shadow-sm) !important;
+    
     border-radius: 99px !important;
 }
 .dtv-badge span {
@@ -204,7 +193,6 @@ p, span, small, label {
 }
 .dtv-badge .bdot {
     background: var(--dtv-orange-500) !important;
-    box-shadow: 0 0 8px var(--dtv-orange-500) !important;
 }
 
 /* Pathway Nodes in Hero */
@@ -213,21 +201,22 @@ p, span, small, label {
 }
 .dtv-path-node {
     background: var(--dtv-orange-500) !important;
-    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15) !important;
-    border: 2px solid #FFFFFF !important;
+    
+    border: 2px solid var(--dtv-bg-raised) !important;
 }
 
 /* Navigation - Floating White Glass */
 .nav-modern, .navbar {
-    background: rgba(255, 255, 255, 0.8) !important;
+    background: var(--dtv-bg-overlay) !important;
     backdrop-filter: blur(16px) !important;
     -webkit-backdrop-filter: blur(16px) !important;
     border-bottom: 1px solid var(--dtv-border-default) !important;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.02) !important;
+    
 }
-/* Hide legacy theme switcher globally */
-#theme-switcher, .theme-switcher-menu {
-    display: none !important;
+/* Show theme switcher */
+#theme-switcher {
+    display: flex !important;
+    align-items: center;
 }
 .logo-modern h1, .logo-modern em, .nav-logo {
     color: var(--dtv-text-primary) !important;
@@ -244,21 +233,21 @@ p, span, small, label {
 }
 .nav-link:hover, .nav-link.active {
     color: var(--dtv-text-primary) !important;
-    background: rgba(15, 23, 42, 0.04) !important;
+    background: var(--dtv-border-subtle) !important;
 }
 
 /* Cards (Features, Dashboard, Steps) */
 .feat-card, .dash-card, .glass-panel, .info-card, .step-card, .career-card, .tool-card,
 html .feat-card, html .dash-card, html .glass-panel {
-    background: #FFFFFF !important;
+    background: var(--dtv-bg-raised) !important;
     border: 1px solid var(--dtv-border-default) !important;
-    box-shadow: var(--dtv-shadow-md) !important;
+    color: var(--dtv-text-primary) !important;
     border-radius: 16px !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 .feat-card:hover, .dash-card:hover, .tool-card:hover {
     transform: translateY(-4px) !important;
-    box-shadow: var(--dtv-shadow-lg) !important;
+    
     border-color: var(--dtv-border-strong) !important;
 }
 .feat-card h3, .dash-card h3, .info-card h3, .tool-card h3 {
@@ -281,12 +270,12 @@ html .feat-card, html .dash-card, html .glass-panel {
     border: 1px solid var(--dtv-border-default) !important;
     color: var(--dtv-text-primary) !important;
     border-radius: 10px !important;
-    box-shadow: var(--dtv-shadow-sm) !important;
+    
     transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 .fi:focus, .ci:focus, input:focus, textarea:focus, select:focus {
     border-color: var(--dtv-orange-500) !important;
-    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1) !important;
+    
     outline: none !important;
 }
 
@@ -295,15 +284,15 @@ html .feat-card, html .dash-card, html .glass-panel {
     background: linear-gradient(135deg, var(--dtv-orange-500), var(--dtv-orange-600)) !important;
     color: #FFFFFF !important;
     border: none !important;
-    box-shadow: var(--dtv-shadow-glow-orange) !important;
+    
     font-weight: 600 !important;
-    text-shadow: none !important;
+    
     border-radius: 10px !important;
     transition: all 0.2s ease !important;
 }
 .btn-primary:hover, .btn-brand:hover, .tool-btn:hover, .hero-btns .btn-out:first-child:hover {
     transform: translateY(-2px) !important;
-    box-shadow: 0 10px 20px rgba(249, 115, 22, 0.2) !important;
+    
     background: linear-gradient(135deg, var(--dtv-orange-400), var(--dtv-orange-500)) !important;
 }
 
@@ -311,7 +300,7 @@ html .feat-card, html .dash-card, html .glass-panel {
     background: #FFFFFF !important;
     color: var(--dtv-text-primary) !important;
     border: 1px solid var(--dtv-border-default) !important;
-    box-shadow: var(--dtv-shadow-sm) !important;
+    
     border-radius: 10px !important;
     font-weight: 600 !important;
     transition: all 0.2s ease !important;
@@ -331,7 +320,7 @@ html .feat-card, html .dash-card, html .glass-panel {
 .seg-btn.active {
     background: var(--dtv-orange-500) !important;
     color: #FFFFFF !important;
-    box-shadow: var(--dtv-shadow-sm) !important;
+    
 }
 
 /* Icons */
@@ -355,7 +344,7 @@ html .feat-card, html .dash-card, html .glass-panel {
 /* Universal Text Highlights */
 .text-brand, .text-glow, .amb, .serif {
     color: var(--dtv-orange-600) !important;
-    text-shadow: none !important;
+    
 }
 
 /* Remove 3D Card Hover Rotations which look weird in light theme */
@@ -381,7 +370,7 @@ html .cp-msgs, html .ai-msg, html .agent-chip {
 html .chat-panel {
     background: #FFFFFF !important; 
     border: 1px solid var(--dtv-border-default) !important;
-    box-shadow: var(--dtv-shadow-xl) !important;
+    
 }
 html .ai-msg {
     background: var(--dtv-bg-base) !important; 
@@ -403,7 +392,7 @@ html .toast {
     background: #FFFFFF !important;
     color: var(--dtv-text-primary) !important;
     border: 1px solid var(--dtv-border-default) !important;
-    box-shadow: var(--dtv-shadow-lg) !important;
+    
 }
 html .tool-btn {
     color: #FFFFFF !important;
@@ -422,7 +411,7 @@ html .sp-card {
     background: #FFFFFF !important;
     color: var(--dtv-text-primary) !important;
     border: 1px solid var(--dtv-border-default) !important;
-    box-shadow: var(--dtv-shadow-md) !important;
+    
 }
 
 /* Ensure text inside these cards is black */
@@ -440,7 +429,7 @@ html .dash-card:hover,
 html .career-card:hover {
     background: #FFFFFF !important; /* Force it to stay white, not black */
     transform: translateY(-5px) !important;
-    box-shadow: var(--dtv-shadow-lg) !important;
+    
 }
 
 /* Top Nav Dropdown */
@@ -450,7 +439,7 @@ html .account-panel {
     background: rgba(255, 255, 255, 0.95) !important;
     backdrop-filter: blur(20px) !important;
     border: 1px solid var(--dtv-border-default) !important;
-    box-shadow: var(--dtv-shadow-lg) !important;
+    
 }
 html .dropdown-menu a, 
 html .nav-dropdown .dropdown-menu a {
@@ -469,7 +458,7 @@ html .account-panel .acc-item:hover {
 /* Ensure the Founder Link is perfectly readable */
 html .dtv-badge a {
     color: var(--dtv-orange-600) !important;
-    text-shadow: none !important;
+    
 }
 
 /* Ensure 3D Vanta Canvas works perfectly in the Hero Section */
@@ -522,7 +511,7 @@ html #analyzer-promo, html #ai-section {
 html .analyzer-card {
     background: #FFFFFF !important;
     border: 1px solid var(--dtv-border-default) !important;
-    box-shadow: var(--dtv-shadow-md) !important;
+    
 }
 html .analyzer-card * {
     color: var(--dtv-text-primary) !important;
@@ -651,14 +640,14 @@ html .road-card.active, html .road-card[style*="background"] {
 html .ecosystem-card, html .feat-card, html .sp-card {
     background: #FFFFFF !important;
     border: 1px solid var(--dtv-border-default) !important;
-    box-shadow: var(--dtv-shadow-md) !important;
+    
 }
 
 /* Review Cards / Testimonials */
 html .mc, html .testimonial-card, html .review-card {
     background: #FFFFFF !important;
     border: 1px solid var(--dtv-border-default) !important;
-    box-shadow: var(--dtv-shadow-sm) !important;
+    
 }
 html .mc *, html .testimonial-card *, html .review-card * {
     color: var(--dtv-text-primary) !important;
@@ -711,7 +700,7 @@ html #root .text-\[\#cbc3d7\] {
 html #login-card, html .glass-card {
     background-color: #FFFFFF !important;
     border-color: rgba(15, 23, 42, 0.08) !important;
-    box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.03) !important;
+    
 }
 
 /* Inputs inside React app */
@@ -737,7 +726,7 @@ html #root p.bg-black\/40 {
 html .wa-redirect-box {
     background: #FFFFFF !important;
     border: 1px solid rgba(15, 23, 42, 0.08) !important;
-    box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.01) !important;
+    
 }
 
 html .wa-redirect-box h2, html .wa-redirect-box h3 {
@@ -757,7 +746,7 @@ html .pricing-card {
 html .pricing-card:hover {
     background: #FFFFFF !important;
     border-color: var(--dtv-orange-500) !important;
-    box-shadow: 0 10px 25px rgba(249, 115, 22, 0.15) !important;
+    
 }
 
 /* Ensure the pricing amounts are dark */
@@ -811,7 +800,7 @@ html .blog-card, html .story-card {
 }
 
 html .blog-card:hover, html .story-card:hover {
-    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05) !important;
+    
     border-color: rgba(15, 23, 42, 0.15) !important;
 }
 
@@ -830,7 +819,7 @@ html .blog-sidebar {
 .student-onboard-box {
     background: #FFF7ED !important;
     border: 1px solid #FFEDD5 !important;
-    box-shadow: 0 20px 40px rgba(249, 115, 22, 0.08) !important;
+    
 }
 
 /* ========================================================================
@@ -873,7 +862,7 @@ html .prob-lead {
 html .stat-box, html .prob-content-card {
     background: #FFFFFF !important;
     border: 1px solid var(--dtv-border-default) !important;
-    box-shadow: var(--dtv-shadow-sm) !important;
+    
 }
 html .stat-num {
     color: var(--dtv-orange-500) !important;
@@ -900,7 +889,7 @@ html .news-text {
 html .solution-box {
     background: #FFFFFF !important;
     border: 1px solid var(--dtv-border-default) !important;
-    box-shadow: var(--dtv-shadow-sm) !important;
+    
 }
 html .solution-box h2 {
     color: var(--dtv-text-primary) !important;
@@ -911,10 +900,10 @@ html .solution-box ul {
 html .btn-primary-dtv {
     background: var(--dtv-orange-500) !important;
     color: #FFFFFF !important;
-    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3) !important;
+    
 }
 html .btn-primary-dtv:hover {
-    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4) !important;
+    
 }
 html .btn-secondary-dtv {
     background: #FFFFFF !important;
@@ -930,7 +919,7 @@ html .ai-drawer-overlay {
 html .ai-drawer-box {
     background: #FFFFFF !important;
     border: 1px solid var(--dtv-border-default) !important;
-    box-shadow: var(--dtv-shadow-xl) !important;
+    
 }
 html .ai-drawer-header {
     border-bottom: 1px solid var(--dtv-border-default) !important;
@@ -979,7 +968,7 @@ html .msg-user {
     -webkit-backdrop-filter: none !important;
   }
   .auth-card, .feat-card, .dash-card, .glass-panel, .info-card, .step-card {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+    
   }
 }
 
@@ -1094,5 +1083,191 @@ input:focus, textarea:focus, select:focus {
     input, select, textarea {
         font-size: 16px !important;
         min-height: 44px !important;
+    }
+}
+ 
+ 
+/* ========================================================================
+   STAR RATING SYSTEM (.sb)
+======================================================================== */
+.star-r {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+.sb {
+    background: transparent;
+    border: none;
+    font-size: 2.2rem;
+    color: var(--dtv-border-strong);
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    padding: 0;
+    line-height: 1;
+}
+.sb:hover {
+    transform: scale(1.15);
+}
+.sb.lit {
+    color: var(--dtv-orange-500);
+    text-shadow: 0 0 12px var(--dtv-orange-glow);
+}
+.sb.hover-lit {
+    color: var(--dtv-orange-400);
+}
+
+/* ========================================================================
+   PREMIUM CARD (Redesigning the flip cards)
+======================================================================== */
+.PremiumCard {
+    background: var(--dtv-bg-raised) !important;
+    border: 1px solid var(--dtv-border-default) !important;
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    color: var(--dtv-text-primary);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.PremiumCard::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.PremiumCard:hover {
+    transform: translateY(-5px);
+    border-color: var(--dtv-border-strong) !important;
+}
+.PremiumCard:hover::before {
+    opacity: 1;
+}
+.PremiumCard .icon-wrap {
+    font-size: 2.5rem;
+    color: var(--dtv-orange-500);
+    margin-bottom: 1rem;
+}
+.PremiumCard h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.PremiumCard p {
+    color: var(--dtv-text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* ========================================================================
+   ORBITAL LAYOUT
+======================================================================== */
+.orbital-container {
+    position: relative;
+    width: 600px;
+    height: 600px;
+    margin: 4rem auto;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.orbital-center {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: var(--dtv-bg-raised);
+    border: 2px solid var(--dtv-border-default);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    position: relative;
+}
+.orbital-center img {
+    width: 80px;
+    border-radius: 12px;
+}
+/* A subtle glowing pulse around the center */
+.orbital-center::after {
+    content: '';
+    position: absolute;
+    inset: -15px;
+    border-radius: 50%;
+    background: var(--dtv-orange-glow);
+    z-index: -1;
+    animation: orbitalPulse 3s infinite alternate;
+}
+@keyframes orbitalPulse {
+    0% { transform: scale(0.95); opacity: 0.5; }
+    100% { transform: scale(1.1); opacity: 1; }
+}
+
+.orbital-track {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 1px dashed var(--dtv-border-default);
+    border-radius: 50%;
+    animation: orbitalSpin 60s linear infinite;
+}
+.orbital-container:hover .orbital-track {
+    animation-play-state: paused;
+}
+.orbital-item {
+    position: absolute;
+    width: 240px;
+    height: 200px;
+    left: 50%;
+    top: 50%;
+    margin-left: -120px;
+    margin-top: -100px;
+}
+/* Counter rotation to keep items upright */
+.orbital-item > div {
+    animation: orbitalSpinReverse 60s linear infinite;
+    height: 100%;
+}
+.orbital-container:hover .orbital-item > div {
+    animation-play-state: paused;
+}
+@keyframes orbitalSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+@keyframes orbitalSpinReverse {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+}
+
+@media (max-width: 1024px) {
+    .orbital-container {
+        width: 100%;
+        height: auto;
+        border-radius: 0;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+    .orbital-center, .orbital-track {
+        display: none;
+    }
+    .orbital-item {
+        position: static;
+        width: 100%;
+        height: auto;
+        margin: 0;
+    }
+    .orbital-item > div {
+        animation: none !important;
     }
 }
