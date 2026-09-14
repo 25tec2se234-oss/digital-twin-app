@@ -937,9 +937,6 @@ html .btn-primary-dtv {
     color: #FFFFFF !important;
     
 }
-html .btn-primary-dtv:hover {
-    
-}
 html .btn-secondary-dtv {
     background: var(--dtv-bg-raised) !important;
     border: 1px solid var(--dtv-border-default) !important;
@@ -1001,9 +998,6 @@ html .msg-user {
   * {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-  }
-  .auth-card, .feat-card, .dash-card, .glass-panel, .info-card, .step-card {
-    
   }
 }
 
@@ -1120,8 +1114,7 @@ input:focus, textarea:focus, select:focus {
         min-height: 44px !important;
     }
 }
- 
- 
+
 /* ========================================================================
    STAR RATING SYSTEM (.sb)
 ======================================================================== */
