@@ -4,6 +4,7 @@ const offerLetterController = require('../controllers/offerLetterController');
 const { authenticate, authorizeAdmin } = require('../middlewares/auth');
 
 // --- Public Endpoints ---
+router.get('/settings', offerLetterController.getSettings);
 router.get('/verify/:token', offerLetterController.verifyOffer);
 router.post('/access/:token', offerLetterController.accessOffer);
 router.post('/verify/:token/accept', offerLetterController.acceptOffer);
@@ -14,7 +15,6 @@ router.use(authenticate);
 router.use(authorizeAdmin);
 
 // Settings
-router.get('/settings', offerLetterController.getSettings);
 router.put('/settings', offerLetterController.updateSettings);
 
 // Signatories

@@ -85,10 +85,10 @@ app.use(helmet({
         "https://cdnjs.cloudflare.com",
         "https://cdn.tailwindcss.com"
       ],
-      scriptSrcAttr: [(req, res) => `'nonce-${res.locals.cspNonce}'`],
+      scriptSrcAttr: ["'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdn.tailwindcss.com"],
       fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
-      imgSrc: ["'self'", "data:", "blob:", "https://www.google-analytics.com", "https://*.razorpay.com", "https://razorpay.com", "https://images.unsplash.com"],
+      imgSrc: ["'self'", "data:", "blob:", "https://www.google-analytics.com", "https://*.razorpay.com", "https://razorpay.com", "https://images.unsplash.com", "https://*.digitaltwinvrs.com", "https://digitaltwinvrs.com"],
       connectSrc: ["'self'", "https://www.google-analytics.com", "https://*.analytics.google.com", "https://*.razorpay.com", "wss:"],
       frameSrc: ["'self'", "https://api.razorpay.com", "https://checkout.razorpay.com"],
       mediaSrc: ["'self'", "data:", "blob:"]
@@ -157,6 +157,9 @@ app.use('/api/futureverse', require('./routes/futureverseRoutes'));
 
 // Simple admin dashboard to browse DB
 app.use('/dashboard', dashboardRoutes);
+
+// Blog routes
+app.use('/blog', blogRoutes);
 
 const publicDir = path.join(__dirname, '..', 'public');
 const parentUiDir = path.join(__dirname, '..', 'parent-ui', 'dist');

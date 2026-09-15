@@ -1687,17 +1687,25 @@ function renderCareers(filter) {
 
         function closeStudentOnboard() {
             var ov = document.getElementById('student-onboard-ov');
-            if (ov) ov.classList.remove('show');
+            if (ov) {
+                ov.classList.remove('show');
+                ov.style.setProperty('display', 'none', 'important'); // Force hide it
+            }
         }
 
         function selectStudentType(type) {
-            ensureStudentDefaults();
-            APP_DATA.studentProfile.type = type;
-            APP_DATA.studentProfile.updatedAt = new Date().toISOString();
-            syncData();
-            closeStudentOnboard();
-            // REMOVED: openLoginGate() to keep user in Guest Mode
+            try {
+                closeStudentOnboard();
+                setStudentType(type);
+            } catch (e) {
+                console.error("Error setting student type:", e);
+                // Even on error, force the UI to unlock
+                document.body.style.overflow = '';
+            }
         }
+        window.selectStudentType = selectStudentType;
+        window.closeStudentOnboard = closeStudentOnboard;
+        window.setStudentType = setStudentType;
 
         function setStudentType(type) {
             ensureStudentDefaults();

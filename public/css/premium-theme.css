@@ -100,6 +100,7 @@ html[data-theme="dark"] body,
 html[data-theme="dark"] {
     background-color: #09090b !important;
     background-image: none !important;
+    color: var(--dtv-text-primary) !important;
 }
 
 /* Midnight theme */
@@ -107,6 +108,7 @@ html[data-theme="midnight"] body,
 html[data-theme="midnight"] {
     background-color: var(--dtv-bg-base) !important;
     background-image: none !important;
+    color: var(--dtv-text-primary) !important;
 }
 
 /* Navy, Slate, Forest, Crimson, Magenta — all dark variants */
@@ -375,9 +377,17 @@ html .feat-card, html .dash-card, html .glass-panel {
 }
 
 /* Universal Text Highlights */
-.text-brand, .text-glow, .amb, .serif {
+html[data-theme="light"] .text-brand, 
+html[data-theme="light"] .text-glow, 
+html[data-theme="light"] .amb, 
+html[data-theme="light"] .serif {
     color: var(--dtv-orange-600) !important;
-    
+}
+html:not([data-theme="light"]) .text-brand, 
+html:not([data-theme="light"]) .text-glow, 
+html:not([data-theme="light"]) .amb, 
+html:not([data-theme="light"]) .serif {
+    color: var(--dtv-orange-400) !important;
 }
 
 /* Remove 3D Card Hover Rotations which look weird in light theme */
