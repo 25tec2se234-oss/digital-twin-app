@@ -5,7 +5,7 @@ describe('Streak Controller & API', function() {
   let accessToken;
 
   beforeAll(async function() {
-    const uniqueEmail = `streak.user_${Date.now()}@example.com`;
+    const uniqueEmail = `streak.user_${Date.now()}@gmail.com`;
     const signup = await request(app)
       .post('/api/v1/auth/signup')
       .send({ email: uniqueEmail, password: 'StrongPass!123', name: 'Streak Test User' });

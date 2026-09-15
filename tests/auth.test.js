@@ -3,7 +3,7 @@ const app = require('../src/app');
 
 describe('Auth flow', function() {
   it('signs up, logs in, and refreshes tokens', async function() {
-    const uniqueEmail = `test.user_${Date.now()}@example.com`;
+    const uniqueEmail = `test.user_${Date.now()}@gmail.com`;
     const signup = await request(app)
       .post('/api/v1/auth/signup')
       .send({ email: uniqueEmail, password: 'StrongPass!123', name: 'Test User' });
