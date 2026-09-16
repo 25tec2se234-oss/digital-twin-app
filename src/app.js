@@ -164,6 +164,12 @@ app.use('/blog', blogRoutes);
 const publicDir = path.join(__dirname, '..', 'public');
 const parentUiDir = path.join(__dirname, '..', 'parent-ui', 'dist');
 
+// Team Page Route
+app.get(['/team', '/team/'], (req, res) => {
+  res.set('Cache-Control', 'public, max-age=3600, must-revalidate');
+  res.sendFile(path.join(publicDir, 'team', 'index.html'));
+});
+
 // Pillar Landing Page Route: Career Guidance After 12th
 app.get(['/career-guidance-after-12th', '/career-guidance-after-12th/'], (req, res) => {
   const pillarPath = path.join(publicDir, 'career-guidance-after-12th', 'index.html');

@@ -105,9 +105,40 @@ function renderDashboard(users, orders) {
         <p>Developer & Admin Analytics Dashboard</p>
       </div>
       <div>
+        <button onclick="goTo('/dashboard/team')" style="background: #3b82f6; color: white; border: none; cursor: pointer; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; margin-right: 10px;">Manage Team</button>
         <span style="background: #a78bfa; color: #000; font-weight: bold; padding: 6px 14px; border-radius: 20px; font-size: 13px;">Live Admin Engine</span>
       </div>
     </div>
+    
+    <script>
+      function goTo(url) {
+        var userStr = localStorage.getItem('dt_user') || sessionStorage.getItem('dt_appdata_v3');
+        var token = '';
+        if (userStr) {
+          try {
+            var data = JSON.parse(userStr);
+            if (data.token) token = data.token;
+            else if (data.userData && data.userData.token) token = data.userData.token;
+          } catch(e) {}
+        }
+        fetch(url, { headers: { 'Authorization': 'Bearer ' + token } })
+        .then(function(res) {
+          if (!res.ok) {
+            alert('Failed to load: ' + res.statusText);
+            return null;
+          }
+          return res.text();
+        })
+        .then(function(html) {
+          if (html) {
+            document.open();
+            document.write(html);
+            document.close();
+            window.history.pushState({}, '', url);
+          }
+        });
+      }
+    </script>
 
     <div class="stats-grid">
       <div class="stat-card">

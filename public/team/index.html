@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>About the Team | Digital Twin Verse</title>
+  <meta name="description" content="Meet the team behind Digital Twin Verse. We are building the future of AI-powered personalized learning and career guidance.">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/premium-theme.css">
+  
+  <style>
+    :root {
+      --bg-dark: #09090b;
+      --bg-card: rgba(24, 24, 27, 0.6);
+      --accent: #F97316;
+      --accent-glow: rgba(249, 115, 22, 0.15);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-highlight: rgba(255, 255, 255, 0.15);
+      --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Force dark background regardless of global CSS */
+    body, html {
+      margin: 0;
+      background-color: var(--bg-dark) !important;
+      background-image: none !important;
+      color: #FAFAFA !important;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4, h5, h6, .outfit {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Animated background elements */
+    .bg-elements {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.5;
+      animation: float 20s infinite ease-in-out;
+    }
+    .orb-1 { width: 600px; height: 600px; background: rgba(234, 88, 12, 0.08); top: -200px; left: -100px; animation-delay: 0s; }
+    .orb-2 { width: 500px; height: 500px; background: rgba(14, 165, 233, 0.05); bottom: -100px; right: -100px; animation-delay: -5s; }
+    .orb-3 { width: 400px; height: 400px; background: rgba(168, 85, 247, 0.05); top: 30%; left: 40%; animation-delay: -10s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-50px) scale(1.05); }
+    }
+
+    .header-nav {
+      position: absolute;
+      top: 0; width: 100%;
+      padding: 30px 40px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .back-btn {
+      color: #a1a1aa;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+    .back-btn:hover { color: #fff; }
+
+    main {
+      position: relative;
+      z-index: 10;
+      padding-top: 120px;
+      padding-bottom: 100px;
+      min-height: 100vh;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-section {
+      text-align: center;
+      margin-bottom: 60px;
+      animation: fadeInDown 1s ease forwards;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-subtitle {
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      margin-bottom: 15px;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, #fff 30%, #a1a1aa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.1;
+    }
+
+    .constellation-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      max-width: 1200px;
+      width: 90%;
+    }
+
+    /* Cards */
+    .member-card {
+      width: 280px;
+      height: 380px;
+      background: var(--bg-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px;
+      box-sizing: border-box;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+      transform-style: preserve-3d;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .member-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 100px;
+      background: linear-gradient(180deg, var(--glass-highlight) 0%, transparent 100%);
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .member-card:hover {
+      border-color: rgba(249, 115, 22, 0.3);
+      box-shadow: 0 20px 40px rgba(249, 115, 22, 0.1), 0 0 0 1px rgba(249, 115, 22, 0.1);
+    }
+    
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      transform: translateZ(30px); /* 3D pop effect */
+    }
+
+    .member-img-wrap {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 25px;
+      position: relative;
+      padding: 5px;
+      background: linear-gradient(135deg, var(--accent), #facc15);
+      box-shadow: 0 10px 20px rgba(249, 115, 22, 0.2);
+    }
+    .member-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      background: inherit;
+      filter: blur(10px);
+      opacity: 0.5;
+      z-index: -1;
+    }
+
+    .member-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #18181b;
+      object-fit: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      border: 3px solid #18181b;
+      box-sizing: border-box;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .member-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      color: #fff;
+      text-align: center;
+    }
+
+    .member-role {
+      font-size: 0.9rem;
+      color: #a1a1aa;
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: auto;
+    }
+
+    .member-category {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      background: var(--accent-glow);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      margin-top: 20px;
+    }
+
+    /* Modal */
+    .profile-modal {
+      position: fixed; inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+      padding: 20px;
+    }
+    .profile-modal.active {
+      opacity: 1; visibility: visible;
+    }
+
+    .profile-content {
+      width: 100%; max-width: 900px;
+      background: #0f1115;
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+      transform: scale(0.9) translateY(20px);
+      transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.05);
+    }
+    .profile-modal.active .profile-content {
+      transform: scale(1) translateY(0);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 20px; right: 20px;
+      width: 40px; height: 40px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 10;
+      transition: 0.3s;
+    }
+    .close-modal:hover { background: rgba(255,255,255,0.15); transform: rotate(90deg); }
+
+    .profile-left {
+      flex: 1;
+      background: linear-gradient(180deg, rgba(24,24,27,0.8), #09090b);
+      padding: 50px 30px;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+    .profile-right {
+      flex: 2;
+      padding: 50px 40px;
+      background: url('data:image/svg+xml,%3Csvg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"%3E%3Ccircle cx="2" cy="2" r="1" fill="%23ffffff" fill-opacity="0.03"/%3E%3C/svg%3E');
+      overflow-y: auto;
+      max-height: 80vh;
+    }
+
+    .modal-img {
+      width: 150px; height: 150px;
+      border-radius: 50%;
+      background: #18181b;
+      margin-bottom: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+      border: 4px solid #18181b;
+      font-size: 2.5rem;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      position: relative;
+    }
+    .modal-img::after {
+      content:''; position: absolute; inset: -8px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), transparent);
+      z-index:-1; filter:blur(10px); opacity:0.5;
+    }
+
+    .profile-bio {
+      font-size: 1.05rem; line-height: 1.7;
+      color: #d4d4d8; margin-bottom: 30px;
+    }
+    .skills-wrapper { display: flex; flex-wrap: wrap; gap: 10px; }
+    .skill-tag {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 6px 16px; border-radius: 20px;
+      font-size: 0.85rem; font-weight: 500; color: #e4e4e7;
+    }
+
+    .social-links { display: flex; gap: 15px; margin-top: 25px; }
+    .social-links a {
+      width: 44px; height: 44px;
+      border-radius: 50%; background: rgba(255,255,255,0.05);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 1.2rem; text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: 0.3s;
+    }
+    .social-links a:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-3px); }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .profile-content { flex-direction: column; max-height: 90vh; }
+      .profile-left { padding: 40px 20px 20px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      .profile-right { padding: 30px 20px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .bg-elements { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Elements -->
+  <div class="bg-elements">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <nav class="header-nav">
+    <a href="/" class="back-btn">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Home
+    </a>
+    <img src="/img/dtv-logo-new.jpg" alt="Digital Twin Verse" style="width: 75px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+  </nav>
+
+  <main>
+    <section class="hero-section">
+      <div class="hero-subtitle">The Visionaries</div>
+      <h1 class="hero-title">Digital Twin Verse</h1>
+    </section>
+
+    <div class="constellation-wrapper" id="teamContainer">
+      <!-- Cards rendered via JS -->
+    </div>
+  </main>
+
+  <!-- Profile Modal -->
+  <div class="profile-modal" id="profileModal" aria-hidden="true" role="dialog">
+    <div class="profile-content">
+      <button class="close-modal" id="closeModalBtn" aria-label="Close modal"><i class="ph-bold ph-x"></i></button>
+      <div class="profile-left">
+        <div class="modal-img" id="modalImg"></div>
+        <h2 class="member-name outfit" id="modalName" style="margin-bottom: 5px; font-size: 2rem;"></h2>
+        <div class="member-role" id="modalRole" style="margin-bottom: 15px; font-size: 1.1rem; color: #a1a1aa;"></div>
+        <div class="member-category" id="modalCategory"></div>
+        <div class="social-links" id="modalSocials"></div>
+      </div>
+      <div class="profile-right">
+        <h3 class="outfit" style="color: #fff; margin-top: 0; font-size: 1.4rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">About</h3>
+        <div class="profile-bio" id="modalBio"></div>
+        <h3 class="outfit" style="color: #fff; margin-top: 35px; font-size: 1.4rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">Core Expertise</h3>
+        <div class="skills-wrapper" id="modalSkills"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  
+  <script>
+    let teamData = [];
+    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = window.innerWidth <= 768;
+
+    async function fetchTeam() {
+      try {
+        const res = await fetch('/api/v1/team');
+        const data = await res.json();
+        teamData = data.team || [];
+        renderTeam();
+      } catch (err) {
+        console.error('Failed to load team', err);
+        document.getElementById('teamContainer').innerHTML = '<p style="text-align:center; color:#94a3b8; font-weight: 500;">Failed to connect to the team network. Please try again later.</p>';
+      }
+    }
+
+    function getInitials(name) {
+      return name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+    }
+
+    function renderTeam() {
+      const container = document.getElementById('teamContainer');
+      container.innerHTML = '';
+
+      if (teamData.length === 0) {
+          container.innerHTML = '<p style="text-align:center; color:#94a3b8; font-weight: 500;">The team constellation is currently being updated. Check back soon.</p>';
+          return;
+      }
+
+      teamData.forEach((member, index) => {
+        const card = document.createElement('div');
+        card.className = 'member-card';
+        card.style.animationDelay = `${(index * 0.1) + 0.2}s`;
+        card.onclick = () => openProfile(member);
+
+        const imgHtml = member.image_url 
+          ? `<img src="${member.image_url}" class="member-img" alt="${member.name}" onerror="this.outerHTML='<div class=\\'member-img\\'>${getInitials(member.name)}</div>'"/>` 
+          : `<div class="member-img">${getInitials(member.name)}</div>`;
+
+        card.innerHTML = `
+          <div class="card-content">
+            <div class="member-img-wrap">
+              ${imgHtml}
+            </div>
+            <h3 class="member-name">${member.name}</h3>
+            <div class="member-role">${member.role}</div>
+            ${member.category ? `<div class="member-category">${member.category}</div>` : ''}
+          </div>
+        `;
+
+        if (!isReducedMotion && !isMobile) {
+          card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * -12;
+            const rotateY = ((x - centerX) / centerX) * 12;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+          });
+
+          card.addEventListener('mouseleave', () => {
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+          });
+        }
+
+        container.appendChild(card);
+      });
+    }
+
+    function openProfile(member) {
+      const modal = document.getElementById('profileModal');
+      
+      const imgHtml = member.image_url 
+          ? `<img src="${member.image_url}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" alt="${member.name}" onerror="this.outerHTML='<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;\\'>${getInitials(member.name)}</div>'"/>` 
+          : getInitials(member.name);
+      
+      document.getElementById('modalImg').innerHTML = imgHtml;
+      document.getElementById('modalName').innerText = member.name;
+      document.getElementById('modalRole').innerText = member.role;
+      document.getElementById('modalCategory').innerText = member.category || '';
+      
+      document.getElementById('modalBio').innerHTML = member.bio ? member.bio.replace(/\\n/g, '<br/>') : 'No bio available.';
+      
+      const skillsBox = document.getElementById('modalSkills');
+      skillsBox.innerHTML = '';
+      let skills = member.skills || [];
+      if (typeof skills === 'string') {
+        try { skills = JSON.parse(skills); } catch(e) {}
+      }
+      if (Array.isArray(skills) && skills.length > 0) {
+        skills.forEach(s => {
+          const span = document.createElement('span');
+          span.className = 'skill-tag';
+          span.innerText = s;
+          skillsBox.appendChild(span);
+        });
+      } else {
+        skillsBox.innerHTML = '<span style="color:#64748b; font-size: 0.95rem; font-style: italic;">No specific skills listed.</span>';
+      }
+
+      const socialBox = document.getElementById('modalSocials');
+      socialBox.innerHTML = '';
+      let socials = member.social_links || {};
+      if (typeof socials === 'string') {
+        try { socials = JSON.parse(socials); } catch(e){}
+      }
+      if (socials.linkedin) socialBox.innerHTML += `<a href="${socials.linkedin}" target="_blank" aria-label="LinkedIn"><i class="ph-fill ph-linkedin-logo"></i></a>`;
+      if (socials.github) socialBox.innerHTML += `<a href="${socials.github}" target="_blank" aria-label="GitHub"><i class="ph-fill ph-github-logo"></i></a>`;
+      if (socials.twitter) socialBox.innerHTML += `<a href="${socials.twitter}" target="_blank" aria-label="Twitter"><i class="ph-fill ph-twitter-logo"></i></a>`;
+
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('profileModal');
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+    
+    document.getElementById('profileModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('profileModal')) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.getElementById('profileModal').classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    fetchTeam();
+  </script>
+</body>
+</html>
