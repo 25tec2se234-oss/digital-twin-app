@@ -451,7 +451,7 @@
       <div class="profile-right">
         <h3 class="outfit" style="color: #fff; margin-top: 0; font-size: 1.4rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">About</h3>
         <div class="profile-bio" id="modalBio"></div>
-        <h3 class="outfit" style="color: #fff; margin-top: 35px; font-size: 1.4rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">Core Expertise</h3>
+        <h3 class="outfit" id="skillsHeading" style="color: #fff; margin-top: 35px; font-size: 1.4rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">Core Expertise</h3>
         <div class="skills-wrapper" id="modalSkills"></div>
       </div>
     </div>
@@ -548,6 +548,8 @@
       document.getElementById('modalBio').innerHTML = member.bio ? member.bio.replace(/\\n/g, '<br/>') : 'No bio available.';
       
       const skillsBox = document.getElementById('modalSkills');
+        document.getElementById('skillsHeading').style.display = 'block';
+        skillsBox.style.display = 'flex';
       skillsBox.innerHTML = '';
       let skills = member.skills || [];
       if (typeof skills === 'string') {
@@ -561,7 +563,8 @@
           skillsBox.appendChild(span);
         });
       } else {
-        skillsBox.innerHTML = '<span style="color:#64748b; font-size: 0.95rem; font-style: italic;">No specific skills listed.</span>';
+        document.getElementById('skillsHeading').style.display = 'none';
+          skillsBox.style.display = 'none';
       }
 
       const socialBox = document.getElementById('modalSocials');
@@ -602,3 +605,6 @@
   </script>
 </body>
 </html>
+
+
+
