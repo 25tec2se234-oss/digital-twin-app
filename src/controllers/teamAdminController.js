@@ -132,7 +132,7 @@ function renderTeamAdmin(team) {
     <div class="modal-overlay" id="memberModal">
       <div class="modal">
         <h2 id="modalTitle">Add Team Member</h2>
-        <form id="memberForm" onsubmit="saveMember(event)">
+        <form id="memberForm" onsubmit="event.preventDefault(); saveMember(); return false;">
           <input type="hidden" id="memberId" />
           <input type="hidden" id="imageUrl" />
           
@@ -290,8 +290,8 @@ function renderTeamAdmin(team) {
         }
       }
 
-      async function saveMember(e) {
-        e.preventDefault();
+      async function saveMember() {
+        
         const id = document.getElementById('memberId').value;
         const btn = document.getElementById('saveBtn');
         btn.innerText = 'Saving...';
