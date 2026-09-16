@@ -203,7 +203,14 @@ function renderTeamAdmin(team) {
     <script>
       function getToken() {
         // Fallback to localStorage if possible, else check window.opener
-        let token = localStorage.getItem('token');
+        let token = localStorage.getItem('token') || localStorage.getItem('adminToken');
+          let dtUser = localStorage.getItem('dt_user');
+          if (dtUser) {
+            try {
+              let user = JSON.parse(dtUser);
+              if (user && user.token) token = user.token;
+            } catch(e) {}
+          }
         if (!token && window.opener && window.opener.APP_DATA) {
           token = window.opener.APP_DATA.userData.token;
         }
@@ -399,6 +406,8 @@ const index = async function(req, res, next) {
 module.exports = {
   index
 };
+
+
 
 
 
