@@ -138,7 +138,7 @@ function renderTeamAdmin(team) {
           
           <div class="form-group">
             <label>Photo</label>
-            <input type="file" id="photoInput" accept="image/jpeg, image/png, image/webp" onchange="uploadPhoto(event)" />
+            <input type="file" id="photoInput" accept="image/*" onchange="uploadPhoto(event)" />
             <div id="uploadProgress" style="font-size: 12px; color: #38bdf8; margin-top: 5px; display: none;">Uploading...</div>
             <div class="image-preview" id="imagePreviewContainer">
               <span style="font-size: 12px; color: #94a3b8;">No Image</span>
@@ -161,9 +161,14 @@ function renderTeamAdmin(team) {
           </div>
           
           <div class="form-group">
-            <label>Short Bio</label>
-            <textarea id="bio" rows="3" placeholder="A brief description about the member..."></textarea>
-          </div>
+              <label>Short Bio</label>
+              <textarea id="bio" rows="3" placeholder="A brief description about the member..."></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label>Skills (comma separated)</label>
+              <input type="text" id="skills" placeholder="e.g. React, Node.js, AWS" />
+            </div>
 
           <div style="display: flex; gap: 16px;">
             <div class="form-group" style="flex:1;">
@@ -229,6 +234,7 @@ function renderTeamAdmin(team) {
         document.getElementById('role').value = m.role || '';
         document.getElementById('category').value = m.category || '';
         document.getElementById('bio').value = m.bio || '';
+          document.getElementById('skills').value = (m.skills || []).join(', ');
         document.getElementById('displayOrder').value = m.display_order || 0;
         document.getElementById('isFeatured').checked = m.is_featured;
         document.getElementById('imageUrl').value = m.image_url || '';
@@ -393,3 +399,8 @@ const index = async function(req, res, next) {
 module.exports = {
   index
 };
+
+
+
+
+
