@@ -324,7 +324,7 @@ function renderTeamAdmin(team) {
           });
           
           if (res.ok) {
-            window.location.reload();
+            goTo('/dashboard/team');
           } else {
             const err = await res.json();
             alert('Error: ' + (err.error || 'Failed to save'));
@@ -348,7 +348,7 @@ function renderTeamAdmin(team) {
             body: JSON.stringify({ isActive })
           });
           if (res.ok) {
-            window.location.reload();
+            goTo('/dashboard/team');
           } else {
             alert('Failed to update status');
           }
@@ -366,7 +366,7 @@ function renderTeamAdmin(team) {
             headers: getAuthHeaders()
           });
           if (res.ok) {
-            window.location.reload();
+            goTo('/dashboard/team');
           } else {
             alert('Failed to delete member');
           }
