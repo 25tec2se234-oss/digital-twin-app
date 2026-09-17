@@ -13,38 +13,58 @@ const transporter = nodemailer.createTransport({
 const canSendEmail = () => env.BREVO_API_KEY || (env.SMTP_USER && env.SMTP_PASS);
 
 async function sendHtmlEmail(toEmail, subject, htmlContent, fromName = 'Digital Twin') {
-    if (env.BREVO_API_KEY) {
-        // Use Brevo REST API
-        const response = await fetch('https://api.brevo.com/v3/smtp/email', {
-            method: 'POST',
-            headers: {
-                'accept': 'application/json',
-                'api-key': env.BREVO_API_KEY,
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                sender: { name: fromName, email: env.SMTP_USER || 'no-reply@digitaltwinvrs.com' },
-                to: [{ email: toEmail }],
-                subject: subject,
-                htmlContent: htmlContent
-            })
-        });
-        
-        if (!response.ok) {
-            const errorData = await response.text();
-            throw new Error(`Brevo API Error: ${response.status} - ${errorData}`);
+    const maxRetries = 3;
+    let attempt = 0;
+    let lastError = null;
+
+    while (attempt < maxRetries) {
+        try {
+            if (env.BREVO_API_KEY) {
+                // Use Brevo REST API
+                const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+                    method: 'POST',
+                    headers: {
+                        'accept': 'application/json',
+                        'api-key': env.BREVO_API_KEY,
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        sender: { name: fromName, email: env.SMTP_USER || 'no-reply@digitaltwinvrs.com' },
+                        to: [{ email: toEmail }],
+                        subject: subject,
+                        htmlContent: htmlContent
+                    })
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.text();
+                    throw new Error(`Brevo API Error: ${response.status} - ${errorData}`);
+                }
+                return await response.json();
+            } else {
+                // Fallback to Nodemailer (Gmail)
+                const mailOptions = {
+                    from: `"${fromName}" <${env.SMTP_USER}>`,
+                    to: toEmail,
+                    subject: subject,
+                    html: htmlContent
+                };
+                return await transporter.sendMail(mailOptions);
+            }
+        } catch (error) {
+            lastError = error;
+            attempt++;
+            console.error(`Email send attempt ${attempt} failed for ${toEmail}:`, error.message);
+            if (attempt < maxRetries) {
+                const waitTime = Math.pow(2, attempt) * 1000; // Exponential backoff: 2s, 4s
+                console.log(`Waiting ${waitTime}ms before retry...`);
+                await new Promise(resolve => setTimeout(resolve, waitTime));
+            }
         }
-        return await response.json();
-    } else {
-        // Fallback to Nodemailer (Gmail)
-        const mailOptions = {
-            from: `"${fromName}" <${env.SMTP_USER}>`,
-            to: toEmail,
-            subject: subject,
-            html: htmlContent
-        };
-        return await transporter.sendMail(mailOptions);
     }
+    
+    console.error(`All ${maxRetries} attempts failed for sending email to ${toEmail}.`);
+    throw lastError;
 }
 
 async function sendVerificationEmail(toEmail, otpCode) {
