@@ -270,8 +270,6 @@ function renderTeamAdmin(team) {
       async function uploadPhoto(e) {
         const file = e.target.files[0];
         if (!file) return;
-        // Reset input value so selecting the same file again triggers onchange
-        e.target.value = '';
 
         const token = getToken();
         if (!token) return alert('Auth token required');
@@ -302,6 +300,9 @@ function renderTeamAdmin(team) {
         } catch (err) {
           progress.style.display = 'none';
           alert('Network error during upload');
+        } finally {
+          // Reset input value so selecting the same file again triggers onchange
+          e.target.value = '';
         }
       }
 
