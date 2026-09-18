@@ -29,6 +29,48 @@ function redactSensitiveData(obj) {
 async function authenticate(req, _res, next) {
   const header = req.headers.authorization || '';
   if (!header.startsWith('Bearer ')) {
+    if (req.method === 'GET' && req.accepts('html')) {
+      return _res.send(`
+        <!DOCTYPE html>
+        <html>
+        <head><title>Loading Dashboard...</title></head>
+        <body style="background:#0b1322; color:#fff; font-family:sans-serif; text-align:center; padding-top:50px;">
+          <h2>Authenticating...</h2>
+          <script>
+            var userStr = localStorage.getItem('dt_user') || sessionStorage.getItem('dt_appdata_v3');
+            var token = localStorage.getItem('token') || localStorage.getItem('adminToken') || '';
+            if (!token && userStr) {
+              try {
+                var data = JSON.parse(userStr);
+                if (data.token) token = data.token;
+                else if (data.userData && data.userData.token) token = data.userData.token;
+                else if (data.accessToken) token = data.accessToken;
+              } catch(e) {}
+            }
+            if (!token && window.opener && window.opener.APP_DATA) {
+              token = window.opener.APP_DATA.userData.token;
+            }
+            if (token) {
+              fetch(window.location.href, { headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'text/html' } })
+              .then(res => {
+                if (!res.ok) window.location.href = '/login.html';
+                return res.text();
+              })
+              .then(html => {
+                if(html) {
+                  document.open();
+                  document.write(html);
+                  document.close();
+                }
+              });
+            } else {
+              window.location.href = '/login.html';
+            }
+          </script>
+        </body>
+        </html>
+      `);
+    }
     return next(new ApiError(401, 'Missing authorization token.'));
   }
 

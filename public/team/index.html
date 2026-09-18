@@ -183,15 +183,15 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 150px;
-      background: radial-gradient(circle at top, rgba(249, 115, 22, 0.15) 0%, transparent 70%);
+      background: radial-gradient(circle at top, var(--card-glow, rgba(249, 115, 22, 0.15)) 0%, transparent 70%);
       opacity: 0.5;
       pointer-events: none;
       transition: opacity 0.5s ease;
     }
 
     .member-card:hover {
-      border-color: rgba(249, 115, 22, 0.4);
-      box-shadow: 0 30px 60px rgba(249, 115, 22, 0.15), 0 0 0 1px rgba(249, 115, 22, 0.2);
+      border-color: var(--card-accent, rgba(249, 115, 22, 0.4));
+      box-shadow: 0 30px 60px var(--card-glow, rgba(249, 115, 22, 0.15)), 0 0 0 1px var(--card-glow, rgba(249, 115, 22, 0.2));
     }
     .member-card:hover::before {
       opacity: 1;
@@ -218,9 +218,9 @@
       margin-bottom: 25px;
       position: relative;
       padding: 6px;
-      background: linear-gradient(135deg, var(--accent), #facc15, #ec4899);
+      background: var(--card-gradient, linear-gradient(135deg, var(--accent), #facc15, #ec4899));
       background-size: 200% 200%;
-      box-shadow: 0 15px 35px rgba(249, 115, 22, 0.3);
+      box-shadow: 0 15px 35px var(--card-glow, rgba(249, 115, 22, 0.3));
       animation: gradientShift 5s ease infinite;
     }
     @keyframes gradientShift {
@@ -281,13 +281,13 @@
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      color: var(--accent);
-      background: var(--accent-glow);
+      color: var(--card-accent, var(--accent));
+      background: var(--card-glow, var(--accent-glow));
       padding: 6px 16px;
       border-radius: 20px;
       font-weight: 700;
       margin-top: 25px;
-      border: 1px solid rgba(249, 115, 22, 0.2);
+      border: 1px solid var(--card-glow, rgba(249, 115, 22, 0.2));
     }
 
     /* Modal */
@@ -371,7 +371,7 @@
     }
     .modal-img::after {
       content:''; position: absolute; inset: -8px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), transparent);
+      background: var(--modal-gradient, linear-gradient(135deg, var(--accent), transparent));
       z-index:-1; filter:blur(10px); opacity:0.5;
     }
 
@@ -396,7 +396,7 @@
       border: 1px solid rgba(255,255,255,0.1);
       transition: 0.3s;
     }
-    .social-links a:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-3px); }
+    .social-links a:hover { background: var(--modal-accent, var(--accent)); border-color: var(--modal-accent, var(--accent)); transform: translateY(-3px); }
 
     /* Responsive */
     @media (max-width: 900px) {
@@ -490,11 +490,24 @@
           return;
       }
 
+      const palettes = [
+        { glow: 'rgba(249, 115, 22, 0.15)', accent: '#F97316', gradient: 'linear-gradient(135deg, #F97316, #facc15, #ec4899)' },
+        { glow: 'rgba(56, 189, 248, 0.15)', accent: '#38bdf8', gradient: 'linear-gradient(135deg, #38bdf8, #818cf8, #c084fc)' },
+        { glow: 'rgba(168, 85, 247, 0.15)', accent: '#a855f7', gradient: 'linear-gradient(135deg, #a855f7, #ec4899, #f43f5e)' },
+        { glow: 'rgba(16, 185, 129, 0.15)', accent: '#10b981', gradient: 'linear-gradient(135deg, #10b981, #34d399, #0ea5e9)' },
+        { glow: 'rgba(244, 63, 94, 0.15)', accent: '#f43f5e', gradient: 'linear-gradient(135deg, #f43f5e, #f97316, #fbbf24)' }
+      ];
+
       teamData.forEach((member, index) => {
+        const p = palettes[index % palettes.length];
         const card = document.createElement('div');
         card.className = 'member-card';
         card.style.animationDelay = `${(index * 0.1) + 0.2}s`;
-        card.onclick = () => openProfile(member);
+        card.style.setProperty('--card-glow', p.glow);
+        card.style.setProperty('--card-accent', p.accent);
+        card.style.setProperty('--card-gradient', p.gradient);
+        
+        card.onclick = () => openProfile(member, p);
 
         const imgHtml = member.image_url 
           ? `<img src="${member.image_url}" class="member-img" alt="${member.name}" onerror="this.outerHTML='<div class=\\'member-img\\'>${getInitials(member.name)}</div>'"/>` 
@@ -533,17 +546,35 @@
       });
     }
 
-    function openProfile(member) {
+    function openProfile(member, p) {
       const modal = document.getElementById('profileModal');
       
       const imgHtml = member.image_url 
           ? `<img src="${member.image_url}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" alt="${member.name}" onerror="this.outerHTML='<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;\\'>${getInitials(member.name)}</div>'"/>` 
           : getInitials(member.name);
       
-      document.getElementById('modalImg').innerHTML = imgHtml;
+      const imgContainer = document.getElementById('modalImg');
+      imgContainer.innerHTML = imgHtml;
+      
+      if (p) {
+        imgContainer.style.boxShadow = \`0 15px 35px \${p.glow}\`;
+        
+        // Use a dynamic pseudo element style by setting variables on modal
+        modal.style.setProperty('--modal-accent', p.accent);
+        modal.style.setProperty('--modal-glow', p.glow);
+        modal.style.setProperty('--modal-gradient', p.gradient);
+      }
+
       document.getElementById('modalName').innerText = member.name;
       document.getElementById('modalRole').innerText = member.role;
-      document.getElementById('modalCategory').innerText = member.category || '';
+      
+      const categoryEl = document.getElementById('modalCategory');
+      categoryEl.innerText = member.category || '';
+      if (p) {
+        categoryEl.style.color = p.accent;
+        categoryEl.style.background = p.glow;
+        categoryEl.style.borderColor = p.glow;
+      }
       
       document.getElementById('modalBio').innerHTML = member.bio ? member.bio.replace(/\\n/g, '<br/>') : 'No bio available.';
       

@@ -40,7 +40,7 @@ async function storeLocal(file, userId) {
     storageProvider: 'local',
     bucket: null,
     objectKey: relativeKey,
-    url: buildPublicUrl(path.join(env.UPLOAD_DIR, relativeKey).replace(/\\/g, '/'))
+    url: '/' + env.UPLOAD_DIR + '/' + relativeKey.replace(/\\/g, '/')
   };
 }
 
