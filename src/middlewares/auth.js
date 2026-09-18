@@ -27,7 +27,7 @@ function redactSensitiveData(obj) {
 }
 
 async function authenticate(req, _res, next) {
-  const header = req.headers.authorization || '';
+  const header = req.headers.authorization || req.headers['x-auth-token'] || req.headers['x-dt-auth'] || '';
   if (!header.startsWith('Bearer ')) {
     if (req.method === 'GET' && req.accepts('html')) {
       return _res.send(`
@@ -105,7 +105,7 @@ async function authenticate(req, _res, next) {
 }
 
 async function authenticateOptional(req, _res, next) {
-  const header = req.headers.authorization || '';
+  const header = req.headers.authorization || req.headers['x-auth-token'] || req.headers['x-dt-auth'] || '';
   if (!header.startsWith('Bearer ')) {
     req.user = null;
     return next();

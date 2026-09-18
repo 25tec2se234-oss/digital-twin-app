@@ -90,7 +90,7 @@ function renderTeamAdmin(team) {
             else if (data.userData && data.userData.token) token = data.userData.token;
           } catch(e) {}
         }
-        fetch(url, { headers: { 'Authorization': 'Bearer ' + token } })
+        fetch(url, { headers: { 'Authorization': 'Bearer ' + token, 'X-Auth-Token': 'Bearer ' + token } })
         .then(function(res) {
           if (!res.ok) {
             alert('Failed to load: ' + res.statusText);
@@ -221,6 +221,7 @@ function renderTeamAdmin(team) {
         const token = getToken();
         return {
           'Authorization': 'Bearer ' + token,
+          'X-Auth-Token': 'Bearer ' + token,
           'Content-Type': 'application/json'
         };
       }
@@ -278,28 +279,32 @@ function renderTeamAdmin(team) {
         formData.append('file', file);
 
         const progress = document.getElementById('uploadProgress');
+        progress.innerText = 'Uploading...';
+        progress.style.color = '#38bdf8';
         progress.style.display = 'block';
 
         try {
           const res = await fetch('/api/v1/files/upload', {
             method: 'POST',
             headers: {
-              'Authorization': 'Bearer ' + token
+              'Authorization': 'Bearer ' + token,
+              'X-Auth-Token': 'Bearer ' + token
             },
             body: formData
           });
           const data = await res.json();
-          progress.style.display = 'none';
 
           if (res.ok) {
+            progress.style.display = 'none';
             document.getElementById('imageUrl').value = data.file.url;
             document.getElementById('imagePreviewContainer').innerHTML = '<img src="' + data.file.url + '" />';
           } else {
-            alert('Upload failed: ' + (data.error || 'Unknown error'));
+            progress.innerText = 'Upload failed: ' + (data.error || 'Unknown error');
+            progress.style.color = '#ef4444';
           }
         } catch (err) {
-          progress.style.display = 'none';
-          alert('Network error during upload');
+          progress.innerText = 'Network error during upload';
+          progress.style.color = '#ef4444';
         } finally {
           // Reset input value so selecting the same file again triggers onchange
           e.target.value = '';
@@ -409,6 +414,7 @@ const index = async function(req, res, next) {
 module.exports = {
   index
 };
+
 
 
 
