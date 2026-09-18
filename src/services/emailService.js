@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 
 const canSendEmail = () => env.BREVO_API_KEY || (env.SMTP_USER && env.SMTP_PASS);
 
-async function sendHtmlEmail(toEmail, subject, htmlContent, fromName = 'Digital Twin') {
+async function sendHtmlEmail(toEmail, subject, htmlContent, fromName = 'Digital Twin Verse') {
     const maxRetries = 3;
     let attempt = 0;
     let lastError = null;
@@ -77,7 +77,7 @@ async function sendVerificationEmail(toEmail, otpCode) {
 
     const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 10px;">
-            <h2 style="color: #2a7de1; text-align: center;">Welcome to Digital Twin!</h2>
+            <h2 style="color: #2a7de1; text-align: center;">Welcome to Digital Twin Verse!</h2>
             <p style="font-size: 16px; color: #333;">Please use the verification code below to activate your account and verify your email address.</p>
             <div style="background-color: #f4f4f4; padding: 15px; text-align: center; border-radius: 5px; margin: 25px 0;">
                 <strong style="font-size: 32px; letter-spacing: 5px; color: #000;">${otpCode}</strong>
@@ -85,12 +85,12 @@ async function sendVerificationEmail(toEmail, otpCode) {
             <p style="font-size: 14px; color: #666;">This code will expire in 10 minutes.</p>
             <p style="font-size: 14px; color: #666;">If you did not request this code, please ignore this email.</p>
             <hr style="border: 0; border-top: 1px solid #eaeaea; margin: 30px 0;" />
-            <p style="font-size: 12px; color: #aaa; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin. All rights reserved.</p>
+            <p style="font-size: 12px; color: #aaa; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse. All rights reserved.</p>
         </div>
     `;
 
     try {
-        await sendHtmlEmail(toEmail, 'Verify your Digital Twin Account', html);
+        await sendHtmlEmail(toEmail, 'Verify your Digital Twin Verse Account', html);
         console.log(`Email OTP sent successfully to ${toEmail}`);
     } catch (error) {
         console.error('Error sending OTP email:', error);
@@ -115,12 +115,12 @@ async function sendPasswordResetEmail(toEmail, otpCode) {
             <p style="font-size: 14px; color: #666;">This code will expire in 10 minutes.</p>
             <p style="font-size: 14px; color: #666;">If you did not request this code, please ignore this email.</p>
             <hr style="border: 0; border-top: 1px solid #eaeaea; margin: 30px 0;" />
-            <p style="font-size: 12px; color: #aaa; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin. All rights reserved.</p>
+            <p style="font-size: 12px; color: #aaa; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse. All rights reserved.</p>
         </div>
     `;
 
     try {
-        await sendHtmlEmail(toEmail, 'Reset your Digital Twin Password', html);
+        await sendHtmlEmail(toEmail, 'Reset your Digital Twin Verse Password', html);
         console.log(`Password reset email sent successfully to ${toEmail}`);
     } catch (error) {
         console.error('Error sending reset email:', error);
