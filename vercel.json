@@ -20,6 +20,10 @@
       "dest": "http://3.110.222.33/dashboard$1"
     },
     {
+      "src": "/uploads(.*)",
+      "dest": "http://3.110.222.33/uploads$1"
+    },
+    {
       "src": "/wheel(.*)",
       "dest": "/public/wheel.html"
     },
