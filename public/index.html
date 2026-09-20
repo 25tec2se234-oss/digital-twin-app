@@ -523,14 +523,14 @@
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg></span>
                     <div class="dropdown-menu">
-                        <a href="#how">How It Works</a>
+                        <a href="#how" data-workspace="public">How It Works</a>
                         <a href="#dashboard"
                             onclick="requirePremiumFrontend(function(){location.hash='#dashboard';})">Career
                             Explorer</a>
                         <a href="/wheel"
                             onclick="event.preventDefault(); requirePremiumFrontend(function(){window.location.href='/wheel';});">Daily
                             Spin Wheel</a>
-                        <a href="#rev">Reviews</a>
+                        <a href="#rev" data-workspace="public">Reviews</a>
                         <a href="/blog">Blog &amp; Resources</a>
                     </div>
                 </div>
@@ -593,11 +593,11 @@
             Parent Code: <strong id="mob-ui-link-code">-</strong></div>
         <a href="#student-dashboard"
             onclick="requirePremiumFrontend(function(){openDashboardShortcut(); togMenu();})">Personalised Dashboard</a>
-        <a href="#how" onclick="togMenu()">How It Works</a>
+        <a href="#how" onclick="togMenu()" data-workspace="public">How It Works</a>
         <a href="#dashboard" onclick="togMenu()">Career Explorer</a>
         <a href="#ai-section" onclick="togMenu()">AI Advisor</a>
         <a href="/parent" style="color: #a78bfa; font-weight: 600;" onclick="togMenu()">Parent Portal</a>
-        <a href="#rev" onclick="togMenu()">Reviews</a>
+        <a href="#rev" onclick="togMenu()" data-workspace="public">Reviews</a>
         <a href="/blog" onclick="togMenu()">Blog &amp; Resources</a>
         <a href="/leaderboard.html" style="color: #fbbf24; font-weight: 600;" onclick="togMenu()"><i
                 class="ph-fill dtv-icon ph-trophy"></i> Leaderboard</a>
@@ -1771,7 +1771,7 @@
 
 
         <!-- AI CHAT SECTION -->
-        <section id="ai-section" data-workspace="public">
+        <section id="ai-section">
             <div class="ai-wrap wrap">
                 <div class="rv">
                     <p class="lbl">Multi-Agent AI System</p>
@@ -2640,7 +2640,7 @@
                 </div>
                 <div class="ft-col">
                     <h4>Platform</h4>
-                    <a href="#how">How It Works</a>
+                    <a href="#how" data-workspace="public">How It Works</a>
                     <a href="#student-dashboard">Student Dashboard</a>
                     <a href="#dashboard">Career Explorer</a>
                     <a href="#ai-section">AI Career Advisor</a>
@@ -2654,7 +2654,7 @@
                     <h4>Company</h4>
                     <a href="/founder/kumar-kartikey" style="color:var(--wh2);">Meet the Founder</a>
                     <a href="/team" style="color:var(--wh2);">About the Team</a>
-                    <a href="#rev">Reviews</a>
+                    <a href="#rev" data-workspace="public">Reviews</a>
                     <a href="#" onclick="openSignupPage(); return false;">Get Early Access</a>
                 </div>
                 <div class="ft-col">
