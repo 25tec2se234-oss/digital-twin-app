@@ -19,16 +19,23 @@
                 document.body.classList.add('workspace-public');
             }
         },
-        hideLoader: function() {}, // no-op - loader removed
-        showLoader: function() {}  // no-op - loader removed
+        hideLoader: function() {}, 
+        showLoader: function() {}  
     };
 
-    // Best-effort init from localStorage using the correct key 'dt_user'
-    try {
-        var dtUser = localStorage.getItem('dt_user');
-        var parsed = dtUser ? JSON.parse(dtUser) : null;
-        document.body.classList.add(parsed && parsed.loggedIn ? 'workspace-auth' : 'workspace-public');
-    } catch (e) {
-        document.body.classList.add('workspace-public');
+    function applyInitialState() {
+        try {
+            var dtUser = localStorage.getItem('dt_user');
+            var parsed = dtUser ? JSON.parse(dtUser) : null;
+            document.body.classList.add(parsed && parsed.loggedIn ? 'workspace-auth' : 'workspace-public');
+        } catch (e) {
+            document.body.classList.add('workspace-public');
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', applyInitialState);
+    } else {
+        applyInitialState();
     }
 })();
