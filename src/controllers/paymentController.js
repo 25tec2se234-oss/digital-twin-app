@@ -78,10 +78,15 @@ async function createOrder(req, res, next) {
 
     // Save to DB (only if we have a valid UUID/user_id, otherwise we skip inserting since anonymous orders don't belong to anyone yet)
     if (userIdDb) {
-      await db.query(
-        'INSERT INTO orders (user_id, razorpay_order_id, plan_duration, amount) VALUES ($1, $2, $3, $4)',
-        [userIdDb, dbOrderId, plan, amount]
-      ).catch(e => console.error('Failed to log order:', e));
+      try {
+        await db.query(
+          'INSERT INTO orders (user_id, razorpay_order_id, plan_duration, amount) VALUES ($1, $2, $3, $4)',
+          [userIdDb, dbOrderId, plan, amount]
+        );
+      } catch (e) {
+        console.error('Failed to log order:', e);
+        throw new ApiError(500, 'Unable to initialize secure payment session. Please try again.');
+      }
     }
 
     res.json({
