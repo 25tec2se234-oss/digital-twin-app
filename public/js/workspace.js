@@ -4,7 +4,6 @@
  */
 
 (function() {
-    // Inject required CSS rules for workspace state toggling
     var style = document.createElement('style');
     style.innerHTML = '\
         body.workspace-public [data-workspace="auth"] { display: none !important; }\
@@ -25,6 +24,13 @@
     ';
     document.head.appendChild(style);
 
+    function hideLoader() {
+        var loader = document.getElementById('workspace-loader');
+        if (!loader) return;
+        loader.classList.add('hidden');
+        setTimeout(function() { loader.style.display = 'none'; }, 350);
+    }
+
     window.WorkspaceController = {
         setState: function(isAuthenticated) {
             if (isAuthenticated) {
@@ -35,22 +41,17 @@
                 document.body.classList.add('workspace-public');
             }
         },
-        hideLoader: function() {
-            var loader = document.getElementById('workspace-loader');
-            if (!loader) return;
-            loader.classList.add('hidden');
-            setTimeout(function() { loader.style.display = 'none'; }, 350);
-        },
+        hideLoader: hideLoader,
         showLoader: function() {
             var loader = document.getElementById('workspace-loader');
             if (!loader) return;
             loader.style.display = 'flex';
-            void loader.offsetWidth; // force reflow
+            void loader.offsetWidth;
             loader.classList.remove('hidden');
         }
     };
 
-    // Best-effort init from localStorage using the correct key 'dt_user'
+    // Best-effort init from localStorage
     try {
         var dtUser = localStorage.getItem('dt_user');
         if (dtUser) {
@@ -63,8 +64,17 @@
         document.body.classList.add('workspace-public');
     }
 
-    // SAFETY NET: auto-hide loader after 2s in case app.js encounters any issue
-    setTimeout(function() {
-        window.WorkspaceController.hideLoader();
-    }, 2000);
+    // AGGRESSIVE SAFETY NET - multiple triggers to ensure loader ALWAYS hides
+    // Trigger 1: 500ms timeout (fast fallback)
+    setTimeout(hideLoader, 500);
+
+    // Trigger 2: DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(hideLoader, 100);
+    });
+
+    // Trigger 3: window.onload (last resort)
+    window.addEventListener('load', function() {
+        hideLoader();
+    });
 })();
