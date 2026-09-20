@@ -824,33 +824,33 @@
     }
 
     spinning = true;
-    remainingSpins = Math.max(0, remainingSpins - 1); // Optimistic decrement
-    updateStatusPill();
     document.getElementById('caption').className = '';
+    document.getElementById('caption-text').textContent = 'Connecting to the Verse...';
+
+    // Await authoritative backend result FIRST
+    const backendData = await postSpin();
+    
+    if (backendData.limitReached || !backendData.success) {
+      spinning = false;
+      updateStatusPill();
+      document.getElementById('caption-text').textContent = 'Touch the core · spin the verse';
+      return;
+    }
+
+    remainingSpins = backendData.remainingSpins !== undefined ? backendData.remainingSpins : Math.max(0, remainingSpins - 1);
+    updateStatusPill();
     document.getElementById('caption-text').textContent = 'Simulating your future...';
 
-    // Call backend (fire-and-forget for result, animation runs immediately)
-    const backendPromise = postSpin();
+    const chosenIndex = backendData.chosenIndex;
 
-    // Pick locally (visual spin)
-    const chosenIndex = pickWeightedIndex();
-
-    // Animate
+    // Animate to exactly what the backend chose
     animateSpin(chosenIndex, async () => {
       const confirmedIndex = segmentIndexAtRotation(rotation);
       const reward = REWARDS[confirmedIndex];
-
-      // Wait for backend result to get authoritative data
-      const backendData = await backendPromise;
       const claimCode = backendData.claimCode || null;
-      const spinsLeft = typeof backendData.remainingSpins === 'number'
-        ? backendData.remainingSpins
-        : remainingSpins;
-      remainingSpins = spinsLeft;
 
       // Special: if backend gave extra spin (extraspin reward)
       if (backendData.rewardId === 'extraspin' || reward.id === 'extraspin') {
-        // Sync state from backend
         await fetchWheelState();
       }
 
