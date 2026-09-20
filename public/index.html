@@ -115,13 +115,13 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.4d6fe531.css?v=511e087401681c9c" as="style">
+    <link rel="preload" href="/dist/main.4d6fe531.css?v=649f518d407780ef" as="style">
     <link rel="stylesheet" href="/css/premium-theme.css?v=dark-fix2">
 
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.4d6fe531.css?v=511e087401681c9c">
+    <link rel="stylesheet" href="/dist/main.4d6fe531.css?v=649f518d407780ef">
     <link rel="stylesheet" href="/css/premium-theme.css?v=dark-fix2">
 
 
@@ -454,9 +454,11 @@
         type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://digitaltwinvrs.com/#organization","name":"Digital Twin Verse","alternateName":"DTV","url":"https://digitaltwinvrs.com/","logo":"https://digitaltwinvrs.com/img/dtv-logo.jpg","description":"AI-powered learning and career simulation platform for students, parents, and schools in India.","founder":{"@id":"https://digitaltwinvrs.com/founder/kumar-kartikey#person"},"employee":[{"@type":"Person","name":"Kaushiki Singh","jobTitle":"Co-Founder"},{"@type":"Person","name":"Rani Singh","jobTitle":"Director"},{"@type":"Person","name":"Satyam Dubey","jobTitle":"Chief Marketing Officer (CMO)"}]},{"@type":"Person","@id":"https://digitaltwinvrs.com/founder/kumar-kartikey#person","name":"Kumar Kartikey","jobTitle":"Founder and CEO","worksFor":{"@id":"https://digitaltwinvrs.com/#organization"},"url":"https://digitaltwinvrs.com/founder/kumar-kartikey","sameAs":["https://www.linkedin.com/in/kumar-kartikey-74626b3a5","https://www.instagram.com/kartikey_rajputana"]},{"@type":"WebSite","@id":"https://digitaltwinvrs.com/#website","name":"Digital Twin Verse","url":"https://digitaltwinvrs.com/","publisher":{"@id":"https://digitaltwinvrs.com/#organization"},"potentialAction":{"@type":"SearchAction","target":"https://digitaltwinvrs.com/?q={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"FAQPage","@id":"https://digitaltwinvrs.com/#faq","mainEntity":[{"@type":"Question","name":"What is Digital Twin Verse?","acceptedAnswer":{"@type":"Answer","text":"Digital Twin Verse is an AI-powered career guidance and personalized learning platform for students in India."}},{"@type":"Question","name":"How does the AI Career Test work?","acceptedAnswer":{"@type":"Answer","text":"Our AI psychometric test analyzes your skills, interests, and academics to suggest the best career paths and create a personalized learning roadmap."}}]}]}</script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
+    <script src="js/workspace.js"></script>
 </head>
 
 <body>
+    <div id="workspace-loader"><div class="loader-spinner"></div></div>
     <!-- PREMIUM SPLASH SCREEN -->
     <div id="splash-screen">
         <div class="splash-logo">
@@ -919,7 +921,7 @@
     <div id="page-main" class="page active">
 
         <!-- HERO -->
-        <section id="hero" class="sec">
+        <section id="hero" data-workspace="public" class="sec">
             <!-- 3D Vanta JS Network will be initialized here -->
             <div class="blobs">
                 <div class="b"
@@ -1013,7 +1015,7 @@
                 margin-bottom: 1rem;
             }
         </style>
-        <section id="stories" class="sec">
+        <section id="stories" data-workspace="public" class="sec">
             <div class="wrap">
                 <div class="rv center-head">
                     <p class="lbl">Student Journeys</p>
@@ -1069,7 +1071,7 @@
         </section>
 
         <!-- PROBLEM -->
-        <section id="prob" class="sec surf">
+        <section id="prob" data-workspace="public" class="sec surf">
             <div class="wrap grid2">
                 <div class="rv">
                     <p class="lbl">The Problem</p>
@@ -1110,7 +1112,7 @@
         </section>
 
         <!-- HOW IT WORKS -->
-        <section id="how" class="sec" style="text-align:center;">
+        <section id="how" data-workspace="public" class="sec" style="text-align:center;">
             <div class="blobs">
                 <div class="b" style="width:600px;height:600px;top:10%;left:-10%;background:rgba(42,125,225,.07);">
                 </div>
@@ -1163,7 +1165,7 @@
         </section>
 
         <!-- STUDENT DASHBOARD -->
-        <section id="student-dashboard" class="sec surf2" data-student="school">
+        <section id="student-dashboard" data-workspace="auth" class="sec surf2" data-student="school">
             <div class="wrap">
                 <div class="rv center-head">
                     <p class="lbl">Personalised Dashboard</p>
@@ -1710,7 +1712,7 @@
         </section>
 
         <!-- FEATURES -->
-        <section id="features" class="sec surf">
+        <section id="features" data-workspace="public" class="sec surf">
             <div class="wrap">
                 <div class="rv center-head">
                     <p class="lbl">Core Features</p>
@@ -1770,7 +1772,7 @@
 
 
         <!-- AI CHAT SECTION -->
-        <section id="ai-section">
+        <section id="ai-section" data-workspace="auth">
             <div class="ai-wrap wrap">
                 <div class="rv">
                     <p class="lbl">Multi-Agent AI System</p>
@@ -1852,7 +1854,7 @@
         </section>
 
         <!-- ACHIEVEMENT ANALYZER PROMO SECTION -->
-        <section id="analyzer-promo" class="sec surf2" style="background: #FFFFFF;">
+        <section id="analyzer-promo" data-workspace="auth" class="sec surf2" style="background: #FFFFFF;">
             <div class="wrap">
                 <div class="rv analyzer-grid">
                     <div>
@@ -1930,7 +1932,7 @@
         </section>
 
         <!-- CAREER DASHBOARD -->
-        <section id="dashboard" class="sec surf">
+        <section id="dashboard" data-workspace="auth" class="sec surf">
             <div class="wrap">
                 <div class="rv career-explorer-head">
                     <div>
@@ -2048,7 +2050,7 @@
         </section>
 
         <!-- MARKET -->
-        <section id="mkt" class="sec">
+        <section id="mkt" data-workspace="public" class="sec">
             <div class="wrap grid2">
                 <div class="mgrid rv">
                     <div class="mc"><span class="mc-big">1.5 Billion</span>
@@ -2075,7 +2077,7 @@
         </section>
 
         <!-- ROADMAP -->
-        <section id="road" class="sec surf" style="text-align:center;">
+        <section id="road" data-workspace="public" class="sec surf" style="text-align:center;">
             <div class="wrap">
                 <div class="rv">
                     <p class="lbl" style="justify-content:center;">Our Journey</p>
@@ -2109,7 +2111,7 @@
         </section>
 
         <!-- REVIEWS -->
-        <section id="rev" class="sec">
+        <section id="rev" data-workspace="public" class="sec">
             <div class="wrap">
                 <div class="rev-top rv">
                     <div>
@@ -2243,7 +2245,7 @@
 
 
         <!-- LATEST CAREER BLOGS -->
-        <section id="latest-blogs" class="sec surf">
+        <section id="latest-blogs" data-workspace="public" class="sec surf">
             <style>
                 .blog-card {
                     display: flex;
@@ -2303,7 +2305,7 @@
         </section>
 
         <!-- WHY DIGITAL TWIN VERSE -->
-        <section id="why-dtv" class="sec surf">
+        <section id="why-dtv" data-workspace="public" class="sec surf">
             <div class="wrap">
                 <div class="rv text-center" style="text-align: center; max-width: 850px; margin: 0 auto 3.5rem;">
                     <p class="lbl" style="justify-content: center;">Comprehensive Learning Ecosystem</p>
@@ -3265,9 +3267,9 @@
 
 
 
-    <script defer="" src="/dist/careers.e4a25189.js?v=511e087401681c9c"></script>
-    <script defer="" src="/dist/app.1f94a5de.js?v=511e087401681c9c"></script>
-    <script defer="" src="/dist/ux-engine.f675feed.js?v=511e087401681c9c"></script>
+    <script defer="" src="/dist/careers.e4a25189.js?v=649f518d407780ef"></script>
+    <script defer="" src="/dist/app.1f94a5de.js?v=649f518d407780ef"></script>
+    <script defer="" src="/dist/ux-engine.f675feed.js?v=649f518d407780ef"></script>
 
 
     <!-- PROBLEM INSIGHT MODAL -->

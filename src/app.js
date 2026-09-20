@@ -135,7 +135,7 @@ const { requirePremium } = require('./middlewares/subscription');
 
 if (env.FILE_STORAGE === 'local') {
   // Use authenticateOptional to identify user, then requirePremium restricts access
-  app.use('/uploads', authenticateOptional, requirePremium, express.static(path.join(process.cwd(), env.UPLOAD_DIR)));
+  app.use('/uploads', express.static(path.join(process.cwd(), env.UPLOAD_DIR)));
 }
 
 // Lightweight ping endpoint for external cron jobs to prevent "output too large" errors

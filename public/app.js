@@ -4210,6 +4210,7 @@ function renderCareers(filter) {
 
         function updateAuthNav() {
             var loggedIn = isLoggedIn();
+            if (window.WorkspaceController) { window.WorkspaceController.setState(loggedIn); }
             var isAdmin = loggedIn && APP_DATA.userData && APP_DATA.userData.role === 'admin';
             var label = document.getElementById('nav-account-label');
             var avatar = document.getElementById('nav-account-avatar');
@@ -5578,6 +5579,7 @@ function renderCareers(filter) {
         document.addEventListener('DOMContentLoaded', function() {
             initGoogleAnalytics();
             loadData();
+            setTimeout(function() { if (window.WorkspaceController) window.WorkspaceController.hideLoader(); }, 200);
             ensureStudentDefaults();
             ensureAuthDefaults();
             initAccessGate();
@@ -7178,6 +7180,7 @@ async function completeSimulation(careerId) {
 
         function checkProtectedHashRoutes() {
             var hash = window.location.hash;
+            if (hash && window.WorkspaceController) { var sections = document.querySelectorAll('section[data-workspace="auth"]'); var isAuthSection = Array.from(sections).some(s => '#' + s.id === hash); if (isAuthSection && !isLoggedIn()) { window.location.hash = ''; openLoginGate(); } }
             var protectedPrefixes = ['#student-dashboard', '#ai-section', '#analyzer-promo', '#dashboard'];
             var isProtected = protectedPrefixes.some(function(p) { return hash === p || hash.startswith(p + '/'); });
             if (isProtected && !isLoggedIn()) {
