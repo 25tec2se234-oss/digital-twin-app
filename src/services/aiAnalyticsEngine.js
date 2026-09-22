@@ -84,9 +84,11 @@ class AIAnalyticsEngine {
       const behaviorScore = parseFloat(((studyHabitScore * 0.6) + (timeManagementScore * 0.4)).toFixed(1));
 
       // 4. Career Recommendations & Dynamic Explanations
-      let recommendedCareer = 'Space Tech Architect / Advanced AI Systems Engineer';
+      let recommendedCareer = 'Emerging Tech Professional';
       if (appData && Array.isArray(appData.careerChoices) && appData.careerChoices.length > 0) {
         recommendedCareer = appData.careerChoices[0].title || recommendedCareer;
+      } else if (appData && appData.analysis && appData.analysis.topRole) {
+        recommendedCareer = appData.analysis.topRole;
       }
 
       const aiSummary = {

@@ -70,14 +70,75 @@ function identifyGaps(userSkills, requiredSkills) {
   return gaps;
 }
 
+const aiService = require('./aiService');
+
 /**
  * Analyzes the user's profile against the career database
  * @param {Object} profile 
  * @returns {Object} Structured analysis result
  */
-function analyzeProfile(profile) {
+async function analyzeProfile(profile) {
   const { interests = [], skills = [], academicInterest = '', achievements = [] } = profile;
   
+  // Try to use AI to generate tailored JSON
+  const systemPrompt = `You are an elite AI Career Counselor. Based on the user's interests, skills, and academic focus, provide exactly 3 highly personalized career recommendations.
+Return the output ONLY as a valid JSON array of objects. Do not include markdown formatting or backticks.
+Schema for each object:
+{
+  "id": "slug_format",
+  "name": "Career Title",
+  "domain": "Industry Domain",
+  "description": "Short description",
+  "salaryBand": "e.g., ₹8L - ₹25L per annum",
+  "marketGrowth": "e.g., 20% YoY",
+  "certifications": ["Cert 1", "Cert 2"],
+  "techStack": ["Tool 1", "Tool 2"],
+  "category": "Strong Current Alignment",
+  "currentAlignment": "Strong alignment",
+  "isConflict": false,
+  "stats": { "interestMatches": 5, "coreSkillMatches": 3, "skillAlignmentRatio": 0.8, "interestAlignmentRatio": 0.9 },
+  "skillsAlreadyHave": ["Skill 1", "Skill 2"],
+  "skillsToDevelop": ["Skill 3", "Skill 4"],
+  "optionalSkillsToDevelop": ["Skill 5"],
+  "educationPathway": ["Degree 1", "Degree 2"],
+  "reasons": ["Reason 1", "Reason 2"],
+  "roadmap": ["Step 1", "Step 2", "Step 3", "Step 4"]
+}`;
+
+  const userPrompt = `User Profile:\nInterests: ${interests.join(', ')}\nSkills: ${skills.join(', ')}\nAcademic Interest: ${academicInterest}\nAchievements: ${achievements.join(', ')}`;
+
+  try {
+    const aiResponse = await aiService.sendMessages({
+      system: systemPrompt,
+      messages: [{ role: 'user', content: userPrompt }],
+      max_tokens: 2500
+    });
+    
+    if (aiResponse && aiResponse.status === 200) {
+      let content = aiResponse.data.content[0].text;
+      // Clean markdown if present
+      content = content.replace(/```json/g, '').replace(/```/g, '').trim();
+      const generatedCareers = JSON.parse(content);
+      
+      return {
+        success: true,
+        profileSummary: { interests, skills, academicInterest },
+        topRecommendations: generatedCareers,
+        categories: {
+          'Strong Current Alignment': generatedCareers,
+          'Interest-Aligned Opportunities': [],
+          'Emerging Opportunities': [],
+          'Career Transition Options': []
+        },
+        scenarios: [],
+        timestamp: new Date().toISOString()
+      };
+    }
+  } catch (e) {
+    console.error("AI Generation failed, falling back to static logic", e);
+  }
+  
+  // Fallback to static logic if AI fails
   const results = careerData.map(career => {
     // 1. Calculate Scores
     const interestMatches = calculateOverlap(interests, career.interests);
@@ -85,8 +146,6 @@ function analyzeProfile(profile) {
     const optionalSkillMatches = calculateOverlap(skills, career.optionalSkills);
     
     // Weighted scoring logic
-    // We don't expose raw scores directly to the user as per requirements, 
-    // but we use them to categorize the career.
     const maxCoreSkills = career.coreSkills.length || 1;
     const maxInterests = career.interests.length || 1;
     
@@ -177,8 +236,8 @@ function analyzeProfile(profile) {
   const scenarios = [];
   
   // Scenario 1: Strong skills but different primary interest
-  const strongestSkillCareer = results.sort((a,b) => b.stats.skillAlignmentRatio - a.stats.skillAlignmentRatio)[0];
-  const strongestInterestCareer = results.sort((a,b) => b.stats.interestAlignmentRatio - a.stats.interestAlignmentRatio)[0];
+  const strongestSkillCareer = [...results].sort((a,b) => b.stats.skillAlignmentRatio - a.stats.skillAlignmentRatio)[0];
+  const strongestInterestCareer = [...results].sort((a,b) => b.stats.interestAlignmentRatio - a.stats.interestAlignmentRatio)[0];
   
   if (strongestSkillCareer && strongestInterestCareer && strongestSkillCareer.id !== strongestInterestCareer.id) {
     if (strongestSkillCareer.stats.skillAlignmentRatio >= 0.5 && strongestInterestCareer.stats.interestAlignmentRatio >= 0.5) {

@@ -26,14 +26,8 @@ const analyzeProfile = asyncHandler(async (req, res) => {
   };
 
   try {
-    const analysisResult = analyzerEngine.analyzeProfile(profile);
-    
-    // Simulate a slight delay to ensure UI loading state is visible (as per UX standard for "AI" tools)
-    // Optional, can be removed if strict latency is required.
-    setTimeout(() => {
-      res.status(200).json(analysisResult);
-    }, 1000);
-    
+    const analysisResult = await analyzerEngine.analyzeProfile(profile);
+    res.status(200).json(analysisResult);
   } catch (error) {
     console.error("Analysis Error:", error);
     res.status(500).json({
