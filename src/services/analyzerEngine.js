@@ -131,6 +131,10 @@ function analyzeProfile(profile) {
       name: career.name,
       domain: career.domain,
       description: career.description,
+      salaryBand: career.salaryBand,
+      marketGrowth: career.marketGrowth,
+      certifications: career.certifications,
+      techStack: career.techStack,
       category,
       currentAlignment,
       isConflict,
@@ -195,7 +199,7 @@ function analyzeProfile(profile) {
       title: 'Passion vs Preparation',
       condition: `IF your goal is ${strongestInterestCareer.name}`,
       but: `BUT your current skills are limited for this role`,
-      then: `You will need a dedicated transition roadmap. Focus on foundational education first (${strongestInterestCareer.educationPathway[0] || 'Relevant certifications'}) before applying for roles.`
+      then: `You will need a dedicated transition roadmap. However, with a market growth of ${strongestInterestCareer.marketGrowth}, the ROI is significant. Focus on foundational education first (${strongestInterestCareer.educationPathway[0] || 'Relevant certifications'}) before applying for entry-level roles.`
     });
   }
 

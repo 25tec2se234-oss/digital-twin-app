@@ -21,20 +21,27 @@
             --surf: #ffffff;
             --surf2: #f9fafb;
             --surf3: #f3f4f6;
-            --blue: #2563eb;
-            --blue2: #3b82f6;
-            --cyan: #06b6d4;
-            --purple: #7c3aed;
-            --purple2: #8b5cf6;
-            --pink: #db2777;
-            --red: #dc2626;
+            --orange: #f97316;
+            --orange2: #ea580c;
+            --amber: #f59e0b;
+            --amber2: #d97706;
+            
+            /* Overriding playful colors to Orange/Grey/Black palette */
+            --blue: #ea580c;    /* Primary Orange */
+            --blue2: #c2410c;   /* Darker Orange */
+            --cyan: #4b5563;    /* Dark Grey */
+            --purple: #1f2937;  /* Almost Black */
+            --purple2: #111827; /* Black */
+            --pink: #9ca3af;    /* Light Grey */
+            --red: #dc2626;     /* Keep red for alerts */
+            
             --wh: #111827;
             --wh2: #374151;
             --mu: #6b7280;
             --bdr: #e5e7eb;
             --card: #ffffff;
-            --grad-bg: linear-gradient(135deg, #f0fdfa, #eff6ff, #f3e8ff);
-            --grad-text: linear-gradient(135deg, #2563eb, #7c3aed);
+            --grad-bg: linear-gradient(135deg, #f9fafb, #f3f4f6, #fff7ed);
+            --grad-text: linear-gradient(135deg, #ea580c, #1f2937);
             --nh: 58px;
             --sw: 248px;
             --r: 12px;
@@ -3245,9 +3252,7 @@
         <!-- DASHBOARD -->
         <div class="view" id="view-dashboard">
 
-    <div style="width:100%; height:250px; border-radius:12px; overflow:hidden; margin-bottom:1.5rem; position:relative; background:var(--surf2); border:1px solid var(--bdr);">
-        <spline-viewer url="https://prod.spline.design/iWj6gB3bE2x6qD7P/scene.splinecode"></spline-viewer>
-    </div>
+            <!-- Spline viewer removed as per request for professional clean UI -->
 
             <div class="dash-header">
                 <div>
@@ -3329,10 +3334,27 @@
                     <div class="card-accent" style="background:linear-gradient(90deg,var(--pink),var(--purple))"></div>
                     <div class="card-lbl">Top Career Path</div>
                     <div class="card-val" id="stat-top-role" style="font-size:1.05rem;margin:.2rem 0 .3rem">—</div>
-                    <div class="card-sub">Personality: <strong id="stat-personality">—</strong></div>
+                    <div class="card-sub" style="margin-bottom: 0.5rem">Personality: <strong id="stat-personality">—</strong></div>
+                    
+                    <!-- NEW SAAS METRICS -->
+                    <div style="display: flex; gap: 1rem; margin-bottom: 0.8rem; font-size: 0.85rem;">
+                        <div><span style="color:var(--mu)">Avg Salary:</span> <strong id="stat-salary" style="color:var(--wh)">—</strong></div>
+                        <div><span style="color:var(--mu)">Market Growth:</span> <strong id="stat-growth" style="color:var(--orange)">—</strong></div>
+                    </div>
+
+                    <div style="margin-top:.85rem; display: flex; gap: 1.5rem;">
+                        <div style="flex: 1">
+                            <div class="card-lbl" style="margin-bottom:.38rem" data-i18n="skillsToLearn">Skills to Learn</div>
+                            <div id="skills-needed"></div>
+                        </div>
+                        <div style="flex: 1">
+                            <div class="card-lbl" style="margin-bottom:.38rem">Tech Stack & Tools</div>
+                            <div id="tech-stack-needed" style="display: flex; flex-wrap: wrap; gap: 0.4rem;"></div>
+                        </div>
+                    </div>
                     <div style="margin-top:.85rem">
-                        <div class="card-lbl" style="margin-bottom:.38rem" data-i18n="skillsToLearn">Skills to Learn</div>
-                        <div id="skills-needed"></div>
+                        <div class="card-lbl" style="margin-bottom:.38rem">Recommended Certifications</div>
+                        <div id="certs-needed" style="font-size: 0.8rem; color: var(--wh2); line-height: 1.4;"></div>
                     </div>
                 </div>
                 <div class="card">
@@ -5451,6 +5473,28 @@
             setById('stat-profile-strength', a.profileScore + '%');
             setById('stat-top-role', a.topRole);
             setById('stat-personality', a.personality);
+
+            /* SaaS Metrics from Backend */
+            var be = a.backendEngine;
+            if (be && be.topRecommendations && be.topRecommendations.length > 0) {
+                var topRec = be.topRecommendations[0];
+                setById('stat-salary', topRec.salaryBand || '—');
+                setById('stat-growth', topRec.marketGrowth || '—');
+                
+                var techContainer = document.getElementById('tech-stack-needed');
+                if (techContainer && topRec.techStack) {
+                    techContainer.innerHTML = topRec.techStack.map(function(t) {
+                        return '<span class="skill-chip sc-blue">' + t + '</span>';
+                    }).join('');
+                }
+                
+                var certsContainer = document.getElementById('certs-needed');
+                if (certsContainer && topRec.certifications) {
+                    certsContainer.innerHTML = topRec.certifications.map(function(c) {
+                        return '<div style="margin-bottom:4px">✓ ' + c + '</div>';
+                    }).join('');
+                }
+            }
 
             /* XP / level */
             updateXPBar();
