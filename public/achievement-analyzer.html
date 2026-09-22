@@ -3301,6 +3301,15 @@
                     <div id="today-goals"></div>
                 </div>
             </div>
+            <!-- Row 2.5: AI Scenarios -->
+            <div id="ai-scenarios-container" class="g1" style="display:none; margin-bottom: 1.5rem;">
+                <div class="card" style="grid-column: 1 / -1;">
+                    <div class="card-accent" style="background:linear-gradient(90deg,var(--orange),var(--pink))"></div>
+                    <div class="card-lbl">IF-BUT Career Scenarios</div>
+                    <div id="scenarios-list" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;"></div>
+                </div>
+            </div>
+
             <!-- Row 3: Top role + Weekly chart -->
             <div class="g2">
                 <div class="card">
@@ -5453,6 +5462,31 @@
 
             /* Weekly progress chart */
             renderWeeklyChart();
+
+            /* AI Scenarios */
+            renderScenarios();
+        }
+
+        function renderScenarios() {
+            var container = document.getElementById('ai-scenarios-container');
+            var list = document.getElementById('scenarios-list');
+            if (!container || !list) return;
+
+            var engine = DT_STATE.profile.analysis.backendEngine;
+            if (!engine || !engine.scenarios || engine.scenarios.length === 0) {
+                container.style.display = 'none';
+                return;
+            }
+
+            container.style.display = 'grid';
+            list.innerHTML = engine.scenarios.map(function(sc) {
+                return '<div style="padding: 1rem; border: 1px solid var(--bdr); border-radius: 8px; background: rgba(255,255,255,0.02);">' +
+                    '<h4 style="margin:0 0 0.5rem 0; color: var(--orange); font-size: 1.1rem;">' + sc.title + '</h4>' +
+                    '<div style="font-weight: 500; color: #e2e8f0; margin-bottom: 0.25rem;">' + sc.condition + '</div>' +
+                    '<div style="font-weight: 500; color: var(--pink); margin-bottom: 0.5rem;">' + sc.but + '</div>' +
+                    '<div style="color: #94a3b8; font-size: 0.95rem; line-height: 1.5;">' + sc.then + '</div>' +
+                '</div>';
+            }).join('');
         }
 
         function setById(id, val) {
@@ -6608,7 +6642,7 @@
             updateInterestPreview();
         }
 
-        function startAnalysis() {
+        async function startAnalysis() {
             var name = (document.getElementById('ob-name') || {}).value || '';
             var age = (document.getElementById('ob-age') || {}).value || '';
             var goal = (document.getElementById('ob-goal') || {}).value || '';
@@ -6627,38 +6661,75 @@
             /* Show analyzing screen */
             showView('analyzing');
 
-            var stepsData = t('analyzingSteps') || ['Analyzing...'];
-            var steps = Array.isArray(stepsData) ? stepsData : ['Analyzing...'];
             var statusEl = document.getElementById('analyzing-status');
             var barEl = document.getElementById('analyzing-bar');
-            var i = 0;
-            var interval = setInterval(function() {
-                if (statusEl) statusEl.textContent = steps[i] || steps[steps.length - 1];
-                if (barEl) barEl.style.width = ((i + 1) / steps.length * 100) + '%';
-                i++;
-                if (i >= steps.length) {
-                    clearInterval(interval);
-                    setTimeout(function() {
-                        /* Build profile */
-                        DT_STATE.profile = {
-                            name: name,
-                            age: age,
-                            goal: goal,
-                            academicInterest: academicVal,
-                            interests: selectedInterests,
-                            skills: skills
-                        };
-                        DT_STATE.profile.analysis = computeAnalysis(DT_STATE.profile);
-                        dtSave();
-                        awardBadge('first_login');
-                        awardBadge('profile_done');
-                        addXP(100, 'Profile created');
-                        renderAllViews();
-                        showView('dashboard');
-                        showMainNav();
-                    }, 500);
+            
+            if (statusEl) statusEl.textContent = 'Connecting to Career Intelligence Engine...';
+            if (barEl) barEl.style.width = '30%';
+
+            try {
+                // Build profile payload
+                const profilePayload = {
+                    name: name,
+                    age: age,
+                    goal: goal,
+                    academicInterest: academicVal,
+                    interests: selectedInterests,
+                    skills: skills
+                };
+
+                const response = await fetch('/api/analyzer/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(profilePayload)
+                });
+
+                if (barEl) barEl.style.width = '70%';
+                if (statusEl) statusEl.textContent = 'Processing scenarios...';
+
+                const result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    throw new Error(result.message || 'Analysis failed');
                 }
-            }, 500);
+
+                if (barEl) barEl.style.width = '100%';
+                if (statusEl) statusEl.textContent = 'Complete!';
+
+                setTimeout(function() {
+                    DT_STATE.profile = profilePayload;
+                    
+                    // Generate local analysis for backward compatibility (charts, badges, roadmap structure)
+                    // and merge with the new engine data
+                    var localAnalysis = computeAnalysis(DT_STATE.profile);
+                    
+                    if (result.topRecommendations && result.topRecommendations.length > 0) {
+                        const top = result.topRecommendations[0];
+                        localAnalysis.topRole = top.name;
+                        localAnalysis.domain = top.domain.toLowerCase();
+                        localAnalysis.careerMatch = Math.round(top.stats.skillAlignmentRatio * 100) || 50;
+                        localAnalysis.requiredSkills = top.skillsToDevelop;
+                    }
+                    
+                    // Attach backend results for new UI components
+                    localAnalysis.backendEngine = result;
+                    
+                    DT_STATE.profile.analysis = localAnalysis;
+                    dtSave();
+                    
+                    awardBadge('first_login');
+                    awardBadge('profile_done');
+                    addXP(100, 'Profile created');
+                    
+                    renderAllViews();
+                    showView('dashboard');
+                    showMainNav();
+                }, 500);
+            } catch (err) {
+                console.error(err);
+                showToast('❌', err.message || 'Error occurred during analysis.');
+                showView('onboarding');
+            }
         }
 
         function showMainNav() {

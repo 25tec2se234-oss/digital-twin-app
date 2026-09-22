@@ -25,6 +25,7 @@ router.post('/track', authenticate, requirePremium, dataController.trackAction);
 router.use('/genesis', require('./genesisRoutes'));
 router.use('/admin/subscriptions', require('./adminSubscriptionRoutes'));
 router.use('/team', require('./teamRoutes'));
+router.use('/analyzer', require('./analyzerRoutes'));
 router.use('/', aiRoutes);
 
 router.get('/config', (req, res) => {
