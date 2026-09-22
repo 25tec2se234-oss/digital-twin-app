@@ -8,7 +8,8 @@ const ApiError = require('../utils/apiError');
 
 function signAccessToken(user) {
   return jwt.sign({ sub: user.id, role: user.role }, env.JWT_ACCESS_SECRET, {
-    expiresIn: env.JWT_ACCESS_TTL
+    expiresIn: env.JWT_ACCESS_TTL,
+    algorithm: 'HS256'
   });
 }
 

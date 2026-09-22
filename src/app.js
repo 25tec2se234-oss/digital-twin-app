@@ -91,7 +91,9 @@ app.use(helmet({
       imgSrc: ["'self'", "data:", "blob:", "https://www.google-analytics.com", "https://*.razorpay.com", "https://razorpay.com", "https://images.unsplash.com", "https://*.digitaltwinvrs.com", "https://digitaltwinvrs.com"],
       connectSrc: ["'self'", "https://www.google-analytics.com", "https://*.analytics.google.com", "https://*.razorpay.com", "wss:"],
       frameSrc: ["'self'", "https://api.razorpay.com", "https://checkout.razorpay.com"],
-      mediaSrc: ["'self'", "data:", "blob:"]
+      mediaSrc: ["'self'", "data:", "blob:"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: []
     }
   },
   crossOriginEmbedderPolicy: false,

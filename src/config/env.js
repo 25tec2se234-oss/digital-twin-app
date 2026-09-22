@@ -24,7 +24,7 @@ const schema = Joi.object({
   CORS_ORIGINS: Joi.string().allow(''),
   RATE_LIMIT_WINDOW_MS: Joi.number().default(15 * 60 * 1000),
   RATE_LIMIT_MAX: Joi.number().default(100),
-  AUTH_RATE_LIMIT_MAX: Joi.number().default(20),
+  AUTH_RATE_LIMIT_MAX: Joi.number().default(5),
   REDIS_URL: Joi.string().allow(''),
   CACHE_TTL_SECONDS: Joi.number().default(30),
   FILE_STORAGE: Joi.string().valid('local', 's3').default('local'),

@@ -76,7 +76,7 @@ async function authenticate(req, _res, next) {
 
   const token = header.slice(7);
   try {
-    const payload = jwt.verify(token, env.JWT_ACCESS_SECRET);
+    const payload = jwt.verify(token, env.JWT_ACCESS_SECRET, { algorithms: ['HS256'] });
     const user = await userModel.findById(payload.sub);
     if (!user || !user.isActive) {
       return next(new ApiError(401, 'Account is inactive or missing.'));
@@ -113,7 +113,7 @@ async function authenticateOptional(req, _res, next) {
 
   const token = header.slice(7);
   try {
-    const payload = jwt.verify(token, env.JWT_ACCESS_SECRET);
+    const payload = jwt.verify(token, env.JWT_ACCESS_SECRET, { algorithms: ['HS256'] });
     const user = await userModel.findById(payload.sub);
     if (user && user.isActive) {
       req.user = user;

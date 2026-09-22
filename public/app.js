@@ -190,6 +190,20 @@
                             if (typeof updateSubscriptionTracker === 'function') updateSubscriptionTracker();
                         }
                     }).catch(function(e) { logClientError('Backend load failed', e); });
+
+                    // Fetch auth/subscription status directly
+                    fetch('/api/v1/auth/me', {
+                        headers: { 'Authorization': 'Bearer ' + APP_DATA.userData.token }
+                    }).then(function(res) {
+                        if (res.ok) return res.json();
+                    }).then(function(json) {
+                        if (json && json.user) {
+                            Object.assign(APP_DATA.userData, json.user);
+                            try { localStorage.setItem('dt_user', JSON.stringify(APP_DATA.userData)); } catch(e) {}
+                            if (typeof updateSubscriptionTracker === 'function') updateSubscriptionTracker();
+                            if (typeof window.renderAll === 'function') window.renderAll();
+                        }
+                    }).catch(function(e) { logClientError('Auth fetch failed', e); });
                 }
                 if (typeof updateSubscriptionTracker === 'function') updateSubscriptionTracker();
             } catch (e) {
@@ -4329,16 +4343,7 @@ function renderCareers(filter) {
             var timeLeft = document.getElementById('tracker-time-left');
             var progressBar = document.getElementById('tracker-progress-bar');
             
-            // Backup check from localStorage
-            try {
-                var dtUser = localStorage.getItem('dt_user');
-                if (dtUser) {
-                    var u = JSON.parse(dtUser);
-                    if (u && u.subscriptionExpiresAt) {
-                        APP_DATA.userData = Object.assign(APP_DATA.userData || {}, u);
-                    }
-                }
-            } catch(e) {}
+            // Rely on APP_DATA as the single source of truth for the current session
 
             var loggedIn = isLoggedIn();
             if (!loggedIn && (!APP_DATA.userData || !APP_DATA.userData.subscriptionExpiresAt)) {
@@ -4643,6 +4648,9 @@ function renderCareers(filter) {
                     showToast('✅', 'Payment successful! Premium Unlocked.');
                     if (APP_DATA && APP_DATA.userData) {
                         APP_DATA.userData.subscriptionExpiresAt = data.subscriptionExpiresAt;
+                        try {
+                            localStorage.setItem('dt_user', JSON.stringify(APP_DATA.userData));
+                        } catch(e) {}
                         if (typeof syncData === 'function') syncData();
                         updateSubscriptionTracker();
                     }

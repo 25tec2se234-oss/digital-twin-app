@@ -1,3 +1,6 @@
+const { JSDOM } = require('jsdom');
+const DOMPurify = require('dompurify')(new JSDOM('').window);
+
 const SENSITIVE_KEYS = new Set([
   'password', 'newpassword', 'currentpassword', 'confirmpassword',
   'otp', 'otpcode', 'verificationcode', 'token', 'refreshtoken', 
@@ -11,13 +14,14 @@ function sanitizeValue(value, key = null) {
   }
 
   if (typeof value === 'string') {
-    return value
-      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-      .replace(/javascript:/gi, '')
-      .replace(/on\w+\s*=/gi, 'x-on=')
-      .replace(/<(iframe|object|embed|applet|svg|math)\b/gi, '<x-$1')
-      .replace(/data:text\/html/gi, 'data:text/plain')
-      .trim();
+    // Only allow specific safe tags and attributes to prevent XSS.
+    let sanitized = DOMPurify.sanitize(value, {
+      ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'a', 'p', 'br', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'code', 'pre', 'span', 'div'],
+      ALLOWED_ATTR: ['href', 'title', 'class', 'target'],
+      ALLOW_DATA_ATTR: false,
+      ALLOW_UNKNOWN_PROTOCOLS: false
+    });
+    return sanitized.trim();
   }
 
   if (Array.isArray(value)) {
