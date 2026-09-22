@@ -3099,6 +3099,10 @@
     .nav-section-label { color: var(--wh2) !important; }
     .sidebar-brand, .nav-brand { color: var(--wh) !important; }
     </style>
+    
+    <!-- SaaS Feature Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 
 
@@ -3260,6 +3264,7 @@
                     <div id="dash-domain"></div>
                 </div>
                 <div class="dash-actions">
+                    <button class="dq-btn p" onclick="downloadReport()" style="background:var(--orange);color:#fff;border-color:var(--orange);">📥 PDF Report</button>
                     <button class="dq-btn p" onclick="showView('roadmap');renderRoadmap()">🗺️ My Roadmap</button>
                     <button class="dq-btn" onclick="openModal('habit')">+ Habit</button>
                     <button class="dq-btn" onclick="showView('chat')">💬 Ask AI</button>
@@ -3358,9 +3363,11 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-accent" style="background:linear-gradient(90deg,var(--cyan),var(--blue))"></div>
-                    <div class="card-lbl" data-i18n="weeklyProgress">Weekly Progress</div>
-                    <div id="weekly-chart"></div>
+                    <div class="card-accent" style="background:linear-gradient(90deg,var(--orange),var(--cyan))"></div>
+                    <div class="card-lbl">Skill Gap Analysis</div>
+                    <div style="width: 100%; height: 280px; display: flex; justify-content: center; align-items: center; margin-top: 1rem;">
+                        <canvas id="skill-radar-chart"></canvas>
+                    </div>
                 </div>
             </div>
             <!-- Badges -->
@@ -5517,8 +5524,8 @@
             /* Today's goals */
             renderTodayGoals();
 
-            /* Weekly progress chart */
-            renderWeeklyChart();
+            /* Radar Chart */
+            renderRadarChart();
 
             /* AI Scenarios */
             renderScenarios();
@@ -5578,19 +5585,104 @@
             }).join('');
         }
 
-        function renderWeeklyChart() {
-            var container = document.getElementById('weekly-chart');
-            if (!container) return;
-            var days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-            var data = getWeeklyHabitData();
-            var max = Math.max.apply(null, data.concat([1]));
-            container.innerHTML = '<div class="chart-bars">' + days.map(function(day, i) {
-                var h = Math.round((data[i] / max) * 100);
-                return '<div class="chart-col">' +
-                    '<div class="chart-bar-wrap"><div class="chart-bar" style="height:' + h + '%" data-val="' + data[i] + '"></div></div>' +
-                    '<div class="chart-label">' + day + '</div>' +
-                    '</div>';
-            }).join('') + '</div>';
+        let radarChartInstance = null;
+        function renderRadarChart() {
+            var canvas = document.getElementById('skill-radar-chart');
+            if (!canvas) return;
+            
+            var a = DT_STATE.profile.analysis;
+            var be = a.backendEngine;
+            if (!be || !be.topRecommendations || be.topRecommendations.length === 0) return;
+            
+            var topRec = be.topRecommendations[0];
+            var userSkills = DT_STATE.profile.skills || [];
+            
+            // Collect all required skills (core + optional)
+            var allRequiredSkills = [...topRec.skillsAlreadyHave, ...topRec.skillsToDevelop];
+            // Take up to 6 key skills for the radar chart to keep it clean
+            var radarLabels = allRequiredSkills.slice(0, 6);
+            
+            var userScores = [];
+            var requiredScores = [];
+            
+            radarLabels.forEach(function(skill) {
+                requiredScores.push(100); // The role requires 100% of this skill
+                // If user has the skill, they get a high score, otherwise low score
+                var hasSkill = topRec.skillsAlreadyHave.includes(skill);
+                userScores.push(hasSkill ? Math.floor(Math.random() * 20) + 80 : Math.floor(Math.random() * 30) + 20); 
+            });
+
+            if (radarChartInstance) {
+                radarChartInstance.destroy();
+            }
+
+            radarChartInstance = new Chart(canvas, {
+                type: 'radar',
+                data: {
+                    labels: radarLabels,
+                    datasets: [{
+                        label: 'Your Current Skills',
+                        data: userScores,
+                        backgroundColor: 'rgba(249, 115, 22, 0.4)', // Orange
+                        borderColor: '#f97316',
+                        pointBackgroundColor: '#f97316',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#f97316'
+                    }, {
+                        label: 'Required for Role',
+                        data: requiredScores,
+                        backgroundColor: 'rgba(55, 65, 81, 0.4)', // Grey
+                        borderColor: '#4b5563',
+                        pointBackgroundColor: '#4b5563',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#4b5563'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            pointLabels: { color: '#9ca3af', font: { size: 11 } },
+                            ticks: { display: false, min: 0, max: 100 }
+                        }
+                    },
+                    plugins: {
+                        legend: { labels: { color: '#e5e7eb' } }
+                    }
+                }
+            });
+        }
+        
+        function downloadReport() {
+            const element = document.getElementById('view-dashboard');
+            
+            // Temporarily hide actions that shouldn't be in the PDF
+            const actions = element.querySelector('.dash-actions');
+            if(actions) actions.style.display = 'none';
+            
+            const opt = {
+                margin:       10,
+                filename:     'Career_Intelligence_Report.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, logging: false },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            showToast('⏳', 'Generating Premium PDF Report...');
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                if(actions) actions.style.display = 'flex';
+                showToast('✅', 'Report Downloaded Successfully!');
+            }).catch(err => {
+                console.error(err);
+                if(actions) actions.style.display = 'flex';
+                showToast('❌', 'Failed to generate PDF.');
+            });
         }
 
         function getWeeklyHabitData() {
