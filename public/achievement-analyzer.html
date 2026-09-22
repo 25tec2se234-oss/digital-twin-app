@@ -6985,9 +6985,15 @@
             });
 
             if (DT_STATE.profile && DT_STATE.profile.analysis) {
-                renderAllViews();
-                showView('dashboard');
-                showMainNav();
+                if (!DT_STATE.profile.analysis.backendEngine) {
+                    console.log("Legacy profile detected. Upgrading to new AI engine...");
+                    showView('analyzing');
+                    startAnalysis();
+                } else {
+                    renderAllViews();
+                    showView('dashboard');
+                    showMainNav();
+                }
             } else {
                 showView('onboarding');
                 renderInterestGrid();
