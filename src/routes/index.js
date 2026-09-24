@@ -26,6 +26,7 @@ router.use('/genesis', require('./genesisRoutes'));
 router.use('/admin/subscriptions', require('./adminSubscriptionRoutes'));
 router.use('/team', require('./teamRoutes'));
 router.use('/analyzer', require('./analyzerRoutes'));
+router.use('/organizations', require('./organizationRoutes'));
 router.use('/', aiRoutes);
 
 router.get('/config', (req, res) => {

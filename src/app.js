@@ -337,6 +337,21 @@ app.use('/parent/assets', function(req, res, next) {
   res.status(404).send('Asset not found');
 });
 
+// Serve Organization UI for /organization routes
+const organizationUiDir = path.join(publicDir, 'organization');
+app.use('/organization', express.static(organizationUiDir));
+app.use('/organization', (req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    return next();
+  }
+  res.sendFile('index.html', { root: organizationUiDir }, (err) => {
+    if (err) {
+      console.error('Error sending organization index.html:', err);
+      res.status(500).end();
+    }
+  });
+});
+
 app.use(function(req, res, next) {
   if (req.path.startsWith('/api')) {
     return next();

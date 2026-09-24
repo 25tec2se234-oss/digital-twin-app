@@ -4436,7 +4436,7 @@ function renderCareers(filter) {
             var now = new Date();
             var subExp = APP_DATA.userData.subscriptionExpiresAt ? new Date(APP_DATA.userData.subscriptionExpiresAt) : null;
             if (subExp && subExp > now) {
-                window.location.href = 'https://www.digitaltwinvrs.com/achievement-analyzer.html';
+                window.location.href = '/achievement-analyzer.html';
                 return;
             }
             showToast('💎', 'Achievement Analyzer is an exclusive Premium feature. Please buy at least a 1-month Premium Plan to use it.');
@@ -5473,7 +5473,7 @@ function renderCareers(filter) {
 
         /* ════ INIT ═══════════════════════════════════════════════════════════════════════ */
         document.addEventListener('click', function(e) {
-            var target = e.target.closest('a[href="https://www.digitaltwinvrs.com/achievement-analyzer.html"]');
+            var target = e.target.closest('a[href="/achievement-analyzer.html"]');
             if (target) {
                 e.preventDefault();
                 openAnalyzer();

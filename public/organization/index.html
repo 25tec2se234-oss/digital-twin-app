@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DTV Capacity Connect — Organization Workspace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#F97316',
+                        dark: '#0F172A',
+                        surface: '#1E293B',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background: #f1f5f9; }
+        .hidden { display: none !important; }
+        .view-section { animation: fadeIn 0.2s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+        .nav-link { transition: all 0.15s ease; }
+        .nav-link.active { background: #fff7ed; color: #F97316; border-right: 3px solid #F97316; }
+        .stat-card { transition: transform 0.15s, box-shadow 0.15s; }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .badge-active { background:#dcfce7; color:#166534; }
+        .badge-draft { background:#fef9c3; color:#854d0e; }
+        .badge-archived { background:#f1f5f9; color:#475569; }
+        .badge-low { background:#fee2e2; color:#991b1b; }
+        .badge-medium { background:#fef9c3; color:#854d0e; }
+        .badge-high { background:#dcfce7; color:#166534; }
+        .ai-typing::after { content: '▋'; animation: blink 0.7s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+        .sidebar { min-height: 100vh; }
+        ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-thumb { background:#cbd5e1; border-radius:5px; }
+        .confidence-low { color: #dc2626; } .confidence-medium { color: #d97706; } .confidence-high { color: #16a34a; }
+    </style>
+</head>
+<body class="text-slate-800">
+
+<!-- Top Navigation -->
+<nav class="bg-dark text-white shadow sticky top-0 z-50 h-14">
+    <div class="flex justify-between items-center h-full px-4 lg:px-6">
+        <div class="flex items-center gap-3">
+            <button id="sidebar-toggle" class="text-slate-400 hover:text-white md:hidden">
+                <i class="bi bi-list text-2xl"></i>
+            </button>
+            <span class="text-lg font-bold">
+                <span class="text-primary">DTV</span> <span class="text-slate-300 font-light">Capacity Connect</span>
+            </span>
+        </div>
+        <div class="flex items-center gap-4">
+            <button id="notif-bell" class="relative text-slate-400 hover:text-white" title="Notifications">
+                <i class="bi bi-bell text-xl"></i>
+                <span id="notif-badge" class="hidden absolute -top-1 -right-1 bg-primary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+            </button>
+            <div class="text-sm text-right hidden sm:block">
+                <div class="font-medium" id="nav-user-name">Loading...</div>
+                <div class="text-slate-400 text-xs" id="nav-org-name">—</div>
+            </div>
+            <a href="/" class="text-slate-400 hover:text-white text-sm hidden sm:block" title="Back to Student Portal">
+                Student Portal
+            </a>
+            <button id="logout-btn" class="bg-slate-700 hover:bg-slate-600 text-sm px-3 py-1.5 rounded-lg transition">
+                <i class="bi bi-box-arrow-right mr-1"></i>Logout
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Notification Drawer -->
+<div id="notif-drawer" class="hidden fixed inset-y-0 right-0 w-80 bg-white shadow-2xl z-40 overflow-y-auto pt-14">
+    <div class="p-4 border-b flex justify-between items-center">
+        <span class="font-semibold">Notifications</span>
+        <button id="close-notif" class="text-slate-400 hover:text-slate-700"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div id="notif-list" class="divide-y">
+        <p class="text-sm text-slate-500 p-4">Loading...</p>
+    </div>
+</div>
+
+<!-- Layout -->
+<div class="flex" style="min-height: calc(100vh - 3.5rem);">
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar w-60 bg-white border-r flex-shrink-0 hidden md:block">
+        <div class="p-3 pt-4">
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-3 mb-2" id="sidebar-role">ROLE</p>
+            <nav id="sidebar-nav" class="space-y-0.5"></nav>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto p-4 lg:p-6">
+
+        <!-- DASHBOARD -->
+        <div id="view-dashboard" class="view-section">
+            <h1 class="text-xl font-bold mb-5">Welcome, <span id="welcome-name"></span> 👋</h1>
+            <div id="admin-stats" class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6"></div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div class="bg-white rounded-xl shadow-sm p-5 border border-slate-100">
+                    <h2 class="font-semibold mb-3 flex items-center gap-2"><i class="bi bi-activity text-primary"></i> Recent Activity</h2>
+                    <p class="text-sm text-slate-400">No recent activity.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-5 border border-slate-100">
+                    <h2 class="font-semibold mb-3 flex items-center gap-2"><i class="bi bi-lightning text-yellow-500"></i> Quick Actions</h2>
+                    <div class="space-y-2" id="quick-actions"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PEOPLE -->
+        <div id="view-people" class="view-section hidden">
+            <div class="flex justify-between items-center mb-5">
+                <h1 class="text-xl font-bold">People Management</h1>
+                <button id="btn-invite" class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-600 transition flex items-center gap-2">
+                    <i class="bi bi-person-plus"></i> Invite Member
+                </button>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="p-4 border-b">
+                    <input type="text" placeholder="Search members..." class="w-full md:w-64 px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead class="bg-slate-50 text-slate-500 uppercase text-xs">
+                            <tr>
+                                <th class="p-4 text-left font-medium">Name</th>
+                                <th class="p-4 text-left font-medium">Role</th>
+                                <th class="p-4 text-left font-medium">Status</th>
+                                <th class="p-4 text-right font-medium">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="people-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- COURSES (LMS) -->
+        <div id="view-courses" class="view-section hidden">
+            <div class="flex justify-between items-center mb-5">
+                <h1 class="text-xl font-bold">Courses</h1>
+                <button id="btn-create-course" class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-600 transition flex items-center gap-2 hidden">
+                    <i class="bi bi-plus-circle"></i> Create Course
+                </button>
+            </div>
+            <div id="courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <p class="text-slate-400 text-sm col-span-full">Loading courses...</p>
+            </div>
+        </div>
+
+        <!-- ASSESSMENTS -->
+        <div id="view-assessments" class="view-section hidden">
+            <div class="flex justify-between items-center mb-5">
+                <h1 class="text-xl font-bold">Assessments</h1>
+            </div>
+            <div id="assessments-list" class="space-y-3">
+                <p class="text-slate-400 text-sm">Loading assessments...</p>
+            </div>
+        </div>
+
+        <!-- COMPETENCIES -->
+        <div id="view-competencies" class="view-section hidden">
+            <h1 class="text-xl font-bold mb-5">Competency Framework</h1>
+            <div id="competencies-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <p class="text-slate-400 text-sm">Loading competencies...</p>
+            </div>
+        </div>
+
+        <!-- SKILL GAPS -->
+        <div id="view-skillgaps" class="view-section hidden">
+            <h1 class="text-xl font-bold mb-2">Skill Gap Analysis</h1>
+            <p class="text-slate-500 text-sm mb-5">AI-identified gaps based on evidence and role requirements.</p>
+            <div id="skillgaps-list" class="space-y-3">
+                <p class="text-slate-400 text-sm">Loading skill gaps...</p>
+            </div>
+        </div>
+
+        <!-- TRAINING NEEDS -->
+        <div id="view-training" class="view-section hidden">
+            <h1 class="text-xl font-bold mb-5">Training Needs</h1>
+            <div id="training-list" class="space-y-3">
+                <p class="text-slate-400 text-sm">Loading training needs...</p>
+            </div>
+        </div>
+
+        <!-- KNOWLEDGE LIBRARY -->
+        <div id="view-knowledge" class="view-section hidden">
+            <div class="flex justify-between items-center mb-5">
+                <h1 class="text-xl font-bold">Knowledge Library</h1>
+                <button id="btn-add-resource" class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-600 transition hidden items-center gap-2">
+                    <i class="bi bi-plus-circle"></i> Add Resource
+                </button>
+            </div>
+            <div id="knowledge-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <p class="text-slate-400 text-sm col-span-full">Loading knowledge resources...</p>
+            </div>
+        </div>
+
+        <!-- CERTIFICATES -->
+        <div id="view-certificates" class="view-section hidden">
+            <h1 class="text-xl font-bold mb-5">Certificates</h1>
+            <div id="certificates-list" class="space-y-3">
+                <p class="text-slate-400 text-sm">Loading certificates...</p>
+            </div>
+        </div>
+
+        <!-- ANALYTICS -->
+        <div id="view-analytics" class="view-section hidden">
+            <h1 class="text-xl font-bold mb-5">Organization Analytics</h1>
+            <div id="analytics-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <p class="text-slate-400 text-sm">Loading analytics...</p>
+            </div>
+        </div>
+
+        <!-- DIGITAL TWIN -->
+        <div id="view-digital-twin" class="view-section hidden">
+            <div class="flex justify-between items-center mb-5">
+                <div>
+                    <h1 class="text-xl font-bold">Organizational Digital Twin</h1>
+                    <p class="text-slate-500 text-sm">Real-time representation of your organization's capability state.</p>
+                </div>
+                <button id="btn-refresh-twin" class="border border-primary text-primary px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-50 transition flex items-center gap-2">
+                    <i class="bi bi-arrow-clockwise"></i> Refresh Twin
+                </button>
+            </div>
+            <div id="twin-confidence-bar" class="bg-white rounded-xl shadow-sm border p-4 mb-4 hidden">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="font-semibold text-sm">Digital Twin Data Confidence</span>
+                    <span id="twin-confidence-label" class="text-sm font-bold"></span>
+                </div>
+                <div class="grid grid-cols-3 gap-4 text-center text-xs text-slate-500 mt-3">
+                    <div><div id="twin-evidence" class="text-lg font-bold text-slate-700">—</div>Evidence Coverage</div>
+                    <div><div id="twin-competency" class="text-lg font-bold text-slate-700">—</div>Competency Coverage</div>
+                    <div><div id="twin-updated" class="text-lg font-bold text-slate-700">—</div>Last Updated</div>
+                </div>
+            </div>
+            <div id="twin-state-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="col-span-full text-slate-400 text-sm">Click "Refresh Twin" to generate a snapshot.</div>
+            </div>
+        </div>
+
+        <!-- ENTERPRISE AI -->
+        <div id="view-enterprise-ai" class="view-section hidden">
+            <h1 class="text-xl font-bold mb-2">Enterprise AI Intelligence</h1>
+            <p class="text-slate-500 text-sm mb-5">Ask questions about your organization. Answers are grounded in verified Digital Twin data — no hallucinations.</p>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden" style="height: calc(100vh - 16rem);">
+                <div id="ai-chat-messages" class="p-5 space-y-4 overflow-y-auto" style="height: calc(100% - 5rem);">
+                    <div class="flex gap-3">
+                        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+                            <i class="bi bi-robot text-white text-sm"></i>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl p-3 text-sm max-w-xl">
+                            Hello! I'm the DTV Enterprise AI. I can answer questions about your organization's competency gaps, training needs, skill coverage, and more. All answers come from your verified organizational data.
+                            <br><br>
+                            Try asking: <em>"What are our biggest competency gaps?"</em> or <em>"Which training needs are unresolved?"</em>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 border-t flex gap-2">
+                    <input id="ai-input" type="text" placeholder="Ask about your organization..." class="flex-1 px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                    <button id="ai-send" class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-600 transition">
+                        <i class="bi bi-send"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div id="view-settings" class="view-section hidden">
+            <h1 class="text-xl font-bold mb-5">Organization Settings</h1>
+            <div class="bg-white rounded-xl shadow-sm border p-6 max-w-2xl">
+                <form id="org-settings-form">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Organization Name</label>
+                        <input type="text" id="org-name-input" disabled class="w-full px-3 py-2 border rounded-lg bg-slate-50 text-sm">
+                    </div>
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Description</label>
+                        <textarea id="org-desc-input" rows="4" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"></textarea>
+                    </div>
+                    <button type="submit" class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-orange-600 transition">Save Changes</button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- Invite Modal -->
+<div id="invite-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-6 w-full max-w-md shadow-xl">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-bold">Invite New Member</h2>
+            <button id="btn-cancel-invite" class="text-slate-400 hover:text-slate-700"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <form id="invite-form">
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
+                <input type="email" id="invite-email" required placeholder="member@company.com" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+            </div>
+            <div class="mb-5">
+                <label class="block text-sm font-medium text-slate-700 mb-1">Role</label>
+                <select id="invite-role" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                    <option value="TRAINEE">Trainee</option>
+                    <option value="TRAINER">Trainer</option>
+                    <option value="ORGANIZATION_ADMIN">Organization Admin</option>
+                </select>
+            </div>
+            <div class="flex justify-end gap-3">
+                <button type="button" id="btn-cancel-invite2" class="px-4 py-2 text-slate-600 hover:text-slate-800 text-sm">Cancel</button>
+                <button type="submit" class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-orange-600 transition">Send Invitation</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast" class="hidden fixed bottom-4 right-4 z-50 px-4 py-3 rounded-lg shadow-lg text-sm text-white font-medium max-w-xs"></div>
+
+<script src="/organization/app.js"></script>
+</body>
+</html>
