@@ -199,6 +199,10 @@
                 document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
                 a.classList.add('active');
                 switchView(item.id);
+                if(window.innerWidth < 768) {
+                    document.getElementById('sidebar')?.classList.add('-translate-x-full');
+                    document.getElementById('sidebar-overlay')?.classList.add('hidden');
+                }
             });
             nav.appendChild(a);
         });
@@ -234,8 +238,9 @@
         ];
 
         qa.innerHTML = actions.map(a => `
-            <button onclick="switchView('${a.view}')" class="w-full text-left flex items-center gap-3 px-3 py-2.5 bg-slate-50 hover:bg-orange-50 hover:text-primary rounded-lg text-sm transition">
-                <i class="bi ${a.icon} text-primary"></i> ${a.label}
+            <button onclick="switchView('${a.view}')" class="flex flex-col items-center justify-center p-4 bg-slate-50 hover:bg-orange-50 hover:text-primary rounded-xl text-sm transition border border-transparent hover:border-orange-100 gap-2 h-full w-full">
+                <i class="bi ${a.icon} text-primary text-2xl mb-1"></i> 
+                <span class="font-medium text-slate-700 text-center">${a.label}</span>
             </button>
         `).join('');
     }
@@ -271,6 +276,10 @@
 
     // ── DASHBOARD ─────────────────────────────────────────────────────
     async function loadDashboard() {
+        const dateEl = el('current-date');
+        if(dateEl) {
+            dateEl.textContent = "Here's what's happening on " + new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) + ".";
+        }
         if (currentRole !== 'ORGANIZATION_ADMIN') {
             el('admin-stats').innerHTML = `<div class="col-span-full bg-white rounded-xl p-5 border text-sm text-slate-500">Welcome! Use the sidebar to navigate your learning portal.</div>`;
             return;
@@ -760,8 +769,18 @@
 
     // ── Mobile Sidebar ────────────────────────────────────────────────
     el('sidebar-toggle')?.addEventListener('click', () => {
-        el('sidebar').classList.toggle('hidden');
-        el('sidebar').classList.toggle('block');
+        el('sidebar').classList.toggle('-translate-x-full');
+        el('sidebar-overlay')?.classList.toggle('hidden');
+    });
+
+    el('sidebar-overlay')?.addEventListener('click', () => {
+        el('sidebar').classList.add('-translate-x-full');
+        el('sidebar-overlay').classList.add('hidden');
+    });
+
+    el('close-sidebar')?.addEventListener('click', () => {
+        el('sidebar').classList.add('-translate-x-full');
+        el('sidebar-overlay').classList.add('hidden');
     });
 
 })();
