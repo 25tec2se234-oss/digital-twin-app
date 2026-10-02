@@ -78,215 +78,175 @@ const aiService = require('./aiService');
  * @returns {Object} Structured analysis result
  */
 async function analyzeProfile(profile) {
-  const { interests = [], skills = [], academicInterest = '', achievements = [] } = profile;
+  const { name = 'Unknown', age = 'Unknown', educationLevel = 'Unknown', academicInterest = 'Unknown', goal = '', skills = [], interests = [], experience = [], achievements = [], preferredDomains = [], constraints = [] } = profile;
   
-  // Try to use AI to generate tailored JSON
-  const systemPrompt = `You are an elite AI Career Counselor. Based on the user's interests, skills, and academic focus, provide exactly 3 highly personalized career recommendations.
-Return the output ONLY as a valid JSON array of objects. Do not include markdown formatting or backticks.
-Schema for each object:
+  // Calculate data quality
+  let dataPoints = 0;
+  if (goal) dataPoints++;
+  if (skills.length > 0) dataPoints++;
+  if (interests.length > 0) dataPoints++;
+  if (educationLevel !== 'Unknown') dataPoints++;
+  if (experience.length > 0) dataPoints++;
+  
+  let dataQuality = 'Limited';
+  if (dataPoints >= 4) dataQuality = 'High';
+  else if (dataPoints >= 2) dataQuality = 'Medium';
+
+  const systemPrompt = `You are an elite AI Career Counselor and Product Architect. Your task is to analyze the user's profile and provide a comprehensive, explainable career assessment.
+CRITICAL RULES:
+1. USE ONLY the provided profile. Do NOT invent facts, fake colleges, salaries, or certifications. If data is unavailable, return "Data currently unavailable".
+2. SKILLS ≠ INTERESTS ≠ GOALS ≠ CAREER. Do not blindly recommend a career because of one matching keyword.
+3. If the user's goal contradicts their skills/interests, EXPLAIN the conflict. Do not override their stated ambition. Provide the pathway to their goal, but also suggest paths aligned with current strengths.
+4. Work for BOTH academic (e.g., Doctor, Engineer) and non-academic/skill-based (e.g., Photographer, Esports, Makeup Artist) careers. Adapt to the user's focus.
+5. Provide explainable match scores (0-100) based on Goal, Skill, Interest, Education, and Experience alignment.
+6. The output MUST be a valid JSON object matching the requested schema exactly. No markdown formatting outside of JSON values. No markdown wrapping.
+7. Deduplicate careers and skills.
+8. Keep career pathways realistic. Generate a personalized 90-day action plan based on actual skill gaps.
+
+JSON SCHEMA:
 {
-  "id": "slug_format",
-  "name": "Career Title",
-  "domain": "Industry Domain",
-  "description": "Short description",
-  "salaryBand": "e.g., ₹8L - ₹25L per annum",
-  "marketGrowth": "e.g., 20% YoY",
-  "certifications": ["Cert 1", "Cert 2"],
-  "techStack": ["Tool 1", "Tool 2"],
-  "category": "Strong Current Alignment",
-  "currentAlignment": "Strong alignment",
-  "isConflict": false,
-  "stats": { "interestMatches": 5, "coreSkillMatches": 3, "skillAlignmentRatio": 0.8, "interestAlignmentRatio": 0.9 },
-  "skillsAlreadyHave": ["Skill 1", "Skill 2"],
-  "skillsToDevelop": ["Skill 3", "Skill 4"],
-  "optionalSkillsToDevelop": ["Skill 5"],
-  "educationPathway": ["Degree 1", "Degree 2"],
-  "reasons": ["Reason 1", "Reason 2"],
-  "roadmap": ["Step 1", "Step 2", "Step 3", "Step 4"]
+  "profileSummary": { "name": "string", "goal": "string", "keyStrengths": ["string"], "missingElements": ["string"] },
+  "primaryCareer": {
+    "name": "string",
+    "domain": "string",
+    "description": "string",
+    "matchPercentage": 85,
+    "whyItMatches": ["string"],
+    "relevantExistingSkills": ["string"],
+    "relevantInterests": ["string"],
+    "missingSkills": ["string"],
+    "importantRequirements": ["string"],
+    "confidenceLevel": "High | Medium | Low",
+    "salaryBand": "string (or 'Data currently unavailable')"
+  },
+  "alternativeCareers": [
+    {
+      "type": "Primary Path | Adjacent Path | Emerging Path",
+      "name": "string",
+      "reasonForRecommendation": "string",
+      "matchPercentage": 75
+    }
+  ],
+  "skillAnalysis": { "coreStrengths": ["string"], "criticalGaps": ["string"] },
+  "goalAnalysis": {
+    "statedGoal": "string",
+    "isConflict": true,
+    "currentStrengths": ["string"],
+    "goalRequirements": ["string"],
+    "educationGaps": ["string"],
+    "experienceGaps": ["string"],
+    "recommendedNextSteps": ["string"],
+    "explanation": "string (Explain relationship/conflict between goal and current profile)"
+  },
+  "careerCompatibility": [
+    { "careerName": "string", "goalFit": "High | Medium | Low", "skillFit": "High | Medium | Low", "interestFit": "High | Medium | Low", "educationFit": "High | Medium | Low", "overallCompatibility": "High | Medium | Low" }
+  ],
+  "actionPlan90Days": {
+    "days1to30": { "focus": "string", "tasks": ["string"] },
+    "days31to60": { "focus": "string", "tasks": ["string"] },
+    "days61to90": { "focus": "string", "tasks": ["string"] }
+  },
+  "dataQuality": { "quality": "High | Medium | Limited", "reason": "string" },
+  "confidence": { "level": "High | Medium | Limited", "reason": "string" }
 }`;
 
-  const userPrompt = `User Profile:\nInterests: ${interests.join(', ')}\nSkills: ${skills.join(', ')}\nAcademic Interest: ${academicInterest}\nAchievements: ${achievements.join(', ')}`;
+  const userPrompt = `User Profile:
+Name: ${name}
+Age: ${age}
+Education Level: ${educationLevel}
+Academic Interest: ${academicInterest}
+Goal: ${goal}
+Skills: ${skills.join(', ')}
+Interests: ${interests.join(', ')}
+Experience: ${experience.join(', ')}
+Achievements: ${achievements.join(', ')}
+Preferred Domains: ${preferredDomains.join(', ')}
+Constraints: ${constraints.join(', ')}
+
+Provide your response strictly as the required JSON object.`;
+
+  let aiStructuredOutput = null;
 
   try {
     const aiResponse = await aiService.sendMessages({
       system: systemPrompt,
       messages: [{ role: 'user', content: userPrompt }],
-      max_tokens: 2500
+      max_tokens: 3500
     });
     
     if (aiResponse && aiResponse.status === 200) {
       let content = aiResponse.data.content[0].text;
-      // Clean markdown if present
       content = content.replace(/```json/g, '').replace(/```/g, '').trim();
-      const generatedCareers = JSON.parse(content);
       
-      return {
-        success: true,
-        profileSummary: { interests, skills, academicInterest },
-        topRecommendations: generatedCareers,
-        categories: {
-          'Strong Current Alignment': generatedCareers,
-          'Interest-Aligned Opportunities': [],
-          'Emerging Opportunities': [],
-          'Career Transition Options': []
-        },
-        scenarios: [],
-        timestamp: new Date().toISOString()
-      };
+      // Attempt to parse
+      try {
+        aiStructuredOutput = JSON.parse(content);
+      } catch (parseErr) {
+        console.error("Failed to parse AI JSON response:", parseErr);
+        // Fallback to static if JSON parse fails
+      }
     }
   } catch (e) {
-    console.error("AI Generation failed, falling back to static logic", e);
+    console.error("AI Generation failed:", e);
   }
   
-  // Fallback to static logic if AI fails
-  const results = careerData.map(career => {
-    // 1. Calculate Scores
-    const interestMatches = calculateOverlap(interests, career.interests);
-    const coreSkillMatches = calculateOverlap(skills, career.coreSkills);
-    const optionalSkillMatches = calculateOverlap(skills, career.optionalSkills);
-    
-    // Weighted scoring logic
-    const maxCoreSkills = career.coreSkills.length || 1;
-    const maxInterests = career.interests.length || 1;
-    
-    const skillAlignmentRatio = coreSkillMatches / maxCoreSkills;
-    const interestAlignmentRatio = interestMatches / maxInterests;
-    
-    // 2. Identify Gaps
-    const missingCoreSkills = identifyGaps(skills, career.coreSkills);
-    const missingOptionalSkills = identifyGaps(skills, career.optionalSkills);
-    const existingSkills = career.coreSkills.filter(s => !missingCoreSkills.includes(s));
-    
-    // 3. Categorize Alignment
-    let currentAlignment = 'Low current alignment';
-    if (skillAlignmentRatio > 0.7) {
-      currentAlignment = 'Strong alignment';
-    } else if (skillAlignmentRatio > 0.4) {
-      currentAlignment = 'Moderate alignment';
-    } else if (skillAlignmentRatio > 0.15) {
-      currentAlignment = 'Developing alignment';
-    }
-
-    // Determine category based on logic
-    let category = 'Emerging Opportunities';
-    if (skillAlignmentRatio > 0.6) {
-      category = 'Strong Current Alignment';
-    } else if (interestAlignmentRatio > 0.5) {
-      category = 'Interest-Aligned Opportunities';
-    } else if (skillAlignmentRatio < 0.2 && interestAlignmentRatio > 0) {
-      category = 'Career Transition Options';
-    }
-    
-    // 4. Determine if there is a conflict (High Interest, Low Skill)
-    const isConflict = interestAlignmentRatio >= 0.5 && skillAlignmentRatio <= 0.3;
-    
-    // Generate explainability statement
-    const reasons = [];
-    if (interestMatches > 0) reasons.push(`Matches your stated interests.`);
-    if (coreSkillMatches > 0) reasons.push(`You already possess ${coreSkillMatches} core skills for this role.`);
-    
-    return {
-      id: career.id,
-      name: career.name,
-      domain: career.domain,
-      description: career.description,
-      salaryBand: career.salaryBand,
-      marketGrowth: career.marketGrowth,
-      certifications: career.certifications,
-      techStack: career.techStack,
-      category,
-      currentAlignment,
-      isConflict,
-      stats: {
-        interestMatches,
-        coreSkillMatches,
-        skillAlignmentRatio,
-        interestAlignmentRatio
-      },
-      skillsAlreadyHave: existingSkills,
-      skillsToDevelop: missingCoreSkills,
-      optionalSkillsToDevelop: missingOptionalSkills,
-      educationPathway: career.requiredEducation,
-      reasons,
-      roadmap: [
-        "Master the foundational concepts for missing core skills",
-        "Build a practical project to demonstrate capability",
-        "Consider relevant certifications or formal education pathways",
-        "Apply for entry-level roles or internships"
-      ]
-    };
-  });
-  
-  // Sort by combination of interest and skill
-  results.sort((a, b) => {
-    const scoreA = (a.stats.skillAlignmentRatio * 0.6) + (a.stats.interestAlignmentRatio * 0.4);
-    const scoreB = (b.stats.skillAlignmentRatio * 0.6) + (b.stats.interestAlignmentRatio * 0.4);
-    return scoreB - scoreA;
-  });
-
-  // Group into categories
-  const categories = {
-    'Strong Current Alignment': results.filter(r => r.category === 'Strong Current Alignment'),
-    'Interest-Aligned Opportunities': results.filter(r => r.category === 'Interest-Aligned Opportunities'),
-    'Emerging Opportunities': results.filter(r => r.category === 'Emerging Opportunities'),
-    'Career Transition Options': results.filter(r => r.category === 'Career Transition Options')
-  };
-
-  // IF-BUT Scenarios
-  const scenarios = [];
-  
-  // Scenario 1: Strong skills but different primary interest
-  const strongestSkillCareer = [...results].sort((a,b) => b.stats.skillAlignmentRatio - a.stats.skillAlignmentRatio)[0];
-  const strongestInterestCareer = [...results].sort((a,b) => b.stats.interestAlignmentRatio - a.stats.interestAlignmentRatio)[0];
-  
-  if (strongestSkillCareer && strongestInterestCareer && strongestSkillCareer.id !== strongestInterestCareer.id) {
-    if (strongestSkillCareer.stats.skillAlignmentRatio >= 0.5 && strongestInterestCareer.stats.interestAlignmentRatio >= 0.5) {
-      scenarios.push({
-        type: 'interest_skill_conflict',
-        title: 'Interest vs Current Skills',
-        condition: `IF you choose ${strongestSkillCareer.name}`,
-        but: `BUT your primary interest is ${strongestInterestCareer.name}`,
-        then: `Your current skills strongly align with ${strongestSkillCareer.name}, which makes it an easier immediate path. However, to transition to ${strongestInterestCareer.name}, you need to focus heavily on acquiring: ${strongestInterestCareer.skillsToDevelop.slice(0, 3).join(', ')}.`
-      });
-    }
+  if (aiStructuredOutput && typeof aiStructuredOutput === 'object') {
+    // Add success flag and return
+    aiStructuredOutput.success = true;
+    aiStructuredOutput.timestamp = new Date().toISOString();
+    return aiStructuredOutput;
   }
-
-  // Scenario 2: High interest, low skills
-  if (strongestInterestCareer && strongestInterestCareer.stats.skillAlignmentRatio <= 0.2 && strongestInterestCareer.stats.interestAlignmentRatio >= 0.5) {
-    scenarios.push({
-      type: 'high_interest_low_skill',
-      title: 'Passion vs Preparation',
-      condition: `IF your goal is ${strongestInterestCareer.name}`,
-      but: `BUT your current skills are limited for this role`,
-      then: `You will need a dedicated transition roadmap. However, with a market growth of ${strongestInterestCareer.marketGrowth}, the ROI is significant. Focus on foundational education first (${strongestInterestCareer.educationPathway[0] || 'Relevant certifications'}) before applying for entry-level roles.`
-    });
-  }
-
-  // Scenario 3: Multiple matching paths
-  if (categories['Strong Current Alignment'].length > 1) {
-    const c1 = categories['Strong Current Alignment'][0];
-    const c2 = categories['Strong Current Alignment'][1];
-    scenarios.push({
-      type: 'multiple_paths',
-      title: 'Multiple Strong Matches',
-      condition: `IF you are deciding between ${c1.name} and ${c2.name}`,
-      but: `BUT both are strong matches for your current skills`,
-      then: `Choose ${c1.name} if you prefer ${c1.domain} and want to focus on ${c1.skillsAlreadyHave[0] || 'current strengths'}. Choose ${c2.name} if you want to leverage your skills in ${c2.domain}.`
-    });
-  }
-
-  return {
+  
+  // ==========================================
+  // FALLBACK STATIC LOGIC (If AI fails)
+  // ==========================================
+  
+  // Very simplified static fallback matching the new schema
+  const fallbackResult = {
     success: true,
     profileSummary: {
-      interests,
-      skills,
-      academicInterest
+      name,
+      goal: goal || "Not specified",
+      keyStrengths: skills,
+      missingElements: ["More data needed for AI analysis"]
     },
-    topRecommendations: results.slice(0, 5),
-    categories,
-    scenarios,
+    primaryCareer: {
+      name: goal || (interests[0] ? interests[0] + " Professional" : "General Professional"),
+      domain: "Various",
+      description: "Based on your provided input.",
+      matchPercentage: 50,
+      whyItMatches: ["Static fallback matching based on your input."],
+      relevantExistingSkills: skills,
+      relevantInterests: interests,
+      missingSkills: ["AI analysis unavailable"],
+      importantRequirements: ["AI analysis unavailable"],
+      confidenceLevel: "Low",
+      salaryBand: "Data currently unavailable"
+    },
+    alternativeCareers: [],
+    skillAnalysis: { coreStrengths: skills, criticalGaps: ["AI analysis unavailable"] },
+    goalAnalysis: {
+      statedGoal: goal || "Not specified",
+      isConflict: false,
+      currentStrengths: skills,
+      goalRequirements: ["Data currently unavailable"],
+      educationGaps: ["Data currently unavailable"],
+      experienceGaps: ["Data currently unavailable"],
+      recommendedNextSteps: ["Complete more profile details and try again."],
+      explanation: "Static analysis mode. Please ensure the AI service is available for detailed insights."
+    },
+    careerCompatibility: [],
+    actionPlan90Days: {
+      days1to30: { focus: "Foundation", tasks: ["Review your current skills"] },
+      days31to60: { focus: "Development", tasks: ["Identify learning resources"] },
+      days61to90: { focus: "Application", tasks: ["Start a project"] }
+    },
+    dataQuality: { quality: dataQuality, reason: "Fallback logic used." },
+    confidence: { level: "Low", reason: "Fallback static logic used." },
     timestamp: new Date().toISOString()
   };
+
+  return fallbackResult;
 }
 
 module.exports = {
