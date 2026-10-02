@@ -83,7 +83,8 @@ app.use(helmet({
         "https://www.googletagmanager.com", 
         "https://checkout.razorpay.com", 
         "https://cdnjs.cloudflare.com",
-        "https://cdn.tailwindcss.com"
+        "https://cdn.tailwindcss.com",
+        "https://cdn.jsdelivr.net"
       ],
       scriptSrcAttr: ["'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdn.tailwindcss.com"],

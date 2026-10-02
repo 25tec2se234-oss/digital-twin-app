@@ -2012,13 +2012,13 @@
             
             var a = DT_STATE.profile.analysis;
             var be = a.backendEngine;
-            if (!be || !be.topRecommendations || be.topRecommendations.length === 0) return;
+            if (!be || !be.primaryCareer) return;
             
-            var topRec = be.topRecommendations[0];
+            var topRec = be.primaryCareer;
             var userSkills = DT_STATE.profile.skills || [];
             
             // Collect all required skills (core + optional)
-            var allRequiredSkills = [...topRec.skillsAlreadyHave, ...topRec.skillsToDevelop];
+            var allRequiredSkills = [...topRec.relevantExistingSkills, ...topRec.missingSkills];
             // Take up to 6 key skills for the radar chart to keep it clean
             var radarLabels = allRequiredSkills.slice(0, 6);
             
@@ -2028,7 +2028,7 @@
             radarLabels.forEach(function(skill) {
                 requiredScores.push(100); // The role requires 100% of this skill
                 // If user has the skill, they get a high score, otherwise low score
-                var hasSkill = topRec.skillsAlreadyHave.includes(skill);
+                var hasSkill = topRec.relevantExistingSkills.includes(skill);
                 userScores.push(hasSkill ? Math.floor(Math.random() * 20) + 80 : Math.floor(Math.random() * 30) + 20); 
             });
 
@@ -2315,31 +2315,40 @@
         /* ── COLLEGE RENDERER ───────────────────────────────────────── */
         function renderColleges() {
             if (!DT_STATE.profile || !DT_STATE.profile.analysis) return;
-            var domain = DT_STATE.profile.analysis.domain;
-            var colleges = COLLEGE_DB[domain] || COLLEGE_DB.tech;
+            var a = DT_STATE.profile.analysis;
+            var colleges = a.colleges || [];
 
             var container = document.getElementById('colleges-grid');
             if (!container) return;
 
             container.innerHTML = colleges.map(function(c, i) {
+                // Determine if this is an AI-generated institution (has type, location) or old static COLLEGE_DB format
+                var isAI = c.type !== undefined;
+                var rankLbl = isAI ? c.type : (c.ranking || '');
+                var loc = isAI ? c.location : ((c.city || '') + ', ' + (c.state || ''));
+                var whyTxt = isAI ? c.whyRecommended : c.why;
+                var statsHtml = isAI ? '' : (
+                    '<div class="college-stats">' +
+                    '<div class="college-stat"><div class="cs-val">' + (c.placementRate || 'N/A') + '</div><div class="cs-lbl">' + t('placementRate') + '</div></div>' +
+                    '<div class="college-stat"><div class="cs-val">' + (c.avgPackage || 'N/A') + '</div><div class="cs-lbl">' + t('avgPackage') + '</div></div>' +
+                    '<div class="college-stat"><div class="cs-val">' + (c.topPackage || 'N/A') + '</div><div class="cs-lbl">Top Package</div></div>' +
+                    '</div>'
+                );
+                var growthHtml = isAI ? '' : '<div class="college-opp"><div class="opp-title">🚀 Growth Opportunities</div><div class="opp-body">' + (c.growthOpp || '') + '</div></div>';
+                var coursesHtml = isAI ? '' : '<span class="courses-tag">' + (c.courses || '') + '</span>';
+                
                 return '<div class="college-card" style="animation-delay:' + (i * 0.1) + 's">' +
                     '<div class="college-top">' +
                     '<div class="college-rank">#' + (i + 1) + ' Pick</div>' +
                     '<div class="college-name">' + c.name + '</div>' +
-                    '<div class="college-loc">📍 ' + c.city + ', ' + c.state + '</div>' +
-                    '<div class="college-rank-badge">' + c.ranking + '</div>' +
+                    '<div class="college-loc">📍 ' + loc + '</div>' +
+                    '<div class="college-rank-badge">' + rankLbl + '</div>' +
                     '</div>' +
-                    '<div class="college-stats">' +
-                    '<div class="college-stat"><div class="cs-val">' + c.placementRate + '</div><div class="cs-lbl">' + t('placementRate') + '</div></div>' +
-                    '<div class="college-stat"><div class="cs-val">' + c.avgPackage + '</div><div class="cs-lbl">' + t('avgPackage') + '</div></div>' +
-                    '<div class="college-stat"><div class="cs-val">' + c.topPackage + '</div><div class="cs-lbl">Top Package</div></div>' +
-                    '</div>' +
-                    '<div class="college-why"><div class="why-title">💡 ' + t('whyThisCollege') + '</div><div class="why-body">' + c.why + '</div></div>' +
-                    '<div class="college-opp"><div class="opp-title">🚀 Growth Opportunities</div><div class="opp-body">' + c.growthOpp + '</div></div>' +
-                    '<div class="college-admission"><div class="adm-title">📝 Admission Route</div><div class="adm-body">' + c.admissionRoute + '</div></div>' +
-                    '<div class="college-footer">' +
-                    '<span class="courses-tag">' + c.courses + '</span>' +
-                    '</div></div>';
+                    statsHtml +
+                    '<div class="college-why"><div class="why-title">💡 ' + t('whyThisCollege') + '</div><div class="why-body">' + whyTxt + '</div></div>' +
+                    growthHtml +
+                    '<div class="college-admission"><div class="adm-title">📝 Admission Route</div><div class="adm-body">' + (c.admissionRoute || 'N/A') + '</div></div>' +
+                    '<div class="college-footer">' + coursesHtml + '</div></div>';
             }).join('');
 
             awardBadge('college_view');
@@ -3278,6 +3287,30 @@
                         localAnalysis.domain = result.primaryCareer.domain.toLowerCase();
                         localAnalysis.careerMatch = result.primaryCareer.matchPercentage || 50;
                         localAnalysis.requiredSkills = result.primaryCareer.missingSkills || [];
+                        
+                        if (result.actionPlan90Days) {
+                            localAnalysis.phases = [
+                                {
+                                    title: result.actionPlan90Days.days1to30.focus,
+                                    months: 'Month 1',
+                                    desc: (result.actionPlan90Days.days1to30.tasks || []).join(', ')
+                                },
+                                {
+                                    title: result.actionPlan90Days.days31to60.focus,
+                                    months: 'Month 2',
+                                    desc: (result.actionPlan90Days.days31to60.tasks || []).join(', ')
+                                },
+                                {
+                                    title: result.actionPlan90Days.days61to90.focus,
+                                    months: 'Month 3',
+                                    desc: (result.actionPlan90Days.days61to90.tasks || []).join(', ')
+                                }
+                            ];
+                        }
+                        
+                        if (result.institutions && result.institutions.length > 0) {
+                            localAnalysis.colleges = result.institutions;
+                        }
                     }
                     
                     // Attach backend results for new UI components
