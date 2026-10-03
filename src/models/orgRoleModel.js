@@ -88,6 +88,16 @@ class OrgRoleModel {
   static async archive(id, organizationId) {
     return this.update(id, organizationId, { status: 'ARCHIVED' });
   }
+
+  static async assignMember(organizationId, roleId, userId, assignedBy) {
+    await pool.query('DELETE FROM org_user_roles WHERE organization_id = $1 AND user_id = $2', [organizationId, userId]);
+    if (roleId) {
+      await pool.query(
+        'INSERT INTO org_user_roles (organization_id, user_id, role_id, assigned_by) VALUES ($1, $2, $3, $4)',
+        [organizationId, userId, roleId, assignedBy]
+      );
+    }
+  }
 }
 
 module.exports = OrgRoleModel;

@@ -57,9 +57,15 @@ async function getUserOrganizations(userId) {
 
 async function getOrganizationMembers(organizationId, limit = 50, offset = 0) {
   const result = await db.query(
-    `SELECT u.id, u.name, u.email, u.avatar_url, om.role, om.status, om.joined_at, COUNT(*) OVER() AS total 
+    `SELECT u.id, u.name, u.email, u.avatar_url, om.role, om.status, om.joined_at, 
+            d.name as department_name, r.name as job_role_name,
+            COUNT(*) OVER() AS total 
      FROM users u 
      JOIN organization_memberships om ON u.id = om.user_id 
+     LEFT JOIN org_user_departments ud ON u.id = ud.user_id AND ud.organization_id = om.organization_id
+     LEFT JOIN org_departments d ON ud.department_id = d.id
+     LEFT JOIN org_user_roles ur ON u.id = ur.user_id AND ur.organization_id = om.organization_id
+     LEFT JOIN org_roles r ON ur.role_id = r.id
      WHERE om.organization_id = $1 
      ORDER BY om.joined_at DESC LIMIT $2 OFFSET $3`,
     [organizationId, limit, offset]

@@ -24,3 +24,14 @@ exports.getLatestSnapshot = async (req, res) => {
     res.status(500).json({ success: false, message: 'Failed to fetch digital twin' });
   }
 };
+
+exports.getHistoricalSnapshots = async (req, res) => {
+  try {
+    const { organizationId } = req.params;
+    const history = await OrgDigitalTwinService.getHistoricalSnapshots(organizationId, 10);
+    res.json({ success: true, data: history });
+  } catch (error) {
+    console.error('Error fetching historical snapshots:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch historical snapshots' });
+  }
+};

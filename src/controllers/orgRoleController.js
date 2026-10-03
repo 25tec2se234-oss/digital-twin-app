@@ -83,3 +83,12 @@ exports.archiveRole = asyncHandler(async (req, res, next) => {
     data: {}
   });
 });
+
+exports.assignMember = asyncHandler(async (req, res, next) => {
+  const { organizationId, id } = req.params;
+  const { userId } = req.body;
+  if (!userId) return next(new ApiError(400, 'userId is required'));
+
+  await orgRoleModel.assignMember(organizationId, id, userId, req.user.id);
+  res.status(200).json({ success: true, message: 'Member assigned to role successfully' });
+});

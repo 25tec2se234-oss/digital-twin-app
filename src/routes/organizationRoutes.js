@@ -11,7 +11,8 @@ const {
   addOrganizationMember,
   updateOrganizationMemberRole,
   updateOrganizationMemberStatus,
-  removeOrganizationMember
+  removeOrganizationMember,
+  getOrganizationMemberProfile
 } = require('../controllers/organizationController');
 
 // All organization routes require authentication
@@ -34,37 +35,43 @@ router.post('/invitations/accept', authenticate, acceptInvitation);
 // Tenant-specific routes (Require organization membership)
 router.use('/:organizationId', requireOrganizationMembership);
 
-router.get('/:organizationId', requirePermission('organization.read'), getOrganizationById);
-router.put('/:organizationId', requirePermission('organization.settings.update'), updateOrganization);
+router.get('/:organizationId', requirePermission('organization.view'), getOrganizationById);
+router.put('/:organizationId', requirePermission('organization.update'), updateOrganization);
 
 router.get(
   '/:organizationId/members', 
-  requirePermission('organization.users.read'), 
+  requirePermission('members.view'), 
   getOrganizationMembers
 );
 
 router.post(
   '/:organizationId/members', 
-  requirePermission('organization.users.create'), 
+  requirePermission('members.invite'), 
   addOrganizationMember
 );
 
 router.put(
   '/:organizationId/members/:userId/role',
-  requirePermission('organization.users.update'),
+  requirePermission('members.update'),
   updateOrganizationMemberRole
 );
 
 router.put(
   '/:organizationId/members/:userId/status',
-  requirePermission('people.activate'),
+  requirePermission('members.update'),
   updateOrganizationMemberStatus
 );
 
 router.delete(
   '/:organizationId/members/:userId',
-  requirePermission('organization.users.delete'),
+  requirePermission('members.remove'),
   removeOrganizationMember
+);
+
+router.get(
+  '/:organizationId/members/:userId/profile',
+  requirePermission('members.view'),
+  getOrganizationMemberProfile
 );
 
 const orgCourseRoutes = require('./orgCourseRoutes');
@@ -85,7 +92,7 @@ router.use('/:organizationId/roles', orgRoleRoutes);
 const orgRequirementRoutes = require('./orgRequirementRoutes');
 router.use('/:organizationId/requirements', orgRequirementRoutes);
 const { getTargetRequirements } = require('../controllers/orgRequirementController');
-router.get('/:organizationId/targets/:targetType/:targetId/requirements', requirePermission('organization.read'), getTargetRequirements);
+router.get('/:organizationId/targets/:targetType/:targetId/requirements', requirePermission('organization.view'), getTargetRequirements);
 
 // Competencies
 const orgCompetencyRoutes = require('./orgCompetencyRoutes');
@@ -111,24 +118,26 @@ router.use('/:organizationId/trainees/:traineeId', orgSkillGapRoutes);
 
 // Org-wide Training Needs
 const { getOrganizationTrainingNeeds } = require('../controllers/orgSkillGapController');
-router.get('/:organizationId/training-needs', requirePermission('organization.read'), getOrganizationTrainingNeeds);
+router.get('/:organizationId/training-needs', requirePermission('organization.view'), require('../controllers/orgSkillGapController').getOrganizationTrainingNeeds);
+router.get('/:organizationId/ai-training-needs', requirePermission('organization.view'), require('../controllers/orgSkillGapController').getAITrainingNeedsAnalysis);
+router.get('/:organizationId/ai-training-needs/export', requirePermission('organization.view'), require('../controllers/orgSkillGapController').getAITrainingNeedsExport);
 
 // Invitations
 router.post(
   '/:organizationId/invitations',
-  requirePermission('organization.invitations.create'),
+  requirePermission('members.invite'),
   createInvitation
 );
 
 router.get(
   '/:organizationId/invitations',
-  requirePermission('organization.invitations.read'),
+  requirePermission('members.view'),
   getInvitations
 );
 
 router.post(
   '/:organizationId/invitations/:inviteId/revoke',
-  requirePermission('organization.invitations.revoke'),
+  requirePermission('members.invite'),
   revokeInvitation
 );
 
@@ -152,5 +161,9 @@ router.use('/:organizationId/digital-twin', orgDigitalTwinRoutes);
 
 const enterpriseAiRoutes = require('./enterpriseAiRoutes');
 router.use('/:organizationId/ai', enterpriseAiRoutes);
+
+// Departments
+const orgDepartmentRoutes = require('./orgDepartmentRoutes');
+router.use('/:organizationId/departments', orgDepartmentRoutes);
 
 module.exports = router;

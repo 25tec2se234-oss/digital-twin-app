@@ -134,9 +134,9 @@ const acceptInvitation = asyncHandler(async (req, res, next) => {
 
   // Optional: Check if email matches (or allow any user to claim if they have the token?)
   // For strict security, we enforce email matching
-  // if (req.user.email !== invitation.email) {
-  //   return next(new ApiError(403, 'This invitation is not for your account.'));
-  // }
+  if (req.user.email !== invitation.email) {
+    return next(new ApiError(403, 'This invitation is not for your account.'));
+  }
 
   // Create membership
   await organizationModel.addMembership(invitation.organization_id, userId, invitation.role);
@@ -152,9 +152,43 @@ const acceptInvitation = asyncHandler(async (req, res, next) => {
   });
 });
 
+// @desc    Resend an invitation
+// @route   POST /api/v1/organizations/:organizationId/invitations/:inviteId/resend
+// @access  Private (requires members.invite permission)
+const resendInvitation = asyncHandler(async (req, res, next) => {
+  const { inviteId, organizationId } = req.params;
+  
+  const invitation = await invitationModel.updateStatus(inviteId, 'PENDING');
+  if (!invitation) return next(new ApiError(404, 'Invitation not found.'));
+  
+  const rawToken = crypto.randomBytes(32).toString('hex');
+  const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
+  
+  await require('../db').pool.query(
+      'UPDATE organization_invitations SET token_hash = $1, expires_at = CURRENT_TIMESTAMP + interval \'7 days\' WHERE id = $2',
+      [tokenHash, inviteId]
+  );
+  
+  const inviteLink = `${req.protocol}://${req.get('host')}/organization/invitations/accept?token=${rawToken}`;
+  try {
+    await sendEmail({
+      email: invitation.email,
+      subject: 'Reminder: You have been invited to an Organization',
+      message: `You have been invited to join the organization as a ${invitation.role}. Click here to accept: ${inviteLink}`
+    });
+  } catch (error) {
+    console.error('Email sending failed', error);
+  }
+  
+  auditLogModel.createLog(req.user.id, 'INVITATION_RESENT', 'organization_invitation', invitation.id, { email: invitation.email }, req.ip, req.headers['user-agent']);
+  
+  res.status(200).json({ success: true, message: 'Invitation resent successfully.' });
+});
+
 module.exports = {
   createInvitation,
   getInvitations,
   revokeInvitation,
-  acceptInvitation
+  acceptInvitation,
+  resendInvitation
 };

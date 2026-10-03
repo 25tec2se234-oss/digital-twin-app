@@ -172,6 +172,11 @@ class CompetencyEngineService {
       ]);
 
       await client.query('COMMIT');
+      
+      // Phase 6: Mark Org Digital Twin as stale
+      const OrgDigitalTwinService = require('./orgDigitalTwinService');
+      await OrgDigitalTwinService.markStale(organizationId);
+
     } catch (e) {
       await client.query('ROLLBACK');
       console.error('Error saving competency snapshot:', e);

@@ -22,6 +22,9 @@ router.route('/training-needs')
 router.route('/recalculate-gaps')
   .post(requirePermission('organization.manage'), recalculateGaps);
 
+router.route('/ai-gap-report')
+  .get(require('../controllers/orgSkillGapController').getAIGapReport);
+
 // Note: /api/v1/organizations/:organizationId/training-needs 
 // will be mapped directly in organizationRoutes.js
 

@@ -227,6 +227,80 @@ const removeOrganizationMember = asyncHandler(async (req, res, next) => {
   });
 });
 
+exports.getOrganizationMemberProfile = asyncHandler(async (req, res, next) => {
+  const { organizationId, userId } = req.params;
+  
+  // Verify membership
+  const membership = await organizationModel.getMembership(organizationId, userId);
+  if (!membership) {
+    return next(new ApiError(404, 'User is not a member of this organization'));
+  }
+
+  // Get basic user profile (from main DB, reuse DTV logic where possible)
+  const userResult = await db.query('SELECT id, name, email, avatar_url, phone_number FROM users WHERE id = $1', [userId]);
+  const user = userResult.rows[0];
+
+  // Get Department and Org Role
+  const deptResult = await db.query(
+    'SELECT d.id, d.name FROM org_departments d JOIN org_user_departments ud ON d.id = ud.department_id WHERE ud.user_id = $1 AND ud.organization_id = $2',
+    [userId, organizationId]
+  );
+  
+  const roleResult = await db.query(
+    'SELECT r.id, r.name FROM org_roles r JOIN org_user_roles ur ON r.id = ur.role_id WHERE ur.user_id = $1 AND ur.organization_id = $2',
+    [userId, organizationId]
+  );
+
+  // Get Competencies & Gaps
+  const gapsResult = await db.query(
+    'SELECT gap_type, priority, skill_id, competency_id, required_level, current_level, score_gap FROM org_skill_gaps WHERE trainee_id = $1 AND organization_id = $2 AND is_current = true',
+    [userId, organizationId]
+  );
+
+  // Get Assigned Training
+  const trainingResult = await db.query(
+    'SELECT n.id, n.status, n.priority, c.title FROM org_training_needs n LEFT JOIN org_training_recommendations r ON n.id = r.training_need_id LEFT JOIN org_courses c ON r.course_id = c.id WHERE n.trainee_id = $1 AND n.organization_id = $2',
+    [userId, organizationId]
+  );
+
+  // Get Competency Matrix (Required from role vs Actual from snapshots)
+  const matrixResult = await db.query(`
+    SELECT 
+      c.name as competency_name,
+      r.required_level,
+      r.required_score,
+      s.level_name as current_level,
+      s.score as current_score,
+      s.evidence_count,
+      s.confidence,
+      (s.score - r.required_score) as gap_score
+    FROM org_competency_requirements r
+    JOIN org_competencies c ON r.competency_id = c.id
+    LEFT JOIN org_competency_snapshots s 
+      ON s.competency_id = r.competency_id 
+      AND s.trainee_id = $1 
+      AND s.is_current = true
+    WHERE r.target_type = 'ROLE' 
+      AND r.organization_id = $2
+      AND r.target_id IN (
+        SELECT role_id FROM org_user_roles WHERE user_id = $1 AND organization_id = $2
+      )
+  `, [userId, organizationId]);
+
+  res.status(200).json({
+    success: true,
+    data: {
+      profile: user,
+      membership: membership,
+      department: deptResult.rows[0] || null,
+      jobRole: roleResult.rows[0] || null,
+      skillGaps: gapsResult.rows,
+      trainingNeeds: trainingResult.rows,
+      competencyMatrix: matrixResult.rows
+    }
+  });
+});
+
 module.exports = {
   createOrganization,
   updateOrganization,
@@ -236,5 +310,6 @@ module.exports = {
   addOrganizationMember,
   updateOrganizationMemberRole,
   updateOrganizationMemberStatus,
-  removeOrganizationMember
+  removeOrganizationMember,
+  getOrganizationMemberProfile: exports.getOrganizationMemberProfile
 };

@@ -10,5 +10,6 @@ router.use(requirePermission('organization.admin'));
 
 router.post('/snapshots', orgDigitalTwinController.generateSnapshot);
 router.get('/snapshots/latest', orgDigitalTwinController.getLatestSnapshot);
+router.get('/snapshots/history', orgDigitalTwinController.getHistoricalSnapshots);
 
 module.exports = router;

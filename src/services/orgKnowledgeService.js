@@ -3,17 +3,30 @@ const OrgNotificationService = require('./orgNotificationService');
 
 class OrgKnowledgeService {
   static async createResource(organizationId, userId, data) {
-    const { title, description, content_type, resource_url, visibility, related_competency_id, related_course_id } = data;
+    const { title, description, content_type, resource_url, visibility, related_competency_id, related_course_id, category, tags, parent_id } = data;
     
+    // Determine version if there's a parent_id
+    let version = 1;
+    if (parent_id) {
+        const parentQuery = `SELECT version FROM org_knowledge_resources WHERE id = $1 AND organization_id = $2 ORDER BY version DESC LIMIT 1`;
+        const parentRes = await pool.query(parentQuery, [parent_id, organizationId]);
+        if (parentRes.rows.length > 0) {
+            version = parentRes.rows[0].version + 1;
+            
+            // Archive the previous version
+            await pool.query(`UPDATE org_knowledge_resources SET status = 'ARCHIVED' WHERE id = $1`, [parent_id]);
+        }
+    }
+
     const query = `
       INSERT INTO org_knowledge_resources 
-        (organization_id, created_by, title, description, content_type, resource_url, visibility, related_competency_id, related_course_id)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+        (organization_id, created_by, title, description, content_type, resource_url, visibility, related_competency_id, related_course_id, category, tags, parent_id, version)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
       RETURNING *
     `;
     const res = await pool.query(query, [
       organizationId, userId, title, description, content_type, resource_url, visibility || 'ORGANIZATION',
-      related_competency_id || null, related_course_id || null
+      related_competency_id || null, related_course_id || null, category || null, JSON.stringify(tags || []), parent_id || null, version
     ]);
 
     return res.rows[0];
@@ -23,6 +36,17 @@ class OrgKnowledgeService {
     const query = `
       UPDATE org_knowledge_resources
       SET status = 'PUBLISHED', published_at = CURRENT_TIMESTAMP
+      WHERE organization_id = $1 AND id = $2
+      RETURNING *
+    `;
+    const res = await pool.query(query, [organizationId, resourceId]);
+    return res.rows[0];
+  }
+
+  static async archiveResource(organizationId, resourceId) {
+    const query = `
+      UPDATE org_knowledge_resources
+      SET status = 'ARCHIVED'
       WHERE organization_id = $1 AND id = $2
       RETURNING *
     `;

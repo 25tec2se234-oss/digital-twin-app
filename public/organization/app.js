@@ -453,27 +453,84 @@
     // ── TRAINING NEEDS ────────────────────────────────────────────────
     async function loadTraining() {
         const list = el('training-list');
-        list.innerHTML = `<p class="text-slate-400 text-sm">Loading...</p>`;
+        list.innerHTML = '<p class="text-slate-400 text-sm">Analyzing training needs...</p>';
         try {
-            const json = await api(`/organizations/${orgId}/training-needs`);
-            const items = json.data || [];
-            if (!items.length) {
-                list.innerHTML = `<div class="text-center py-10 text-slate-400"><i class="bi bi-bullseye text-4xl block mb-2"></i>No training needs recorded.</div>`;
+            const deptSelect = el('filter-dept-tn');
+            if (deptSelect && deptSelect.children.length <= 1) {
+                api(\`/organizations/\${orgId}/departments\`).then(res => {
+                    deptSelect.innerHTML = '<option value="">All Departments</option>' + (res.data || []).map(d => \`<option value="\${d.id}">\${d.name}</option>\`).join('');
+                }).catch(console.error);
+            }
+            const roleSelect = el('filter-role-tn');
+            if (roleSelect && roleSelect.children.length <= 1) {
+                api(\`/organizations/\${orgId}/roles\`).then(res => {
+                    roleSelect.innerHTML = '<option value="">All Roles</option>' + (res.data || []).map(r => \`<option value="\${r.id}">\${r.name}</option>\`).join('');
+                }).catch(console.error);
+            }
+
+            const deptId = el('filter-dept-tn')?.value;
+            const roleId = el('filter-role-tn')?.value;
+            let url = \`/organizations/\${orgId}/ai-training-needs?\`;
+            if (deptId) url += \`departmentId=\${deptId}&\`;
+            if (roleId) url += \`roleId=\${roleId}&\`;
+            
+            const json = await api(url);
+            if (!json.success || !json.data || json.data.length === 0) {
+                list.innerHTML = '<p class="text-slate-500 text-sm">No training needs identified for the selected criteria.</p>';
                 return;
             }
-            list.innerHTML = items.map(t => `
-                <div class="bg-white rounded-xl border border-slate-100 p-4 shadow-sm">
-                    <div class="flex justify-between items-start">
+            
+            list.innerHTML = json.data.map(n => \`
+                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+                    <div class="flex justify-between mb-3">
+                        <h4 class="font-bold text-slate-800 text-lg">\${n.training_need}</h4>
+                        <span class="px-3 py-1 bg-\${n.priority === 'CRITICAL' ? 'red' : (n.priority === 'HIGH' ? 'orange' : 'blue')}-100 text-\${n.priority === 'CRITICAL' ? 'red' : (n.priority === 'HIGH' ? 'orange' : 'blue')}-700 text-xs font-bold rounded-full">
+                            \${n.priority} PRIORITY
+                        </span>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 text-sm text-slate-600">
                         <div>
-                            <h3 class="font-medium text-sm">${t.title || t.skill_name || 'Training Need'}</h3>
-                            <p class="text-xs text-slate-400 mt-0.5">${t.description || '—'}</p>
+                            <span class="block text-xs font-semibold text-slate-400 mb-1">AFFECTED MEMBERS</span>
+                            \${n.affected_members}
                         </div>
-                        ${statusBadge(t.status || 'PENDING')}
+                        <div>
+                            <span class="block text-xs font-semibold text-slate-400 mb-1">DEPARTMENTS</span>
+                            \${n.affected_department}
+                        </div>
+                        <div class="col-span-2">
+                            <span class="block text-xs font-semibold text-slate-400 mb-1">RECOMMENDED TRAINING</span>
+                            \${n.recommended_training}
+                        </div>
+                    </div>
+                    <div class="bg-indigo-50 p-4 rounded-lg flex gap-3 border border-indigo-100">
+                        <i class="bi bi-robot text-indigo-500 text-lg"></i>
+                        <div>
+                            <span class="block text-xs font-bold text-indigo-700 mb-1">AI INSIGHT (Reasoning)</span>
+                            <p class="text-sm text-slate-700">\${n.reason || 'Automatically identified training need.'}</p>
+                        </div>
                     </div>
                 </div>
-            `).join('');
-        } catch (e) { list.innerHTML = `<p class="text-red-400 text-sm">${e.message}</p>`; }
+            \`).join('');
+        } catch (err) {
+            list.innerHTML = \`<p class="text-red-500 text-sm">Error loading training needs: \${err.message}</p>\`;
+        }
     }
+
+    window.exportTrainingNeeds = (format) => {
+        const deptId = el('filter-dept-tn')?.value;
+        const roleId = el('filter-role-tn')?.value;
+        let url = \`/api/v1/organizations/\${orgId}/ai-training-needs/export?format=\${format}\`;
+        if (deptId) url += \`&departmentId=\${deptId}\`;
+        if (roleId) url += \`&roleId=\${roleId}\`;
+        window.open(url, '_blank');
+    };
+
+    window.loadTrainingNeeds = loadTraining;
+
+    el('btn-analyze-training')?.addEventListener('click', () => {
+        toast('Regenerating AI Analysis...');
+        loadTraining();
+    });
 
     // ── KNOWLEDGE LIBRARY ─────────────────────────────────────────────
     async function loadKnowledge() {
@@ -533,20 +590,36 @@
     }
 
     // ── ANALYTICS ─────────────────────────────────────────────────────
+    let currentAnalyticsPage = 1;
+
     async function loadAnalytics() {
         const grid = el('analytics-grid');
-        grid.innerHTML = `<p class="text-slate-400 text-sm">Loading analytics...</p>`;
+        const deptTbody = el('analytics-departments-tbody');
+        grid.innerHTML = `<p class="text-slate-400 text-sm col-span-full">Loading analytics...</p>`;
+        deptTbody.innerHTML = `<tr><td colspan="5" class="px-5 py-4 text-center text-slate-400">Loading department data...</td></tr>`;
+        
         try {
-            const json = await api(`/organizations/${orgId}/analytics/overview`);
-            const data = json.data || {};
+            // Load Dashboard Metrics
+            const dashJson = await api(`/organizations/${orgId}/analytics/dashboard`);
+            const data = dashJson.data || {};
+
+            if (data.isEmpty) {
+                grid.innerHTML = `<p class="text-slate-400 text-sm col-span-full text-center py-10"><i class="bi bi-inbox text-3xl block mb-2"></i>No data available for your organization yet.</p>`;
+                deptTbody.innerHTML = `<tr><td colspan="5" class="px-5 py-4 text-center text-slate-400">Empty organization.</td></tr>`;
+                return;
+            }
 
             const metrics = [
-                { label: 'Total Members', val: data.totalMembers || data.total_members || '—', icon: 'bi-people', color: 'text-blue-600' },
-                { label: 'Active Courses', val: data.publishedCourses || data.published_courses || '—', icon: 'bi-journal-bookmark', color: 'text-primary' },
-                { label: 'Total Enrollments', val: data.totalEnrollments || data.total_enrollments || '—', icon: 'bi-person-check', color: 'text-green-600' },
-                { label: 'Completed Courses', val: data.completedEnrollments || data.completed_enrollments || '—', icon: 'bi-trophy', color: 'text-yellow-600' },
-                { label: 'Skill Gaps', val: data.criticalGaps || data.critical_gaps || '—', icon: 'bi-exclamation-triangle', color: 'text-red-500' },
-                { label: 'Certificates Issued', val: data.certificatesIssued || data.certificates_issued || '—', icon: 'bi-patch-check', color: 'text-purple-600' },
+                { label: 'Total Members', val: data.totalMembers || 0, icon: 'bi-people', color: 'text-blue-600' },
+                { label: 'Departments', val: data.totalDepartments || 0, icon: 'bi-diagram-3', color: 'text-indigo-500' },
+                { label: 'Competency Coverage', val: `${data.competencyCoverage || 0}%`, icon: 'bi-bullseye', color: 'text-primary' },
+                { label: 'Evidence Coverage', val: `${data.evidenceCoverage || 0}%`, icon: 'bi-file-earmark-check', color: 'text-green-600' },
+                { label: 'Active Training', val: data.activeTraining || 0, icon: 'bi-journal-play', color: 'text-blue-500' },
+                { label: 'Completed Training', val: data.completedTraining || 0, icon: 'bi-trophy', color: 'text-yellow-600' },
+                { label: 'Overdue Training', val: data.overdueTraining || 0, icon: 'bi-clock-history', color: 'text-orange-500' },
+                { label: 'Critical Gaps', val: data.criticalGaps || 0, icon: 'bi-exclamation-octagon', color: 'text-red-600' },
+                { label: 'Training Needs', val: data.trainingNeeds || 0, icon: 'bi-lightbulb', color: 'text-yellow-500' },
+                { label: 'Twin Confidence', val: data.digitalTwinConfidence || 'N/A', icon: 'bi-cpu', color: 'text-teal-500' },
             ];
 
             grid.innerHTML = metrics.map(m => `
@@ -560,8 +633,68 @@
                     </div>
                 </div>
             `).join('');
-        } catch (e) { grid.innerHTML = `<p class="text-red-400 text-sm">${e.message}</p>`; }
+
+            // Load Department Analytics
+            await loadDepartmentAnalyticsPage(1);
+
+        } catch (e) { 
+            grid.innerHTML = `<p class="text-red-400 text-sm col-span-full">${e.message}</p>`; 
+            deptTbody.innerHTML = `<tr><td colspan="5" class="px-5 py-4 text-center text-red-400">Failed to load department analytics.</td></tr>`;
+        }
     }
+
+    async function loadDepartmentAnalyticsPage(page) {
+        currentAnalyticsPage = page;
+        const deptTbody = el('analytics-departments-tbody');
+        const pag = el('analytics-pagination');
+        
+        try {
+            const res = await api(`/organizations/${orgId}/analytics/departments?page=${page}&limit=10`);
+            const depts = res.data || [];
+            
+            if (depts.length === 0) {
+                deptTbody.innerHTML = `<tr><td colspan="5" class="px-5 py-4 text-center text-slate-400">No department data found.</td></tr>`;
+                pag.classList.add('hidden');
+                return;
+            }
+
+            deptTbody.innerHTML = depts.map(d => `
+                <tr class="hover:bg-slate-50">
+                    <td class="px-5 py-4 font-medium text-slate-700">${d.name}</td>
+                    <td class="px-5 py-4 text-slate-500">${d.member_count}</td>
+                    <td class="px-5 py-4 text-slate-500">${d.training_completed}</td>
+                    <td class="px-5 py-4 text-red-500 font-medium">${d.major_gaps}</td>
+                    <td class="px-5 py-4 text-green-600 font-medium">${d.evidence_coverage}</td>
+                </tr>
+            `).join('');
+
+            const p = res.pagination;
+            if (p && p.totalPages > 1) {
+                pag.classList.remove('hidden');
+                el('analytics-page-info').textContent = `page ${p.page} of ${p.totalPages}`;
+                
+                const btnPrev = el('btn-analytics-prev');
+                const btnNext = el('btn-analytics-next');
+                
+                btnPrev.disabled = p.page <= 1;
+                btnNext.disabled = p.page >= p.totalPages;
+                
+                btnPrev.onclick = () => loadDepartmentAnalyticsPage(p.page - 1);
+                btnNext.onclick = () => loadDepartmentAnalyticsPage(p.page + 1);
+            } else {
+                pag.classList.add('hidden');
+            }
+        } catch (e) {
+            console.error(e);
+            deptTbody.innerHTML = `<tr><td colspan="5" class="px-5 py-4 text-center text-red-400">Failed to load pagination.</td></tr>`;
+        }
+    }
+
+    window.exportReport = function(type, format) {
+        // Download via hidden iframe or window location
+        const url = `/api/v1/organizations/${orgId}/analytics/export?type=${type}&format=${format}`;
+        window.open(url, '_blank');
+    };
 
     // ── DIGITAL TWIN ──────────────────────────────────────────────────
     async function loadDigitalTwin() {
@@ -577,11 +710,58 @@
         if (!snap) return;
         const confidenceBar = el('twin-confidence-bar');
         confidenceBar.classList.remove('hidden');
-        el('twin-confidence-label').className = `text-sm font-bold confidence-${snap.confidence?.toLowerCase()}`;
+        el('twin-confidence-label').className = \`text-sm font-bold confidence-\${snap.confidence?.toLowerCase()}\`;
         el('twin-confidence-label').textContent = snap.confidence;
-        el('twin-evidence').textContent = snap.evidence_coverage != null ? `${parseFloat(snap.evidence_coverage).toFixed(0)}%` : '—';
-        el('twin-competency').textContent = snap.competency_coverage != null ? `${parseFloat(snap.competency_coverage).toFixed(0)}%` : '—';
+        el('twin-evidence').textContent = snap.evidence_coverage != null ? \`\${parseFloat(snap.evidence_coverage).toFixed(0)}%\` : '—';
+        el('twin-competency').textContent = snap.competency_coverage != null ? \`\${parseFloat(snap.competency_coverage).toFixed(0)}%\` : '—';
         el('twin-updated').textContent = snap.created_at ? new Date(snap.created_at).toLocaleDateString() : '—';
+
+        // Add version indicator
+        if (!el('twin-version-indicator')) {
+            const vBadge = document.createElement('span');
+            vBadge.id = 'twin-version-indicator';
+            vBadge.className = 'ml-3 text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-700';
+            el('twin-confidence-label').parentNode.appendChild(vBadge);
+        }
+        el('twin-version-indicator').textContent = \`v\${snap.snapshot_version || '1.0'}\`;
+
+        let html = '';
+        
+        // AI Explanations & Trends rendering
+        if (snap.ai_explanations && typeof snap.ai_explanations === 'object') {
+            const ai = snap.ai_explanations;
+            const trends = ai.trends || {};
+            
+            html += \`
+            <div class="col-span-full bg-gradient-to-r from-indigo-50 to-blue-50 rounded-xl border border-indigo-100 p-5 shadow-sm mb-4">
+                <h3 class="font-bold text-indigo-900 text-sm mb-3 flex items-center gap-2">
+                    <i class="bi bi-robot text-indigo-600"></i> Enterprise AI Insights
+                </h3>
+                <div class="space-y-2 text-sm text-indigo-800">
+                    \${ai.executiveSummary ? \`<p><strong class="text-indigo-900">Summary:</strong> \${ai.executiveSummary}</p>\` : ''}
+                    \${ai.departmentInsights ? \`<p><strong class="text-indigo-900">Departments:</strong> \${ai.departmentInsights}</p>\` : ''}
+                    \${ai.trainingAction ? \`<p><strong class="text-indigo-900">Action:</strong> \${ai.trainingAction}</p>\` : ''}
+                    \${ai.dataWarning ? \`<p class="text-orange-700 bg-orange-50 p-2 rounded text-xs mt-2 border border-orange-100"><i class="bi bi-exclamation-triangle"></i> \${ai.dataWarning}</p>\` : ''}
+                    \${ai.message ? \`<p class="text-slate-500">\${ai.message}</p>\` : ''}
+                </div>
+            </div>\`;
+
+            // Trend indicator
+            if (Object.keys(trends).length > 0) {
+                html += \`<div class="col-span-full grid grid-cols-2 gap-4 mb-4">
+                    <div class="bg-white rounded-xl border border-slate-100 p-4 flex justify-between items-center shadow-sm">
+                        <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Competency Trend</span>
+                        \${trends.competencyTrend > 0 ? \`<span class="text-green-500 text-sm font-bold"><i class="bi bi-arrow-up"></i> +\${trends.competencyTrend.toFixed(1)}%</span>\` : 
+                          (trends.competencyTrend < 0 ? \`<span class="text-red-500 text-sm font-bold"><i class="bi bi-arrow-down"></i> \${trends.competencyTrend.toFixed(1)}%</span>\` : \`<span class="text-slate-400 text-sm font-bold">No Change</span>\`)}
+                    </div>
+                    <div class="bg-white rounded-xl border border-slate-100 p-4 flex justify-between items-center shadow-sm">
+                        <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Evidence Trend</span>
+                        \${trends.evidenceTrend > 0 ? \`<span class="text-green-500 text-sm font-bold"><i class="bi bi-arrow-up"></i> +\${trends.evidenceTrend.toFixed(1)}%</span>\` : 
+                          (trends.evidenceTrend < 0 ? \`<span class="text-red-500 text-sm font-bold"><i class="bi bi-arrow-down"></i> \${trends.evidenceTrend.toFixed(1)}%</span>\` : \`<span class="text-slate-400 text-sm font-bold">No Change</span>\`)}
+                    </div>
+                </div>\`;
+            }
+        }
 
         const states = [
             { title: 'Workforce', icon: 'bi-people', data: snap.workforce_state },
@@ -591,22 +771,24 @@
             { title: 'Certification', icon: 'bi-patch-check', data: snap.certification_state },
         ];
 
-        el('twin-state-grid').innerHTML = states.map(s => {
+        html += states.map(s => {
             const d = s.data || {};
             const entries = Object.entries(d).slice(0, 4);
-            return `
+            return \`
             <div class="bg-white rounded-xl border border-slate-100 p-5 shadow-sm">
                 <h3 class="font-semibold text-sm mb-3 flex items-center gap-2">
-                    <i class="bi ${s.icon} text-primary"></i> ${s.title} State
+                    <i class="bi \${s.icon} text-primary"></i> \${s.title} State
                 </h3>
-                ${entries.length ? entries.map(([k, v]) => `
+                \${entries.length ? entries.map(([k, v]) => \`
                     <div class="flex justify-between text-xs py-1 border-b border-slate-50">
-                        <span class="text-slate-500 capitalize">${k.replace(/_/g, ' ')}</span>
-                        <span class="font-medium">${v ?? '—'}</span>
+                        <span class="text-slate-500 capitalize">\${k.replace(/_/g, ' ')}</span>
+                        <span class="font-medium">\${(v !== null && typeof v === 'object') ? JSON.stringify(v) : (v ?? '—')}</span>
                     </div>
-                `).join('') : '<p class="text-xs text-slate-400">Insufficient evidence for this state.</p>'}
-            </div>`;
+                \`).join('') : '<p class="text-xs text-slate-400">Insufficient evidence for this state.</p>'}
+            </div>\`;
         }).join('');
+        
+        el('twin-state-grid').innerHTML = html;
     }
 
     window.refreshTwin = async function() {

@@ -8,5 +8,9 @@ module.exports = {
     '<rootDir>/extensions/',
     '<rootDir>/my-app/',
     '<rootDir>/digital-twin-project/'
-  ]
+  ],
+  moduleNameMapper: {
+    '^dompurify$': '<rootDir>/tests/__mocks__/dompurify.js',
+    '^jsdom$': '<rootDir>/tests/__mocks__/jsdom.js'
+  }
 };
