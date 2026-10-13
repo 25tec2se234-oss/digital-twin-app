@@ -15,11 +15,32 @@ async function findById(id) {
 }
 
 async function update(id, updateData) {
-  const { description, logoUrl } = updateData;
-  const result = await db.query(
-    'UPDATE organizations SET description = $1, logo_url = $2, updated_at = CURRENT_TIMESTAMP WHERE id = $3 AND deleted_at IS NULL RETURNING *',
-    [description, logoUrl, id]
-  );
+  const { name, description, logoUrl } = updateData;
+  const updates = [];
+  const values = [];
+  let paramIdx = 1;
+
+  if (name !== undefined && name !== null && name.trim()) {
+    updates.push(`name = $${paramIdx++}`);
+    values.push(name.trim());
+  }
+  if (description !== undefined) {
+    updates.push(`description = $${paramIdx++}`);
+    values.push(description);
+  }
+  if (logoUrl !== undefined) {
+    updates.push(`logo_url = $${paramIdx++}`);
+    values.push(logoUrl);
+  }
+
+  if (updates.length === 0) {
+    return findById(id);
+  }
+
+  updates.push(`updated_at = CURRENT_TIMESTAMP`);
+  values.push(id);
+  const query = `UPDATE organizations SET ${updates.join(', ')} WHERE id = $${paramIdx} AND deleted_at IS NULL RETURNING *`;
+  const result = await db.query(query, values);
   return result.rows[0];
 }
 

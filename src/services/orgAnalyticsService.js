@@ -28,7 +28,7 @@ class OrgAnalyticsService {
 
     const query = `
       SELECT 
-        COUNT(DISTINCT user_id) as people_with_evidence,
+        COUNT(DISTINCT trainee_id) as people_with_evidence,
         COUNT(CASE WHEN score >= 50 THEN 1 END) as people_meeting_required_level,
         COUNT(CASE WHEN score < 50 THEN 1 END) as people_below_required_level
       FROM org_competency_snapshots
@@ -37,15 +37,28 @@ class OrgAnalyticsService {
     const res = await pool.query(query, [organizationId]);
     const data = res.rows[0];
 
-    const peopleWithEvidence = parseInt(data.people_with_evidence) || 0;
-    const evidenceCoveragePercent = totalTrainees > 0 ? ((peopleWithEvidence / totalTrainees) * 100).toFixed(2) : 0;
+    const peopleWithEvidence = parseInt(data?.people_with_evidence) || 0;
+    const evidenceCoveragePercent = totalTrainees > 0 ? parseFloat(((peopleWithEvidence / totalTrainees) * 100).toFixed(2)) : 0;
+
+    // Get total competencies required across organization roles
+    let totalRequiredCompetencies = 0;
+    try {
+      const reqRes = await pool.query(
+        `SELECT COUNT(DISTINCT competency_id) as total_required FROM org_competency_requirements WHERE organization_id = $1`,
+        [organizationId]
+      );
+      totalRequiredCompetencies = parseInt(reqRes.rows[0]?.total_required) || 0;
+    } catch(e) {}
 
     return {
       total_trainees: totalTrainees,
       people_with_evidence: peopleWithEvidence,
-      people_meeting_required_level: parseInt(data.people_meeting_required_level) || 0,
-      people_below_required_level: parseInt(data.people_below_required_level) || 0,
-      evidence_coverage_percent: evidenceCoveragePercent
+      totalWithEvidence: peopleWithEvidence,
+      totalRequiredCompetencies: totalRequiredCompetencies,
+      people_meeting_required_level: parseInt(data?.people_meeting_required_level) || 0,
+      people_below_required_level: parseInt(data?.people_below_required_level) || 0,
+      evidence_coverage_percent: evidenceCoveragePercent,
+      evidenceCoveragePercentage: evidenceCoveragePercent
     };
   }
 
@@ -119,8 +132,8 @@ class OrgAnalyticsService {
     const assessQuery = `
       SELECT 
         COUNT(*) as total_attempts,
-        COUNT(CASE WHEN status = 'COMPLETED' THEN 1 END) as completed_attempts,
-        COUNT(CASE WHEN passed = true THEN 1 END) as passed_attempts
+        COUNT(CASE WHEN status = 'SUBMITTED' THEN 1 END) as completed_attempts,
+        COUNT(CASE WHEN is_passed = true THEN 1 END) as passed_attempts
       FROM org_assessment_attempts
       WHERE organization_id = $1
     `;

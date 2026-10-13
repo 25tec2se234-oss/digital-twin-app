@@ -51,9 +51,19 @@ const getMyOrganizations = asyncHandler(async (req, res, next) => {
 // @access  Private (requires organization.settings.update permission)
 const updateOrganization = asyncHandler(async (req, res, next) => {
   const { organizationId } = req.params;
-  const { description, logoUrl } = req.body;
+  const { name, description, logoUrl } = req.body;
+
+  if (name !== undefined) {
+    if (typeof name !== 'string' || name.trim().length < 2) {
+      return next(new ApiError(400, 'Organization name must be at least 2 characters.'));
+    }
+    if (name.length > 100) {
+      return next(new ApiError(400, 'Organization name cannot exceed 100 characters.'));
+    }
+  }
 
   const organization = await organizationModel.update(organizationId, {
+    name,
     description,
     logoUrl
   });
@@ -62,11 +72,41 @@ const updateOrganization = asyncHandler(async (req, res, next) => {
     return next(new ApiError(404, 'Organization not found or could not be updated.'));
   }
 
-  auditLogModel.createLog(req.user.id, 'ORGANIZATION_UPDATED', 'organization', organizationId, { description, logoUrl }, req.ip, req.headers['user-agent']);
+  await auditLogModel.createLog(
+    req.user.id,
+    organizationId,
+    'ORGANIZATION_UPDATED',
+    'organization',
+    organizationId,
+    { name: organization.name, description, logoUrl },
+    req.ip,
+    req.headers['user-agent']
+  );
 
   res.status(200).json({
     success: true,
     data: organization
+  });
+});
+
+// @desc    Get organization activity / audit logs
+// @route   GET /api/v1/organizations/:organizationId/activity
+// @access  Private (requires organization.view permission)
+const getOrganizationActivity = asyncHandler(async (req, res, next) => {
+  const { organizationId } = req.params;
+  const limit = parseInt(req.query.limit, 10) || 20;
+  const offset = parseInt(req.query.offset, 10) || 0;
+
+  const result = await auditLogModel.getOrganizationActivity(organizationId, { limit, offset });
+
+  res.status(200).json({
+    success: true,
+    data: result.activities,
+    pagination: {
+      total: result.total,
+      limit: result.limit,
+      offset: result.offset
+    }
   });
 });
 
@@ -161,7 +201,7 @@ const updateOrganizationMemberRole = asyncHandler(async (req, res, next) => {
     return next(new ApiError(404, 'Membership not found.'));
   }
 
-  auditLogModel.createLog(req.user.id, 'ROLE_CHANGED', 'organization_membership', membership.id, { new_role: role }, req.ip, req.headers['user-agent']);
+  await auditLogModel.createLog(req.user.id, organizationId, 'ROLE_CHANGED', 'organization_membership', membership.id, { new_role: role }, req.ip, req.headers['user-agent']);
 
   res.status(200).json({
     success: true,
@@ -195,7 +235,7 @@ const updateOrganizationMemberStatus = asyncHandler(async (req, res, next) => {
     return next(new ApiError(404, 'Membership not found.'));
   }
 
-  auditLogModel.createLog(req.user.id, 'USER_STATUS_UPDATED', 'organization_membership', membership.id, { new_status: status }, req.ip, req.headers['user-agent']);
+  await auditLogModel.createLog(req.user.id, organizationId, 'USER_STATUS_UPDATED', 'organization_membership', membership.id, { new_status: status }, req.ip, req.headers['user-agent']);
 
   res.status(200).json({
     success: true,
@@ -219,7 +259,7 @@ const removeOrganizationMember = asyncHandler(async (req, res, next) => {
     return next(new ApiError(404, 'Membership not found.'));
   }
 
-  auditLogModel.createLog(req.user.id, 'USER_REMOVED', 'organization_membership', membership.id, { user_id: userId }, req.ip, req.headers['user-agent']);
+  await auditLogModel.createLog(req.user.id, organizationId, 'USER_REMOVED', 'organization_membership', membership.id, { user_id: userId }, req.ip, req.headers['user-agent']);
 
   res.status(200).json({
     success: true,
@@ -311,5 +351,6 @@ module.exports = {
   updateOrganizationMemberRole,
   updateOrganizationMemberStatus,
   removeOrganizationMember,
+  getOrganizationActivity,
   getOrganizationMemberProfile: exports.getOrganizationMemberProfile
 };

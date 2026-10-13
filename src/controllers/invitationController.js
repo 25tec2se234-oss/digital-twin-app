@@ -4,17 +4,11 @@ const invitationModel = require('../models/invitationModel');
 const organizationModel = require('../models/organizationModel');
 const auditLogModel = require('../models/auditLogModel');
 const crypto = require('crypto');
-// Assuming some email service exists, mock it here for now
-let sendEmail;
-try {
-  sendEmail = require('../utils/sendEmail');
-} catch (e) {
-  sendEmail = async () => console.log('Mock email sent');
-}
+const { sendOrgInvitation } = require('../services/emailService');
 
 // @desc    Create and send an invitation
 // @route   POST /api/v1/organizations/:organizationId/invitations
-// @access  Private (requires organization.invitations.create permission)
+// @access  Private (requires members.invite permission)
 const createInvitation = asyncHandler(async (req, res, next) => {
   const { organizationId } = req.params;
   const { email, role } = req.body;
@@ -24,37 +18,51 @@ const createInvitation = asyncHandler(async (req, res, next) => {
     return next(new ApiError(400, 'Email and role are required.'));
   }
 
+  // Normalize and validate email
+  const normalizedEmail = email.trim().toLowerCase();
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(normalizedEmail)) {
+    return next(new ApiError(400, 'Please provide a valid email address.'));
+  }
+
   const validRoles = ['TRAINER', 'TRAINEE', 'ORGANIZATION_ADMIN'];
   if (!validRoles.includes(role)) {
     return next(new ApiError(400, 'Invalid role specified.'));
   }
 
-  // Prevent escalating privileges
-  if (role === 'ORGANIZATION_ADMIN' && req.user.role !== 'ORGANIZATION_ADMIN') { // Also need to check org membership role, but rbac handles that mostly. We will enforce: only ADMINs can invite ADMINs
-      // The RBAC middleware `requirePermission` ensures the user is an admin if they have this permission usually, but let's be explicit
-  }
-
   // Check if invitation already exists
-  const exists = await invitationModel.checkExisting(organizationId, email);
+  const exists = await invitationModel.checkExisting(organizationId, normalizedEmail);
   if (exists) {
     return next(new ApiError(400, 'A pending invitation for this email already exists.'));
   }
 
-  const { invitation, rawToken } = await invitationModel.create(organizationId, inviterId, email, role);
+  const org = await organizationModel.findById(organizationId);
+  const { invitation, rawToken } = await invitationModel.create(organizationId, inviterId, normalizedEmail, role);
 
-  // Send email (Mocked for now)
   const inviteLink = `${req.protocol}://${req.get('host')}/organization/invitations/accept?token=${rawToken}`;
+  let emailDelivery = { success: false };
   try {
-    await sendEmail({
-      email: email,
-      subject: 'You have been invited to an Organization',
-      message: `You have been invited to join the organization as a ${role}. Click here to accept: ${inviteLink}`
-    });
+    emailDelivery = await sendOrgInvitation(
+      normalizedEmail,
+      req.user.name || 'An administrator',
+      org?.name || 'Organization',
+      role,
+      inviteLink
+    );
   } catch (error) {
-    console.error('Email sending failed', error);
+    console.error('Email sending failed:', error.message);
   }
 
-  auditLogModel.createLog(req.user.id, 'USER_INVITED', 'organization_invitation', invitation.id, { email, role }, req.ip, req.headers['user-agent']);
+  await auditLogModel.createLog(
+    req.user.id,
+    organizationId,
+    'USER_INVITED',
+    'organization_invitation',
+    invitation.id,
+    { email: normalizedEmail, role, emailDelivered: emailDelivery?.success || false },
+    req.ip,
+    req.headers['user-agent']
+  );
 
   res.status(201).json({
     success: true,
@@ -64,15 +72,14 @@ const createInvitation = asyncHandler(async (req, res, next) => {
       role: invitation.role,
       status: invitation.status,
       expires_at: invitation.expires_at,
-      // NOTE: NEVER return rawToken in production response, this is just for dev debugging
-      // _devToken: rawToken
+      email_delivered: emailDelivery?.success || false
     }
   });
 });
 
 // @desc    Get all pending invitations for an organization
 // @route   GET /api/v1/organizations/:organizationId/invitations
-// @access  Private (requires organization.invitations.read permission)
+// @access  Private (requires members.view permission)
 const getInvitations = asyncHandler(async (req, res, next) => {
   const { organizationId } = req.params;
   
@@ -87,9 +94,9 @@ const getInvitations = asyncHandler(async (req, res, next) => {
 
 // @desc    Revoke an invitation
 // @route   POST /api/v1/organizations/:organizationId/invitations/:inviteId/revoke
-// @access  Private (requires organization.invitations.revoke permission)
+// @access  Private (requires members.invite permission)
 const revokeInvitation = asyncHandler(async (req, res, next) => {
-  const { inviteId } = req.params;
+  const { organizationId, inviteId } = req.params;
   
   const invitation = await invitationModel.updateStatus(inviteId, 'REVOKED');
 
@@ -97,7 +104,16 @@ const revokeInvitation = asyncHandler(async (req, res, next) => {
     return next(new ApiError(404, 'Invitation not found.'));
   }
 
-  auditLogModel.createLog(req.user.id, 'INVITATION_REVOKED', 'organization_invitation', invitation.id, { email: invitation.email }, req.ip, req.headers['user-agent']);
+  await auditLogModel.createLog(
+    req.user.id,
+    organizationId,
+    'INVITATION_REVOKED',
+    'organization_invitation',
+    invitation.id,
+    { email: invitation.email },
+    req.ip,
+    req.headers['user-agent']
+  );
 
   res.status(200).json({
     success: true,
@@ -110,13 +126,13 @@ const revokeInvitation = asyncHandler(async (req, res, next) => {
 // @access  Private (requires standard DTV user authentication)
 const acceptInvitation = asyncHandler(async (req, res, next) => {
   const { token } = req.body;
-  const userId = req.user.id; // User must be logged in
+  const userId = req.user.id;
 
   if (!token) {
     return next(new ApiError(400, 'Invitation token is required.'));
   }
 
-  const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+  const tokenHash = crypto.createHash('sha256').update(token.trim()).digest('hex');
   const invitation = await invitationModel.findByTokenHash(tokenHash);
 
   if (!invitation) {
@@ -132,19 +148,27 @@ const acceptInvitation = asyncHandler(async (req, res, next) => {
     return next(new ApiError(400, 'Invitation has expired.'));
   }
 
-  // Optional: Check if email matches (or allow any user to claim if they have the token?)
-  // For strict security, we enforce email matching
-  if (req.user.email !== invitation.email) {
-    return next(new ApiError(403, 'This invitation is not for your account.'));
+  // Enforce recipient email matching for security
+  if (req.user.email && req.user.email.toLowerCase() !== invitation.email.toLowerCase()) {
+    return next(new ApiError(403, 'This invitation was addressed to a different email address.'));
   }
 
-  // Create membership
+  // Create membership atomically
   await organizationModel.addMembership(invitation.organization_id, userId, invitation.role);
   
   // Mark invitation as accepted
   await invitationModel.updateStatus(invitation.id, 'ACCEPTED');
 
-  auditLogModel.createLog(userId, 'INVITATION_ACCEPTED', 'organization_invitation', invitation.id, { organization_id: invitation.organization_id, role: invitation.role }, req.ip, req.headers['user-agent']);
+  await auditLogModel.createLog(
+    userId,
+    invitation.organization_id,
+    'INVITATION_ACCEPTED',
+    'organization_invitation',
+    invitation.id,
+    { role: invitation.role },
+    req.ip,
+    req.headers['user-agent']
+  );
 
   res.status(200).json({
     success: true,
@@ -164,25 +188,44 @@ const resendInvitation = asyncHandler(async (req, res, next) => {
   const rawToken = crypto.randomBytes(32).toString('hex');
   const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
   
-  await require('../db').pool.query(
-      'UPDATE organization_invitations SET token_hash = $1, expires_at = CURRENT_TIMESTAMP + interval \'7 days\' WHERE id = $2',
-      [tokenHash, inviteId]
+  const { pool } = require('../db');
+  await pool.query(
+    "UPDATE organization_invitations SET token_hash = $1, expires_at = CURRENT_TIMESTAMP + interval '7 days' WHERE id = $2",
+    [tokenHash, inviteId]
   );
   
+  const org = await organizationModel.findById(organizationId);
   const inviteLink = `${req.protocol}://${req.get('host')}/organization/invitations/accept?token=${rawToken}`;
+  
+  let emailDelivery = { success: false };
   try {
-    await sendEmail({
-      email: invitation.email,
-      subject: 'Reminder: You have been invited to an Organization',
-      message: `You have been invited to join the organization as a ${invitation.role}. Click here to accept: ${inviteLink}`
-    });
+    emailDelivery = await sendOrgInvitation(
+      invitation.email,
+      req.user.name || 'An administrator',
+      org?.name || 'Organization',
+      invitation.role,
+      inviteLink
+    );
   } catch (error) {
-    console.error('Email sending failed', error);
+    console.error('Email resending failed:', error.message);
   }
   
-  auditLogModel.createLog(req.user.id, 'INVITATION_RESENT', 'organization_invitation', invitation.id, { email: invitation.email }, req.ip, req.headers['user-agent']);
+  await auditLogModel.createLog(
+    req.user.id,
+    organizationId,
+    'INVITATION_RESENT',
+    'organization_invitation',
+    invitation.id,
+    { email: invitation.email, emailDelivered: emailDelivery?.success || false },
+    req.ip,
+    req.headers['user-agent']
+  );
   
-  res.status(200).json({ success: true, message: 'Invitation resent successfully.' });
+  res.status(200).json({ 
+    success: true, 
+    message: 'Invitation resent successfully.',
+    email_delivered: emailDelivery?.success || false
+  });
 });
 
 module.exports = {

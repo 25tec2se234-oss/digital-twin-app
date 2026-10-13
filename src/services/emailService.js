@@ -325,6 +325,42 @@ async function sendParentTestAlert(toEmail, studentName) {
     }
 }
 
+async function sendOrgInvitation(toEmail, inviterName, orgName, role, inviteLink) {
+    if (env.NODE_ENV === 'test') return { success: true, test: true };
+    if (!canSendEmail()) {
+        console.warn('⚠️ Email credentials not set.');
+        console.log(`\n📧 MOCK ORG INVITATION TO: ${toEmail}\n🏢 Organization: ${orgName}\n🔗 Link: ${inviteLink}\n`);
+        return { success: false, mocked: true };
+    }
+
+    const html = `
+        <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; background: #0b1322; color: #e8f0f8; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
+            <div style="text-align: center; padding-bottom: 20px;">
+                <h1 style="color: #ffd700; margin: 0; font-size: 28px;">Digital Twin Verse</h1>
+                <span style="background: #e88c2a; color: #000; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold;">ORGANIZATION INVITATION</span>
+            </div>
+            <h2 style="color: #ffffff;">Hello,</h2>
+            <p style="font-size: 16px; line-height: 1.6; color: #cbd5e1;"><strong>${inviterName || 'An administrator'}</strong> has invited you to join <strong>${orgName || 'an organization'}</strong> as a <strong>${role}</strong> on Digital Twin Verse.</p>
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; margin: 25px 0; text-align: center;">
+                <p style="font-size: 14px; color: #94a3b8; margin-bottom: 20px;">Click the button below to accept your invitation and join the workspace:</p>
+                <a href="${inviteLink}" style="background: #e88c2a; color: #000000; padding: 14px 32px; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; display: inline-block;">Accept Invitation</a>
+            </div>
+            <p style="font-size: 14px; color: #94a3b8;">If the button above does not work, copy and paste this link into your browser:<br><br><a href="${inviteLink}" style="color: #a78bfa; word-break: break-all;">${inviteLink}</a></p>
+            <p style="font-size: 12px; color: #64748b; margin-top: 20px;">This invitation link will expire in 7 days.</p>
+            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;" />
+            <p style="font-size: 12px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Digital Twin Verse by DTV Family. All rights reserved.</p>
+        </div>
+    `;
+
+    try {
+        await sendHtmlEmail(toEmail, `Invitation to join ${orgName || 'Organization'} on Digital Twin Verse`, html, 'Digital Twin Verse');
+        return { success: true };
+    } catch (error) {
+        console.error('Error sending organization invitation email:', error);
+        throw error;
+    }
+}
+
 module.exports = {
     sendVerificationEmail,
     sendPasswordResetEmail,
@@ -333,5 +369,6 @@ module.exports = {
     sendParentInvitation,
     sendDemoEndingSoonEmail,
     sendSubscriptionExpiredEmail,
-    sendParentTestAlert
+    sendParentTestAlert,
+    sendOrgInvitation
 };

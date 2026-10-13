@@ -4,9 +4,9 @@ exports.askAi = async (req, res) => {
   try {
     const { organizationId } = req.params;
     const userId = req.user.id;
-    const { queryText } = req.body;
+    const queryText = req.body.queryText || req.body.query;
 
-    if (!queryText) {
+    if (!queryText || typeof queryText !== 'string' || !queryText.trim()) {
         return res.status(400).json({ success: false, message: 'queryText is required' });
     }
 

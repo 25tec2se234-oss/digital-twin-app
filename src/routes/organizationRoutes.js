@@ -12,6 +12,7 @@ const {
   updateOrganizationMemberRole,
   updateOrganizationMemberStatus,
   removeOrganizationMember,
+  getOrganizationActivity,
   getOrganizationMemberProfile
 } = require('../controllers/organizationController');
 
@@ -26,7 +27,8 @@ const {
   createInvitation,
   getInvitations,
   revokeInvitation,
-  acceptInvitation
+  acceptInvitation,
+  resendInvitation
 } = require('../controllers/invitationController');
 
 // Accept invitation (global route, but user must be authenticated)
@@ -37,6 +39,7 @@ router.use('/:organizationId', requireOrganizationMembership);
 
 router.get('/:organizationId', requirePermission('organization.view'), getOrganizationById);
 router.put('/:organizationId', requirePermission('organization.update'), updateOrganization);
+router.get('/:organizationId/activity', requirePermission('organization.view'), getOrganizationActivity);
 
 router.get(
   '/:organizationId/members', 
@@ -139,6 +142,12 @@ router.post(
   '/:organizationId/invitations/:inviteId/revoke',
   requirePermission('members.invite'),
   revokeInvitation
+);
+
+router.post(
+  '/:organizationId/invitations/:inviteId/resend',
+  requirePermission('members.invite'),
+  resendInvitation
 );
 
 const orgTrainerMatchRoutes = require('./orgTrainerMatchRoutes');

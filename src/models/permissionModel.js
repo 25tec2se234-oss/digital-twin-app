@@ -23,6 +23,11 @@ async function hasPermission(userId, organizationId, permissionKey) {
   }
   
   const orgRole = membershipResult.rows[0].role;
+
+  // Organization admins and owners have full administrative permissions for their tenant
+  if (orgRole === 'ORGANIZATION_ADMIN' || orgRole === 'Owner' || orgRole === 'Admin') {
+    return true;
+  }
   
   // Check if role has the requested permission
   const permissionResult = await db.query(

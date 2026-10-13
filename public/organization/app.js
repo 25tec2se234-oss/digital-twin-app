@@ -327,7 +327,152 @@
                 </div>
             `).join('');
         } catch (e) { console.error(e); }
+        await loadRecentActivity();
     }
+
+    // ── RECENT ACTIVITY & AUDIT TRAIL ──────────────────────────────────
+    function formatActionText(action, details, actor) {
+        const actorName = actor?.actor_name || actor?.actor_email || 'A team member';
+        switch (action) {
+            case 'ORGANIZATION_UPDATED':
+                return `<strong>${actorName}</strong> updated organization profile.`;
+            case 'USER_INVITED':
+                return `<strong>${actorName}</strong> invited <strong>${details?.email || 'a member'}</strong> as ${details?.role || 'Member'}.`;
+            case 'INVITATION_ACCEPTED':
+                return `<strong>${actorName}</strong> joined the organization as ${details?.role || 'Member'}.`;
+            case 'INVITATION_REVOKED':
+                return `<strong>${actorName}</strong> revoked an invitation for ${details?.email || 'a member'}.`;
+            case 'INVITATION_RESENT':
+                return `<strong>${actorName}</strong> resent an invitation to ${details?.email || 'a member'}.`;
+            case 'ROLE_CHANGED':
+                return `<strong>${actorName}</strong> updated a member role to ${details?.new_role || 'Member'}.`;
+            case 'USER_STATUS_UPDATED':
+                return `<strong>${actorName}</strong> updated member status to ${details?.new_status || 'Active'}.`;
+            case 'USER_REMOVED':
+                return `<strong>${actorName}</strong> removed a member from the organization.`;
+            case 'DIGITAL_TWIN_REFRESHED':
+                return `<strong>${actorName}</strong> refreshed the Organizational Digital Twin snapshot.`;
+            default:
+                return `<strong>${actorName}</strong> performed <code>${action}</code>.`;
+        }
+    }
+
+    function getActionIcon(action) {
+        switch (action) {
+            case 'ORGANIZATION_UPDATED':
+                return { icon: 'bi-gear-fill', bg: 'bg-blue-50 text-blue-600' };
+            case 'USER_INVITED':
+                return { icon: 'bi-person-plus-fill', bg: 'bg-emerald-50 text-emerald-600' };
+            case 'INVITATION_ACCEPTED':
+                return { icon: 'bi-check-circle-fill', bg: 'bg-green-50 text-green-600' };
+            case 'INVITATION_REVOKED':
+            case 'USER_REMOVED':
+                return { icon: 'bi-trash-fill', bg: 'bg-red-50 text-red-600' };
+            case 'DIGITAL_TWIN_REFRESHED':
+                return { icon: 'bi-cpu-fill', bg: 'bg-purple-50 text-purple-600' };
+            default:
+                return { icon: 'bi-activity', bg: 'bg-orange-50 text-primary' };
+        }
+    }
+
+    async function loadRecentActivity() {
+        const container = el('recent-activity-container');
+        if (!container) return;
+        try {
+            const res = await api(`/organizations/${orgId}/activity?limit=5`);
+            const activities = res.data || [];
+            if (!activities.length) {
+                container.innerHTML = `
+                    <div class="flex-1 flex flex-col items-center justify-center text-center py-8 text-slate-400">
+                        <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-3">
+                            <i class="bi bi-inbox text-2xl text-slate-300"></i>
+                        </div>
+                        <p class="text-sm font-medium text-slate-500">No recent activity</p>
+                        <p class="text-xs mt-1">Updates and actions will appear here.</p>
+                    </div>`;
+                return;
+            }
+            container.innerHTML = activities.map(act => {
+                const iconInfo = getActionIcon(act.action);
+                const text = formatActionText(act.action, act.details, act);
+                const timeAgo = new Date(act.created_at).toLocaleString();
+                return `
+                    <div class="flex items-start gap-3 p-2.5 rounded-lg hover:bg-slate-50 transition border border-transparent hover:border-slate-100">
+                        <div class="w-8 h-8 rounded-full ${iconInfo.bg} flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <i class="bi ${iconInfo.icon} text-sm"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-xs text-slate-700 leading-snug">${text}</p>
+                            <span class="text-[10px] text-slate-400 mt-0.5 block">${timeAgo}</span>
+                        </div>
+                    </div>`;
+            }).join('');
+        } catch (e) {
+            console.error('Failed to load recent activity', e);
+        }
+    }
+
+    let activityOffset = 0;
+    const activityLimit = 15;
+    let activityTotal = 0;
+
+    async function loadActivityModal(offset = 0) {
+        activityOffset = offset;
+        const listEl = el('activity-modal-list');
+        if (!listEl) return;
+        listEl.innerHTML = '<div class="text-center py-8 text-slate-400">Loading activity...</div>';
+        try {
+            const res = await api(`/organizations/${orgId}/activity?limit=${activityLimit}&offset=${activityOffset}`);
+            const activities = res.data || [];
+            activityTotal = res.pagination?.total || activities.length;
+            
+            if (el('activity-pagination-info')) {
+                const start = activityTotal === 0 ? 0 : activityOffset + 1;
+                const end = Math.min(activityOffset + activities.length, activityTotal);
+                el('activity-pagination-info').textContent = `Showing ${start}-${end} of ${activityTotal} events`;
+            }
+
+            if (el('btn-activity-prev')) el('btn-activity-prev').disabled = activityOffset <= 0;
+            if (el('btn-activity-next')) el('btn-activity-next').disabled = activityOffset + activityLimit >= activityTotal;
+
+            if (!activities.length) {
+                listEl.innerHTML = '<div class="text-center py-8 text-slate-400">No activity logs recorded.</div>';
+                return;
+            }
+
+            listEl.innerHTML = activities.map(act => {
+                const iconInfo = getActionIcon(act.action);
+                const text = formatActionText(act.action, act.details, act);
+                const timeAgo = new Date(act.created_at).toLocaleString();
+                return `
+                    <div class="flex items-start gap-3 p-3 rounded-lg border border-slate-100 bg-white">
+                        <div class="w-8 h-8 rounded-full ${iconInfo.bg} flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <i class="bi ${iconInfo.icon} text-sm"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-xs text-slate-800 leading-snug">${text}</p>
+                            <span class="text-[10px] text-slate-400 mt-1 block">${timeAgo}</span>
+                        </div>
+                    </div>`;
+            }).join('');
+        } catch (e) {
+            listEl.innerHTML = `<div class="text-center py-8 text-red-500">Failed to load activity logs: ${e.message}</div>`;
+        }
+    }
+
+    el('btn-view-all-activity')?.addEventListener('click', () => {
+        el('activity-modal')?.classList.remove('hidden');
+        loadActivityModal(0);
+    });
+    el('btn-close-activity-modal')?.addEventListener('click', () => {
+        el('activity-modal')?.classList.add('hidden');
+    });
+    el('btn-activity-prev')?.addEventListener('click', () => {
+        if (activityOffset > 0) loadActivityModal(activityOffset - activityLimit);
+    });
+    el('btn-activity-next')?.addEventListener('click', () => {
+        if (activityOffset + activityLimit < activityTotal) loadActivityModal(activityOffset + activityLimit);
+    });
 
     // ── PEOPLE ────────────────────────────────────────────────────────
     async function loadPeople() {
@@ -918,6 +1063,7 @@
             const json = await api(`/organizations/${orgId}/digital-twin/snapshots`, { method: 'POST' });
             renderTwin(json.data);
             toast('Digital Twin snapshot updated!');
+            loadRecentActivity();
         } catch (e) {
             toast(e.message, 'error');
         } finally {
@@ -1028,14 +1174,23 @@
 
     el('org-settings-form')?.addEventListener('submit', async e => {
         e.preventDefault();
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        if (submitBtn) submitBtn.disabled = true;
         try {
+            const nameVal = el('org-name-input')?.value.trim();
+            const descVal = el('org-desc-input')?.value.trim();
             const json = await api(`/organizations/${orgId}`, {
                 method: 'PUT',
-                body: JSON.stringify({ description: el('org-desc-input').value })
+                body: JSON.stringify({ name: nameVal, description: descVal })
             });
             organizationData = json.data;
-            toast('Settings saved!');
-        } catch (ex) { toast(ex.message, 'error'); }
+            toast('Settings saved successfully!');
+            loadRecentActivity();
+        } catch (ex) { 
+            toast(ex.message, 'error'); 
+        } finally {
+            if (submitBtn) submitBtn.disabled = false;
+        }
     });
 
     // ── PEOPLE — Invite Modal ─────────────────────────────────────────
@@ -1046,18 +1201,25 @@
 
     el('invite-form')?.addEventListener('submit', async e => {
         e.preventDefault();
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        if (submitBtn) submitBtn.disabled = true;
         try {
             await api(`/organizations/${orgId}/invitations`, {
                 method: 'POST',
                 body: JSON.stringify({
-                    email: el('invite-email').value,
+                    email: el('invite-email').value.trim(),
                     role: el('invite-role').value
                 })
             });
-            toast('Invitation sent!');
+            toast('Invitation sent successfully!');
             el('invite-modal').classList.add('hidden');
             e.target.reset();
-        } catch (ex) { toast(ex.message, 'error'); }
+            loadRecentActivity();
+        } catch (ex) { 
+            toast(ex.message, 'error'); 
+        } finally {
+            if (submitBtn) submitBtn.disabled = false;
+        }
     });
 
     // ── LOGOUT ────────────────────────────────────────────────────────

@@ -20,10 +20,12 @@ class OrgDigitalTwinService {
 
     // 3. Calculate Coverage & Confidence
     const totalRequired = parseInt(fullCompetencyState.totalRequiredCompetencies) || 0;
-    const totalWithEvidence = parseInt(fullCompetencyState.totalWithEvidence) || 0;
-    const competencyCoverage = totalRequired > 0 ? (totalWithEvidence / totalRequired) * 100 : 0;
+    const totalWithEvidence = parseInt(fullCompetencyState.totalWithEvidence || fullCompetencyState.people_with_evidence) || 0;
+    const rawCompetencyCoverage = totalRequired > 0 ? (totalWithEvidence / totalRequired) * 100 : 0;
+    const competencyCoverage = isNaN(rawCompetencyCoverage) ? 0 : parseFloat(rawCompetencyCoverage.toFixed(2));
 
-    const evidenceCoverage = parseFloat(fullCompetencyState.evidenceCoveragePercentage) || 0;
+    const rawEvidenceCoverage = parseFloat(fullCompetencyState.evidenceCoveragePercentage || fullCompetencyState.evidence_coverage_percent) || 0;
+    const evidenceCoverage = isNaN(rawEvidenceCoverage) ? 0 : parseFloat(rawEvidenceCoverage.toFixed(2));
     
     let confidence = 'LOW';
     if (evidenceCoverage > 75 && competencyCoverage > 75) {
@@ -52,7 +54,12 @@ class OrgDigitalTwinService {
 
     // 5. Generate AI Explanation
     let aiExplanations = {};
-    if (genAI && (evidenceCoverage > 0 || competencyCoverage > 0 || workforceState.totalMembers > 0)) {
+    if (process.env.NODE_ENV === 'test') {
+        aiExplanations = {
+            executiveSummary: "Deterministic baseline generated for test environment.",
+            confidence: confidence
+        };
+    } else if (genAI && (evidenceCoverage > 0 || competencyCoverage > 0 || totalActiveMembers > 0)) {
         try {
             const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
             const prompt = `
@@ -78,7 +85,7 @@ Provide a JSON object with:
             const text = result.response.text();
             
             // Extract JSON
-            const jsonMatch = text.match(/\\{.*\\}/s);
+            const jsonMatch = text.match(/\{.*\}/s);
             if (jsonMatch) {
                 aiExplanations = JSON.parse(jsonMatch[0]);
             }
@@ -104,12 +111,17 @@ Provide a JSON object with:
       RETURNING *
     `;
 
+    const totalActiveMembers = parseInt(workforceState.total_active_people || workforceState.totalMembers || 0);
+    const dataCoverage = totalActiveMembers > 0 ? 100 : 0;
+    const activeEnrollments = parseInt(learningState.enrollments?.active_enrollments || learningState.activeEnrollments || 0);
+    const learningCoverage = activeEnrollments > 0 ? 100 : 0;
+
     const res = await pool.query(insertQuery, [
         organizationId,
-        workforceState.totalMembers > 0 ? 100 : 0, // system data coverage
+        dataCoverage,
         evidenceCoverage,
         competencyCoverage,
-        parseFloat(learningState.activeEnrollments) > 0 ? 100 : 0,
+        learningCoverage,
         confidence,
         JSON.stringify(workforceState),
         JSON.stringify(fullCompetencyState),
