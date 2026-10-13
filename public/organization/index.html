@@ -199,60 +199,6 @@
             </div>
         </div>
 
-        <!-- COURSES (LMS) -->
-        <div id="view-departments" class="view-section hidden">
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-bold text-slate-800">Departments</h1>
-                <button onclick="openDeptModal()" class="bg-primary text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-orange-600 transition shadow-sm">
-                    <i class="bi bi-plus-lg mr-1"></i> New Department
-                </button>
-            </div>
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-                <div class="p-4 border-b border-slate-100 flex gap-4 bg-slate-50/50">
-                    <div class="relative flex-1">
-                        <i class="bi bi-search absolute left-3 top-2.5 text-slate-400"></i>
-                        <input type="text" id="dept-search" placeholder="Search departments..." class="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition">
-                    </div>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm">
-                        <thead class="bg-slate-50 text-slate-500 uppercase text-xs">
-                            <tr>
-                                <th class="p-4 text-left font-medium">Name</th>
-                                <th class="p-4 text-left font-medium">Description</th>
-                                <th class="p-4 text-left font-medium">Members</th>
-                                <th class="p-4 text-right font-medium">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="departments-table-body" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div id="view-roles" class="view-section hidden">
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-bold text-slate-800">Job Roles</h1>
-                <button onclick="openRoleModal()" class="bg-primary text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-orange-600 transition shadow-sm">
-                    <i class="bi bi-plus-lg mr-1"></i> New Role
-                </button>
-            </div>
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm">
-                        <thead class="bg-slate-50 text-slate-500 uppercase text-xs">
-                            <tr>
-                                <th class="p-4 text-left font-medium">Role Name</th>
-                                <th class="p-4 text-left font-medium">Department</th>
-                                <th class="p-4 text-left font-medium">Status</th>
-                                <th class="p-4 text-right font-medium">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="roles-table-body" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
 
         <!-- DEPARTMENTS -->
         <div id="view-departments" class="view-section hidden">

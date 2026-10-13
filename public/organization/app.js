@@ -53,7 +53,7 @@
     const qs = (sel, root = document) => root.querySelector(sel);
 
     // ── Boot ──────────────────────────────────────────────────────────
-    document.addEventListener('DOMContentLoaded', async () => {
+    async function boot() {
         token = localStorage.getItem('token') || localStorage.getItem('adminToken') || '';
         let userStr = localStorage.getItem('dt_user') || sessionStorage.getItem('dt_appdata_v3');
         if (!token && userStr) {
@@ -137,9 +137,14 @@
                 const myOrgsRes = await api(`/organizations`);
                 const myOrgs = myOrgsRes.data || myOrgsRes.organizations || [];
                 const myOrg = myOrgs.find(o => (o.id || o.organization_id) === orgId);
-                currentRole = myOrg?.membership_role || myOrg?.role || myOrg?.user_role || 'TRAINEE';
+                currentRole = myOrg?.membership_role || myOrg?.role || myOrg?.user_role || (currentUser?.role === 'admin' ? 'ORGANIZATION_ADMIN' : 'TRAINEE');
             } catch(_) {
-                currentRole = 'TRAINEE';
+                currentRole = currentUser?.role === 'admin' ? 'ORGANIZATION_ADMIN' : 'TRAINEE';
+            }
+
+            currentRole = (currentRole || 'TRAINEE').toUpperCase();
+            if (currentRole === 'ADMIN' || currentRole === 'SUPER_ADMIN') {
+                currentRole = 'ORGANIZATION_ADMIN';
             }
 
             const displayName = currentUser.first_name
@@ -164,17 +169,23 @@
                 window.location.href = '/login.html';
             }
         }
+    }
 
-        bindGlobalEvents();
-    });
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', boot);
+    } else {
+        boot();
+    }
 
     // ── Sidebar Navigation ─────────────────────────────────────────────
     const NAV_ITEMS = [
         { id: 'dashboard', icon: 'bi-grid-1x2', text: 'Dashboard', roles: ['ORGANIZATION_ADMIN', 'TRAINER', 'TRAINEE'] },
         { id: 'people', icon: 'bi-people', text: 'People', roles: ['ORGANIZATION_ADMIN'] },
+        { id: 'departments', icon: 'bi-diagram-3', text: 'Departments', roles: ['ORGANIZATION_ADMIN'] },
+        { id: 'roles', icon: 'bi-briefcase', text: 'Job Roles', roles: ['ORGANIZATION_ADMIN'] },
         { id: 'courses', icon: 'bi-journal-bookmark', text: 'Courses', roles: ['ORGANIZATION_ADMIN', 'TRAINER', 'TRAINEE'] },
         { id: 'assessments', icon: 'bi-clipboard-check', text: 'Assessments', roles: ['ORGANIZATION_ADMIN', 'TRAINER', 'TRAINEE'] },
-        { id: 'competencies', icon: 'bi-diagram-3', text: 'Competencies', roles: ['ORGANIZATION_ADMIN', 'TRAINER'] },
+        { id: 'competencies', icon: 'bi-check2-circle', text: 'Competencies', roles: ['ORGANIZATION_ADMIN', 'TRAINER'] },
         { id: 'skillgaps', icon: 'bi-exclamation-triangle', text: 'Skill Gaps', roles: ['ORGANIZATION_ADMIN'] },
         { id: 'training', icon: 'bi-bullseye', text: 'Training Needs', roles: ['ORGANIZATION_ADMIN', 'TRAINER'] },
         { id: 'knowledge', icon: 'bi-book', text: 'Knowledge Library', roles: ['ORGANIZATION_ADMIN', 'TRAINER', 'TRAINEE'] },
@@ -187,8 +198,13 @@
 
     function buildNavigation() {
         const nav = el('sidebar-nav');
+        if (!nav) return;
         nav.innerHTML = '';
-        NAV_ITEMS.filter(n => n.roles.includes(currentRole)).forEach(item => {
+        let items = NAV_ITEMS.filter(n => n.roles.includes(currentRole));
+        if (!items.length) {
+            items = NAV_ITEMS.filter(n => n.roles.includes('TRAINEE'));
+        }
+        items.forEach(item => {
             const a = document.createElement('a');
             a.href = '#';
             a.className = 'nav-link flex items-center gap-3 px-3 py-2.5 text-sm text-slate-600 hover:bg-slate-50 rounded-lg';
@@ -249,6 +265,8 @@
     const loaders = {
         dashboard: loadDashboard,
         people: loadPeople,
+        departments: loadDepartments,
+        roles: loadRoles,
         courses: loadCourses,
         assessments: loadAssessments,
         competencies: loadCompetencies,
@@ -258,6 +276,7 @@
         certificates: loadCertificates,
         analytics: loadAnalytics,
         'digital-twin': loadDigitalTwin,
+        'enterprise-ai': () => {},
         settings: loadSettings,
     };
 
@@ -343,6 +362,105 @@
             toast('Member removed.');
             loadPeople();
         } catch (e) { toast(e.message, 'error'); }
+    };
+
+    // ── DEPARTMENTS ────────────────────────────────────────────────────
+    async function loadDepartments() {
+        const tbody = el('departments-table-body');
+        if (!tbody) return;
+        tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">Loading departments...</td></tr>`;
+        try {
+            const res = await api(`/organizations/${orgId}/departments`);
+            const items = res.data || [];
+            if (!items.length) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400">No departments found.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = items.map(d => `
+                <tr class="border-b hover:bg-slate-50 transition">
+                    <td class="p-4 font-medium text-slate-800">${d.name}</td>
+                    <td class="p-4 text-slate-500">${d.description || '—'}</td>
+                    <td class="p-4 text-slate-500">${d.member_count || 0}</td>
+                    <td class="p-4 text-right">
+                        <button onclick="archiveDepartment('${d.id}')" class="text-red-400 hover:text-red-600 text-sm" title="Archive Department"><i class="bi bi-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        } catch(e) {
+            tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-red-400">${e.message}</td></tr>`;
+        }
+    }
+
+    window.openDeptModal = async function() {
+        const name = prompt('Enter Department Name:');
+        if (!name || !name.trim()) return;
+        const description = prompt('Enter Department Description (optional):') || '';
+        try {
+            await api(`/organizations/${orgId}/departments`, {
+                method: 'POST',
+                body: JSON.stringify({ name: name.trim(), description: description.trim() })
+            });
+            toast('Department created successfully!');
+            loadDepartments();
+        } catch(e) { toast(e.message, 'error'); }
+    };
+
+    window.archiveDepartment = async function(deptId) {
+        if (!confirm('Are you sure you want to archive this department?')) return;
+        try {
+            await api(`/organizations/${orgId}/departments/${deptId}`, { method: 'DELETE' });
+            toast('Department archived.');
+            loadDepartments();
+        } catch(e) { toast(e.message, 'error'); }
+    };
+
+    // ── ROLES ──────────────────────────────────────────────────────────
+    async function loadRoles() {
+        const tbody = el('roles-table-body');
+        if (!tbody) return;
+        tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">Loading job roles...</td></tr>`;
+        try {
+            const res = await api(`/organizations/${orgId}/roles`);
+            const items = res.data || [];
+            if (!items.length) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400">No job roles defined.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = items.map(r => `
+                <tr class="border-b hover:bg-slate-50 transition">
+                    <td class="p-4 font-medium text-slate-800">${r.name}</td>
+                    <td class="p-4 text-slate-500">${r.department_name || r.department || '—'}</td>
+                    <td class="p-4">${statusBadge(r.status || 'ACTIVE')}</td>
+                    <td class="p-4 text-right">
+                        <button onclick="archiveRole('${r.id}')" class="text-red-400 hover:text-red-600 text-sm" title="Archive Role"><i class="bi bi-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        } catch(e) {
+            tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-red-400">${e.message}</td></tr>`;
+        }
+    }
+
+    window.openRoleModal = async function() {
+        const name = prompt('Enter Job Role Name:');
+        if (!name || !name.trim()) return;
+        try {
+            await api(`/organizations/${orgId}/roles`, {
+                method: 'POST',
+                body: JSON.stringify({ name: name.trim() })
+            });
+            toast('Job role created successfully!');
+            loadRoles();
+        } catch(e) { toast(e.message, 'error'); }
+    };
+
+    window.archiveRole = async function(roleId) {
+        if (!confirm('Are you sure you want to archive this role?')) return;
+        try {
+            await api(`/organizations/${orgId}/roles/${roleId}`, { method: 'DELETE' });
+            toast('Job role archived.');
+            loadRoles();
+        } catch(e) { toast(e.message, 'error'); }
     };
 
     // ── COURSES (LMS) ─────────────────────────────────────────────────
@@ -457,22 +575,22 @@
         try {
             const deptSelect = el('filter-dept-tn');
             if (deptSelect && deptSelect.children.length <= 1) {
-                api(\`/organizations/\${orgId}/departments\`).then(res => {
-                    deptSelect.innerHTML = '<option value="">All Departments</option>' + (res.data || []).map(d => \`<option value="\${d.id}">\${d.name}</option>\`).join('');
+                api(`/organizations/${orgId}/departments`).then(res => {
+                    deptSelect.innerHTML = '<option value="">All Departments</option>' + (res.data || []).map(d => `<option value="${d.id}">${d.name}</option>`).join('');
                 }).catch(console.error);
             }
             const roleSelect = el('filter-role-tn');
             if (roleSelect && roleSelect.children.length <= 1) {
-                api(\`/organizations/\${orgId}/roles\`).then(res => {
-                    roleSelect.innerHTML = '<option value="">All Roles</option>' + (res.data || []).map(r => \`<option value="\${r.id}">\${r.name}</option>\`).join('');
+                api(`/organizations/${orgId}/roles`).then(res => {
+                    roleSelect.innerHTML = '<option value="">All Roles</option>' + (res.data || []).map(r => `<option value="${r.id}">${r.name}</option>`).join('');
                 }).catch(console.error);
             }
 
             const deptId = el('filter-dept-tn')?.value;
             const roleId = el('filter-role-tn')?.value;
-            let url = \`/organizations/\${orgId}/ai-training-needs?\`;
-            if (deptId) url += \`departmentId=\${deptId}&\`;
-            if (roleId) url += \`roleId=\${roleId}&\`;
+            let url = `/organizations/${orgId}/ai-training-needs?`;
+            if (deptId) url += `departmentId=${deptId}&`;
+            if (roleId) url += `roleId=${roleId}&`;
             
             const json = await api(url);
             if (!json.success || !json.data || json.data.length === 0) {
@@ -480,48 +598,48 @@
                 return;
             }
             
-            list.innerHTML = json.data.map(n => \`
+            list.innerHTML = json.data.map(n => `
                 <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
                     <div class="flex justify-between mb-3">
-                        <h4 class="font-bold text-slate-800 text-lg">\${n.training_need}</h4>
-                        <span class="px-3 py-1 bg-\${n.priority === 'CRITICAL' ? 'red' : (n.priority === 'HIGH' ? 'orange' : 'blue')}-100 text-\${n.priority === 'CRITICAL' ? 'red' : (n.priority === 'HIGH' ? 'orange' : 'blue')}-700 text-xs font-bold rounded-full">
-                            \${n.priority} PRIORITY
+                        <h4 class="font-bold text-slate-800 text-lg">${n.training_need}</h4>
+                        <span class="px-3 py-1 bg-${n.priority === 'CRITICAL' ? 'red' : (n.priority === 'HIGH' ? 'orange' : 'blue')}-100 text-${n.priority === 'CRITICAL' ? 'red' : (n.priority === 'HIGH' ? 'orange' : 'blue')}-700 text-xs font-bold rounded-full">
+                            ${n.priority} PRIORITY
                         </span>
                     </div>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 text-sm text-slate-600">
                         <div>
                             <span class="block text-xs font-semibold text-slate-400 mb-1">AFFECTED MEMBERS</span>
-                            \${n.affected_members}
+                            ${n.affected_members}
                         </div>
                         <div>
                             <span class="block text-xs font-semibold text-slate-400 mb-1">DEPARTMENTS</span>
-                            \${n.affected_department}
+                            ${n.affected_department}
                         </div>
                         <div class="col-span-2">
                             <span class="block text-xs font-semibold text-slate-400 mb-1">RECOMMENDED TRAINING</span>
-                            \${n.recommended_training}
+                            ${n.recommended_training}
                         </div>
                     </div>
                     <div class="bg-indigo-50 p-4 rounded-lg flex gap-3 border border-indigo-100">
                         <i class="bi bi-robot text-indigo-500 text-lg"></i>
                         <div>
                             <span class="block text-xs font-bold text-indigo-700 mb-1">AI INSIGHT (Reasoning)</span>
-                            <p class="text-sm text-slate-700">\${n.reason || 'Automatically identified training need.'}</p>
+                            <p class="text-sm text-slate-700">${n.reason || 'Automatically identified training need.'}</p>
                         </div>
                     </div>
                 </div>
-            \`).join('');
+            `).join('');
         } catch (err) {
-            list.innerHTML = \`<p class="text-red-500 text-sm">Error loading training needs: \${err.message}</p>\`;
+            list.innerHTML = `<p class="text-red-500 text-sm">Error loading training needs: ${err.message}</p>`;
         }
     }
 
     window.exportTrainingNeeds = (format) => {
         const deptId = el('filter-dept-tn')?.value;
         const roleId = el('filter-role-tn')?.value;
-        let url = \`/api/v1/organizations/\${orgId}/ai-training-needs/export?format=\${format}\`;
-        if (deptId) url += \`&departmentId=\${deptId}\`;
-        if (roleId) url += \`&roleId=\${roleId}\`;
+        let url = `/api/v1/organizations/${orgId}/ai-training-needs/export?format=${format}`;
+        if (deptId) url += `&departmentId=${deptId}`;
+        if (roleId) url += `&roleId=${roleId}`;
         window.open(url, '_blank');
     };
 
@@ -710,10 +828,10 @@
         if (!snap) return;
         const confidenceBar = el('twin-confidence-bar');
         confidenceBar.classList.remove('hidden');
-        el('twin-confidence-label').className = \`text-sm font-bold confidence-\${snap.confidence?.toLowerCase()}\`;
+        el('twin-confidence-label').className = `text-sm font-bold confidence-${snap.confidence?.toLowerCase()}`;
         el('twin-confidence-label').textContent = snap.confidence;
-        el('twin-evidence').textContent = snap.evidence_coverage != null ? \`\${parseFloat(snap.evidence_coverage).toFixed(0)}%\` : '—';
-        el('twin-competency').textContent = snap.competency_coverage != null ? \`\${parseFloat(snap.competency_coverage).toFixed(0)}%\` : '—';
+        el('twin-evidence').textContent = snap.evidence_coverage != null ? `${parseFloat(snap.evidence_coverage).toFixed(0)}%` : '—';
+        el('twin-competency').textContent = snap.competency_coverage != null ? `${parseFloat(snap.competency_coverage).toFixed(0)}%` : '—';
         el('twin-updated').textContent = snap.created_at ? new Date(snap.created_at).toLocaleDateString() : '—';
 
         // Add version indicator
@@ -723,7 +841,7 @@
             vBadge.className = 'ml-3 text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-700';
             el('twin-confidence-label').parentNode.appendChild(vBadge);
         }
-        el('twin-version-indicator').textContent = \`v\${snap.snapshot_version || '1.0'}\`;
+        el('twin-version-indicator').textContent = `v${snap.snapshot_version || '1.0'}`;
 
         let html = '';
         
@@ -732,34 +850,34 @@
             const ai = snap.ai_explanations;
             const trends = ai.trends || {};
             
-            html += \`
+            html += `
             <div class="col-span-full bg-gradient-to-r from-indigo-50 to-blue-50 rounded-xl border border-indigo-100 p-5 shadow-sm mb-4">
                 <h3 class="font-bold text-indigo-900 text-sm mb-3 flex items-center gap-2">
                     <i class="bi bi-robot text-indigo-600"></i> Enterprise AI Insights
                 </h3>
                 <div class="space-y-2 text-sm text-indigo-800">
-                    \${ai.executiveSummary ? \`<p><strong class="text-indigo-900">Summary:</strong> \${ai.executiveSummary}</p>\` : ''}
-                    \${ai.departmentInsights ? \`<p><strong class="text-indigo-900">Departments:</strong> \${ai.departmentInsights}</p>\` : ''}
-                    \${ai.trainingAction ? \`<p><strong class="text-indigo-900">Action:</strong> \${ai.trainingAction}</p>\` : ''}
-                    \${ai.dataWarning ? \`<p class="text-orange-700 bg-orange-50 p-2 rounded text-xs mt-2 border border-orange-100"><i class="bi bi-exclamation-triangle"></i> \${ai.dataWarning}</p>\` : ''}
-                    \${ai.message ? \`<p class="text-slate-500">\${ai.message}</p>\` : ''}
+                    ${ai.executiveSummary ? `<p><strong class="text-indigo-900">Summary:</strong> ${ai.executiveSummary}</p>` : ''}
+                    ${ai.departmentInsights ? `<p><strong class="text-indigo-900">Departments:</strong> ${ai.departmentInsights}</p>` : ''}
+                    ${ai.trainingAction ? `<p><strong class="text-indigo-900">Action:</strong> ${ai.trainingAction}</p>` : ''}
+                    ${ai.dataWarning ? `<p class="text-orange-700 bg-orange-50 p-2 rounded text-xs mt-2 border border-orange-100"><i class="bi bi-exclamation-triangle"></i> ${ai.dataWarning}</p>` : ''}
+                    ${ai.message ? `<p class="text-slate-500">${ai.message}</p>` : ''}
                 </div>
-            </div>\`;
+            </div>`;
 
             // Trend indicator
             if (Object.keys(trends).length > 0) {
-                html += \`<div class="col-span-full grid grid-cols-2 gap-4 mb-4">
+                html += `<div class="col-span-full grid grid-cols-2 gap-4 mb-4">
                     <div class="bg-white rounded-xl border border-slate-100 p-4 flex justify-between items-center shadow-sm">
                         <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Competency Trend</span>
-                        \${trends.competencyTrend > 0 ? \`<span class="text-green-500 text-sm font-bold"><i class="bi bi-arrow-up"></i> +\${trends.competencyTrend.toFixed(1)}%</span>\` : 
-                          (trends.competencyTrend < 0 ? \`<span class="text-red-500 text-sm font-bold"><i class="bi bi-arrow-down"></i> \${trends.competencyTrend.toFixed(1)}%</span>\` : \`<span class="text-slate-400 text-sm font-bold">No Change</span>\`)}
+                        ${trends.competencyTrend > 0 ? `<span class="text-green-500 text-sm font-bold"><i class="bi bi-arrow-up"></i> +${trends.competencyTrend.toFixed(1)}%</span>` : 
+                          (trends.competencyTrend < 0 ? `<span class="text-red-500 text-sm font-bold"><i class="bi bi-arrow-down"></i> ${trends.competencyTrend.toFixed(1)}%</span>` : `<span class="text-slate-400 text-sm font-bold">No Change</span>`)}
                     </div>
                     <div class="bg-white rounded-xl border border-slate-100 p-4 flex justify-between items-center shadow-sm">
                         <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Evidence Trend</span>
-                        \${trends.evidenceTrend > 0 ? \`<span class="text-green-500 text-sm font-bold"><i class="bi bi-arrow-up"></i> +\${trends.evidenceTrend.toFixed(1)}%</span>\` : 
-                          (trends.evidenceTrend < 0 ? \`<span class="text-red-500 text-sm font-bold"><i class="bi bi-arrow-down"></i> \${trends.evidenceTrend.toFixed(1)}%</span>\` : \`<span class="text-slate-400 text-sm font-bold">No Change</span>\`)}
+                        ${trends.evidenceTrend > 0 ? `<span class="text-green-500 text-sm font-bold"><i class="bi bi-arrow-up"></i> +${trends.evidenceTrend.toFixed(1)}%</span>` : 
+                          (trends.evidenceTrend < 0 ? `<span class="text-red-500 text-sm font-bold"><i class="bi bi-arrow-down"></i> ${trends.evidenceTrend.toFixed(1)}%</span>` : `<span class="text-slate-400 text-sm font-bold">No Change</span>`)}
                     </div>
-                </div>\`;
+                </div>`;
             }
         }
 
@@ -774,18 +892,18 @@
         html += states.map(s => {
             const d = s.data || {};
             const entries = Object.entries(d).slice(0, 4);
-            return \`
+            return `
             <div class="bg-white rounded-xl border border-slate-100 p-5 shadow-sm">
                 <h3 class="font-semibold text-sm mb-3 flex items-center gap-2">
-                    <i class="bi \${s.icon} text-primary"></i> \${s.title} State
+                    <i class="bi ${s.icon} text-primary"></i> ${s.title} State
                 </h3>
-                \${entries.length ? entries.map(([k, v]) => \`
+                ${entries.length ? entries.map(([k, v]) => `
                     <div class="flex justify-between text-xs py-1 border-b border-slate-50">
-                        <span class="text-slate-500 capitalize">\${k.replace(/_/g, ' ')}</span>
-                        <span class="font-medium">\${(v !== null && typeof v === 'object') ? JSON.stringify(v) : (v ?? '—')}</span>
+                        <span class="text-slate-500 capitalize">${k.replace(/_/g, ' ')}</span>
+                        <span class="font-medium">${(v !== null && typeof v === 'object') ? JSON.stringify(v) : (v ?? '—')}</span>
                     </div>
-                \`).join('') : '<p class="text-xs text-slate-400">Insufficient evidence for this state.</p>'}
-            </div>\`;
+                `).join('') : '<p class="text-xs text-slate-400">Insufficient evidence for this state.</p>'}
+            </div>`;
         }).join('');
         
         el('twin-state-grid').innerHTML = html;
