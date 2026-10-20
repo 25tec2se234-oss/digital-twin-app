@@ -25,7 +25,8 @@
     },
     {
       "src": "/wheel(.*)",
-      "dest": "/public/wheel.html"
+      "status": 302,
+      "headers": { "Location": "/" }
     },
     {
       "src": "/genesis(.*)",

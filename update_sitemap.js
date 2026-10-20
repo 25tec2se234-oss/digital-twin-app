@@ -29,12 +29,6 @@ const newUrls = `
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://digitaltwinvrs.com/wheel.html</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
 </urlset>`;
 
 sitemap = sitemap.replace('</urlset>', newUrls);
