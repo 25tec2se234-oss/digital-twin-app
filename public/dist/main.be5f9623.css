@@ -7190,9 +7190,53 @@ h1, h2, h3, h4, h5, h6 {
 [data-theme="light"] .genesis-card,
 [data-theme="light"] .feature-card,
 [data-theme="light"] .analyzer-preview-card,
-[data-theme="light"] .preview-subcard {
+[data-theme="light"] .preview-subcard,
+[data-theme="light"] .why-choose-card,
+[data-theme="light"] .premium-accordion-item {
     background: #FFFFFF !important;
     border-color: #E5E7EB !important;
+}
+
+[data-theme="light"] .why-choose-title {
+    color: #0F172A !important;
+}
+
+[data-theme="light"] .why-choose-desc {
+    color: #475569 !important;
+}
+
+[data-theme="light"] .premium-accordion-btn {
+    color: #0F172A !important;
+}
+
+[data-theme="light"] .dropdown-menu {
+    background: #FFFFFF !important;
+    border-color: #E2E8F0 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] .dropdown-menu a {
+    color: #334155 !important;
+}
+
+[data-theme="light"] .dropdown-menu a:hover {
+    background: #F1F5F9 !important;
+    color: #0F172A !important;
+}
+
+[data-theme="light"] .account-panel {
+    background: #FFFFFF !important;
+    border-color: #E2E8F0 !important;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme="light"] .account-panel .acc-item {
+    color: #334155 !important;
+}
+
+[data-theme="light"] .account-panel .acc-item:hover {
+    background: #F1F5F9 !important;
+    color: #0F172A !important;
 }
 
 [data-theme="light"] h1,
@@ -7213,4 +7257,9 @@ h1, h2, h3, h4, h5, h6 {
 [data-theme="light"] .testimonial-role,
 [data-theme="light"] .stat-description {
     color: #4B5563 !important;
+}
+
+/* Ensure flip card back text is always crisp light text on its dark navy background */
+.flip-card-back p {
+    color: #E2E8F0 !important;
 }

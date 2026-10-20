@@ -54,9 +54,9 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.52b4fcb7.css?v=a726915771de64e0" as="style">
+    <link rel="preload" href="/dist/main.be5f9623.css?v=ab335b7c9223e46e" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.52b4fcb7.css?v=a726915771de64e0">
+    <link rel="stylesheet" href="/dist/main.be5f9623.css?v=ab335b7c9223e46e">
 
     <!-- JSON-LD Structured Data Schema -->
     
@@ -376,18 +376,47 @@
 </head><body>
 
 <style>
-/* Same styles for grid */
-.related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-.blog-card { background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s ease; display: block; text-decoration: none; color: inherit; }
-.blog-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.3); }
-.blog-card img { width: 100%; height: 200px; object-fit: cover; }
+/* Theme-Aware Blog Hub Card Styles */
+.related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.75rem; margin-top: 2rem; }
+.blog-card {
+    background: var(--dtv-bg-raised, #ffffff) !important;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--dtv-border-default, #e2e8f0) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+}
+.blog-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--dtv-orange-400, #fb923c) !important;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+}
+.blog-card img { width: 100%; height: 210px; object-fit: cover; }
 .blog-card-content { padding: 1.5rem; }
-.blog-card-title { font-size: 1.25rem; margin-bottom: 0.5rem; color: #fff; }
-.blog-card-meta { font-size: 0.85rem; color: #a1a1aa; margin-bottom: 1rem; }
+.blog-card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.6rem;
+    color: var(--dtv-text-primary, #09090b) !important;
+    font-weight: 700;
+    line-height: 1.35;
+}
+.blog-card-meta {
+    font-size: 0.85rem;
+    color: var(--dtv-text-tertiary, #64748b) !important;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+.blog-card p {
+    color: var(--dtv-text-secondary, #475569) !important;
+    line-height: 1.6;
+}
 </style>
 
-    <script defer="defer" src="/dist/app.d6188f8f.js?v=a726915771de64e0"></script>
-    <script defer="defer" src="/dist/ux-engine.f675feed.js?v=a726915771de64e0"></script>
+    <script defer="defer" src="/dist/app.d6188f8f.js?v=ab335b7c9223e46e"></script>
+    <script defer="defer" src="/dist/ux-engine.f675feed.js?v=ab335b7c9223e46e"></script>
 
 
 
