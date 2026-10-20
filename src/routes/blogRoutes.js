@@ -422,6 +422,140 @@ router.get('/:slug', (req, res) => {
             .blog-content a { color: #a78bfa; text-decoration: none; }
             .blog-content a:hover { text-decoration: underline; }
             .blog-content strong { color: #fff; }
+
+            /* ════ COMPLETE VISIBILITY & CONTRAST FOR DARK / ASH / SLATE CONTAINERS ════ */
+            .blog-content div[style*="rgba(15, 23, 42"],
+            .blog-content div[style*="rgba(15,23,42"],
+            .blog-content div[style*="rgba(0, 0, 0"],
+            .blog-content div[style*="rgba(0,0,0"],
+            .blog-content div[style*="background: #0f172a"],
+            .blog-content div[style*="background:#0f172a"],
+            .blog-content div[style*="background: #111827"],
+            .blog-content div[style*="background:#111827"],
+            .blog-content div[style*="background: #1e293b"],
+            .blog-content div[style*="background:#1e293b"],
+            .blog-content .dark-box,
+            .blog-content .simulation-showcase-box {
+                background: #0f172a !important;
+                border: 1px solid rgba(148, 163, 184, 0.3) !important;
+                color: #f8fafc !important;
+            }
+
+            .blog-content div[style*="rgba(15, 23, 42"] h1,
+            .blog-content div[style*="rgba(15, 23, 42"] h2,
+            .blog-content div[style*="rgba(15, 23, 42"] h3,
+            .blog-content div[style*="rgba(15, 23, 42"] h4,
+            .blog-content div[style*="rgba(15, 23, 42"] h5,
+            .blog-content div[style*="rgba(15, 23, 42"] strong,
+            .blog-content div[style*="rgba(15, 23, 42"] b,
+            .blog-content div[style*="rgba(15,23,42"] h1,
+            .blog-content div[style*="rgba(15,23,42"] h2,
+            .blog-content div[style*="rgba(15,23,42"] h3,
+            .blog-content div[style*="rgba(15,23,42"] h4,
+            .blog-content div[style*="rgba(15,23,42"] h5,
+            .blog-content div[style*="rgba(15,23,42"] strong,
+            .blog-content div[style*="rgba(15,23,42"] b,
+            .blog-content div[style*="rgba(0, 0, 0"] h1,
+            .blog-content div[style*="rgba(0, 0, 0"] h2,
+            .blog-content div[style*="rgba(0, 0, 0"] h3,
+            .blog-content div[style*="rgba(0, 0, 0"] h4,
+            .blog-content div[style*="rgba(0, 0, 0"] strong,
+            .blog-content div[style*="rgba(0, 0, 0"] b,
+            .blog-content div[style*="rgba(0,0,0"] h1,
+            .blog-content div[style*="rgba(0,0,0"] h2,
+            .blog-content div[style*="rgba(0,0,0"] h3,
+            .blog-content div[style*="rgba(0,0,0"] h4,
+            .blog-content div[style*="rgba(0,0,0"] strong,
+            .blog-content div[style*="rgba(0,0,0"] b,
+            .blog-content div[style*="background: #0f172a"] h1,
+            .blog-content div[style*="background: #0f172a"] h2,
+            .blog-content div[style*="background: #0f172a"] h3,
+            .blog-content div[style*="background: #0f172a"] h4,
+            .blog-content div[style*="background: #0f172a"] strong,
+            .blog-content div[style*="background: #0f172a"] b,
+            .blog-content div[style*="background: #111827"] h1,
+            .blog-content div[style*="background: #111827"] h2,
+            .blog-content div[style*="background: #111827"] h3,
+            .blog-content div[style*="background: #111827"] h4,
+            .blog-content div[style*="background: #111827"] strong,
+            .blog-content div[style*="background: #111827"] b,
+            .blog-content div[style*="background: #1e293b"] h1,
+            .blog-content div[style*="background: #1e293b"] h2,
+            .blog-content div[style*="background: #1e293b"] h3,
+            .blog-content div[style*="background: #1e293b"] h4,
+            .blog-content div[style*="background: #1e293b"] strong,
+            .blog-content div[style*="background: #1e293b"] b,
+            .blog-content .simulation-showcase-box h4,
+            .blog-content .simulation-showcase-box strong,
+            .blog-content .simulation-showcase-box b {
+                color: #ffffff !important;
+            }
+
+            .blog-content div[style*="rgba(15, 23, 42"] p,
+            .blog-content div[style*="rgba(15, 23, 42"] li,
+            .blog-content div[style*="rgba(15, 23, 42"] ul,
+            .blog-content div[style*="rgba(15, 23, 42"] ol,
+            .blog-content div[style*="rgba(15, 23, 42"] span,
+            .blog-content div[style*="rgba(15, 23, 42"] div,
+            .blog-content div[style*="rgba(15,23,42"] p,
+            .blog-content div[style*="rgba(15,23,42"] li,
+            .blog-content div[style*="rgba(15,23,42"] ul,
+            .blog-content div[style*="rgba(15,23,42"] ol,
+            .blog-content div[style*="rgba(15,23,42"] span,
+            .blog-content div[style*="rgba(15,23,42"] div,
+            .blog-content div[style*="rgba(0, 0, 0"] p,
+            .blog-content div[style*="rgba(0, 0, 0"] li,
+            .blog-content div[style*="rgba(0, 0, 0"] ul,
+            .blog-content div[style*="rgba(0, 0, 0"] ol,
+            .blog-content div[style*="rgba(0, 0, 0"] span,
+            .blog-content div[style*="rgba(0, 0, 0"] div,
+            .blog-content div[style*="rgba(0,0,0"] p,
+            .blog-content div[style*="rgba(0,0,0"] li,
+            .blog-content div[style*="rgba(0,0,0"] ul,
+            .blog-content div[style*="rgba(0,0,0"] ol,
+            .blog-content div[style*="rgba(0,0,0"] span,
+            .blog-content div[style*="rgba(0,0,0"] div,
+            .blog-content div[style*="background: #0f172a"] p,
+            .blog-content div[style*="background: #0f172a"] li,
+            .blog-content div[style*="background: #0f172a"] ul,
+            .blog-content div[style*="background: #0f172a"] ol,
+            .blog-content div[style*="background: #0f172a"] span,
+            .blog-content div[style*="background: #0f172a"] div,
+            .blog-content div[style*="background: #111827"] p,
+            .blog-content div[style*="background: #111827"] li,
+            .blog-content div[style*="background: #111827"] ul,
+            .blog-content div[style*="background: #111827"] ol,
+            .blog-content div[style*="background: #111827"] span,
+            .blog-content div[style*="background: #111827"] div,
+            .blog-content div[style*="background: #1e293b"] p,
+            .blog-content div[style*="background: #1e293b"] li,
+            .blog-content div[style*="background: #1e293b"] ul,
+            .blog-content div[style*="background: #1e293b"] ol,
+            .blog-content div[style*="background: #1e293b"] span,
+            .blog-content div[style*="background: #1e293b"] div,
+            .blog-content .simulation-showcase-box p,
+            .blog-content .simulation-showcase-box li,
+            .blog-content .simulation-showcase-box ul {
+                color: #e2e8f0 !important;
+            }
+
+            .blog-content div[style*="rgba(15, 23, 42"] a,
+            .blog-content div[style*="rgba(15,23,42"] a,
+            .blog-content div[style*="rgba(0, 0, 0"] a,
+            .blog-content div[style*="rgba(0,0,0"] a,
+            .blog-content div[style*="background: #0f172a"] a,
+            .blog-content div[style*="background: #111827"] a,
+            .blog-content div[style*="background: #1e293b"] a,
+            .blog-content .simulation-showcase-box a {
+                color: #38bdf8 !important;
+                text-decoration: underline !important;
+                font-weight: 600 !important;
+            }
+
+            .blog-content .simulation-showcase-box a,
+            .blog-content div[style*="rgba(236, 72, 153"] a {
+                color: #f472b6 !important;
+            }
             
             .author-box { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); width: 100%; }
 

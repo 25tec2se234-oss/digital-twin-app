@@ -140,14 +140,14 @@ const contentHtml = `
             From testing machinery in virtual flight simulators to testing human potential in simulated career realities:
         </p>
         <div style="display: flex; justify-content: center; align-items: center; gap: 1.5rem; flex-wrap: wrap;">
-            <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 1.2rem; width: 260px; text-align: left;">
-                <div style="color: #60a5fa; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.4rem;">INDUSTRIAL DIGITAL TWIN</div>
-                <div style="color: #94a3b8; font-size: 0.85rem; line-height: 1.5;">Physical Turbines &rarr; Sensor Telemetry &rarr; Virtual Stress Test &rarr; Predictive Maintenance without Physical Crash</div>
+            <div style="background: #0f172a; border: 1px solid rgba(96, 165, 250, 0.4); border-radius: 10px; padding: 1.2rem; width: 260px; text-align: left; box-shadow: 0 4px 20px rgba(0,0,0,0.25);">
+                <div style="color: #93c5fd; font-weight: 800; font-size: 0.9rem; margin-bottom: 0.4rem;">INDUSTRIAL DIGITAL TWIN</div>
+                <div style="color: #f1f5f9; font-size: 0.88rem; line-height: 1.5;">Physical Turbines &rarr; Sensor Telemetry &rarr; Virtual Stress Test &rarr; Predictive Maintenance without Physical Crash</div>
             </div>
             <div style="color: #a78bfa; font-size: 1.8rem; font-weight: bold;">&rarr;</div>
-            <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(167, 139, 250, 0.3); border-radius: 10px; padding: 1.2rem; width: 260px; text-align: left;">
-                <div style="color: #c084fc; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.4rem;">STUDENT DIGITAL TWIN</div>
-                <div style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.5;">Learner Capabilities &rarr; Cognitive & Achievement Telemetry &rarr; AI Career Simulation &rarr; Personalized Roadmap without Sunk-Cost Years</div>
+            <div style="background: #0f172a; border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 10px; padding: 1.2rem; width: 260px; text-align: left; box-shadow: 0 4px 20px rgba(0,0,0,0.25);">
+                <div style="color: #c084fc; font-weight: 800; font-size: 0.9rem; margin-bottom: 0.4rem;">STUDENT DIGITAL TWIN</div>
+                <div style="color: #f1f5f9; font-size: 0.88rem; line-height: 1.5;">Learner Capabilities &rarr; Cognitive & Achievement Telemetry &rarr; AI Career Simulation &rarr; Personalized Roadmap without Sunk-Cost Years</div>
             </div>
         </div>
     </div>
@@ -188,17 +188,17 @@ const contentHtml = `
     <p>Yet for generations, career counseling has treated reading about a job as a substitute for experiencing it. A prospective medical student reads about surgery and envisions heroic triumphs; they do not experience the exhaustion of standing on concrete floors for eight hours holding a surgical retractor in silence. An aspiring software engineer imagines inventing revolutionary applications; they do not experience spending four consecutive hours hunting down a single missing semicolon in a legacy codebase while a deployment pipeline fails.</p>
 
     <!-- Interactive Lab Concept Block -->
-    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(236, 72, 153, 0.35); border-radius: 14px; padding: 2rem; margin: 2rem 0;">
-        <h4 style="color: #f472b6; font-size: 1.25rem; font-weight: 700; margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">
+    <div class="simulation-showcase-box" style="background: #0f172a; border: 1px solid rgba(244, 114, 182, 0.45); border-radius: 14px; padding: 2rem; margin: 2rem 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        <h4 style="color: #f472b6; font-size: 1.3rem; font-weight: 700; margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">
             <span>🔬</span> Inside the AI Reality Lab: The Simulation Experience
         </h4>
-        <p style="color: #e2e8f0; line-height: 1.7; font-size: 1rem; margin-bottom: 1rem;">
-            In the <a href="/ai-reality-lab" style="color: #f472b6; font-weight: 600;">AI Reality Lab</a>, learners are not given multiple-choice quizzes. They are immersed in interactive, simulated workplace crises that mirror the real daily friction of high-growth professions:
+        <p style="color: #f8fafc; line-height: 1.7; font-size: 1.05rem; margin-bottom: 1.2rem;">
+            In the <a href="/ai-reality-lab" style="color: #f472b6; font-weight: 700; text-decoration: underline;">AI Reality Lab</a>, learners are not given multiple-choice quizzes. They are immersed in interactive, simulated workplace crises that mirror the real daily friction of high-growth professions:
         </p>
-        <ul style="color: #cbd5e1; line-height: 1.7; font-size: 0.95rem; margin-bottom: 0;">
-            <li><strong>AI Product Manager Simulation:</strong> Given conflicting user feedback, an urgent release deadline, and a limited engineering budget, the learner must prioritize features, defend trade-offs against a simulated executive team, and navigate product edge cases.</li>
-            <li><strong>Data Scientist Simulation:</strong> Faced with a messy, real-world customer churn dataset containing missing values and contradictory metrics, the student must clean the telemetry, select appropriate modeling techniques, and present findings in plain business language.</li>
-            <li><strong>Cybersecurity Specialist Simulation:</strong> When a simulated network breach triggers automated security alerts, the learner must triage vulnerabilities, isolate compromised assets, and formulate an incident response protocol under time pressure.</li>
+        <ul style="color: #e2e8f0; line-height: 1.8; font-size: 1rem; margin-bottom: 0;">
+            <li style="color: #e2e8f0; margin-bottom: 1rem;"><strong style="color: #ffffff; font-weight: 700;">AI Product Manager Simulation:</strong> Given conflicting user feedback, an urgent release deadline, and a limited engineering budget, the learner must prioritize features, defend trade-offs against a simulated executive team, and navigate product edge cases.</li>
+            <li style="color: #e2e8f0; margin-bottom: 1rem;"><strong style="color: #ffffff; font-weight: 700;">Data Scientist Simulation:</strong> Faced with a messy, real-world customer churn dataset containing missing values and contradictory metrics, the student must clean the telemetry, select appropriate modeling techniques, and present findings in plain business language.</li>
+            <li style="color: #e2e8f0; margin-bottom: 0;"><strong style="color: #ffffff; font-weight: 700;">Cybersecurity Specialist Simulation:</strong> When a simulated network breach triggers automated security alerts, the learner must triage vulnerabilities, isolate compromised assets, and formulate an incident response protocol under time pressure.</li>
         </ul>
     </div>
 
@@ -217,83 +217,83 @@ const contentHtml = `
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2.5rem 0;">
         
         <!-- Product 1: Genesis -->
-        <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(167, 139, 250, 0.3); border-radius: 12px; padding: 1.6rem;">
-            <div style="color: #a78bfa; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">ONBOARDING & FOUNDATION</div>
-            <h3 style="color: #fff; font-size: 1.25rem; margin: 0 0 0.8rem;"><a href="/genesis" style="color: inherit; text-decoration: none;">Genesis by DTV</a></h3>
-            <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem;">
+        <div style="background: #0f172a; border: 1px solid rgba(167, 139, 250, 0.4); border-radius: 12px; padding: 1.6rem; box-shadow: 0 4px 20px rgba(0,0,0,0.25);">
+            <div style="color: #c084fc; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">ONBOARDING & FOUNDATION</div>
+            <h3 style="color: #ffffff; font-size: 1.25rem; margin: 0 0 0.8rem; font-weight: 700;"><a href="/genesis" style="color: #ffffff; text-decoration: none;">Genesis by DTV</a></h3>
+            <p style="color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem;">
                 The foundational onboarding portal where students establish their baseline profile. Genesis synthesizes academic background, cognitive assessments, and vocational interests to initialize the Student Digital Twin.
             </p>
-            <a href="/genesis" style="color: #a78bfa; font-size: 0.9rem; font-weight: 700; text-decoration: none;">Launch Genesis &rarr;</a>
+            <a href="/genesis" style="color: #c084fc; font-size: 0.9rem; font-weight: 700; text-decoration: underline;">Launch Genesis &rarr;</a>
         </div>
 
         <!-- Product 2: Achievement Analyzer -->
-        <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; padding: 1.6rem;">
+        <div style="background: #0f172a; border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 12px; padding: 1.6rem; box-shadow: 0 4px 20px rgba(0,0,0,0.25);">
             <div style="color: #60a5fa; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">EVALUATION & BENCHMARKING</div>
-            <h3 style="color: #fff; font-size: 1.25rem; margin: 0 0 0.8rem;"><a href="/achievement-analyzer.html" style="color: inherit; text-decoration: none;">Achievement Analyzer</a></h3>
-            <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem;">
+            <h3 style="color: #ffffff; font-size: 1.25rem; margin: 0 0 0.8rem; font-weight: 700;"><a href="/achievement-analyzer.html" style="color: #ffffff; text-decoration: none;">Achievement Analyzer</a></h3>
+            <p style="color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem;">
                 A specialized diagnostic engine that processes academic transcripts, extracurricular projects, and verifiable milestones to generate precise skill percentiles and identify hidden competency strengths.
             </p>
-            <a href="/achievement-analyzer.html" style="color: #60a5fa; font-size: 0.9rem; font-weight: 700; text-decoration: none;">Run Analyzer &rarr;</a>
+            <a href="/achievement-analyzer.html" style="color: #60a5fa; font-size: 0.9rem; font-weight: 700; text-decoration: underline;">Run Analyzer &rarr;</a>
         </div>
 
         <!-- Product 3: AI Reality Lab -->
-        <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(236, 72, 153, 0.3); border-radius: 12px; padding: 1.6rem;">
+        <div style="background: #0f172a; border: 1px solid rgba(244, 114, 182, 0.4); border-radius: 12px; padding: 1.6rem; box-shadow: 0 4px 20px rgba(0,0,0,0.25);">
             <div style="color: #f472b6; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">HANDS-ON SIMULATION</div>
-            <h3 style="color: #fff; font-size: 1.25rem; margin: 0 0 0.8rem;"><a href="/ai-reality-lab" style="color: inherit; text-decoration: none;">AI Reality Lab</a></h3>
-            <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem;">
+            <h3 style="color: #ffffff; font-size: 1.25rem; margin: 0 0 0.8rem; font-weight: 700;"><a href="/ai-reality-lab" style="color: #ffffff; text-decoration: none;">AI Reality Lab</a></h3>
+            <p style="color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem;">
                 An interactive career simulation engine that drops students into realistic professional scenarios with simulated deadlines, team interactions, and technical problem-solving friction.
             </p>
-            <a href="/ai-reality-lab" style="color: #f472b6; font-size: 0.9rem; font-weight: 700; text-decoration: none;">Enter Reality Lab &rarr;</a>
+            <a href="/ai-reality-lab" style="color: #f472b6; font-size: 0.9rem; font-weight: 700; text-decoration: underline;">Enter Reality Lab &rarr;</a>
         </div>
 
         <!-- Product 4: Skill Intelligence Hub -->
-        <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 1.6rem;">
+        <div style="background: #0f172a; border: 1px solid rgba(52, 211, 153, 0.4); border-radius: 12px; padding: 1.6rem; box-shadow: 0 4px 20px rgba(0,0,0,0.25);">
             <div style="color: #34d399; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">COMPETENCY MAPPING</div>
-            <h3 style="color: #fff; font-size: 1.25rem; margin: 0 0 0.8rem;"><a href="/skill-intelligence-hub" style="color: inherit; text-decoration: none;">Skill Intelligence Hub</a></h3>
-            <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem;">
+            <h3 style="color: #ffffff; font-size: 1.25rem; margin: 0 0 0.8rem; font-weight: 700;"><a href="/skill-intelligence-hub" style="color: #ffffff; text-decoration: none;">Skill Intelligence Hub</a></h3>
+            <p style="color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem;">
                 An interactive knowledge network mapping high-growth skills, their interdependencies, and the vocational opportunities they unlock. Students generate personal skill maps tailored to market needs.
             </p>
-            <a href="/skill-intelligence-hub" style="color: #34d399; font-size: 0.9rem; font-weight: 700; text-decoration: none;">Explore Skills &rarr;</a>
+            <a href="/skill-intelligence-hub" style="color: #34d399; font-size: 0.9rem; font-weight: 700; text-decoration: underline;">Explore Skills &rarr;</a>
         </div>
 
         <!-- Product 5: Futureverse -->
-        <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(248, 113, 113, 0.3); border-radius: 12px; padding: 1.6rem;">
+        <div style="background: #0f172a; border: 1px solid rgba(248, 113, 113, 0.4); border-radius: 12px; padding: 1.6rem; box-shadow: 0 4px 20px rgba(0,0,0,0.25);">
             <div style="color: #f87171; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">3D SPATIAL EXPLORATION</div>
-            <h3 style="color: #fff; font-size: 1.25rem; margin: 0 0 0.8rem;"><a href="/futureverse" style="color: inherit; text-decoration: none;">DTV Futureverse</a></h3>
-            <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem;">
+            <h3 style="color: #ffffff; font-size: 1.25rem; margin: 0 0 0.8rem; font-weight: 700;"><a href="/futureverse" style="color: #ffffff; text-decoration: none;">DTV Futureverse</a></h3>
+            <p style="color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem;">
                 An immersive 3D spatial computing environment where learners visualize their growing skill constellations, explore parallel technological horizons, and interact with complex knowledge domains.
             </p>
-            <a href="/futureverse" style="color: #f87171; font-size: 0.9rem; font-weight: 700; text-decoration: none;">Step Into Futureverse &rarr;</a>
+            <a href="/futureverse" style="color: #f87171; font-size: 0.9rem; font-weight: 700; text-decoration: underline;">Step Into Futureverse &rarr;</a>
         </div>
 
         <!-- Product 6: AI Career Roadmap -->
-        <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 12px; padding: 1.6rem;">
+        <div style="background: #0f172a; border: 1px solid rgba(251, 191, 36, 0.4); border-radius: 12px; padding: 1.6rem; box-shadow: 0 4px 20px rgba(0,0,0,0.25);">
             <div style="color: #fbbf24; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">STRATEGIC TIMELINES</div>
-            <h3 style="color: #fff; font-size: 1.25rem; margin: 0 0 0.8rem;"><a href="/ai-career-roadmap" style="color: inherit; text-decoration: none;">AI Career Roadmap</a></h3>
-            <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem;">
+            <h3 style="color: #ffffff; font-size: 1.25rem; margin: 0 0 0.8rem; font-weight: 700;"><a href="/ai-career-roadmap" style="color: #ffffff; text-decoration: none;">AI Career Roadmap</a></h3>
+            <p style="color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem;">
                 A definitive, multi-year career navigation dashboard covering 12 distinct artificial intelligence and engineering career trajectories, compensation benchmarks, and step-by-step milestone timelines.
             </p>
-            <a href="/ai-career-roadmap" style="color: #fbbf24; font-size: 0.9rem; font-weight: 700; text-decoration: none;">View Roadmap &rarr;</a>
+            <a href="/ai-career-roadmap" style="color: #fbbf24; font-size: 0.9rem; font-weight: 700; text-decoration: underline;">View Roadmap &rarr;</a>
         </div>
 
         <!-- Product 7: DTV Capacity Connect (B2B) -->
-        <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(249, 115, 22, 0.3); border-radius: 12px; padding: 1.6rem;">
+        <div style="background: #0f172a; border: 1px solid rgba(251, 146, 60, 0.4); border-radius: 12px; padding: 1.6rem; box-shadow: 0 4px 20px rgba(0,0,0,0.25);">
             <div style="color: #fb923c; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">ENTERPRISE & INSTITUTIONS</div>
-            <h3 style="color: #fff; font-size: 1.25rem; margin: 0 0 0.8rem;"><a href="/organization" style="color: inherit; text-decoration: none;">DTV Capacity Connect</a></h3>
-            <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem;">
+            <h3 style="color: #ffffff; font-size: 1.25rem; margin: 0 0 0.8rem; font-weight: 700;"><a href="/organization" style="color: #ffffff; text-decoration: none;">DTV Capacity Connect</a></h3>
+            <p style="color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem;">
                 An institutional B2B workspace designed for colleges, universities, and enterprise teams. Provides organizational competency mapping, team skills gap diagnostics, role requirements, and workforce digital twins.
             </p>
-            <a href="/organization" style="color: #fb923c; font-size: 0.9rem; font-weight: 700; text-decoration: none;">Explore Organization Workspace &rarr;</a>
+            <a href="/organization" style="color: #fb923c; font-size: 0.9rem; font-weight: 700; text-decoration: underline;">Explore Organization Workspace &rarr;</a>
         </div>
 
         <!-- Product 8: Curated AI Tools Directory -->
-        <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 12px; padding: 1.6rem;">
+        <div style="background: #0f172a; border: 1px solid rgba(0, 240, 255, 0.4); border-radius: 12px; padding: 1.6rem; box-shadow: 0 4px 20px rgba(0,0,0,0.25);">
             <div style="color: #00f0ff; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">STUDENT PRODUCTIVITY</div>
-            <h3 style="color: #fff; font-size: 1.25rem; margin: 0 0 0.8rem;"><a href="/ai-tools-for-students" style="color: inherit; text-decoration: none;">50+ Free AI Tools Directory</a></h3>
-            <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem;">
+            <h3 style="color: #ffffff; font-size: 1.25rem; margin: 0 0 0.8rem; font-weight: 700;"><a href="/ai-tools-for-students" style="color: #ffffff; text-decoration: none;">50+ Free AI Tools Directory</a></h3>
+            <p style="color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1rem;">
                 A comprehensive, filtered directory of 50+ vetted, free AI applications empowering students across research, programming, writing, slide creation, and mathematics.
             </p>
-            <a href="/ai-tools-for-students" style="color: #00f0ff; font-size: 0.9rem; font-weight: 700; text-decoration: none;">Access Free Tools &rarr;</a>
+            <a href="/ai-tools-for-students" style="color: #00f0ff; font-size: 0.9rem; font-weight: 700; text-decoration: underline;">Access Free Tools &rarr;</a>
         </div>
 
     </div>
@@ -337,45 +337,45 @@ const contentHtml = `
     <p>Philosophy without practical execution is an empty indulgence. For students, parents, and emerging professionals seeking to transition from passive anxiety into active construction, we provide the definitive 5-stage Builder's Blueprint:</p>
 
     <!-- Blueprint Steps Box -->
-    <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 2.2rem; margin: 2.5rem 0;">
+    <div style="background: #0f172a; border: 1px solid rgba(167, 139, 250, 0.4); border-radius: 16px; padding: 2.2rem; margin: 2.5rem 0; box-shadow: 0 10px 30px rgba(0,0,0,0.25);">
         
         <div style="margin-bottom: 2rem;">
-            <div style="color: #a78bfa; font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3rem;">STAGE 1 &bull; EMPIRICAL SELF-AUDIT</div>
-            <h4 style="color: #fff; font-size: 1.3rem; margin: 0 0 0.6rem;">Stop Guessing: Establish Your Real Baseline</h4>
-            <p style="color: #cbd5e1; line-height: 1.7; margin: 0; font-size: 1rem;">
-                Abandon vague self-perceptions and vanity resume bullets. Utilize objective diagnostic tools such as the <a href="/achievement-analyzer.html" style="color: #a78bfa; font-weight: 600;">Achievement Analyzer</a> and <a href="/genesis" style="color: #a78bfa; font-weight: 600;">Genesis</a> to inventory your genuine cognitive, technical, and interpersonal capabilities. Document what you can verifiably build, articulate, and solve today without reliance on external aids.
+            <div style="color: #c084fc; font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3rem;">STAGE 1 &bull; EMPIRICAL SELF-AUDIT</div>
+            <h4 style="color: #ffffff; font-size: 1.3rem; margin: 0 0 0.6rem; font-weight: 700;">Stop Guessing: Establish Your Real Baseline</h4>
+            <p style="color: #e2e8f0; line-height: 1.7; margin: 0; font-size: 1rem;">
+                Abandon vague self-perceptions and vanity resume bullets. Utilize objective diagnostic tools such as the <a href="/achievement-analyzer.html" style="color: #93c5fd; font-weight: 600; text-decoration: underline;">Achievement Analyzer</a> and <a href="/genesis" style="color: #93c5fd; font-weight: 600; text-decoration: underline;">Genesis</a> to inventory your genuine cognitive, technical, and interpersonal capabilities. Document what you can verifiably build, articulate, and solve today without reliance on external aids.
             </p>
         </div>
 
         <div style="margin-bottom: 2rem;">
             <div style="color: #60a5fa; font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3rem;">STAGE 2 &bull; PARALLEL HYPOTHESIS TESTING</div>
-            <h4 style="color: #fff; font-size: 1.3rem; margin: 0 0 0.6rem;">Simulate Before You Commit</h4>
-            <p style="color: #cbd5e1; line-height: 1.7; margin: 0; font-size: 1rem;">
-                Select three distinct vocational hypotheses (e.g., AI Engineering, Product Management, Cybersecurity Architecture). Do not commit immediately to a single major or expensive certification. Enter the <a href="/ai-reality-lab" style="color: #60a5fa; font-weight: 600;">AI Reality Lab</a> and run simulated real-world problem scenarios for each role. Evaluate your emotional engagement and cognitive stamina when confronted with the actual daily friction of each field.
+            <h4 style="color: #ffffff; font-size: 1.3rem; margin: 0 0 0.6rem; font-weight: 700;">Simulate Before You Commit</h4>
+            <p style="color: #e2e8f0; line-height: 1.7; margin: 0; font-size: 1rem;">
+                Select three distinct vocational hypotheses (e.g., AI Engineering, Product Management, Cybersecurity Architecture). Do not commit immediately to a single major or expensive certification. Enter the <a href="/ai-reality-lab" style="color: #93c5fd; font-weight: 600; text-decoration: underline;">AI Reality Lab</a> and run simulated real-world problem scenarios for each role. Evaluate your emotional engagement and cognitive stamina when confronted with the actual daily friction of each field.
             </p>
         </div>
 
         <div style="margin-bottom: 2rem;">
             <div style="color: #34d399; font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3rem;">STAGE 3 &bull; SURGICAL SKILL ACQUISITION</div>
-            <h4 style="color: #fff; font-size: 1.3rem; margin: 0 0 0.6rem;">Target High-Leverage Deltas over Certificate Hoarding</h4>
-            <p style="color: #cbd5e1; line-height: 1.7; margin: 0; font-size: 1rem;">
-                Review the exact skill gaps calculated by your Student Digital Twin. Stop passively collecting introductory digital course certificates that signal zero applied competence. Focus quarterly cycles on mastering high-leverage micro-skills identified in the <a href="/skill-intelligence-hub" style="color: #34d399; font-weight: 600;">Skill Intelligence Hub</a>—such as vectorized database operations, prompt evaluation pipelines, or structured stakeholder negotiation.
+            <h4 style="color: #ffffff; font-size: 1.3rem; margin: 0 0 0.6rem; font-weight: 700;">Target High-Leverage Deltas over Certificate Hoarding</h4>
+            <p style="color: #e2e8f0; line-height: 1.7; margin: 0; font-size: 1rem;">
+                Review the exact skill gaps calculated by your Student Digital Twin. Stop passively collecting introductory digital course certificates that signal zero applied competence. Focus quarterly cycles on mastering high-leverage micro-skills identified in the <a href="/skill-intelligence-hub" style="color: #93c5fd; font-weight: 600; text-decoration: underline;">Skill Intelligence Hub</a>—such as vectorized database operations, prompt evaluation pipelines, or structured stakeholder negotiation.
             </p>
         </div>
 
         <div style="margin-bottom: 2rem;">
             <div style="color: #fbbf24; font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3rem;">STAGE 4 &bull; ARTIFACT CREATION & PROOF-OF-WORK</div>
-            <h4 style="color: #fff; font-size: 1.3rem; margin: 0 0 0.6rem;">Build Public Proof Instead of Traditional Resumes</h4>
-            <p style="color: #cbd5e1; line-height: 1.7; margin: 0; font-size: 1rem;">
+            <h4 style="color: #ffffff; font-size: 1.3rem; margin: 0 0 0.6rem; font-weight: 700;">Build Public Proof Instead of Traditional Resumes</h4>
+            <p style="color: #e2e8f0; line-height: 1.7; margin: 0; font-size: 1rem;">
                 In the modern market, claims of knowledge mean nothing; visible artifacts mean everything. Build open-source tools, write detailed technical teardowns, publish case studies, and contribute to collaborative problem sets. Your portfolio of verified work speaks with vastly greater authority than any static GPA or university pedigree.
             </p>
         </div>
 
         <div>
             <div style="color: #f87171; font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3rem;">STAGE 5 &bull; CONTINUOUS RECALIBRATION</div>
-            <h4 style="color: #fff; font-size: 1.3rem; margin: 0 0 0.6rem;">Treat Your Path as a Dynamic Constellation</h4>
-            <p style="color: #cbd5e1; line-height: 1.7; margin: 0; font-size: 1rem;">
-                Every three to six months, revisit your digital twin within the <a href="/futureverse" style="color: #f87171; font-weight: 600;">Futureverse</a>. Review newly mapped competency stars, examine shifts in market telemetries via the <a href="/ai-career-roadmap" style="color: #f87171; font-weight: 600;">AI Career Roadmap</a>, and recalibrate your trajectory. The goal is not a fixed, rigid plan; it is perpetual agility anchored in deep capability.
+            <h4 style="color: #ffffff; font-size: 1.3rem; margin: 0 0 0.6rem; font-weight: 700;">Treat Your Path as a Dynamic Constellation</h4>
+            <p style="color: #e2e8f0; line-height: 1.7; margin: 0; font-size: 1rem;">
+                Every three to six months, revisit your digital twin within the <a href="/futureverse" style="color: #93c5fd; font-weight: 600; text-decoration: underline;">Futureverse</a>. Review newly mapped competency stars, examine shifts in market telemetries via the <a href="/ai-career-roadmap" style="color: #93c5fd; font-weight: 600; text-decoration: underline;">AI Career Roadmap</a>, and recalibrate your trajectory. The goal is not a fixed, rigid plan; it is perpetual agility anchored in deep capability.
             </p>
         </div>
 
