@@ -424,55 +424,48 @@ router.get('/:slug', (req, res) => {
             .blog-content strong { color: #fff; }
 
             /* ════ COMPLETE VISIBILITY & CONTRAST FOR DARK / ASH / SLATE CONTAINERS ════ */
-            .blog-content div[style*="rgba(15, 23, 42"],
-            .blog-content div[style*="rgba(15,23,42"],
-            .blog-content div[style*="rgba(0, 0, 0"],
-            .blog-content div[style*="rgba(0,0,0"],
+            .blog-content .dark-box,
+            .blog-content .dark-table,
+            .blog-content .simulation-showcase-box,
             .blog-content div[style*="background: #0f172a"],
             .blog-content div[style*="background:#0f172a"],
             .blog-content div[style*="background: #111827"],
             .blog-content div[style*="background:#111827"],
             .blog-content div[style*="background: #1e293b"],
             .blog-content div[style*="background:#1e293b"],
-            .blog-content .dark-box,
-            .blog-content .simulation-showcase-box {
+            .blog-content div[style*="background: rgba(15, 23, 42"],
+            .blog-content div[style*="background:rgba(15, 23, 42"],
+            .blog-content div[style*="background:rgba(15,23,42"] {
                 background: #0f172a !important;
                 border: 1px solid rgba(148, 163, 184, 0.3) !important;
                 color: #f8fafc !important;
             }
 
-            .blog-content div[style*="rgba(15, 23, 42"] h1,
-            .blog-content div[style*="rgba(15, 23, 42"] h2,
-            .blog-content div[style*="rgba(15, 23, 42"] h3,
-            .blog-content div[style*="rgba(15, 23, 42"] h4,
-            .blog-content div[style*="rgba(15, 23, 42"] h5,
-            .blog-content div[style*="rgba(15, 23, 42"] strong,
-            .blog-content div[style*="rgba(15, 23, 42"] b,
-            .blog-content div[style*="rgba(15,23,42"] h1,
-            .blog-content div[style*="rgba(15,23,42"] h2,
-            .blog-content div[style*="rgba(15,23,42"] h3,
-            .blog-content div[style*="rgba(15,23,42"] h4,
-            .blog-content div[style*="rgba(15,23,42"] h5,
-            .blog-content div[style*="rgba(15,23,42"] strong,
-            .blog-content div[style*="rgba(15,23,42"] b,
-            .blog-content div[style*="rgba(0, 0, 0"] h1,
-            .blog-content div[style*="rgba(0, 0, 0"] h2,
-            .blog-content div[style*="rgba(0, 0, 0"] h3,
-            .blog-content div[style*="rgba(0, 0, 0"] h4,
-            .blog-content div[style*="rgba(0, 0, 0"] strong,
-            .blog-content div[style*="rgba(0, 0, 0"] b,
-            .blog-content div[style*="rgba(0,0,0"] h1,
-            .blog-content div[style*="rgba(0,0,0"] h2,
-            .blog-content div[style*="rgba(0,0,0"] h3,
-            .blog-content div[style*="rgba(0,0,0"] h4,
-            .blog-content div[style*="rgba(0,0,0"] strong,
-            .blog-content div[style*="rgba(0,0,0"] b,
+            /* Headings and bold text inside dark/ash containers */
+            .blog-content .dark-box h1,
+            .blog-content .dark-box h2,
+            .blog-content .dark-box h3,
+            .blog-content .dark-box h4,
+            .blog-content .dark-box strong,
+            .blog-content .dark-box b,
+            .blog-content .simulation-showcase-box h1,
+            .blog-content .simulation-showcase-box h2,
+            .blog-content .simulation-showcase-box h3,
+            .blog-content .simulation-showcase-box h4,
+            .blog-content .simulation-showcase-box strong,
+            .blog-content .simulation-showcase-box b,
             .blog-content div[style*="background: #0f172a"] h1,
             .blog-content div[style*="background: #0f172a"] h2,
             .blog-content div[style*="background: #0f172a"] h3,
             .blog-content div[style*="background: #0f172a"] h4,
             .blog-content div[style*="background: #0f172a"] strong,
             .blog-content div[style*="background: #0f172a"] b,
+            .blog-content div[style*="background:#0f172a"] h1,
+            .blog-content div[style*="background:#0f172a"] h2,
+            .blog-content div[style*="background:#0f172a"] h3,
+            .blog-content div[style*="background:#0f172a"] h4,
+            .blog-content div[style*="background:#0f172a"] strong,
+            .blog-content div[style*="background:#0f172a"] b,
             .blog-content div[style*="background: #111827"] h1,
             .blog-content div[style*="background: #111827"] h2,
             .blog-content div[style*="background: #111827"] h3,
@@ -485,68 +478,54 @@ router.get('/:slug', (req, res) => {
             .blog-content div[style*="background: #1e293b"] h4,
             .blog-content div[style*="background: #1e293b"] strong,
             .blog-content div[style*="background: #1e293b"] b,
-            .blog-content .simulation-showcase-box h4,
-            .blog-content .simulation-showcase-box strong,
-            .blog-content .simulation-showcase-box b {
+            .blog-content div[style*="background: rgba(15, 23, 42"] h1,
+            .blog-content div[style*="background: rgba(15, 23, 42"] h2,
+            .blog-content div[style*="background: rgba(15, 23, 42"] h3,
+            .blog-content div[style*="background: rgba(15, 23, 42"] h4,
+            .blog-content div[style*="background: rgba(15, 23, 42"] strong,
+            .blog-content div[style*="background: rgba(15, 23, 42"] b {
                 color: #ffffff !important;
             }
 
-            .blog-content div[style*="rgba(15, 23, 42"] p,
-            .blog-content div[style*="rgba(15, 23, 42"] li,
-            .blog-content div[style*="rgba(15, 23, 42"] ul,
-            .blog-content div[style*="rgba(15, 23, 42"] ol,
-            .blog-content div[style*="rgba(15, 23, 42"] span,
-            .blog-content div[style*="rgba(15, 23, 42"] div,
-            .blog-content div[style*="rgba(15,23,42"] p,
-            .blog-content div[style*="rgba(15,23,42"] li,
-            .blog-content div[style*="rgba(15,23,42"] ul,
-            .blog-content div[style*="rgba(15,23,42"] ol,
-            .blog-content div[style*="rgba(15,23,42"] span,
-            .blog-content div[style*="rgba(15,23,42"] div,
-            .blog-content div[style*="rgba(0, 0, 0"] p,
-            .blog-content div[style*="rgba(0, 0, 0"] li,
-            .blog-content div[style*="rgba(0, 0, 0"] ul,
-            .blog-content div[style*="rgba(0, 0, 0"] ol,
-            .blog-content div[style*="rgba(0, 0, 0"] span,
-            .blog-content div[style*="rgba(0, 0, 0"] div,
-            .blog-content div[style*="rgba(0,0,0"] p,
-            .blog-content div[style*="rgba(0,0,0"] li,
-            .blog-content div[style*="rgba(0,0,0"] ul,
-            .blog-content div[style*="rgba(0,0,0"] ol,
-            .blog-content div[style*="rgba(0,0,0"] span,
-            .blog-content div[style*="rgba(0,0,0"] div,
+            /* Paragraphs, list items, and descriptions inside dark/ash containers */
+            .blog-content .dark-box p,
+            .blog-content .dark-box li,
+            .blog-content .dark-box span,
+            .blog-content .simulation-showcase-box p,
+            .blog-content .simulation-showcase-box li,
+            .blog-content .simulation-showcase-box ul,
             .blog-content div[style*="background: #0f172a"] p,
             .blog-content div[style*="background: #0f172a"] li,
             .blog-content div[style*="background: #0f172a"] ul,
             .blog-content div[style*="background: #0f172a"] ol,
             .blog-content div[style*="background: #0f172a"] span,
             .blog-content div[style*="background: #0f172a"] div,
+            .blog-content div[style*="background:#0f172a"] p,
+            .blog-content div[style*="background:#0f172a"] li,
+            .blog-content div[style*="background:#0f172a"] ul,
+            .blog-content div[style*="background:#0f172a"] ol,
+            .blog-content div[style*="background:#0f172a"] span,
+            .blog-content div[style*="background:#0f172a"] div,
             .blog-content div[style*="background: #111827"] p,
             .blog-content div[style*="background: #111827"] li,
-            .blog-content div[style*="background: #111827"] ul,
-            .blog-content div[style*="background: #111827"] ol,
             .blog-content div[style*="background: #111827"] span,
-            .blog-content div[style*="background: #111827"] div,
             .blog-content div[style*="background: #1e293b"] p,
             .blog-content div[style*="background: #1e293b"] li,
-            .blog-content div[style*="background: #1e293b"] ul,
-            .blog-content div[style*="background: #1e293b"] ol,
             .blog-content div[style*="background: #1e293b"] span,
-            .blog-content div[style*="background: #1e293b"] div,
-            .blog-content .simulation-showcase-box p,
-            .blog-content .simulation-showcase-box li,
-            .blog-content .simulation-showcase-box ul {
+            .blog-content div[style*="background: rgba(15, 23, 42"] p,
+            .blog-content div[style*="background: rgba(15, 23, 42"] li,
+            .blog-content div[style*="background: rgba(15, 23, 42"] span {
                 color: #e2e8f0 !important;
             }
 
-            .blog-content div[style*="rgba(15, 23, 42"] a,
-            .blog-content div[style*="rgba(15,23,42"] a,
-            .blog-content div[style*="rgba(0, 0, 0"] a,
-            .blog-content div[style*="rgba(0,0,0"] a,
+            /* Links inside dark/ash containers */
+            .blog-content .dark-box a,
+            .blog-content .simulation-showcase-box a,
             .blog-content div[style*="background: #0f172a"] a,
+            .blog-content div[style*="background:#0f172a"] a,
             .blog-content div[style*="background: #111827"] a,
             .blog-content div[style*="background: #1e293b"] a,
-            .blog-content .simulation-showcase-box a {
+            .blog-content div[style*="background: rgba(15, 23, 42"] a {
                 color: #38bdf8 !important;
                 text-decoration: underline !important;
                 font-weight: 600 !important;
@@ -570,8 +549,73 @@ router.get('/:slug', (req, res) => {
             .rel-blog-card:hover .rel-title { color: #a78bfa; }
             .rel-desc { color: #94a3b8; font-size: 0.95rem; margin: 0; line-height: 1.6; }
             
-            .faq-item { background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1.8rem; transition: transform 0.3s, box-shadow 0.3s; }
-            .faq-item:hover { transform: translateY(-3px); border-color: rgba(167,139,250,0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+            /* ════ FAQ SECTION & ITEMS: GUARANTEED MAXIMUM CONTRAST & VISIBILITY ════ */
+            .blog-content .faq-section,
+            .faq-section {
+                margin-top: 5rem !important;
+                padding-top: 3rem !important;
+                border-top: 1px solid rgba(255,255,255,0.1) !important;
+                background: transparent !important;
+                box-shadow: none !important;
+            }
+
+            .blog-content .faq-section h2,
+            .faq-section h2 {
+                color: #ffffff !important;
+                font-size: 2.2rem !important;
+                font-weight: 800 !important;
+                margin-bottom: 2rem !important;
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
+
+            .blog-content .faq-item,
+            .faq-item {
+                background: rgba(255, 255, 255, 0.04) !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                border-radius: 14px !important;
+                padding: 1.8rem !important;
+                margin-bottom: 1.25rem !important;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+            }
+
+            .blog-content .faq-item:hover,
+            .faq-item:hover {
+                transform: translateY(-2px) !important;
+                border-color: rgba(167, 139, 250, 0.5) !important;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4) !important;
+            }
+
+            .blog-content .faq-item h3,
+            .faq-section .faq-item h3,
+            .faq-item h3 {
+                color: #ffffff !important;
+                font-size: 1.28rem !important;
+                font-weight: 700 !important;
+                margin-top: 0 !important;
+                margin-bottom: 0.75rem !important;
+                line-height: 1.45 !important;
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
+
+            .blog-content .faq-item p,
+            .faq-section .faq-item p,
+            .faq-item p {
+                color: #cbd5e1 !important;
+                font-size: 1.05rem !important;
+                line-height: 1.75 !important;
+                margin-bottom: 0 !important;
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
             
             .nav-art-btn { flex: 1; min-width: 250px; padding: 2rem; background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; text-decoration: none; transition: all 0.4s ease; position: relative; overflow: hidden; }
             .nav-art-btn::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(167,139,250,0.1), rgba(59,130,246,0.1)); opacity: 0; transition: opacity 0.4s ease; }

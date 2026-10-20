@@ -44,7 +44,7 @@ const contentHtml = `
     <p>Agency—the deliberate, informed capacity to direct one's own developmental trajectory—is the only sustainable currency in an era of rapid technological acceleration. At <a href="/">Digital Twin Verse (DTV)</a>, our foundational thesis is that human potential should never be squandered on guesswork, outdated intuition, or generic standardized testing. By bridging empirical skill metrics, machine intelligence, and dynamic computational modeling, we provide learners and organizations with the telemetry required to actively design their futures rather than simply enduring them.</p>
 
     <!-- Key Takeaway Box -->
-    <div style="background: rgba(15, 23, 42, 0.5); border-left: 4px solid #3b82f6; border-radius: 8px; padding: 1.5rem; margin: 2rem 0;">
+    <div class="dark-box" style="background: #0f172a; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 1.5rem; margin: 2rem 0;">
         <h4 style="margin: 0 0 0.5rem; color: #93c5fd; font-size: 1.1rem; font-weight: 700;">Core Realization</h4>
         <p style="margin: 0; color: #e2e8f0; font-size: 1rem; line-height: 1.6;">
             A career is no longer a static destination you arrive at; it is a complex, adaptive system you continuously navigate. Success requires transitioning from a passive consumer of standardized education to an active architect of an evolving personal skill portfolio.
@@ -70,7 +70,7 @@ const contentHtml = `
 
     <!-- Bottlenecks Comparison Table -->
     <div style="overflow-x: auto; margin: 2.5rem 0;">
-        <table style="width: 100%; border-collapse: collapse; text-align: left; background: rgba(15, 23, 42, 0.4); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+        <table class="dark-table" style="width: 100%; border-collapse: collapse; text-align: left; background: #0f172a; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
             <thead>
                 <tr style="background: rgba(167, 139, 250, 0.15); border-bottom: 2px solid rgba(167, 139, 250, 0.3);">
                     <th style="padding: 1rem 1.2rem; color: #fff; font-weight: 700;">Structural Bottleneck</th>
