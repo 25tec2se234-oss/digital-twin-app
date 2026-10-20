@@ -30,10 +30,28 @@ function generateSchema(blog) {
         {
             "@context": "https://schema.org",
             "@type": "BlogPosting",
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": `https://digitaltwinvrs.com/blog/${blog.slug}`
+            },
             "headline": blog.title,
             "image": blog.featuredImage,
-            "author": { "@type": "Person", "name": blog.author },
+            "author": {
+                "@type": "Organization",
+                "name": blog.author || "Digital Twin Verse Editorial Team",
+                "url": "https://digitaltwinvrs.com/"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "Digital Twin Verse",
+                "url": "https://digitaltwinvrs.com/",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://digitaltwinvrs.com/img/dtv-logo.jpg"
+                }
+            },
             "datePublished": blog.publishedDate,
+            "dateModified": blog.publishedDate,
             "description": blog.metaDescription
         }
     ];
@@ -234,10 +252,48 @@ router.get('/', (req, res) => {
         </script>
         `;
 
-        template = template.replace('{{CONTENT}}', gridHtml);
+        const blogHubSchema = JSON.stringify([
+            {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://digitaltwinvrs.com/" },
+                    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://digitaltwinvrs.com/blog" }
+                ]
+            },
+            {
+                "@context": "https://schema.org",
+                "@type": "CollectionPage",
+                "@id": "https://digitaltwinvrs.com/blog#collection",
+                "url": "https://digitaltwinvrs.com/blog",
+                "name": "Digital Twin Verse Knowledge Hub | AI, Career Simulations & Skill Intelligence",
+                "description": "Read authoritative guides, career roadmaps, and insights on Student Digital Twins, AI tools, and future-proof career planning by Digital Twin Verse.",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Digital Twin Verse",
+                    "url": "https://digitaltwinvrs.com/",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": "https://digitaltwinvrs.com/img/dtv-logo.jpg"
+                    }
+                }
+            }
+        ]);
+
         template = template.replace('{{SEO_TAGS}}', `
-            <title>Career Guidance Blog | Digital Twin Verse</title>
-            <meta name="description" content="Read our latest articles on AI career guidance, educational tips, and more.">
+            <title>Digital Twin Verse Knowledge Hub | AI, Career Simulations &amp; Skill Intelligence</title>
+            <meta name="description" content="Explore in-depth guides, career roadmaps, and insights on AI tools, student digital twins, skill development, and the future of work by Digital Twin Verse.">
+            <link rel="canonical" href="https://digitaltwinvrs.com/blog">
+            <meta property="og:title" content="Digital Twin Verse Knowledge Hub | AI &amp; Career Guidance">
+            <meta property="og:description" content="Explore in-depth guides, career roadmaps, and insights on AI tools, student digital twins, and future-proof skills.">
+            <meta property="og:url" content="https://digitaltwinvrs.com/blog">
+            <meta property="og:image" content="https://digitaltwinvrs.com/img/dtv-logo.jpg">
+            <meta property="og:type" content="website">
+            <meta name="twitter:card" content="summary_large_image">
+            <meta name="twitter:title" content="Digital Twin Verse Knowledge Hub">
+            <meta name="twitter:description" content="In-depth guides on AI career guidance, student digital twins, and skill roadmaps.">
+            <meta name="twitter:image" content="https://digitaltwinvrs.com/img/dtv-logo.jpg">
+            <script type="application/ld+json">${blogHubSchema}</script>
         `);
         res.send(template);
     } catch (e) {

@@ -7,6 +7,12 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://digitaltwinvrs.com/blog/the-future-is-not-something-we-wait-for-its-something-we-build</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://digitaltwinvrs.com/founder/kumar-kartikey</loc>
     <lastmod>2026-08-12</lastmod>
     <changefreq>monthly</changefreq>
@@ -152,6 +158,12 @@
   </url>
 
   <url>
+    <loc>https://digitaltwinvrs.com/blog/how-to-build-tech-portfolio-for-ai-roles-2026</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://digitaltwinvrs.com/blog/emerging-technology-in-education-digital-twins-ai-2026</loc>
     <lastmod>2026-08-13</lastmod>
     <changefreq>monthly</changefreq>
@@ -164,9 +176,76 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://digitaltwinvrs.com/ai-reality-lab</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://digitaltwinvrs.com/skill-intelligence-hub</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://digitaltwinvrs.com/futureverse</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://digitaltwinvrs.com/blog/student-digital-twin-career-planning-2026</loc>
     <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://digitaltwinvrs.com/blog/career-simulation-for-students-guide-2026</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://digitaltwinvrs.com/blog</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://digitaltwinvrs.com/achievement-analyzer.html</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://digitaltwinvrs.com/leaderboard.html</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://digitaltwinvrs.com/wheel.html</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://digitaltwinvrs.com/blog/skill-gap-analysis-for-students-2026</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://digitaltwinvrs.com/organization</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://digitaltwinvrs.com/team</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>
