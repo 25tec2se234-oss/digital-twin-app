@@ -103,8 +103,19 @@ const aiLimiter = rateLimit({
   message: { error: 'SECURITY ALERT: Too many AI requests. Please try again later.' }
 });
 
+const inquiryLimiter = rateLimit({
+  store: getStoreConfig('rate-limit:inquiry:'),
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  passOnStoreError: true,
+  message: { error: 'Too many pilot inquiry submissions from this network. Please wait a few minutes before retrying.' }
+});
+
 module.exports = {
   generalLimiter,
   authLimiter,
-  aiLimiter
+  aiLimiter,
+  inquiryLimiter
 };

@@ -156,6 +156,7 @@ app.use('/api', aiRoutes);
 app.use('/api/v1/parent', parentRoutes);
 app.use('/api/v1', routes);
 app.use('/api/readiness', require('./routes/careerReadinessRoutes'));
+app.use('/api/institutions', require('./routes/institutionalRoutes'));
 app.use('/api/futureverse', require('./routes/futureverseRoutes'));
 
 // Simple admin dashboard to browse DB
@@ -166,6 +167,16 @@ app.use('/blog', blogRoutes);
 
 const publicDir = path.join(__dirname, '..', 'public');
 const parentUiDir = path.join(__dirname, '..', 'parent-ui', 'dist');
+
+// Institutional Landing Page Route (B2B Evaluation Pilot)
+app.get(['/institutions', '/institutions/'], (req, res) => {
+  res.set('Cache-Control', 'public, max-age=3600, must-revalidate');
+  const instPath = path.join(publicDir, 'institutions', 'index.html');
+  if (require('fs').existsSync(instPath)) {
+    return res.sendFile(instPath);
+  }
+  res.sendFile(path.join(publicDir, 'institutional.html'));
+});
 
 // Team Page Route
 app.get(['/team', '/team/'], (req, res) => {
