@@ -155,6 +155,7 @@ app.use('/api/genesis', require('./routes/genesisRoutes'));
 app.use('/api', aiRoutes);
 app.use('/api/v1/parent', parentRoutes);
 app.use('/api/v1', routes);
+app.use('/api/readiness', require('./routes/careerReadinessRoutes'));
 app.use('/api/futureverse', require('./routes/futureverseRoutes'));
 
 // Simple admin dashboard to browse DB

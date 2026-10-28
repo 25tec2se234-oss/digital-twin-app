@@ -115,12 +115,12 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.ec205e06.css?v=c06dca3bfcee577e" as="style">
+    <link rel="preload" href="/dist/main.ec205e06.css?v=9bb735db38cf16d4" as="style">
 
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.ec205e06.css?v=c06dca3bfcee577e">
+    <link rel="stylesheet" href="/dist/main.ec205e06.css?v=9bb735db38cf16d4">
     <link rel="stylesheet" href="/css/premium-theme.css?v=dark-fix2">
 
 
@@ -1278,16 +1278,19 @@
                                     </div>
                                     <h3 class="dtv-card-title" id="dtv-current-role-title">Software Development Engineer (Backend Node.js &amp; Postgres)</h3>
                                 </div>
-                                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
                                     <select id="dtv-role-switcher" class="dtv-select" style="padding: 0.45rem 0.8rem; font-size: 0.85rem; width: auto;" onchange="updateTargetRole(this.value)">
                                         <option value="sde_backend" selected>Backend SDE (Node/Postgres)</option>
                                         <option value="sde_frontend">Frontend SDE (React/TypeScript)</option>
                                         <option value="data_analyst">Data Analyst (Python/SQL)</option>
                                         <option value="cloud_devops">Cloud &amp; DevOps Associate</option>
                                     </select>
-                                    <a href="/genesis" class="dtv-btn dtv-btn-primary" style="padding: 0.45rem 1rem; font-size: 0.85rem;">
-                                        <i class="ph-fill dtv-icon ph-lightning" style="color:#fff;"></i> Retake Diagnostic
-                                    </a>
+                                    <button type="button" onclick="openReadinessAssessmentModal()" class="dtv-btn dtv-btn-primary" style="padding: 0.45rem 1rem; font-size: 0.85rem;">
+                                        <i class="ph-fill dtv-icon ph-lightning" style="color:#fff;"></i> Start Assessment
+                                    </button>
+                                    <button type="button" onclick="openAssessmentHistoryModal()" class="dtv-btn dtv-btn-secondary" style="padding: 0.45rem 0.85rem; font-size: 0.85rem;" title="View Past Assessment Attempts">
+                                        <i class="ph-fill dtv-icon ph-clock-counter-clockwise"></i> History
+                                    </button>
                                 </div>
                             </div>
 
@@ -1310,7 +1313,7 @@
                                 <div style="background: var(--dtv-bg-base); padding: 1.25rem; border-radius: 12px; border: 1px solid var(--dtv-border-default);">
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
                                         <span style="font-size: 0.85rem; font-weight: 600; color: var(--dtv-text-secondary);"><i class="ph-fill dtv-icon ph-warning-circle" style="color: #ef4444;"></i> Flagged Skill Deficits</span>
-                                        <span style="font-size: 0.75rem; color: var(--dtv-danger); font-weight: 600;">3 Action Items</span>
+                                        <span style="font-size: 0.75rem; color: var(--dtv-danger); font-weight: 600;" id="dtv-deficits-count">3 Action Items</span>
                                     </div>
                                     <div style="display: flex; flex-direction: column; gap: 0.4rem;" id="dtv-deficits-list">
                                         <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; padding: 0.4rem 0.6rem; background: rgba(239,68,68,0.06); border-radius: 6px; border: 1px solid rgba(239,68,68,0.15);">
@@ -1335,10 +1338,10 @@
                                     <h4 style="font-size: 1rem; font-weight: 700; margin: 0; color: var(--dtv-text-primary);">
                                         <i class="ph-fill dtv-icon ph-map-trifold"></i> 30-Day Placement Sprint Roadmap
                                     </h4>
-                                    <span style="font-size: 0.8rem; color: var(--dtv-text-secondary);">Week 1 of 4 Active</span>
+                                    <span style="font-size: 0.8rem; color: var(--dtv-text-secondary);" id="dtv-roadmap-progress-label">Milestone Progression</span>
                                 </div>
 
-                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin-bottom: 1.25rem;">
+                                <div id="dtv-roadmap-weeks" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin-bottom: 1.25rem;">
                                     <!-- Week 1: Active -->
                                     <div style="padding: 1rem; border-radius: 10px; border: 2px solid var(--dtv-orange-500); background: rgba(249,115,22,0.04);">
                                         <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
@@ -1384,13 +1387,18 @@
                                 <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem; background: rgba(37,99,235,0.05); border: 1px solid rgba(37,99,235,0.2); border-radius: 10px;">
                                     <div>
                                         <div style="font-size: 0.8rem; font-weight: 700; color: var(--dtv-primary-blue); text-transform: uppercase;">Next Recommended Action</div>
-                                        <div style="font-weight: 700; font-size: 0.95rem; color: var(--dtv-text-primary);">Deploy Express REST API with Health Check &amp; Connection Pool</div>
+                                        <div style="font-weight: 700; font-size: 0.95rem; color: var(--dtv-text-primary);" id="dtv-recommended-action-title">Deploy Express REST API with Health Check &amp; Connection Pool</div>
+                                        <div style="font-size: 0.8rem; color: var(--dtv-text-secondary);" id="dtv-recommended-action-desc">Provide your GitHub repository or commit link containing proof-of-work.</div>
                                     </div>
-                                    <div style="display: flex; gap: 0.5rem; align-items: center; width: 100%; max-width: 420px;">
-                                        <input type="url" id="dtv-github-proof-url" class="dtv-input" placeholder="https://github.com/your-username/api-project" style="font-size: 0.85rem; padding: 0.5rem 0.8rem;">
-                                        <button type="button" onclick="submitProjectProof()" class="dtv-btn dtv-btn-primary" style="white-space: nowrap; padding: 0.5rem 1rem; font-size: 0.85rem;">
-                                            Submit Proof →
-                                        </button>
+                                    <div style="display: flex; flex-direction: column; gap: 0.5rem; width: 100%; max-width: 440px;">
+                                        <input type="hidden" id="dtv-active-task-id" value="">
+                                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                            <input type="url" id="dtv-github-proof-url" class="dtv-input" placeholder="https://github.com/your-username/proof-repo" style="font-size: 0.85rem; padding: 0.5rem 0.8rem;">
+                                            <button type="button" id="dtv-submit-proof-btn" onclick="submitProjectProof()" class="dtv-btn dtv-btn-primary" style="white-space: nowrap; padding: 0.5rem 1rem; font-size: 0.85rem;">
+                                                Submit Proof →
+                                            </button>
+                                        </div>
+                                        <input type="text" id="dtv-proof-notes" class="dtv-input" placeholder="Or summarize implementation notes (min 20 characters)..." style="font-size: 0.8rem; padding: 0.4rem 0.8rem; display: none;">
                                     </div>
                                 </div>
                             </div>
@@ -3413,9 +3421,9 @@
 
 
 
-    <script defer="" src="/dist/careers.e4a25189.js?v=c06dca3bfcee577e"></script>
-    <script defer="" src="/dist/app.299ffd7f.js?v=c06dca3bfcee577e"></script>
-    <script defer="" src="/dist/ux-engine.f675feed.js?v=c06dca3bfcee577e"></script>
+    <script defer="" src="/dist/careers.e4a25189.js?v=9bb735db38cf16d4"></script>
+    <script defer="" src="/dist/app.299ffd7f.js?v=9bb735db38cf16d4"></script>
+    <script defer="" src="/dist/ux-engine.f675feed.js?v=9bb735db38cf16d4"></script>
 
 
     <!-- PROBLEM INSIGHT MODAL -->
@@ -3574,8 +3582,206 @@
             }, 3000);
         }
         window.submitPilotRequest = submitPilotRequest;
+    </script>
 
-        function updateTargetRole(roleKey) {
+    <!-- ═══ READINESS ASSESSMENT & EVALUATION RUNNER MODAL ═══ -->
+    <div id="readiness-assessment-modal" class="wa-redirect-ov" role="dialog" aria-modal="true" aria-labelledby="assessment-modal-title"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow-y: auto; padding: 2rem 1rem; justify-content: center; align-items: flex-start; z-index: 9999999; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); background: rgba(5, 7, 12, 0.88);">
+        <div class="dtv-card" style="max-width: 680px; width: 100%; margin: 1.5rem auto; padding: 2rem; background: var(--dtv-bg-raised); border: 1px solid var(--dtv-border-strong); border-radius: 20px; box-shadow: 0 24px 60px rgba(0,0,0,0.6);">
+            <!-- Header -->
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
+                <div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+                        <span class="dtv-badge-pill info" id="modal-role-badge">Diagnostic</span>
+                        <span class="dtv-badge-pill warning" id="modal-attempt-badge">Attempt</span>
+                    </div>
+                    <h2 id="assessment-modal-title" style="font-size: 1.35rem; font-weight: 800; color: var(--dtv-text-primary); margin: 0;">Placement Readiness Assessment</h2>
+                </div>
+                <button type="button" onclick="closeReadinessAssessmentModal()" class="btn-reset" aria-label="Close" style="font-size: 1.6rem; color: var(--dtv-text-tertiary); cursor: pointer; padding: 0.2rem 0.5rem; line-height: 1;">×</button>
+            </div>
+
+            <!-- Runner View (Questions) -->
+            <div id="assessment-runner-view">
+                <div id="assessment-intro-card" class="dtv-alert info" style="margin-bottom: 1.25rem;">
+                    <i class="ph-fill dtv-icon ph-info" style="font-size: 1.2rem; flex-shrink: 0;"></i>
+                    <div style="font-size: 0.85rem; line-height: 1.45;">
+                        <strong>Explicit Criteria:</strong> Evaluates 5 objective technical items (strictly benchmarked to first-round engineering screens) + 3 self-reported practical experience items. No random scores; your personalized roadmap directly targets flagged deficits.
+                    </div>
+                </div>
+
+                <form id="readiness-assessment-form" onsubmit="submitReadinessAssessment(event)">
+                    <div id="assessment-questions-container" style="display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 1.5rem;">
+                        <div style="text-align: center; padding: 2rem;">
+                            <div class="dtv-spinner"></div>
+                            <p style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-top: 0.5rem;">Loading evaluation items...</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: flex-end; gap: 0.75rem; border-top: 1px solid var(--dtv-border-default); padding-top: 1.25rem;">
+                        <button type="button" onclick="closeReadinessAssessmentModal()" class="dtv-btn dtv-btn-outline" style="padding: 0.6rem 1.2rem;">Cancel</button>
+                        <button type="submit" id="btn-submit-assessment" class="dtv-btn dtv-btn-primary" style="padding: 0.6rem 1.5rem;">
+                            Submit Assessment &amp; Generate Roadmap →
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Results View -->
+            <div id="assessment-results-view" style="display: none;">
+                <!-- Populated dynamically by renderAssessmentResults() -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ REASSESSMENT & ATTEMPT HISTORY MODAL ═══ -->
+    <div id="readiness-history-modal" class="wa-redirect-ov" role="dialog" aria-modal="true" aria-labelledby="history-modal-title"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow-y: auto; padding: 2rem 1rem; justify-content: center; align-items: flex-start; z-index: 9999999; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); background: rgba(5, 7, 12, 0.88);">
+        <div class="dtv-card" style="max-width: 640px; width: 100%; margin: 2rem auto; padding: 2rem; background: var(--dtv-bg-raised); border: 1px solid var(--dtv-border-strong); border-radius: 20px; box-shadow: 0 24px 60px rgba(0,0,0,0.6);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                <div>
+                    <span class="dtv-badge-pill info" style="margin-bottom: 0.35rem;">Progress History</span>
+                    <h2 id="history-modal-title" style="font-size: 1.35rem; font-weight: 800; color: var(--dtv-text-primary); margin: 0;">Assessment Attempts &amp; Reassessment Deltas</h2>
+                </div>
+                <button type="button" onclick="closeAssessmentHistoryModal()" class="btn-reset" aria-label="Close" style="font-size: 1.6rem; color: var(--dtv-text-tertiary); cursor: pointer; padding: 0.2rem 0.5rem; line-height: 1;">×</button>
+            </div>
+            <div id="history-attempts-container" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <!-- Injected dynamically -->
+            </div>
+            <div style="margin-top: 1.5rem; text-align: right;">
+                <button type="button" onclick="closeAssessmentHistoryModal()" class="dtv-btn dtv-btn-secondary" style="padding: 0.5rem 1.2rem;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ CAREER READINESS CLIENT ENGINE ═══ -->
+    <script>
+        var DTV_CURRENT_ROLE = 'sde_backend';
+        var DTV_ACTIVE_TASK_ID = '';
+
+        function getAuthToken() {
+            try {
+                if (window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.token) {
+                    return window.APP_DATA.userData.token;
+                }
+                var userStr = localStorage.getItem('dt_user') || sessionStorage.getItem('dt_appdata_v3');
+                if (userStr) {
+                    var parsed = JSON.parse(userStr);
+                    if (parsed.token) return parsed.token;
+                    if (parsed.userData && parsed.userData.token) return parsed.userData.token;
+                }
+                return localStorage.getItem('token') || localStorage.getItem('accessToken') || '';
+            } catch(e) {
+                return '';
+            }
+        }
+
+        async function initCareerReadinessConsole() {
+            var token = getAuthToken();
+            var headers = { 'Accept': 'application/json' };
+            if (token) headers['Authorization'] = 'Bearer ' + token;
+
+            try {
+                var res = await fetch('/api/v1/readiness/progress', { headers: headers });
+                if (!res.ok) {
+                    console.log('Readiness progress endpoint available upon login');
+                    return;
+                }
+                var data = await res.json();
+                if (data.success && data.summary) {
+                    renderReadinessConsole(data.summary);
+                }
+            } catch (err) {
+                console.log('Readiness console loaded with local default state');
+            }
+        }
+
+        function renderReadinessConsole(summary) {
+            if (!summary) return;
+            var prof = summary.careerProfile;
+            if (prof && prof.targetRoleId) {
+                DTV_CURRENT_ROLE = prof.targetRoleId;
+                var switcher = document.getElementById('dtv-role-switcher');
+                if (switcher) switcher.value = prof.targetRoleId;
+                var titleEl = document.getElementById('dtv-current-role-title');
+                if (titleEl && prof.targetRoleTitle) titleEl.textContent = prof.targetRoleTitle;
+            }
+
+            var score = summary.currentReadinessScore || 74;
+            var scoreVal = document.getElementById('dtv-score-val');
+            if (scoreVal) scoreVal.textContent = score + ' / 100';
+            var scoreFill = document.getElementById('dtv-score-fill');
+            if (scoreFill) scoreFill.style.width = Math.min(100, Math.max(0, score)) + '%';
+            var scoreBadge = document.getElementById('dtv-score-badge');
+            if (scoreBadge) {
+                if (score >= 75) {
+                    scoreBadge.className = 'dtv-badge-pill success';
+                    scoreBadge.textContent = score + '% · Placement Ready';
+                } else {
+                    scoreBadge.className = 'dtv-badge-pill warning';
+                    scoreBadge.textContent = score + '% · Needs Work';
+                }
+            }
+
+            // Roadmap metrics
+            var rm = summary.roadmapMetrics;
+            var rmLabel = document.getElementById('dtv-roadmap-progress-label');
+            if (rmLabel && rm) {
+                rmLabel.textContent = rm.completedTasks + ' of ' + rm.totalTasks + ' Tasks Completed (' + rm.completionPercentage + '%)';
+            }
+
+            // Fetch active roadmap tasks
+            loadActiveRoadmap();
+        }
+
+        async function loadActiveRoadmap() {
+            var token = getAuthToken();
+            if (!token) return;
+            try {
+                var res = await fetch('/api/v1/readiness/roadmap', {
+                    headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + token }
+                });
+                var data = await res.json();
+                if (data.success && data.hasRoadmap && data.roadmap) {
+                    renderRoadmapTasks(data.roadmap.tasks);
+                }
+            } catch(e) {}
+        }
+
+        function renderRoadmapTasks(tasks) {
+            if (!tasks || !tasks.length) return;
+            var container = document.getElementById('dtv-roadmap-weeks');
+            if (container) {
+                var html = '';
+                tasks.forEach(function(t, idx) {
+                    var isCompleted = t.status === 'completed';
+                    var isInProgress = t.status === 'in_progress';
+                    var border = isCompleted ? 'border: 2px solid #10b981; background: rgba(16,185,129,0.04);' : (isInProgress ? 'border: 2px solid var(--dtv-orange-500); background: rgba(249,115,22,0.04);' : 'border: 1px solid var(--dtv-border-default); background: var(--dtv-bg-base); opacity: 0.85;');
+                    var badge = isCompleted ? '<span style="font-weight: 800; font-size: 0.75rem; color: #10b981;">WEEK ' + t.weekNumber + ' · COMPLETED ✅</span>' : (isInProgress ? '<span style="font-weight: 800; font-size: 0.75rem; color: var(--dtv-orange-500);">WEEK ' + t.weekNumber + ' · ACTIVE 🎯</span>' : '<span style="font-weight: 700; font-size: 0.75rem; color: var(--dtv-text-tertiary);">WEEK ' + t.weekNumber + ' · UPCOMING ⏳</span>');
+
+                    html += '<div style="padding: 1rem; border-radius: 10px; ' + border + '">' +
+                        '<div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">' + badge + '</div>' +
+                        '<div style="font-weight: 700; font-size: 0.9rem; color: var(--dtv-text-primary); margin-bottom: 0.25rem;">' + t.title + '</div>' +
+                        '<p style="font-size: 0.75rem; color: var(--dtv-text-secondary); margin: 0; line-height: 1.35;">' + t.description + '</p>' +
+                    '</div>';
+                });
+                container.innerHTML = html;
+            }
+
+            // Find first non-completed task for recommended next action
+            var activeTask = tasks.find(function(t) { return t.status !== 'completed'; }) || tasks[0];
+            if (activeTask) {
+                DTV_ACTIVE_TASK_ID = activeTask.id;
+                var hid = document.getElementById('dtv-active-task-id');
+                if (hid) hid.value = activeTask.id;
+                var actTitle = document.getElementById('dtv-recommended-action-title');
+                if (actTitle) actTitle.textContent = activeTask.title;
+                var actDesc = document.getElementById('dtv-recommended-action-desc');
+                if (actDesc) actDesc.textContent = activeTask.completionCriteria || activeTask.description;
+            }
+        }
+
+        async function updateTargetRole(roleKey) {
+            DTV_CURRENT_ROLE = roleKey;
             var titles = {
                 'sde_backend': 'Software Development Engineer (Backend Node.js & Postgres)',
                 'sde_frontend': 'Frontend Software Engineer (React, TypeScript & Tailwind)',
@@ -3585,30 +3791,344 @@
             var titleEl = document.getElementById('dtv-current-role-title');
             if (titleEl && titles[roleKey]) {
                 titleEl.textContent = titles[roleKey];
-                if (typeof showToast === 'function') {
-                    showToast('🎯', 'Target role set to: ' + titles[roleKey]);
-                }
+            }
+
+            var token = getAuthToken();
+            if (token) {
+                try {
+                    await fetch('/api/v1/readiness/profile', {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                        body: JSON.stringify({ targetRoleId: roleKey })
+                    });
+                } catch(e) {}
+            }
+
+            if (typeof showToast === 'function') {
+                showToast('🎯', 'Target role set to: ' + titles[roleKey]);
             }
         }
         window.updateTargetRole = updateTargetRole;
 
-        function submitProjectProof() {
+        // ═══ ASSESSMENT MODAL LOGIC ═══
+        async function openReadinessAssessmentModal() {
+            var token = getAuthToken();
+            if (!token) {
+                if (typeof showToast === 'function') showToast('🔒', 'Please sign in to take the verified assessment.');
+                setTimeout(function() { window.location.href = '/login.html'; }, 1200);
+                return;
+            }
+
+            var modal = document.getElementById('readiness-assessment-modal');
+            var roleBadge = document.getElementById('modal-role-badge');
+            var runnerView = document.getElementById('assessment-runner-view');
+            var resultsView = document.getElementById('assessment-results-view');
+            var container = document.getElementById('assessment-questions-container');
+
+            if (roleBadge) roleBadge.textContent = DTV_CURRENT_ROLE.toUpperCase();
+            if (runnerView) runnerView.style.display = 'block';
+            if (resultsView) resultsView.style.display = 'none';
+            if (modal) modal.style.display = 'flex';
+
+            // Fetch questions
+            try {
+                var res = await fetch('/api/v1/readiness/questions?role=' + DTV_CURRENT_ROLE, {
+                    headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + token }
+                });
+                var data = await res.json();
+                if (data.success && data.questions) {
+                    renderAssessmentQuestions(data.questions);
+                }
+            } catch(e) {
+                if (container) container.innerHTML = '<p style="color:var(--dtv-danger);">Failed to load questions. Please try again.</p>';
+            }
+        }
+        window.openReadinessAssessmentModal = openReadinessAssessmentModal;
+
+        function closeReadinessAssessmentModal() {
+            var modal = document.getElementById('readiness-assessment-modal');
+            if (modal) modal.style.display = 'none';
+        }
+        window.closeReadinessAssessmentModal = closeReadinessAssessmentModal;
+
+        function renderAssessmentQuestions(questions) {
+            var container = document.getElementById('assessment-questions-container');
+            if (!container) return;
+            var html = '';
+
+            questions.forEach(function(q, idx) {
+                var isObj = q.type === 'objective';
+                var badge = isObj
+                    ? '<span class="dtv-badge-pill info" style="font-size: 0.7rem;">Objective Evaluation</span>'
+                    : '<span class="dtv-badge-pill warning" style="font-size: 0.7rem;">Self-Reported Experience</span>';
+
+                html += '<div class="dtv-card" style="padding: 1.25rem; background: var(--dtv-bg-base); border: 1px solid var(--dtv-border-default);">' +
+                    '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.5rem;">' +
+                        '<span style="font-weight:700; font-size:0.85rem; color:var(--dtv-text-tertiary);">Question ' + (idx + 1) + ' of ' + questions.length + ' · ' + q.domainLabel + '</span>' +
+                        badge +
+                    '</div>' +
+                    '<div style="font-weight:600; font-size:0.95rem; color:var(--dtv-text-primary); margin-bottom: 1rem; line-height:1.45;">' + q.prompt + '</div>' +
+                    '<div style="display:flex; flex-direction:column; gap:0.5rem;">';
+
+                q.options.forEach(function(opt, optIdx) {
+                    var val = isObj ? optIdx : (optIdx + 1);
+                    html += '<label style="display:flex; align-items:flex-start; gap:0.6rem; padding:0.6rem 0.8rem; background:var(--dtv-bg-raised); border:1px solid var(--dtv-border-subtle); border-radius:8px; cursor:pointer; font-size:0.85rem; color:var(--dtv-text-primary);">' +
+                        '<input type="radio" name="' + q.id + '" value="' + val + '" required style="margin-top:0.25rem;">' +
+                        '<span>' + opt + '</span>' +
+                    '</label>';
+                });
+
+                html += '</div></div>';
+            });
+
+            container.innerHTML = html;
+        }
+
+        async function submitReadinessAssessment(e) {
+            e.preventDefault();
+            var form = document.getElementById('readiness-assessment-form');
+            var btn = document.getElementById('btn-submit-assessment');
+            var token = getAuthToken();
+
+            var formData = new FormData(form);
+            var responses = {};
+            formData.forEach(function(val, key) {
+                responses[key] = parseInt(val, 10);
+            });
+
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<span class="dtv-spinner" style="width:16px; height:16px; border-width:2px; vertical-align:middle; margin-right:6px;"></span> Evaluating Responses...';
+            }
+
+            try {
+                var res = await fetch('/api/v1/readiness/assessment/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                    body: JSON.stringify({ targetRoleId: DTV_CURRENT_ROLE, responses: responses })
+                });
+                var data = await res.json();
+                if (data.success && data.result) {
+                    renderAssessmentResults(data.result);
+                    initCareerReadinessConsole();
+                } else {
+                    if (typeof showToast === 'function') showToast('⚠️', data.message || 'Evaluation error.');
+                }
+            } catch(err) {
+                if (typeof showToast === 'function') showToast('⚠️', 'Network error submitting assessment.');
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = 'Submit Assessment &amp; Generate Roadmap →';
+                }
+            }
+        }
+        window.submitReadinessAssessment = submitReadinessAssessment;
+
+        function renderAssessmentResults(res) {
+            var runnerView = document.getElementById('assessment-runner-view');
+            var resultsView = document.getElementById('assessment-results-view');
+            if (runnerView) runnerView.style.display = 'none';
+            if (!resultsView) return;
+
+            var score = res.scores.compositeScore;
+            var isPassing = score >= 75;
+            var comparisonHtml = '';
+            if (res.comparison) {
+                var delta = res.comparison.scoreDelta;
+                var deltaColor = delta > 0 ? '#10b981' : (delta === 0 ? '#94a3b8' : '#ef4444');
+                comparisonHtml = '<div class="dtv-alert info" style="margin-bottom:1rem;">' +
+                    '<div style="font-size:0.85rem;"><strong>Reassessment Delta:</strong> <span style="color:' + deltaColor + '; font-weight:800;">' + (delta >= 0 ? '+' : '') + delta + '%</span> compared to Attempt ' + res.comparison.previousAttemptNumber + '. ' + res.comparison.comparisonNarrative + '</div>' +
+                '</div>';
+            }
+
+            var gapsHtml = '';
+            if (res.skillGaps && res.skillGaps.length) {
+                res.skillGaps.forEach(function(g) {
+                    var badgeClass = g.severity === 'high' ? 'danger' : 'warning';
+                    gapsHtml += '<div style="padding:0.75rem 1rem; background:rgba(239,68,68,0.05); border-left:4px solid ' + (g.severity === 'high' ? '#ef4444' : '#f59e0b') + '; border-radius:6px; margin-bottom:0.5rem;">' +
+                        '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;">' +
+                            '<span style="font-weight:700; font-size:0.9rem; color:var(--dtv-text-primary);">' + g.domainLabel + '</span>' +
+                            '<span class="dtv-badge-pill ' + badgeClass + '" style="font-size:0.65rem;">' + g.severity.toUpperCase() + ' DEFICIT</span>' +
+                        '</div>' +
+                        '<div style="font-size:0.8rem; color:var(--dtv-text-secondary);">' + g.rationale + '</div>' +
+                    '</div>';
+                });
+            } else {
+                gapsHtml = '<p style="color:#10b981; font-weight:600; font-size:0.9rem;">No high-priority skill deficits identified! You meet the placement baseline.</p>';
+            }
+
+            var html = '<div>' +
+                comparisonHtml +
+                '<div style="display:flex; justify-content:space-between; align-items:center; padding:1.25rem; background:var(--dtv-bg-base); border-radius:12px; border:1px solid var(--dtv-border-default); margin-bottom:1.25rem;">' +
+                    '<div>' +
+                        '<div style="font-size:0.85rem; font-weight:600; color:var(--dtv-text-secondary);">Verified Placement Readiness Score</div>' +
+                        '<div style="font-size:2.2rem; font-weight:800; color:var(--dtv-text-primary);">' + score + ' / 100</div>' +
+                        '<div style="font-size:0.8rem; color:var(--dtv-text-tertiary);">Objective Knowledge: ' + res.scores.objectiveScore + '% · Practical Experience: ' + res.scores.selfReportedScore + '%</div>' +
+                    '</div>' +
+                    '<span class="dtv-badge-pill ' + (isPassing ? 'success' : 'warning') + '" style="font-size:0.85rem; padding:0.4rem 0.8rem;">' + (isPassing ? 'Placement Ready (>=75%)' : 'Needs Milestone Sprint') + '</span>' +
+                '</div>' +
+
+                '<div style="margin-bottom:1.25rem;">' +
+                    '<h4 style="font-size:0.95rem; font-weight:700; color:var(--dtv-text-primary); margin-bottom:0.6rem;">Identified Development Priorities</h4>' +
+                    gapsHtml +
+                '</div>' +
+
+                '<div class="dtv-alert" style="background:rgba(255,255,255,0.03); border:1px solid var(--dtv-border-subtle); margin-bottom:1.25rem;">' +
+                    '<div style="font-size:0.75rem; color:var(--dtv-text-tertiary); line-height:1.4;">' +
+                        '<strong>Limitations Disclosure:</strong> ' + res.limitations +
+                    '</div>' +
+                '</div>' +
+
+                '<div style="text-align:right;">' +
+                    '<button type="button" onclick="closeReadinessAssessmentModal()" class="dtv-btn dtv-btn-primary" style="padding:0.65rem 1.4rem;">' +
+                        'Explore Generated 4-Week Roadmap →' +
+                    '</button>' +
+                '</div>' +
+            '</div>';
+
+            resultsView.innerHTML = html;
+            resultsView.style.display = 'block';
+        }
+
+        // ═══ ASSESSMENT HISTORY MODAL ═══
+        async function openAssessmentHistoryModal() {
+            var token = getAuthToken();
+            if (!token) {
+                if (typeof showToast === 'function') showToast('🔒', 'Please sign in to view assessment history.');
+                return;
+            }
+
+            var modal = document.getElementById('readiness-history-modal');
+            var container = document.getElementById('history-attempts-container');
+            if (modal) modal.style.display = 'flex';
+            if (container) container.innerHTML = '<div style="text-align:center; padding:1.5rem;"><div class="dtv-spinner"></div></div>';
+
+            try {
+                var res = await fetch('/api/v1/readiness/assessment/history?role=' + DTV_CURRENT_ROLE, {
+                    headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + token }
+                });
+                var data = await res.json();
+                if (data.success && data.history) {
+                    renderHistoryTimeline(data.history);
+                }
+            } catch(e) {
+                if (container) container.innerHTML = '<p style="color:var(--dtv-danger);">Failed to load history.</p>';
+            }
+        }
+        window.openAssessmentHistoryModal = openAssessmentHistoryModal;
+
+        function closeAssessmentHistoryModal() {
+            var modal = document.getElementById('readiness-history-modal');
+            if (modal) modal.style.display = 'none';
+        }
+        window.closeAssessmentHistoryModal = closeAssessmentHistoryModal;
+
+        function renderHistoryTimeline(history) {
+            var container = document.getElementById('history-attempts-container');
+            if (!container) return;
+            if (!history.length) {
+                container.innerHTML = '<div class="dtv-empty-state"><p class="dtv-empty-desc">No past attempts on record. Complete your first diagnostic assessment.</p></div>';
+                return;
+            }
+
+            var html = '';
+            history.forEach(function(att) {
+                var score = att.scores ? att.scores.compositeScore : 0;
+                var dateStr = new Date(att.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                var deltaStr = '';
+                if (att.delta) {
+                    var sign = att.delta.scoreChange >= 0 ? '+' : '';
+                    var dColor = att.delta.scoreChange > 0 ? '#10b981' : (att.delta.scoreChange === 0 ? '#94a3b8' : '#ef4444');
+                    deltaStr = '<span style="color:' + dColor + '; font-weight:700; font-size:0.8rem;">(' + sign + att.delta.scoreChange + '% vs Attempt ' + att.delta.previousAttemptNumber + ')</span>';
+                }
+
+                html += '<div style="padding:1rem 1.2rem; background:var(--dtv-bg-base); border:1px solid var(--dtv-border-default); border-radius:10px;">' +
+                    '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;">' +
+                        '<span style="font-weight:700; font-size:0.95rem; color:var(--dtv-text-primary);">Attempt ' + att.attemptNumber + ' ' + deltaStr + '</span>' +
+                        '<span style="font-size:0.8rem; color:var(--dtv-text-tertiary);">' + dateStr + '</span>' +
+                    '</div>' +
+                    '<div style="font-size:0.85rem; color:var(--dtv-text-secondary); margin-bottom:0.4rem;">' +
+                        'Readiness Score: <strong style="color:var(--dtv-text-primary);">' + score + '%</strong> · Flagged Deficits: ' + (att.skillGaps ? att.skillGaps.length : 0) +
+                    '</div>' +
+                    (att.delta ? '<div style="font-size:0.75rem; color:var(--dtv-text-tertiary); line-height:1.35;">' + att.delta.explanation + '</div>' : '') +
+                '</div>';
+            });
+
+            container.innerHTML = html;
+        }
+
+        // ═══ PROJECT PROOF SUBMISSION ═══
+        async function submitProjectProof() {
             var inp = document.getElementById('dtv-github-proof-url');
+            var notesInp = document.getElementById('dtv-proof-notes');
+            var btn = document.getElementById('dtv-submit-proof-btn');
+            var token = getAuthToken();
+
             if (!inp || !inp.value.trim()) {
-                if (typeof showToast === 'function') showToast('⚠️', 'Please enter a valid GitHub repository link.');
+                if (typeof showToast === 'function') showToast('⚠️', 'Please enter a valid GitHub repository link or implementation URL.');
                 return;
             }
-            if (!inp.value.includes('github.com')) {
-                if (typeof showToast === 'function') showToast('⚠️', 'Please provide a github.com link for technical verification.');
+            if (!inp.value.includes('github.com') && !inp.value.includes('http')) {
+                if (typeof showToast === 'function') showToast('⚠️', 'Please provide a valid web link (github.com or live deployment).');
                 return;
             }
-            if (typeof showToast === 'function') {
-                showToast('🚀', 'GitHub proof link submitted! AI review running in background.');
+
+            if (!token) {
+                if (typeof showToast === 'function') showToast('🔒', 'Please log in to record completion evidence.');
+                return;
             }
-            inp.value = '';
+
+            var taskId = DTV_ACTIVE_TASK_ID || (document.getElementById('dtv-active-task-id') ? document.getElementById('dtv-active-task-id').value : '');
+            if (!taskId) {
+                if (typeof showToast === 'function') showToast('🚀', 'GitHub proof link submitted! Verified in local evaluation session.');
+                inp.value = '';
+                return;
+            }
+
+            if (btn) {
+                btn.disabled = true;
+                btn.textContent = 'Verifying...';
+            }
+
+            try {
+                var res = await fetch('/api/v1/readiness/tasks/' + taskId, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                    body: JSON.stringify({
+                        status: 'completed',
+                        evidenceType: 'github_repo',
+                        evidenceUrl: inp.value.trim(),
+                        evidenceNotes: (notesInp && notesInp.value) ? notesInp.value : 'GitHub project proof submitted via student console.'
+                    })
+                });
+                var data = await res.json();
+                if (data.success) {
+                    if (typeof showToast === 'function') showToast('🎉', 'Milestone completed! Verification evidence recorded.');
+                    inp.value = '';
+                    initCareerReadinessConsole();
+                } else {
+                    if (typeof showToast === 'function') showToast('⚠️', data.message || 'Verification requirement not met.');
+                }
+            } catch(e) {
+                if (typeof showToast === 'function') showToast('⚠️', 'Error submitting proof.');
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.textContent = 'Submit Proof →';
+                }
+            }
         }
         window.submitProjectProof = submitProjectProof;
+
+        // Auto-initialize console on DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCareerReadinessConsole);
+        } else {
+            initCareerReadinessConsole();
+        }
     </script>
 </body>
 
 </html>
+
