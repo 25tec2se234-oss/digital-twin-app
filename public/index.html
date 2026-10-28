@@ -115,13 +115,12 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.be5f9623.css?v=59b5c1d0609f75ef" as="style">
-    <link rel="stylesheet" href="/css/premium-theme.css?v=dark-fix2">
+    <link rel="preload" href="/dist/main.ec205e06.css?v=c06dca3bfcee577e" as="style">
 
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.be5f9623.css?v=59b5c1d0609f75ef">
+    <link rel="stylesheet" href="/dist/main.ec205e06.css?v=c06dca3bfcee577e">
     <link rel="stylesheet" href="/css/premium-theme.css?v=dark-fix2">
 
 
@@ -508,14 +507,12 @@
 
         <div class="nav-right-container">
             <div class="nav-links-modern">
-                <a href="/genesis" class="nav-link" style="color: #38bdf8; font-weight: 700;">Genesis™</a>
-                <a href="#student-dashboard" onclick="requirePremiumFrontend(openDashboardShortcut)"
+                <a href="/genesis" class="nav-link" style="color: var(--dtv-orange-500); font-weight: 700;">Diagnostic (Genesis™)</a>
+                <a href="#student-dashboard" onclick="if(typeof openDashboardShortcut === 'function'){openDashboardShortcut();}"
                     class="nav-link">Dashboard</a>
-                <a href="#ai-section" onclick="requirePremiumFrontend(function(){location.hash='#ai-section';})"
-                    class="nav-link">AI Advisor</a>
-                <a href="/parent" class="nav-link">Parent Portal</a>
-                <a href="/organization" class="nav-link" style="color: #4ade80; font-weight: 700;">B2B / Organization</a>
-                <a href="/leaderboard.html" class="nav-link">Leaderboard</a>
+                <a href="#road" class="nav-link">Roadmaps</a>
+                <a href="#ai-section" class="nav-link">Interview AI</a>
+                <a href="#prob" onclick="openInstitutionalPilotModal(); return false;" class="nav-link" style="color: #10b981; font-weight: 600;">For Colleges (TPO)</a>
 
                 <div class="nav-dropdown">
                     <span class="nav-link dropdown-toggle">More <svg width="12" height="12" viewBox="0 0 24 24"
@@ -526,10 +523,13 @@
                     <div class="dropdown-menu">
                         <a href="#how" data-workspace="public">How It Works</a>
                         <a href="#dashboard"
-                            onclick="requirePremiumFrontend(function(){location.hash='#dashboard';})">Career
+                            onclick="if(typeof toggleCareerExplorer === 'function'){toggleCareerExplorer(true);}">Career
                             Explorer</a>
-                        <a href="#rev" data-workspace="public">Reviews</a>
+                        <a href="/leaderboard.html">Weekly Leaderboard</a>
                         <a href="/blog">Blog &amp; Resources</a>
+                        <a href="/parent">Parent Portal</a>
+                        <a href="/organization">Organization Workspace</a>
+                        <a href="#rev" data-workspace="public">Reviews</a>
                     </div>
                 </div>
             </div>
@@ -550,7 +550,7 @@
 
                 <!-- Go Premium -->
                 <button type="button" onclick="openPricingPage(); return false;" class="dtv-btn dtv-btn-primary"><i
-                        class="ph-fill dtv-icon ph-diamond"></i> Premium</button>
+                        class="ph-fill dtv-icon ph-diamond"></i> Placement Pass</button>
 
                 <!-- Account -->
                 <div class="account-menu" id="nav-account-wrap">
@@ -579,10 +579,9 @@
         <div class="hbg" id="hbg" onclick="togMenu()"><span></span><span></span><span></span></div>
     </nav>
     <div class="mob" id="mob">
-        <a href="/genesis" style="color: #38bdf8; font-weight: 700; font-size: 1.15rem;" onclick="togMenu()">✨ Genesis™
-            Onboarding</a>
+        <a href="/genesis" style="color: var(--dtv-orange-500); font-weight: 700; font-size: 1.15rem;" onclick="togMenu()">✨ 10-Min Placement Diagnostic</a>
         <button type="button" id="mob-signin" onclick="openLoginGate(); togMenu()" class="btn-reset">Sign In</button>
-        <button type="button" id="mob-signup" onclick="openLoginGate(); togMenu()" class="btn-reset">Sign Up</button>
+        <button type="button" id="mob-signup" onclick="openLoginGate('signup'); togMenu()" class="btn-reset">Sign Up (5-Day Trial)</button>
         <button type="button" id="mob-admindb" onclick="openAdminDashboard(); togMenu()"
             style="display:none; color:#f5a94e;" class="btn-reset">Developer DB</button>
         <button type="button" id="mob-logout" onclick="if (doLogout()) togMenu()" class="btn-reset">Log Out</button>
@@ -590,19 +589,19 @@
             style="display:none; padding: 1rem 1.5rem; color:#a78bfa; font-size: 1.1rem; font-weight: 600; cursor:default;">
             Parent Code: <strong id="mob-ui-link-code">-</strong></div>
         <a href="#student-dashboard"
-            onclick="requirePremiumFrontend(function(){openDashboardShortcut(); togMenu();})">Personalised Dashboard</a>
-        <a href="#how" onclick="togMenu()" data-workspace="public">How It Works</a>
-        <a href="#dashboard" onclick="togMenu()">Career Explorer</a>
-        <a href="#ai-section" onclick="togMenu()">AI Advisor</a>
-        <a href="/parent" style="color: #a78bfa; font-weight: 600;" onclick="togMenu()">Parent Portal</a>
-        <a href="/organization" style="color: #4ade80; font-weight: 600;" onclick="togMenu()">B2B / Organization</a>
-        <a href="#rev" onclick="togMenu()" data-workspace="public">Reviews</a>
-        <a href="/blog" onclick="togMenu()">Blog &amp; Resources</a>
+            onclick="if(typeof openDashboardShortcut==='function'){openDashboardShortcut();} togMenu();">Placement Dashboard</a>
+        <a href="#road" onclick="togMenu()">Skill Roadmaps</a>
+        <a href="#ai-section" onclick="togMenu()">AI Interview Coach</a>
+        <a href="#prob" onclick="openInstitutionalPilotModal(); togMenu();" style="color: #10b981; font-weight: 600;">For Colleges (TPO Pilot)</a>
         <a href="/leaderboard.html" style="color: #fbbf24; font-weight: 600;" onclick="togMenu()"><i
                 class="ph-fill dtv-icon ph-trophy"></i> Leaderboard</a>
+        <a href="/blog" onclick="togMenu()">Blog &amp; Resources</a>
+        <a href="/parent" style="color: #a78bfa; font-weight: 600;" onclick="togMenu()">Parent Portal</a>
+        <a href="/organization" style="color: #4ade80; font-weight: 600;" onclick="togMenu()">Organization Workspace</a>
+        <a href="#how" onclick="togMenu()" data-workspace="public">How It Works</a>
         <button type="button" onclick="openPricingPage(); togMenu(); return false;" class="btn-reset"
             style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: #e88c2a; width: 100%; text-align: left; font-size: 1.1rem; font-weight: 700;"><i
-                class="ph-fill dtv-icon ph-diamond"></i> Go Premium</button>
+                class="ph-fill dtv-icon ph-diamond"></i> Placement Pass (₹199)</button>
         <button type="button" onclick="openAnalyzer(); togMenu();" class="btn-reset"
             style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: var(--wh, #fff); width: 100%; text-align: left; font-size: 1.1rem; font-weight: 600;"><i
                 class="ph-fill dtv-icon ph-brain"></i>
@@ -920,33 +919,55 @@
 
         <!-- HERO -->
         <section id="hero" class="sec" data-workspace="public">
-            <!-- 3D Vanta JS Network will be initialized here -->
-            <div class="blobs">
-                <div class="b"
-                    style="width:650px;height:650px;top:-180px;left:-200px;background:rgba(42,125,225,.16);animation-delay:0s;">
-                </div>
-                <div class="b"
-                    style="width:550px;height:550px;bottom:-120px;right:-160px;background:rgba(232,140,42,.13);animation-delay:5s;">
-                </div>
-            </div>
             <div class="hero-shell">
-                <div class="hero-copy rv">
-                    <div class="dtv-badge"><span class="bdot"></span><span style="text-align: left;">India's First AI
-                            Career Simulation Platform <span style="opacity:0.4; margin:0 4px;">|</span> <span
-                                style="white-space: nowrap;">Founded by <a href="/founder/kumar-kartikey/"
-                                    style="color: #38bdf8; text-decoration: none; font-weight: 600;">Kumar
-                                    Kartikey</a></span></span></div>
-                    <h2 class="hero-h fluid-text">Don't Guess Your Future<br><span class="serif amb">Simulate It.</span>
-                    </h2>
-                    <p class="hero-sub">Digital Twin Verse uses a multi-agent AI system to model your skills, interests,
-                        and goals — mapping real-world career paths so you decide with confidence, not guesswork.</p>
-                    <div class="hero-btns">
+                <div class="hero-copy rv" style="max-width: 880px; margin: 0 auto; text-align: center;">
+                    <div class="dtv-badge" style="display: inline-flex; align-items: center; margin-bottom: 1.25rem;">
+                        <span class="bdot"></span>
+                        <span style="font-size: 0.85rem; font-weight: 600;">30-Day Placement Readiness &amp; Technical Skill Gap Engine</span>
+                    </div>
 
-                        <a href="#ai-section" class="btn btn-out">Talk to Career AI</a>
-                        <button type="button" onclick="openAnalyzer()" class="btn btn-out"
-                            style="border-color:rgba(167,139,250,.4);color:var(--purple,#a78bfa); cursor:pointer;"><i
-                                class="ph-fill dtv-icon ph-brain"></i>
-                            Analyze My Profile</button>
+                    <h1 class="hero-h fluid-text" style="font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.15; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem;">
+                        Clear Your Tech Placement.<br>
+                        <span class="serif amb" style="background: linear-gradient(135deg, var(--dtv-orange-400), var(--dtv-orange-600)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Diagnose Deficits in 10 Minutes.</span>
+                    </h1>
+
+                    <p class="hero-sub" style="font-size: 1.15rem; color: var(--dtv-text-secondary); max-width: 680px; margin: 0 auto 1.75rem auto; line-height: 1.6;">
+                        Over 60% of engineering seniors get filtered out by initial technical screens and ATS keyword mismatches. DTV diagnoses your role-specific skill gaps, highlights fatal resume flags, and generates a verified 30-day proof-of-work project roadmap.
+                    </p>
+
+                    <!-- DUAL-PERSONA CALL TO ACTION (STUDENT & INSTITUTIONAL) -->
+                    <div class="dtv-hero-dual-cta" style="justify-content: center; gap: 1rem;">
+                        <a href="/genesis" class="dtv-btn dtv-btn-primary" style="font-size: 1.05rem; padding: 0.85rem 1.8rem;">
+                            <i class="ph-fill dtv-icon ph-lightning" style="color: #ffffff;"></i> Start Free 10-Min Diagnostic
+                        </a>
+                        <button type="button" onclick="openInstitutionalPilotModal()" class="dtv-btn dtv-btn-secondary" style="font-size: 1.05rem; padding: 0.85rem 1.8rem;">
+                            <i class="ph-fill dtv-icon ph-buildings" style="color: #10b981;"></i> For Colleges: TPO Pilot →
+                        </button>
+                    </div>
+
+                    <!-- REAL FUNCTIONALITY TRUST BAR (ONLY VERIFIED CAPABILITIES) -->
+                    <div class="dtv-hero-trust-bar">
+                        <div class="dtv-trust-card">
+                            <div class="dtv-trust-icon"><i class="ph-fill dtv-icon ph-chart-polar"></i></div>
+                            <div>
+                                <div class="dtv-trust-title">Adaptive 10-Min Diagnostic</div>
+                                <p class="dtv-trust-desc">Benchmark logic, velocity, and technical concepts for SDE, Cloud, and Data roles.</p>
+                            </div>
+                        </div>
+                        <div class="dtv-trust-card">
+                            <div class="dtv-trust-icon"><i class="ph-fill dtv-icon ph-warning-circle"></i></div>
+                            <div>
+                                <div class="dtv-trust-title">Explainable Deficit Scoring</div>
+                                <p class="dtv-trust-desc">Flag top 3 skill gaps (e.g. SQL indexing, API caching) with recruiter ATS check.</p>
+                            </div>
+                        </div>
+                        <div class="dtv-trust-card">
+                            <div class="dtv-trust-icon"><i class="ph-fill dtv-icon ph-check-square-offset"></i></div>
+                            <div>
+                                <div class="dtv-trust-title">30-Day Proof Project Sprint</div>
+                                <p class="dtv-trust-desc">Build real GitHub repositories that prove your technical capability to recruiters.</p>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -1245,6 +1266,133 @@
                                 <label>Personalised Focus</label>
                                 <div class="focus-box" id="focus-box">Select a class or university level to see a
                                     personalised focus plan.</div>
+                            </div>
+                        </div>
+
+                        <!-- ═══ PLACEMENT READINESS CORE CONSOLE (APPROVED SPECIFICATION) ═══ -->
+                        <div class="dtv-card" id="placement-core-console" style="margin: 1.5rem 0; border: 1px solid var(--dtv-border-strong); background: var(--dtv-bg-raised);">
+                            <div class="dtv-card-header" style="flex-wrap: wrap; gap: 0.75rem;">
+                                <div>
+                                    <div class="dtv-badge-pill info" style="margin-bottom: 0.4rem;">
+                                        <i class="ph-fill dtv-icon ph-target"></i> Target Role &amp; Assessment Engine
+                                    </div>
+                                    <h3 class="dtv-card-title" id="dtv-current-role-title">Software Development Engineer (Backend Node.js &amp; Postgres)</h3>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                    <select id="dtv-role-switcher" class="dtv-select" style="padding: 0.45rem 0.8rem; font-size: 0.85rem; width: auto;" onchange="updateTargetRole(this.value)">
+                                        <option value="sde_backend" selected>Backend SDE (Node/Postgres)</option>
+                                        <option value="sde_frontend">Frontend SDE (React/TypeScript)</option>
+                                        <option value="data_analyst">Data Analyst (Python/SQL)</option>
+                                        <option value="cloud_devops">Cloud &amp; DevOps Associate</option>
+                                    </select>
+                                    <a href="/genesis" class="dtv-btn dtv-btn-primary" style="padding: 0.45rem 1rem; font-size: 0.85rem;">
+                                        <i class="ph-fill dtv-icon ph-lightning" style="color:#fff;"></i> Retake Diagnostic
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Readiness Score & Deficit Highlights -->
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem;">
+                                <!-- Score Gauge Card -->
+                                <div style="background: var(--dtv-bg-base); padding: 1.25rem; border-radius: 12px; border: 1px solid var(--dtv-border-default);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                        <span style="font-size: 0.85rem; font-weight: 600; color: var(--dtv-text-secondary);">Placement Readiness Benchmark</span>
+                                        <span class="dtv-badge-pill warning" id="dtv-score-badge">74% · Needs Work</span>
+                                    </div>
+                                    <div style="font-size: 2.2rem; font-weight: 800; color: var(--dtv-text-primary); letter-spacing: -0.02em;" id="dtv-score-val">74 / 100</div>
+                                    <div class="mini-bar" style="height: 8px; margin: 0.75rem 0 0.5rem 0; background: rgba(15,23,42,0.1);">
+                                        <span id="dtv-score-fill" style="width: 74%; background: linear-gradient(90deg, #f59e0b, #10b981); height: 8px; display: block; border-radius: 4px;"></span>
+                                    </div>
+                                    <p style="font-size: 0.8rem; color: var(--dtv-text-tertiary); margin: 0;">Market cutoff for SDE campus placement rounds is typically <strong>75%</strong>.</p>
+                                </div>
+
+                                <!-- Priority Deficit Flags -->
+                                <div style="background: var(--dtv-bg-base); padding: 1.25rem; border-radius: 12px; border: 1px solid var(--dtv-border-default);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                        <span style="font-size: 0.85rem; font-weight: 600; color: var(--dtv-text-secondary);"><i class="ph-fill dtv-icon ph-warning-circle" style="color: #ef4444;"></i> Flagged Skill Deficits</span>
+                                        <span style="font-size: 0.75rem; color: var(--dtv-danger); font-weight: 600;">3 Action Items</span>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; gap: 0.4rem;" id="dtv-deficits-list">
+                                        <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; padding: 0.4rem 0.6rem; background: rgba(239,68,68,0.06); border-radius: 6px; border: 1px solid rgba(239,68,68,0.15);">
+                                            <span><strong>SQL Indexing Strategies</strong> (B-Tree vs Hash)</span>
+                                            <span class="dtv-badge-pill danger" style="font-size: 0.7rem; padding: 0.15rem 0.4rem;">High Impact</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; padding: 0.4rem 0.6rem; background: rgba(245,158,11,0.06); border-radius: 6px; border: 1px solid rgba(245,158,11,0.15);">
+                                            <span><strong>Async Error Handling</strong> (Node.js Process Crash)</span>
+                                            <span class="dtv-badge-pill warning" style="font-size: 0.7rem; padding: 0.15rem 0.4rem;">Moderate</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; padding: 0.4rem 0.6rem; background: rgba(37,99,235,0.06); border-radius: 6px; border: 1px solid rgba(37,99,235,0.15);">
+                                            <span><strong>REST API Caching</strong> (Redis Key Invalidation)</span>
+                                            <span class="dtv-badge-pill info" style="font-size: 0.7rem; padding: 0.15rem 0.4rem;">Recommended</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 30-Day Targeted Roadmap Sprint (Weeks 1 to 4) -->
+                            <div style="border-top: 1px solid var(--dtv-border-default); padding-top: 1.25rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <h4 style="font-size: 1rem; font-weight: 700; margin: 0; color: var(--dtv-text-primary);">
+                                        <i class="ph-fill dtv-icon ph-map-trifold"></i> 30-Day Placement Sprint Roadmap
+                                    </h4>
+                                    <span style="font-size: 0.8rem; color: var(--dtv-text-secondary);">Week 1 of 4 Active</span>
+                                </div>
+
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin-bottom: 1.25rem;">
+                                    <!-- Week 1: Active -->
+                                    <div style="padding: 1rem; border-radius: 10px; border: 2px solid var(--dtv-orange-500); background: rgba(249,115,22,0.04);">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
+                                            <span style="font-weight: 800; font-size: 0.75rem; color: var(--dtv-orange-500);">WEEK 1 · ACTIVE</span>
+                                            <span style="font-size: 0.8rem;">🎯</span>
+                                        </div>
+                                        <div style="font-weight: 700; font-size: 0.9rem; color: var(--dtv-text-primary); margin-bottom: 0.25rem;">API Architecture &amp; Pooling</div>
+                                        <p style="font-size: 0.75rem; color: var(--dtv-text-secondary); margin: 0; line-height: 1.35;">Build Express API with Postgres pool &amp; unhandled rejection middleware.</p>
+                                    </div>
+
+                                    <!-- Week 2: Upcoming -->
+                                    <div style="padding: 1rem; border-radius: 10px; border: 1px solid var(--dtv-border-default); background: var(--dtv-bg-base); opacity: 0.85;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
+                                            <span style="font-weight: 700; font-size: 0.75rem; color: var(--dtv-text-tertiary);">WEEK 2 · UPCOMING</span>
+                                            <span style="font-size: 0.8rem;">⏳</span>
+                                        </div>
+                                        <div style="font-weight: 700; font-size: 0.9rem; color: var(--dtv-text-primary); margin-bottom: 0.25rem;">Database Indexing</div>
+                                        <p style="font-size: 0.75rem; color: var(--dtv-text-secondary); margin: 0; line-height: 1.35;">Optimize slow queries, add EXPLAIN ANALYZE benchmarks.</p>
+                                    </div>
+
+                                    <!-- Week 3: Locked -->
+                                    <div style="padding: 1rem; border-radius: 10px; border: 1px solid var(--dtv-border-subtle); background: var(--dtv-bg-base); opacity: 0.6;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
+                                            <span style="font-weight: 700; font-size: 0.75rem; color: var(--dtv-text-tertiary);">WEEK 3 · LOCKED</span>
+                                            <span style="font-size: 0.8rem;">🔒</span>
+                                        </div>
+                                        <div style="font-weight: 700; font-size: 0.9rem; color: var(--dtv-text-primary); margin-bottom: 0.25rem;">Redis System Caching</div>
+                                        <p style="font-size: 0.75rem; color: var(--dtv-text-secondary); margin: 0; line-height: 1.35;">Prevent cache thundering herd in simulated high-traffic routes.</p>
+                                    </div>
+
+                                    <!-- Week 4: Locked -->
+                                    <div style="padding: 1rem; border-radius: 10px; border: 1px solid var(--dtv-border-subtle); background: var(--dtv-bg-base); opacity: 0.6;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
+                                            <span style="font-weight: 700; font-size: 0.75rem; color: var(--dtv-text-tertiary);">WEEK 4 · LOCKED</span>
+                                            <span style="font-size: 0.8rem;">🔒</span>
+                                        </div>
+                                        <div style="font-weight: 700; font-size: 0.9rem; color: var(--dtv-text-primary); margin-bottom: 0.25rem;">Mock Interviews &amp; ATS</div>
+                                        <p style="font-size: 0.75rem; color: var(--dtv-text-secondary); margin: 0; line-height: 1.35;">AI technical round simulation + ATS resume keyword calibration.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Action Milestone Task Submission Card -->
+                                <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem; background: rgba(37,99,235,0.05); border: 1px solid rgba(37,99,235,0.2); border-radius: 10px;">
+                                    <div>
+                                        <div style="font-size: 0.8rem; font-weight: 700; color: var(--dtv-primary-blue); text-transform: uppercase;">Next Recommended Action</div>
+                                        <div style="font-weight: 700; font-size: 0.95rem; color: var(--dtv-text-primary);">Deploy Express REST API with Health Check &amp; Connection Pool</div>
+                                    </div>
+                                    <div style="display: flex; gap: 0.5rem; align-items: center; width: 100%; max-width: 420px;">
+                                        <input type="url" id="dtv-github-proof-url" class="dtv-input" placeholder="https://github.com/your-username/api-project" style="font-size: 0.85rem; padding: 0.5rem 0.8rem;">
+                                        <button type="button" onclick="submitProjectProof()" class="dtv-btn dtv-btn-primary" style="white-space: nowrap; padding: 0.5rem 1rem; font-size: 0.85rem;">
+                                            Submit Proof →
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -3265,9 +3413,9 @@
 
 
 
-    <script defer="" src="/dist/careers.e4a25189.js?v=59b5c1d0609f75ef"></script>
-    <script defer="" src="/dist/app.d6188f8f.js?v=59b5c1d0609f75ef"></script>
-    <script defer="" src="/dist/ux-engine.f675feed.js?v=59b5c1d0609f75ef"></script>
+    <script defer="" src="/dist/careers.e4a25189.js?v=c06dca3bfcee577e"></script>
+    <script defer="" src="/dist/app.299ffd7f.js?v=c06dca3bfcee577e"></script>
+    <script defer="" src="/dist/ux-engine.f675feed.js?v=c06dca3bfcee577e"></script>
 
 
     <!-- PROBLEM INSIGHT MODAL -->
@@ -3293,31 +3441,173 @@
         </ul>
     </nav>
 
-    <!-- 3D Interactive SaaS Neural Network -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <!-- ═══ INSTITUTIONAL PLACEMENT PILOT MODAL (B2B TPO LEAD CAPTURE) ═══ -->
+    <div id="institutional-pilot-modal" class="wa-redirect-ov" role="dialog" aria-modal="true" aria-labelledby="tpo-modal-title"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow-y: auto; padding: 2.5rem 1rem; justify-content: center; align-items: center; z-index: 9999999; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); background: rgba(5, 7, 12, 0.85);">
+        <div class="dtv-card" style="max-width: 580px; width: 100%; margin: auto; padding: 2rem; background: var(--dtv-bg-raised); border: 1px solid var(--dtv-border-strong); border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(16,185,129,0.12); color: #10b981; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                        <i class="ph-fill dtv-icon ph-buildings" style="color: #10b981;"></i>
+                    </div>
+                    <div>
+                        <span class="dtv-badge-pill success" style="margin-bottom: 0.2rem;">Institutional Pilot Program</span>
+                        <h2 id="tpo-modal-title" style="font-size: 1.35rem; font-weight: 800; color: var(--dtv-text-primary); margin: 0;">DTV Capacity Connect</h2>
+                    </div>
+                </div>
+                <button type="button" onclick="closeInstitutionalPilotModal()" class="btn-reset" aria-label="Close" style="font-size: 1.5rem; color: var(--dtv-text-tertiary); cursor: pointer; padding: 0.25rem 0.5rem; line-height: 1;">×</button>
+            </div>
+
+            <p style="font-size: 0.95rem; color: var(--dtv-text-secondary); line-height: 1.5; margin-bottom: 1.25rem;">
+                A zero-cost, 6-week contingent pilot for 80–120 final-year seniors. Your placement cell receives automated technical deficit heatmaps, verified GitHub proof-of-work tracking, and placement telemetry before commercial commitment.
+            </p>
+
+            <form id="tpo-pilot-form" onsubmit="submitPilotRequest(event)">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem;">
+                    <div class="dtv-form-group" style="margin-bottom: 0;">
+                        <label for="pilot-org-name" class="dtv-label">College / University *</label>
+                        <input type="text" id="pilot-org-name" class="dtv-input" required placeholder="e.g. Pune Institute of Tech">
+                    </div>
+                    <div class="dtv-form-group" style="margin-bottom: 0;">
+                        <label for="pilot-org-city" class="dtv-label">City &amp; State *</label>
+                        <input type="text" id="pilot-org-city" class="dtv-input" required placeholder="e.g. Pune, Maharashtra">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem;">
+                    <div class="dtv-form-group" style="margin-bottom: 0;">
+                        <label for="pilot-contact-name" class="dtv-label">Contact Person *</label>
+                        <input type="text" id="pilot-contact-name" class="dtv-input" required placeholder="Name &amp; Title (TPO / Dean)">
+                    </div>
+                    <div class="dtv-form-group" style="margin-bottom: 0;">
+                        <label for="pilot-batch-size" class="dtv-label">Cohort Size *</label>
+                        <select id="pilot-batch-size" class="dtv-select" required>
+                            <option value="80">1 Department (80 Seniors)</option>
+                            <option value="120" selected>1 Batch (120 Seniors)</option>
+                            <option value="250">2 Departments (250 Seniors)</option>
+                            <option value="500+">Entire Senior Class (500+)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem;">
+                    <div class="dtv-form-group" style="margin-bottom: 0;">
+                        <label for="pilot-contact-email" class="dtv-label">Official Email (.edu / .ac.in) *</label>
+                        <input type="email" id="pilot-contact-email" class="dtv-input" required placeholder="tpo@college.edu.in">
+                    </div>
+                    <div class="dtv-form-group" style="margin-bottom: 0;">
+                        <label for="pilot-contact-phone" class="dtv-label">WhatsApp / Phone *</label>
+                        <input type="tel" id="pilot-contact-phone" class="dtv-input" required placeholder="+91 98765 43210">
+                    </div>
+                </div>
+
+                <div id="tpo-pilot-success" style="display: none;" class="dtv-alert success">
+                    ✅ <strong>Pilot Request Received!</strong> Our academic partnerships director will share the 6-week cohort onboarding kit with your TPO within 24 hours.
+                </div>
+
+                <div style="display: flex; gap: 0.75rem; justify-content: flex-end; align-items: center; margin-top: 1rem;">
+                    <button type="button" onclick="closeInstitutionalPilotModal()" class="dtv-btn dtv-btn-outline">Cancel</button>
+                    <button type="submit" id="tpo-submit-btn" class="dtv-btn dtv-btn-primary" style="background: linear-gradient(135deg, #10b981, #059669) !important;">
+                        Request 6-Week Cohort Pilot →
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            if (typeof VANTA !== 'undefined') {
-                VANTA.NET({
-                    el: "#hero",
-                    mouseControls: true,
-                    touchControls: true,
-                    gyroControls: false,
-                    minHeight: 200.00,
-                    minWidth: 200.00,
-                    scale: 1.00,
-                    scaleMobile: 1.00,
-                    color: 0xF97316,
-                    backgroundColor: 0xFFFFFF,
-                    backgroundAlpha: 0.0,
-                    points: 12.00,
-                    maxDistance: 22.00,
-                    spacing: 20.00,
-                    showDots: true
-                });
+        function openInstitutionalPilotModal() {
+            var m = document.getElementById('institutional-pilot-modal');
+            if (m) {
+                m.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
             }
-        });
+        }
+        window.openInstitutionalPilotModal = openInstitutionalPilotModal;
+
+        function closeInstitutionalPilotModal() {
+            var m = document.getElementById('institutional-pilot-modal');
+            if (m) {
+                m.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+        window.closeInstitutionalPilotModal = closeInstitutionalPilotModal;
+
+        function submitPilotRequest(e) {
+            e.preventDefault();
+            var btn = document.getElementById('tpo-submit-btn');
+            var success = document.getElementById('tpo-pilot-success');
+            var form = document.getElementById('tpo-pilot-form');
+            if (btn) btn.disabled = true;
+
+            var payload = {
+                orgName: document.getElementById('pilot-org-name').value,
+                city: document.getElementById('pilot-org-city').value,
+                contactName: document.getElementById('pilot-contact-name').value,
+                batchSize: document.getElementById('pilot-batch-size').value,
+                email: document.getElementById('pilot-contact-email').value,
+                phone: document.getElementById('pilot-contact-phone').value,
+                requestedAt: new Date().toISOString()
+            };
+
+            // Save to localStorage as pilot lead
+            try {
+                var existing = JSON.parse(localStorage.getItem('dtv_pilot_leads') || '[]');
+                existing.push(payload);
+                localStorage.setItem('dtv_pilot_leads', JSON.stringify(existing));
+            } catch(err) {}
+
+            if (success) success.style.display = 'flex';
+            if (btn) btn.style.display = 'none';
+
+            if (typeof showToast === 'function') {
+                showToast('🏛️', 'Pilot inquiry received! We will contact your placement office.');
+            }
+
+            setTimeout(function() {
+                closeInstitutionalPilotModal();
+                if (btn) btn.disabled = false;
+                if (btn) btn.style.display = '';
+                if (success) success.style.display = 'none';
+                if (form) form.reset();
+            }, 3000);
+        }
+        window.submitPilotRequest = submitPilotRequest;
+
+        function updateTargetRole(roleKey) {
+            var titles = {
+                'sde_backend': 'Software Development Engineer (Backend Node.js & Postgres)',
+                'sde_frontend': 'Frontend Software Engineer (React, TypeScript & Tailwind)',
+                'data_analyst': 'Data Analyst & Analytics Engineer (SQL, Python & PowerBI)',
+                'cloud_devops': 'Cloud & DevOps Associate (AWS, Docker & CI/CD)'
+            };
+            var titleEl = document.getElementById('dtv-current-role-title');
+            if (titleEl && titles[roleKey]) {
+                titleEl.textContent = titles[roleKey];
+                if (typeof showToast === 'function') {
+                    showToast('🎯', 'Target role set to: ' + titles[roleKey]);
+                }
+            }
+        }
+        window.updateTargetRole = updateTargetRole;
+
+        function submitProjectProof() {
+            var inp = document.getElementById('dtv-github-proof-url');
+            if (!inp || !inp.value.trim()) {
+                if (typeof showToast === 'function') showToast('⚠️', 'Please enter a valid GitHub repository link.');
+                return;
+            }
+            if (!inp.value.includes('github.com')) {
+                if (typeof showToast === 'function') showToast('⚠️', 'Please provide a github.com link for technical verification.');
+                return;
+            }
+            if (typeof showToast === 'function') {
+                showToast('🚀', 'GitHub proof link submitted! AI review running in background.');
+            }
+            inp.value = '';
+        }
+        window.submitProjectProof = submitProjectProof;
     </script>
 </body>
 

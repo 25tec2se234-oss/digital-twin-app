@@ -1777,3 +1777,414 @@ html[data-theme="midnight"] section#features {
     background: var(--dtv-bg-base) !important;
     background-image: none !important;
 }
+
+/* ========================================================================
+   UNIFIED DTV DESIGN SYSTEM (APPROVED UI/UX SPECIFICATION)
+   Standardized Typography, Spacing, Buttons, Forms, Cards, Tables,
+   Modals, Alerts, Loading, Empty, and Error States.
+======================================================================== */
+
+/* ── Typography & Spacing Tokens ──────────────────────────────────────── */
+:root {
+    --dtv-space-xs: 4px;
+    --dtv-space-sm: 8px;
+    --dtv-space-md: 16px;
+    --dtv-space-lg: 24px;
+    --dtv-space-xl: 32px;
+    --dtv-space-2xl: 48px;
+
+    --dtv-radius-sm: 6px;
+    --dtv-radius-md: 10px;
+    --dtv-radius-lg: 16px;
+    --dtv-radius-full: 9999px;
+
+    --dtv-primary-blue: #2563eb;
+    --dtv-primary-blue-hover: #1d4ed8;
+    --dtv-success: #10b981;
+    --dtv-warning: #f59e0b;
+    --dtv-danger: #ef4444;
+    --dtv-info: #0284c7;
+
+    --dtv-focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.35);
+}
+
+/* ── Accessibility & Focus States ─────────────────────────────────────── */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--dtv-primary-blue) !important;
+    outline-offset: 2px !important;
+    box-shadow: var(--dtv-focus-ring) !important;
+}
+
+/* Minimum Accessible Touch Target Size */
+.dtv-btn,
+.nav-link,
+.seg-btn,
+.tool-btn,
+.tool-link {
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────────── */
+.dtv-btn {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.65rem 1.4rem;
+    border-radius: var(--dtv-radius-md);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    gap: 0.5rem;
+    border: 1px solid transparent;
+    line-height: 1.25;
+}
+
+.dtv-btn-primary {
+    background: linear-gradient(135deg, var(--dtv-orange-500), var(--dtv-orange-600)) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.25) !important;
+}
+.dtv-btn-primary:hover {
+    background: linear-gradient(135deg, var(--dtv-orange-400), var(--dtv-orange-500)) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.35) !important;
+}
+
+.dtv-btn-secondary {
+    background: var(--dtv-bg-raised) !important;
+    color: var(--dtv-text-primary) !important;
+    border: 1px solid var(--dtv-border-strong) !important;
+}
+.dtv-btn-secondary:hover {
+    background: var(--dtv-border-subtle) !important;
+    border-color: var(--dtv-orange-500) !important;
+}
+
+.dtv-btn-outline {
+    background: transparent !important;
+    color: var(--dtv-text-primary) !important;
+    border: 1px solid var(--dtv-border-default) !important;
+}
+.dtv-btn-outline:hover {
+    background: var(--dtv-border-subtle) !important;
+    border-color: var(--dtv-border-strong) !important;
+}
+
+.dtv-btn-danger {
+    background: rgba(239, 68, 68, 0.1) !important;
+    color: var(--dtv-danger) !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+.dtv-btn-danger:hover {
+    background: var(--dtv-danger) !important;
+    color: #ffffff !important;
+}
+
+.dtv-btn:disabled,
+.dtv-btn[disabled] {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* ── Forms ────────────────────────────────────────────────────────────── */
+.dtv-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1.25rem;
+    text-align: left;
+}
+
+.dtv-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--dtv-text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dtv-input,
+.dtv-select,
+.dtv-textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--dtv-bg-raised);
+    border: 1px solid var(--dtv-border-default);
+    border-radius: var(--dtv-radius-md);
+    color: var(--dtv-text-primary);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dtv-input:focus,
+.dtv-select:focus,
+.dtv-textarea:focus {
+    border-color: var(--dtv-primary-blue) !important;
+    box-shadow: var(--dtv-focus-ring) !important;
+    outline: none !important;
+}
+
+.dtv-input.has-error,
+.dtv-select.has-error {
+    border-color: var(--dtv-danger) !important;
+    background: rgba(239, 68, 68, 0.03);
+}
+
+.dtv-error-msg {
+    font-size: 0.8rem;
+    color: var(--dtv-danger);
+    font-weight: 500;
+    margin-top: 0.2rem;
+}
+
+.dtv-help-text {
+    font-size: 0.8rem;
+    color: var(--dtv-text-tertiary);
+}
+
+/* ── Cards & Panels ───────────────────────────────────────────────────── */
+.dtv-card {
+    background: var(--dtv-bg-raised);
+    border: 1px solid var(--dtv-border-default);
+    border-radius: var(--dtv-radius-lg);
+    padding: 1.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.dtv-card:hover {
+    border-color: var(--dtv-border-strong);
+}
+
+.dtv-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--dtv-border-subtle);
+}
+
+.dtv-card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--dtv-text-primary);
+    margin: 0;
+}
+
+/* ── Badges ───────────────────────────────────────────────────────────── */
+.dtv-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--dtv-radius-full);
+}
+
+.dtv-badge-pill.success {
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--dtv-success);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.dtv-badge-pill.warning {
+    background: rgba(245, 158, 11, 0.12);
+    color: var(--dtv-warning);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.dtv-badge-pill.danger {
+    background: rgba(239, 68, 68, 0.12);
+    color: var(--dtv-danger);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.dtv-badge-pill.info {
+    background: rgba(37, 99, 235, 0.12);
+    color: var(--dtv-primary-blue);
+    border: 1px solid rgba(37, 99, 235, 0.25);
+}
+
+/* ── Responsive Tables ────────────────────────────────────────────────── */
+.dtv-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--dtv-radius-md);
+    border: 1px solid var(--dtv-border-default);
+    margin: 1rem 0;
+}
+
+.dtv-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+.dtv-table th {
+    background: var(--dtv-bg-base);
+    color: var(--dtv-text-secondary);
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--dtv-border-default);
+    white-space: nowrap;
+}
+
+.dtv-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--dtv-border-subtle);
+    color: var(--dtv-text-primary);
+}
+
+.dtv-table tr:last-child td {
+    border-bottom: none;
+}
+
+.dtv-table tr:hover td {
+    background: var(--dtv-border-subtle);
+}
+
+/* ── Alerts ───────────────────────────────────────────────────────────── */
+.dtv-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.9rem 1.2rem;
+    border-radius: var(--dtv-radius-md);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.45;
+}
+
+.dtv-alert.info {
+    background: rgba(37, 99, 235, 0.08);
+    border: 1px solid rgba(37, 99, 235, 0.2);
+    color: var(--dtv-primary-blue);
+}
+
+.dtv-alert.success {
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    color: var(--dtv-success);
+}
+
+.dtv-alert.warning {
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    color: var(--dtv-warning);
+}
+
+.dtv-alert.error {
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    color: var(--dtv-danger);
+}
+
+/* ── Loading, Empty, and Error States ─────────────────────────────────── */
+.dtv-spinner {
+    width: 28px;
+    height: 28px;
+    border: 3px solid rgba(249, 115, 22, 0.2);
+    border-top-color: var(--dtv-orange-500);
+    border-radius: 50%;
+    animation: dtvSpin 0.7s linear infinite;
+    display: inline-block;
+}
+
+@keyframes dtvSpin {
+    to { transform: rotate(360deg); }
+}
+
+.dtv-empty-state {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background: var(--dtv-bg-raised);
+    border: 1px dashed var(--dtv-border-default);
+    border-radius: var(--dtv-radius-lg);
+}
+
+.dtv-empty-icon {
+    font-size: 2.5rem;
+    color: var(--dtv-text-tertiary);
+    margin-bottom: 0.75rem;
+}
+
+.dtv-empty-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--dtv-text-primary);
+    margin-bottom: 0.35rem;
+}
+
+.dtv-empty-desc {
+    font-size: 0.9rem;
+    color: var(--dtv-text-secondary);
+    max-width: 420px;
+    margin: 0 auto 1.25rem auto;
+}
+
+/* ── Split Dual-Persona Hero Banner (Student / Institutional) ────────── */
+.dtv-hero-dual-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+.dtv-hero-trust-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 2.5rem;
+    text-align: left;
+}
+
+.dtv-trust-card {
+    background: var(--dtv-bg-raised);
+    border: 1px solid var(--dtv-border-default);
+    border-radius: var(--dtv-radius-md);
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.dtv-trust-icon {
+    font-size: 1.5rem;
+    color: var(--dtv-orange-500);
+    line-height: 1;
+}
+
+.dtv-trust-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--dtv-text-primary);
+    margin-bottom: 0.15rem;
+}
+
+.dtv-trust-desc {
+    font-size: 0.8rem;
+    color: var(--dtv-text-secondary);
+    line-height: 1.35;
+    margin: 0;
+}
