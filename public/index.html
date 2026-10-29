@@ -12,6 +12,7 @@
 
         gtag('config', 'G-G79C8YZYXF');
     </script>
+    <script src="/dist/analytics.d7758758.js?v=bd7f95c6a27a70d6"></script>
     <meta name="google-site-verification" content="JqI4ie5AN2FqEf6IiFaV1aagZj-uKcFR91x1r8khGCw">
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <meta name="msvalidate.01" content="BING_VERIFICATION_CODE_HERE">
@@ -115,13 +116,12 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.be5f9623.css?v=59b5c1d0609f75ef" as="style">
-    <link rel="stylesheet" href="/css/premium-theme.css?v=dark-fix2">
+    <link rel="preload" href="/dist/main.ec205e06.css?v=bd7f95c6a27a70d6" as="style">
 
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.be5f9623.css?v=59b5c1d0609f75ef">
+    <link rel="stylesheet" href="/dist/main.ec205e06.css?v=bd7f95c6a27a70d6">
     <link rel="stylesheet" href="/css/premium-theme.css?v=dark-fix2">
 
 
@@ -508,14 +508,12 @@
 
         <div class="nav-right-container">
             <div class="nav-links-modern">
-                <a href="/genesis" class="nav-link" style="color: #38bdf8; font-weight: 700;">Genesis™</a>
-                <a href="#student-dashboard" onclick="requirePremiumFrontend(openDashboardShortcut)"
+                <a href="/genesis" class="nav-link" style="color: var(--dtv-orange-500); font-weight: 700;">Diagnostic (Genesis™)</a>
+                <a href="#student-dashboard" onclick="if(typeof openDashboardShortcut === 'function'){openDashboardShortcut();}"
                     class="nav-link">Dashboard</a>
-                <a href="#ai-section" onclick="requirePremiumFrontend(function(){location.hash='#ai-section';})"
-                    class="nav-link">AI Advisor</a>
-                <a href="/parent" class="nav-link">Parent Portal</a>
-                <a href="/organization" class="nav-link" style="color: #4ade80; font-weight: 700;">B2B / Organization</a>
-                <a href="/leaderboard.html" class="nav-link">Leaderboard</a>
+                <a href="#road" class="nav-link">Roadmaps</a>
+                <a href="#ai-section" class="nav-link">Interview AI</a>
+                <a href="/institutions" class="nav-link" style="color: #60a5fa; font-weight: 700;">For Colleges</a>
 
                 <div class="nav-dropdown">
                     <span class="nav-link dropdown-toggle">More <svg width="12" height="12" viewBox="0 0 24 24"
@@ -526,10 +524,13 @@
                     <div class="dropdown-menu">
                         <a href="#how" data-workspace="public">How It Works</a>
                         <a href="#dashboard"
-                            onclick="requirePremiumFrontend(function(){location.hash='#dashboard';})">Career
+                            onclick="if(typeof toggleCareerExplorer === 'function'){toggleCareerExplorer(true);}">Career
                             Explorer</a>
-                        <a href="#rev" data-workspace="public">Reviews</a>
+                        <a href="/leaderboard.html">Weekly Leaderboard</a>
                         <a href="/blog">Blog &amp; Resources</a>
+                        <a href="/parent">Parent Portal</a>
+                        <a href="/organization">Organization Workspace</a>
+                        <a href="#rev" data-workspace="public">Reviews</a>
                     </div>
                 </div>
             </div>
@@ -550,7 +551,7 @@
 
                 <!-- Go Premium -->
                 <button type="button" onclick="openPricingPage(); return false;" class="dtv-btn dtv-btn-primary"><i
-                        class="ph-fill dtv-icon ph-diamond"></i> Premium</button>
+                        class="ph-fill dtv-icon ph-diamond"></i> Placement Pass</button>
 
                 <!-- Account -->
                 <div class="account-menu" id="nav-account-wrap">
@@ -579,10 +580,9 @@
         <div class="hbg" id="hbg" onclick="togMenu()"><span></span><span></span><span></span></div>
     </nav>
     <div class="mob" id="mob">
-        <a href="/genesis" style="color: #38bdf8; font-weight: 700; font-size: 1.15rem;" onclick="togMenu()">✨ Genesis™
-            Onboarding</a>
+        <a href="/genesis" style="color: var(--dtv-orange-500); font-weight: 700; font-size: 1.15rem;" onclick="togMenu()">✨ 10-Min Placement Diagnostic</a>
         <button type="button" id="mob-signin" onclick="openLoginGate(); togMenu()" class="btn-reset">Sign In</button>
-        <button type="button" id="mob-signup" onclick="openLoginGate(); togMenu()" class="btn-reset">Sign Up</button>
+        <button type="button" id="mob-signup" onclick="openLoginGate('signup'); togMenu()" class="btn-reset">Sign Up (5-Day Trial)</button>
         <button type="button" id="mob-admindb" onclick="openAdminDashboard(); togMenu()"
             style="display:none; color:#f5a94e;" class="btn-reset">Developer DB</button>
         <button type="button" id="mob-logout" onclick="if (doLogout()) togMenu()" class="btn-reset">Log Out</button>
@@ -590,19 +590,19 @@
             style="display:none; padding: 1rem 1.5rem; color:#a78bfa; font-size: 1.1rem; font-weight: 600; cursor:default;">
             Parent Code: <strong id="mob-ui-link-code">-</strong></div>
         <a href="#student-dashboard"
-            onclick="requirePremiumFrontend(function(){openDashboardShortcut(); togMenu();})">Personalised Dashboard</a>
-        <a href="#how" onclick="togMenu()" data-workspace="public">How It Works</a>
-        <a href="#dashboard" onclick="togMenu()">Career Explorer</a>
-        <a href="#ai-section" onclick="togMenu()">AI Advisor</a>
-        <a href="/parent" style="color: #a78bfa; font-weight: 600;" onclick="togMenu()">Parent Portal</a>
-        <a href="/organization" style="color: #4ade80; font-weight: 600;" onclick="togMenu()">B2B / Organization</a>
-        <a href="#rev" onclick="togMenu()" data-workspace="public">Reviews</a>
-        <a href="/blog" onclick="togMenu()">Blog &amp; Resources</a>
+            onclick="if(typeof openDashboardShortcut==='function'){openDashboardShortcut();} togMenu();">Placement Dashboard</a>
+        <a href="#road" onclick="togMenu()">Skill Roadmaps</a>
+        <a href="#ai-section" onclick="togMenu()">AI Interview Coach</a>
+        <a href="#prob" onclick="openInstitutionalPilotModal(); togMenu();" style="color: #10b981; font-weight: 600;">For Colleges (TPO Pilot)</a>
         <a href="/leaderboard.html" style="color: #fbbf24; font-weight: 600;" onclick="togMenu()"><i
                 class="ph-fill dtv-icon ph-trophy"></i> Leaderboard</a>
+        <a href="/blog" onclick="togMenu()">Blog &amp; Resources</a>
+        <a href="/parent" style="color: #a78bfa; font-weight: 600;" onclick="togMenu()">Parent Portal</a>
+        <a href="/organization" style="color: #4ade80; font-weight: 600;" onclick="togMenu()">Organization Workspace</a>
+        <a href="#how" onclick="togMenu()" data-workspace="public">How It Works</a>
         <button type="button" onclick="openPricingPage(); togMenu(); return false;" class="btn-reset"
             style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: #e88c2a; width: 100%; text-align: left; font-size: 1.1rem; font-weight: 700;"><i
-                class="ph-fill dtv-icon ph-diamond"></i> Go Premium</button>
+                class="ph-fill dtv-icon ph-diamond"></i> Placement Pass (₹199)</button>
         <button type="button" onclick="openAnalyzer(); togMenu();" class="btn-reset"
             style="cursor:pointer; display:block; padding: 1rem 1.5rem; text-decoration: none; color: var(--wh, #fff); width: 100%; text-align: left; font-size: 1.1rem; font-weight: 600;"><i
                 class="ph-fill dtv-icon ph-brain"></i>
@@ -920,33 +920,55 @@
 
         <!-- HERO -->
         <section id="hero" class="sec" data-workspace="public">
-            <!-- 3D Vanta JS Network will be initialized here -->
-            <div class="blobs">
-                <div class="b"
-                    style="width:650px;height:650px;top:-180px;left:-200px;background:rgba(42,125,225,.16);animation-delay:0s;">
-                </div>
-                <div class="b"
-                    style="width:550px;height:550px;bottom:-120px;right:-160px;background:rgba(232,140,42,.13);animation-delay:5s;">
-                </div>
-            </div>
             <div class="hero-shell">
-                <div class="hero-copy rv">
-                    <div class="dtv-badge"><span class="bdot"></span><span style="text-align: left;">India's First AI
-                            Career Simulation Platform <span style="opacity:0.4; margin:0 4px;">|</span> <span
-                                style="white-space: nowrap;">Founded by <a href="/founder/kumar-kartikey/"
-                                    style="color: #38bdf8; text-decoration: none; font-weight: 600;">Kumar
-                                    Kartikey</a></span></span></div>
-                    <h2 class="hero-h fluid-text">Don't Guess Your Future<br><span class="serif amb">Simulate It.</span>
-                    </h2>
-                    <p class="hero-sub">Digital Twin Verse uses a multi-agent AI system to model your skills, interests,
-                        and goals — mapping real-world career paths so you decide with confidence, not guesswork.</p>
-                    <div class="hero-btns">
+                <div class="hero-copy rv" style="max-width: 880px; margin: 0 auto; text-align: center;">
+                    <div class="dtv-badge" style="display: inline-flex; align-items: center; margin-bottom: 1.25rem;">
+                        <span class="bdot"></span>
+                        <span style="font-size: 0.85rem; font-weight: 600;">30-Day Placement Readiness &amp; Technical Skill Gap Engine</span>
+                    </div>
 
-                        <a href="#ai-section" class="btn btn-out">Talk to Career AI</a>
-                        <button type="button" onclick="openAnalyzer()" class="btn btn-out"
-                            style="border-color:rgba(167,139,250,.4);color:var(--purple,#a78bfa); cursor:pointer;"><i
-                                class="ph-fill dtv-icon ph-brain"></i>
-                            Analyze My Profile</button>
+                    <h1 class="hero-h fluid-text" style="font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.15; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem;">
+                        Clear Your Tech Placement.<br>
+                        <span class="serif amb" style="background: linear-gradient(135deg, var(--dtv-orange-400), var(--dtv-orange-600)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Diagnose Deficits in 10 Minutes.</span>
+                    </h1>
+
+                    <p class="hero-sub" style="font-size: 1.15rem; color: var(--dtv-text-secondary); max-width: 680px; margin: 0 auto 1.75rem auto; line-height: 1.6;">
+                        Over 60% of engineering seniors get filtered out by initial technical screens and ATS keyword mismatches. DTV diagnoses your role-specific skill gaps, highlights fatal resume flags, and generates a verified 30-day proof-of-work project roadmap.
+                    </p>
+
+                    <!-- DUAL-PERSONA CALL TO ACTION (STUDENT & INSTITUTIONAL) -->
+                    <div class="dtv-hero-dual-cta" style="justify-content: center; gap: 1rem;">
+                        <a href="/genesis" onclick="if(window.DtvAnalytics) window.DtvAnalytics.trackEntryPoint('hero_start_diagnostic', '/genesis');" class="dtv-btn dtv-btn-primary" style="font-size: 1.05rem; padding: 0.85rem 1.8rem;">
+                            <i class="ph-fill dtv-icon ph-lightning" style="color: #ffffff;"></i> Start Free 10-Min Diagnostic
+                        </a>
+                        <button type="button" onclick="if(window.DtvAnalytics) window.DtvAnalytics.trackEntryPoint('hero_tpo_pilot', '#pilot'); openInstitutionalPilotModal();" class="dtv-btn dtv-btn-secondary" style="font-size: 1.05rem; padding: 0.85rem 1.8rem;">
+                            <i class="ph-fill dtv-icon ph-buildings" style="color: #10b981;"></i> For Colleges: TPO Pilot →
+                        </button>
+                    </div>
+
+                    <!-- REAL FUNCTIONALITY TRUST BAR (ONLY VERIFIED CAPABILITIES) -->
+                    <div class="dtv-hero-trust-bar">
+                        <div class="dtv-trust-card">
+                            <div class="dtv-trust-icon"><i class="ph-fill dtv-icon ph-chart-polar"></i></div>
+                            <div>
+                                <div class="dtv-trust-title">Adaptive 10-Min Diagnostic</div>
+                                <p class="dtv-trust-desc">Benchmark logic, velocity, and technical concepts for SDE, Cloud, and Data roles.</p>
+                            </div>
+                        </div>
+                        <div class="dtv-trust-card">
+                            <div class="dtv-trust-icon"><i class="ph-fill dtv-icon ph-warning-circle"></i></div>
+                            <div>
+                                <div class="dtv-trust-title">Explainable Deficit Scoring</div>
+                                <p class="dtv-trust-desc">Flag top 3 skill gaps (e.g. SQL indexing, API caching) with recruiter ATS check.</p>
+                            </div>
+                        </div>
+                        <div class="dtv-trust-card">
+                            <div class="dtv-trust-icon"><i class="ph-fill dtv-icon ph-check-square-offset"></i></div>
+                            <div>
+                                <div class="dtv-trust-title">30-Day Proof Project Sprint</div>
+                                <p class="dtv-trust-desc">Build real GitHub repositories that prove your technical capability to recruiters.</p>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -1245,6 +1267,167 @@
                                 <label>Personalised Focus</label>
                                 <div class="focus-box" id="focus-box">Select a class or university level to see a
                                     personalised focus plan.</div>
+                            </div>
+                        </div>
+
+                        <!-- ═══ PLACEMENT READINESS CORE CONSOLE (APPROVED SPECIFICATION) ═══ -->
+                        <div class="dtv-card" id="placement-core-console" style="margin: 1.5rem 0; border: 1px solid var(--dtv-border-strong); background: var(--dtv-bg-raised);">
+                            <div class="dtv-card-header" style="flex-wrap: wrap; gap: 0.75rem;">
+                                <div>
+                                    <div class="dtv-badge-pill info" style="margin-bottom: 0.4rem;">
+                                        <i class="ph-fill dtv-icon ph-target"></i> Target Role &amp; Assessment Engine
+                                    </div>
+                                    <h3 class="dtv-card-title" id="dtv-current-role-title">Software Development Engineer (Backend Node.js &amp; Postgres)</h3>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                                    <select id="dtv-role-switcher" class="dtv-select" style="padding: 0.45rem 0.8rem; font-size: 0.85rem; width: auto;" onchange="updateTargetRole(this.value)">
+                                        <option value="sde_backend" selected>Backend SDE (Node/Postgres)</option>
+                                        <option value="sde_frontend">Frontend SDE (React/TypeScript)</option>
+                                        <option value="data_analyst">Data Analyst (Python/SQL)</option>
+                                        <option value="cloud_devops">Cloud &amp; DevOps Associate</option>
+                                    </select>
+                                    <button type="button" onclick="openReadinessAssessmentModal()" class="dtv-btn dtv-btn-primary" style="padding: 0.45rem 0.9rem; font-size: 0.85rem;">
+                                        <i class="ph-fill dtv-icon ph-lightning" style="color:#fff;"></i> Assessment
+                                    </button>
+                                    <button type="button" onclick="openWeeklySummaryModal()" class="dtv-btn dtv-btn-secondary" style="padding: 0.45rem 0.85rem; font-size: 0.85rem;" title="View Past 7 Days Progress Summary">
+                                        <i class="ph-fill dtv-icon ph-calendar-check"></i> Weekly Digest
+                                    </button>
+                                    <button type="button" onclick="openMilestonesModal()" class="dtv-btn dtv-btn-secondary" style="padding: 0.45rem 0.85rem; font-size: 0.85rem;" title="View Verified Milestone Achievements">
+                                        <i class="ph-fill dtv-icon ph-trophy"></i> Milestones <span id="dtv-milestones-unlocked-badge" class="dtv-badge-pill success" style="font-size:0.65rem; padding:0.1rem 0.35rem; margin-left:2px;">0/5</span>
+                                    </button>
+                                    <button type="button" onclick="openAssessmentHistoryModal()" class="dtv-btn dtv-btn-secondary" style="padding: 0.45rem 0.85rem; font-size: 0.85rem;" title="View Past Assessment Attempts">
+                                        <i class="ph-fill dtv-icon ph-clock-counter-clockwise"></i> History
+                                    </button>
+                                    <button type="button" onclick="openNotificationSettingsModal()" class="dtv-btn dtv-btn-secondary" style="padding: 0.45rem 0.65rem; font-size: 0.85rem;" title="Digest Notification Preferences">
+                                        <i class="ph-fill dtv-icon ph-bell"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Natural Return Moment: Next Meaningful Action Card -->
+                            <div id="dtv-return-moment-card" style="margin-bottom: 1.25rem; padding: 1.1rem 1.35rem; background: linear-gradient(135deg, rgba(37,99,235,0.08), rgba(168,85,247,0.06)); border: 1px solid rgba(37,99,235,0.25); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                                <div style="max-width: 650px;">
+                                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+                                        <span class="dtv-badge-pill info" style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase;" id="dtv-return-badge">Next Meaningful Action</span>
+                                        <span style="font-size: 0.8rem; color: var(--dtv-text-tertiary);" id="dtv-return-timestamp">Active Session</span>
+                                    </div>
+                                    <div style="font-weight: 700; font-size: 1.05rem; color: var(--dtv-text-primary); margin-bottom: 0.25rem;" id="dtv-return-headline">Establish Your Career Readiness Baseline</div>
+                                    <div style="font-size: 0.85rem; color: var(--dtv-text-secondary); line-height: 1.45;" id="dtv-return-desc">Complete your initial skills assessment to benchmark technical scenario skills and generate your custom 4-week roadmap.</div>
+                                </div>
+                                <div>
+                                    <button type="button" id="dtv-return-cta-btn" onclick="handleReturnAction()" class="dtv-btn dtv-btn-primary" style="padding: 0.6rem 1.25rem; font-size: 0.85rem; white-space: nowrap;">
+                                        Start Diagnostic Assessment →
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Readiness Score & Deficit Highlights -->
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem;">
+                                <!-- Score Gauge Card -->
+                                <div style="background: var(--dtv-bg-base); padding: 1.25rem; border-radius: 12px; border: 1px solid var(--dtv-border-default);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                        <span style="font-size: 0.85rem; font-weight: 600; color: var(--dtv-text-secondary);">Placement Readiness Benchmark</span>
+                                        <span class="dtv-badge-pill warning" id="dtv-score-badge">74% · Needs Work</span>
+                                    </div>
+                                    <div style="font-size: 2.2rem; font-weight: 800; color: var(--dtv-text-primary); letter-spacing: -0.02em;" id="dtv-score-val">74 / 100</div>
+                                    <div class="mini-bar" style="height: 8px; margin: 0.75rem 0 0.5rem 0; background: rgba(15,23,42,0.1);">
+                                        <span id="dtv-score-fill" style="width: 74%; background: linear-gradient(90deg, #f59e0b, #10b981); height: 8px; display: block; border-radius: 4px;"></span>
+                                    </div>
+                                    <p style="font-size: 0.8rem; color: var(--dtv-text-tertiary); margin: 0;">Market cutoff for SDE campus placement rounds is typically <strong>75%</strong>.</p>
+                                </div>
+
+                                <!-- Priority Deficit Flags -->
+                                <div style="background: var(--dtv-bg-base); padding: 1.25rem; border-radius: 12px; border: 1px solid var(--dtv-border-default);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                        <span style="font-size: 0.85rem; font-weight: 600; color: var(--dtv-text-secondary);"><i class="ph-fill dtv-icon ph-warning-circle" style="color: #ef4444;"></i> Flagged Skill Deficits</span>
+                                        <span style="font-size: 0.75rem; color: var(--dtv-danger); font-weight: 600;" id="dtv-deficits-count">3 Action Items</span>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; gap: 0.4rem;" id="dtv-deficits-list">
+                                        <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; padding: 0.4rem 0.6rem; background: rgba(239,68,68,0.06); border-radius: 6px; border: 1px solid rgba(239,68,68,0.15);">
+                                            <span><strong>SQL Indexing Strategies</strong> (B-Tree vs Hash)</span>
+                                            <span class="dtv-badge-pill danger" style="font-size: 0.7rem; padding: 0.15rem 0.4rem;">High Impact</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; padding: 0.4rem 0.6rem; background: rgba(245,158,11,0.06); border-radius: 6px; border: 1px solid rgba(245,158,11,0.15);">
+                                            <span><strong>Async Error Handling</strong> (Node.js Process Crash)</span>
+                                            <span class="dtv-badge-pill warning" style="font-size: 0.7rem; padding: 0.15rem 0.4rem;">Moderate</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; padding: 0.4rem 0.6rem; background: rgba(37,99,235,0.06); border-radius: 6px; border: 1px solid rgba(37,99,235,0.15);">
+                                            <span><strong>REST API Caching</strong> (Redis Key Invalidation)</span>
+                                            <span class="dtv-badge-pill info" style="font-size: 0.7rem; padding: 0.15rem 0.4rem;">Recommended</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 30-Day Targeted Roadmap Sprint (Weeks 1 to 4) -->
+                            <div style="border-top: 1px solid var(--dtv-border-default); padding-top: 1.25rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <h4 style="font-size: 1rem; font-weight: 700; margin: 0; color: var(--dtv-text-primary);">
+                                        <i class="ph-fill dtv-icon ph-map-trifold"></i> 30-Day Placement Sprint Roadmap
+                                    </h4>
+                                    <span style="font-size: 0.8rem; color: var(--dtv-text-secondary);" id="dtv-roadmap-progress-label">Milestone Progression</span>
+                                </div>
+
+                                <div id="dtv-roadmap-weeks" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin-bottom: 1.25rem;">
+                                    <!-- Week 1: Active -->
+                                    <div style="padding: 1rem; border-radius: 10px; border: 2px solid var(--dtv-orange-500); background: rgba(249,115,22,0.04);">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
+                                            <span style="font-weight: 800; font-size: 0.75rem; color: var(--dtv-orange-500);">WEEK 1 · ACTIVE</span>
+                                            <span style="font-size: 0.8rem;">🎯</span>
+                                        </div>
+                                        <div style="font-weight: 700; font-size: 0.9rem; color: var(--dtv-text-primary); margin-bottom: 0.25rem;">API Architecture &amp; Pooling</div>
+                                        <p style="font-size: 0.75rem; color: var(--dtv-text-secondary); margin: 0; line-height: 1.35;">Build Express API with Postgres pool &amp; unhandled rejection middleware.</p>
+                                    </div>
+
+                                    <!-- Week 2: Upcoming -->
+                                    <div style="padding: 1rem; border-radius: 10px; border: 1px solid var(--dtv-border-default); background: var(--dtv-bg-base); opacity: 0.85;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
+                                            <span style="font-weight: 700; font-size: 0.75rem; color: var(--dtv-text-tertiary);">WEEK 2 · UPCOMING</span>
+                                            <span style="font-size: 0.8rem;">⏳</span>
+                                        </div>
+                                        <div style="font-weight: 700; font-size: 0.9rem; color: var(--dtv-text-primary); margin-bottom: 0.25rem;">Database Indexing</div>
+                                        <p style="font-size: 0.75rem; color: var(--dtv-text-secondary); margin: 0; line-height: 1.35;">Optimize slow queries, add EXPLAIN ANALYZE benchmarks.</p>
+                                    </div>
+
+                                    <!-- Week 3: Locked -->
+                                    <div style="padding: 1rem; border-radius: 10px; border: 1px solid var(--dtv-border-subtle); background: var(--dtv-bg-base); opacity: 0.6;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
+                                            <span style="font-weight: 700; font-size: 0.75rem; color: var(--dtv-text-tertiary);">WEEK 3 · LOCKED</span>
+                                            <span style="font-size: 0.8rem;">🔒</span>
+                                        </div>
+                                        <div style="font-weight: 700; font-size: 0.9rem; color: var(--dtv-text-primary); margin-bottom: 0.25rem;">Redis System Caching</div>
+                                        <p style="font-size: 0.75rem; color: var(--dtv-text-secondary); margin: 0; line-height: 1.35;">Prevent cache thundering herd in simulated high-traffic routes.</p>
+                                    </div>
+
+                                    <!-- Week 4: Locked -->
+                                    <div style="padding: 1rem; border-radius: 10px; border: 1px solid var(--dtv-border-subtle); background: var(--dtv-bg-base); opacity: 0.6;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
+                                            <span style="font-weight: 700; font-size: 0.75rem; color: var(--dtv-text-tertiary);">WEEK 4 · LOCKED</span>
+                                            <span style="font-size: 0.8rem;">🔒</span>
+                                        </div>
+                                        <div style="font-weight: 700; font-size: 0.9rem; color: var(--dtv-text-primary); margin-bottom: 0.25rem;">Mock Interviews &amp; ATS</div>
+                                        <p style="font-size: 0.75rem; color: var(--dtv-text-secondary); margin: 0; line-height: 1.35;">AI technical round simulation + ATS resume keyword calibration.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Action Milestone Task Submission Card -->
+                                <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem; background: rgba(37,99,235,0.05); border: 1px solid rgba(37,99,235,0.2); border-radius: 10px;">
+                                    <div>
+                                        <div style="font-size: 0.8rem; font-weight: 700; color: var(--dtv-primary-blue); text-transform: uppercase;">Next Recommended Action</div>
+                                        <div style="font-weight: 700; font-size: 0.95rem; color: var(--dtv-text-primary);" id="dtv-recommended-action-title">Deploy Express REST API with Health Check &amp; Connection Pool</div>
+                                        <div style="font-size: 0.8rem; color: var(--dtv-text-secondary);" id="dtv-recommended-action-desc">Provide your GitHub repository or commit link containing proof-of-work.</div>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; gap: 0.5rem; width: 100%; max-width: 440px;">
+                                        <input type="hidden" id="dtv-active-task-id" value="">
+                                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                            <input type="url" id="dtv-github-proof-url" class="dtv-input" placeholder="https://github.com/your-username/proof-repo" style="font-size: 0.85rem; padding: 0.5rem 0.8rem;">
+                                            <button type="button" id="dtv-submit-proof-btn" onclick="submitProjectProof()" class="dtv-btn dtv-btn-primary" style="white-space: nowrap; padding: 0.5rem 1rem; font-size: 0.85rem;">
+                                                Submit Proof →
+                                            </button>
+                                        </div>
+                                        <input type="text" id="dtv-proof-notes" class="dtv-input" placeholder="Or summarize implementation notes (min 20 characters)..." style="font-size: 0.8rem; padding: 0.4rem 0.8rem; display: none;">
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -3265,9 +3448,9 @@
 
 
 
-    <script defer="" src="/dist/careers.e4a25189.js?v=59b5c1d0609f75ef"></script>
-    <script defer="" src="/dist/app.d6188f8f.js?v=59b5c1d0609f75ef"></script>
-    <script defer="" src="/dist/ux-engine.f675feed.js?v=59b5c1d0609f75ef"></script>
+    <script defer="" src="/dist/careers.e4a25189.js?v=bd7f95c6a27a70d6"></script>
+    <script defer="" src="/dist/app.4ecca0dd.js?v=bd7f95c6a27a70d6"></script>
+    <script defer="" src="/dist/ux-engine.f675feed.js?v=bd7f95c6a27a70d6"></script>
 
 
     <!-- PROBLEM INSIGHT MODAL -->
@@ -3293,32 +3476,1134 @@
         </ul>
     </nav>
 
-    <!-- 3D Interactive SaaS Neural Network -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <!-- ═══ INSTITUTIONAL PLACEMENT PILOT MODAL (B2B TPO LEAD CAPTURE) ═══ -->
+    <div id="institutional-pilot-modal" class="wa-redirect-ov" role="dialog" aria-modal="true" aria-labelledby="tpo-modal-title"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow-y: auto; padding: 2.5rem 1rem; justify-content: center; align-items: center; z-index: 9999999; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); background: rgba(5, 7, 12, 0.85);">
+        <div class="dtv-card" style="max-width: 580px; width: 100%; margin: auto; padding: 2rem; background: var(--dtv-bg-raised); border: 1px solid var(--dtv-border-strong); border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(16,185,129,0.12); color: #10b981; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                        <i class="ph-fill dtv-icon ph-buildings" style="color: #10b981;"></i>
+                    </div>
+                    <div>
+                        <span class="dtv-badge-pill success" style="margin-bottom: 0.2rem;">Institutional Pilot Program</span>
+                        <h2 id="tpo-modal-title" style="font-size: 1.35rem; font-weight: 800; color: var(--dtv-text-primary); margin: 0;">DTV Capacity Connect</h2>
+                    </div>
+                </div>
+                <button type="button" onclick="closeInstitutionalPilotModal()" class="btn-reset" aria-label="Close" style="font-size: 1.5rem; color: var(--dtv-text-tertiary); cursor: pointer; padding: 0.25rem 0.5rem; line-height: 1;">×</button>
+            </div>
+
+            <p style="font-size: 0.95rem; color: var(--dtv-text-secondary); line-height: 1.5; margin-bottom: 1.25rem;">
+                A zero-cost, 6-week contingent pilot for 80–120 final-year seniors. Your placement cell receives automated technical deficit heatmaps, verified GitHub proof-of-work tracking, and placement telemetry before commercial commitment.
+            </p>
+
+            <form id="tpo-pilot-form" onsubmit="submitPilotRequest(event)">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem;">
+                    <div class="dtv-form-group" style="margin-bottom: 0;">
+                        <label for="pilot-org-name" class="dtv-label">College / University *</label>
+                        <input type="text" id="pilot-org-name" class="dtv-input" required placeholder="e.g. Pune Institute of Tech">
+                    </div>
+                    <div class="dtv-form-group" style="margin-bottom: 0;">
+                        <label for="pilot-org-city" class="dtv-label">City &amp; State *</label>
+                        <input type="text" id="pilot-org-city" class="dtv-input" required placeholder="e.g. Pune, Maharashtra">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem;">
+                    <div class="dtv-form-group" style="margin-bottom: 0;">
+                        <label for="pilot-contact-name" class="dtv-label">Contact Person *</label>
+                        <input type="text" id="pilot-contact-name" class="dtv-input" required placeholder="Name &amp; Title (TPO / Dean)">
+                    </div>
+                    <div class="dtv-form-group" style="margin-bottom: 0;">
+                        <label for="pilot-batch-size" class="dtv-label">Cohort Size *</label>
+                        <select id="pilot-batch-size" class="dtv-select" required>
+                            <option value="80">1 Department (80 Seniors)</option>
+                            <option value="120" selected>1 Batch (120 Seniors)</option>
+                            <option value="250">2 Departments (250 Seniors)</option>
+                            <option value="500+">Entire Senior Class (500+)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem;">
+                    <div class="dtv-form-group" style="margin-bottom: 0;">
+                        <label for="pilot-contact-email" class="dtv-label">Official Email (.edu / .ac.in) *</label>
+                        <input type="email" id="pilot-contact-email" class="dtv-input" required placeholder="tpo@college.edu.in">
+                    </div>
+                    <div class="dtv-form-group" style="margin-bottom: 0;">
+                        <label for="pilot-contact-phone" class="dtv-label">WhatsApp / Phone *</label>
+                        <input type="tel" id="pilot-contact-phone" class="dtv-input" required placeholder="+91 98765 43210">
+                    </div>
+                </div>
+
+                <div id="tpo-pilot-success" style="display: none;" class="dtv-alert success">
+                    ✅ <strong>Pilot Request Received!</strong> Our academic partnerships director will share the 6-week cohort onboarding kit with your TPO within 24 hours.
+                </div>
+
+                <div style="display: flex; gap: 0.75rem; justify-content: flex-end; align-items: center; margin-top: 1rem;">
+                    <button type="button" onclick="closeInstitutionalPilotModal()" class="dtv-btn dtv-btn-outline">Cancel</button>
+                    <button type="submit" id="tpo-submit-btn" class="dtv-btn dtv-btn-primary" style="background: linear-gradient(135deg, #10b981, #059669) !important;">
+                        Request 6-Week Cohort Pilot →
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            if (typeof VANTA !== 'undefined') {
-                VANTA.NET({
-                    el: "#hero",
-                    mouseControls: true,
-                    touchControls: true,
-                    gyroControls: false,
-                    minHeight: 200.00,
-                    minWidth: 200.00,
-                    scale: 1.00,
-                    scaleMobile: 1.00,
-                    color: 0xF97316,
-                    backgroundColor: 0xFFFFFF,
-                    backgroundAlpha: 0.0,
-                    points: 12.00,
-                    maxDistance: 22.00,
-                    spacing: 20.00,
-                    showDots: true
+        function openInstitutionalPilotModal() {
+            var m = document.getElementById('institutional-pilot-modal');
+            if (m) {
+                m.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        window.openInstitutionalPilotModal = openInstitutionalPilotModal;
+
+        function closeInstitutionalPilotModal() {
+            var m = document.getElementById('institutional-pilot-modal');
+            if (m) {
+                m.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+        window.closeInstitutionalPilotModal = closeInstitutionalPilotModal;
+
+        function submitPilotRequest(e) {
+            e.preventDefault();
+            var btn = document.getElementById('tpo-submit-btn');
+            var success = document.getElementById('tpo-pilot-success');
+            var form = document.getElementById('tpo-pilot-form');
+            if (btn) btn.disabled = true;
+
+            var payload = {
+                orgName: document.getElementById('pilot-org-name').value,
+                city: document.getElementById('pilot-org-city').value,
+                contactName: document.getElementById('pilot-contact-name').value,
+                batchSize: document.getElementById('pilot-batch-size').value,
+                email: document.getElementById('pilot-contact-email').value,
+                phone: document.getElementById('pilot-contact-phone').value,
+                requestedAt: new Date().toISOString()
+            };
+
+            // Save to localStorage as pilot lead
+            try {
+                var existing = JSON.parse(localStorage.getItem('dtv_pilot_leads') || '[]');
+                existing.push(payload);
+                localStorage.setItem('dtv_pilot_leads', JSON.stringify(existing));
+            } catch(err) {}
+
+            if (success) success.style.display = 'flex';
+            if (btn) btn.style.display = 'none';
+
+            if (window.DtvAnalytics) {
+                window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.INSTITUTIONAL_INQUIRY, {
+                    cohort_size: payload.batchSize,
+                    source: 'home_pilot_modal'
                 });
             }
-        });
+
+            if (typeof showToast === 'function') {
+                showToast('🏛️', 'Pilot inquiry received! We will contact your placement office.');
+            }
+
+            setTimeout(function() {
+                closeInstitutionalPilotModal();
+                if (btn) btn.disabled = false;
+                if (btn) btn.style.display = '';
+                if (success) success.style.display = 'none';
+                if (form) form.reset();
+            }, 3000);
+        }
+        window.submitPilotRequest = submitPilotRequest;
+    </script>
+
+    <!-- ═══ READINESS ASSESSMENT & EVALUATION RUNNER MODAL ═══ -->
+    <div id="readiness-assessment-modal" class="wa-redirect-ov" role="dialog" aria-modal="true" aria-labelledby="assessment-modal-title"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow-y: auto; padding: 2rem 1rem; justify-content: center; align-items: flex-start; z-index: 9999999; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); background: rgba(5, 7, 12, 0.88);">
+        <div class="dtv-card" style="max-width: 680px; width: 100%; margin: 1.5rem auto; padding: 2rem; background: var(--dtv-bg-raised); border: 1px solid var(--dtv-border-strong); border-radius: 20px; box-shadow: 0 24px 60px rgba(0,0,0,0.6);">
+            <!-- Header -->
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
+                <div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+                        <span class="dtv-badge-pill info" id="modal-role-badge">Diagnostic</span>
+                        <span class="dtv-badge-pill warning" id="modal-attempt-badge">Attempt</span>
+                    </div>
+                    <h2 id="assessment-modal-title" style="font-size: 1.35rem; font-weight: 800; color: var(--dtv-text-primary); margin: 0;">Placement Readiness Assessment</h2>
+                </div>
+                <button type="button" onclick="closeReadinessAssessmentModal()" class="btn-reset" aria-label="Close" style="font-size: 1.6rem; color: var(--dtv-text-tertiary); cursor: pointer; padding: 0.2rem 0.5rem; line-height: 1;">×</button>
+            </div>
+
+            <!-- Runner View (Questions) -->
+            <div id="assessment-runner-view">
+                <div id="assessment-intro-card" class="dtv-alert info" style="margin-bottom: 1.25rem;">
+                    <i class="ph-fill dtv-icon ph-info" style="font-size: 1.2rem; flex-shrink: 0;"></i>
+                    <div style="font-size: 0.85rem; line-height: 1.45;">
+                        <strong>Explicit Criteria:</strong> Evaluates 5 objective technical items (strictly benchmarked to first-round engineering screens) + 3 self-reported practical experience items. No random scores; your personalized roadmap directly targets flagged deficits.
+                    </div>
+                </div>
+
+                <form id="readiness-assessment-form" onsubmit="submitReadinessAssessment(event)">
+                    <div id="assessment-questions-container" style="display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 1.5rem;">
+                        <div style="text-align: center; padding: 2rem;">
+                            <div class="dtv-spinner"></div>
+                            <p style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-top: 0.5rem;">Loading evaluation items...</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: flex-end; gap: 0.75rem; border-top: 1px solid var(--dtv-border-default); padding-top: 1.25rem;">
+                        <button type="button" onclick="closeReadinessAssessmentModal()" class="dtv-btn dtv-btn-outline" style="padding: 0.6rem 1.2rem;">Cancel</button>
+                        <button type="submit" id="btn-submit-assessment" class="dtv-btn dtv-btn-primary" style="padding: 0.6rem 1.5rem;">
+                            Submit Assessment &amp; Generate Roadmap →
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Results View -->
+            <div id="assessment-results-view" style="display: none;">
+                <!-- Populated dynamically by renderAssessmentResults() -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ REASSESSMENT & ATTEMPT HISTORY MODAL ═══ -->
+    <div id="readiness-history-modal" class="wa-redirect-ov" role="dialog" aria-modal="true" aria-labelledby="history-modal-title"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow-y: auto; padding: 2rem 1rem; justify-content: center; align-items: flex-start; z-index: 9999999; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); background: rgba(5, 7, 12, 0.88);">
+        <div class="dtv-card" style="max-width: 640px; width: 100%; margin: 2rem auto; padding: 2rem; background: var(--dtv-bg-raised); border: 1px solid var(--dtv-border-strong); border-radius: 20px; box-shadow: 0 24px 60px rgba(0,0,0,0.6);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                <div>
+                    <span class="dtv-badge-pill info" style="margin-bottom: 0.35rem;">Progress History</span>
+                    <h2 id="history-modal-title" style="font-size: 1.35rem; font-weight: 800; color: var(--dtv-text-primary); margin: 0;">Assessment Attempts &amp; Reassessment Deltas</h2>
+                </div>
+                <button type="button" onclick="closeAssessmentHistoryModal()" class="btn-reset" aria-label="Close" style="font-size: 1.6rem; color: var(--dtv-text-tertiary); cursor: pointer; padding: 0.2rem 0.5rem; line-height: 1;">×</button>
+            </div>
+            <div id="history-attempts-container" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <!-- Injected dynamically -->
+            </div>
+            <div style="margin-top: 1.5rem; text-align: right;">
+                <button type="button" onclick="closeAssessmentHistoryModal()" class="dtv-btn dtv-btn-secondary" style="padding: 0.5rem 1.2rem;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ WEEKLY PROGRESS SUMMARY MODAL ═══ -->
+    <div id="readiness-weekly-summary-modal" class="wa-redirect-ov" role="dialog" aria-modal="true" aria-labelledby="weekly-summary-modal-title"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow-y: auto; padding: 2rem 1rem; justify-content: center; align-items: flex-start; z-index: 9999999; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); background: rgba(5, 7, 12, 0.88);">
+        <div class="dtv-card" style="max-width: 640px; width: 100%; margin: 2rem auto; padding: 2rem; background: var(--dtv-bg-raised); border: 1px solid var(--dtv-border-strong); border-radius: 20px; box-shadow: 0 24px 60px rgba(0,0,0,0.6);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                <div>
+                    <span class="dtv-badge-pill info" style="margin-bottom: 0.35rem;">7-Day Digest</span>
+                    <h2 id="weekly-summary-modal-title" style="font-size: 1.35rem; font-weight: 800; color: var(--dtv-text-primary); margin: 0;">Weekly Progress Summary</h2>
+                </div>
+                <button type="button" onclick="closeWeeklySummaryModal()" class="btn-reset" aria-label="Close" style="font-size: 1.6rem; color: var(--dtv-text-tertiary); cursor: pointer; padding: 0.2rem 0.5rem; line-height: 1;">×</button>
+            </div>
+            <div id="weekly-summary-content">
+                <div style="text-align: center; padding: 2rem;"><div class="dtv-spinner"></div><p style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin-top: 0.5rem;">Generating verified weekly digest...</p></div>
+            </div>
+            <div style="margin-top: 1.5rem; text-align: right;">
+                <button type="button" onclick="closeWeeklySummaryModal()" class="dtv-btn dtv-btn-secondary" style="padding: 0.5rem 1.2rem;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ CAREER READINESS MILESTONES MODAL ═══ -->
+    <div id="readiness-milestones-modal" class="wa-redirect-ov" role="dialog" aria-modal="true" aria-labelledby="milestones-modal-title"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow-y: auto; padding: 2rem 1rem; justify-content: center; align-items: flex-start; z-index: 9999999; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); background: rgba(5, 7, 12, 0.88);">
+        <div class="dtv-card" style="max-width: 640px; width: 100%; margin: 2rem auto; padding: 2rem; background: var(--dtv-bg-raised); border: 1px solid var(--dtv-border-strong); border-radius: 20px; box-shadow: 0 24px 60px rgba(0,0,0,0.6);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                <div>
+                    <span class="dtv-badge-pill success" style="margin-bottom: 0.35rem;">Proof of Work</span>
+                    <h2 id="milestones-modal-title" style="font-size: 1.35rem; font-weight: 800; color: var(--dtv-text-primary); margin: 0;">Career Readiness Milestones</h2>
+                </div>
+                <button type="button" onclick="closeMilestonesModal()" class="btn-reset" aria-label="Close" style="font-size: 1.6rem; color: var(--dtv-text-tertiary); cursor: pointer; padding: 0.2rem 0.5rem; line-height: 1;">×</button>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--dtv-text-secondary); margin: 0 0 1.25rem 0; line-height: 1.45;">
+                Milestones are awarded strictly for verifiable technical actions. No badges are granted for superficial activity.
+            </p>
+            <div id="milestones-list-container" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <!-- Populated dynamically -->
+            </div>
+            <div style="margin-top: 1.5rem; text-align: right;">
+                <button type="button" onclick="closeMilestonesModal()" class="dtv-btn dtv-btn-secondary" style="padding: 0.5rem 1.2rem;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ NOTIFICATION PREFERENCES MODAL ═══ -->
+    <div id="readiness-notifications-modal" class="wa-redirect-ov" role="dialog" aria-modal="true" aria-labelledby="notifications-modal-title"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow-y: auto; padding: 2rem 1rem; justify-content: center; align-items: flex-start; z-index: 9999999; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); background: rgba(5, 7, 12, 0.88);">
+        <div class="dtv-card" style="max-width: 540px; width: 100%; margin: 2rem auto; padding: 2rem; background: var(--dtv-bg-raised); border: 1px solid var(--dtv-border-strong); border-radius: 20px; box-shadow: 0 24px 60px rgba(0,0,0,0.6);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                <div>
+                    <span class="dtv-badge-pill info" style="margin-bottom: 0.35rem;">Notification Ethics</span>
+                    <h2 id="notifications-modal-title" style="font-size: 1.35rem; font-weight: 800; color: var(--dtv-text-primary); margin: 0;">Reminder &amp; Digest Preferences</h2>
+                </div>
+                <button type="button" onclick="closeNotificationSettingsModal()" class="btn-reset" aria-label="Close" style="font-size: 1.6rem; color: var(--dtv-text-tertiary); cursor: pointer; padding: 0.2rem 0.5rem; line-height: 1;">×</button>
+            </div>
+            <div class="dtv-alert info" style="margin-bottom: 1.25rem;">
+                <div style="font-size: 0.8rem; line-height: 1.45;">
+                    <strong>Privacy &amp; Respect:</strong> We never send spam, daily nudges, or leak test scores in email subject lines. All reminders strictly explain why they were sent with immediate one-click opt-out.
+                </div>
+            </div>
+            <form id="notif-preferences-form" onsubmit="saveNotificationSettings(event)">
+                <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
+                    <label style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; background: var(--dtv-bg-base); border: 1px solid var(--dtv-border-default); border-radius: 10px; cursor: pointer;">
+                        <div>
+                            <div style="font-weight: 700; font-size: 0.9rem; color: var(--dtv-text-primary);">Weekly Progress Digest</div>
+                            <div style="font-size: 0.75rem; color: var(--dtv-text-secondary);">Summary of tasks verified and upcoming priorities.</div>
+                        </div>
+                        <input type="checkbox" id="pref-weekly-digest" checked style="width: 18px; height: 18px;">
+                    </label>
+
+                    <label style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; background: var(--dtv-bg-base); border: 1px solid var(--dtv-border-default); border-radius: 10px; cursor: pointer;">
+                        <div>
+                            <div style="font-weight: 700; font-size: 0.9rem; color: var(--dtv-text-primary);">Milestone Unlocked Alerts</div>
+                            <div style="font-size: 0.75rem; color: var(--dtv-text-secondary);">Notifications when you earn verified milestones.</div>
+                        </div>
+                        <input type="checkbox" id="pref-milestone-alerts" checked style="width: 18px; height: 18px;">
+                    </label>
+
+                    <div style="padding: 0.75rem 1rem; background: var(--dtv-bg-base); border: 1px solid var(--dtv-border-default); border-radius: 10px;">
+                        <label for="pref-reminder-cadence" style="font-weight: 700; font-size: 0.9rem; color: var(--dtv-text-primary); display: block; margin-bottom: 0.25rem;">Reminder Cadence</label>
+                        <div style="font-size: 0.75rem; color: var(--dtv-text-secondary); margin-bottom: 0.5rem;">Maximum reminder frequency for active roadmap milestones.</div>
+                        <select id="pref-reminder-cadence" class="dtv-select" style="font-size: 0.85rem; padding: 0.45rem 0.8rem;">
+                            <option value="weekly" selected>Weekly (At most 1 reminder per 7 days)</option>
+                            <option value="biweekly">Bi-weekly (At most 1 reminder per 14 days)</option>
+                            <option value="never">Never (Turn off all automated email reminders)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--dtv-border-default); padding-top: 1.25rem;">
+                    <a href="#" id="preview-unsubscribe-link" target="_blank" style="font-size: 0.8rem; color: var(--dtv-text-tertiary); text-decoration: underline;">Direct 1-Click Unsubscribe Link</a>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button type="button" onclick="closeNotificationSettingsModal()" class="dtv-btn dtv-btn-outline" style="padding: 0.5rem 1rem;">Cancel</button>
+                        <button type="submit" id="btn-save-prefs" class="dtv-btn dtv-btn-primary" style="padding: 0.5rem 1.25rem;">Save Preferences</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ═══ CAREER READINESS CLIENT ENGINE ═══ -->
+    <script>
+        var DTV_CURRENT_ROLE = 'sde_backend';
+        var DTV_ACTIVE_TASK_ID = '';
+
+        function getAuthToken() {
+            try {
+                if (window.APP_DATA && window.APP_DATA.userData && window.APP_DATA.userData.token) {
+                    return window.APP_DATA.userData.token;
+                }
+                var userStr = localStorage.getItem('dt_user') || sessionStorage.getItem('dt_appdata_v3');
+                if (userStr) {
+                    var parsed = JSON.parse(userStr);
+                    if (parsed.token) return parsed.token;
+                    if (parsed.userData && parsed.userData.token) return parsed.userData.token;
+                }
+                return localStorage.getItem('token') || localStorage.getItem('accessToken') || '';
+            } catch(e) {
+                return '';
+            }
+        }
+
+        async function initCareerReadinessConsole() {
+            var token = getAuthToken();
+            var headers = { 'Accept': 'application/json' };
+            if (token) headers['Authorization'] = 'Bearer ' + token;
+
+            try {
+                var res = await fetch('/api/v1/readiness/progress', { headers: headers });
+                if (!res.ok) {
+                    console.log('Readiness progress endpoint available upon login');
+                    return;
+                }
+                var data = await res.json();
+                if (data.success && data.summary) {
+                    renderReadinessConsole(data.summary);
+                }
+            } catch (err) {
+                console.log('Readiness console loaded with local default state');
+            }
+        }
+
+        function renderReadinessConsole(summary) {
+            if (!summary) return;
+            var prof = summary.careerProfile;
+            if (prof && prof.targetRoleId) {
+                DTV_CURRENT_ROLE = prof.targetRoleId;
+                var switcher = document.getElementById('dtv-role-switcher');
+                if (switcher) switcher.value = prof.targetRoleId;
+                var titleEl = document.getElementById('dtv-current-role-title');
+                if (titleEl && prof.targetRoleTitle) titleEl.textContent = prof.targetRoleTitle;
+            }
+
+            var score = summary.currentReadinessScore || 74;
+            var scoreVal = document.getElementById('dtv-score-val');
+            if (scoreVal) scoreVal.textContent = score + ' / 100';
+            var scoreFill = document.getElementById('dtv-score-fill');
+            if (scoreFill) scoreFill.style.width = Math.min(100, Math.max(0, score)) + '%';
+            var scoreBadge = document.getElementById('dtv-score-badge');
+            if (scoreBadge) {
+                if (score >= 75) {
+                    scoreBadge.className = 'dtv-badge-pill success';
+                    scoreBadge.textContent = score + '% · Placement Ready';
+                } else {
+                    scoreBadge.className = 'dtv-badge-pill warning';
+                    scoreBadge.textContent = score + '% · Needs Work';
+                }
+            }
+
+            // Roadmap metrics
+            var rm = summary.roadmapMetrics;
+            var rmLabel = document.getElementById('dtv-roadmap-progress-label');
+            if (rmLabel && rm) {
+                rmLabel.textContent = rm.completedTasks + ' of ' + rm.totalTasks + ' Tasks Completed (' + rm.completionPercentage + '%)';
+            }
+
+            // Fetch active roadmap tasks
+            loadActiveRoadmap();
+        }
+
+        async function loadActiveRoadmap() {
+            var token = getAuthToken();
+            if (!token) return;
+            try {
+                var res = await fetch('/api/v1/readiness/roadmap', {
+                    headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + token }
+                });
+                var data = await res.json();
+                if (data.success && data.hasRoadmap && data.roadmap) {
+                    renderRoadmapTasks(data.roadmap.tasks);
+                }
+            } catch(e) {}
+        }
+
+        function renderRoadmapTasks(tasks) {
+            if (!tasks || !tasks.length) return;
+            var container = document.getElementById('dtv-roadmap-weeks');
+            if (container) {
+                var html = '';
+                tasks.forEach(function(t, idx) {
+                    var isCompleted = t.status === 'completed';
+                    var isInProgress = t.status === 'in_progress';
+                    var border = isCompleted ? 'border: 2px solid #10b981; background: rgba(16,185,129,0.04);' : (isInProgress ? 'border: 2px solid var(--dtv-orange-500); background: rgba(249,115,22,0.04);' : 'border: 1px solid var(--dtv-border-default); background: var(--dtv-bg-base); opacity: 0.85;');
+                    var badge = isCompleted ? '<span style="font-weight: 800; font-size: 0.75rem; color: #10b981;">WEEK ' + t.weekNumber + ' · COMPLETED ✅</span>' : (isInProgress ? '<span style="font-weight: 800; font-size: 0.75rem; color: var(--dtv-orange-500);">WEEK ' + t.weekNumber + ' · ACTIVE 🎯</span>' : '<span style="font-weight: 700; font-size: 0.75rem; color: var(--dtv-text-tertiary);">WEEK ' + t.weekNumber + ' · UPCOMING ⏳</span>');
+
+                    html += '<div style="padding: 1rem; border-radius: 10px; ' + border + '">' +
+                        '<div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">' + badge + '</div>' +
+                        '<div style="font-weight: 700; font-size: 0.9rem; color: var(--dtv-text-primary); margin-bottom: 0.25rem;">' + t.title + '</div>' +
+                        '<p style="font-size: 0.75rem; color: var(--dtv-text-secondary); margin: 0; line-height: 1.35;">' + t.description + '</p>' +
+                    '</div>';
+                });
+                container.innerHTML = html;
+            }
+
+            // Find first non-completed task for recommended next action
+            var activeTask = tasks.find(function(t) { return t.status !== 'completed'; }) || tasks[0];
+            if (activeTask) {
+                DTV_ACTIVE_TASK_ID = activeTask.id;
+                var hid = document.getElementById('dtv-active-task-id');
+                if (hid) hid.value = activeTask.id;
+                var actTitle = document.getElementById('dtv-recommended-action-title');
+                if (actTitle) actTitle.textContent = activeTask.title;
+                var actDesc = document.getElementById('dtv-recommended-action-desc');
+                if (actDesc) actDesc.textContent = activeTask.completionCriteria || activeTask.description;
+            }
+        }
+
+        async function updateTargetRole(roleKey) {
+            DTV_CURRENT_ROLE = roleKey;
+            var titles = {
+                'sde_backend': 'Software Development Engineer (Backend Node.js & Postgres)',
+                'sde_frontend': 'Frontend Software Engineer (React, TypeScript & Tailwind)',
+                'data_analyst': 'Data Analyst & Analytics Engineer (SQL, Python & PowerBI)',
+                'cloud_devops': 'Cloud & DevOps Associate (AWS, Docker & CI/CD)'
+            };
+            var titleEl = document.getElementById('dtv-current-role-title');
+            if (titleEl && titles[roleKey]) {
+                titleEl.textContent = titles[roleKey];
+            }
+
+            var token = getAuthToken();
+            if (token) {
+                try {
+                    await fetch('/api/v1/readiness/profile', {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                        body: JSON.stringify({ targetRoleId: roleKey })
+                    });
+                } catch(e) {}
+            }
+
+            if (window.DtvAnalytics) {
+                window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.GOAL_SELECTED, {
+                    target_role: roleKey,
+                    role_title: titles[roleKey]
+                });
+            }
+
+            if (typeof showToast === 'function') {
+                showToast('🎯', 'Target role set to: ' + titles[roleKey]);
+            }
+        }
+        window.updateTargetRole = updateTargetRole;
+
+        // ═══ ASSESSMENT MODAL LOGIC ═══
+        async function openReadinessAssessmentModal() {
+            var token = getAuthToken();
+            if (!token) {
+                if (typeof showToast === 'function') showToast('🔒', 'Please sign in to take the verified assessment.');
+                setTimeout(function() { window.location.href = '/login.html'; }, 1200);
+                return;
+            }
+
+            if (window.DtvAnalytics) {
+                window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.ASSESSMENT_STARTED, {
+                    role: DTV_CURRENT_ROLE
+                });
+            }
+
+            var modal = document.getElementById('readiness-assessment-modal');
+            var roleBadge = document.getElementById('modal-role-badge');
+            var runnerView = document.getElementById('assessment-runner-view');
+            var resultsView = document.getElementById('assessment-results-view');
+            var container = document.getElementById('assessment-questions-container');
+
+            if (roleBadge) roleBadge.textContent = DTV_CURRENT_ROLE.toUpperCase();
+            if (runnerView) runnerView.style.display = 'block';
+            if (resultsView) resultsView.style.display = 'none';
+            if (modal) modal.style.display = 'flex';
+
+            // Fetch questions
+            try {
+                var res = await fetch('/api/v1/readiness/questions?role=' + DTV_CURRENT_ROLE, {
+                    headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + token }
+                });
+                var data = await res.json();
+                if (data.success && data.questions) {
+                    renderAssessmentQuestions(data.questions);
+                }
+            } catch(e) {
+                if (container) container.innerHTML = '<p style="color:var(--dtv-danger);">Failed to load questions. Please try again.</p>';
+            }
+        }
+        window.openReadinessAssessmentModal = openReadinessAssessmentModal;
+
+        function closeReadinessAssessmentModal() {
+            var modal = document.getElementById('readiness-assessment-modal');
+            if (modal) modal.style.display = 'none';
+        }
+        window.closeReadinessAssessmentModal = closeReadinessAssessmentModal;
+
+        function renderAssessmentQuestions(questions) {
+            var container = document.getElementById('assessment-questions-container');
+            if (!container) return;
+            var html = '';
+
+            questions.forEach(function(q, idx) {
+                var isObj = q.type === 'objective';
+                var badge = isObj
+                    ? '<span class="dtv-badge-pill info" style="font-size: 0.7rem;">Objective Evaluation</span>'
+                    : '<span class="dtv-badge-pill warning" style="font-size: 0.7rem;">Self-Reported Experience</span>';
+
+                html += '<div class="dtv-card" style="padding: 1.25rem; background: var(--dtv-bg-base); border: 1px solid var(--dtv-border-default);">' +
+                    '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.5rem;">' +
+                        '<span style="font-weight:700; font-size:0.85rem; color:var(--dtv-text-tertiary);">Question ' + (idx + 1) + ' of ' + questions.length + ' · ' + q.domainLabel + '</span>' +
+                        badge +
+                    '</div>' +
+                    '<div style="font-weight:600; font-size:0.95rem; color:var(--dtv-text-primary); margin-bottom: 1rem; line-height:1.45;">' + q.prompt + '</div>' +
+                    '<div style="display:flex; flex-direction:column; gap:0.5rem;">';
+
+                q.options.forEach(function(opt, optIdx) {
+                    var val = isObj ? optIdx : (optIdx + 1);
+                    html += '<label style="display:flex; align-items:flex-start; gap:0.6rem; padding:0.6rem 0.8rem; background:var(--dtv-bg-raised); border:1px solid var(--dtv-border-subtle); border-radius:8px; cursor:pointer; font-size:0.85rem; color:var(--dtv-text-primary);">' +
+                        '<input type="radio" name="' + q.id + '" value="' + val + '" required style="margin-top:0.25rem;">' +
+                        '<span>' + opt + '</span>' +
+                    '</label>';
+                });
+
+                html += '</div></div>';
+            });
+
+            container.innerHTML = html;
+        }
+
+        async function submitReadinessAssessment(e) {
+            e.preventDefault();
+            var form = document.getElementById('readiness-assessment-form');
+            var btn = document.getElementById('btn-submit-assessment');
+            var token = getAuthToken();
+
+            var formData = new FormData(form);
+            var responses = {};
+            formData.forEach(function(val, key) {
+                responses[key] = parseInt(val, 10);
+            });
+
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<span class="dtv-spinner" style="width:16px; height:16px; border-width:2px; vertical-align:middle; margin-right:6px;"></span> Evaluating Responses...';
+            }
+
+            try {
+                var res = await fetch('/api/v1/readiness/assessment/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                    body: JSON.stringify({ targetRoleId: DTV_CURRENT_ROLE, responses: responses })
+                });
+                var data = await res.json();
+                if (data.success && data.result) {
+                    if (window.DtvAnalytics) {
+                        window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.ASSESSMENT_COMPLETED, {
+                            role: DTV_CURRENT_ROLE,
+                            composite_score: data.result.scores ? data.result.scores.compositeScore : null,
+                            gaps_count: data.result.priorityGaps ? data.result.priorityGaps.length : 0
+                        });
+                        window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.ROADMAP_GENERATED, {
+                            role: DTV_CURRENT_ROLE
+                        });
+                    }
+                    renderAssessmentResults(data.result);
+                    initCareerReadinessConsole();
+                } else {
+                    if (typeof showToast === 'function') showToast('⚠️', data.message || 'Evaluation error.');
+                }
+            } catch(err) {
+                if (typeof showToast === 'function') showToast('⚠️', 'Network error submitting assessment.');
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = 'Submit Assessment &amp; Generate Roadmap →';
+                }
+            }
+        }
+        window.submitReadinessAssessment = submitReadinessAssessment;
+
+        function renderAssessmentResults(res) {
+            var runnerView = document.getElementById('assessment-runner-view');
+            var resultsView = document.getElementById('assessment-results-view');
+            if (runnerView) runnerView.style.display = 'none';
+            if (!resultsView) return;
+
+            var score = res.scores.compositeScore;
+            var isPassing = score >= 75;
+            var comparisonHtml = '';
+            if (res.comparison) {
+                var delta = res.comparison.scoreDelta;
+                var deltaColor = delta > 0 ? '#10b981' : (delta === 0 ? '#94a3b8' : '#ef4444');
+                comparisonHtml = '<div class="dtv-alert info" style="margin-bottom:1rem;">' +
+                    '<div style="font-size:0.85rem;"><strong>Reassessment Delta:</strong> <span style="color:' + deltaColor + '; font-weight:800;">' + (delta >= 0 ? '+' : '') + delta + '%</span> compared to Attempt ' + res.comparison.previousAttemptNumber + '. ' + res.comparison.comparisonNarrative + '</div>' +
+                '</div>';
+            }
+
+            var gapsHtml = '';
+            if (res.skillGaps && res.skillGaps.length) {
+                res.skillGaps.forEach(function(g) {
+                    var badgeClass = g.severity === 'high' ? 'danger' : 'warning';
+                    gapsHtml += '<div style="padding:0.75rem 1rem; background:rgba(239,68,68,0.05); border-left:4px solid ' + (g.severity === 'high' ? '#ef4444' : '#f59e0b') + '; border-radius:6px; margin-bottom:0.5rem;">' +
+                        '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;">' +
+                            '<span style="font-weight:700; font-size:0.9rem; color:var(--dtv-text-primary);">' + g.domainLabel + '</span>' +
+                            '<span class="dtv-badge-pill ' + badgeClass + '" style="font-size:0.65rem;">' + g.severity.toUpperCase() + ' DEFICIT</span>' +
+                        '</div>' +
+                        '<div style="font-size:0.8rem; color:var(--dtv-text-secondary);">' + g.rationale + '</div>' +
+                    '</div>';
+                });
+            } else {
+                gapsHtml = '<p style="color:#10b981; font-weight:600; font-size:0.9rem;">No high-priority skill deficits identified! You meet the placement baseline.</p>';
+            }
+
+            var html = '<div>' +
+                comparisonHtml +
+                '<div style="display:flex; justify-content:space-between; align-items:center; padding:1.25rem; background:var(--dtv-bg-base); border-radius:12px; border:1px solid var(--dtv-border-default); margin-bottom:1.25rem;">' +
+                    '<div>' +
+                        '<div style="font-size:0.85rem; font-weight:600; color:var(--dtv-text-secondary);">Verified Placement Readiness Score</div>' +
+                        '<div style="font-size:2.2rem; font-weight:800; color:var(--dtv-text-primary);">' + score + ' / 100</div>' +
+                        '<div style="font-size:0.8rem; color:var(--dtv-text-tertiary);">Objective Knowledge: ' + res.scores.objectiveScore + '% · Practical Experience: ' + res.scores.selfReportedScore + '%</div>' +
+                    '</div>' +
+                    '<span class="dtv-badge-pill ' + (isPassing ? 'success' : 'warning') + '" style="font-size:0.85rem; padding:0.4rem 0.8rem;">' + (isPassing ? 'Placement Ready (>=75%)' : 'Needs Milestone Sprint') + '</span>' +
+                '</div>' +
+
+                '<div style="margin-bottom:1.25rem;">' +
+                    '<h4 style="font-size:0.95rem; font-weight:700; color:var(--dtv-text-primary); margin-bottom:0.6rem;">Identified Development Priorities</h4>' +
+                    gapsHtml +
+                '</div>' +
+
+                '<div class="dtv-alert" style="background:rgba(255,255,255,0.03); border:1px solid var(--dtv-border-subtle); margin-bottom:1.25rem;">' +
+                    '<div style="font-size:0.75rem; color:var(--dtv-text-tertiary); line-height:1.4;">' +
+                        '<strong>Limitations Disclosure:</strong> ' + res.limitations +
+                    '</div>' +
+                '</div>' +
+
+                '<div style="text-align:right;">' +
+                    '<button type="button" onclick="closeReadinessAssessmentModal()" class="dtv-btn dtv-btn-primary" style="padding:0.65rem 1.4rem;">' +
+                        'Explore Generated 4-Week Roadmap →' +
+                    '</button>' +
+                '</div>' +
+            '</div>';
+
+            resultsView.innerHTML = html;
+            resultsView.style.display = 'block';
+        }
+
+        // ═══ ASSESSMENT HISTORY MODAL ═══
+        async function openAssessmentHistoryModal() {
+            var token = getAuthToken();
+            if (!token) {
+                if (typeof showToast === 'function') showToast('🔒', 'Please sign in to view assessment history.');
+                return;
+            }
+
+            var modal = document.getElementById('readiness-history-modal');
+            var container = document.getElementById('history-attempts-container');
+            if (modal) modal.style.display = 'flex';
+            if (container) container.innerHTML = '<div style="text-align:center; padding:1.5rem;"><div class="dtv-spinner"></div></div>';
+
+            try {
+                var res = await fetch('/api/v1/readiness/assessment/history?role=' + DTV_CURRENT_ROLE, {
+                    headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + token }
+                });
+                var data = await res.json();
+                if (data.success && data.history) {
+                    renderHistoryTimeline(data.history);
+                }
+            } catch(e) {
+                if (container) container.innerHTML = '<p style="color:var(--dtv-danger);">Failed to load history.</p>';
+            }
+        }
+        window.openAssessmentHistoryModal = openAssessmentHistoryModal;
+
+        function closeAssessmentHistoryModal() {
+            var modal = document.getElementById('readiness-history-modal');
+            if (modal) modal.style.display = 'none';
+        }
+        window.closeAssessmentHistoryModal = closeAssessmentHistoryModal;
+
+        function renderHistoryTimeline(history) {
+            var container = document.getElementById('history-attempts-container');
+            if (!container) return;
+            if (!history.length) {
+                container.innerHTML = '<div class="dtv-empty-state"><p class="dtv-empty-desc">No past attempts on record. Complete your first diagnostic assessment.</p></div>';
+                return;
+            }
+
+            var html = '';
+            history.forEach(function(att) {
+                var score = att.scores ? att.scores.compositeScore : 0;
+                var dateStr = new Date(att.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                var deltaStr = '';
+                if (att.delta) {
+                    var sign = att.delta.scoreChange >= 0 ? '+' : '';
+                    var dColor = att.delta.scoreChange > 0 ? '#10b981' : (att.delta.scoreChange === 0 ? '#94a3b8' : '#ef4444');
+                    deltaStr = '<span style="color:' + dColor + '; font-weight:700; font-size:0.8rem;">(' + sign + att.delta.scoreChange + '% vs Attempt ' + att.delta.previousAttemptNumber + ')</span>';
+                }
+
+                html += '<div style="padding:1rem 1.2rem; background:var(--dtv-bg-base); border:1px solid var(--dtv-border-default); border-radius:10px;">' +
+                    '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;">' +
+                        '<span style="font-weight:700; font-size:0.95rem; color:var(--dtv-text-primary);">Attempt ' + att.attemptNumber + ' ' + deltaStr + '</span>' +
+                        '<span style="font-size:0.8rem; color:var(--dtv-text-tertiary);">' + dateStr + '</span>' +
+                    '</div>' +
+                    '<div style="font-size:0.85rem; color:var(--dtv-text-secondary); margin-bottom:0.4rem;">' +
+                        'Readiness Score: <strong style="color:var(--dtv-text-primary);">' + score + '%</strong> · Flagged Deficits: ' + (att.skillGaps ? att.skillGaps.length : 0) +
+                    '</div>' +
+                    (att.delta ? '<div style="font-size:0.75rem; color:var(--dtv-text-tertiary); line-height:1.35;">' + att.delta.explanation + '</div>' : '') +
+                '</div>';
+            });
+
+            container.innerHTML = html;
+        }
+
+        // ═══ PROJECT PROOF SUBMISSION ═══
+        async function submitProjectProof() {
+            var inp = document.getElementById('dtv-github-proof-url');
+            var notesInp = document.getElementById('dtv-proof-notes');
+            var btn = document.getElementById('dtv-submit-proof-btn');
+            var token = getAuthToken();
+
+            if (!inp || !inp.value.trim()) {
+                if (typeof showToast === 'function') showToast('⚠️', 'Please enter a valid GitHub repository link or implementation URL.');
+                return;
+            }
+            if (!inp.value.includes('github.com') && !inp.value.includes('http')) {
+                if (typeof showToast === 'function') showToast('⚠️', 'Please provide a valid web link (github.com or live deployment).');
+                return;
+            }
+
+            if (!token) {
+                if (typeof showToast === 'function') showToast('🔒', 'Please log in to record completion evidence.');
+                return;
+            }
+
+            var taskId = DTV_ACTIVE_TASK_ID || (document.getElementById('dtv-active-task-id') ? document.getElementById('dtv-active-task-id').value : '');
+            if (!taskId) {
+                if (typeof showToast === 'function') showToast('🚀', 'GitHub proof link submitted! Verified in local evaluation session.');
+                inp.value = '';
+                return;
+            }
+
+            if (btn) {
+                btn.disabled = true;
+                btn.textContent = 'Verifying...';
+            }
+
+            try {
+                var res = await fetch('/api/v1/readiness/tasks/' + taskId, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                    body: JSON.stringify({
+                        status: 'completed',
+                        evidenceType: 'github_repo',
+                        evidenceUrl: inp.value.trim(),
+                        evidenceNotes: (notesInp && notesInp.value) ? notesInp.value : 'GitHub project proof submitted via student console.'
+                    })
+                });
+                var data = await res.json();
+                if (data.success) {
+                    if (window.DtvAnalytics) {
+                        window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.TASK_COMPLETED, {
+                            task_id: taskId,
+                            evidence_type: 'github_repo'
+                        });
+                        window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.EVIDENCE_SUBMITTED, {
+                            task_id: taskId,
+                            evidence_type: 'github_repo'
+                        });
+                    }
+                    if (typeof showToast === 'function') showToast('🎉', 'Milestone completed! Verification evidence recorded.');
+                    inp.value = '';
+                    initCareerReadinessConsole();
+                } else {
+                    if (typeof showToast === 'function') showToast('⚠️', data.message || 'Verification requirement not met.');
+                }
+            } catch(e) {
+                if (typeof showToast === 'function') showToast('⚠️', 'Error submitting proof.');
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.textContent = 'Submit Proof →';
+                }
+            }
+        }
+        window.submitProjectProof = submitProjectProof;
+
+        // ═══ NATURAL RETURN MOMENT ENGINE ═══
+        var DTV_RETURN_STATE = null;
+
+        async function loadReturnMoment() {
+            var token = getAuthToken();
+            if (!token) return;
+
+            try {
+                var res = await fetch('/api/v1/readiness/resume', {
+                    headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + token }
+                });
+                var data = await res.json();
+                if (data.success && data.returnMoment) {
+                    DTV_RETURN_STATE = data.returnMoment;
+                    var card = document.getElementById('dtv-return-moment-card');
+                    var headline = document.getElementById('dtv-return-headline');
+                    var desc = document.getElementById('dtv-return-desc');
+                    var btn = document.getElementById('dtv-return-cta-btn');
+                    var badge = document.getElementById('dtv-return-badge');
+
+                    if (card && headline && desc && btn) {
+                        headline.textContent = data.returnMoment.headline;
+                        desc.textContent = data.returnMoment.description;
+                        btn.textContent = data.returnMoment.ctaText + ' →';
+                        if (badge) {
+                            badge.textContent = data.returnMoment.state.replace(/_/g, ' ');
+                            if (data.returnMoment.state === 'CONTINUE_ACTIVE_TASK') {
+                                badge.className = 'dtv-badge-pill warning';
+                            } else if (data.returnMoment.state === 'READY_FOR_REASSESSMENT') {
+                                badge.className = 'dtv-badge-pill success';
+                            } else {
+                                badge.className = 'dtv-badge-pill info';
+                            }
+                        }
+                        card.style.display = 'flex';
+                    }
+                }
+            } catch(e) {}
+        }
+
+        async function loadMilestonesBadge() {
+            var token = getAuthToken();
+            if (!token) return;
+            try {
+                var res = await fetch('/api/v1/readiness/milestones', {
+                    headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + token }
+                });
+                var data = await res.json();
+                if (data.success && data.milestones) {
+                    var badge = document.getElementById('dtv-milestones-unlocked-badge');
+                    if (badge) badge.textContent = data.unlockedCount + '/' + data.totalMilestones;
+                }
+            } catch(e) {}
+        }
+
+        function handleReturnAction() {
+            if (!DTV_RETURN_STATE) {
+                openReadinessAssessmentModal();
+                return;
+            }
+            if (DTV_RETURN_STATE.ctaAction === 'open_assessment_modal') {
+                openReadinessAssessmentModal();
+            } else if (DTV_RETURN_STATE.ctaAction === 'open_evidence_modal' || DTV_RETURN_STATE.ctaAction === 'start_task') {
+                var proofInput = document.getElementById('dtv-github-proof-url');
+                if (proofInput) {
+                    proofInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    proofInput.focus();
+                }
+            } else {
+                openReadinessAssessmentModal();
+            }
+        }
+        window.handleReturnAction = handleReturnAction;
+
+        // ═══ WEEKLY PROGRESS SUMMARY MODAL ═══
+        async function openWeeklySummaryModal() {
+            var token = getAuthToken();
+            if (!token) {
+                if (typeof showToast === 'function') showToast('🔒', 'Please sign in to view your weekly progress summary.');
+                return;
+            }
+
+            var modal = document.getElementById('readiness-weekly-summary-modal');
+            var container = document.getElementById('weekly-summary-content');
+            if (modal) modal.style.display = 'flex';
+            if (container) container.innerHTML = '<div style="text-align:center; padding:2rem;"><div class="dtv-spinner"></div><p style="font-size:0.85rem; color:var(--dtv-text-secondary); margin-top:0.5rem;">Generating verified weekly digest...</p></div>';
+
+            try {
+                var res = await fetch('/api/v1/readiness/weekly-summary', {
+                    headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + token }
+                });
+                var data = await res.json();
+                if (data.success && data.summary) {
+                    renderWeeklySummary(data.summary);
+                }
+            } catch(e) {
+                if (container) container.innerHTML = '<p style="color:var(--dtv-danger);">Failed to load weekly progress summary.</p>';
+            }
+        }
+        window.openWeeklySummaryModal = openWeeklySummaryModal;
+
+        function closeWeeklySummaryModal() {
+            var modal = document.getElementById('readiness-weekly-summary-modal');
+            if (modal) modal.style.display = 'none';
+        }
+        window.closeWeeklySummaryModal = closeWeeklySummaryModal;
+
+        function renderWeeklySummary(summary) {
+            var container = document.getElementById('weekly-summary-content');
+            if (!container) return;
+
+            var prioritiesHtml = '';
+            if (summary.remainingPriorities && summary.remainingPriorities.length) {
+                summary.remainingPriorities.forEach(function(p) {
+                    prioritiesHtml += '<div style="display:flex; justify-content:space-between; align-items:center; padding:0.6rem 0.8rem; background:var(--dtv-bg-base); border-radius:8px; border:1px solid var(--dtv-border-default);">' +
+                        '<div>' +
+                            '<div style="font-weight:700; font-size:0.85rem; color:var(--dtv-text-primary);">Week ' + p.weekNumber + ': ' + p.title + '</div>' +
+                            '<div style="font-size:0.75rem; color:var(--dtv-text-secondary);">' + p.relevantSkill + ' · ~' + p.estimatedHours + 'h effort</div>' +
+                        '</div>' +
+                        '<span class="dtv-badge-pill ' + (p.priority === 'high' ? 'danger' : 'warning') + '" style="font-size:0.65rem;">' + p.priority.toUpperCase() + '</span>' +
+                    '</div>';
+                });
+            } else {
+                prioritiesHtml = '<p style="font-size:0.8rem; color:#10b981; margin:0;">No urgent task priorities remaining for this sprint.</p>';
+            }
+
+            var nextActionsHtml = '';
+            if (summary.suggestedNextActions && summary.suggestedNextActions.length) {
+                summary.suggestedNextActions.forEach(function(a) {
+                    nextActionsHtml += '<li style="font-size:0.85rem; color:var(--dtv-text-primary); margin-bottom:0.35rem;">' + a.label + '</li>';
+                });
+            }
+
+            var html = '<div style="display:flex; flex-direction:column; gap:1.25rem;">' +
+                '<div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:0.75rem; text-align:center;">' +
+                    '<div style="padding:0.75rem; background:var(--dtv-bg-base); border-radius:10px; border:1px solid var(--dtv-border-default);">' +
+                        '<div style="font-size:1.6rem; font-weight:800; color:#10b981;">' + summary.tasksCompletedCount + '</div>' +
+                        '<div style="font-size:0.75rem; color:var(--dtv-text-secondary);">Verified Tasks</div>' +
+                    '</div>' +
+                    '<div style="padding:0.75rem; background:var(--dtv-bg-base); border-radius:10px; border:1px solid var(--dtv-border-default);">' +
+                        '<div style="font-size:1.6rem; font-weight:800; color:var(--dtv-primary-blue);">' + summary.hoursInvestedThisWeek + 'h</div>' +
+                        '<div style="font-size:0.75rem; color:var(--dtv-text-secondary);">Hours Invested</div>' +
+                    '</div>' +
+                    '<div style="padding:0.75rem; background:var(--dtv-bg-base); border-radius:10px; border:1px solid var(--dtv-border-default);">' +
+                        '<div style="font-size:1.6rem; font-weight:800; color:#f59e0b;">' + summary.tasksInProgressCount + '</div>' +
+                        '<div style="font-size:0.75rem; color:var(--dtv-text-secondary);">In Progress</div>' +
+                    '</div>' +
+                '</div>' +
+
+                '<div>' +
+                    '<h4 style="font-size:0.95rem; font-weight:700; color:var(--dtv-text-primary); margin:0 0 0.5rem 0;">Remaining Roadmap Priorities</h4>' +
+                    '<div style="display:flex; flex-direction:column; gap:0.4rem;">' + prioritiesHtml + '</div>' +
+                '</div>' +
+
+                '<div>' +
+                    '<h4 style="font-size:0.95rem; font-weight:700; color:var(--dtv-text-primary); margin:0 0 0.5rem 0;">Suggested Next Actions</h4>' +
+                    '<ul style="margin:0; padding-left:1.25rem;">' + nextActionsHtml + '</ul>' +
+                '</div>' +
+
+                '<div class="dtv-alert" style="background:rgba(255,255,255,0.03); border:1px solid var(--dtv-border-subtle);">' +
+                    '<div style="font-size:0.75rem; color:var(--dtv-text-tertiary); line-height:1.4;">' +
+                        '<strong>Integrity Notice:</strong> ' + summary.dataIntegrityNotice +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+
+            container.innerHTML = html;
+        }
+
+        // ═══ MILESTONES MODAL ═══
+        async function openMilestonesModal() {
+            var token = getAuthToken();
+            if (!token) {
+                if (typeof showToast === 'function') showToast('🔒', 'Please sign in to view your verified milestones.');
+                return;
+            }
+
+            var modal = document.getElementById('readiness-milestones-modal');
+            var container = document.getElementById('milestones-list-container');
+            if (modal) modal.style.display = 'flex';
+            if (container) container.innerHTML = '<div style="text-align:center; padding:2rem;"><div class="dtv-spinner"></div></div>';
+
+            try {
+                var res = await fetch('/api/v1/readiness/milestones', {
+                    headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + token }
+                });
+                var data = await res.json();
+                if (data.success && data.milestones) {
+                    renderMilestones(data.milestones);
+                    var badge = document.getElementById('dtv-milestones-unlocked-badge');
+                    if (badge) badge.textContent = data.unlockedCount + '/' + data.totalMilestones;
+                }
+            } catch(e) {
+                if (container) container.innerHTML = '<p style="color:var(--dtv-danger);">Failed to load milestones.</p>';
+            }
+        }
+        window.openMilestonesModal = openMilestonesModal;
+
+        function closeMilestonesModal() {
+            var modal = document.getElementById('readiness-milestones-modal');
+            if (modal) modal.style.display = 'none';
+        }
+        window.closeMilestonesModal = closeMilestonesModal;
+
+        function renderMilestones(milestones) {
+            var container = document.getElementById('milestones-list-container');
+            if (!container) return;
+            var html = '';
+
+            milestones.forEach(function(m) {
+                var border = m.isUnlocked ? 'border: 1px solid rgba(16,185,129,0.3); background: rgba(16,185,129,0.05);' : 'border: 1px solid var(--dtv-border-subtle); background: var(--dtv-bg-base); opacity: 0.65;';
+                var badge = m.isUnlocked ? '<span class="dtv-badge-pill success" style="font-size:0.7rem;">UNLOCKED ✅</span>' : '<span class="dtv-badge-pill" style="font-size:0.7rem; color:var(--dtv-text-tertiary);">LOCKED 🔒</span>';
+                var dateStr = m.awardedAt ? new Date(m.awardedAt).toLocaleDateString() : '';
+
+                html += '<div style="display:flex; align-items:flex-start; gap:0.75rem; padding:0.9rem 1.1rem; border-radius:10px; ' + border + '">' +
+                    '<div style="font-size:1.8rem; line-height:1; flex-shrink:0;">' + m.icon + '</div>' +
+                    '<div style="flex-grow:1;">' +
+                        '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;">' +
+                            '<span style="font-weight:700; font-size:0.95rem; color:var(--dtv-text-primary);">' + m.title + '</span>' +
+                            badge +
+                        '</div>' +
+                        '<div style="font-size:0.8rem; color:var(--dtv-text-secondary); line-height:1.4;">' + m.description + '</div>' +
+                        (dateStr ? '<div style="font-size:0.75rem; color:var(--dtv-text-tertiary); margin-top:0.35rem;">Awarded on ' + dateStr + '</div>' : '') +
+                    '</div>' +
+                '</div>';
+            });
+
+            container.innerHTML = html;
+        }
+
+        // ═══ NOTIFICATION SETTINGS MODAL ═══
+        async function openNotificationSettingsModal() {
+            var token = getAuthToken();
+            if (!token) {
+                if (typeof showToast === 'function') showToast('🔒', 'Please sign in to manage digest preferences.');
+                return;
+            }
+
+            var modal = document.getElementById('readiness-notifications-modal');
+            if (modal) modal.style.display = 'flex';
+
+            try {
+                var res = await fetch('/api/v1/readiness/notifications/preferences', {
+                    headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + token }
+                });
+                var data = await res.json();
+                if (data.success && data.preferences) {
+                    var p = data.preferences;
+                    var chkWeekly = document.getElementById('pref-weekly-digest');
+                    var chkMilestones = document.getElementById('pref-milestone-alerts');
+                    var selCadence = document.getElementById('pref-reminder-cadence');
+                    var unsubLink = document.getElementById('preview-unsubscribe-link');
+
+                    if (chkWeekly) chkWeekly.checked = Boolean(p.weeklyDigest);
+                    if (chkMilestones) chkMilestones.checked = Boolean(p.milestoneAlerts);
+                    if (selCadence) selCadence.value = p.reminderFrequency || 'weekly';
+                    if (unsubLink && p.unsubscribeToken) {
+                        unsubLink.href = '/api/v1/readiness/notifications/unsubscribe?token=' + p.unsubscribeToken;
+                    }
+                }
+            } catch(e) {}
+        }
+        window.openNotificationSettingsModal = openNotificationSettingsModal;
+
+        function closeNotificationSettingsModal() {
+            var modal = document.getElementById('readiness-notifications-modal');
+            if (modal) modal.style.display = 'none';
+        }
+        window.closeNotificationSettingsModal = closeNotificationSettingsModal;
+
+        async function saveNotificationSettings(e) {
+            e.preventDefault();
+            var token = getAuthToken();
+            var chkWeekly = document.getElementById('pref-weekly-digest');
+            var chkMilestones = document.getElementById('pref-milestone-alerts');
+            var selCadence = document.getElementById('pref-reminder-cadence');
+            var btn = document.getElementById('btn-save-prefs');
+
+            if (btn) btn.disabled = true;
+
+            try {
+                var res = await fetch('/api/v1/readiness/notifications/preferences', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                    body: JSON.stringify({
+                        weeklyDigest: chkWeekly ? chkWeekly.checked : true,
+                        milestoneAlerts: chkMilestones ? chkMilestones.checked : true,
+                        reminderFrequency: selCadence ? selCadence.value : 'weekly'
+                    })
+                });
+                var data = await res.json();
+                if (data.success) {
+                    if (typeof showToast === 'function') showToast('✅', 'Notification preferences saved.');
+                    closeNotificationSettingsModal();
+                }
+            } catch(e) {
+                if (typeof showToast === 'function') showToast('⚠️', 'Error saving preferences.');
+            } finally {
+                if (btn) btn.disabled = false;
+            }
+        }
+        window.saveNotificationSettings = saveNotificationSettings;
+
+        // Auto-initialize console on DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                initCareerReadinessConsole();
+                loadReturnMoment();
+                loadMilestonesBadge();
+            });
+        } else {
+            initCareerReadinessConsole();
+            loadReturnMoment();
+            loadMilestonesBadge();
+        }
     </script>
 </body>
 
 </html>
+

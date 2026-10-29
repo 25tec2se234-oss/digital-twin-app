@@ -8,6 +8,7 @@ const router = express.Router();
 
 // Protected dashboard - admin only
 router.get('/', authenticate, authorize('admin'), dashboardController.index);
+router.get('/metrics', authenticate, authorize('admin'), dashboardController.getFunnelMetrics);
 router.get('/team', authenticate, authorize('admin'), teamAdminController.index);
 
 module.exports = router;

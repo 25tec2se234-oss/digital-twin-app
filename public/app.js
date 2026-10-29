@@ -4116,16 +4116,23 @@ function renderCareers(filter) {
                 try {
                     if (APP_DATA && APP_DATA.userData) {
                         var now = new Date();
+                        // Auto-provision 5-day trial if new or uninitialized
+                        if (!APP_DATA.userData.trialExpiresAt && !APP_DATA.userData.subscriptionExpiresAt) {
+                            APP_DATA.userData.trialExpiresAt = new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString();
+                            if (typeof syncData === 'function') syncData();
+                        }
+
                         var trialExp = APP_DATA.userData.trialExpiresAt ? new Date(APP_DATA.userData.trialExpiresAt) : null;
                         var subExp = APP_DATA.userData.subscriptionExpiresAt ? new Date(APP_DATA.userData.subscriptionExpiresAt) : null;
                         
                         var hasTrial = trialExp && trialExp > now;
                         var hasSub = subExp && subExp > now;
                         
+                        // Allow access during active trial or active subscription
                         if (!hasTrial && !hasSub) {
-                            var expiredAt = Math.max(trialExp || 0, subExp || 0);
+                            var expiredAt = Math.max(trialExp ? trialExp.getTime() : 0, subExp ? subExp.getTime() : 0);
                             if (typeof showSubscriptionExpiredModal === 'function') {
-                                showSubscriptionExpiredModal('Your Plan Is Expired Please Upgrade Your Plan To Get The Access', expiredAt);
+                                showSubscriptionExpiredModal('Your 5-day trial has concluded. Upgrade to continue your full placement sprint.', expiredAt);
                             }
                             return; // Halt here, do not execute callback
                         }
@@ -4133,7 +4140,7 @@ function renderCareers(filter) {
                     
                     if (typeof callback === 'function') callback();
                 } catch(e) {
-                    console.error(e);
+                    console.error('requirePremiumFrontend error:', e);
                     if (typeof callback === 'function') callback();
                 }
             });
@@ -4611,6 +4618,14 @@ function renderCareers(filter) {
                 rzp1.on('payment.failed', function (response){
                     if(typeof showToast === 'function') showToast('⚠️', 'Payment failed. ' + response.error.description);
                 });
+
+                if (window.DtvAnalytics) {
+                    window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.CHECKOUT_INITIATED, {
+                        plan: plan,
+                        amount: data.amount,
+                        currency: data.currency
+                    });
+                }
                 rzp1.open();
             })
             .catch(err => {
@@ -4645,6 +4660,11 @@ function renderCareers(filter) {
             .then(res => res.json())
             .then(data => {
                 if(data.success) {
+                    if (window.DtvAnalytics) {
+                        window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.PAYMENT_CONVERTED, {
+                            order_id: order_id
+                        });
+                    }
                     showToast('✅', 'Payment successful! Premium Unlocked.');
                     if (APP_DATA && APP_DATA.userData) {
                         APP_DATA.userData.subscriptionExpiresAt = data.subscriptionExpiresAt;
@@ -5564,6 +5584,10 @@ function renderCareers(filter) {
 
         async function initGoogleAnalytics() {
             try {
+                // Prevent duplicate analytics initialization if already loaded in HTML head
+                if (window.gtag || document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) {
+                    return;
+                }
                 const res = await fetch('/api/v1/config');
                 if (!res.ok) return;
                 const config = await res.json();

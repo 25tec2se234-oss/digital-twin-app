@@ -29,6 +29,10 @@
       "headers": { "Location": "/" }
     },
     {
+      "src": "/institutions(.*)",
+      "dest": "/public/institutions/index.html"
+    },
+    {
       "src": "/genesis(.*)",
       "dest": "/public/genesis/index.html"
     },

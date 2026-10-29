@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G79C8YZYXF"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-G79C8YZYXF');
+    </script>
+    <script src="/dist/analytics.d7758758.js?v=bd7f95c6a27a70d6"></script>
+
+    <title>Institutional Placement Readiness &amp; Competency Intelligence | Digital Twin Verse</title>
+    <meta name="description" content="Empower engineering college leadership and placement cells (TPOs) with verifiable student skill diagnostics, practical roadmap telemetry, and 30-day placement cohort pilots.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://digitaltwinvrs.com/institutions">
+
+    <!-- JSON-LD Structured Data: EducationalOrganization & Service -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "EducationalOrganization",
+          "@id": "https://digitaltwinvrs.com/#organization",
+          "name": "Digital Twin Verse",
+          "url": "https://digitaltwinvrs.com/",
+          "logo": "https://digitaltwinvrs.com/img/dtv-logo.jpg",
+          "description": "AI-powered career readiness, student competency diagnostics, and placement roadmap platform for colleges."
+        },
+        {
+          "@type": "Service",
+          "@id": "https://digitaltwinvrs.com/institutions#service",
+          "name": "Campus Placement Readiness & Cohort Diagnostic Pilot",
+          "provider": { "@id": "https://digitaltwinvrs.com/#organization" },
+          "serviceType": "Career Readiness Assessment & Cohort Analytics",
+          "areaServed": "India",
+          "description": "Structured 30-day placement evaluation pilot for college placement cells (TPOs) and academic departments."
+        }
+      ]
+    }
+    </script>
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="/dist/main.ec205e06.css?v=bd7f95c6a27a70d6">
+    <link rel="stylesheet" href="/css/premium-theme.css?v=dark-fix2">
+
+    <style>
+        :root {
+            --inst-bg-base: #070A12;
+            --inst-bg-surface: #0E1424;
+            --inst-bg-card: #141C32;
+            --inst-border: rgba(255, 255, 255, 0.1);
+            --inst-accent-blue: #3B82F6;
+            --inst-accent-violet: #8B5CF6;
+            --inst-accent-orange: #F97316;
+            --inst-text-primary: #F8FAFC;
+            --inst-text-secondary: #94A3B8;
+            --inst-text-muted: #64748B;
+        }
+
+        body {
+            background-color: var(--inst-bg-base);
+            color: var(--inst-text-primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .inst-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Institutional Header */
+        .inst-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(7, 10, 18, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--inst-border);
+            padding: 1rem 0;
+        }
+
+        .inst-nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .inst-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.15rem;
+        }
+
+        .inst-brand-badge {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60A5FA;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            font-size: 0.7rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .inst-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.75rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .inst-nav-links a {
+            color: var(--inst-text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .inst-nav-links a:hover {
+            color: #fff;
+        }
+
+        /* Hero */
+        .inst-hero {
+            padding: 5rem 0 3.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .inst-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.9rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 999px;
+            color: #93C5FD;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .inst-hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.03em;
+        }
+
+        .inst-hero-title span {
+            background: linear-gradient(135deg, #60A5FA, #A78BFA, #F97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .inst-hero-sub {
+            font-size: 1.2rem;
+            color: var(--inst-text-secondary);
+            max-width: 800px;
+            margin: 0 auto 2.25rem;
+        }
+
+        .inst-hero-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Cards & Grids */
+        .inst-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+        }
+
+        .inst-card {
+            background: var(--inst-bg-card);
+            border: 1px solid var(--inst-border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .inst-card:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .inst-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60A5FA;
+        }
+
+        .inst-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .inst-card p {
+            color: var(--inst-text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Section Headers */
+        .inst-section {
+            padding: 4.5rem 0;
+            border-top: 1px solid var(--inst-border);
+        }
+
+        .inst-sec-header {
+            text-align: center;
+            max-width: 760px;
+            margin: 0 auto 3rem;
+        }
+
+        .inst-sec-tag {
+            color: #60A5FA;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.5rem;
+        }
+
+        .inst-sec-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .inst-sec-desc {
+            color: var(--inst-text-secondary);
+            font-size: 1.05rem;
+        }
+
+        /* Workflow Steps */
+        .inst-step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .inst-step-item {
+            display: flex;
+            gap: 1.5rem;
+            background: var(--inst-bg-surface);
+            border: 1px solid var(--inst-border);
+            border-radius: 14px;
+            padding: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .inst-step-num {
+            min-width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #2563EB, #7C3AED);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+        }
+
+        .inst-step-body h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+        }
+
+        .inst-step-body p {
+            color: var(--inst-text-secondary);
+            font-size: 0.92rem;
+            margin: 0;
+        }
+
+        /* Status Disclaimers */
+        .inst-badge-available {
+            background: rgba(52, 211, 153, 0.15);
+            color: #34D399;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            font-size: 0.72rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            font-weight: 700;
+        }
+
+        .inst-badge-roadmap {
+            background: rgba(251, 191, 36, 0.15);
+            color: #FBBF24;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            font-size: 0.72rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            font-weight: 700;
+        }
+
+        /* Form */
+        .inst-form-card {
+            background: var(--inst-bg-card);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 760px;
+            margin: 0 auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .inst-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        .inst-form-full {
+            grid-column: span 2;
+        }
+
+        .inst-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #CBD5E1;
+            margin-bottom: 0.4rem;
+        }
+
+        .inst-input, .inst-select, .inst-textarea {
+            width: 100%;
+            background: var(--inst-bg-surface);
+            border: 1px solid var(--inst-border);
+            color: #fff;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .inst-input:focus, .inst-select:focus, .inst-textarea:focus {
+            outline: none;
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .inst-hp {
+            display: none !important;
+            visibility: hidden;
+        }
+
+        /* Footer */
+        .inst-footer {
+            border-top: 1px solid var(--inst-border);
+            padding: 3rem 0;
+            color: var(--inst-text-muted);
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .inst-hero-title { font-size: 2.2rem; }
+            .inst-form-grid { grid-template-columns: 1fr; }
+            .inst-form-full { grid-column: span 1; }
+            .inst-nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="inst-header">
+        <div class="inst-container inst-nav-inner">
+            <a href="/" class="inst-brand">
+                <i class="ph-fill ph-circles-three" style="color: #60A5FA; font-size: 1.5rem;"></i>
+                <span>Digital Twin Verse</span>
+                <span class="inst-brand-badge">Institutional</span>
+            </a>
+            <ul class="inst-nav-links">
+                <li><a href="#problem">The Challenge</a></li>
+                <li><a href="#workflow">Student Workflow</a></li>
+                <li><a href="#reporting">Cohort Reporting</a></li>
+                <li><a href="#privacy">Privacy &amp; Governance</a></li>
+                <li><a href="#pilot">Pilot Scope</a></li>
+            </ul>
+            <div>
+                <a href="#inquiry" class="dtv-btn dtv-btn-primary" style="padding: 0.5rem 1.25rem; font-size: 0.88rem;">
+                    <i class="ph-fill ph-paper-plane-tilt"></i> Request Pilot
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="inst-hero">
+        <div class="inst-container">
+            <div class="inst-hero-badge">
+                <i class="ph-fill ph-shield-check"></i> Higher Education Evaluation Pilot (B2B)
+            </div>
+            <h1 class="inst-hero-title">
+                Replace Placement Guesswork with<br>
+                <span>Verifiable Student Competence</span>
+            </h1>
+            <p class="inst-hero-sub">
+                A structured, evidence-backed career readiness system for engineering colleges and universities. 
+                Measure diagnostic skill baselines, guide students through real-world engineering tasks, and monitor cohort readiness before recruitment drives.
+            </p>
+            <div class="inst-hero-actions">
+                <a href="#inquiry" class="dtv-btn dtv-btn-primary" style="padding: 0.85rem 2rem; font-size: 1rem;">
+                    <i class="ph-fill ph-calendar-check"></i> Request 30-Day Pilot Briefing
+                </a>
+                <a href="#workflow" class="dtv-btn dtv-btn-secondary" style="padding: 0.85rem 1.75rem; font-size: 1rem;">
+                    <i class="ph-fill ph-tree-structure"></i> Explore Student Workflow
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Institutional Problem Section -->
+    <section id="problem" class="inst-section">
+        <div class="inst-container">
+            <div class="inst-sec-header">
+                <div class="inst-sec-tag">The Higher Ed Challenge</div>
+                <h2 class="inst-sec-title">The Three Structural Blind Spots in Campus Placements</h2>
+                <p class="inst-sec-desc">Academic excellence alone is no longer enough to clear modern corporate engineering filters. Here is where existing placement workflows struggle:</p>
+            </div>
+
+            <div class="inst-grid-3">
+                <div class="inst-card">
+                    <div class="inst-card-icon"><i class="ph-fill ph-eye-slash"></i></div>
+                    <h3>1. The Black Box of Readiness</h3>
+                    <p>Training &amp; Placement Officers (TPOs) typically discover student skill deficits only after campus recruitment rejection rates spike. Spreadsheets and attendance logs do not provide predictive insight into whether students can pass coding screens.</p>
+                </div>
+
+                <div class="inst-card">
+                    <div class="inst-card-icon"><i class="ph-fill ph-certificate"></i></div>
+                    <h3>2. Credentials vs. Verifiable Proof</h3>
+                    <p>Passive course completion certificates carry diminishing credibility with hiring managers. Recruiters look for live GitHub repositories, system architecture trade-offs, and verified project output over paper certificates.</p>
+                </div>
+
+                <div class="inst-card">
+                    <div class="inst-card-icon"><i class="ph-fill ph-scales"></i></div>
+                    <h3>3. Accreditation Outcome Mandates</h3>
+                    <p>Regulatory frameworks (including NAAC Criteria 2.6 and NIRF graduate outcome matrices) increasingly demand verifiable evidence of program learning outcomes and measurable industry alignment across batches.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Workflow Section -->
+    <section id="workflow" class="inst-section" style="background: var(--inst-bg-surface);">
+        <div class="inst-container">
+            <div class="inst-sec-header">
+                <div class="inst-sec-tag">Pedagogical Framework</div>
+                <h2 class="inst-sec-title">The 6-Step Verifiable Career-Readiness Loop</h2>
+                <p class="inst-sec-desc">DTV connects student effort to measurable progress through an explainable, practical engineering workflow:</p>
+            </div>
+
+            <div class="inst-step-list">
+                <div class="inst-step-item">
+                    <div class="inst-step-num">1</div>
+                    <div class="inst-step-body">
+                        <h4>Target Role Selection</h4>
+                        <p>The student commits to a specific technical career track (Full-Stack Web Development, Data Analytics, Cloud &amp; DevOps). Requirements match modern industry job descriptions rather than generic academic syllabi.</p>
+                    </div>
+                </div>
+
+                <div class="inst-step-item">
+                    <div class="inst-step-num">2</div>
+                    <div class="inst-step-body">
+                        <h4>Diagnostic Skill Assessment</h4>
+                        <p>A 15-question conceptual and scenario-based diagnostic assessment measures competence across core domains. The system outputs an explainable baseline score and highlights critical skill deficits.</p>
+                    </div>
+                </div>
+
+                <div class="inst-step-item">
+                    <div class="inst-step-num">3</div>
+                    <div class="inst-step-body">
+                        <h4>Personalized 4-Week Roadmap</h4>
+                        <p>A structured sequence of 8 milestone tasks is automatically assembled. The roadmap prioritizes the student's highest-severity skill gaps, preventing aimless tutorial looping.</p>
+                    </div>
+                </div>
+
+                <div class="inst-step-item">
+                    <div class="inst-step-num">4</div>
+                    <div class="inst-step-body">
+                        <h4>Practical Task Execution</h4>
+                        <p>Students build real software artifacts—such as REST APIs, SQL analytical queries, and container configurations—with explicit evaluation rubrics and estimated hours invested.</p>
+                    </div>
+                </div>
+
+                <div class="inst-step-item">
+                    <div class="inst-step-num">5</div>
+                    <div class="inst-step-body">
+                        <h4>Verifiable Evidence Submission</h4>
+                        <p>Students submit live code repositories, documentation, or verifiable outputs. The system checks proof of work prior to marking steps completed, ensuring zero fabricated progress.</p>
+                    </div>
+                </div>
+
+                <div class="inst-step-item">
+                    <div class="inst-step-num">6</div>
+                    <div class="inst-step-body">
+                        <h4>Reassessment &amp; Delta Measurement</h4>
+                        <p>Students reassess their skills after completing roadmap tasks. The system plots pre-training versus post-training skill deltas, providing concrete evidence of learning velocity.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Institutional Reporting Section -->
+    <section id="reporting" class="inst-section">
+        <div class="inst-container">
+            <div class="inst-sec-header">
+                <div class="inst-sec-tag">Administrative Telemetry</div>
+                <h2 class="inst-sec-title">Proposed Institutional Reporting Capabilities</h2>
+                <p class="inst-sec-desc">Equipping Placement Officers and Deans with cohort-level intelligence without compromising individual student trust:</p>
+            </div>
+
+            <div class="inst-grid-3">
+                <div class="inst-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                        <span class="inst-badge-available">Available in Pilot</span>
+                        <i class="ph-fill ph-chart-polar" style="color:#60A5FA; font-size:1.5rem;"></i>
+                    </div>
+                    <h3>Cohort Readiness Heatmap</h3>
+                    <p>Aggregate distribution of student readiness across three clear tiers: Critical Attention (&lt;50%), Developing (50–74%), and Placement Ready (75%+). Enables targeted bootcamps before company visits.</p>
+                </div>
+
+                <div class="inst-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                        <span class="inst-badge-available">Available in Pilot</span>
+                        <i class="ph-fill ph-crosshair-simple" style="color:#60A5FA; font-size:1.5rem;"></i>
+                    </div>
+                    <h3>Competency Deficit Analysis</h3>
+                    <p>Identifies department-wide conceptual bottlenecks (e.g. 64% of cohort struggling with SQL window functions or asynchronous runtime concurrency) to guide faculty intervention.</p>
+                </div>
+
+                <div class="inst-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                        <span class="inst-badge-available">Available in Pilot</span>
+                        <i class="ph-fill ph-check-circle" style="color:#60A5FA; font-size:1.5rem;"></i>
+                    </div>
+                    <h3>Verified Task Completion Velocity</h3>
+                    <p>Tracks genuine hours invested and verified GitHub submissions across the batch. Measures real technical effort rather than passive website time or superficial clicks.</p>
+                </div>
+
+                <div class="inst-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                        <span class="inst-badge-available">Available in Pilot</span>
+                        <i class="ph-fill ph-file-arrow-down" style="color:#60A5FA; font-size:1.5rem;"></i>
+                    </div>
+                    <h3>Outcome Audit Summaries</h3>
+                    <p>Exportable aggregate performance summaries designed for departmental review, Board of Studies evaluations, and NAAC / NIRF outcome documentation.</p>
+                </div>
+
+                <div class="inst-card" style="opacity: 0.85;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                        <span class="inst-badge-roadmap">Roadmap / Q2</span>
+                        <i class="ph-fill ph-plug" style="color:#FBBF24; font-size:1.5rem;"></i>
+                    </div>
+                    <h3>LMS LTI 1.3 Deep-Linking</h3>
+                    <p>Future automated single-sign-on and gradebook synchronization with institutional Canvas, Blackboard, or Moodle environments. <em>(Not included in 30-day evaluation pilot).</em></p>
+                </div>
+
+                <div class="inst-card" style="opacity: 0.85;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                        <span class="inst-badge-roadmap">Roadmap / Q2</span>
+                        <i class="ph-fill ph-buildings" style="color:#FBBF24; font-size:1.5rem;"></i>
+                    </div>
+                    <h3>Automated Recruiter Shortlisting</h3>
+                    <p>Direct sharing of anonymized, verified student skill portfolios with visiting corporate hiring partners based on role criteria. <em>(Under development).</em></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy & Implementation Section -->
+    <section id="privacy" class="inst-section" style="background: var(--inst-bg-surface);">
+        <div class="inst-container">
+            <div class="inst-sec-header">
+                <div class="inst-sec-tag">Implementation &amp; Governance</div>
+                <h2 class="inst-sec-title">Enterprise Security, Zero Campus IT Overhead</h2>
+                <p class="inst-sec-desc">Designed to integrate smoothly without campus server provisioning, complex software installations, or data sovereignty risks:</p>
+            </div>
+
+            <div class="inst-grid-3">
+                <div class="inst-card">
+                    <div class="inst-card-icon"><i class="ph-fill ph-upload-simple"></i></div>
+                    <h3>Turnkey Roster Onboarding</h3>
+                    <p>Upload a standard CSV roster containing student names, college emails, and roll numbers. Students receive a secure invite link to start immediately. No local servers or IT intervention needed.</p>
+                </div>
+
+                <div class="inst-card">
+                    <div class="inst-card-icon"><i class="ph-fill ph-shield-checkered"></i></div>
+                    <h3>Student Data Sovereignty</h3>
+                    <p>Aligned with India's DPDP Act and international student privacy principles. Students own their personal portfolios. Institutional dashboards display aggregate readiness metrics with student consent.</p>
+                </div>
+
+                <div class="inst-card">
+                    <div class="inst-card-icon"><i class="ph-fill ph-lock-key"></i></div>
+                    <h3>Strict Tenant Sandboxing</h3>
+                    <p>Strict multi-tenant authorization prevents cross-institution data bleed. Organization members can only query records explicitly belonging to their accredited tenant boundary.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pilot Options Section -->
+    <section id="pilot" class="inst-section">
+        <div class="inst-container">
+            <div class="inst-sec-header">
+                <div class="inst-sec-tag">Evaluation Scope</div>
+                <h2 class="inst-sec-title">The Structured 30-Day Placement Pilot</h2>
+                <p class="inst-sec-desc">A controlled, risk-free framework to evaluate student learning velocity and placement readiness before committing to an institutional partnership:</p>
+            </div>
+
+            <div style="background: var(--inst-bg-card); border: 1px solid var(--inst-border); border-radius: 18px; padding: 2.5rem; margin-bottom: 3.5rem;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                    <div>
+                        <div style="color: #60A5FA; font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">Cohort Size</div>
+                        <div style="font-size: 1.4rem; font-weight: 800; margin: 0.25rem 0;">50 – 100 Students</div>
+                        <div style="color: var(--inst-text-secondary); font-size: 0.88rem;">Final-year (2026 batch) or pre-final year engineering students.</div>
+                    </div>
+                    <div>
+                        <div style="color: #60A5FA; font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">Curriculum Track</div>
+                        <div style="font-size: 1.4rem; font-weight: 800; margin: 0.25rem 0;">1 Selected Role</div>
+                        <div style="color: var(--inst-text-secondary); font-size: 0.88rem;">Full-Stack Web Development, Data Analytics, or Cloud/DevOps.</div>
+                    </div>
+                    <div>
+                        <div style="color: #60A5FA; font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">Timeline</div>
+                        <div style="font-size: 1.4rem; font-weight: 800; margin: 0.25rem 0;">4 Consecutive Weeks</div>
+                        <div style="color: var(--inst-text-secondary); font-size: 0.88rem;">Week 1 Baseline Diagnostic &rarr; Weeks 2-3 Tasks &rarr; Week 4 Reassessment.</div>
+                    </div>
+                    <div>
+                        <div style="color: #60A5FA; font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">Commercial Terms</div>
+                        <div style="font-size: 1.4rem; font-weight: 800; margin: 0.25rem 0;">Zero Software Cost</div>
+                        <div style="color: var(--inst-text-secondary); font-size: 0.88rem;">Evaluation pilot under mutual Letter of Intent (LOI). No long-term lock-in.</div>
+                    </div>
+                </div>
+
+                <div style="background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.2); border-radius: 12px; padding: 1.25rem; font-size: 0.92rem; color: #CBD5E1;">
+                    <i class="ph-fill ph-info" style="color: #60A5FA; margin-right: 0.35rem;"></i>
+                    <strong>Pilot Guardrail:</strong> DTV does not automatically enroll real students or send unsolicited communications without written administrative approval from the college placement cell or department dean.
+                </div>
+            </div>
+
+            <!-- Inquiry Form (Phase B) -->
+            <div id="inquiry" class="inst-form-card">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem;">Request an Institutional Pilot Briefing</h3>
+                    <p style="color: var(--inst-text-secondary); font-size: 0.95rem; margin: 0;">Connect with our educational partnerships team to discuss pilot cohort parameters and receive a structured demo.</p>
+                </div>
+
+                <form id="inst-inquiry-form" onsubmit="handleInquirySubmit(event)">
+                    <!-- Anti-spam Honeypot Field -->
+                    <div class="inst-hp" aria-hidden="true">
+                        <label for="hp_challenge">Leave this empty</label>
+                        <input type="text" id="hp_challenge" name="hp_challenge" tabindex="-1" autocomplete="off">
+                    </div>
+
+                    <div class="inst-form-grid">
+                        <div>
+                            <label class="inst-label" for="contact_name">Your Name *</label>
+                            <input type="text" id="contact_name" name="contact_name" class="inst-input" placeholder="e.g., Dr. Rajesh Sharma" required minlength="2" maxlength="100">
+                        </div>
+
+                        <div>
+                            <label class="inst-label" for="contact_email">Work / College Email *</label>
+                            <input type="email" id="contact_email" name="contact_email" class="inst-input" placeholder="e.g., rsharma@engg.edu" required maxlength="255">
+                        </div>
+
+                        <div>
+                            <label class="inst-label" for="institution_name">College / University Name *</label>
+                            <input type="text" id="institution_name" name="institution_name" class="inst-input" placeholder="e.g., Apex Institute of Technology" required minlength="2" maxlength="255">
+                        </div>
+
+                        <div>
+                            <label class="inst-label" for="role_title">Your Designation / Role *</label>
+                            <select id="role_title" name="role_title" class="inst-select" required>
+                                <option value="" disabled selected>Select your institutional role</option>
+                                <option value="Training & Placement Officer (TPO)">Training &amp; Placement Officer (TPO)</option>
+                                <option value="Dean / Principal">Dean / Principal / Director</option>
+                                <option value="Head of Department (HOD)">Head of Department (HOD)</option>
+                                <option value="Faculty Placement Coordinator">Faculty Placement Coordinator</option>
+                                <option value="Other">Other Academic Leadership</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="inst-label" for="phone">Direct Contact Number</label>
+                            <input type="tel" id="phone" name="phone" class="inst-input" placeholder="e.g., +91 98765 43210" maxlength="50">
+                        </div>
+
+                        <div>
+                            <label class="inst-label" for="cohort_size">Target Student Cohort Size *</label>
+                            <select id="cohort_size" name="cohort_size" class="inst-select" required>
+                                <option value="" disabled selected>Select estimated cohort size</option>
+                                <option value="50-100">50 – 100 Students (Recommended Pilot)</option>
+                                <option value="100-250">100 – 250 Students</option>
+                                <option value="250-500">250 – 500 Students</option>
+                                <option value="500+">500+ Students (Campus-wide)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="inst-label" for="target_role">Primary Career Track Focus *</label>
+                            <select id="target_role" name="target_role" class="inst-select" required>
+                                <option value="" disabled selected>Select track</option>
+                                <option value="Full-Stack Web Development">Full-Stack Web Development</option>
+                                <option value="Data Analytics & Engineering">Data Analytics &amp; Engineering</option>
+                                <option value="Cloud & DevOps Engineering">Cloud &amp; DevOps Engineering</option>
+                                <option value="Multiple Tracks">Multiple Tracks</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="inst-label" for="pilot_timeline">Evaluation Timeline *</label>
+                            <select id="pilot_timeline" name="pilot_timeline" class="inst-select" required>
+                                <option value="" disabled selected>Select planned timing</option>
+                                <option value="Immediate (Next 30 Days)">Immediate (Next 30 Days)</option>
+                                <option value="Upcoming Semester">Upcoming Semester</option>
+                                <option value="Exploratory Evaluation">Exploratory / Budget Planning</option>
+                            </select>
+                        </div>
+
+                        <div class="inst-form-full">
+                            <label class="inst-label" for="notes">Specific Objectives or Departmental Goals (Optional)</label>
+                            <textarea id="notes" name="notes" class="inst-textarea" rows="3" placeholder="Tell us about your upcoming placement season, target companies, or specific skill gaps..." maxlength="1000"></textarea>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 1.5rem;">
+                        <button type="submit" id="inst-submit-btn" class="dtv-btn dtv-btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1rem;">
+                            <i class="ph-fill ph-paper-plane-tilt"></i> Submit Pilot Inquiry
+                        </button>
+                    </div>
+
+                    <!-- Status Display Area -->
+                    <div id="inst-form-alert" style="display: none; margin-top: 1.25rem; padding: 1rem; border-radius: 8px; font-size: 0.92rem;"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Confirmation Modal (Phase B) -->
+    <div id="inst-confirmation-modal" class="dtv-modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center;">
+        <div style="background: var(--inst-bg-card); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 16px; padding: 2.5rem; max-width: 520px; width: 90%; text-align: center;">
+            <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(52, 211, 153, 0.15); color: #34D399; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.25rem;">
+                <i class="ph-fill ph-check-circle"></i>
+            </div>
+            <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">Inquiry Recorded Successfully</h3>
+            <p style="color: var(--inst-text-secondary); font-size: 0.95rem; margin-bottom: 1.25rem;" id="inst-modal-msg">
+                Thank you for requesting an institutional evaluation pilot. Your reference ID has been recorded.
+            </p>
+            <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--inst-border); border-radius: 8px; padding: 0.85rem; margin-bottom: 1.5rem;">
+                <div style="font-size: 0.75rem; color: var(--inst-text-muted); text-transform: uppercase; font-weight: 700;">Inquiry Reference ID</div>
+                <div id="inst-modal-ref" style="font-size: 1.3rem; font-weight: 800; color: #60A5FA; letter-spacing: 0.05em; margin-top: 0.2rem;">DTV-PILOT-XXXX</div>
+            </div>
+            <p style="color: var(--inst-text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">
+                An institutional onboarding coordinator will review your request and contact you within <strong>1–2 business days</strong> with cohort onboarding materials.
+            </p>
+            <button type="button" onclick="closeConfirmationModal()" class="dtv-btn dtv-btn-primary" style="width: 100%; padding: 0.75rem;">
+                Done
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="inst-footer">
+        <div class="inst-container">
+            <p>&copy; 2026 Digital Twin Verse. All rights reserved. &bull; <a href="/privacy" style="color: var(--inst-text-secondary);">Privacy Policy</a> &bull; <a href="/terms" style="color: var(--inst-text-secondary);">Terms of Service</a> &bull; <a href="/" style="color: var(--inst-text-secondary);">Student Platform</a></p>
+            <p style="margin-top: 0.5rem; color: #475569;">B2B Institutional Evaluation Framework &bull; Strict Tenant Sandboxing &bull; DPDP Aligned</p>
+        </div>
+    </footer>
+
+    <!-- Client-side Inquiry Workflow Handler -->
+    <script>
+        async function handleInquirySubmit(event) {
+            event.preventDefault();
+            const submitBtn = document.getElementById('inst-submit-btn');
+            const alertBox = document.getElementById('inst-form-alert');
+            
+            alertBox.style.display = 'none';
+            alertBox.className = '';
+
+            const form = event.target;
+            const payload = {
+                contact_name: form.contact_name.value.trim(),
+                contact_email: form.contact_email.value.trim(),
+                institution_name: form.institution_name.value.trim(),
+                role_title: form.role_title.value,
+                phone: form.phone.value.trim(),
+                cohort_size: form.cohort_size.value,
+                target_role: form.target_role.value,
+                pilot_timeline: form.pilot_timeline.value,
+                notes: form.notes.value.trim(),
+                hp_challenge: form.hp_challenge.value
+            };
+
+            // Basic validation check
+            if (!payload.contact_name || !payload.contact_email || !payload.institution_name || !payload.role_title) {
+                showAlert('Please fill in all required fields.', 'error');
+                return;
+            }
+
+            // Disable button and show spinner
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="ph-fill ph-spinner" style="animation: spin 1s linear infinite;"></i> Submitting Inquiry...';
+
+            try {
+                const response = await fetch('/api/v1/institutions/inquiry', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to submit inquiry. Please check your information and try again.');
+                }
+
+                // Show confirmation modal
+                document.getElementById('inst-modal-ref').innerText = data.reference_id || 'DTV-PILOT-SUBMITTED';
+                if (data.message) {
+                    document.getElementById('inst-modal-msg').innerText = data.message;
+                }
+                document.getElementById('inst-confirmation-modal').style.display = 'flex';
+                form.reset();
+
+                // Track inquiry submission with privacy safeguards
+                if (window.DtvAnalytics) {
+                    window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.INSTITUTIONAL_INQUIRY, {
+                        cohort_size: payload.cohort_size,
+                        target_role: payload.target_role,
+                        pilot_timeline: payload.pilot_timeline,
+                        role_title: payload.role_title
+                    });
+                }
+
+            } catch (err) {
+                showAlert(err.message || 'An unexpected error occurred while processing your request.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="ph-fill ph-paper-plane-tilt"></i> Submit Pilot Inquiry';
+            }
+        }
+
+        function showAlert(msg, type) {
+            const alertBox = document.getElementById('inst-form-alert');
+            alertBox.style.display = 'block';
+            if (type === 'error') {
+                alertBox.style.background = 'rgba(239, 68, 68, 0.15)';
+                alertBox.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+                alertBox.style.color = '#FCA5A5';
+                alertBox.innerHTML = '<i class="ph-fill ph-warning-circle" style="margin-right: 0.35rem;"></i> ' + msg;
+            } else {
+                alertBox.style.background = 'rgba(52, 211, 153, 0.15)';
+                alertBox.style.border = '1px solid rgba(52, 211, 153, 0.3)';
+                alertBox.style.color = '#6EE7B7';
+                alertBox.innerHTML = '<i class="ph-fill ph-check-circle" style="margin-right: 0.35rem;"></i> ' + msg;
+            }
+        }
+
+        function closeConfirmationModal() {
+            document.getElementById('inst-confirmation-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
