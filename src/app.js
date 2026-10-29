@@ -69,7 +69,12 @@ if (env.SENTRY_DSN) {
 
 app.use(requestId);
 app.use(morgan('combined', { stream: logger.stream }));
-app.use(express.json({ limit: '1mb' }));
+app.use(express.json({
+  limit: '1mb',
+  verify: (req, _res, buf) => {
+    req.rawBody = buf;
+  }
+}));
 app.use(express.urlencoded({ extended: false, limit: '1mb' }));
 app.use(hpp()); // Protect against HTTP Parameter Pollution
 app.use(cookieParser());
@@ -159,8 +164,9 @@ app.use('/api/readiness', require('./routes/careerReadinessRoutes'));
 app.use('/api/institutions', require('./routes/institutionalRoutes'));
 app.use('/api/futureverse', require('./routes/futureverseRoutes'));
 
-// Simple admin dashboard to browse DB
+// Simple admin dashboard to browse DB and product funnel metrics API
 app.use('/dashboard', dashboardRoutes);
+app.use('/api/v1/dashboard', dashboardRoutes);
 
 // Blog routes
 app.use('/blog', blogRoutes);

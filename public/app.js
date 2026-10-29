@@ -4618,6 +4618,14 @@ function renderCareers(filter) {
                 rzp1.on('payment.failed', function (response){
                     if(typeof showToast === 'function') showToast('⚠️', 'Payment failed. ' + response.error.description);
                 });
+
+                if (window.DtvAnalytics) {
+                    window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.CHECKOUT_INITIATED, {
+                        plan: plan,
+                        amount: data.amount,
+                        currency: data.currency
+                    });
+                }
                 rzp1.open();
             })
             .catch(err => {
@@ -4652,6 +4660,11 @@ function renderCareers(filter) {
             .then(res => res.json())
             .then(data => {
                 if(data.success) {
+                    if (window.DtvAnalytics) {
+                        window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.PAYMENT_CONVERTED, {
+                            order_id: order_id
+                        });
+                    }
                     showToast('✅', 'Payment successful! Premium Unlocked.');
                     if (APP_DATA && APP_DATA.userData) {
                         APP_DATA.userData.subscriptionExpiresAt = data.subscriptionExpiresAt;
@@ -5571,6 +5584,10 @@ function renderCareers(filter) {
 
         async function initGoogleAnalytics() {
             try {
+                // Prevent duplicate analytics initialization if already loaded in HTML head
+                if (window.gtag || document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) {
+                    return;
+                }
                 const res = await fetch('/api/v1/config');
                 if (!res.ok) return;
                 const config = await res.json();

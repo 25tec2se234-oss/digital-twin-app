@@ -3,10 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G79C8YZYXF"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-G79C8YZYXF');
+    </script>
+    <script src="/dist/analytics.d7758758.js?v=bd7f95c6a27a70d6"></script>
+
     <title>Institutional Placement Readiness &amp; Competency Intelligence | Digital Twin Verse</title>
     <meta name="description" content="Empower engineering college leadership and placement cells (TPOs) with verifiable student skill diagnostics, practical roadmap telemetry, and 30-day placement cohort pilots.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://digitaltwinvrs.com/institutions">
+
+    <!-- JSON-LD Structured Data: EducationalOrganization & Service -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "EducationalOrganization",
+          "@id": "https://digitaltwinvrs.com/#organization",
+          "name": "Digital Twin Verse",
+          "url": "https://digitaltwinvrs.com/",
+          "logo": "https://digitaltwinvrs.com/img/dtv-logo.jpg",
+          "description": "AI-powered career readiness, student competency diagnostics, and placement roadmap platform for colleges."
+        },
+        {
+          "@type": "Service",
+          "@id": "https://digitaltwinvrs.com/institutions#service",
+          "name": "Campus Placement Readiness & Cohort Diagnostic Pilot",
+          "provider": { "@id": "https://digitaltwinvrs.com/#organization" },
+          "serviceType": "Career Readiness Assessment & Cohort Analytics",
+          "areaServed": "India",
+          "description": "Structured 30-day placement evaluation pilot for college placement cells (TPOs) and academic departments."
+        }
+      ]
+    }
+    </script>
 
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +51,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
 
     <!-- Base CSS -->
-    <link rel="stylesheet" href="/dist/main.ec205e06.css?v=fd40c0f9f1b5f29a">
+    <link rel="stylesheet" href="/dist/main.ec205e06.css?v=bd7f95c6a27a70d6">
     <link rel="stylesheet" href="/css/premium-theme.css?v=dark-fix2">
 
     <style>
@@ -832,6 +868,16 @@
                 }
                 document.getElementById('inst-confirmation-modal').style.display = 'flex';
                 form.reset();
+
+                // Track inquiry submission with privacy safeguards
+                if (window.DtvAnalytics) {
+                    window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.INSTITUTIONAL_INQUIRY, {
+                        cohort_size: payload.cohort_size,
+                        target_role: payload.target_role,
+                        pilot_timeline: payload.pilot_timeline,
+                        role_title: payload.role_title
+                    });
+                }
 
             } catch (err) {
                 showAlert(err.message || 'An unexpected error occurred while processing your request.', 'error');

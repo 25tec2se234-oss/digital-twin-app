@@ -1,6 +1,11 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /login
 Disallow: /login.html
+Disallow: /dashboard/
+Disallow: /admin/
+Disallow: /payment/
+Disallow: /uploads/
 
 Sitemap: https://digitaltwinvrs.com/sitemap.xml

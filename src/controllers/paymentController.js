@@ -147,6 +147,16 @@ async function verifyPayment(req, res, next) {
           });
         }
 
+        // Check if razorpay_payment_id has already been claimed by another order
+        const existingPayment = await client.query(
+          "SELECT id, razorpay_order_id FROM orders WHERE razorpay_payment_id = $1 AND razorpay_order_id != $2 AND status = 'paid' LIMIT 1",
+          [razorpay_payment_id, razorpay_order_id]
+        );
+        if (existingPayment.rows.length > 0) {
+          await client.query('ROLLBACK');
+          throw new ApiError(400, 'This payment transaction ID has already been redeemed.');
+        }
+
         // It is not paid yet, update it
         await client.query(
           "UPDATE orders SET status = 'paid', razorpay_payment_id = $1, razorpay_signature = $2, updated_at = CURRENT_TIMESTAMP WHERE razorpay_order_id = $3",
@@ -237,17 +247,7 @@ async function verifyPaymentProof(req, res, next) {
     }
 
     // ==============================================================================================
-    // 🛡️ SENIOR DEVELOPER FIREWALL: WHAT-IF SCENARIO CROSS-VALIDATION ENGINE
-    // ==============================================================================================
-    // Scenario A: User modifies or appends characters to your specific transaction reference
-    if (cleanRef.includes('pay_T6MilSkslYF0XP') && plan_duration !== '1m') {
-      return res.status(400).json({
-        success: false,
-        message: `SECURITY ALERT: Payment mismatch detected! Transaction ID (${cleanRef}) is for ₹ 29.00 (Starter Plan - 1 Month), but you selected a higher plan duration. Please select 'Starter Plan (1 Month)' to verify.`
-      });
-    }
-
-    // Scenario B: User inputs a genuine Razorpay Transaction ID (pay_...)
+    // Dynamic verification against Razorpay API if live transaction ID is provided
     let wasRazorpaySuccessfullyFetched = false;
     if (cleanRef.startsWith('pay_')) {
       try {
@@ -373,10 +373,166 @@ async function logConsent(req, res, next) {
   }
 }
 
+/**
+ * Handle incoming asynchronous Razorpay webhooks (e.g., order.paid, payment.captured, payment.failed)
+ * Verifies webhook signature, ensures idempotent execution, and safe subscription activation.
+ */
+async function handleWebhook(req, res, next) {
+  try {
+    const signature = req.headers['x-razorpay-signature'];
+    if (!signature) {
+      throw new ApiError(400, 'Missing Razorpay webhook signature header (x-razorpay-signature).');
+    }
+
+    const webhookSecret = env.RAZORPAY_WEBHOOK_SECRET || (function() {
+      try { return getKeySecret(); } catch (e) { return null; }
+    })();
+
+    if (!webhookSecret) {
+      throw new ApiError(500, 'Razorpay webhook secret is not configured.');
+    }
+
+    const rawPayload = req.rawBody ? req.rawBody : Buffer.from(JSON.stringify(req.body));
+    const expectedSignature = crypto
+      .createHmac('sha256', webhookSecret)
+      .update(rawPayload)
+      .digest('hex');
+
+    let isSignatureValid = false;
+    try {
+      isSignatureValid = crypto.timingSafeEqual(
+        Buffer.from(signature, 'utf8'),
+        Buffer.from(expectedSignature, 'utf8')
+      );
+    } catch (cmpErr) {
+      isSignatureValid = false;
+    }
+
+    if (!isSignatureValid) {
+      console.warn('Invalid Razorpay webhook signature attempt.');
+      throw new ApiError(400, 'Invalid webhook signature.');
+    }
+
+    const event = req.body.event;
+    const eventId = req.body.event_id || req.headers['x-razorpay-event-id'] || `evt_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
+    const payload = req.body.payload || {};
+
+    // 1. Idempotency Check: Prevent duplicate webhook event execution
+    try {
+      const existing = await db.query(
+        'SELECT id, status FROM payment_webhooks WHERE event_id = $1 LIMIT 1',
+        [eventId]
+      );
+      if (existing.rows.length > 0) {
+        return res.status(200).json({ status: 'ok', message: 'Event already processed (idempotent).' });
+      }
+    } catch (e) {
+      // Table may not exist yet in tests or offline
+    }
+
+    let razorpayOrderId = null;
+    let razorpayPaymentId = null;
+
+    if (payload.payment && payload.payment.entity) {
+      razorpayPaymentId = payload.payment.entity.id;
+      razorpayOrderId = payload.payment.entity.order_id;
+    } else if (payload.order && payload.order.entity) {
+      razorpayOrderId = payload.order.entity.id;
+    }
+
+    // 2. Process Business Events
+    if (event === 'order.paid' || event === 'payment.captured') {
+      if (razorpayOrderId) {
+        const client = await db.pool.connect();
+        try {
+          await client.query('BEGIN');
+          const lockRes = await client.query(
+            "SELECT user_id, plan_duration, status FROM orders WHERE razorpay_order_id = $1 FOR UPDATE",
+            [razorpayOrderId]
+          );
+
+          if (lockRes.rows.length > 0) {
+            const order = lockRes.rows[0];
+            if (order.status !== 'paid') {
+              await client.query(
+                "UPDATE orders SET status = 'paid', razorpay_payment_id = COALESCE($1, razorpay_payment_id), updated_at = CURRENT_TIMESTAMP WHERE razorpay_order_id = $2",
+                [razorpayPaymentId, razorpayOrderId]
+              );
+
+              let interval = '1 month';
+              if (order.plan_duration === '1w') interval = '7 days';
+              if (order.plan_duration === '1m') interval = '1 month';
+              if (order.plan_duration === '6m') interval = '6 months';
+              if (order.plan_duration === '12m') interval = '1 year';
+
+              const updateRes = await client.query(`
+                UPDATE users 
+                SET subscription_expires_at = GREATEST(COALESCE(subscription_expires_at, CURRENT_TIMESTAMP), CURRENT_TIMESTAMP) + interval '${interval}'
+                WHERE id = $1
+                RETURNING email, name, subscription_expires_at
+              `, [order.user_id]);
+
+              await client.query('COMMIT');
+
+              if (updateRes.rows.length > 0) {
+                const updatedUser = updateRes.rows[0];
+                const planName = order.plan_duration === '1m' ? '1 Month Plan' : (order.plan_duration === '6m' ? '6 Months Plan' : '12 Months Plan');
+                const amountPaid = order.plan_duration === '1m' ? 29 : (order.plan_duration === '6m' ? 119 : 249);
+                emailService.sendPremiumConfirmation(
+                  updatedUser.email,
+                  updatedUser.name,
+                  planName,
+                  amountPaid,
+                  updatedUser.subscription_expires_at
+                ).catch(() => {});
+              }
+            } else {
+              await client.query('ROLLBACK');
+            }
+          } else {
+            await client.query('ROLLBACK');
+          }
+        } catch (txnErr) {
+          await client.query('ROLLBACK');
+          throw txnErr;
+        } finally {
+          client.release();
+        }
+      }
+    } else if (event === 'payment.failed') {
+      if (razorpayOrderId) {
+        await db.query(
+          "UPDATE orders SET status = 'failed', updated_at = CURRENT_TIMESTAMP WHERE razorpay_order_id = $1 AND status != 'paid'",
+          [razorpayOrderId]
+        ).catch(() => {});
+      }
+    }
+
+    // 3. Persist Webhook Audit Record
+    try {
+      await db.query(
+        `INSERT INTO payment_webhooks (event_id, event_type, razorpay_order_id, razorpay_payment_id, payload, status)
+         VALUES ($1, $2, $3, $4, $5, 'PROCESSED')
+         ON CONFLICT (event_id) DO NOTHING`,
+        [eventId, event, razorpayOrderId, razorpayPaymentId, JSON.stringify(req.body)]
+      );
+    } catch (whErr) {
+      // Non-critical audit logging failure
+    }
+
+    return res.status(200).json({ status: 'ok', event, eventId });
+  } catch (err) {
+    console.error('handleWebhook error:', err);
+    next(err);
+  }
+}
+
 module.exports = {
   createOrder,
   verifyPayment,
   verifyPaymentProof,
-  logConsent
+  logConsent,
+  handleWebhook,
+  PLAN_RATES
 };
 

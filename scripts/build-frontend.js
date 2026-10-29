@@ -23,7 +23,7 @@ function hashFile(filePath) {
     return hash;
 }
 
-const assets = ['app.js', 'ux-engine.js', 'css/main.css', 'js/data/careers.js'];
+const assets = ['app.js', 'ux-engine.js', 'css/main.css', 'js/data/careers.js', 'js/analytics.js'];
 const manifest = {};
 
 assets.forEach(asset => {
@@ -103,6 +103,13 @@ htmlPaths.forEach(indexPath => {
             indexHtml = indexHtml.replace(/src="\/js\/data\/careers\.js(\?[^"]*)?"/g, `src="${manifest['js/data/careers.js']}?v=${buildVersion}"`);
             indexHtml = indexHtml.replace(/src="\/dist\/careers\.js(\?[^"]*)?"/g, `src="${manifest['js/data/careers.js']}?v=${buildVersion}"`);
             indexHtml = indexHtml.replace(/src="\/dist\/careers\.[a-f0-9]+\.js(\?[^"]*)?"/g, `src="${manifest['js/data/careers.js']}?v=${buildVersion}"`);
+        }
+
+        // For analytics.js
+        if (manifest['js/analytics.js']) {
+            indexHtml = indexHtml.replace(/src="\/js\/analytics\.js(\?[^"]*)?"/g, `src="${manifest['js/analytics.js']}?v=${buildVersion}"`);
+            indexHtml = indexHtml.replace(/src="\/dist\/analytics\.js(\?[^"]*)?"/g, `src="${manifest['js/analytics.js']}?v=${buildVersion}"`);
+            indexHtml = indexHtml.replace(/src="\/dist\/analytics\.[a-f0-9]+\.js(\?[^"]*)?"/g, `src="${manifest['js/analytics.js']}?v=${buildVersion}"`);
         }
         
         fs.writeFileSync(indexPath, indexHtml);

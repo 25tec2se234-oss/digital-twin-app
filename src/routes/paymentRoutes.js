@@ -37,9 +37,18 @@ const uploadSingle = (req, res, next) => {
   });
 };
 
+const webhookLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 60,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, message: 'Too many webhook requests.' }
+});
+
 router.post('/create', authenticate, paymentLimiter, paymentController.createOrder);
 router.post('/verify', authenticate, paymentLimiter, paymentController.verifyPayment);
 router.post('/verify-proof', authenticate, paymentLimiter, uploadSingle, paymentController.verifyPaymentProof);
 router.post('/consent', authenticateOptional, paymentLimiter, paymentController.logConsent);
+router.post('/webhook', webhookLimiter, paymentController.handleWebhook);
 
 module.exports = router;

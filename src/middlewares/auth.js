@@ -29,7 +29,7 @@ function redactSensitiveData(obj) {
 async function authenticate(req, _res, next) {
   const header = req.headers.authorization || req.headers['x-auth-token'] || req.headers['x-dt-auth'] || '';
   if (!header.startsWith('Bearer ')) {
-    if (req.method === 'GET' && req.accepts('html')) {
+    if (req.method === 'GET' && req.accepts('html') && !req.originalUrl.includes('/api/') && !req.originalUrl.includes('/metrics')) {
       return _res.send(`
         <!DOCTYPE html>
         <html>

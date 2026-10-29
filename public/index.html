@@ -12,6 +12,7 @@
 
         gtag('config', 'G-G79C8YZYXF');
     </script>
+    <script src="/dist/analytics.d7758758.js?v=bd7f95c6a27a70d6"></script>
     <meta name="google-site-verification" content="JqI4ie5AN2FqEf6IiFaV1aagZj-uKcFR91x1r8khGCw">
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <meta name="msvalidate.01" content="BING_VERIFICATION_CODE_HERE">
@@ -115,12 +116,12 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preload" href="/dist/main.ec205e06.css?v=fd40c0f9f1b5f29a" as="style">
+    <link rel="preload" href="/dist/main.ec205e06.css?v=bd7f95c6a27a70d6" as="style">
 
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/dist/main.ec205e06.css?v=fd40c0f9f1b5f29a">
+    <link rel="stylesheet" href="/dist/main.ec205e06.css?v=bd7f95c6a27a70d6">
     <link rel="stylesheet" href="/css/premium-theme.css?v=dark-fix2">
 
 
@@ -937,10 +938,10 @@
 
                     <!-- DUAL-PERSONA CALL TO ACTION (STUDENT & INSTITUTIONAL) -->
                     <div class="dtv-hero-dual-cta" style="justify-content: center; gap: 1rem;">
-                        <a href="/genesis" class="dtv-btn dtv-btn-primary" style="font-size: 1.05rem; padding: 0.85rem 1.8rem;">
+                        <a href="/genesis" onclick="if(window.DtvAnalytics) window.DtvAnalytics.trackEntryPoint('hero_start_diagnostic', '/genesis');" class="dtv-btn dtv-btn-primary" style="font-size: 1.05rem; padding: 0.85rem 1.8rem;">
                             <i class="ph-fill dtv-icon ph-lightning" style="color: #ffffff;"></i> Start Free 10-Min Diagnostic
                         </a>
-                        <button type="button" onclick="openInstitutionalPilotModal()" class="dtv-btn dtv-btn-secondary" style="font-size: 1.05rem; padding: 0.85rem 1.8rem;">
+                        <button type="button" onclick="if(window.DtvAnalytics) window.DtvAnalytics.trackEntryPoint('hero_tpo_pilot', '#pilot'); openInstitutionalPilotModal();" class="dtv-btn dtv-btn-secondary" style="font-size: 1.05rem; padding: 0.85rem 1.8rem;">
                             <i class="ph-fill dtv-icon ph-buildings" style="color: #10b981;"></i> For Colleges: TPO Pilot →
                         </button>
                     </div>
@@ -3447,9 +3448,9 @@
 
 
 
-    <script defer="" src="/dist/careers.e4a25189.js?v=fd40c0f9f1b5f29a"></script>
-    <script defer="" src="/dist/app.299ffd7f.js?v=fd40c0f9f1b5f29a"></script>
-    <script defer="" src="/dist/ux-engine.f675feed.js?v=fd40c0f9f1b5f29a"></script>
+    <script defer="" src="/dist/careers.e4a25189.js?v=bd7f95c6a27a70d6"></script>
+    <script defer="" src="/dist/app.4ecca0dd.js?v=bd7f95c6a27a70d6"></script>
+    <script defer="" src="/dist/ux-engine.f675feed.js?v=bd7f95c6a27a70d6"></script>
 
 
     <!-- PROBLEM INSIGHT MODAL -->
@@ -3594,6 +3595,13 @@
 
             if (success) success.style.display = 'flex';
             if (btn) btn.style.display = 'none';
+
+            if (window.DtvAnalytics) {
+                window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.INSTITUTIONAL_INQUIRY, {
+                    cohort_size: payload.batchSize,
+                    source: 'home_pilot_modal'
+                });
+            }
 
             if (typeof showToast === 'function') {
                 showToast('🏛️', 'Pilot inquiry received! We will contact your placement office.');
@@ -3929,6 +3937,13 @@
                 } catch(e) {}
             }
 
+            if (window.DtvAnalytics) {
+                window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.GOAL_SELECTED, {
+                    target_role: roleKey,
+                    role_title: titles[roleKey]
+                });
+            }
+
             if (typeof showToast === 'function') {
                 showToast('🎯', 'Target role set to: ' + titles[roleKey]);
             }
@@ -3942,6 +3957,12 @@
                 if (typeof showToast === 'function') showToast('🔒', 'Please sign in to take the verified assessment.');
                 setTimeout(function() { window.location.href = '/login.html'; }, 1200);
                 return;
+            }
+
+            if (window.DtvAnalytics) {
+                window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.ASSESSMENT_STARTED, {
+                    role: DTV_CURRENT_ROLE
+                });
             }
 
             var modal = document.getElementById('readiness-assessment-modal');
@@ -4034,6 +4055,16 @@
                 });
                 var data = await res.json();
                 if (data.success && data.result) {
+                    if (window.DtvAnalytics) {
+                        window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.ASSESSMENT_COMPLETED, {
+                            role: DTV_CURRENT_ROLE,
+                            composite_score: data.result.scores ? data.result.scores.compositeScore : null,
+                            gaps_count: data.result.priorityGaps ? data.result.priorityGaps.length : 0
+                        });
+                        window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.ROADMAP_GENERATED, {
+                            role: DTV_CURRENT_ROLE
+                        });
+                    }
                     renderAssessmentResults(data.result);
                     initCareerReadinessConsole();
                 } else {
@@ -4229,6 +4260,16 @@
                 });
                 var data = await res.json();
                 if (data.success) {
+                    if (window.DtvAnalytics) {
+                        window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.TASK_COMPLETED, {
+                            task_id: taskId,
+                            evidence_type: 'github_repo'
+                        });
+                        window.DtvAnalytics.track(window.DtvAnalytics.EVENTS.EVIDENCE_SUBMITTED, {
+                            task_id: taskId,
+                            evidence_type: 'github_repo'
+                        });
+                    }
                     if (typeof showToast === 'function') showToast('🎉', 'Milestone completed! Verification evidence recorded.');
                     inp.value = '';
                     initCareerReadinessConsole();

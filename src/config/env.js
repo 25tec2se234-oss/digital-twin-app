@@ -51,7 +51,8 @@ const schema = Joi.object({
   SMTP_PASS: Joi.string().allow(''),
   BREVO_API_KEY: Joi.string().allow(''),
   RAZORPAY_KEY_ID: Joi.string().allow(''),
-  RAZORPAY_KEY_SECRET: Joi.string().allow('')
+  RAZORPAY_KEY_SECRET: Joi.string().allow(''),
+  RAZORPAY_WEBHOOK_SECRET: Joi.string().allow('')
 }).unknown();
 
 const result = schema.validate(process.env, { abortEarly: false });

@@ -5,6 +5,9 @@ const db = require('../src/db');
 jest.setTimeout(60000);
 
 beforeAll(async function() {
+  if (process.env.DATABASE_URL && process.env.DATABASE_URL.includes('ep-sparkling-mode-apvo7mhj')) {
+    return;
+  }
   const filePath = path.join(__dirname, '..', 'migrations', '001_init.sql');
   const sql = fs.readFileSync(filePath, 'utf8');
   await db.pool.query(sql);
